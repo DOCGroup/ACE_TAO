@@ -69,8 +69,7 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
 
   *os << be_nl_2;
 
-  *os << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (os);
 
   // Generate the skeleton class name.
   *os << be_nl_2
@@ -116,7 +115,7 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
 
   // Copy constructor and destructor.
   *os << class_name.c_str () << " (const "
-      << class_name.c_str () << "& rhs);" << be_nl
+      << class_name.c_str () << "& rhs) = default;" << be_nl
       << "virtual ~" << class_name.c_str () << " () = default;" << be_nl_2;
 
   // _is_a

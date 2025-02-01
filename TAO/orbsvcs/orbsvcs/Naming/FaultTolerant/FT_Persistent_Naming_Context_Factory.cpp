@@ -3,20 +3,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-/// Constructor.
-TAO_FT_Persistent_Naming_Context_Factory::TAO_FT_Persistent_Naming_Context_Factory ()
-: TAO_Persistent_Naming_Context_Factory ()
-{
-
-}
-
-/// Destructor.  Does not deallocate the hash map: if an instance of
-/// this class goes out of scope, its hash_map remains in persistent storage.
-TAO_FT_Persistent_Naming_Context_Factory::~TAO_FT_Persistent_Naming_Context_Factory ()
-{
-}
-
-
 /// Factory method for creating an implementation object for naming contexts
 TAO_Persistent_Naming_Context*
 TAO_FT_Persistent_Naming_Context_Factory::create_naming_context_impl (

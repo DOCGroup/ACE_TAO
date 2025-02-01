@@ -42,7 +42,6 @@
 class ACEXML_Export ACEXML_Locator
 {
 public:
-
   virtual ~ACEXML_Locator ();
 
   /*

@@ -1,6 +1,5 @@
 #include "timer.h"
 
-
 Timer_imp::Timer_imp (XtAppContext &app,
                       CORBA::Long interval,
                       Stopwatch_display *stopwatch)
@@ -17,7 +16,7 @@ Timer_imp::~Timer_imp ()
 }
 
 void
-Timer_imp::start (void)
+Timer_imp::start ()
 {
   // Reset the elapsed time
   this->counter_ = 0;
@@ -33,11 +32,11 @@ Timer_imp::start (void)
   this->id_ = XtAppAddTimeOut (this->app_,
                                this->interval_,
                                &Timer_imp::tick_callback,
-                               (XtPointer) this );
+                               (XtPointer) this);
 }
 
 void
-Timer_imp::stop (void)
+Timer_imp::stop ()
 {
     // Remove the current timeout function, if any
   if (this->id_)
@@ -47,9 +46,9 @@ Timer_imp::stop (void)
 }
 
 CORBA::Float
-Timer_imp::elapsed_time(void)
+Timer_imp::elapsed_time()
 {
-    return ((CORBA::Float) counter_ * interval_ / 1000.0 );
+    return ((CORBA::Float) counter_ * interval_ / 1000.0);
 }
 
 void
@@ -61,9 +60,8 @@ Timer_imp::tick_callback (XtPointer client_data,
   obj->tick ();
 }
 
-
 void
-Timer_imp::tick (void)
+Timer_imp::tick ()
 {
   // Increment a counter for each tick
   counter_++;
@@ -83,5 +81,3 @@ Timer_imp::report_time (CORBA::Float time)
 {
   stopwatch_->set_time (time);
 }
-
-

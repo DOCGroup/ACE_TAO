@@ -104,7 +104,7 @@ create_consumers (CosNotifyChannelAdmin::ConsumerAdmin_ptr admin,
 }
 
 static void
-disconnect_consumers (void)
+disconnect_consumers ()
 {
   for (unsigned int i = 0; i < consumer_count; i++)
   {
@@ -153,7 +153,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         // Tell the supplier to go
         sig->go ();
 
-        client.ORB_run( );
+        client.ORB_run();
 
         disconnect_consumers();
 

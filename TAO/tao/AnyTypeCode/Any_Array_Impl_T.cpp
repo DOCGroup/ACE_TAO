@@ -10,7 +10,7 @@
 #include "tao/CDR.h"
 #include "tao/SystemException.h"
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 #if !defined (__ACE_INLINE__)
 # include "tao/AnyTypeCode/Any_Array_Impl_T.inl"
@@ -30,7 +30,7 @@ TAO::Any_Array_Impl_T<T_slice, T_forany>::Any_Array_Impl_T (
 }
 
 template<typename T_slice, typename T_forany>
-TAO::Any_Array_Impl_T<T_slice, T_forany>::~Any_Array_Impl_T (void)
+TAO::Any_Array_Impl_T<T_slice, T_forany>::~Any_Array_Impl_T ()
 {
 }
 

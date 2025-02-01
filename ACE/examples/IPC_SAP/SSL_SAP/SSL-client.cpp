@@ -17,7 +17,7 @@
 
 #include "SSL-client.h"
 
-Options::Options (void)
+Options::Options ()
   : host_ (ACE_DEFAULT_SERVER_HOST),
     port_ (ACE_DEFAULT_SERVER_PORT),
     sleep_time_ (0, 0), // By default, don't sleep between calls.
@@ -34,7 +34,7 @@ Options::Options (void)
   ACE_OS::strcpy (quit_string_, "q");
 }
 
-Options::~Options (void)
+Options::~Options ()
 {
   ACE_MT (delete this->barrier_);
   delete [] this->message_buf_;
@@ -44,7 +44,7 @@ Options::~Options (void)
 typedef ACE_Singleton<Options, ACE_SYNCH_RECURSIVE_MUTEX> OPTIONS;
 
 int
-Options::init (void)
+Options::init ()
 {
   // Check for default case.
   if (this->message_len_ == 0)
@@ -371,7 +371,7 @@ Options::twoway_client_test (void *)
 }
 
 ACE_THR_FUNC
-Options::thr_func (void)
+Options::thr_func ()
 {
   if (this->oneway_ == 0)
     return ACE_THR_FUNC (&Options::twoway_client_test);
@@ -380,7 +380,7 @@ Options::thr_func (void)
 }
 
 static int
-run_client (void)
+run_client ()
 {
   // Raise the socket handle limit to the maximum.
   ACE::set_handle_limit ();

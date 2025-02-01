@@ -37,8 +37,7 @@ int be_visitor_exception_ch::visit_exception (be_exception *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (os);
 
   *os << be_nl_2 << "class " << be_global->stub_export_macro ()
             << " " << node->local_name ()
@@ -73,9 +72,9 @@ int be_visitor_exception_ch::visit_exception (be_exception *node)
     }
 
   *os << "static " << node->local_name ()
-      << " *_downcast ( ::CORBA::Exception *);" << be_nl
+      << " *_downcast (::CORBA::Exception *);" << be_nl
       << "static const " << node->local_name ()
-      << " *_downcast ( ::CORBA::Exception const *);" << be_nl_2;
+      << " *_downcast (::CORBA::Exception const *);" << be_nl_2;
 
   *os << "static ::CORBA::Exception *_alloc ();" << be_nl_2;
 

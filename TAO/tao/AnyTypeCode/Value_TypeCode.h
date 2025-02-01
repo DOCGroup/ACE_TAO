@@ -52,7 +52,6 @@ namespace TAO
         private RefCountPolicy
     {
     public:
-
       /// Constructor.
       Value (CORBA::TCKind kind,
              char const * id,
@@ -121,7 +120,6 @@ namespace TAO
        *       increase cache hits by improving spatial locality.
        */
       //@{
-
       /// Base attributes containing repository ID and name of
       /// @c valuetype.
       Base_Attributes<StringType> base_attributes_;
@@ -144,7 +142,6 @@ namespace TAO
       //@}
 
     };
-
   }  // End namespace TypeCode
 }  // End namespace TAO
 
@@ -154,14 +151,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 # include "tao/AnyTypeCode/Value_TypeCode.inl"
 #endif  /* __ACE_INLINE__ */
 
-#ifdef ACE_TEMPLATES_REQUIRE_SOURCE
-# include "tao/AnyTypeCode/Value_TypeCode.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#ifdef ACE_TEMPLATES_REQUIRE_PRAGMA
-# pragma implementation ("Value_TypeCode.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
-
+#include "tao/AnyTypeCode/Value_TypeCode.cpp"
 
 #include /**/ "ace/post.h"
 

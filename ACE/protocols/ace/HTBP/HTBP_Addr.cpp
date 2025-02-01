@@ -3,14 +3,8 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// Constructor
-ACE::HTBP::Addr::Addr ()
-{
-}
-
 // Creates a ACE_INET_Addr from a PORT_NUMBER and the remote
 // HOST_NAME.
-
 ACE::HTBP::Addr::Addr (u_short port_number,
                        const char host_name[],
                        int address_family)

@@ -33,7 +33,7 @@ namespace TAO
   public:
     CompressorFactory (::Compression::CompressorId compressor_id);
 
-    virtual ::Compression::CompressorId compressor_id (void);
+    virtual ::Compression::CompressorId compressor_id ();
 
     virtual ::Compression::Compressor_ptr get_compressor
       (::Compression::CompressionLevel compression_level) = 0;

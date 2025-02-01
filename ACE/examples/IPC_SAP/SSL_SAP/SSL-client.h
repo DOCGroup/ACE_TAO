@@ -15,10 +15,10 @@ class Options
 {
 public:
   // Constructor.
-  Options (void);
+  Options ();
 
   // Destructor.
-  ~Options (void);
+  ~Options ();
 
   // Parse the command-line arguments.
   int parse_args (int argc, ACE_TCHAR *argv[]);
@@ -50,12 +50,12 @@ public:
 
   // Returns a pointer to the entry point into the thread that runs
   // the client test function.
-  ACE_THR_FUNC thr_func (void);
+  ACE_THR_FUNC thr_func ();
 
 private:
   // Initialize the message we're sending to the user and set up the
   // barrier.
-  int init (void);
+  int init ();
 
   // Performs the shared behavior of the oneway and twoway client
   // tests.

@@ -23,7 +23,7 @@ TAO_ESF_Proxy_RB_Tree_Iterator<PROXY>::operator != (
 }
 
 template<class PROXY> ACE_INLINE TAO_ESF_Proxy_RB_Tree_Iterator<PROXY>&
-TAO_ESF_Proxy_RB_Tree_Iterator<PROXY>::operator++ (void)
+TAO_ESF_Proxy_RB_Tree_Iterator<PROXY>::operator++ ()
 {
   ++this->impl_;
   return *this;
@@ -38,7 +38,7 @@ TAO_ESF_Proxy_RB_Tree_Iterator<PROXY>::operator++ (int)
 }
 
 template<class PROXY> ACE_INLINE PROXY*
-TAO_ESF_Proxy_RB_Tree_Iterator<PROXY>::operator *(void)
+TAO_ESF_Proxy_RB_Tree_Iterator<PROXY>::operator *()
 {
   return (*this->impl_).key ();
 }
@@ -46,13 +46,13 @@ TAO_ESF_Proxy_RB_Tree_Iterator<PROXY>::operator *(void)
 // ****************************************************************
 
 template<class PROXY> ACE_INLINE TAO_ESF_Proxy_RB_Tree_Iterator<PROXY>
-TAO_ESF_Proxy_RB_Tree<PROXY>::begin (void)
+TAO_ESF_Proxy_RB_Tree<PROXY>::begin ()
 {
   return Iterator (this->impl_.begin ());
 }
 
 template<class PROXY> ACE_INLINE TAO_ESF_Proxy_RB_Tree_Iterator<PROXY>
-TAO_ESF_Proxy_RB_Tree<PROXY>::end (void)
+TAO_ESF_Proxy_RB_Tree<PROXY>::end ()
 {
   return Iterator (this->impl_.end ());
 }

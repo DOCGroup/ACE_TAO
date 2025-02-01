@@ -17,9 +17,7 @@
  * data sent in the second call.
  */
 class ReadHandler : public ACE_Event_Handler {
-
     private:
-
         /**
          * The stream socket used for data exchange.
          */
@@ -47,11 +45,10 @@ class ReadHandler : public ACE_Event_Handler {
         int mInvocationCounter;
 
     public:
-
         /**
          * Initialization.
          */
-        ReadHandler(void);
+        ReadHandler();
 
         /**
          * Clean up data.
@@ -61,13 +58,12 @@ class ReadHandler : public ACE_Event_Handler {
         /**
          * Provide access to the internal stream socket.
          */
-        ACE_SOCK_Stream &getStream(void);
+        ACE_SOCK_Stream &getStream();
 
         /**
          * @name Overridden methods from the ACE_Event_Handler
          */
         // @{
-
         /**
          * Provides the handle of mStream;
          */

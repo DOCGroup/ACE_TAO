@@ -30,7 +30,7 @@ namespace TAO
       public ::TAO::CompressorFactory
     {
       public:
-        Bzip2_CompressorFactory (void);
+        Bzip2_CompressorFactory ();
 
         virtual ::Compression::Compressor_ptr get_compressor (
             ::Compression::CompressionLevel compression_level);

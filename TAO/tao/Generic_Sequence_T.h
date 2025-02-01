@@ -55,7 +55,6 @@
  */
 
 #include "tao/Range_Checking_T.h"
-#include "ace/checked_iterator.h"
 
 #include <algorithm>
 
@@ -65,7 +64,6 @@ namespace TAO
 {
 namespace details
 {
-
 template<typename T,
          class ALLOCATION_TRAITS,
          class ELEMENT_TRAITS>
@@ -128,7 +126,7 @@ public:
     element_traits::copy_range(
         rhs.buffer_,
         rhs.buffer_ + rhs.length_,
-        ACE_make_checked_array_iterator (tmp.buffer_, tmp.length_));
+        tmp.buffer_);
     swap(tmp);
   }
 
@@ -212,7 +210,7 @@ public:
     element_traits::copy_swap_range(
       buffer_,
       buffer_ + length_,
-      ACE_make_checked_array_iterator (tmp.buffer_, tmp.length_));
+      tmp.buffer_);
 
     swap(tmp);
   }
@@ -316,7 +314,7 @@ public:
     return tmp.buffer_;
   }
 
-  void swap(generic_sequence & rhs) throw()
+  void swap(generic_sequence & rhs) noexcept
   {
     std::swap(maximum_, rhs.maximum_);
     std::swap(length_, rhs.length_);

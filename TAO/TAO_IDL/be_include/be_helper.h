@@ -92,7 +92,6 @@ struct TAO_ACE_CHECK
 class TAO_OutStream
 {
 public:
-
   /// Enumerated type to indicate the stream type
   enum STREAM_TYPE
     {
@@ -186,6 +185,7 @@ public:
   }
 
   TAO_OutStream &operator<< (const char *str);
+  TAO_OutStream &operator<< (char ch);
   TAO_OutStream &operator<< (const ACE_CString &str);
   TAO_OutStream &operator<< (const ACE_CDR::UShort num);
   TAO_OutStream &operator<< (const ACE_CDR::Short num);
@@ -217,6 +217,9 @@ public:
   TAO_OutStream &print (UTL_IdList *idl);
 
   TAO_OutStream &print (AST_Expression *idl);
+
+  void insert_comment (const char *file, int line);
+#define TAO_INSERT_COMMENT(STRM) (STRM)->insert_comment (__FILE__, __LINE__)
 
 protected:
   /// The underlying low-level I/O handle

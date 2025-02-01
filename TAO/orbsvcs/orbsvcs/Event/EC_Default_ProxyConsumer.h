@@ -37,12 +37,11 @@ class TAO_RTEvent_Serv_Export TAO_EC_Default_ProxyPushConsumer :
   public TAO_EC_ProxyPushConsumer
 {
 public:
-
   /// Constructor...
   TAO_EC_Default_ProxyPushConsumer (TAO_EC_Event_Channel_Base* event_channel);
 
   /// Destructor...
-  virtual ~TAO_EC_Default_ProxyPushConsumer ();
+  virtual ~TAO_EC_Default_ProxyPushConsumer () = default;
 
  virtual void activate (
      RtecEventChannelAdmin::ProxyPushConsumer_ptr &proxy);
@@ -60,7 +59,6 @@ public:
   virtual void _remove_ref ();
 
 private:
-
   virtual PortableServer::ObjectId
          object_id ();
 };

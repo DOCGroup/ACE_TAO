@@ -188,7 +188,6 @@ TAO::SSLIOP::Transport::tear_listen_point_list (TAO_InputCDR &cdr)
 }
 
 
-
 void
 TAO::SSLIOP::Transport::set_bidir_context_info (
   TAO_Operation_Details &opdetails)

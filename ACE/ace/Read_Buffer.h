@@ -49,17 +49,13 @@ public:
                    bool close_on_delete = false,
                    ACE_Allocator * = 0);
 
-#if !defined (ACE_HAS_WINCE)
-  // Note that ACE_HANDLE = FILE under CE.
-
   /// Read from an open HANDLE.
   ACE_Read_Buffer (ACE_HANDLE handle,
                    bool close_on_delete = false,
                    ACE_Allocator * = 0);
-#endif  // ACE_HAS_WINCE
 
   /// Closes the FILE *.
-  ~ACE_Read_Buffer (void);
+  ~ACE_Read_Buffer ();
 
   /**
    * Returns a pointer dynamically allocated with

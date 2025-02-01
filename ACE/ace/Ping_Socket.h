@@ -40,14 +40,14 @@ class ACE_Export ACE_Ping_Socket : public ACE_ICMP_Socket
   typedef ACE_ICMP_Socket inherited;
 public:
   /// Default constructor.
-  ACE_Ping_Socket (void);
+  ACE_Ping_Socket ();
 
   ACE_Ping_Socket (ACE_Addr const & local,
                    int protocol    = IPPROTO_ICMP,
                    int reuse_addr  = 0);
 
   /// Destructor.
-  ~ACE_Ping_Socket (void);
+  ~ACE_Ping_Socket ();
 
   /// Wrapper around the BSD-style @c socket system call (no QoS).
   int open (ACE_Addr const & local = ACE_Addr::sap_any,
@@ -67,7 +67,7 @@ public:
                        bool to_connect = false,
                        ACE_Time_Value const * timeout = &time_default_);
 
-  char * icmp_recv_buff (void);
+  char * icmp_recv_buff ();
 
   /// Dump the state of an object.
   void dump () const;
@@ -76,7 +76,6 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 public:
-
   enum
     {
       PING_BUFFER_SIZE = (1024 * 2)

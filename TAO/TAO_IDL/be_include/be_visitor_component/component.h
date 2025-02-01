@@ -24,7 +24,6 @@
  */
 class be_visitor_component : public be_visitor_interface
 {
-
 public:
   be_visitor_component (be_visitor_context *ctx);
 

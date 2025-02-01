@@ -5,7 +5,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-RLE_CompressorFactory::RLE_CompressorFactory(void)
+RLE_CompressorFactory::RLE_CompressorFactory()
     : ::TAO::CompressorFactory(Compression::COMPRESSORID_RLE)
     , compressor_(::Compression::Compressor::_nil())
 {

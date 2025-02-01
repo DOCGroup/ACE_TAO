@@ -38,7 +38,7 @@ TAO::SSLIOP::release (T * st)
 // -------------------------------------------------------------------
 
 template <typename T> ACE_INLINE
-TAO::SSLIOP::OpenSSL_st_var<T>::OpenSSL_st_var (void)
+TAO::SSLIOP::OpenSSL_st_var<T>::OpenSSL_st_var ()
   : st_ (0)
 {
 }
@@ -63,7 +63,7 @@ TAO::SSLIOP::OpenSSL_st_var<T>::OpenSSL_st_var (T const & st)
 }
 
 template <typename T> ACE_INLINE
-TAO::SSLIOP::OpenSSL_st_var<T>::~OpenSSL_st_var (void)
+TAO::SSLIOP::OpenSSL_st_var<T>::~OpenSSL_st_var ()
 {
   TAO::SSLIOP::OpenSSL_traits<T>::release (this->st_);
   //  TAO::SSLIOP::release (this->st_);
@@ -109,7 +109,7 @@ TAO::SSLIOP::OpenSSL_st_var<T>::operator-> () const
 }
 
 template <typename T> ACE_INLINE T *
-TAO::SSLIOP::OpenSSL_st_var<T>::operator-> (void)
+TAO::SSLIOP::OpenSSL_st_var<T>::operator-> ()
 {
   return this->st_;
 }
@@ -133,13 +133,13 @@ TAO::SSLIOP::OpenSSL_st_var<T>::in () const
 }
 
 template <typename T> ACE_INLINE T *&
-TAO::SSLIOP::OpenSSL_st_var<T>::inout (void)
+TAO::SSLIOP::OpenSSL_st_var<T>::inout ()
 {
   return this->st_;
 }
 
 template <typename T> ACE_INLINE T *&
-TAO::SSLIOP::OpenSSL_st_var<T>::out (void)
+TAO::SSLIOP::OpenSSL_st_var<T>::out ()
 {
   TAO::SSLIOP::OpenSSL_traits<T>::release (this->st_);
   this->st_ = 0;
@@ -147,7 +147,7 @@ TAO::SSLIOP::OpenSSL_st_var<T>::out (void)
 }
 
 template <typename T> ACE_INLINE T *
-TAO::SSLIOP::OpenSSL_st_var<T>::_retn (void)
+TAO::SSLIOP::OpenSSL_st_var<T>::_retn ()
 {
   // Yield ownership of the OpenSSL structure.
   T * st = this->st_;

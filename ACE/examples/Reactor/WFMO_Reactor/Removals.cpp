@@ -20,7 +20,6 @@
 #include "ace/Event.h"
 
 
-
 /**
  * @class Event_Handler
  *

@@ -66,7 +66,6 @@ TAO_DynValueBox_i::init (CORBA::TypeCode_ptr tc)
 
   this->init_common ();
   this->set_to_null ();
-
 }
 
 void

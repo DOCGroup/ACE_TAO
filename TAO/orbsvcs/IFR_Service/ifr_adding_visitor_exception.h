@@ -36,7 +36,7 @@ public:
                                 CORBA::Boolean in_reopened_);
 
   /// Destructor.
-  virtual ~ifr_adding_visitor_exception (void);
+  virtual ~ifr_adding_visitor_exception ();
 
   /// Visit a struct.
   virtual int visit_scope (UTL_Scope *node);
@@ -65,7 +65,6 @@ private:
   /// Holder for the member list passed to create_struct() or
   /// create_exception().
   CORBA::StructMemberSeq members_;
-
 };
 
 #endif /* TAO_IFR_ADDING_VISITOR_EXCEPTION_H */

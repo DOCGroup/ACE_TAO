@@ -97,7 +97,7 @@ public:
    *        new messages, which can minimize the "silly window syndrome."
    * @param ns Notification strategy. Pointer to an object conforming to the
    *        ACE_Notification_Strategy interface. If set, the object's
-   *        notify(void) method will be called each time data is added to
+   *        notify() method will be called each time data is added to
    *        this ACE_Message_Queue. @see ACE_Reactor_Notification_Strategy.
    */
   ACE_Message_Queue (size_t hwm = ACE_Message_Queue_Base::DEFAULT_HWM,
@@ -353,7 +353,6 @@ public:
   /** @name Queue statistics methods
    */
   //@{
-
   /// True if queue is full, else false.
   virtual bool is_full ();
   /// True if queue is empty, else false.
@@ -395,7 +394,6 @@ public:
   /** @name Water mark (flow control) methods
    */
   //@{
-
   /**
    * Get high watermark.
    */
@@ -424,7 +422,6 @@ public:
    * enqueueing and dequeueing operations.
    */
   //@{
-
   /**
    * Deactivate the queue and wakeup all threads waiting on the queue
    * so they can continue.  No messages are removed from the queue,
@@ -462,7 +459,6 @@ public:
   /** @name Notification strategy methods
    */
   //@{
-
   /**
    * This hook is automatically invoked by <enqueue_head>,
    * <enqueue_tail>, and <enqueue_prio> when a new item is inserted
@@ -841,7 +837,6 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-
   /**
    * Enqueue an <ACE_Message_Block *> in accordance with its priority.
    * priority may be *dynamic* or *static* or a combination or *both*
@@ -1002,7 +997,6 @@ template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL, class TIME_POLICY = ACE_System
 class ACE_Message_Queue_Ex
 {
 public:
-
   enum
   {
     /// Default priority value. This is the lowest priority.
@@ -1038,7 +1032,7 @@ public:
    *        new messages, which can minimize the "silly window syndrome."
    * @param ns Notification strategy. Pointer to an object conforming to the
    *        ACE_Notification_Strategy interface. If set, the object's
-   *        notify(void) method will be called each time data is added to
+   *        notify() method will be called each time data is added to
    *        this ACE_Message_Queue. @see ACE_Reactor_Notification_Strategy.
    */
   ACE_Message_Queue_Ex (size_t high_water_mark = ACE_Message_Queue_Base::DEFAULT_HWM,
@@ -1254,7 +1248,6 @@ public:
   /** @name Queue statistics methods
    */
   //@{
-
   /// True if queue is full, else false.
   virtual bool is_full ();
 
@@ -1294,7 +1287,6 @@ public:
   /** @name Water mark (flow control) methods
    */
   //@{
-
   /**
    * Get high watermark.
    */
@@ -1323,7 +1315,6 @@ public:
    * enqueueing and dequeueing operations.
    */
   //@{
-
   /**
    * Deactivate the queue and wakeup all threads waiting on the queue
    * so they can continue.  No messages are removed from the queue,
@@ -1361,7 +1352,6 @@ public:
   /** @name Notification strategy methods
    */
   //@{
-
   /**
    * This hook is automatically invoked by <enqueue_head>,
    * <enqueue_tail>, and <enqueue_prio> when a new item is inserted
@@ -1394,6 +1384,11 @@ public:
 
   /// Dump the state of an object.
   virtual void dump () const;
+
+  /// Support access to the underlying <Message_Queue>. Note that
+  /// manipulating the lower level queue directly may be hazardous (, but
+  /// necessary in some scenarios); be sure to lock the queue first.
+  ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY> &queue ();
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -1571,13 +1566,7 @@ protected:
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Message_Queue_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Message_Queue_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 

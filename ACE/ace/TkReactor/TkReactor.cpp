@@ -32,7 +32,7 @@ ACE_TkReactor::ACE_TkReactor (size_t size,
 #endif /* ACE_MT_SAFE */
 }
 
-ACE_TkReactor::~ACE_TkReactor (void)
+ACE_TkReactor::~ACE_TkReactor ()
 {
   // Delete the remaining items in the linked list.
 
@@ -65,7 +65,6 @@ ACE_TkReactor::wait_for_multiple_events (ACE_Select_Reactor_Handle_Set &handle_s
       nfound = TkWaitForMultipleEvents (width,
                                         handle_set,
                                         max_wait_time);
-
     } while (nfound == -1 && this->handle_error () > 0);
 
   if (nfound > 0)
@@ -342,7 +341,7 @@ ACE_TkReactor::remove_handler_i (const ACE_Handle_Set &handles,
 // first timeout in the Reactor's Timer_Queue.
 
 void
-ACE_TkReactor::reset_timeout (void)
+ACE_TkReactor::reset_timeout ()
 {
   if (this->timeout_)
     ::Tk_DeleteTimerHandler (this->timeout_);

@@ -35,14 +35,6 @@ ACE_Errno_Guard::~ACE_Errno_Guard ()
 #endif /* ACE_MT_SAFE */
 }
 
-#if defined (ACE_HAS_WINCE_BROKEN_ERRNO)
-ACE_INLINE int
-ACE_Errno_Guard::operator= (const ACE_ERRNO_TYPE &error)
-{
-  return this->error_ = error;
-}
-#endif /* ACE_HAS_WINCE_BROKEN_ERRNO */
-
 ACE_INLINE int
 ACE_Errno_Guard::operator= (int error)
 {

@@ -1,6 +1,6 @@
 # Set the version number here.
-%define ACEVER  7.0.4
-%define TAOVER  3.0.4
+%define ACEVER  8.0.2
+%define TAOVER  4.0.2
 
 # Conditional build
 # Default values are
@@ -1099,7 +1099,7 @@ BASEHDR="$BASEHDR `find \
 for j in $BASEHDR; do
         echo $j >> rawhdrs.log
         echo '#include <'$j'>' | \
-        g++ %{inline} \
+        g++ -std=c++17 %{inline} \
             -I . \
             -I protocols \
             $TAO_MM_OPTS \
@@ -1128,13 +1128,13 @@ cat mmraw.list |\
         sort -u > allhdrs.list
 
 # Add missing headers.
-echo ace/QtReactor/QtReactor.h >> allhdrs.list
+ls ace/*{.h,.inl,.cpp} >> allhdrs.list
 %if 0%{?_with_tao:1}%{?_without_tao:0}
-echo TAO/tao/QtResource/QtResource_Factory.h >> allhdrs.list
-echo TAO/tao/QtResource/QtResource_Loader.h >> allhdrs.list
-echo TAO/tao/PortableServer/get_arg.h >> allhdrs.list
-echo TAO/orbsvcs/orbsvcs/ESF/ESF_Proxy_List.{h,inl,cpp} >> allhdrs.list
-echo TAO/orbsvcs/orbsvcs/ESF/ESF_Proxy_RB_Tree.{h,inl,cpp} >> allhdrs.list
+ls TAO/tao/*{.h,.inl,_T.cpp} >> allhdrs.list
+ls TAO/tao/*/*{.h,.inl,.cpp} >> allhdrs.list
+ls TAO/orbsvcs/orbsvcs/*{.idl,.h,.inl,_T.cpp} >> allhdrs.list
+ls TAO/orbsvcs/orbsvcs/*/*{.h,.inl,_T.cpp} >> allhdrs.list
+ls TAO/orbsvcs/orbsvcs/ESF/*.cpp >> allhdrs.list
 %endif
 
 # Install headers and create header lists

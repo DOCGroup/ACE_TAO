@@ -17,7 +17,6 @@ namespace TAO
 {
 namespace details
 {
-
 template<typename T, class ref_traits, CORBA::ULong MAX, bool dummy>
 struct bounded_valuetype_allocation_traits
 {
@@ -63,7 +62,6 @@ struct bounded_valuetype_allocation_traits
     return MAX;
   }
 };
-
 } // namespace details
 } // namespace TAO
 

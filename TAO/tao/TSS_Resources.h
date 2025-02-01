@@ -45,7 +45,6 @@ namespace TAO
 class TAO_Export TAO_TSS_Resources
 {
 public:
-
   /// Constructor
   TAO_TSS_Resources ();
 
@@ -56,7 +55,6 @@ public:
   static TAO_TSS_Resources * instance ();
 
 private:
-
   /// Do not copy TSS resources
   //@{
   TAO_TSS_Resources (const TAO_TSS_Resources&);
@@ -64,7 +62,6 @@ private:
   //@}
 
 public:
-
   /**
    * Points to structure containing state for the current upcall
    * context in this thread.  Note that it does not come from the

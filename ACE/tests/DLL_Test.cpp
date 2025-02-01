@@ -11,12 +11,14 @@
 
 #include "test_config.h"
 #include "ace/DLL.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/ACE.h"
 #include "ace/DLL_Manager.h"
 #include "ace/SString.h"
 #include "ace/OS_NS_dlfcn.h"
 #include "DLL_Test.h"
+
+#include <memory>
 
 #if defined (ACE_LD_DECORATOR_STR)
 # define OBJ_SUFFIX ACE_LD_DECORATOR_STR ACE_DLL_SUFFIX
@@ -24,7 +26,7 @@
 # define OBJ_SUFFIX ACE_DLL_SUFFIX
 #endif /* ACE_LD_DECORATOR_STR */
 
-#if defined (ACE_WIN32) || defined (ACE_OPENVMS)
+#if defined (ACE_WIN32)
 #  define OBJ_PREFIX ACE_DLL_PREFIX
 #else
 #  define OBJ_PREFIX ACE_TEXT("./") ACE_DLL_PREFIX

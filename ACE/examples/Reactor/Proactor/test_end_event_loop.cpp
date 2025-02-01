@@ -37,12 +37,12 @@ class My_Task: public ACE_Task <ACE_NULL_SYNCH>
 {
 public:
   // Constructor.
-  My_Task (void)
+  My_Task ()
     : time_flag_ (0)
     {}
 
   /// Destructor.
-  virtual ~My_Task (void) {}
+  virtual ~My_Task () {}
 
   //FUZZ: disable check_for_lack_ACE_OS
   // If time_flag is zero do the eventloop indefinitely, otherwise do
@@ -68,7 +68,7 @@ public:
     }
 
   // Thread function.
-  int svc (void)
+  int svc ()
     {
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t):Starting svc routine\n"));

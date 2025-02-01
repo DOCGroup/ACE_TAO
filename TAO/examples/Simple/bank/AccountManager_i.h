@@ -45,10 +45,10 @@ class AccountManager_i : public POA_Bank::AccountManager
 {
 public:
   /// Constructor.
-  AccountManager_i (void);
+  AccountManager_i ();
 
   /// Destructor.
-  virtual ~AccountManager_i (void);
+  virtual ~AccountManager_i ();
 
   /// Return the Account interface with the given name from the server.
   /// Put the initial balance specified in the new account.
@@ -59,7 +59,7 @@ public:
   virtual void close (Bank::Account_ptr);
 
   /// Shutdown the server.
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
   /// Set the ORB pointer.
   void orb (CORBA::ORB_ptr o);

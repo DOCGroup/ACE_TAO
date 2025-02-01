@@ -23,7 +23,7 @@
 #include "ace/Acceptor.h"
 #include "ace/Handle_Set.h"
 #include "ace/Connector.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/Get_Opt.h"
 #include "ace/Process_Mutex.h"
 #include "ace/Signal.h"
@@ -34,7 +34,6 @@
 #include "ace/OS_NS_sys_wait.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/os_include/os_netdb.h"
-
 
 
 static const char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
@@ -82,16 +81,8 @@ using CACHED_CONNECT_STRATEGY = ACE_Cached_Connect_Strategy<Svc_Handler, ACE_SOC
 #define REFCOUNTED_HASH_RECYCLABLE_ADDR ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>
 
 // Default number of clients/servers.
-#if defined (ACE_HAS_PHARLAP)
-// PharLap is, by default, resource contrained. Test for something that works
-// on the default configuration.
-static int n_servers = 2;
-static int n_clients = 4;
-#else
 static int n_servers = 5;
 static int n_clients = 5;
-#endif /* ACE_HAS_PHARLAP */
-
 static int n_client_iterations = 3;
 
 Svc_Handler::Svc_Handler (ACE_Thread_Manager *)
@@ -526,7 +517,7 @@ spawn_processes (ACCEPTOR *acceptor,
   ACE_NEW_RETURN (children_ptr,
                   pid_t[n_servers],
                   -1);
-  ACE_Auto_Basic_Array_Ptr<pid_t> children (children_ptr);
+  std::unique_ptr<pid_t[]> children (children_ptr);
   int i;
 
   // Spawn off a number of server processes all of which will listen

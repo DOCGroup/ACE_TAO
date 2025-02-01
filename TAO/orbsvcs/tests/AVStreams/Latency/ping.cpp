@@ -172,7 +172,6 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG, "done %d\n", gsf));
 
       recv_latency.dump_results (ACE_TEXT("Receive"), gsf);
-
     }
   catch (const CORBA::Exception& ex)
     {
@@ -185,7 +184,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
 // ****************************************************************
 
-Ping_Recv::Ping_Recv (void)
+Ping_Recv::Ping_Recv ()
   :  TAO_FlowConsumer ("Ping",
                        ping_protocols,
                        "UNS:ping")
@@ -201,13 +200,13 @@ Ping_Recv::get_callback (const char *,
   return 0;
 }
 
-Ping_Recv_Callback::Ping_Recv_Callback (void)
+Ping_Recv_Callback::Ping_Recv_Callback ()
   : count_ (0)
 {
 }
 
 int
-Ping_Recv_Callback::handle_stop (void)
+Ping_Recv_Callback::handle_stop ()
 {
   ACE_DEBUG ((LM_DEBUG,"Ping_Recv_Callback::stop"));
   TAO_AV_CORE::instance ()->orb ()->shutdown ();
@@ -258,7 +257,7 @@ Ping_Recv_Callback::receive_frame (ACE_Message_Block *frame,
 }
 
 int
-Ping_Recv_Callback::handle_destroy (void)
+Ping_Recv_Callback::handle_destroy ()
 {
   ACE_DEBUG ((LM_DEBUG,"Ping_Recv_Callback::destroy\n"));
   return 0;
@@ -266,7 +265,7 @@ Ping_Recv_Callback::handle_destroy (void)
 
 // ****************************************************************
 
-Pong_Send::Pong_Send (void)
+Pong_Send::Pong_Send ()
   :  TAO_FlowProducer ("Pong",
                        pong_protocols,
                        "UNS:pong")
@@ -299,7 +298,7 @@ Pong_Send_Callback::handle_timeout (void *)
 }
 
 int
-Pong_Send_Callback::handle_end_stream (void)
+Pong_Send_Callback::handle_end_stream ()
 {
   return 0;
 }

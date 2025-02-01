@@ -103,7 +103,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                       1));
           ACE_OS::abort ();
         }
-      // Fallthrough
+      ACE_FALLTHROUGH;
     default:
       if (do_parent (FIFO_NAME, argv[1]) == -1)
         {

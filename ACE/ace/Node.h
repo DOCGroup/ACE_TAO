@@ -55,7 +55,7 @@ public:
 
 private:
   ACE_Node (const T &i, ACE_Node<T, C> *n);
-  ACE_Node (ACE_Node<T, C> *n = 0, int = 0);
+  ACE_Node (ACE_Node<T, C> *n = nullptr, int = 0);
   ACE_Node (const ACE_Node<T, C> &n);
 private:
   void operator= (const ACE_Node<T, C> &) = delete;
@@ -70,13 +70,7 @@ private:
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Node.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Node.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_NODE_H */

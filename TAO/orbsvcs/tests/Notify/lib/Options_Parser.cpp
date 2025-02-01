@@ -3,7 +3,7 @@
 #include "tao/debug.h"
 #include "ace/Log_Msg.h"
 
-TAO_Notify_Tests_Options_Parser::TAO_Notify_Tests_Options_Parser (void)
+TAO_Notify_Tests_Options_Parser::TAO_Notify_Tests_Options_Parser ()
 {
 }
 
@@ -95,7 +95,6 @@ TAO_Notify_Tests_Options_Parser::execute (CosNotification::QoSProperties& qos, A
       qos.length (1);
       qos[0].name = CORBA::string_dup (NotifyExt::ThreadPool);
       qos[0].value <<= tp_params;
-
     } /* ThreadPool */
   else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Lanes")) == 0) // -Lanes lane_count -Lane prio static_thr dy_thr
     {
@@ -149,6 +148,5 @@ TAO_Notify_Tests_Options_Parser::execute (CosNotification::QoSProperties& qos, A
       qos.length (1);
       qos[0].name = CORBA::string_dup (NotifyExt::ThreadPoolLanes);
       qos[0].value <<= tpl_params;
-
     } /* ThreadPoolLane */
 }

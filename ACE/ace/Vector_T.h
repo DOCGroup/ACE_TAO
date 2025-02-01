@@ -157,7 +157,7 @@ public:
    * This function dumps the content of the vector.  TO BE MOVED out
    * of this class.  It needs to be implemented as a global template
    * function that accepts a const ACE_Vector&lt;T&gt;, in order to
-   * make instances of this class compile on Linux, AIX.  G++ and xlC
+   * make instances of this class compile on Linux.  G++ and xlC
    * have template instantiation algoriths, which are different from
    * the one in Visual C++.  The algorithms try to instantiate ALL
    * methods declared in the template class, regardless of whether the
@@ -199,7 +199,6 @@ public:
   ///}
 
 protected:
-
   /**
    * Dynamic size (length) of the vector.
    */
@@ -261,13 +260,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #include "ace/Vector_T.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Vector_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Vector_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 

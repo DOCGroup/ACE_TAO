@@ -11,7 +11,7 @@ class Hello
 {
 public:
   /// Constructor
-  Hello ();
+  Hello () = default;
 
   // = The skeleton methods
   void crash () override;

@@ -28,7 +28,7 @@ ACE::HTBP::Stream::Stream (ACE::HTBP::Session *s)
 }
 
 /// Destructor.
-ACE::HTBP::Stream::~Stream (void)
+ACE::HTBP::Stream::~Stream ()
 {
 }
 
@@ -37,7 +37,6 @@ void
 ACE::HTBP::Stream::dump () const
 {
 }
-
 
 
 //---------------------------------------------------------------------------
@@ -285,19 +284,19 @@ ACE::HTBP::Stream::sendv_n (const iovec [],
 }
 
 int
-ACE::HTBP::Stream::close_reader (void)
+ACE::HTBP::Stream::close_reader ()
 {
   return this->session_->close_inbound();
 }
 
 int
-ACE::HTBP::Stream::close_writer (void)
+ACE::HTBP::Stream::close_writer ()
 {
   return this->session_->close_outbound();
 }
 
 int
-ACE::HTBP::Stream::close (void)
+ACE::HTBP::Stream::close ()
 {
   return this->session_->close();
 }

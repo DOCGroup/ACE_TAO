@@ -11,7 +11,6 @@
 //=============================================================================
 
 
-
 #include "ace/OS_main.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Task.h"
@@ -34,17 +33,17 @@ class Test_Task : public ACE_Task<ACE_SYNCH>
 {
 public:
   Test_Task (ACE_Thread_Manager * = ACE_Thread_Manager::instance ());
-  ~Test_Task (void) {};
+  ~Test_Task () {};
 
   //FUZZ: disable check_for_lack_ACE_OS
   int open (void * = 0);
-  int svc (void);
+  int svc ();
   int close (u_long);
 
   ///FUZZ: enable check_for_lack_ACE_OS
-  int shutdown (void);
+  int shutdown ();
 
-  int synch (void);
+  int synch ();
 };
 
 Test_Task::Test_Task (ACE_Thread_Manager *thrmgr)
@@ -67,7 +66,7 @@ Test_Task::open (void *)
 }
 
 int
-Test_Task::svc (void)
+Test_Task::svc ()
 {
   while (thr_mgr_->testcancel (ACE_OS::thr_self ()) == 0)
     // Sleep for 350 msecs.
@@ -84,13 +83,13 @@ Test_Task::close (u_long)
 }
 
 int
-Test_Task::shutdown (void)
+Test_Task::shutdown ()
 {
   return thr_mgr_->cancel_grp (grp_id_);
 }
 
 int
-Test_Task::synch (void)
+Test_Task::synch ()
 {
   return thr_mgr_->wait_grp (grp_id_);
 }

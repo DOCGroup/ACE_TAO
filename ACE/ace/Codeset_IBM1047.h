@@ -43,10 +43,10 @@ class ACE_Export ACE_IBM1047_ISO8859 : public ACE_Char_Codeset_Translator
 {
 public:
   /// A do nothing constructor.
-  ACE_IBM1047_ISO8859 (void);
+  ACE_IBM1047_ISO8859 ();
 
   /// Virtual destruction
-  virtual ~ACE_IBM1047_ISO8859 (void);
+  virtual ~ACE_IBM1047_ISO8859 ();
 
   // = Documented in $ACE_ROOT/ace/CDR_Stream.h
   virtual ACE_CDR::Boolean read_char (ACE_InputCDR &,
@@ -88,10 +88,10 @@ class ACE_Export ACE_ISO8859_IBM1047 : public ACE_Char_Codeset_Translator
 {
 public:
   /// A do nothing constructor.
-  ACE_ISO8859_IBM1047 (void);
+  ACE_ISO8859_IBM1047 ();
 
   /// Virtual destruction
-  virtual ~ACE_ISO8859_IBM1047 (void);
+  virtual ~ACE_ISO8859_IBM1047 ();
 
   // = Documented in $ACE_ROOT/ace/CDR_Stream.h
   virtual ACE_CDR::Boolean read_char (ACE_InputCDR &,

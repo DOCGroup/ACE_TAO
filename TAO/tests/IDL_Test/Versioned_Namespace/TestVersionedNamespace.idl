@@ -1,0 +1,15 @@
+module M1 {
+  struct S1 {
+    octet o;
+  };
+
+  local interface LI {
+    void op(in S1 s);
+  };
+
+  valuetype V {
+    public string valString;
+    public S1 valStruct;
+    public LI valLocalIface;
+  };
+};

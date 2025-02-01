@@ -29,7 +29,7 @@ public:
            ACE_Reactor & );
   // Constructor.
 
-  ~Handler (void);
+  ~Handler ();
   // Destructor.
 
   // Event demuxer hooks.
@@ -130,7 +130,7 @@ Handler::handle_close (ACE_HANDLE h, ACE_Reactor_Mask)
   return 0;
 }
 
-Handler::~Handler (void)
+Handler::~Handler ()
 {
   if (this->mcast_.leave (sockmc_addr_) == -1)
     ACE_ERROR ((LM_ERROR,
@@ -188,7 +188,8 @@ parse_args (int argc, ACE_TCHAR *argv[])
         INTERFACE = get_opt.opt_arg ();
         break;
       case 'u':
-        // Usage fallthrough.
+        // usage same as unknown.
+        ACE_FALLTHROUGH;
       default:
         ACE_DEBUG ((LM_DEBUG,
                     "%s -i interface\n",

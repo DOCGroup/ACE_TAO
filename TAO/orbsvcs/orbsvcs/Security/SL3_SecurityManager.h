@@ -46,7 +46,6 @@ namespace TAO
         public virtual ::CORBA::LocalObject
     {
     public:
-
       /// Constructor
       SecurityManager (SecurityLevel3::CredentialsCurator_ptr cc);
 
@@ -77,22 +76,18 @@ namespace TAO
       //@}
 
     protected:
-
       /// Destructor
       /**
        * Protected destructor to enforce proper memory management
        * through the reference counting mechanism.
        */
-      virtual ~SecurityManager (void);
+      virtual ~SecurityManager ();
 
     private:
-
       /// The ORB-specific SecurityLevel3::CredentialsCurator
       /// reference.
       SecurityLevel3::CredentialsCurator_var credentials_curator_;
-
     };
-
   } // End SL3 namespace
 }  // End TAO namespace
 

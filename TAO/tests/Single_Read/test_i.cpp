@@ -39,7 +39,7 @@ test_i::method (CORBA::ULong request_number,
 }
 
 void
-test_i::shutdown (void)
+test_i::shutdown ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) About to invoke shudown... "));

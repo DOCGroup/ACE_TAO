@@ -128,13 +128,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #include "tao/Seq_Var_T.inl"
 #endif /* defined INLINE */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "tao/Seq_Var_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Seq_Var_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 

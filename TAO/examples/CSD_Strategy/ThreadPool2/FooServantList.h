@@ -18,7 +18,7 @@ public:
 
   void create_and_activate(PortableServer::POA_ptr poa);
 
-  void client_done(void);
+  void client_done();
 
 private:
   PortableServer::ServantBase_var* servants_;

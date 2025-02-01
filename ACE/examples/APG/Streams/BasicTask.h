@@ -35,7 +35,7 @@ public:
   // Listing 101
 
   // Listing 1020 code/ch18
-  virtual int svc (void)
+  virtual int svc ()
   {
     for (ACE_Message_Block *message = 0; ; )
       {
@@ -131,7 +131,7 @@ protected:
   // Listing 104 code/ch18
   virtual int process (Message *message) = 0;
 
-  virtual int desired_threads (void)
+  virtual int desired_threads ()
   {
     return 1;
   }

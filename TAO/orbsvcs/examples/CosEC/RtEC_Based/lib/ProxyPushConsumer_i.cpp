@@ -53,7 +53,7 @@ TAO_CosEC_PushSupplierWrapper::TAO_CosEC_PushSupplierWrapper
 }
 
 void
-TAO_CosEC_PushSupplierWrapper::disconnect_push_supplier (void)
+TAO_CosEC_PushSupplierWrapper::disconnect_push_supplier ()
 {
   this->supplier_->disconnect_push_supplier ();
 
@@ -78,7 +78,7 @@ TAO_CosEC_ProxyPushConsumer_i::TAO_CosEC_ProxyPushConsumer_i (const RtecEventCha
 {
 }
 
-TAO_CosEC_ProxyPushConsumer_i::~TAO_CosEC_ProxyPushConsumer_i (void)
+TAO_CosEC_ProxyPushConsumer_i::~TAO_CosEC_ProxyPushConsumer_i ()
 {
 }
 
@@ -119,7 +119,7 @@ TAO_CosEC_ProxyPushConsumer_i::push (const CORBA::Any &data)
 }
 
 void
-TAO_CosEC_ProxyPushConsumer_i::disconnect_push_consumer (void)
+TAO_CosEC_ProxyPushConsumer_i::disconnect_push_consumer ()
 {
   this->proxypushconsumer_->disconnect_push_consumer ();
 
@@ -161,7 +161,7 @@ TAO_CosEC_ProxyPushConsumer_i::connect_push_supplier (CosEventComm::PushSupplier
 }
 
 int
-TAO_CosEC_ProxyPushConsumer_i::connected (void)
+TAO_CosEC_ProxyPushConsumer_i::connected ()
 {
   return this->wrapper_ == 0 ? 0 : 1;
 }

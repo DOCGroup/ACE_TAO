@@ -4,8 +4,7 @@
 /**
  * @file Task_Ex_Test.h
  *
- * Define class needed for generating templates. IBM C++ requires this
- * to be in its own file for auto template instantiation.
+ * Define class needed for generating templates.
  *
  * @author Kobi Cohen-Arazi <kobi-co@barak-online.net>
  */

@@ -45,7 +45,7 @@ ACE_NT_Service::ACE_NT_Service (const ACE_TCHAR *name,
 
 
 ACE_INLINE int
-ACE_NT_Service::svc (void)
+ACE_NT_Service::svc ()
 {
   return -1;
 }

@@ -16,7 +16,7 @@ Sleeper_i::delay(CORBA::Short sec)
 }
 
 void
-Sleeper_i::shutdown (void)
+Sleeper_i::shutdown ()
 {
   this->orb_->shutdown (false);
 }
@@ -72,7 +72,7 @@ Middle_i::call_delay(CORBA::Short sec)
 }
 
 void
-Middle_i::shutdown (void)
+Middle_i::shutdown ()
 {
   sleeper_->shutdown ();
   this->orb_->shutdown (false);

@@ -44,8 +44,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
 
   if (node->is_defined () && be_global->gen_arg_traits ())
     {
-      *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-          << "// " << __FILE__ << ":" << __LINE__;
+      TAO_INSERT_COMMENT (os);
 
       *os << be_global->core_versioning_begin ();
 
@@ -66,7 +65,6 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << node->name () << "_ptr p)" << be_nl
           << "{" << be_idt_nl;
 
-      // Workaround for broken HP V7.4-004 on OpenVMS IA83
       if (node->has_mixed_parentage ())
         {
           *os << "::CORBA::AbstractBase_ptr abs = p;" << be_nl
@@ -382,7 +380,6 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
 
   if (be_global->tc_support ())
     {
-
       be_visitor_context ctx = *this->ctx_;
       TAO::be_visitor_objref_typecode tc_visitor (&ctx);
 

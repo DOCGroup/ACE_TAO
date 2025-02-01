@@ -36,11 +36,11 @@ class TAO_Notify_Serv_Export TAO_Notify_Method_Request
 {
 public:
   /// Destructor.
-  virtual ~TAO_Notify_Method_Request (void);
+  virtual ~TAO_Notify_Method_Request ();
 
   /// Execute the Request
-  virtual int execute (void) = 0;
-  virtual TAO_Notify_Method_Request_Queueable* copy (void) = 0;
+  virtual int execute () = 0;
+  virtual TAO_Notify_Method_Request_Queueable* copy () = 0;
 };
 
 /***********************************************************************/
@@ -60,7 +60,7 @@ public:
   TAO_Notify_Method_Request_Queueable();
   TAO_Notify_Method_Request_Queueable(const TAO_Notify_Event * event);
 
-  virtual TAO_Notify_Method_Request_Queueable* copy (void);
+  virtual TAO_Notify_Method_Request_Queueable* copy ();
   void init (const TAO_Notify_Event * event);
 
   /// The creation time of the event to which this request corresponds.

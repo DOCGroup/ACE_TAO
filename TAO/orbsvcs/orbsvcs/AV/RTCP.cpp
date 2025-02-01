@@ -177,7 +177,6 @@ TAO_AV_RTCP_Callback::receive_control_frame (ACE_Message_Block *data,
       }
 
       first_rtcp_packet = 0;
-
     }
 
     if (more != 0)
@@ -330,7 +329,6 @@ TAO_AV_RTCP::rtcp_interval (int members,
 }
 
 
-
 // TAO_AV_RTCP_Flow_Factory
 TAO_AV_RTCP_Flow_Factory::TAO_AV_RTCP_Flow_Factory ()
 {
@@ -437,7 +435,6 @@ TAO_AV_RTCP_Object::TAO_AV_RTCP_Object (TAO_AV_Callback *client_cb,
 {
   rtcp_cb = &this->rtcp_cb_;
   this->client_cb_ = client_cb;
-
 }
 
 TAO_AV_RTCP_Object::~TAO_AV_RTCP_Object ()

@@ -1,0 +1,1133 @@
+commit 3e51b282dea0957756ff611a8707be7d2ccf1df5
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Oct 25 09:07:20 2023 +0200
+
+    Make use of std::nothrow
+    
+        * TAO/tao/IORManipulation/IORManip_IIOP_Filter.cpp:
+        * TAO/tao/LocateRequest_Invocation.cpp:
+        * TAO/tao/Object.cpp:
+        * TAO/tao/Synch_Invocation.cpp:
+
+commit 51e1e2c4835cf779efadc04b5737f7cf0722a9be
+Merge: 1affc2bd31c 7c292a3308a
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Oct 6 13:26:25 2023 -0500
+
+    Merge pull request #2133 from nickwilliams-zaxiom/add_gitignores
+    
+    Add missing and update .gitignore files to prevent untracked files Git status
+
+commit 7105510fc875d2429489962c9dfa4cfba331fcae
+Merge: 854bfeeb364 65566a4be54
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Thu Oct 5 12:19:01 2023 -0500
+
+    Merge pull request #2120 from nickwilliams-zaxiom/multicast_protocol_documentation_fixes
+    
+    Fix #2119: Improve documentation for TAO_UIPMC_Protocol_Factory and TAO_MIOP_Resource_Factory
+
+commit 9c6597e597b941f55b9ada64a9655e8703c80523
+Merge: de47fd52716 99d2d14dc0f
+Author: Justin Wilson <wilsonj@unityfoundation.io>
+Date:   Wed Oct 4 13:13:41 2023 -0500
+
+    Merge pull request #2136 from iguessthislldo/igtd/maps-scope
+    
+    Add Note About Maps Not Usable in TAO
+
+commit 99d2d14dc0f4a614bf48272dbd816264976bab6b
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Fri Sep 29 19:43:22 2023 -0500
+
+    Add Note About Maps Not Usable in TAO
+
+commit d3f1c845346abca0dc9d44a2f2d44a201495a14f
+Author: Nick Williams <nicholas.williams@zaxiom.com>
+Date:   Thu Sep 21 13:34:17 2023 -0500
+
+    Add missing and update .gitignore files to prevent untracked files Git status
+
+commit 33104f3296898ac1af7fe7e20f45649d038fd481
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 12 13:56:28 2023 +0200
+
+    Use default
+    
+        * TAO/tao/Base_Transport_Property.h:
+        * TAO/tao/Base_Transport_Property.inl:
+
+commit 65566a4be54cc015f34811a96436e9483524f25b
+Author: Nick Williams <nicholas.williams@zaxiom.com>
+Date:   Fri Sep 8 13:40:20 2023 -0500
+
+    Improve documentation for TAO_UIPMC_Protocol_Factory and TAO_MIOP_Resource_Factory
+
+commit d1a1e205295667ec2f61d3eee57db4cf4fb265c1
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Sep 7 13:05:50 2023 +0200
+
+    Use nullptr
+    
+        * TAO/tao/Valuetype/AbstractBase.cpp:
+
+commit 45ac78686bae84642d5b2812a9af13dd18105ca2
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Sep 7 13:05:41 2023 +0200
+
+    Fixed friend
+    
+        * TAO/tao/ORB_Core.h:
+
+commit 800a332bea49f9117ad69d3522ee346600d992f4
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 5 14:27:33 2023 +0200
+
+    Use std::unique_ptr with a custom deleter for TAO_ORB_Core_Auto_Ptr
+    
+        * TAO/tao/ORB_Core_Auto_Ptr.inl:
+          Deleted.
+    
+        * TAO/tao/Collocated_Invocation.cpp:
+        * TAO/tao/ORB_Core.cpp:
+        * TAO/tao/ORB_Core_Auto_Ptr.cpp:
+        * TAO/tao/ORB_Core_Auto_Ptr.h:
+        * TAO/tests/Bug_2084_Regression/EventNode.cpp:
+        * TAO/tests/Bug_2084_Regression/Hello.cpp:
+        * TAO/tests/COIOP/Hello.cpp:
+        * TAO/tests/Collocated_Best/Collocated_Best_Direct/Hello.cpp:
+        * TAO/tests/Collocated_Best/Collocated_Best_NoColl/Hello.cpp:
+        * TAO/tests/Collocated_Best/Collocated_Best_ThuP/Hello.cpp:
+        * TAO/tests/Collocated_NoColl/Hello.cpp:
+        * TAO/tests/Collocation_Exception_Test/Hello.cpp:
+        * TAO/tests/Collocation_Oneway_Tests/Hello.cpp:
+        * TAO/tests/Collocation_Tests/Hello.cpp:
+        * TAO/tests/DII_Collocation_Tests/oneway/Hello.cpp:
+        * TAO/tests/DII_Collocation_Tests/twoway/Hello.cpp:
+
+commit a3441278e47e3a2c3ceac3dcbf083c64872915ee
+Merge: da225741f57 81db2de177b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Sep 4 14:55:33 2023 +0200
+
+    Merge branch 'master' into jwi-stubuniqueptr
+
+commit da225741f576bbd94bc7b75c371d89c062c7d092
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Sep 4 12:18:47 2023 +0200
+
+    Reimplement TAO_Stub_Auto_Ptr with a std::unique_ptr with a custom deleter, reduces our code, also simplified the _this, no magic ACE macros anymore
+    
+        * TAO/TAO_IDL/be/be_visitor_interface/amh_ss.cpp:
+        * TAO/TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+        * TAO/tao/ORB_Core.h:
+        * TAO/tao/Stub.h:
+        * TAO/tao/Stub.inl:
+
+commit eb0d6c13cbd327c39a77b5da4f4dd4a277d34502
+Merge: c5fbb6372bb eb32c46b479
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Sep 4 09:29:07 2023 +0200
+
+    Merge branch 'jwi-autoptrcpp17_cleanup' of https://github.com/jwillemsen/ATCD into jwi-autoptrcpp17_cleanup
+
+commit c5fbb6372bb3264100d97e0b54520af5b2f67851
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Sep 4 09:23:27 2023 +0200
+
+    More auto_ptr cleanup
+    
+        * TAO/TAO_IDL/be/be_codegen.cpp:
+        * TAO/docs/events_tutorial.html:
+
+commit eb32c46b479862893bfb2c24609b873f3241292b
+Merge: b91f32118c9 0853054fe77
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Sep 3 11:48:45 2023 +0200
+
+    Merge branch 'master' into jwi-autoptrcpp17_cleanup
+
+commit b91f32118c92deca2ef6841fdfd2ef46e62b9c22
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Sep 3 09:12:34 2023 +0200
+
+    Use std::move
+    
+        * TAO/orbsvcs/orbsvcs/Notify/ProxyConsumer.cpp:
+
+commit 552b2a809408d9b78d44547c5d30b378ad6bb813
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Sep 3 09:02:45 2023 +0200
+
+    Include changes memory
+
+commit bf716f7573aa4962ba56b080b9b5448f28a1f9cb
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Sep 2 21:03:01 2023 +0200
+
+    Update EventChannel.cpp
+
+commit 5fd8963e1e7d973d3740c16e18538ab7d8da1985
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Sep 2 20:25:15 2023 +0200
+
+    Include fix
+    
+        * TAO/tao/PortableServer/Root_POA.cpp:
+
+commit 292335d6048ac7a54e2339271da8de5af9ecd194
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Sep 2 20:22:40 2023 +0200
+
+    Use std::unique_ptr
+        * ACE/ACEXML/parser/parser/Parser.cpp:
+        * ACE/apps/JAWS/server/HTTP_Server.cpp:
+        * ACE/protocols/ace/INet/FTP_ClientRequestHandler.cpp:
+        * ACE/protocols/ace/INet/HTTPS_Context.h:
+        * ACE/protocols/ace/INet/HTTPS_SessionFactory.cpp:
+        * ACE/protocols/ace/INet/HTTP_ClientRequestHandler.cpp:
+        * ACE/protocols/ace/RMCast/Socket.cpp:
+        * ACE/protocols/ace/RMCast/Socket.h:
+        * ACE/protocols/examples/INet/FTP_Simple_exec.cpp:
+        * ACE/protocols/examples/INet/HTTP_Simple_exec.cpp:
+        * ACE/tests/Bug_3539_Regression_Test.cpp:
+        * TAO/DevGuideExamples/Multithreading/GracefulShutdown/MessengerServer.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/Activator_Loader.h:
+        * TAO/orbsvcs/ImplRepo_Service/Locator_Loader.h:
+        * TAO/orbsvcs/ImplRepo_Service/tao_imr_i.h:
+        * TAO/orbsvcs/examples/ImR/Combined_Service/dynserver.h:
+        * TAO/orbsvcs/orbsvcs/IFRService/Container_i.cpp:
+        * TAO/orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.cpp:
+        * TAO/orbsvcs/orbsvcs/Naming/Storable_Naming_Context.cpp:
+        * TAO/orbsvcs/orbsvcs/Naming/Storable_Naming_Context.h:
+        * TAO/orbsvcs/orbsvcs/Naming/Storable_Naming_Context_Activator.cpp:
+        * TAO/orbsvcs/orbsvcs/Notify/Admin.h:
+        * TAO/orbsvcs/orbsvcs/Notify/Consumer.h:
+        * TAO/orbsvcs/orbsvcs/Notify/CosNotify_Service.h:
+        * TAO/orbsvcs/orbsvcs/PortableGroup/PG_Object_Group_Storable.cpp:
+        * TAO/orbsvcs/orbsvcs/PortableGroup/UIPMC_Mcast_Transport.cpp:
+        * TAO/orbsvcs/tests/CosEvent/Timeout/TimeoutTestMain.cpp:
+        * TAO/tests/Bug_3524_Regression/test_i.cpp:
+        * TAO/tests/ORB_Local_Config/Two_DLL_ORB/ORB_DLL.h:
+        * TAO/tests/Storable/Savable.cpp:
+
+commit babc33f87eacaff8b45ec09e666cee482937c901
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Sep 2 20:20:11 2023 +0200
+
+    Get rid of ACE_Auto_Array_Ptr
+    
+        * ACE/Kokyu/Default_Dispatcher_Impl.h:
+        * ACE/ace/Sock_Connect.cpp:
+        * ACE/ace/TLI.cpp:
+        * ACE/examples/C++NPv2/Reactor_Logging_Server_Adapter.cpp:
+        * ACE/examples/C++NPv2/TP_Logging_Server.h:
+        * ACE/examples/Reactor/TP_Reactor/client.cpp:
+        * ACE/protocols/ace/HTBP/HTBP_Channel.cpp:
+        * ACE/protocols/ace/HTBP/HTBP_Session.cpp:
+        * ACE/protocols/ace/INet/BidirStreamBuffer.h:
+        * ACE/protocols/ace/INet/BufferedStreamBuffer.h:
+        * ACE/protocols/ace/INet/HTTP_BasicAuthentication.cpp:
+        * ACE/protocols/ace/RMCast/Link.cpp:
+        * ACE/tests/CDR_Test.cpp:
+        * ACE/tests/Reactor_Performance_Test.cpp:
+        * TAO/examples/Simple/grid/Grid_i.cpp:
+        * TAO/examples/Simple/grid/Grid_i.h:
+        * TAO/orbsvcs/orbsvcs/AV/SCTP_SEQ.cpp:
+        * TAO/orbsvcs/orbsvcs/PortableGroup/Fragments_Cleanup_Strategy.cpp:
+        * TAO/orbsvcs/orbsvcs/PortableGroup/UIPMC_Mcast_Transport.cpp:
+        * TAO/orbsvcs/tests/Bug_2285_Regression/client2.cpp:
+        * TAO/tests/Oneway_Send_Timeouts/Client.cpp:
+
+commit ed54a767da647199e7238d3f9eabe4ca9f22bde3
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Sep 2 16:37:49 2023 +0200
+
+    C++17 removes std::auto_ptr so we don't provide the ACE auto_ptr templates anymore with C++17, use std::unique_ptr as replacement. Updated a lot of examples/tests to not use any ACE auto pointer templates but just std::unique_ptr
+    
+        * ACE/ACEXML/common/HttpCharStream.cpp:
+        * ACE/ACEXML/common/URL_Addr.cpp:
+        * ACE/ACEXML/common/XML_Codecs.cpp:
+        * ACE/ACEXML/examples/SAXPrint/main.cpp:
+        * ACE/ACEXML/parser/parser/Parser.cpp:
+        * ACE/ACEXML/parser/parser/Parser.h:
+        * ACE/Kokyu/Default_Dispatcher_Impl.cpp:
+        * ACE/Kokyu/Kokyu_defs.h:
+        * ACE/Kokyu/tests/DSRT_MIF/MIF.cpp:
+        * ACE/ace/ACE.cpp:
+        * ACE/ace/Auto_Functor.h:
+        * ACE/ace/Auto_Ptr.cpp:
+        * ACE/ace/Auto_Ptr.h:
+        * ACE/ace/Auto_Ptr.inl:
+        * ACE/ace/CDR_Stream.cpp:
+        * ACE/ace/DLL_Manager.cpp:
+        * ACE/ace/Log_Msg.h:
+        * ACE/ace/Pagefile_Memory_Pool.cpp:
+        * ACE/ace/Proactor.cpp:
+        * ACE/ace/Refcounted_Auto_Ptr.h:
+        * ACE/ace/SOCK_SEQPACK_Acceptor.cpp:
+        * ACE/ace/SOCK_SEQPACK_Association.cpp:
+        * ACE/ace/SString.h:
+        * ACE/ace/Service_Gestalt.cpp:
+        * ACE/ace/Sock_Connect.cpp:
+        * ACE/ace/Svc_Conf_Lexer.cpp:
+        * ACE/ace/TLI.cpp:
+        * ACE/ace/UUID.cpp:
+        * ACE/ace/config-win32-msvc-142.h:
+        * ACE/apps/JAWS/clients/Caching/Locator_Request_Reply.cpp:
+        * ACE/apps/JAWS/clients/Caching/URL_Properties.cpp:
+        * ACE/apps/JAWS/server/JAWS_IO.cpp:
+        * ACE/apps/gperf/src/Key_List.cpp:
+        * ACE/bin/main2TMAIN.pl:
+        * ACE/docs/exceptions.html:
+        * ACE/examples/IPC_SAP/UPIPE_SAP/ex2.cpp:
+        * ACE/examples/IPC_SAP/UPIPE_SAP/ex3.cpp:
+        * ACE/examples/Reactor/WFMO_Reactor/Handle_Close.cpp:
+        * ACE/examples/Reactor/WFMO_Reactor/Window_Messages.cpp:
+        * ACE/examples/Threads/future1.cpp:
+        * ACE/examples/Threads/future2.cpp:
+        * ACE/examples/Web_Crawler/HTTP_URL.cpp:
+        * ACE/include/makeinclude/platform_linux_icc.GNU:
+        * ACE/netsvcs/lib/Name_Handler.cpp:
+        * ACE/tests/CDR_File_Test.cpp:
+        * ACE/tests/CDR_Test.cpp:
+        * ACE/tests/Codecs_Test.cpp:
+        * ACE/tests/Compiler_Features_09_Test.cpp:
+        * ACE/tests/Conn_Test.cpp:
+        * ACE/tests/Future_Set_Test.cpp:
+        * ACE/tests/Future_Test.cpp:
+        * ACE/tests/Log_Msg_Test.cpp:
+        * ACE/tests/Logging_Strategy_Test.cpp:
+        * ACE/tests/Message_Queue_Test_Ex.cpp:
+        * ACE/tests/Reactor_Fairness_Test.cpp:
+        * ACE/tests/Reactor_Performance_Test.cpp:
+        * ACE/tests/Reactor_Timer_Test.cpp:
+        * ACE/tests/Refcounted_Auto_Ptr_Test.cpp:
+        * ACE/tests/SString_Test.cpp:
+        * ACE/tests/UUID_Test.cpp:
+        * TAO/docs/events_tutorial.html:
+        * TAO/docs/tutorials/Quoter/Simple/ImprovedServer/index.html:
+        * TAO/examples/Borland/ChatClientWnd.cpp:
+        * TAO/examples/Borland/ChatClientWnd.h:
+        * TAO/examples/Load_Balancing/Load_Balancer_i.cpp:
+        * TAO/orbsvcs/orbsvcs/AV/SCTP_SEQ.h:
+        * TAO/orbsvcs/orbsvcs/Event/EC_ObserverStrategy.cpp:
+        * TAO/orbsvcs/orbsvcs/HTIOP/HTIOP_Acceptor.cpp:
+        * TAO/orbsvcs/orbsvcs/IFRService/AliasDef_i.cpp:
+        * TAO/orbsvcs/orbsvcs/IFRService/ArrayDef_i.cpp:
+        * TAO/orbsvcs/orbsvcs/IFRService/AttributeDef_i.cpp:
+        * TAO/orbsvcs/orbsvcs/IFRService/ConstantDef_i.cpp:
+        * TAO/orbsvcs/orbsvcs/IFRService/Contained_i.cpp:
+        * TAO/orbsvcs/orbsvcs/IFRService/Container_i.cpp:
+        * TAO/orbsvcs/orbsvcs/Log/RTEventLogFactory_i.cpp:
+        * TAO/orbsvcs/orbsvcs/Naming/Persistent_Context_Index.cpp:
+        * TAO/orbsvcs/orbsvcs/Naming/Persistent_Naming_Context.cpp:
+        * TAO/orbsvcs/orbsvcs/Naming/Storable_Naming_Context.cpp:
+        * TAO/orbsvcs/orbsvcs/Naming/Storable_Naming_Context_Activator.cpp:
+        * TAO/orbsvcs/orbsvcs/Naming/Transient_Naming_Context.cpp:
+        * TAO/orbsvcs/orbsvcs/Notify/ETCL_Filter.cpp:
+        * TAO/orbsvcs/orbsvcs/Notify/EventChannel.h:
+        * TAO/orbsvcs/orbsvcs/Notify/EventChannelFactory.cpp:
+        * TAO/orbsvcs/orbsvcs/Notify/EventChannelFactory.h:
+        * TAO/orbsvcs/orbsvcs/Notify/Event_Manager.h:
+        * TAO/orbsvcs/orbsvcs/Notify/MonitorControl/NotificationServiceMonitor_i.cpp:
+        * TAO/orbsvcs/orbsvcs/Notify/Object.cpp:
+        * TAO/orbsvcs/orbsvcs/Notify/ProxyConsumer.cpp:
+        * TAO/orbsvcs/orbsvcs/Notify/ProxyConsumer.h:
+        * TAO/orbsvcs/orbsvcs/Notify/RT_Builder.cpp:
+        * TAO/orbsvcs/orbsvcs/Notify/Structured/StructuredProxyPushConsumer.cpp:
+        * TAO/orbsvcs/orbsvcs/Notify/ThreadPool_Task.h:
+        * TAO/orbsvcs/orbsvcs/PortableGroup/Fragments_Cleanup_Strategy.cpp:
+        * TAO/orbsvcs/orbsvcs/PortableGroup/GOA.cpp:
+        * TAO/orbsvcs/orbsvcs/PortableGroup/PG_FactoryRegistry.cpp:
+        * TAO/orbsvcs/orbsvcs/PortableGroup/PG_Group_List_Store.cpp:
+        * TAO/orbsvcs/orbsvcs/PortableGroup/PG_Object_Group_Storable.cpp:
+        * TAO/orbsvcs/orbsvcs/Sched/Reconfig_Scheduler_T.cpp:
+        * TAO/orbsvcs/performance-tests/RTEvent/Colocated_Roundtrip/driver.cpp:
+        * TAO/orbsvcs/performance-tests/RTEvent/Federated_Roundtrip/client.cpp:
+        * TAO/orbsvcs/performance-tests/RTEvent/Federated_Roundtrip/server.cpp:
+        * TAO/orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/client.cpp:
+        * TAO/orbsvcs/performance-tests/RTEvent/RTCORBA_Baseline/server.cpp:
+        * TAO/orbsvcs/performance-tests/RTEvent/RTCORBA_Callback/client.cpp:
+        * TAO/orbsvcs/performance-tests/RTEvent/RTCORBA_Callback/server.cpp:
+        * TAO/orbsvcs/performance-tests/RTEvent/Roundtrip/server.cpp:
+        * TAO/orbsvcs/performance-tests/RTEvent/lib/Control.cpp:
+        * TAO/orbsvcs/performance-tests/RTEvent/lib/Low_Priority_Setup.cpp:
+        * TAO/orbsvcs/performance-tests/RTEvent/lib/Low_Priority_Setup.h:
+        * TAO/orbsvcs/performance-tests/RTEvent/lib/RTEC_Initializer.cpp:
+        * TAO/tao/Acceptor_Registry.cpp:
+        * TAO/tao/CSD_ThreadPool/CSD_TP_Collocated_Synch_Request.inl:
+        * TAO/tao/DynamicAny/DynAnyUtils_T.cpp:
+        * TAO/tao/Dynamic_TP/DTP_Thread_Pool.cpp:
+        * TAO/tao/IIOP_Acceptor.cpp:
+        * TAO/tao/IIOP_Connector.cpp:
+        * TAO/tao/LocateRequest_Invocation.cpp:
+        * TAO/tao/Messaging/ExceptionHolder_i.cpp:
+        * TAO/tao/ORB_Core.cpp:
+        * TAO/tao/PortableServer/Active_Object_Map.cpp:
+        * TAO/tao/PortableServer/Object_Adapter.cpp:
+        * TAO/tao/PortableServer/Root_POA.cpp:
+        * TAO/tao/RTCORBA/Thread_Pool.cpp:
+        * TAO/tao/Strategies/SCIOP_Acceptor.cpp:
+        * TAO/tao/ZIOP/ZIOP_Service_Context_Handler.cpp:
+        * TAO/tests/IOR_Endpoint_Hostnames/list_interfaces.cpp:
+
+commit 41c666be2e55f20426354aae24fcdf7e6c9bf984
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Thu Aug 31 14:47:20 2023 -0500
+
+    Fix Codacy Issues in be_map
+
+commit 5c528320ff0ce0ac5d1d68a0073f4697b803ce51
+Merge: 4183f948eef 50be4072e9b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 28 16:31:23 2023 +0200
+
+    Merge pull request #2103 from tmayoff/coverity
+    
+    Fixed uninitialized member
+
+commit a5e0d86bf3ea71e326137219b52631ab59728f30
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 28 16:18:17 2023 +0200
+
+    Add IDL4 maps test
+    
+        * TAO/bin/tao_orb_tests.lst:
+
+commit 50be4072e9b0d7a243fba7567d69a74c4d06cb5d
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Mon Aug 28 09:53:39 2023 -0400
+
+    Members initialized in order they were declared
+
+commit edb24941b3aec55181bf4d42fc90be8f537f5812
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Mon Aug 28 09:51:57 2023 -0400
+
+    Initialized seen_in_map_
+
+commit ae54a2fc7d4c392266582b8c73625f62e8be569e
+Merge: 5cdadecfe06 6c256ad581f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 28 12:03:58 2023 +0200
+
+    Merge pull request #2097 from ClausKlein/feature/replace-unary_function
+    
+    Replace std::unary_function<> with std::function<>
+
+commit 3681bd78dde4ebed97fc9480bac2cfa73cee9662
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Thu Aug 24 13:23:24 2023 -0500
+
+    Remove Semicolon
+
+commit cbb50c204c880ea9c99c57837926bed287deec48
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Thu Aug 24 12:22:58 2023 -0500
+
+    Make `ast_visitor::visit_map` a nop impl
+
+commit 8dbc393cd50106e054eecd56aac878166b2a8cc8
+Author: Tyler <tyler@tylermayoff.com>
+Date:   Wed Aug 23 11:10:23 2023 -0400
+
+    Update NEWS
+
+commit 6c64cee1608eed305f0cdab75a04717bce07fffa
+Merge: 694a7f30a67 bbf82d182c0
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Tue Aug 22 13:07:39 2023 -0500
+
+    Merge pull request #1842 from tmayoff/maps
+    
+    Add IDL4 map support to TAO
+
+commit b192a376446da1af90f068873b147c0b1fe25e29
+Author: ClausKlein <claus.klein@arcormail.de>
+Date:   Tue Aug 22 18:12:19 2023 +0200
+
+    Replace std::unary_function<> with std::function<>
+    
+    (deprecated in C++11) and removed in C++17
+    
+    Add missing #include <memory>
+    
+    Make the hack clear:
+        respect review comment
+        ace/Auto_Ptr.h must still include <memory>
+
+commit bbf82d182c0cc469f55ead4b14c2473218fab0e9
+Author: Tyler <tyler@tylermayoff.com>
+Date:   Fri Aug 18 13:44:10 2023 -0400
+
+    Update TAO/orbsvcs/IFR_Service/ifr_adding_visitor.cpp
+    
+    Co-authored-by: Fred Hornsey <fred@hornsey.us>
+
+commit 2564f45e06dbe5fffdbcd1f9459fce27c5ffaead
+Author: Tyler <tyler@tylermayoff.com>
+Date:   Fri Aug 18 13:44:05 2023 -0400
+
+    Update TAO/TAO_IDL/be/be_visitor_map/map_cs.cpp
+    
+    Co-authored-by: Fred Hornsey <fred@hornsey.us>
+
+commit 2b705cfa15b9961e1465c1be31fda51ed5b24eb8
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 14 10:29:19 2023 +0200
+
+    Fixed typo in comment
+    
+        * TAO/tao/TimeBase.pidl:
+
+commit 43d328e0c614c6a28d6931932a5140d025f1ee58
+Merge: 061d692f5ff a71b63addfb
+Author: Tyler <tyler@tylermayoff.com>
+Date:   Tue Aug 8 14:48:48 2023 -0400
+
+    Merge branch 'master' into maps
+
+commit 745299b61a507418606f328abfcda08da79c92b9
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jul 7 14:53:36 2023 +0200
+
+    Use nullptr and no need to compare a pointer not equal to zero explicitly
+    
+        * TAO/TAO_IDL/be/be_visitor_operation/ami_handler_reply_stub_operation_cs.cpp:
+        * TAO/TAO_IDL/be/be_visitor_operation/exceptlist_cs.cpp:
+        * TAO/TAO_IDL/be/be_visitor_operation/upcall_command_ss.cpp:
+
+commit f2ee1640940bf46f155352adf34f0bdbbcc6e8e0
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jun 28 12:02:01 2023 +0200
+
+    Make ACE 7.1.1 and TAO 3.1.1 available
+    
+        * ACE/NEWS:
+        * ACE/bin/copy-local-script.sh:
+        * ACE/bin/diff-builds-and-group-fixed-tests-only.sh:
+        * ACE/docs/Download.html:
+        * ACE/etc/index.html:
+        * TAO/NEWS:
+
+commit a0a132a282accb3a698dbc6fa4b2dc74bea87a2e
+Merge: 69a160c7997 ab8e94dd74a
+Author: Tyler <tyler@tylermayoff.com>
+Date:   Mon Mar 20 23:07:04 2023 -0400
+
+    Merge branch 'master' into maps
+
+commit 69a160c799716560e09338a3796ef6cb7547b60a
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Mon Mar 20 23:05:26 2023 -0400
+
+    C++ sometimes struggles with structs as map keys
+
+commit 197dc29625cad83d720f81f148cf30963642dc31
+Merge: 00c4af278fa 8ab31e3e5bb
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jan 31 11:32:05 2023 +0100
+
+    Merge branch 'master' into maps
+
+commit 00c4af278fa5264e3ff51d593ce87ed795e79cfe
+Merge: 73bdce4f0ac c41ff8c22b3
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Sat Oct 22 14:30:23 2022 -0400
+
+    Merge branch 'maps' of https://github.com/tmayoff/ACE_TAO into maps
+
+commit 73bdce4f0ac19643766958e1f1cedc58f87d6e02
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Sat Oct 22 14:30:21 2022 -0400
+
+    switched typedef to using
+
+commit c41ff8c22b38698ee09335c0dd3ebd946aac056f
+Merge: 17cee1b7436 6bc45bf6b34
+Author: Tyler <tyler@tylermayoff.com>
+Date:   Sat Oct 22 14:26:37 2022 -0400
+
+    Merge branch 'master' into maps
+
+commit 17cee1b74361558ce88c9b7c63b2a256fcb103d1
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Sat Oct 22 14:25:36 2022 -0400
+
+    whitespace
+
+commit 8a1a7ba025df350b2d1d56cd40342185a262cc41
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Sat Oct 22 14:23:32 2022 -0400
+
+    added map to node_type_to_string
+
+commit 735ad0551cc5e2c310f00b31af1616a3f11ad194
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Sat Oct 22 14:21:01 2022 -0400
+
+    fixed warnings
+
+commit 7ccbd1cede35ef5a7355fd2caa3332417e52e381
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Sat Oct 22 14:17:09 2022 -0400
+
+    proper map key/val type code gen
+
+commit e2715553dabbf4808d49c681879a56456636b05b
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Sat Oct 22 14:16:08 2022 -0400
+
+    remove bounded maps
+
+commit c9d754ccaa75380ef98b5932715028511989d687
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Sat Oct 22 14:04:25 2022 -0400
+
+    fixed cdr op
+
+commit 6f8fce1c507d3ccb179c60d07c3e9b42961f447a
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Sat Oct 22 13:01:05 2022 -0400
+
+    removed support for bounded maps
+    
+    This was causing issues with the code generation.
+    A bounded map isn't supported with std::map
+
+commit bdc650de2ff16972c9b0e9b3e64280f224df08b0
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Sat Oct 22 00:53:58 2022 -0400
+
+    Almost working stream operators
+
+commit 4d1b3d3561b27ba53fd494bcbd2cda195939cda9
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Tue Oct 18 00:06:29 2022 -0400
+
+    fixed comments, removed unused
+
+commit 6ceaada7c54077c188b207ee69fe54906e3010b1
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Thu Oct 13 18:50:35 2022 -0400
+
+    cleaned up some generated code
+
+commit 37b7fba3f87d20f6d910ac3e6e6b16926082ab0b
+Merge: 36a3d4e1302 731905bb831
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Oct 13 17:07:24 2022 +0200
+
+    Merge branch 'master' into maps
+
+commit 36a3d4e130256ea2ddd27dcc088fcbf8cd56ef10
+Merge: 45dbc23a979 320486a7926
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Oct 5 08:36:48 2022 +0200
+
+    Merge branch 'master' into maps
+
+commit 45dbc23a979e3aa61244c28dd872ee3aa08e9c2d
+Author: Tyler <tyler@tylermayoff.com>
+Date:   Fri Sep 30 15:11:43 2022 -0400
+
+    Update TAO/TAO_IDL/include/ast_generator.h
+    
+    Co-authored-by: Adam Mitz <mitza@objectcomputing.com>
+
+commit cfc7584a04d2b7b8d69a82d01187fb6edb196c55
+Author: Tyler <tyler@tylermayoff.com>
+Date:   Fri Sep 30 15:11:38 2022 -0400
+
+    Update TAO/TAO_IDL/include/ast_visitor_reifying.h
+    
+    Co-authored-by: Adam Mitz <mitza@objectcomputing.com>
+
+commit 2d311a57982bdb874095f6c8a6103e5f7fcf1879
+Author: Tyler <tyler@tylermayoff.com>
+Date:   Fri Sep 30 15:11:27 2022 -0400
+
+    Update TAO/TAO_IDL/include/ast_visitor_tmpl_module_inst.h
+    
+    Co-authored-by: Adam Mitz <mitza@objectcomputing.com>
+
+commit 9b3324cf5a6478f7fe2fe88c6d6a3ca407245837
+Author: Tyler <tyler@tylermayoff.com>
+Date:   Fri Sep 30 15:11:15 2022 -0400
+
+    Update TAO/TAO_IDL/include/idl_global.h
+    
+    Co-authored-by: Adam Mitz <mitza@objectcomputing.com>
+
+commit 895416437e66423cc1ad3acab8a2534116982a8a
+Merge: 4a3d7ed6969 c8d4a23b971
+Author: Tyler <tyler@tylermayoff.com>
+Date:   Tue Sep 6 16:15:47 2022 -0400
+
+    Merge branch 'master' into maps
+
+commit 4a3d7ed69699463e0e70c43ff7ff76a0a182d265
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Fri Aug 19 21:38:38 2022 -0400
+
+    Typo
+
+commit 42df71b21849e0d07459e3a13741e72ee8b1fa12
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Sat Aug 13 14:59:46 2022 -0400
+
+    another switch
+
+commit f4789ac31459f9906a3718642ed4a669e04e7aa4
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Sat Aug 13 14:58:25 2022 -0400
+
+    Switched to std::snprintf
+
+commit f223c829718b10ee349cf69fc94c96be9913a8cb
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Sat Aug 13 13:30:28 2022 -0400
+
+    Fixed recursive type test
+
+commit d9477512c3b0256d67438426072895669097980b
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Sat Aug 13 13:30:16 2022 -0400
+
+    Fixed recursion check
+    
+    Checks both key and val types
+
+commit 4dfa44758f2aff38dc78e16bd67d27e2f6ba172f
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Sat Aug 13 13:29:54 2022 -0400
+
+    regenerated after changes
+
+commit 73e4e121359c621c4a444e89bb1186b836b9ec69
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Sat Aug 13 13:27:26 2022 -0400
+
+    comment
+
+commit 9caa9c9fb07c9f80f4677d11c18fb6979a9d6087
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Fri Aug 12 18:37:48 2022 -0400
+
+    fixed whitespace
+
+commit 025d75aed6a6324adf146a818cf72aa3492e2bea
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Fri Aug 12 18:27:29 2022 -0400
+
+    cleaned up old comments
+
+commit da15886b71026fe6128e0bb1ac475fab4234c13f
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Fri Aug 12 18:21:56 2022 -0400
+
+    cleaned test file
+
+commit 38dfb732b22f343624c6b1d10bfc1d6bc8b1247e
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Fri Aug 12 18:21:26 2022 -0400
+
+    Updated comments / author notes
+
+commit 3eac49912f4f0bc94433b320b239ab9de61c16c9
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Sat Aug 6 16:02:31 2022 -0400
+
+    Created recursive example that fails
+
+commit 0c31804e6831f11b0a9914547f44267900f8f17f
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Sat Aug 6 16:02:11 2022 -0400
+
+    typos
+
+commit e06ccf4fe34c1d94a90d14fb6c9a58db783b48bd
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Thu Aug 4 19:30:51 2022 -0400
+
+    Fixed issue with names
+
+commit f55d0fb063fdbd6bd8a9615a072ad86176730a24
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Fri Jul 22 19:13:01 2022 -0400
+
+    Started on some more testing
+
+commit 23700ef9db62646b71e97d76b00f0ee848ddf3c9
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Fri Jul 22 19:00:20 2022 -0400
+
+    fixed some things, switched to std::strcmp
+
+commit b6de86b715ca1bc937520347bdf7dae1a3760349
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Fri Jul 22 18:59:18 2022 -0400
+
+    Formatted
+
+commit 90f9feb17103d46cb8e99dc1a6836c93190d55c4
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Tue Jul 12 17:59:13 2022 -0400
+
+    Fixed error messaging in ifr_adding_visitor
+
+commit d1bf737bf7e59327c1a2d85c446cf5455357d86a
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Thu Jul 7 18:19:28 2022 -0400
+
+    Removed comments
+
+commit 508cb9548ea0fe1f778da16e3fe97c360cc5f795
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Thu Jul 7 18:10:45 2022 -0400
+
+    Fixed formatting
+
+commit 1cb036a913f9a9d4f15a3bbe40ec630e71aed7ce
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Thu Jul 7 18:09:07 2022 -0400
+
+    Fixed TAO_IDL_IDL_VERSION macro
+
+commit f8e8e5df074f35f726b067af6108b082629bef46
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Tue Jul 5 20:33:51 2022 -0400
+
+    cleaned up default destructors + using is_empty
+
+commit af034d4d6937736f200b3edd6dfe30ac925d7cbc
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Wed Jun 29 17:55:30 2022 -0400
+
+    Cleaned up some final comments and stubbed code and fixed formatting
+
+commit cbedd95c8be8b17c93497965c5cc2ff4747ff92c
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Mon Jun 27 18:47:17 2022 -0400
+
+    Fixed double free error
+
+commit 3b736f576c32e8f293b4b2f1a13a24fcbaa50253
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Mon Jun 27 18:47:07 2022 -0400
+
+    Cleaned up the maps test
+
+commit 51ad46b22123ae719b7c5a2b6689d0865c1fa5dd
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Sun Jun 26 16:13:26 2022 -0400
+
+    added ast_map.h to ast.h
+
+commit 51b71fde4e77c7e143a9c991f10f1e03a62758d0
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Sat Jun 25 12:00:37 2022 -0400
+
+    No more generated warnings and fixed the last codacy warning
+
+commit 922bc3f225150db7b42c6edb5312734f00fdadd8
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Fri Jun 24 18:24:56 2022 -0400
+
+    cleaned up some warnings
+
+commit 3af0ed44f1c72ef9528c1b0ef49c8ea51f56510e
+Merge: 4cff93034b4 94d132b1738
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Fri Jun 24 18:22:19 2022 -0400
+
+    Merge branch 'master' into maps
+
+commit 4cff93034b471109e12cda6dcbd8a49b6a23f6d9
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Fri Jun 24 16:29:08 2022 -0400
+
+    used the wrong vars for the check
+
+commit 11077a8a0b82fb60cc2ce5b3bc4fe78d6a17ffad
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Fri Jun 24 15:44:44 2022 -0400
+
+    Should silence the codacy check
+
+commit 94eecfccdba534a8912c370256436c27a868e400
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Fri Jun 24 09:44:51 2022 -0400
+
+    generating <map> include conditionally
+
+commit 53d65daa963da57b3d4236a9bd53ef17c8c0357b
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Fri Jun 24 08:28:52 2022 -0400
+
+    whitespace
+
+commit 95b7517fef11ec15a99f0d06f9bdf8eed96677f3
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Fri Jun 24 08:27:43 2022 -0400
+
+    whitespace
+
+commit e5df3047c579041b40a53ef846c3af913c024fa4
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Fri Jun 24 08:26:48 2022 -0400
+
+    Finished test
+
+commit 243b7382a6281afe90f388e327725ca954648647
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Fri Jun 24 08:14:00 2022 -0400
+
+    generating typedefs + maps with maps as values
+
+commit 0a2d7a4b1487a6f43de1895c0130232ebd61c546
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Thu Jun 23 22:58:20 2022 -0400
+
+    removed whitespace
+
+commit db20a3a206d57235fefdda93f05d5793ff29d712
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Thu Jun 23 22:42:18 2022 -0400
+
+    Fixed static analysis
+
+commit 2b7f3b4d0189f9cfc51053482831477f8d2043c5
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Thu Jun 23 22:36:20 2022 -0400
+
+    more cleanup of stubbed code
+
+commit 30848dd121daa761f099696810190acd55136e03
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Thu Jun 23 21:43:44 2022 -0400
+
+    code generation working properly
+    
+    Map with anonymous maps not working yet
+
+commit ba4c11669731439d6c1a05d7386e14b6aa3b6b8e
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Wed Jun 22 20:25:31 2022 -0400
+
+    Fixed fuzzing
+
+commit 26b45ba2ca881ea99e04c4ebf57ffeabceb5bc4e
+Merge: db2924baf25 587bacedd8b
+Author: Tyler <tyler@tylermayoff.com>
+Date:   Sun Jun 19 21:30:23 2022 -0400
+
+    Merge branch 'DOCGroup:master' into maps
+
+commit db2924baf25546bfb0572899e2d02082ecec4094
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Sun Jun 19 20:56:16 2022 -0400
+
+    Updated test, and stubbed stream operators
+
+commit 8a730f94b6b29b83ba9232946da5cf9904be1c7e
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Sat Jun 18 21:22:10 2022 -0400
+
+    Cleaned up CDR progress
+
+commit 7a016b6c84fac1b6daa39761824bb14be174f679
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Fri Jun 17 21:00:19 2022 -0400
+
+    Fixed fuzzing
+
+commit fb88c10cf5fc88479452feaeabe382107bf38e52
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Fri Jun 17 20:56:51 2022 -0400
+
+    remove whitespace
+
+commit 52939b71add7e674e2cc02868f3afd6b1f434944
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Fri Jun 17 20:53:29 2022 -0400
+
+    updated include
+
+commit ad0d7dc97e70c6c5d895ae31193247310769d4a5
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Fri Jun 17 20:15:22 2022 -0400
+
+    Cleaned up some be_map functions
+
+commit facd12c3ff0a5f995c164e904da0154b9fea133d
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Thu Jun 16 21:06:59 2022 -0400
+
+    Fixed fuzz
+
+commit 67ec6bad45bbb567f027e83e8df857ce27c1e97a
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Thu Jun 16 21:00:48 2022 -0400
+
+    Removed whitespaces
+
+commit 7b4251e54ba02e71e94bdb5cd1e3b76c55b7aa37
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Thu Jun 16 20:57:13 2022 -0400
+
+    maps almost being generated via code, still very messy
+
+commit cbe7b95a934e874542f693de5f332fbf5a81c406
+Merge: fd1f1baf024 21cb902c2e5
+Author: Tyler <tyler@tylermayoff.com>
+Date:   Tue Jun 14 19:29:24 2022 -0400
+
+    Merge branch 'DOCGroup:master' into maps
+
+commit fd1f1baf024f53c46e0ace99d8a3a54985c736dd
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Fri Jun 10 21:56:43 2022 -0400
+
+    Added maps in the idl_features
+
+commit e677ed0398342e04b5f493d5a9559ef8bc36df1a
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Wed Jun 8 18:30:26 2022 -0400
+
+    added map_head rules to parser, for proper null scope
+
+commit b4e0d4bfbde941b6cd663e9bd3ba4422a0670962
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Fri Jun 3 21:18:35 2022 -0400
+
+    Fixed typo
+
+commit 3cbb2c83862d48161883a11d34ea806fb98c0045
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Fri Jun 3 21:09:56 2022 -0400
+
+    fixed whitespace
+
+commit aa6f53e100ae532f37d67a70d493bd1e0209c08c
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Fri Jun 3 21:08:24 2022 -0400
+
+    removed whitespace
+
+commit 00099e694c5d415386a105afd98311a6d5387adc
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Fri Jun 3 21:04:24 2022 -0400
+
+    Updated idl for null scope
+
+commit 42c8ff76ccda538223e0664f65de4cd5fa42f287
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Fri Jun 3 20:14:48 2022 -0400
+
+    Updated bison, pushing null scope
+
+commit 17a670ad1d51f425f82dd3fbb4b9dafdb4437b32
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Fri Jun 3 20:13:34 2022 -0400
+
+    key_type + value_type code, and cleanup
+
+commit 06a095923fa6d722738eba9a5e721aff3b7c544d
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Thu Jun 2 20:33:17 2022 -0400
+
+    fixes based on the code review
+
+commit d6d2babde4b3ad5e1f94de008e7c778c8dfc07c8
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Wed Jun 1 21:21:08 2022 -0400
+
+    cleaned up
+
+commit 78a6345eb1a1a6d553322f804a481fb81d0a5172
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Wed May 25 21:35:42 2022 -0400
+
+    trailing whitespace
+
+commit f154d189c948af51e9089e9e7cb69cca62d19bc0
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Wed May 25 21:32:15 2022 -0400
+
+    removed whitespace
+
+commit 8a9729e0f28e5b8ead9cb0f4fae9c26481b981be
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Wed May 25 21:31:16 2022 -0400
+
+    Simplified bison
+
+commit 9c6922836a9ca536b2dd180b491c31e0bb02435d
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Wed May 25 20:48:45 2022 -0400
+
+    Adding bounds to bison
+
+commit 8a7f735e2452bcbfbec015d4b87167e85e735ab6
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Tue May 24 21:47:06 2022 -0400
+
+    ifr_visitor
+
+commit fc6f206a73db335d21f32ddae377b66677743425
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Mon May 23 12:07:47 2022 -0400
+
+    Removed blank lines
+
+commit 2686e77cd9b6d896e4bc7513c0b4d1bad6b85f3c
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Mon May 23 11:49:30 2022 -0400
+
+    Added functions for ast_visitor
+
+commit 6e51d1036f970fc20be9578743ce03ffaf9019bc
+Merge: f99f4601dd1 067a8513e10
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Sun May 22 22:55:22 2022 -0400
+
+    Merge branch 'maps' of github.com:tmayoff/ACE_TAO into maps
+
+commit f99f4601dd18911c36c816629098040ce6b7ec85
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Sun May 22 22:54:19 2022 -0400
+
+    More ast
+
+commit 067a8513e100e5e6c0721e707444aaa8d90aee2e
+Merge: 1ff3a930772 ef9ea413c1a
+Author: Tyler <tyler@tylermayoff.com>
+Date:   Sun May 22 22:49:16 2022 -0400
+
+    Merge branch 'DOCGroup:master' into maps
+
+commit 1ff3a9307721e6c453421a87802a718e7be762a1
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Sun May 22 22:47:03 2022 -0400
+
+    Updated flex and bison
+
+commit 6e4f5bbc7231decf920d46c962a7665e0032d9a5
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Sun May 22 22:44:31 2022 -0400
+
+    Added AST for map
+
+commit 3c34706b1bdc301d07d3f79d9d146b100e3f176d
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Sun May 22 22:39:38 2022 -0400
+
+    Fixed test.idl
+
+commit c9384eb98b90084998ed8df87557d6fb33c85faa
+Author: Tyler Mayoff <tyler@tylermayoff.com>
+Date:   Sat May 21 13:48:26 2022 -0400
+
+    Added a test for maps

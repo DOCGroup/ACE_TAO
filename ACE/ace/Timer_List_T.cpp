@@ -10,7 +10,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 
-
 // Default Constructor
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY>
@@ -21,14 +20,14 @@ ACE_Timer_List_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::ACE_Timer_List_
 }
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY>
-ACE_Timer_List_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::~ACE_Timer_List_Iterator_T (void)
+ACE_Timer_List_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::~ACE_Timer_List_Iterator_T ()
 {
 }
 
 // Positions the iterator at the node right after the dummy node
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY> void
-ACE_Timer_List_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::first (void)
+ACE_Timer_List_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::first ()
 {
   this->current_node_ = this->list_.get_first();
 }
@@ -36,7 +35,7 @@ ACE_Timer_List_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::first (void)
 // Positions the iterator at the next node in the Timer Queue
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY> void
-ACE_Timer_List_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::next (void)
+ACE_Timer_List_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::next ()
 {
   // Make sure that if we are at the end, we don't wrap around
   if (! this->isdone())
@@ -56,7 +55,7 @@ ACE_Timer_List_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::isdone () const
 // Returns the node at <position_> or 0 if we are at the end
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY> ACE_Timer_Node_T<TYPE> *
-ACE_Timer_List_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::item (void)
+ACE_Timer_List_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::item ()
 {
   if (! this->isdone())
     return this->current_node_;
@@ -69,7 +68,7 @@ ACE_Timer_List_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::item (void)
 // Return our instance of the iterator
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY> ACE_Timer_Queue_Iterator_T<TYPE> &
-ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::iter (void)
+ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::iter ()
 {
   this->iterator_->first ();
   return *this->iterator_;
@@ -120,7 +119,7 @@ ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::earliest_time () const
 // Remove all remaining items in the list.
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY>
-ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::~ACE_Timer_List_T (void)
+ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::~ACE_Timer_List_T ()
 {
   ACE_TRACE ("ACE_Timer_List_T::~ACE_Timer_List_T");
   ACE_MT (ACE_GUARD (ACE_LOCK, ace_mon, this->mutex_));
@@ -134,7 +133,7 @@ ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::~ACE_Timer_List_T (void)
 }
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY> int
-ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::close (void)
+ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::close ()
 {
   ACE_TRACE ("ACE_Timer_List_T::close");
   ACE_MT (ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->mutex_, -1));
@@ -397,7 +396,7 @@ ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::cancel_i (ACE_Timer_Node
 
 // Reads the first node on the list and returns it.
 template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY> ACE_Timer_Node_T<TYPE> *
-ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::get_first (void)
+ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::get_first ()
 {
   ACE_TRACE ("ACE_Timer_List_T::get_first");
   return this->get_first_i();
@@ -417,7 +416,7 @@ ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::get_first_i () const
 // Removes the first node on the list and returns it.
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY> ACE_Timer_Node_T<TYPE> *
-ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::remove_first (void)
+ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::remove_first ()
 {
   ACE_TRACE ("ACE_Timer_List_T::remove_first");
   ACE_Timer_Node_T<TYPE>* first = this->get_first();

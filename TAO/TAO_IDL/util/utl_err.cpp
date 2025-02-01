@@ -186,7 +186,7 @@ error_string (UTL_Error::ErrorCode c)
       return "Warning - spelling differs from IDL keyword only in case: ";
     case UTL_Error::EIDL_ANONYMOUS_ERROR:
       return "anonymous types require the IDL version to be 4 or later or must "
-        "be explictly enabled using -as";
+        "be explicitly enabled using -as";
     case UTL_Error::EIDL_ANONYMOUS_WARNING:
       return "anonymous type found";
     case UTL_Error::EIDL_ANONYMOUS_EXPLICIT_ERROR:
@@ -759,7 +759,7 @@ UTL_Error::error1 (UTL_Error::ErrorCode c,
 {
   idl_error_header (c);
   ACE_ERROR ((LM_ERROR, " - "));
-  d->name ()->dump (*ACE_DEFAULT_LOG_STREAM);;
+  d->name ()->dump (*ACE_DEFAULT_LOG_STREAM);
   ACE_ERROR ((LM_ERROR,
               "\n"));
 }
@@ -770,10 +770,10 @@ UTL_Error::error2 (UTL_Error::ErrorCode c,
                    AST_Decl *d2)
 {
   idl_error_header (c);
-  d1->name ()->dump (*ACE_DEFAULT_LOG_STREAM);;
+  d1->name ()->dump (*ACE_DEFAULT_LOG_STREAM);
   ACE_ERROR ((LM_ERROR,
               ", "));
-  d2->name ()->dump (*ACE_DEFAULT_LOG_STREAM);;
+  d2->name ()->dump (*ACE_DEFAULT_LOG_STREAM);
   ACE_ERROR ((LM_ERROR,
               "\n"));
 }
@@ -785,13 +785,13 @@ UTL_Error::error3 (UTL_Error::ErrorCode c,
                    AST_Decl *d3)
 {
   idl_error_header (c);
-  d1->name ()->dump (*ACE_DEFAULT_LOG_STREAM);;
+  d1->name ()->dump (*ACE_DEFAULT_LOG_STREAM);
   ACE_ERROR ((LM_ERROR,
               ", "));
-  d2->name ()->dump (*ACE_DEFAULT_LOG_STREAM);;
+  d2->name ()->dump (*ACE_DEFAULT_LOG_STREAM);
   ACE_ERROR ((LM_ERROR,
               ", "));
-  d3->name ()->dump (*ACE_DEFAULT_LOG_STREAM);;
+  d3->name ()->dump (*ACE_DEFAULT_LOG_STREAM);
   ACE_ERROR ((LM_ERROR,
               "\n"));
 }
@@ -878,7 +878,7 @@ UTL_Error::lookup_error (UTL_ScopedName *n)
 {
   if (idl_global->ignore_lookup_errors_) return;
   idl_error_header (EIDL_LOOKUP_ERROR);
-  n->dump (*ACE_DEFAULT_LOG_STREAM);;
+  n->dump (*ACE_DEFAULT_LOG_STREAM);
   ACE_ERROR ((LM_ERROR,
               "\n"));
 }
@@ -889,7 +889,7 @@ UTL_Error::lookup_warning (UTL_ScopedName *n)
   if (idl_global->print_warnings ())
     {
       idl_warning_header (EIDL_LOOKUP_ERROR);
-      n->dump (*ACE_DEFAULT_LOG_STREAM);;
+      n->dump (*ACE_DEFAULT_LOG_STREAM);
       ACE_ERROR ((LM_ERROR, "\n"));
     }
 }
@@ -962,7 +962,7 @@ UTL_Error::inheritance_error (UTL_ScopedName *n,
                               AST_Decl *d)
 {
   idl_error_header (EIDL_CANT_INHERIT);
-  n->dump (*ACE_DEFAULT_LOG_STREAM);;
+  n->dump (*ACE_DEFAULT_LOG_STREAM);
   ACE_ERROR ((LM_ERROR,
               " attempts to inherit from "));
   d->name ()->dump (*ACE_DEFAULT_LOG_STREAM);
@@ -996,7 +996,7 @@ UTL_Error::supports_error (UTL_ScopedName *n,
   n->dump (*ACE_DEFAULT_LOG_STREAM);
   ACE_ERROR ((LM_ERROR,
               " attempts to support "));
-  d->name ()->dump (*ACE_DEFAULT_LOG_STREAM);;
+  d->name ()->dump (*ACE_DEFAULT_LOG_STREAM);
   ACE_ERROR ((LM_ERROR,
               "\n"));
 }
@@ -1333,7 +1333,7 @@ UTL_Error::fwd_decl_lookup (AST_Interface *d,
   idl_error_header (EIDL_FWD_DECL_LOOKUP);
   ACE_ERROR ((LM_ERROR,
               "trying to look up "));
-  n->dump (*ACE_DEFAULT_LOG_STREAM);;
+  n->dump (*ACE_DEFAULT_LOG_STREAM);
   ACE_ERROR ((LM_ERROR,
               " in undefined forward declared interface "));
   d->local_name ()->dump (*ACE_DEFAULT_LOG_STREAM);
@@ -1367,7 +1367,7 @@ UTL_Error::not_a_type (AST_Decl *d)
     }
   else
     {
-      d->name ()->dump (*ACE_DEFAULT_LOG_STREAM);;
+      d->name ()->dump (*ACE_DEFAULT_LOG_STREAM);
     }
 
   ACE_ERROR ((LM_ERROR,
@@ -1596,10 +1596,10 @@ UTL_Error::invalid_annotation_param_error (
   bool is_builtin = decl->builtin ();
   idl_error_header (EIDL_ANNOTATION_PARAM_ERROR,
     static_cast<AST_Decl*>(appl));
-  invalid_id->dump (*ACE_DEFAULT_LOG_STREAM);;
+  invalid_id->dump (*ACE_DEFAULT_LOG_STREAM);
   ACE_ERROR ((LM_ERROR, ACE_TEXT (" is not a member of %Cannotation "),
     is_builtin ? "builtin " : ""));
-  decl->name ()->dump (*ACE_DEFAULT_LOG_STREAM);;
+  decl->name ()->dump (*ACE_DEFAULT_LOG_STREAM);
   if (!is_builtin)
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT (" declared in \"%C\" on line %d"),
@@ -1628,7 +1628,7 @@ UTL_Error::invalid_annotation_param_type (
         get_filename (member), get_lineno (member)));
     }
   ACE_ERROR ((LM_ERROR, ACE_TEXT (" can not be set to ")));
-  offending_value->dump (*ACE_DEFAULT_LOG_STREAM);;
+  offending_value->dump (*ACE_DEFAULT_LOG_STREAM);
   ACE_ERROR ((LM_ERROR, ACE_TEXT (" because the types are incompatible!\n")));
 }
 

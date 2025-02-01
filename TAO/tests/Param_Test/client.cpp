@@ -31,14 +31,14 @@ Param_Test_Client<T>::Param_Test_Client (CORBA::ORB_ptr orb,
 
 // destructor
 template <class T>
-Param_Test_Client<T>::~Param_Test_Client (void)
+Param_Test_Client<T>::~Param_Test_Client ()
 {
   delete this->test_object_;
 }
 
 // All the individual tests.
 template <class T> int
-Param_Test_Client<T>::run_sii_test (void)
+Param_Test_Client<T>::run_sii_test ()
 {
   CORBA::ULong i = 0;  // loop index
   Options *opt = OPTIONS::instance (); // get the options
@@ -98,7 +98,6 @@ Param_Test_Client<T>::run_sii_test (void)
         }
       catch (const CORBA::Exception& ex)
         {
-
           this->results_.error_count (this->results_.error_count () + 1);
           ex._tao_print_exception (opname);
           ACE_ERROR ((LM_ERROR,
@@ -106,7 +105,6 @@ Param_Test_Client<T>::run_sii_test (void)
                       "run_sii_test exception in iteration %d",
                       i));
           goto loop_around;
-
         }
 
       if (!this->test_object_->check_validity ())
@@ -146,7 +144,7 @@ Param_Test_Client<T>::run_sii_test (void)
 
 // use DII
 template <class T> int
-Param_Test_Client<T>::run_dii_test (void)
+Param_Test_Client<T>::run_dii_test ()
 {
   const char *opname = this->test_object_->opname ();
   Options *opt = OPTIONS::instance ();

@@ -20,7 +20,6 @@ namespace TAO
 {
   namespace Transport
   {
-
     // Forward decl
     class Stats;
 
@@ -77,7 +76,7 @@ namespace TAO
         /// reference counted, and should not be destroyed using
         /// delete() by anything other than the reference counting
         /// mechanism.
-        virtual ~Current_Impl (void);
+        virtual ~Current_Impl ();
 
       private:
         Current_Impl (const Current_Impl &) = delete;
@@ -90,7 +89,6 @@ namespace TAO
         // The ORB's TSS slot id for the Transport ptr
         size_t tss_slot_id_;
       };
-
   }
 
 }

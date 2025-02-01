@@ -18,7 +18,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_SSL_SOCK_Connector)
 
-ACE_SSL_SOCK_Connector::~ACE_SSL_SOCK_Connector (void)
+ACE_SSL_SOCK_Connector::~ACE_SSL_SOCK_Connector ()
 {
   ACE_TRACE ("ACE_SSL_SOCK_Connector::~ACE_SSL_SOCK_Connector");
 }
@@ -366,7 +366,6 @@ ACE_SSL_SOCK_Connector::complete (ACE_SSL_SOCK_Stream &new_stream,
     }
 
   return 0;
-
 }
 
 

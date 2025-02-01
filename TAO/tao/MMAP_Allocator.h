@@ -45,13 +45,13 @@ class TAO_MMAP_Allocator
 {
 public:
   /// Constructor
-  TAO_MMAP_Allocator (void);
+  TAO_MMAP_Allocator ();
 
   /// Destructor.
-  virtual ~TAO_MMAP_Allocator (void);
+  virtual ~TAO_MMAP_Allocator ();
 
   /// Return backing store handle.
-  ACE_HANDLE handle (void);
+  ACE_HANDLE handle ();
 
   /// Return offset in backing store file for memory address @a p. If @a p
   /// is not coming from this allocator -1 is returned.

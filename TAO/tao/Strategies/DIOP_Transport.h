@@ -67,9 +67,8 @@ protected:
    * These are implementations of template methods declared by TAO_Transport.
    */
   //@{
-
-  virtual ACE_Event_Handler * event_handler_i (void);
-  virtual TAO_Connection_Handler *connection_handler_i (void);
+  virtual ACE_Event_Handler * event_handler_i ();
+  virtual TAO_Connection_Handler *connection_handler_i ();
 
   /// Write the complete Message_Block chain to the connection.
   virtual ssize_t send (iovec *iov, int iovcnt,
@@ -81,7 +80,7 @@ protected:
                         size_t len,
                         const ACE_Time_Value *s = 0);
 
-  virtual int register_handler (void);
+  virtual int register_handler ();
 
   ///@}
 public:
@@ -100,7 +99,6 @@ public:
                             ACE_Time_Value *max_time_wait = 0);
 
 private:
-
   /// The connection service handler used for accessing lower layer
   /// communication protocols.
   TAO_DIOP_Connection_Handler *connection_handler_;

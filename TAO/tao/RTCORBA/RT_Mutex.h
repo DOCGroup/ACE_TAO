@@ -50,12 +50,11 @@ class TAO_RTCORBA_Export TAO_RT_Mutex
     public ::CORBA::LocalObject
 {
 public:
-
   /// Acquire the lock.
-  virtual void lock (void);
+  virtual void lock ();
 
   /// Release the lock.
-  virtual void unlock (void);
+  virtual void unlock ();
 
   /**
    * Acquire the lock, but only wait up to @a max_wait time.  Note
@@ -69,7 +68,7 @@ public:
   virtual const char *name () const;
 
   /// Destructor.
-  virtual ~TAO_RT_Mutex (void);
+  virtual ~TAO_RT_Mutex ();
 
 protected:
   /// Synchronization lock.
@@ -92,7 +91,6 @@ public:
   virtual const char *name () const;
 
 protected:
-
   /// My name.
   ACE_CString name_;
 };

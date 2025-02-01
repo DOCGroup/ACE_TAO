@@ -16,7 +16,7 @@ Client_Task::successful_calls () const
 }
 
 int
-Client_Task::svc (void)
+Client_Task::svc ()
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Starting client task\n"));
 
@@ -55,7 +55,7 @@ Client_Task::svc (void)
 }
 
 void
-Client_Task::validate_connection (void)
+Client_Task::validate_connection ()
 {
   try
     {
@@ -71,7 +71,7 @@ Client_Task::validate_connection (void)
 }
 
 int
-Client_Task::one_iteration (void)
+Client_Task::one_iteration ()
 {
   try
     {

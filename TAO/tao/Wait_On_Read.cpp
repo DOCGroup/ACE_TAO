@@ -15,11 +15,6 @@ TAO_Wait_On_Read::TAO_Wait_On_Read (TAO_Transport *transport)
 {
 }
 
-// Destructor.
-TAO_Wait_On_Read::~TAO_Wait_On_Read ()
-{
-}
-
 int
 TAO_Wait_On_Read::sending_request (TAO_ORB_Core *orb_core,
                                    TAO_Message_Semantics msg_semantics)

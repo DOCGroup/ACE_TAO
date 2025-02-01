@@ -83,7 +83,6 @@ public:
   void execute ();
 
 private:
-
   RtecEventChannelAdmin::ProxyPushSupplier_var proxy_;
 };
 
@@ -101,10 +100,8 @@ class TAO_RTEvent_Serv_Export TAO_ECG_UDP_Sender :
   public TAO_EC_Deactivated_Object
 {
 public:
-
   /// Initialization and termination methods.
   //@{
-
   /// Create a new TAO_ECG_UDP_Sender object.
   /// (Constructor access is restricted to insure that all
   /// TAO_ECG_UDP_Sender objects are heap-allocated.)
@@ -175,13 +172,11 @@ public:
   //@}
 
 protected:
-
   /// Constructor (protected).  Clients can create new
   /// TAO_ECG_UDP_Sender objects using the static create() method.
   TAO_ECG_UDP_Sender (CORBA::Boolean crc = 0);
 
 private:
-
   /// Helpers for the connect() method.
   //@{
   // Establishes connection to the Event Channel for the first time.

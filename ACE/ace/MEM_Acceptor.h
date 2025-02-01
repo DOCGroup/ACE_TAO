@@ -24,10 +24,7 @@
 
 #include "ace/MEM_Stream.h"
 #include "ace/MEM_Addr.h"
-
-#if !defined (ACE_HAS_WINCE)
 #include "ace/OS_QoS.h"
-#endif  // ACE_HAS_WINCE
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -53,10 +50,10 @@ class ACE_Export ACE_MEM_Acceptor : public ACE_SOCK_Acceptor
 {
 public:
   /// Default constructor.
-  ACE_MEM_Acceptor (void);
+  ACE_MEM_Acceptor ();
 
   /// Destructor.
-  ~ACE_MEM_Acceptor (void);
+  ~ACE_MEM_Acceptor ();
 
   /// Initiate a passive mode socket.
   ACE_MEM_Acceptor (const ACE_MEM_Addr &remote_sap,
@@ -151,14 +148,12 @@ protected:
               bool restart = true,
               bool reset_new_handle = false) const;
 
-#if !defined (ACE_HAS_WINCE)
   int accept (ACE_SOCK_Stream &new_stream,
               ACE_Accept_QoS_Params qos_params,
               ACE_Addr *remote_addr = 0,
               ACE_Time_Value *timeout = 0,
               bool restart = true,
               bool reset_new_handle = false) const;
-#endif  // ACE_HAS_WINCE
 
 private:
   /// The filename prefix of the created mmap files.  It should

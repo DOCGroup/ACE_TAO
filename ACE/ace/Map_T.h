@@ -32,7 +32,6 @@ template <class T>
 class ACE_Noop_Key_Generator
 {
 public:
-
   /// Functor method: generates a new key.
   int operator () (T &);
 };
@@ -685,7 +684,6 @@ public:
   IMPLEMENTATION &impl ();
 
 protected:
-
   /// All implementation details are forwarded to this class.
   IMPLEMENTATION implementation_;
 
@@ -716,7 +714,6 @@ template <class T, class VALUE>
 class ACE_Active_Map_Manager_Iterator_Adapter : public ACE_Iterator_Impl<T>
 {
 public:
-
   // = Traits.
   typedef typename ACE_Active_Map_Manager<VALUE>::iterator
           implementation;
@@ -746,7 +743,6 @@ public:
   ACE_Map_Iterator<ACE_Active_Map_Manager_Key, VALUE, ACE_Null_Mutex> &impl ();
 
 protected:
-
   /// All implementation details are forwarded to this class.
   ACE_Map_Iterator<ACE_Active_Map_Manager_Key, VALUE, ACE_Null_Mutex> implementation_;
 };
@@ -762,7 +758,6 @@ template <class T, class VALUE>
 class ACE_Active_Map_Manager_Reverse_Iterator_Adapter : public ACE_Reverse_Iterator_Impl<T>
 {
 public:
-
   // = Traits.
   typedef typename ACE_Active_Map_Manager<VALUE>::reverse_iterator
           implementation;
@@ -792,7 +787,6 @@ public:
   ACE_Map_Reverse_Iterator<ACE_Active_Map_Manager_Key, VALUE, ACE_Null_Mutex> &impl ();
 
 protected:
-
   /// All implementation details are forwarded to this class.
   ACE_Map_Reverse_Iterator<ACE_Active_Map_Manager_Key, VALUE, ACE_Null_Mutex> implementation_;
 };
@@ -966,7 +960,6 @@ public:
   KEY_ADAPTER &key_adapter ();
 
 protected:
-
   /// Find helper.
   virtual int find (const KEY &key,
                     expanded_value *&internal_value);
@@ -1008,7 +1001,6 @@ template <class T, class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS>
 class ACE_Hash_Map_Manager_Ex_Iterator_Adapter : public ACE_Iterator_Impl<T>
 {
 public:
-
   // = Traits.
   typedef typename ACE_Hash_Map_Manager_Ex<KEY, VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex>::iterator
           implementation;
@@ -1038,7 +1030,6 @@ public:
   ACE_Hash_Map_Iterator_Ex<KEY, VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex> &impl ();
 
 protected:
-
   /// All implementation details are forwarded to this class.
   ACE_Hash_Map_Iterator_Ex<KEY, VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex> implementation_;
 };
@@ -1054,7 +1045,6 @@ template <class T, class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS>
 class ACE_Hash_Map_Manager_Ex_Reverse_Iterator_Adapter : public ACE_Reverse_Iterator_Impl<T>
 {
 public:
-
   // = Traits.
   typedef typename ACE_Hash_Map_Manager_Ex<KEY, VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex>::reverse_iterator
           implementation;
@@ -1084,7 +1074,6 @@ public:
   ACE_Hash_Map_Reverse_Iterator_Ex<KEY, VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex> &impl ();
 
 protected:
-
   /// All implementation details are forwarded to this class.
   ACE_Hash_Map_Reverse_Iterator_Ex<KEY, VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex> implementation_;
 };
@@ -1257,7 +1246,6 @@ public:
   KEY_GENERATOR &key_generator ();
 
 protected:
-
   /// All implementation details are forwarded to this class.
   ACE_Hash_Map_Manager_Ex<KEY, VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex> implementation_;
 
@@ -1291,7 +1279,6 @@ template <class T, class KEY, class VALUE>
 class ACE_Map_Manager_Iterator_Adapter : public ACE_Iterator_Impl<T>
 {
 public:
-
   // = Traits.
   typedef typename ACE_Map_Manager<KEY, VALUE, ACE_Null_Mutex>::iterator
           implementation;
@@ -1321,7 +1308,6 @@ public:
   ACE_Map_Iterator<KEY, VALUE, ACE_Null_Mutex> &impl ();
 
 protected:
-
   /// All implementation details are forwarded to this class.
   ACE_Map_Iterator<KEY, VALUE, ACE_Null_Mutex> implementation_;
 };
@@ -1337,7 +1323,6 @@ template <class T, class KEY, class VALUE>
 class ACE_Map_Manager_Reverse_Iterator_Adapter : public ACE_Reverse_Iterator_Impl<T>
 {
 public:
-
   // = Traits.
   typedef typename ACE_Map_Manager<KEY, VALUE, ACE_Null_Mutex>::reverse_iterator
           implementation;
@@ -1367,7 +1352,6 @@ public:
   ACE_Map_Reverse_Iterator<KEY, VALUE, ACE_Null_Mutex> &impl ();
 
 protected:
-
   /// All implementation details are forwarded to this class.
   ACE_Map_Reverse_Iterator<KEY, VALUE, ACE_Null_Mutex> implementation_;
 };
@@ -1540,7 +1524,6 @@ public:
   KEY_GENERATOR &key_generator ();
 
 protected:
-
   /// All implementation details are forwarded to this class.
   ACE_Map_Manager<KEY, VALUE, ACE_Null_Mutex> implementation_;
 
@@ -1569,13 +1552,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #include "ace/Map_T.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Map_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Map_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_MAP_T_H */

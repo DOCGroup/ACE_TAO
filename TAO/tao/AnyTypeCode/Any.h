@@ -66,7 +66,7 @@ namespace CORBA
     typedef Any_var _var_type;
     typedef Any_out _out_type;
 
-    Any ();
+    Any () = default;
     Any (const Any &);
 
     ~Any ();
@@ -170,7 +170,7 @@ namespace CORBA
     CORBA::Boolean operator>>= (unsigned char&) const;
 
   private:
-    TAO::Any_Impl *impl_;
+    TAO::Any_Impl *impl_ {};
 
     friend class TAO_Marshal_Any;
   };
@@ -224,7 +224,7 @@ namespace CORBA
     Any *ptr () const;
   private:
     /// Holds the Any.
-    Any *ptr_;
+    Any *ptr_ {};
   };
 
   /**
@@ -280,11 +280,8 @@ operator<< (std::ostream &, const CORBA::Any &);
 
 #endif /* GEN_OSTREAM_OPS */
 
-#ifdef ACE_ANY_OPS_USE_NAMESPACE
 namespace CORBA
 {
-#endif
-
 /// Typesafe insertion.
 
 TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, CORBA::Short);
@@ -346,9 +343,7 @@ TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any &,
                                        std::wstring &);
 #endif
 
-#ifdef ACE_ANY_OPS_USE_NAMESPACE
 }
-#endif
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
@@ -358,11 +353,8 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-#ifdef ACE_ANY_OPS_USE_NAMESPACE
 namespace CORBA
 {
-#endif
-
 /// Copying versions of insertion operators for basic types
 /// must also be defined for CORBA::Any_var.
 
@@ -426,10 +418,7 @@ TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any_var &,
                                        CORBA::Any::to_wstring);
 TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any_var &,
                                        CORBA::Any::to_object);
-
-#ifdef ACE_ANY_OPS_USE_NAMESPACE
 }
-#endif
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

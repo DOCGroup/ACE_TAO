@@ -129,7 +129,6 @@ namespace ACE
     /// Object owned by this @c Value_Ptr.
     T * p_;
   };
-
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

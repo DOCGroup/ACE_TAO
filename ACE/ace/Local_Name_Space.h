@@ -39,7 +39,7 @@ class ACE_Export ACE_NS_String
 public:
   // = Initialization.
   /// Default "no-op" constructor.
-  ACE_NS_String (void);
+  ACE_NS_String ();
 
   /// Initialization method.
   ACE_NS_String (ACE_WCHAR_T *dst,
@@ -50,7 +50,7 @@ public:
   ACE_NS_String (const ACE_NS_WString &);
 
   /// Destructor
-  ~ACE_NS_String (void);
+  ~ACE_NS_String ();
 
   /// Converts an ACE_NS_String to fresh copy of an ACE_NS_WString;
   operator ACE_NS_WString () const;
@@ -98,7 +98,7 @@ class ACE_Export ACE_NS_Internal
 {
 public:
   /// No-op constructor.
-  ACE_NS_Internal (void);
+  ACE_NS_Internal ();
 
   /// Constructor.
   ACE_NS_Internal (ACE_NS_String &value, const char *type);
@@ -107,10 +107,10 @@ public:
   bool operator == (const ACE_NS_Internal &) const;
 
   /// Return value.
-  ACE_NS_String value (void);
+  ACE_NS_String value ();
 
   /// Return type.
-  const char *type (void);
+  const char *type ();
 
 private:
   /// Contains the value of the string.

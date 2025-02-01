@@ -1,8 +1,7 @@
 #include "Priority_Mapping.h"
 
 
-
-TAO_Notify_Tests_Priority_Mapping::~TAO_Notify_Tests_Priority_Mapping (void)
+TAO_Notify_Tests_Priority_Mapping::~TAO_Notify_Tests_Priority_Mapping ()
 {
 }
 

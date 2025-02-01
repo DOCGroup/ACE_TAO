@@ -45,10 +45,10 @@ class ACE_Asynch_Acceptor : public ACE_Handler
 {
 public:
   /// A do nothing constructor.
-  ACE_Asynch_Acceptor (void);
+  ACE_Asynch_Acceptor ();
 
   /// Virtual destruction
-  virtual ~ACE_Asynch_Acceptor (void);
+  virtual ~ACE_Asynch_Acceptor ();
 
   /**
    * @c open starts one or more asynchronous accept requests on a
@@ -138,7 +138,7 @@ public:
    * @note On Windows, only accept operations initiated by the calling thread
    *       are canceled.
    */
-  virtual int cancel (void);
+  virtual int cancel ();
 
   /**
    * Template method to validate peer before service is opened.
@@ -175,7 +175,7 @@ public:
    * @c open() method's @a reissue_accept argument. That value can also
    * be changed using the @c reissue_accept() method.
    */
-  virtual int should_reissue_accept (void);
+  virtual int should_reissue_accept ();
 
   //
   // These are low level tweaking methods
@@ -210,7 +210,6 @@ public:
   virtual void bytes_to_read (size_t new_value);
 
 protected:
-
   /// This is called when an outstanding accept completes.
   virtual void handle_accept (const ACE_Asynch_Accept::Result &result);
 
@@ -225,14 +224,18 @@ protected:
                       ACE_INET_Addr &local_address);
 
   /// Return the asynch accept object.
-  ACE_Asynch_Accept &asynch_accept (void);
+  ACE_Asynch_Accept &asynch_accept ();
 
   /**
    * This is the template method used to create new handler.
    * Subclasses must overwrite this method if a new handler creation
    * strategy is required.
    */
-  virtual HANDLER *make_handler (void);
+  virtual HANDLER *make_handler ();
+
+  /// Address family used to open this object. Obtained from @a address passed
+  /// to @c open().
+  int addr_family_;
 
 private:
   /// Handle used to listen for new connections.
@@ -253,21 +256,11 @@ private:
 
   /// Bytes to be read with the <accept> call.
   size_t bytes_to_read_;
-
-  /// Address family used to open this object. Obtained from @a address passed
-  /// to @c open().
-  int addr_family_;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Asynch_Acceptor.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Asynch_Acceptor.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #endif /* ACE_HAS_WIN32_OVERLAPPED_IO || ACE_HAS_AIO_CALLS */
 #include /**/ "ace/post.h"

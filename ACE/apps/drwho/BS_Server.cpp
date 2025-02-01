@@ -106,7 +106,7 @@ BS_Server::insert (const char *key_name, int max_len)
 // (because these entries weren't on the server machine. */
 
 Protocol_Record *
-BS_Server::get_next_entry (void)
+BS_Server::get_next_entry ()
 {
   for (Protocol_Record *prp = Binary_Search::get_next_entry ();
        prp != 0;

@@ -44,7 +44,7 @@
     </P>
     <P>
       The Build Czar is empowered to set up more builds on his own for his
-      convenience. This <a href="https://raw.githubusercontent.com/DOCGroup/autobuild/master/README">
+      convenience. This <a href="https://github.com/DOCGroup/autobuild/blob/master/README.md">
         page </a>has a step by step instructions on how to do that.
     </P>
     <P>
@@ -286,7 +286,7 @@
         rm -rf doxygen<br>
         mkdir doxygen<br>
         cd doxygen<br>
-        git clone https://github.com/DOCGroup/ACE_TAO.git --depth 1 --branch ACE+TAO-7_0_5 ACE_TAO<br>
+        git clone https://github.com/DOCGroup/ACE_TAO.git --depth 1 --branch ACE+TAO-7_0_9 ACE_TAO<br>
         cd ACE_TAO<br>
         export ACE_ROOT=$PWD/ACE<br>
         export TAO_ROOT=$PWD/TAO<br>
@@ -330,12 +330,12 @@
         scp bczar@download.dre.vanderbilt.edu:/export/www/download.dre/ACE+TAO-distribution/ACE-html.tar.bz2 .<br>
         bunzip2 ACE-html.tar.bz2;tar -xvf ACE-html.tar<br>
         cd ..<br>
-        mkdir 7.0.5<br>
-        cd 7.0.5<br>
+        mkdir 7.0.8<br>
+        cd 7.0.8<br>
         mv ../tmp/html .<br>
         cd ..<br>
         rm Micro<br>
-        ln -s 7.0.5/html Micro<br>
+        ln -s 7.0.8/html Micro<br>
         rm -rf tmp<br>
         </code>
 
@@ -390,14 +390,7 @@
         Make a new pull request to Microsoft vcpkg to update ACE to the new release, see https://github.com/Microsoft/vcpkg/tree/master/ports/ace
       </li>
       <li>
-        Make a new pull request to conda-forge to update ACE to the new release, see https://github.com/conda-forge/ace-feedstock/tree/master/recipe
-      </li>
-      <li>
-        Make a new pull request to OpenDDS to update the configure script to use the new release, see https://github.com/objectcomputing/OpenDDS/blob/master/configure
-      </li>
-      <li>
         Mail the approved release announcement out to, at minimum the following:
-        <tt>ciao-users@list.isis.vanderbilt.edu</tt>, <tt>ciao-announce@list.isis.vanderbilt.edu</tt>,
         <tt>tao-users@list.isis.vanderbilt.edu</tt>, <tt>tao-announce@list.isis.vanderbilt.edu</tt>,
         <tt>ace-users@list.isis.vanderbilt.edu</tt>, <tt>ace-announce@list.isis.vanderbilt.edu</tt>.
         Do this as yourself (not as bugzilla). <b>N.B.</b>

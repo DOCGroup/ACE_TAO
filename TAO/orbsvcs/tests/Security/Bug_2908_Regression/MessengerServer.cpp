@@ -42,8 +42,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       return 1;
 
     //Get reference to Root POA
-    CORBA::Object_var POA_obj = orb->resolve_initial_references( "RootPOA" );
-    PortableServer::POA_var poa = PortableServer::POA::_narrow( POA_obj.in() );
+    CORBA::Object_var POA_obj = orb->resolve_initial_references( "RootPOA");
+    PortableServer::POA_var poa = PortableServer::POA::_narrow( POA_obj.in());
 
     // Activate POA Manager
     PortableServer::POAManager_var mgr = poa->the_POAManager();

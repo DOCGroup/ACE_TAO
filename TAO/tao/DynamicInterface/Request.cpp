@@ -104,7 +104,7 @@ CORBA::Request::Request (CORBA::Object_ptr obj,
            CORBA::NamedValue);
 }
 
-CORBA::Request::~Request (void)
+CORBA::Request::~Request ()
 {
   ACE_ASSERT (refcount_ == 0);
 
@@ -123,7 +123,7 @@ CORBA::Request::~Request (void)
 // flow in some exotic situations.
 
 void
-CORBA::Request::invoke (void)
+CORBA::Request::invoke ()
 {
   TAO::NamedValue_Argument _tao_retval (this->result_);
 
@@ -161,7 +161,7 @@ CORBA::Request::invoke (void)
 }
 
 void
-CORBA::Request::send_oneway (void)
+CORBA::Request::send_oneway ()
 {
   TAO::NamedValue_Argument _tao_retval (this->result_);
 
@@ -188,7 +188,7 @@ CORBA::Request::send_oneway (void)
 }
 
 void
-CORBA::Request::send_deferred (void)
+CORBA::Request::send_deferred ()
 {
   {
     ACE_GUARD (TAO_SYNCH_MUTEX,
@@ -296,7 +296,7 @@ CORBA::Request::_tao_reply_stub (TAO_InputCDR &_tao_in,
 #endif /* TAO_HAS_AMI */
 
 void
-CORBA::Request::get_response (void)
+CORBA::Request::get_response ()
 {
   while (!this->response_received_)
     {
@@ -310,7 +310,7 @@ CORBA::Request::get_response (void)
 }
 
 CORBA::Boolean
-CORBA::Request::poll_response (void)
+CORBA::Request::poll_response ()
 {
   CORBA::Boolean response_received = false;
 

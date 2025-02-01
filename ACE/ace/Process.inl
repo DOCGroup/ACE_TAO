@@ -28,7 +28,7 @@ ACE_Process_Options::use_unicode_environment () const
 #if defined (ACE_WIN32)
 
 ACE_INLINE PROCESS_INFORMATION
-ACE_Process::process_info (void)
+ACE_Process::process_info ()
 {
   return process_info_;
 }
@@ -115,7 +115,7 @@ ACE_Process::exit_code (ACE_exitcode code)
 ACE_INLINE u_long
 ACE_Process_Options::creation_flags () const
 {
-#if defined (ACE_USES_WCHAR) && defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
+#if defined (ACE_USES_WCHAR) && defined (ACE_WIN32)
   return creation_flags_ | CREATE_UNICODE_ENVIRONMENT;
 #else
   return creation_flags_;
@@ -168,55 +168,35 @@ ACE_Process_Options::avoid_zombies (int avoid_zombies)
 #if defined (ACE_WIN32)
 
 ACE_INLINE ACE_TEXT_STARTUPINFO *
-ACE_Process_Options::startup_info (void)
+ACE_Process_Options::startup_info ()
 {
-#if !defined (ACE_HAS_WINCE)
   return &startup_info_;
-#else
-  return 0;
-#endif /* !ACE_HAS_WINCE */
 }
 
 ACE_INLINE LPSECURITY_ATTRIBUTES
 ACE_Process_Options::get_process_attributes () const
 {
-#if !defined (ACE_HAS_WINCE)
   return process_attributes_;
-#else
-  return 0;
-#endif /* !ACE_HAS_WINCE */
 }
 
 ACE_INLINE LPSECURITY_ATTRIBUTES
-ACE_Process_Options::set_process_attributes (void)
+ACE_Process_Options::set_process_attributes ()
 {
-#if !defined (ACE_HAS_WINCE)
   process_attributes_ = &security_buf1_;
   return process_attributes_;
-#else
-  return 0;
-#endif /* !ACE_HAS_WINCE */
 }
 
 ACE_INLINE LPSECURITY_ATTRIBUTES
 ACE_Process_Options::get_thread_attributes () const
 {
-#if !defined (ACE_HAS_WINCE)
   return thread_attributes_;
-#else
-  return 0;
-#endif /* !ACE_HAS_WINCE */
 }
 
 ACE_INLINE LPSECURITY_ATTRIBUTES
-ACE_Process_Options::set_thread_attributes (void)
+ACE_Process_Options::set_thread_attributes ()
 {
-#if !defined (ACE_HAS_WINCE)
   thread_attributes_ = &security_buf2_;
   return thread_attributes_;
-#else
-  return 0;
-#endif /* !ACE_HAS_WINCE */
 }
 
 ACE_INLINE HANDLE ACE_Process_Options::get_user_token () const
@@ -291,13 +271,13 @@ ACE_Process_Options::seteuid (uid_t id)
 }
 
 ACE_INLINE void
-ACE_Process_Options::setrgid (uid_t id)
+ACE_Process_Options::setrgid (gid_t id)
 {
   this->rgid_ = id;
 }
 
 ACE_INLINE void
-ACE_Process_Options::setegid (uid_t id)
+ACE_Process_Options::setegid (gid_t id)
 {
   this->egid_ = id;
 }
@@ -314,13 +294,13 @@ ACE_Process_Options::geteuid () const
   return this->euid_;
 }
 
-ACE_INLINE uid_t
+ACE_INLINE gid_t
 ACE_Process_Options::getrgid () const
 {
   return this->rgid_;
 }
 
-ACE_INLINE uid_t
+ACE_INLINE gid_t
 ACE_Process_Options::getegid () const
 {
   return this->egid_;
@@ -338,35 +318,23 @@ ACE_Process_Options::command_line_buf (size_t *max_lenp)
 ACE_INLINE ACE_TCHAR *
 ACE_Process_Options::working_directory ()
 {
-#if !defined (ACE_HAS_WINCE)
   if (working_directory_[0] == '\0')
     return 0;
   else
     return working_directory_;
-#else
-  return 0;
-#endif /* !ACE_HAS_WINCE */
 }
 
 ACE_INLINE void
 ACE_Process_Options::working_directory (const char *wd)
 {
-#if !defined(ACE_HAS_WINCE)
   ACE_OS::strcpy (working_directory_, ACE_TEXT_CHAR_TO_TCHAR (wd));
-#else
-  ACE_UNUSED_ARG (wd);
-#endif /* !ACE_HAS_WINCE */
 }
 
 #if defined (ACE_HAS_WCHAR)
 ACE_INLINE void
 ACE_Process_Options::working_directory (const wchar_t *wd)
 {
-#if !defined(ACE_HAS_WINCE)
   ACE_OS::strcpy (working_directory_, ACE_TEXT_WCHAR_TO_TCHAR (wd));
-#else
-  ACE_UNUSED_ARG (wd);
-#endif /* !ACE_HAS_WINCE */
 }
 #endif /* ACE_HAS_WCHAR */
 
@@ -384,39 +352,5 @@ ACE_Process_Options::process_name ()
 
   return this->process_name_;
 }
-
-#if defined (ACE_HAS_WINCE)
-// Here is a collection of inline functions which are defined only
-// under CE.  They are not empty on most other platforms.
-
-ACE_INLINE int
-ACE_Process_Options::setenv (ACE_TCHAR * /* envp */[])
-{
-  return -1;
-}
-
-ACE_INLINE int
-ACE_Process_Options::setenv (const ACE_TCHAR * /* format */, ...)
-{
-  return -1;
-}
-
-ACE_INLINE int
-ACE_Process_Options::setenv (const ACE_TCHAR * /* variable_name */,
-                             const ACE_TCHAR * /* format */,
-                             ...)
-{
-  return -1;
-}
-
-ACE_INLINE int
-ACE_Process_Options::set_handles (ACE_HANDLE /* std_in */,
-                                  ACE_HANDLE /* std_out */,
-                                  ACE_HANDLE /* std_err */)
-{
-  return -1;
-}
-
-#endif /* ACE_HAS_WINCE */
 
 ACE_END_VERSIONED_NAMESPACE_DECL

@@ -19,7 +19,7 @@ public:
   // = The skeleton methods
   virtual void more_data (const Test::Payload &payload);
 
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
   int get_count () const;
 

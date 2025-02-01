@@ -43,7 +43,6 @@ TAO_HTTP_Client::read (ACE_Message_Block *mb)
     }
 
   return ACE_Utils::truncate_cast<int> (HTTP_reader.byte_count ());
-
 }
 
 int

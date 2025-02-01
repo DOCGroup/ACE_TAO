@@ -19,7 +19,6 @@
 class Deadlock : public ACE_Task_Base
 {
 public:
-
   int svc () override;
 
   int handle_timeout (const ACE_Time_Value &current_time,
@@ -55,7 +54,6 @@ Deadlock::handle_timeout (const ACE_Time_Value &,
 class Event_Handler : public ACE_Event_Handler
 {
 public:
-
   Event_Handler (Deadlock &deadlock);
 
   int handle_timeout (const ACE_Time_Value &current_time,

@@ -114,8 +114,8 @@ class TAO_AV_Export TAO_AV_RTCP_Flow_Factory
   :public TAO_AV_Flow_Protocol_Factory
 {
 public:
-  TAO_AV_RTCP_Flow_Factory (void);
-  virtual ~TAO_AV_RTCP_Flow_Factory (void);
+  TAO_AV_RTCP_Flow_Factory ();
+  virtual ~TAO_AV_RTCP_Flow_Factory ();
   virtual int init (int argc, ACE_TCHAR *argv[]);
   virtual int match_protocol (const char *flow_string);
   virtual TAO_AV_Protocol_Object* make_protocol_object (TAO_FlowSpec_Entry *entry,
@@ -134,16 +134,16 @@ class TAO_AV_Export TAO_AV_RTCP_Callback : public TAO_AV_Callback
 {
 public:
   /// RTCP callback.
-  TAO_AV_RTCP_Callback (void);
+  TAO_AV_RTCP_Callback ();
 
   /// virtual destructor.
-  virtual ~TAO_AV_RTCP_Callback (void);
+  virtual ~TAO_AV_RTCP_Callback ();
 
   /// Called during Streamctrl->start.
-  virtual int handle_start (void);
+  virtual int handle_start ();
 
   /// Called during Streamctrl->stop.
-  virtual int handle_stop (void);
+  virtual int handle_stop ();
 
   /// Called during timeout for Flow Producers.
   virtual int handle_timeout (void *arg);
@@ -159,7 +159,7 @@ public:
 
   /// Called during Streamctrl->destroy i.e tear_down  of the stream
   /// @@coryan:Call it handle_destroy or handle_close.
-  virtual int handle_destroy (void);
+  virtual int handle_destroy ();
 
   /// Called to get the timeout. If tv is 0 then the framework stop
   /// calling this.
@@ -168,7 +168,7 @@ public:
 
   int send_report(int bye);
   void schedule (int ms);
-  TAO_AV_RTP_State *state (void);
+  TAO_AV_RTP_State *state ();
   void ts_offset (ACE_UINT32 offset);
 
 protected:
@@ -199,9 +199,9 @@ public:
                       TAO_AV_Transport *transport = 0);
 
   /// Destructor
-  virtual ~TAO_AV_RTCP_Object (void);
+  virtual ~TAO_AV_RTCP_Object ();
 
-  virtual int handle_input (void);
+  virtual int handle_input ();
   virtual int handle_control_input (ACE_Message_Block *frame,
                                     const ACE_Addr &peer_address);
   virtual int handle_control_output (ACE_Message_Block *frame);
@@ -210,8 +210,8 @@ public:
   virtual int set_policies (const TAO_AV_PolicyList &policy_list);
 
   /// start/stop the flow.
-  virtual int start (void);
-  virtual int stop (void);
+  virtual int start ();
+  virtual int stop ();
 
   /// send a data frame.
   virtual int send_frame (ACE_Message_Block *frame,
@@ -226,10 +226,10 @@ public:
                           size_t len);
 
   /// end the stream.
-  virtual int destroy (void);
+  virtual int destroy ();
 
   void ssrc (ACE_UINT32 ssrc) {this->ssrc_ = ssrc; }
-  ACE_UINT32 ssrc (void) { return this->ssrc_; }
+  ACE_UINT32 ssrc () { return this->ssrc_; }
 
   void ts_offset (ACE_UINT32 ts_offset);
 

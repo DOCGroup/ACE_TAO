@@ -95,7 +95,7 @@ be_scope::decl ()
     case AST_Decl::NT_finder:
       return dynamic_cast<be_finder*> (this);
     default:
-      return (be_decl *)nullptr;
+      return nullptr;
     }
 }
 

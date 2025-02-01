@@ -5,7 +5,6 @@
 #include "ace/OS_NS_string.h"
 
 
-
 int
 Options::parse_args (int argc, ACE_TCHAR *argv[])
 {
@@ -173,7 +172,7 @@ Options::visitor (URL_Visitor *v)
 }
 
 int
-Options::handle_limit (void)
+Options::handle_limit ()
 {
   return this->handle_limit_;
 }

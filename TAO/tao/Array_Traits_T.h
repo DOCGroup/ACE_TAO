@@ -18,7 +18,6 @@ namespace TAO
 {
 namespace details
 {
-
 template <typename T_forany>
 struct array_traits
 {
@@ -87,7 +86,6 @@ struct array_traits
     copy_range(begin, end, dst);
   }
 };
-
 } // namespace details
 } // namespace CORBA
 

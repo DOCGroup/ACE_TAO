@@ -101,8 +101,7 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
 
   *os << be_nl_2;
 
-  *os << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (os);
 
   os->gen_ifdef_macro (node->flat_name ());
 
@@ -206,7 +205,7 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
 
       *os << be_nl_2
           << "void" << be_nl
-          << node->name () << "::length ( ::CORBA::ULong length)"
+          << node->name () << "::length (::CORBA::ULong length)"
           << be_nl
           << "{" << be_idt_nl
           << "this->resize (length);" << be_uidt_nl

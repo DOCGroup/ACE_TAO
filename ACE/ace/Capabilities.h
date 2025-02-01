@@ -40,7 +40,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_CapEntry
 {
 public:
-   virtual ~ACE_CapEntry (void);
+   virtual ~ACE_CapEntry () = default;
 
 protected:
   enum
@@ -135,10 +135,10 @@ public:
   typedef  ACE_Hash_Map_Manager_Ex<ACE_TString, ACE_CapEntry *, ACE_Hash<ACE_TString>, ACE_Equal_To<ACE_TString>, ACE_Null_Mutex> CAPABILITIES_MAP;
 
   /// The Constructor
-  ACE_Capabilities (void);
+  ACE_Capabilities ();
 
   /// The Destructor
-  ~ACE_Capabilities(void);
+  ~ACE_Capabilities();
 
 public:
   /// Get a string entry.
@@ -172,7 +172,7 @@ protected:
   int is_entry (const ACE_TCHAR *name, const ACE_TCHAR *line);
 
   /// Reset the set of capabilities
-  void resetcaps (void);
+  void resetcaps ();
 
 private:
   /// This is the set of ACE_CapEntry.

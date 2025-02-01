@@ -144,12 +144,12 @@ public:
   /**
    * Destroy timer queue. Cancels all timers.
    */
-  virtual int close (void);
+  virtual int close ();
 
   /// Run the <functor> for all timers whose values are <=
   /// <ACE_OS::gettimeofday>.  Also accounts for <timer_skew>.  Returns
   /// the number of timers canceled.
-  virtual int expire (void);
+  virtual int expire ();
 
   // Run the <functor> for all timers whose values are <= @a current_time.
   // This does not account for <timer_skew>.  Returns the number of
@@ -213,13 +213,7 @@ private:
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Timer_Wheel_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Timer_Wheel_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_TIMER_WHEEL_T_H */

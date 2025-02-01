@@ -238,7 +238,7 @@ push_structured_event (StructuredEvent const& e)
 
 
 void
-Gate::disconnect_structured_push_consumer (void)
+Gate::disconnect_structured_push_consumer ()
 {
   // We don't care.
 }

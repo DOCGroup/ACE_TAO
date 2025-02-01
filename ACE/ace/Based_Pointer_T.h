@@ -59,7 +59,7 @@ public:
    *    based-pointer uses its address as an offset to it's base
    *    address 0.
    */
-  ACE_Based_Pointer_Basic (void);
+  ACE_Based_Pointer_Basic ();
 
   /**
    * Initialize this object using the @a initial pointer.  This
@@ -84,48 +84,37 @@ public:
    */
   ACE_Based_Pointer_Basic (CONCRETE *initial);
 
-  /// Copy constructor.
-  ACE_Based_Pointer_Basic (const ACE_Based_Pointer_Basic<CONCRETE> &);
+  ACE_Based_Pointer_Basic (const ACE_Based_Pointer_Basic &) = delete;
+  ACE_Based_Pointer_Basic (ACE_Based_Pointer_Basic &&) = delete;
 
   /// Constructor for know base address. @a o is only used to
   /// resolve overload ambiguity.
   ACE_Based_Pointer_Basic (const void *base_addr, int o);
 
-  /// Pseudo-assignment operator.
-  void operator = (CONCRETE *from);
+  void operator= (CONCRETE *from);
 
-  /// Pseudo-assignment operator.
-  void operator = (const ACE_Based_Pointer_Basic<CONCRETE> &);
+  void operator= (const ACE_Based_Pointer_Basic &);
 
-  /// Dereference operator.
   CONCRETE operator * () const;
 
-  /// Less than operator.
-  bool operator < (const ACE_Based_Pointer_Basic<CONCRETE> &) const;
+  bool operator< (const ACE_Based_Pointer_Basic &) const;
 
-  /// Less than or equal operator.
-  bool operator <= (const ACE_Based_Pointer_Basic<CONCRETE> &) const;
+  bool operator<= (const ACE_Based_Pointer_Basic &) const;
 
-  /// Greater than operator.
-  bool operator > (const ACE_Based_Pointer_Basic<CONCRETE> &) const;
+  bool operator> (const ACE_Based_Pointer_Basic &) const;
 
-  /// Greater than or equal operator.
-  bool operator >= (const ACE_Based_Pointer_Basic<CONCRETE> &) const;
+  bool operator>= (const ACE_Based_Pointer_Basic &) const;
 
-  /// Equality operator.
-  bool operator == (const ACE_Based_Pointer_Basic<CONCRETE> &) const;
+  bool operator== (const ACE_Based_Pointer_Basic &) const;
 
-  /// Inequality operator.
-  bool operator != (const ACE_Based_Pointer_Basic<CONCRETE> &) const;
+  bool operator!= (const ACE_Based_Pointer_Basic &) const;
 
-  /// Subscript operator.
-  CONCRETE operator [](int index) const;
+  CONCRETE operator[] (int index) const;
 
-  /// Increment operator.
   void operator+= (int index);
 
   /// Returns the underlying memory address of the smart pointer.
-  operator CONCRETE *() const;
+  operator CONCRETE * () const;
 
   /// Returns the underlying memory address of the smart pointer.
   CONCRETE *addr () const;
@@ -159,7 +148,7 @@ class ACE_Based_Pointer : public ACE_Based_Pointer_Basic<CONCRETE>
 public:
   /// Constructor.  See constructor for ACE_Based_Pointer_Basic for
   /// details.
-  ACE_Based_Pointer (void);
+  ACE_Based_Pointer ();
 
   /// Initialize this object using the <initial> pointer.  See
   /// constructor for ACE_Based_Pointer_Basic for details.
@@ -170,17 +159,15 @@ public:
   /// otherwise ignored.
   ACE_Based_Pointer (const void *base_addr, int dummy);
 
-  /// Copy constructor (not implemented yet).
-  ACE_Based_Pointer (const ACE_Based_Pointer<CONCRETE> &);
+  ACE_Based_Pointer (const ACE_Based_Pointer &) = delete;
+  ACE_Based_Pointer (ACE_Based_Pointer &&) = delete;
 
-  /// Assignment operator.
-  void operator = (const ACE_Based_Pointer<CONCRETE> &);
+  void operator= (const ACE_Based_Pointer &);
 
   /// Pseudo-assignment operator.
   void operator = (CONCRETE *from);
 
-  /// The C++ "delegation operator".
-  CONCRETE *operator-> (void);
+  CONCRETE *operator-> ();
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
@@ -189,13 +176,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #include "ace/Based_Pointer_T.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Based_Pointer_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Based_Pointer_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 

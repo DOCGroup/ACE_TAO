@@ -86,8 +86,7 @@ int be_visitor_array_cs::visit_array (be_array *node)
         }
     }
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   // dup method.
   *os << fname << "_slice *" << be_nl
@@ -169,7 +168,7 @@ int be_visitor_array_cs::visit_array (be_array *node)
       if (expr->ev ()->et == AST_Expression::EV_ulong)
         {
           // Generate a loop for each dimension.
-          *os << "for ( ::CORBA::ULong i" << i << " = 0; i" << i << " < "
+          *os << "for (::CORBA::ULong i" << i << " = 0; i" << i << " < "
               << expr->ev ()->u.ulval << "; ++i" << i << ")" << be_idt_nl
               << "{" << be_idt_nl;
         }

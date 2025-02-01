@@ -400,13 +400,6 @@ ACE_OS::recvfrom (ACE_HANDLE handle,
     }
   else
     {
-#  if defined (ACE_HAS_PHARLAP)
-      // Pharlap ETS (at least to v13) returns a legit address but doesn't
-      // include the sin_zero[8] bytes in the count. Correct for this here.
-      if (addrlen != 0 && addr != 0 &&
-          *addrlen == 8 && addr->sa_family == AF_INET)
-        *addrlen = sizeof(sockaddr_in);
-#  endif /* ACE_HAS_PHARLAP */
       return result;
     }
 #else /* non Win32 */
@@ -1062,8 +1055,10 @@ ACE_OS::if_freenameindex (struct if_nameindex *ptr)
 #ifdef ACE_LACKS_IF_NAMEINDEX
   ACE_UNUSED_ARG (ptr);
 #else
-  if (ptr != 0)
+  if (ptr)
+  {
     ::if_freenameindex (ptr);
+  }
 #endif /* ACE_LACKS_IF_NAMEINDEX */
 }
 

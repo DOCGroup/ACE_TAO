@@ -17,7 +17,6 @@ TAO_LogNotification::~TAO_LogNotification ()
 void
 TAO_LogNotification::object_creation (DsLogAdmin::LogId id)
 {
-
   CORBA::Any any;
   DsLogNotification::ObjectCreation event;
 

@@ -9,7 +9,6 @@ const ACE_TCHAR* filename = ACE_TEXT("test.ior");
 class test_impl : public POA_test
 {
 public:
-
   test_impl (CORBA::ORB_ptr orb,
              RTScheduling::Current_ptr current)
     : orb_ (orb),
@@ -40,7 +39,7 @@ public:
   }
 
   //FUZZ: disable check_for_lack_ACE_OS
-  virtual void shutdown (void)
+  virtual void shutdown ()
   {
     orb_->shutdown ();
   }

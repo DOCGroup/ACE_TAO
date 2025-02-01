@@ -123,40 +123,13 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * @param ptr the base pointer
  * @param alignment the required alignment
  */
-#if defined (ACE_OPENVMS) && (!defined (__INITIAL_POINTER_SIZE) || (__INITIAL_POINTER_SIZE < 64))
-inline unsigned int
-ACE_align_binary (unsigned int ptr, unsigned int alignment)
-{
-  unsigned int const tmp = alignment - 1;
-  return (ptr + tmp) & (~tmp);
-}
-#else
 inline uintptr_t
 ACE_align_binary (uintptr_t ptr, uintptr_t alignment)
 {
   uintptr_t const tmp = alignment - 1;
   return (ptr + tmp) & (~tmp);
 }
-#endif
 
-#if defined (ACE_OPENVMS) && (!defined (__INITIAL_POINTER_SIZE) || (__INITIAL_POINTER_SIZE < 64))
-/// Return the next address aligned to a required boundary
-inline char *
-ACE_ptr_align_binary (char const * ptr, unsigned int alignment)
-{
-  return
-    reinterpret_cast<char *> (
-      ACE_align_binary (reinterpret_cast<unsigned int> (ptr), alignment));
-}
-
-/// Return the next address aligned to a required boundary
-inline char *
-ACE_ptr_align_binary (unsigned char const * ptr, unsigned int alignment)
-{
-  return
-    ACE_ptr_align_binary (reinterpret_cast<char const *> (ptr), alignment);
-}
-#else
 /// Return the next address aligned to a required boundary
 inline char *
 ACE_ptr_align_binary (char const * ptr, uintptr_t alignment)
@@ -173,7 +146,6 @@ ACE_ptr_align_binary (unsigned char const * ptr, uintptr_t alignment)
   return
     ACE_ptr_align_binary (reinterpret_cast<char const *> (ptr), alignment);
 }
-#endif  /* ACE_OPENVMS && __INITIAL_POINTER_SIZE < 64 */
 //@}
 ACE_END_VERSIONED_NAMESPACE_DECL
 

@@ -20,10 +20,9 @@ ClientInterceptor (IOP::CodecFactory_var cf)
 
   // Obtain the CDR encapsulation Codec.
   this->codec = cf->create_codec (encoding);
-
 }
 
-ClientInterceptor::~ClientInterceptor (void)
+ClientInterceptor::~ClientInterceptor ()
 {
 }
 
@@ -67,7 +66,6 @@ ClientInterceptor::send_request (
 
   // Add this context to the service context list.
   ri->add_request_service_context (sc, false);
-
 }
 
 void

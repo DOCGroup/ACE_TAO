@@ -50,7 +50,7 @@ class ACE_Export ACE_ATM_Connector
 {
 public:
   /// Default constructor.
-  ACE_ATM_Connector (void);
+  ACE_ATM_Connector ();
 
   /**
    * Actively connect and produce a @a new_stream if things go well.

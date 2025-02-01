@@ -50,7 +50,6 @@ class TAO_Transport;
 class TAO_Export TAO_Incoming_Message_Queue
 {
 public:
-
   /// Constructor.
   TAO_Incoming_Message_Queue (TAO_ORB_Core *orb_core);
 
@@ -66,7 +65,6 @@ public:
   CORBA::ULong queue_length () const;
 
 private:
-
   friend class TAO_Transport;
 
 private:

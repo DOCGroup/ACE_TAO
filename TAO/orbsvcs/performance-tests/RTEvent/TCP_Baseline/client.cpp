@@ -26,7 +26,7 @@ public:
                   ACE_Barrier * the_barrier,
                   int period_in_usecs);
 
-  void stop(void);
+  void stop();
 
   virtual int svc ();
 
@@ -129,14 +129,14 @@ Scavenger_Task::Scavenger_Task(ACE_TCHAR const * endpoint,
 }
 
 void
-Scavenger_Task::stop(void)
+Scavenger_Task::stop()
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
   this->stopped_ = 1;
 }
 
 int
-Scavenger_Task::svc(void)
+Scavenger_Task::svc()
 {
   this->the_barrier_->wait ();
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Starting scavenger thread\n"));

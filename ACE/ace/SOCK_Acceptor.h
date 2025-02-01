@@ -119,7 +119,6 @@ public:
               bool restart = true,
               bool reset_new_handle = false) const;
 
-#if !defined (ACE_HAS_WINCE)
   /**
    * Accept a new ACE_SOCK_Stream connection using the QoS
    * information in @a qos_params.  A @a timeout of 0 means block
@@ -136,7 +135,6 @@ public:
               ACE_Time_Value *timeout = 0,
               bool restart = true,
               bool reset_new_handle = false) const;
-#endif  // ACE_HAS_WINCE
 
   // = Meta-type info
   typedef ACE_INET_Addr PEER_ADDR;

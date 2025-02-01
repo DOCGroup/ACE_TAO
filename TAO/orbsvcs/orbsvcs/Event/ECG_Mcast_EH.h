@@ -51,7 +51,6 @@ class TAO_RTEvent_Serv_Export TAO_ECG_Mcast_EH :
   public TAO_ECG_Handler_Shutdown
 {
 public:
-
   /// Initialization and termination methods.
   //@{
   /**
@@ -97,7 +96,6 @@ public:
   virtual int handle_input (ACE_HANDLE fd);
 
 private:
-
   /**
    * @class Observer
    *
@@ -211,7 +209,6 @@ private:
     void execute ();
 
   private:
-
     RtecEventChannelAdmin::Observer_Handle handle_;
     RtecEventChannelAdmin::EventChannel_var ec_;
   };

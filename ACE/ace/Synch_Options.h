@@ -84,7 +84,7 @@ public:
    *                ACE_Synch_Options makes no use of it internally.
    */
   ACE_Synch_Options (unsigned long options = 0,
-                     const ACE_Time_Value &timeout = ACE_Time_Value::zero,
+                     const ACE_Time_Value &timeout = ACE_Time_Value(),
                      const void *arg = 0);
 
   /// Initialize the object; arguments are the same as for the

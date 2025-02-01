@@ -79,7 +79,6 @@ be_visitor_facet_ami_exh::visit_provides (be_provides *node)
 int
 be_visitor_facet_ami_exh::visit_attribute (be_attribute *node)
 {
-
   be_operation get_op (node->field_type (),
                        AST_Operation::OP_noflags,
                        node->name (),
@@ -219,9 +218,7 @@ be_visitor_facet_ami_exh::init (bool for_impl)
 int
 be_visitor_facet_ami_exh::gen_reply_handler_class ()
 {
-  os_ << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
-
+  TAO_INSERT_COMMENT (&os_);
 
   const char *suffix = "_reply_handler";
   this->init (false);
@@ -271,8 +268,7 @@ be_visitor_facet_ami_exh::gen_reply_handler_class ()
 int
 be_visitor_facet_ami_exh::gen_facet_executor_class ()
 {
-    os_ << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (&os_);
 
   const char *suffix = "_exec_i";
   const char *scope_name =
@@ -324,7 +320,6 @@ be_visitor_facet_ami_exh::gen_facet_executor_class ()
      sync_iface->get_insert_queue ().enqueue_tail (sync_iface);
 
 
-
      Facet_AMI_ExecH_Op_Attr_Generator op_attr_gen (this);
      int status =
          sync_iface->traverse_inheritance_graph(
@@ -340,7 +335,6 @@ be_visitor_facet_ami_exh::gen_facet_executor_class ()
                       ACE_TEXT ("::gen_facet_executor_class - ")
                       ACE_TEXT ("traverse_inheritance_graph() on ")
                       ACE_TEXT ("interface failed\n")));
-
        }
    }
  else

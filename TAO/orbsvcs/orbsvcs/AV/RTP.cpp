@@ -681,7 +681,7 @@ TAO_AV_RTP_Object::set_policies (const TAO_AV_PolicyList &policy_list)
               static_cast<TAO_AV_SSRC_Policy *> (policy);
             if (ssrc_policy == 0)
               ORBSVCS_ERROR_RETURN ( (LM_ERROR,"TAO_AV_RTP_Object::send_frame:SSRC policy not defined\n"),-1);
-            this->ssrc_ = ssrc_policy->value ();;
+            this->ssrc_ = ssrc_policy->value ();
           }
           break;
         default:

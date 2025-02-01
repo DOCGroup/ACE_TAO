@@ -24,7 +24,6 @@
  */
 class be_visitor_valuetype_init : public be_visitor_valuetype
 {
-
 public:
   /// constructor
   be_visitor_valuetype_init (be_visitor_context *ctx);
@@ -33,7 +32,6 @@ public:
   ~be_visitor_valuetype_init ();
 
 public:
-
   void begin_public ();
   void begin_private ();
 };

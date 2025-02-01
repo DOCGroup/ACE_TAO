@@ -16,7 +16,6 @@
 #include "ace/OS_NS_unistd.h"
 
 
-
 // Default is to have a 2 second timeout.
 static int timeout = 2;
 
@@ -164,14 +163,14 @@ class STDIN_Handler : public ACE_Event_Handler
   //   This class illustrates that the ACE_Reactor can handle signals,
   //   STDIO, and timeouts using the same mechanisms.
 public:
-  STDIN_Handler (void);
-  ~STDIN_Handler (void);
+  STDIN_Handler ();
+  ~STDIN_Handler ();
   virtual int handle_input (ACE_HANDLE);
   virtual int handle_timeout (const ACE_Time_Value &,
                               const void *arg);
 };
 
-STDIN_Handler::STDIN_Handler (void)
+STDIN_Handler::STDIN_Handler ()
 {
   if (ACE_Event_Handler::register_stdin_handler (this,
                                                  ACE_Reactor::instance (),
@@ -195,7 +194,7 @@ STDIN_Handler::STDIN_Handler (void)
                 1));
 }
 
-STDIN_Handler::~STDIN_Handler (void)
+STDIN_Handler::~STDIN_Handler ()
 {
   if (ACE_Event_Handler::remove_stdin_handler (ACE_Reactor::instance (),
                                                ACE_Thread_Manager::instance ()) == -1)
@@ -239,7 +238,7 @@ STDIN_Handler::handle_input (ACE_HANDLE handle)
         ACE_ERROR ((LM_ERROR,
                     "%p\n",
                     "read"));
-      /* FALLTHROUGH */
+      ACE_FALLTHROUGH;
     case 0:
       ACE_Reactor::end_event_loop ();
       break;
@@ -260,7 +259,7 @@ STDIN_Handler::handle_input (ACE_HANDLE handle)
 class Message_Handler : public ACE_Task <ACE_SYNCH>
 {
 public:
-  Message_Handler (void);
+  Message_Handler ();
 
   virtual int handle_input (ACE_HANDLE);
   // Called back within the context of the <ACE_Reactor> Singleton to
@@ -276,7 +275,7 @@ private:
   // message is enqueued.
 };
 
-Message_Handler::Message_Handler (void)
+Message_Handler::Message_Handler ()
   : notification_strategy_ (ACE_Reactor::instance (),
                             this,
                             ACE_Event_Handler::READ_MASK)
@@ -291,7 +290,7 @@ Message_Handler::Message_Handler (void)
 }
 
 int
-Message_Handler::svc (void)
+Message_Handler::svc ()
 {
   for (int i = 0;; i++)
     {

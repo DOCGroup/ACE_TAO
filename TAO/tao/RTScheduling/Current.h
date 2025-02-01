@@ -256,7 +256,7 @@ public:
 
   void delete_all_currents ();
 
-  const char* name (void);
+  const char* name ();
   void name (const char *);
 
   TAO_ORB_Core* orb ();

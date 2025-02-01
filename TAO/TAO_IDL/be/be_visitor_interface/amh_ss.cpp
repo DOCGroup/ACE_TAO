@@ -61,46 +61,37 @@ be_visitor_amh_interface_ss::this_method (be_interface *node)
     this->generate_full_skel_name (node);
   const char *full_skel_name = full_skel_name_holder.c_str ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   *os << non_amh_name.c_str () << "*" << be_nl
       << full_skel_name
       << "::_this ()" << be_nl
       << "{" << be_idt_nl
-      << "TAO_Stub *stub = this->_create_stub ();" << be_nl_2;
+      << "TAO_Stub_Auto_Ptr stub (this->_create_stub ());" << be_nl;
 
-  *os << "TAO_Stub_Auto_Ptr safe_stub (stub);" << be_nl
-      << "::CORBA::Object_ptr tmp {};" << be_nl
-      << be_nl
-      << "::CORBA::Boolean _tao_opt_colloc =" << be_idt_nl
+  *os << "::CORBA::Boolean _tao_opt_colloc = "
       << "stub->servant_orb_var ()->orb_core ()->"
-      << "optimize_collocation_objects ();" << be_uidt_nl << be_nl
-      << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
-      << "tmp," << be_nl
-      << "::CORBA::Object (stub, _tao_opt_colloc, this)," << be_nl
-      << "nullptr" << be_uidt_nl
-      << ");" << be_uidt_nl << be_nl;
+      << "optimize_collocation_objects ();" << be_nl
+      << "::CORBA::Object_var obj = "
+      << "new (std::nothrow) ::CORBA::Object (stub.get (), _tao_opt_colloc, this);" << be_nl
+      << "if (obj.ptr ())" << be_idt_nl
+      << "{" << be_idt_nl;
 
-  *os << "::CORBA::Object_var obj = tmp;" << be_nl
-      << "(void) safe_stub.release ();" << be_nl_2;
-
-  *os << "typedef ::" << node->name () << " STUB_SCOPED_NAME;" << be_nl
-      << "return" << be_idt_nl;
+  *os << "(void) stub.release ();" << be_nl;
 
   if (!node->is_abstract ())
     {
-      *os << "TAO::Narrow_Utils<STUB_SCOPED_NAME>::unchecked_narrow (";
+      *os << "return TAO::Narrow_Utils<::" << node->name () << ">::unchecked_narrow (";
     }
   else
     {
-      *os << "TAO::AbstractBase_Narrow_Utils<STUB_SCOPED_NAME>::unchecked_narrow (";
+      *os << "return TAO::AbstractBase_Narrow_Utils<::" << node->name () << ">::unchecked_narrow (";
     }
   *os << "obj.in ());" << be_nl;
 
-  *os << be_uidt << be_uidt_nl
-      << "}";
-
+  *os << be_uidt_nl
+      << "}"
+      << be_uidt_nl << "return {};" << be_uidt_nl << "}";
 }
 
 void
@@ -112,8 +103,7 @@ be_visitor_amh_interface_ss::dispatch_method (be_interface *node)
     this->generate_full_skel_name (node);
   const char *full_skel_name = full_skel_name_holder.c_str ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   *os << "void" << be_nl
       << full_skel_name << "::_dispatch (" << be_idt << be_idt_nl
@@ -210,7 +200,7 @@ TAO_IDL_Copy_Ctor_Worker::emit (be_interface *derived,
       TAO_OutStream *os,
       be_interface *base)
 {
-  if (derived == base)
+  if (derived == base || derived->nmembers () > 0)
     {
       return 0;
     }

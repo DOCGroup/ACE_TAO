@@ -77,7 +77,7 @@ report process</a>.<p>
   <li><a href="#eclipse">Working with ACE in Eclipse</a></li>
   <li><a href="#advanced">Advanced Topics</a></li>
   <li><a href="#power">Building from git</a></li>
-</li></ul>
+</ul>
 
 
 <p></p><hr><p>
@@ -181,11 +181,11 @@ document</a>.</p><p>
     <td>Maintains ACE on many platforms required for their ACE and
         TAO service offerings. We support AIX,
         Embarcadero C++ Builder,
-        Windows CE, MinGW, Microsoft Visual C++, GCC,
-        Cygwin, VxWorks 6.x (kernel and rtp), OpenVMS on IA64,
+        MinGW, Microsoft Visual C++, GCC,
+        Cygwin, VxWorks 6.x (kernel and rtp),
         BlueCAT Linux, RedHat Linux, Fedora, MacOSX, Solaris,
-        Tru64, SuSE Linux on IA32/EM64T/IA64, RTEMS, QNX, LynxOS,
-        HPUX on IA64, and Android.
+        SuSE Linux on IA32/EM64T/IA64, QNX, LynxOS,
+        and Android.
         The Intel C++ compiler is supported on
         Windows 32/64bit, Linux IA32/EM64T/IA64, MacOSX.
     </td>
@@ -284,7 +284,6 @@ The following sections explain how to build ACE on:
 <li><a href="#win32">Windows (including MinGW and Cygwin)</a></li>
 <li><a href="#vxworks">VxWorks</a></li>
 <li><a href="#android">Android</a></li>
-<li><a href="#rtems">RTEMS</a></li>
 </ul>
 
 <h2>General Rules</h2>
@@ -330,7 +329,7 @@ per-platform configuration method:</p>
       source tree.  The ACE recursive Makefile scheme needs this information.
       There are several ways to set the ACE_ROOT variable.  For example:
       <blockquote>
-      TSCH/CSH:
+      TCSH/CSH:
       <code>setenv ACE_ROOT /home/cs/faculty/schmidt/ACE_wrappers</code>
       </blockquote>
       <blockquote>
@@ -428,6 +427,9 @@ INSTALL_PREFIX = /usr/local
   </li>
   <li>If you've set the INSTALL_PREFIX before building, now run
 <blockquote><code>% make install</code></blockquote>
+    <p>An alternative to directly running <code>make install</code> is to use <code>$ACE_ROOT/bin/install_proj.sh</code>
+       which will only install projects that are built (instead of trying to build each one during <code>make install</code>).
+    </p>
   </li>
   <li>If you need to regenerate the <code>ace/Svc_Conf_y.cpp</code> file,
       you'll need to
@@ -676,15 +678,10 @@ to check <a href="#win32nonic">here</a> first. <p>
       Codeguard support. Should only be used when DEBUG is also set<br>
       <code>set CODEGUARD=1</code><br>
       <br>
-      By default we are using the clang based compilers. At the moment you
-      want to compile using the old bcc32 compiler set the CLASIC environment variable<br>
-      <code>set CLASSIC=1</code><br>
+      Set one of the following environment variable to 1 to select which Embarcadero
+      C++ compiler has to be used. Valid environment variables are <code>BCC32C</code>, <code>BCC64</code>, and <code>BCC64X</code>.
       <br>
-      Set the environment variable below to build a version of ACE optimized
-      for a certain CPU. For this there are special compiler flags
-      (-3/-4/-5/-6), see the Embarcadero help for more info.<br>
-      <code>set CPU_FLAG=-6</code><br>
-      <br>
+      <code>set BCC64X=1</code><br><br>
       You can then start the build with the command
       <br><code>make -f Makefile.bmak all</code><br>
       <br>
@@ -2065,87 +2062,6 @@ libraries.
       Please see the <a href="#NonStaticObjectManager">Non-static
       ACE_Object_Manager</a> discussion below.</p><p>
 
-  </p></li><li><b>Windows CE</b><p>
-
-      Take a look at (<a href="docs/CE-status.txt">CE-status.txt</a>) for
-      up-to-date information about ACE on Windows CE and Windows Mobile.
-
-  </p></li><li><b> Solaris 7, 8, 9, and 10 using Sun ONE Studio 8 (C++ 5.5)
-       or higher, Centerline C++ 2.x, GNU gcc 2.95 and
-       later.</b><p>
-
-      All the source code and tests should build and run without any
-      problems on Solaris 7, 8, and 9 platforms using the above
-      Sun C++ compilers.
-
-      There are likely to be build problems with older versions or
-      different patchlevels of Sun C++.  Likewise, on
-      Solaris with g++ you may need to use GNU as instead of
-      /usr/ccs/bin/as, if you want -gstabs+ and -pipe support.
-
-      Thanks to Susan Liebeskind &lt;shl@janis.gtri.gatech.edu&gt;
-      for providing the following useful information:</p><p>
-
-      By default, ACE uses both the Solaris and POSIX thread
-      interface.  To disable use of the Solaris thread interface, add
-      <code>-D_POSIX_PTHREAD_SEMANTICS</code> to the
-      <code>CFLAGS</code> in your
-      <code>$(ACE_ROOT)/include/makeinclude/platform_macros.GNU</code>.
-      See the Solaris Intro (3) man page for more information.</p><p>
-
-      To disable ACE thread support completely, build with the
-      <code>threads=0</code> make flag.  See the <a href="#flags">Makefile Flags</a> section below for more
-      information on make flags.</p><p>
-
-      If you use g++ on Solaris 7, you might need to rebuild
-      it on a SunOS 5.7 (Solaris 7) host.  Some versions of g++
-      provide replacements for system header files.  The
-      replacements on older SunOS systems are not compatible with the
-      SunOS 5.7 system headers.  </P>
-
-  </li><li><b>AIX</b><p>
-
-      ACE is currently supported on AIX 5.2 and higher using IBM's
-      Visual Age C++ 6 and XL C++ 7 compilers as well as g++ 3.2.</p><p>
-
-      The <code>ace/config-aix-5.x.h</code> file is recommended for all
-      compilers on all AIX 5L versions. The Asynchronous I/O functionality
-      is disabled by default because its use requires the system administrator
-      to explicitly enable it in the kernel using SMIT. If this has been
-      done and you want to enable asynchronous I/O support in ACE, add:
-      <code>#define ACE_HAS_AIO_CALLS</code> to your <code>config.h</code>
-      file before including <code>ace/config-aix-5.x.h</code>.</p><p>
-
-      The Visual Age 6.0.0.3 and 6.0.0.4 do have some bugs that makes
-      them unusable for building TAO. TAO has been tested with 6.0.0.12 and
-      had no problems with that version.</p><p>
-
-      For your <code>platform_macros.GNU</code> file, you should use
-      <code>platform_aix_ibm.GNU</code> when building ACE with any of the
-      IBM compilers and <code>platform_aix_g++.GNU</code> when building ACE
-      with g++.</p><p>
-
-      BTW, here's a technique from Rob Jordan &lt;<a href="mailto:jordan@hursley.ibm.com">jordan@hursley.ibm.com</a>&gt;
-      that can reduce the size of the ACE libraries by about one
-      third, and can also be applied to applications.  It works by
-      optimising the sharing of template functions, which are created
-      in an "unusual" way under AIX. It also speeds up
-      compilation.</p><p>
-
-      Here's how to optimise the ACE library generation:</p><p>
-
-      Look at the <a href="ace/GNUmakefile.ACE">ace/GNUmakefile.ACE</a>
-      in <code>$ACE_ROOT/ace</code>. Create a file called
-      <code>ACE_All_Src.cpp</code>, and add a line to #include
-      each of the source files
-      listed under <code>FILES=</code> in the GNUmakefile. Create a
-      file called <code>ACE_All_Tmp.h</code>
-      and add a line to #include each of the .h files listed under
-      <code>TEMPLATE_FILES=</code> in the GNUmakefile. Now update the
-      GNUmakefile so that
-      <code>FILES=ACE_All_Src</code> and
-      <code>TEMPLATE_FILES=ACE_All_Tmp</code>.</p><p>
-
   </p></li><li><b><a name="Linux">Linux</a></b><p>
 
       ACE has been ported to Linux on
@@ -2205,41 +2121,6 @@ libraries.
       compiler.  Arturo Montes &lt;<a href="mailto:mitosys@colomsat.net.co">mitosys@colomsat.net.co</a>&gt;
       maintains this code.  In addition, he also maintains a version
       of <a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/FSU-threads.tar.gz">FSU pthreads</a>.</p><p>
-
-  </p></li><li><b>SGI IRIX 5.x and 6.x</b><p>
-
-      ACE used to build fine using the SGI C++ and GNU GCC compilers
-      for IRIX 5.x.  It has been ported to IRIX 6.x using the SGI
-      MipsPro 7.1 C++ compiler; be aware that in IRIX 6.2 there is a
-      number of patches that have to be installed and exceptions
-      appear to fail with the O32 ABI.  Please check the config files
-      for the details.</p><p>
-
-  </p></li><li><b>OSF/1 3.2 and 4.0 (a.k.a. Digital UNIX 4.0)</b> <p>
-
-      The Digital UNIX C++ 5.4 through 5.7 compilers have problems
-      with ACE's templates.  They compile the lib and most of the test
-      programs, although they warn about template usage.  Most tests
-      run, some dump core.  If you use a 5.x version of cxx, be sure
-      to set the CXX_VER variable to CXX_5, either on your make
-      command line or in an environment variable.  The ACE Makefiles
-      assume by default that the cxx version is 6.x or later.</p><p>
-
-      CXX 6.0 and 6.1 are much improved over 5.x: V6.0-020, V6.1-025,
-      and later build all of ACE cleanly.  All of the tests in
-      $(ACE_ROOT)/tests run successfully with CXX 6.0 and CXX 6.1.
-      Please note that problems have been reported with some versions
-      of CXX 6.1, notably versions -021 and earlier.  It's best to use
-      V6.1-022 or later.</p><p>
-
-      NOTE: if you use Digital UNIX 4.0f or later, you <strong>must</strong>
-      use <code>ace/config-tru64.h</code> instead of
-      <code>ace/config-osf1-4.0.h</code>.  <code>ace/config-tru64.h</code>
-      can be used for all supported compilers on any version of
-      Digital UNIX after and include 4.0.  And, with 4.0f and later when
-      using Digital CXX, you <strong>must</strong> use
-      <code>include/makeinclude/platform_tru64_cxx.GNU</code> instead of
-      <code>include/makeinclude/platform_osf1_4.0.GNU</code>.</p>
 
   </li><li><b> FreeBSD </b><p>
 
@@ -2472,24 +2353,6 @@ libraries.
       Under the current version of QNX RTP ACE fails if compiled with
       inline=0 . </p><p>
 
-  </p></li><li><strong><a name="rtems">RTEMS</a></strong><p>
-
-      The support for RTEMS has been revived from version x.5.4. This version
-      was the first version that build again out of the box on RTEMS. Compilation
-      and testing was done for RTEMS with and without networking support. The
-      ACE GNU makefiles do automatically detect whether networking support
-      is available or not.
-
-      Besides the standard config.h/platform_macros.GNU file you will need
-      to set <code>RTEMS_MAKEFILE_PATH</code> to point to the location
-      of your RTEMS installation, see below for an example.</p>
-      <p><code>export RTEMS_MAKEFILE_PATH=/opt/rtems/CPU-rtems/BSP</code></p>
-      <p>
-      When building without network support you will need the ace_for_tao
-      subsetting functionality enabled. For this add <code>ace_for_tao = 1</code>
-      to your <code>bin/MakeProjectCreator/config</code> file and regenerate the
-      GNU makefiles as described <a href="#power">here</a>.</p><p>
-
   </p></li><li><strong>PharLap ETS</strong><p>
 
       ACE has been ported to Ardence's
@@ -2609,7 +2472,7 @@ perl bin/mwc.pl  -type vc71 -relative ACE_ROOT=C:/ace/ACE_wrappers -relative TAO
 If you use the GNU GCC g++ compiler please note the following:
 
 <ul>
-  </p></li><li>ACE/TAO needs g++ 4.8 or better. Older versions are not usable anymore<p>
+  </p><li>ACE/TAO needs g++ 4.8 or better. Older versions are not usable anymore<p>
 
   </p></li><li>Make sure to update your gcc <code>config.status</code>
       file.  This file is produced when installing gcc; it specifies
@@ -2620,14 +2483,6 @@ If you use the GNU GCC g++ compiler please note the following:
       <code>configure</code> script; it is preferable to use the
       <code>--prefix</code> option to <code>configure</code> instead
       of hacking its output.<p>
-
-  </p></li><li>If you are getting weird link errors when building libACE
-      on Solaris you are probably using the GNU linker.  Try using the
-      Sun linker (/usr/ccs/bin/ld) instead.  Note that gcc first looks
-      for the GNU linker if it is installed along with gcc.  The only
-      way to not use the GNU linker is to delete it from the
-      installation or to build your own compiler with no linker.  Be
-      aware that you still need the libraries and includes of gcc.<p>
 
       NOTE: if you do use the GNU linker, you might need to change
       the <code>-G</code> flag to <code>-shared</code> in
@@ -3039,7 +2894,6 @@ include_env      Support old-style ACE_TRY_ENV declarations in methods.
                  parameters when using include_env=1.
                  If possible, do not use it, but instead change your TAO
                  applications to use the ACE_ENV_ARG macros.
-fast             Enable -fast option, e.g., with Sun C++.
 inline           Enable ACE inlining.  Some platforms enable inlining by
                    default, others do not.
 optimize         Enable optimization; see OCFLAGS and OCCFLAGS.

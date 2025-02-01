@@ -1,6 +1,6 @@
 #include "server.h"
 
-FTP_Server_FlowEndPoint::FTP_Server_FlowEndPoint (void)
+FTP_Server_FlowEndPoint::FTP_Server_FlowEndPoint ()
   :TAO_FlowConsumer ("Data",FTP_SERVER::instance ()->protocols (), FTP_SERVER::instance ()->format ())
 {
   AVStreams::protocolSpec protocols (2);
@@ -29,12 +29,12 @@ FTP_Server_FlowEndPoint::get_callback (const char *,
   return 0;
 }
 
-FTP_Server_Callback::FTP_Server_Callback (void)
+FTP_Server_Callback::FTP_Server_Callback ()
 {
 }
 
 int
-FTP_Server_Callback::handle_stop (void)
+FTP_Server_Callback::handle_stop ()
 {
   ACE_DEBUG ((LM_DEBUG,"FTP_Server_Callback::stop\n"));
   ACE_OS::fclose (FTP_SERVER::instance ()->file ());
@@ -62,14 +62,14 @@ FTP_Server_Callback::receive_frame (ACE_Message_Block *frame,
 }
 
 int
-FTP_Server_Callback::handle_end_stream (void)
+FTP_Server_Callback::handle_end_stream ()
 {
   CORBA::ORB_var orb = TAO_AV_CORE::instance ()->orb ();
   orb->shutdown ();
   return 0;
 }
 
-Server::Server (void)
+Server::Server ()
   :orb_ (TAO_AV_CORE::instance ()->orb ()),
    poa_ (TAO_AV_CORE::instance ()->poa ())
 {
@@ -78,7 +78,7 @@ Server::Server (void)
 }
 
 AVStreams::protocolSpec
-Server::protocols (void)
+Server::protocols ()
 {
   AVStreams::protocolSpec protocols (2);
   protocols.length (2);
@@ -88,7 +88,7 @@ Server::protocols (void)
 }
 
 const char*
-Server::format (void)
+Server::format ()
 {
   return "UNS:ftp";
 }
@@ -123,7 +123,7 @@ Server::init (int argc,
 
       fep_b_obj_ = this->fep_b_->_this ();
 
-      CORBA::String_var s1 = sep_b_->add_fep( fep_b_obj_.in() );
+      CORBA::String_var s1 = sep_b_->add_fep( fep_b_obj_.in());
 
      ACE_DEBUG ((LM_DEBUG, "(%N,%l) Added flowendpoint named: %C\n", s1.in() ));
 
@@ -136,8 +136,6 @@ Server::init (int argc,
       // Register the video control object with the naming server.
       this->my_naming_client_->rebind (server_sep_b_name,
                                        sep_b_.in ());
-
-
     }
   catch (const CORBA::Exception& ex)
     {
@@ -148,7 +146,7 @@ Server::init (int argc,
 }
 
 int
-Server::run (void)
+Server::run ()
 {
   try
     {
@@ -196,7 +194,7 @@ Server::parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 FILE*
-Server::file (void)
+Server::file ()
 {
   return this->fp_;
 }

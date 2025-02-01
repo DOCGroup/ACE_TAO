@@ -26,7 +26,6 @@ namespace TAO
 {
   namespace Transport
   {
-
     template <typename Impl>
     class Current_ORBInitializer
       : public Current_ORBInitializer_Base
@@ -43,14 +42,7 @@ namespace TAO
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "tao/TransportCurrent/Current_ORBInitializer.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("tao/TransportCurrent/Current_ORBInitializer.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
-
 
 #include /**/ "ace/post.h"
 

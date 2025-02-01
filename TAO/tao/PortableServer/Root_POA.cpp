@@ -46,14 +46,12 @@
 #include "tao/TSS_Resources.h"
 #include "tao/IORInterceptor_Adapter.h"
 #include "tao/debug.h"
-
-// auto_ptr class
-#include "ace/Auto_Ptr.h"
 #include "ace/Dynamic_Service.h"
 #include "ace/OS_NS_netdb.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/Log_Msg.h"
+#include <memory>
 
 #if !defined (__ACE_INLINE__)
 # include "tao/PortableServer/Root_POA.inl"
@@ -258,11 +256,9 @@ TAO_Root_POA::TAO_Root_POA (const TAO_Root_POA::String &name,
   // minimum POA builds, remove this code and remove the guards
   // in Object_Adapter.cpp when changing the default policy for the
   // RootPOA.
-  if (ACE_OS::strcmp (this->name_.c_str (),
-                      TAO_DEFAULT_ROOTPOA_NAME) == 0)
+  if (ACE_OS::strcmp (this->name_.c_str (), TAO_DEFAULT_ROOTPOA_NAME) == 0)
     {
-      this->cached_policies_.implicit_activation
-        (PortableServer::IMPLICIT_ACTIVATION);
+      this->cached_policies_.implicit_activation (PortableServer::IMPLICIT_ACTIVATION);
     }
 #endif /* TAO_HAS_MINIMUM_POA == 1 */
 
@@ -270,7 +266,7 @@ TAO_Root_POA::TAO_Root_POA (const TAO_Root_POA::String &name,
   this->active_policy_strategies_.update (this->cached_policies_,
                                           this);
   TAO::Portable_Server::Active_Policy_Strategies_Cleanup_Guard aps_cleanup_guard (
-    &this->active_policy_strategies_);
+    std::addressof(this->active_policy_strategies_));
 
   // Set the folded name of this POA.
   this->set_folded_name (parent);
@@ -528,7 +524,7 @@ TAO_Root_POA::create_POA_i (const TAO_Root_POA::String &adapter_name,
                             PortableServer::POAManager_ptr poa_manager,
                             const TAO_POA_Policy_Set &policies)
 {
-  // This operaton creates a new POA as a child of the target POA. The
+  // This operation creates a new POA as a child of the target POA. The
   // specified name identifies the new POA with respect to other POAs
   // with the same parent POA. If the target POA already has a child
   // POA with the specified name, the AdapterAlreadyExists exception
@@ -738,6 +734,8 @@ TAO_Root_POA::servant_to_reference (PortableServer::Servant servant)
   return this->servant_to_reference_i (servant);
 }
 
+
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
 PortableServer::POAList *
 TAO_Root_POA::the_children ()
 {
@@ -746,7 +744,7 @@ TAO_Root_POA::the_children ()
 
   return this->the_children_i ();
 }
-
+#endif /* TAO_HAS_MINIMUM_POA == 0 && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO) */
 
 PortableServer::Servant
 TAO_Root_POA::id_to_servant (const PortableServer::ObjectId &oid)
@@ -1499,7 +1497,6 @@ TAO_Root_POA::cleanup_servant (
 PortableServer::Servant
 TAO_Root_POA::id_to_servant_i (const PortableServer::ObjectId &id)
 {
-
   PortableServer::Servant servant =
     this->active_policy_strategies_.request_processing_strategy()->
       id_to_servant (id);
@@ -1972,7 +1969,6 @@ TAO_Root_POA::key_to_object (const TAO::ObjectKey &key,
                                             collocated,
                                             servant),
                         CORBA::INTERNAL ());
-
     }
   else
     {
@@ -2026,7 +2022,7 @@ TAO_Root_POA::key_to_stub_i (const TAO::ObjectKey &key,
                       0);
     }
 
-  // Give ownership to the auto pointer.
+  // Give ownership to the unique pointer.
   std::unique_ptr<TAO_Acceptor_Filter> new_filter (filter);
 
   TAO_Stub *data =
@@ -2191,7 +2187,7 @@ TAO_Root_POA::client_exposed_policies (CORBA::Short /* object_priority */)
   return policies._retn ();
 }
 
-TAO_SERVANT_LOCATION
+TAO_Servant_Location
 TAO_Root_POA::locate_servant_i (const PortableServer::ObjectId &system_id,
                                 PortableServer::Servant &servant)
 {
@@ -2199,7 +2195,7 @@ TAO_Root_POA::locate_servant_i (const PortableServer::ObjectId &system_id,
           locate_servant (system_id, servant);
 }
 
-TAO_SERVANT_LOCATION
+TAO_Servant_Location
 TAO_Root_POA::servant_present (const PortableServer::ObjectId &system_id,
                                PortableServer::Servant &servant)
 {

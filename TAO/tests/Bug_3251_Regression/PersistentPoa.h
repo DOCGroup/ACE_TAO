@@ -14,10 +14,9 @@ class bug_3251_Export PersistentPoa:  public ACE_Service_Object
 {
   // public types and methods
   public:
-    PersistentPoa ( );
+    PersistentPoa ();
 
-    ~PersistentPoa ( )
-      throw ();
+    ~PersistentPoa () noexcept;
 
   // protected types and methods
   protected:

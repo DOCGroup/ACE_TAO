@@ -67,7 +67,7 @@ class ACE_Dev_Poll_Reactor_Notify : public ACE_Reactor_Notify
 {
 public:
   /// Constructor
-  ACE_Dev_Poll_Reactor_Notify (void);
+  ACE_Dev_Poll_Reactor_Notify ();
 
   /**
    * @name Initialization and Termination Methods
@@ -78,7 +78,7 @@ public:
   virtual int open (ACE_Reactor_Impl *,
                     ACE_Timer_Queue *timer_queue = 0,
                     int disable_notify = 0);
-  virtual int close (void);
+  virtual int close ();
 
   /**
    * Called by a thread when it wants to unblock the Reactor_Impl.
@@ -107,7 +107,7 @@ public:
   /// Returns the ACE_HANDLE of the notify pipe on which the reactor
   /// is listening for notifications so that other threads can unblock
   /// the Reactor_Impl.
-  virtual ACE_HANDLE notify_handle (void);
+  virtual ACE_HANDLE notify_handle ();
 
   /// Verify whether the buffer has dispatchable info or not.
   virtual int is_dispatchable (ACE_Notification_Buffer &buffer);
@@ -142,7 +142,7 @@ public:
    * passed in via the notify queue before breaking out of its event
    * loop.
    */
-  virtual int max_notify_iterations (void);
+  virtual int max_notify_iterations ();
 
   /**
    * Purge any notifications pending in this reactor for the specified
@@ -167,7 +167,6 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-
   /**
    * Keep a back pointer to the ACE_Dev_Poll_Reactor.  If this value
    * if NULL then the ACE_Dev_Poll_Reactor has been initialized with
@@ -252,7 +251,6 @@ typedef ACE_Reactor_Token_T<ACE_DEV_POLL_TOKEN> ACE_Dev_Poll_Reactor_Token;
 
 class ACE_Export ACE_Dev_Poll_Reactor : public ACE_Reactor_Impl
 {
-
   /**
    * @struct Event_Tuple
    *
@@ -316,7 +314,7 @@ class ACE_Export ACE_Dev_Poll_Reactor : public ACE_Reactor_Impl
   {
   public:
     /// Constructor.
-    Handler_Repository (void);
+    Handler_Repository ();
 
     /// Initialize a repository that can map handles up to the value @a size.
     /// Since the event tuples are accessed directly using the handle as
@@ -324,7 +322,7 @@ class ACE_Export ACE_Dev_Poll_Reactor : public ACE_Reactor_Impl
     int open (size_t size);
 
     /// Close down the repository.
-    int close (void);
+    int close ();
 
     /**
      * @name Repository Manipulation Operations
@@ -332,7 +330,6 @@ class ACE_Export ACE_Dev_Poll_Reactor : public ACE_Reactor_Impl
      * Methods used to search and modify the handler repository.
      */
     //@{
-
     /// Return a pointer to the Event_Tuple associated with @a handle.
     /// If there is none associated, returns 0 and sets errno.
     Event_Tuple *find (ACE_HANDLE handle);
@@ -349,7 +346,7 @@ class ACE_Export ACE_Dev_Poll_Reactor : public ACE_Reactor_Impl
     int unbind (ACE_HANDLE handle, bool decr_refcnt = true);
 
     /// Remove all the registered tuples.
-    int unbind_all (void);
+    int unbind_all ();
 
     //@}
 
@@ -360,7 +357,6 @@ class ACE_Export ACE_Dev_Poll_Reactor : public ACE_Reactor_Impl
      * underlying handler array.
      */
     //@{
-
     // Check the @a handle to make sure it's a valid @c ACE_HANDLE that
     // within the range of legal handles (i.e., greater than or equal to
     // zero and less than @c max_size_).
@@ -398,7 +394,6 @@ class ACE_Export ACE_Dev_Poll_Reactor : public ACE_Reactor_Impl
      * an @c ACE_HANDLE value.  This is Unix-specific.
      */
     Event_Tuple *handlers_;
-
   };
 
 public:
@@ -436,7 +431,7 @@ public:
                         int s_queue = ACE_DEV_POLL_TOKEN::FIFO);
 
   /// Close down and release all resources.
-  virtual ~ACE_Dev_Poll_Reactor (void);
+  virtual ~ACE_Dev_Poll_Reactor ();
 
   /// Initialization.
   virtual int open (size_t size,
@@ -466,7 +461,7 @@ public:
   virtual ACE_Timer_Queue *timer_queue () const;
 
   /// Close down and release all resources.
-  virtual int close (void);
+  virtual int close ();
 
   // = Event loop drivers.
   /**
@@ -527,7 +522,7 @@ public:
    *         non-zero, @c handle_events() and
    *         @c handle_alertable_events() return -1 immediately.
    */
-  virtual int deactivated (void);
+  virtual int deactivated ();
 
   /**
    * Control whether the Reactor will handle any more incoming events
@@ -637,7 +632,7 @@ public:
   virtual int suspend_handler (const ACE_Handle_Set &handles);
 
   /// Suspend all handles temporarily.
-  virtual int suspend_handlers (void);
+  virtual int suspend_handlers ();
 
   /// Resume event_handler. Use ACE_Event_Handler::get_handle() to
   /// get the handle.
@@ -650,16 +645,16 @@ public:
   virtual int resume_handler (const ACE_Handle_Set &handles);
 
   /// Resume all handles.
-  virtual int resume_handlers (void);
+  virtual int resume_handlers ();
 
   /// Does the reactor allow the application to resume the handle on
   /// its own, i.e., can it pass on the control of handle resumption to
   /// the application.
-  virtual int resumable_handler (void);
+  virtual int resumable_handler ();
 
   /// Return true if we any event associations were made by the reactor
   /// for the handles that it waits on, false otherwise.
-  virtual bool uses_event_associations (void);
+  virtual bool uses_event_associations ();
 
   // = Timer management.
 
@@ -765,7 +760,7 @@ public:
    * via the notify queue before breaking out of its
    * ACE_Message_Queue::dequeue() loop.
    */
-  virtual int max_notify_iterations (void);
+  virtual int max_notify_iterations ();
 
   /**
    * Purge any notifications pending in this reactor for the specified
@@ -800,17 +795,17 @@ public:
 
   /// Returns true if Reactor has been successfully initialized, else
   /// false.
-  virtual bool initialized (void);
+  virtual bool initialized ();
 
   /// Returns the current size of the Reactor's internal descriptor
   /// table.
   virtual size_t size () const;
 
   /// Returns a reference to the Reactor's internal repository lock.
-  virtual ACE_Lock &lock (void);
+  virtual ACE_Lock &lock ();
 
   /// Wake up all threads waiting in the event loop.
-  virtual void wakeup_all_threads (void);
+  virtual void wakeup_all_threads ();
 
   /// Transfers ownership of Reactor_Impl to the @a new_owner.
   /**
@@ -831,7 +826,7 @@ public:
   virtual int owner (ACE_thread_t *owner);
 
   /// Get the existing restart value.
-  virtual bool restart (void);
+  virtual bool restart ();
 
   /// Set a new value for restart and return the original value.
   /**
@@ -853,7 +848,7 @@ public:
   /**
    * @note This is currently a no-op.
    */
-  virtual int requeue_position (void);
+  virtual int requeue_position ();
 
   /**
    * @name Low-level wait_set mask manipulation methods
@@ -865,7 +860,6 @@ public:
    * manipulated with these methods.
    */
   //@{
-
   /// GET/SET/ADD/CLR the dispatch mask "bit" bound with the
   /// event_handler and mask.
   /**
@@ -892,7 +886,6 @@ public:
    * These methods are unimplemented.
    */
   //@{
-
   /// GET/SET/ADD/CLR the ready "bit" bound with the event_handler
   /// and mask.
   virtual int ready_ops (ACE_Event_Handler *event_handler,
@@ -913,7 +906,6 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-
   class Token_Guard;
 
   /// Non-locking version of wait_pending().
@@ -1090,7 +1082,6 @@ protected:
   bool restart_;
 
 protected:
-
   /**
    * @class Token_Guard
    *
@@ -1105,14 +1096,14 @@ protected:
 
     /// Destructor. This will release the token if it hasn't been
     /// released till this point
-    ~Token_Guard (void);
+    ~Token_Guard ();
 
     /// Release the token ..
-    void release_token (void);
+    void release_token ();
 
     /// Returns whether the thread that created this object owns the
     /// token or not.
-    bool is_owner (void);
+    bool is_owner ();
 
     /// A helper method that acquires the token 1) at a low priority, and
     /// 2) wait quietly for the token, not waking another thread. This
@@ -1126,7 +1117,7 @@ protected:
     int acquire (ACE_Time_Value *max_wait = 0);
 
   private:
-    Token_Guard (void);
+    Token_Guard ();
 
   private:
     /// The Reactor token.
@@ -1171,11 +1162,11 @@ public:
    * The destructor decrements the reference count on the event
    * handler corresponding to the given handle.
    */
-  ~ACE_Dev_Poll_Handler_Guard (void);
+  ~ACE_Dev_Poll_Handler_Guard ();
 
   /// Release the event handler from this guard; when the destructor is
   /// called, the handler's reference count will not be decremented.
-  void release (void);
+  void release ();
 
 private:
   /// The event handler being managed.

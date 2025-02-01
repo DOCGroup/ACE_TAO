@@ -6,7 +6,7 @@
 #include "ace/Log_Msg.h"
 #include <memory>
 
-typedef Magazine* (*Magazine_Creator) (void);
+typedef Magazine* (*Magazine_Creator) ();
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])

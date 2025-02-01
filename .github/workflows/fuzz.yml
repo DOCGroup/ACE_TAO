@@ -11,6 +11,9 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+permissions:
+  contents: read
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -20,7 +23,7 @@ jobs:
 
     steps:
     - name: checkout ACE/TAO
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
     - name: Run fuzz
       run: |
         perl ${env:ACE_ROOT}/bin/fuzz.pl

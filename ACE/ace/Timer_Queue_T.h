@@ -43,7 +43,7 @@ class ACE_Timer_Queue_Upcall_Base
 {
 public:
   // Constructor
-  explicit ACE_Timer_Queue_Upcall_Base(FUNCTOR * upcall_functor = 0);
+  explicit ACE_Timer_Queue_Upcall_Base(FUNCTOR * upcall_functor = nullptr);
 
   /// Destructor
   virtual ~ACE_Timer_Queue_Upcall_Base ();
@@ -237,13 +237,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #include "ace/Timer_Queue_T.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Timer_Queue_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Timer_Queue_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_TIMER_QUEUE_T_H */

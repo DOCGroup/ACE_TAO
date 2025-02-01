@@ -142,7 +142,7 @@ public: // Should be protected:
    * Note that if this conflicts with the C++ iostream <flush>
    * function, just rewrite the iostream function as ::<flush>.
    */
-  int flush (u_long flag = ACE_Task_Flags::ACE_FLUSHALL);
+  virtual int flush (u_long flag = ACE_Task_Flags::ACE_FLUSHALL);
 
   // = Special routines corresponding to certain message types.
 
@@ -183,13 +183,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #include "ace/Task_T.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Task_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Task_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_TASK_T_H */

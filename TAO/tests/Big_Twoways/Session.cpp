@@ -18,12 +18,12 @@ Session::Session (Test::Session_Control_ptr control,
 {
 }
 
-Session::~Session (void)
+Session::~Session ()
 {
 }
 
 int
-Session::svc (void)
+Session::svc ()
 {
   this->barrier_.wait ();
 
@@ -183,7 +183,7 @@ Session::echo_payload (const Test::Payload &the_payload)
 
 
 void
-Session::destroy (void)
+Session::destroy ()
 {
   // Make sure local resources are released
 
@@ -206,7 +206,7 @@ Session::more_work () const
 }
 
 void
-Session::validate_connections (void)
+Session::validate_connections ()
 {
   const CORBA::ULong session_count =
     this->other_sessions_.length ();

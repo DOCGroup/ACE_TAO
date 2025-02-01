@@ -70,6 +70,10 @@
 #  include "ace/Trace.h"
 #endif /* ACE_OS_NTRACE */
 
+#if !defined (ACE_TEMPLATES_REQUIRE_SOURCE)
+# define ACE_TEMPLATES_REQUIRE_SOURCE
+#endif
+
 #if !defined (ACE_HAS_MONITOR_FRAMEWORK)
 # define ACE_HAS_MONITOR_FRAMEWORK 1
 #endif

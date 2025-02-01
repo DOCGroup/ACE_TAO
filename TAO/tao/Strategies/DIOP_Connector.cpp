@@ -19,7 +19,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_DIOP_Connector::TAO_DIOP_Connector (void)
+TAO_DIOP_Connector::TAO_DIOP_Connector ()
   : TAO_Connector (TAO_TAG_DIOP_PROFILE)
 {
 }
@@ -37,7 +37,7 @@ TAO_DIOP_Connector::open (TAO_ORB_Core *orb_core)
 }
 
 int
-TAO_DIOP_Connector::close (void)
+TAO_DIOP_Connector::close ()
 {
   return 0;
 }
@@ -222,7 +222,7 @@ TAO_DIOP_Connector::create_profile (TAO_InputCDR& cdr)
 }
 
 TAO_Profile *
-TAO_DIOP_Connector::make_profile (void)
+TAO_DIOP_Connector::make_profile ()
 {
   // The endpoint should be of the form:
   //    N.n@host:port/object_key

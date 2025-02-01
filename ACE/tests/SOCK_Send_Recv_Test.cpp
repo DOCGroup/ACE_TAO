@@ -29,7 +29,6 @@
 #include "ace/SOCK_Stream.h"
 
 
-
 // Change to non-zero if test fails
 static int Test_Result = 0;
 

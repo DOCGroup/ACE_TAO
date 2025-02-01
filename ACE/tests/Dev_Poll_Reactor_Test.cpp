@@ -43,7 +43,6 @@ using SVC_HANDLER = ACE_Svc_Handler<ACE_SOCK_Stream, ACE_NULL_SYNCH>;
 class Client : public SVC_HANDLER
 {
 public:
-
   Client ();
 
   //FUZZ: disable check_for_lack_ACE_OS
@@ -59,16 +58,13 @@ public:
                             ACE_Reactor_Mask mask) override;
 
 private:
-
   unsigned int call_count_;
-
 };
 
 
 class Server : public SVC_HANDLER
 {
 public:
-
   Server ();
 
   int handle_input (ACE_HANDLE handle) override;
@@ -80,9 +76,7 @@ public:
                             ACE_Reactor_Mask mask) override;
 
 private:
-
   unsigned int call_count_;
-
 };
 
 // ----------------------------------------------------
@@ -230,7 +224,6 @@ Server::handle_input (ACE_HANDLE /* handle */)
         {
           if (errno == EWOULDBLOCK)
             {
-
 //               ACE_HEX_DUMP ((LM_DEBUG,
 //                              buf,
 //                              80,
@@ -318,7 +311,6 @@ using CONNECTOR = ACE_Connector<Client, ACE_SOCK_Connector>;
 class TestAcceptor : public ACCEPTOR
 {
 public:
-
   int accept_svc_handler (Server * handler) override
   {
     int result = this->ACCEPTOR::accept_svc_handler (handler);
@@ -360,7 +352,6 @@ public:
 
     return result;
   }
-
 };
 
 // ----------------------------------------------------
@@ -368,7 +359,6 @@ public:
 class TestConnector : public CONNECTOR
 {
 public:
-
   int connect_svc_handler (
     CONNECTOR::handler_type *& handler,
     const CONNECTOR::addr_type &remote_addr,

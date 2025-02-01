@@ -177,12 +177,6 @@ public:
                                              be_interface *,
                                              TAO_OutStream *os);
 
-  /// Helper method passed to the template method to invoke ctors of all the
-  /// base classes.
-  static int copy_ctor_helper (be_interface *,
-                               be_interface *,
-                               TAO_OutStream *os);
-
   /// Helper method to determine if the interface node is involved in some kind
   /// of multiple inheritance or not. Required on the skeleton side.
   static int in_mult_inheritance_helper (be_interface *,

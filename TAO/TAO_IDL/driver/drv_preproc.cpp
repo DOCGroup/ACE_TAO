@@ -73,11 +73,10 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_err.h"
 
 #include "ace/Version.h"
-#include "ace/Process_Manager.h"
+#include "ace/Process.h"
 #include "ace/SString.h"
 #include "ace/Env_Value_T.h"
 #include "ace/ARGV.h"
-#include "ace/UUID.h"
 #include "ace/Dirent.h"
 #include "ace/OS_NS_sys_stat.h"
 #include "ace/Truncate.h"
@@ -88,6 +87,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_fcntl.h"
+#include "ace/OS_NS_sys_stat.h"
 
 // Storage for preprocessor args.
 unsigned long const DRV_MAX_ARGCOUNT = 1024;
@@ -143,22 +143,11 @@ DRV_cpp_putarg (const char *str)
   char *replace = nullptr;
   if (str)
     {
-      const char *const first_quote = ACE_OS::strchr (str, '"');
       bool allocate_error = false;
 
-      if (ACE_OS::strchr (str, ' ') && !first_quote)
-        {
-          ACE_NEW_NORETURN (replace, char[ACE_OS::strlen (str) + 3]);
-          allocate_error = !replace;
-          if (replace)
-            {
-              replace[0] = '"';
-              ACE_OS::strcpy (replace + 1, str);
-              ACE_OS::strcat (replace, "\"");
-            }
-        }
 #ifdef ACE_WIN32
-      else if (first_quote)
+      const char *const first_quote = ACE_OS::strchr (str, '"');
+      if (first_quote)
         {
           // Escape Doublequotes on Windows
 
@@ -188,6 +177,17 @@ DRV_cpp_putarg (const char *str)
             }
         }
 #endif
+      if (ACE_OS::strchr (str, ' '))
+        {
+          ACE_NEW_NORETURN (replace, char[ACE_OS::strlen (str) + 3]);
+          allocate_error = !replace;
+          if (replace)
+            {
+              replace[0] = '"';
+              ACE_OS::strcpy (replace + 1, str);
+              ACE_OS::strcat (replace, "\"");
+            }
+        }
 
       if (allocate_error)
         {
@@ -485,13 +485,8 @@ DRV_sweep_dirs (const char *rel_path,
             {
               if (!include_added)
                 {
-                  /// Surround the path name with quotes, in
-                  /// case the original path argument included
-                  /// spaces. If it didn't, no harm done.
-                  ACE_CString incl_arg ("-I ");
-                  incl_arg += '\"';
+                  ACE_CString incl_arg ("-I");
                   incl_arg += bname;
-                  incl_arg += '\"';
                   DRV_cpp_putarg (incl_arg.c_str ());
                   idl_global->add_rel_include_path (bname.c_str ());
                   full_path = ACE_OS::realpath ("", abspath);
@@ -1123,6 +1118,27 @@ DRV_stripped_name (char *fn)
 void
 DRV_pre_proc (const char *myfile)
 {
+  // Check to see that the file is a normal file. If we don't and the file is a
+  // directory, then the copy would be blank and any error message later might
+  // not be helpful.
+  ACE_stat file_stat;
+  if (ACE_OS::stat (myfile, &file_stat) == -1)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "%C: ERROR: Unable to open file (stat) \"%C\": %m\n",
+                  idl_global->prog_name (),
+                  myfile));
+      throw Bailout ();
+    }
+  else if ((file_stat.st_mode & S_IFREG) != S_IFREG)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "%C: ERROR: This is not a regular file: \"%C\"\n",
+                  idl_global->prog_name (),
+                  myfile));
+      throw Bailout ();
+    }
+
   const char* tmpdir = idl_global->temp_dir ();
   static const char temp_file_extension[] = ".cpp";
 
@@ -1194,14 +1210,12 @@ DRV_pre_proc (const char *myfile)
   // Rename temporary files so that they have extensions accepted
   // by the preprocessor.
   FILE * const file = ACE_OS::fopen (myfile, "r");
-
   if (file == nullptr)
     {
       ACE_ERROR ((LM_ERROR,
-                  "%C: ERROR: Unable to open file : %m\n",
+                  "%C: ERROR: Unable to open file (fopen) \"%C\": %m\n",
                   idl_global->prog_name (),
                   myfile));
-
       (void) ACE_OS::unlink (tmp_ifile);
       (void) ACE_OS::unlink (tmp_file);
       throw Bailout ();
@@ -1215,35 +1229,10 @@ DRV_pre_proc (const char *myfile)
 
   UTL_String *utl_string = nullptr;
 
-#if defined (ACE_OPENVMS)
-  {
-    char main_abspath[MAXPATHLEN] = "";
-    char trans_path[MAXPATHLEN] = "";
-    char *main_fullpath =
-      ACE_OS::realpath (IDL_GlobalData::translateName (myfile, trans_path),
-                        main_abspath);
-
-    if (main_fullpath == 0)
-      {
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("Unable to construct full file pathname\n")));
-
-        (void) ACE_OS::unlink (tmp_ifile);
-        (void) ACE_OS::unlink (tmp_file);
-        throw Bailout ();
-      }
-
-    ACE_NEW (utl_string,
-             UTL_String (main_fullpath, true));
-
-    idl_global->set_main_filename (utl_string);
-  }
-#else
   ACE_NEW (utl_string,
            UTL_String (myfile, true));
 
   idl_global->set_main_filename (utl_string);
-#endif
 
   ACE_Auto_String_Free safety (ACE_OS::strdup (myfile));
 
@@ -1332,17 +1321,9 @@ DRV_pre_proc (const char *myfile)
       // If the following open() fails, then we're either being hit with a
       // symbolic link attack, or another process opened the file before
       // us.
-#if defined (ACE_OPENVMS)
-      //FUZZ: disable check_for_lack_ACE_OS
-      fd = ::open (t_file, O_WRONLY | O_CREAT | O_EXCL,
-                   ACE_DEFAULT_FILE_PERMS,
-                   "shr=get,put,upd", "ctx=rec", "fop=dfw");
-      //FUZZ: enable check_for_lack_ACE_OS
-#else
       fd = ACE_OS::open (t_file,
                          O_WRONLY | O_CREAT | O_EXCL,
                          ACE_DEFAULT_FILE_PERMS);
-#endif
 
       if (fd == ACE_INVALID_HANDLE)
         {
@@ -1460,11 +1441,6 @@ DRV_pre_proc (const char *myfile)
   // version the current process
   // would exit if the pre-processor
   // returned with error.
-
-#if defined (ACE_OPENVMS)
-  cpp_options.release_handles();
-#endif
-
   FILE * const yyin = ACE_OS::fopen (t_file, "r");
 
   if (yyin == nullptr)

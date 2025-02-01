@@ -67,7 +67,7 @@ handle_signal (int signum)
       // need to return -1!
       return 0;
     case SIGINT:
-      /* FALLTHRU */
+      ACE_FALLTHROUGH;
     case SIGTERM:
       // Shut down our thread using <ACE_Thread_Manager::exit>.
 #if 0
@@ -336,7 +336,7 @@ run_test (ACE_THR_FUNC worker,
     {
       // For the synchronous signal tests, block signals to prevent
       // asynchronous delivery to default handler (at least necessary
-      // on linux and solaris; POSIX spec also states that signal(s)
+      // on linux ; POSIX spec also states that signal(s)
       // should be blocked before call to sigwait())
       ACE_Sig_Guard guard;
 

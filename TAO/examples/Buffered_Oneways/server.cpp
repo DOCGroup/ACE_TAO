@@ -3,7 +3,6 @@
 #include "ace/OS_NS_stdio.h"
 
 
-
 const ACE_TCHAR *ior_output_file = ACE_TEXT("ior");
 
 int

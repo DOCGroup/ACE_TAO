@@ -35,10 +35,10 @@ public:
     Descriptor (PortableServer::POA_ptr poa);
 
     /// Destructor
-    ~Descriptor (void);
+    ~Descriptor ();
 
     /// Returns the default POA of this object
-    PortableServer::POA_ptr _default_POA (void);
+    PortableServer::POA_ptr _default_POA ();
 
     /// write buffer to File corresponding to this Descriptor
     virtual CORBA::Long write (const File::Descriptor::DataBuffer &buffer);
@@ -50,12 +50,11 @@ public:
                                 CORBA::Long whence);
 
     /// closes the file corresponding to the requested ObjectID
-    virtual void destroy (void);
+    virtual void destroy ();
 
   private:
-
     /// Extracts the ACE_HANDLE from the objectID
-    ACE_HANDLE fd (void);
+    ACE_HANDLE fd ();
 
     PortableServer::POA_var poa_;
   };
@@ -74,17 +73,17 @@ public:
             PortableServer::POA_ptr poa);
 
     ///Destructor
-    ~System (void);
+    ~System ();
 
     ///Returns the default POA of this object
-    PortableServer::POA_ptr _default_POA (void);
+    PortableServer::POA_ptr _default_POA ();
 
     /// Opens a file ,creates a Descriptor reference with the
     /// ACE_HANDLE and returns that reference
     File::Descriptor_ptr open (const char *file_name,
                                CORBA::Long flags);
 
-    void shutdown (void);
+    void shutdown ();
   private:
     CORBA::ORB_var orb_;
 

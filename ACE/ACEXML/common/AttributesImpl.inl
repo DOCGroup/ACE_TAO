@@ -4,7 +4,7 @@
 #include "ace/OS_NS_string.h"
 
 ACEXML_INLINE
-ACEXML_Attribute::ACEXML_Attribute (void)
+ACEXML_Attribute::ACEXML_Attribute ()
   : uri_ (0),
     localName_ (0),
     qName_ (0),
@@ -38,7 +38,7 @@ ACEXML_Attribute::ACEXML_Attribute (const ACEXML_Char *uri,
 }
 
 ACEXML_INLINE
-ACEXML_Attribute::~ACEXML_Attribute (void)
+ACEXML_Attribute::~ACEXML_Attribute ()
 {
   delete[] this->uri_;
   delete[] this->localName_;

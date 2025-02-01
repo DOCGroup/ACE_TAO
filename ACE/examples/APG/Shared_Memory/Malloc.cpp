@@ -29,9 +29,9 @@ public:
   }
 
   ~Record () { g_allocator->free (name_); }
-  char* name(void) { return name_; }
-  int id1 (void) { return id1_; }
-  int id2 (void) { return id2_; }
+  char* name() { return name_; }
+  int id1 () { return id1_; }
+  int id2 () { return id2_; }
 
 private:
   int id1_;

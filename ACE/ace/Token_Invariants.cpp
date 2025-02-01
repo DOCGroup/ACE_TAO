@@ -10,7 +10,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_Token_Invariant_Manager *ACE_Token_Invariant_Manager::instance_ = 0;
 
 ACE_Token_Invariant_Manager *
-ACE_Token_Invariant_Manager::instance (void)
+ACE_Token_Invariant_Manager::instance ()
 {
   ACE_TRACE ("ACE_Token_Invariant_Manager::instance");
 
@@ -202,7 +202,7 @@ ACE_Token_Invariant_Manager::get_rwlock (const ACE_TCHAR *token_name,
 }
 
 
-ACE_Token_Invariant_Manager::~ACE_Token_Invariant_Manager (void)
+ACE_Token_Invariant_Manager::~ACE_Token_Invariant_Manager ()
 {
   ACE_TRACE ("ACE_Token_Invariant_Manager::~ACE_Token_Invariant_Manager");
 
@@ -258,7 +258,7 @@ ACE_Mutex_Invariants::dump () const
 // **************************************************
 
 int
-ACE_RWLock_Invariants::writer_acquired (void)
+ACE_RWLock_Invariants::writer_acquired ()
 {
   if (readers_ > 0)
     {
@@ -275,7 +275,7 @@ ACE_RWLock_Invariants::writer_acquired (void)
 }
 
 int
-ACE_RWLock_Invariants::reader_acquired (void)
+ACE_RWLock_Invariants::reader_acquired ()
 {
   if (writers_ > 0)
     {
@@ -290,7 +290,7 @@ ACE_RWLock_Invariants::reader_acquired (void)
 }
 
 void
-ACE_RWLock_Invariants::releasing (void)
+ACE_RWLock_Invariants::releasing ()
 {
   if (writers_ == 1)
     writers_ = 0;

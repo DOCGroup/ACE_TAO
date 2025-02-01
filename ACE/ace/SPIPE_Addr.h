@@ -39,6 +39,9 @@ public:
   /// Copy constructor.
   ACE_SPIPE_Addr (const ACE_SPIPE_Addr &sa);
 
+  /// Assignment operator
+  ACE_SPIPE_Addr& operator= (const ACE_SPIPE_Addr&) = default;
+
   /// Create a ACE_SPIPE_Addr from a rendezvous point in the file
   /// system.
   ACE_SPIPE_Addr (const ACE_TCHAR *rendezvous_point, gid_t = 0, uid_t = 0);
@@ -103,7 +106,6 @@ private:
 
     /// Pathname in the file system.
     ACE_TCHAR rendezvous_[MAXPATHLEN + 1];
-
   } SPIPE_addr_;
   // Contents of an SPIPE address.
 };

@@ -41,21 +41,7 @@ ACE_OS::uname (ACE_utsname *name)
 # endif
 
   SYSTEM_INFO sinfo;
-#   if defined (ACE_HAS_PHARLAP)
-  // PharLap doesn't do GetSystemInfo.  What's really wanted is the
-  // CPU architecture, so we can get that with EtsGetSystemInfo. Fill
-  // in what's wanted in the SYSTEM_INFO structure, and carry on. Note
-  // that the CPU type values in EK_KERNELINFO have the same values
-  // are the ones defined for SYSTEM_INFO.
-  EK_KERNELINFO ets_kern;
-  EK_SYSTEMINFO ets_sys;
-  EtsGetSystemInfo (&ets_kern, &ets_sys);
-  sinfo.wProcessorLevel = static_cast<WORD> (ets_kern.CpuType);
-  sinfo.wProcessorArchitecture = PROCESSOR_ARCHITECTURE_INTEL;
-  sinfo.dwProcessorType = ets_kern.CpuType * 100 + 86;
-#   else
   ::GetSystemInfo(&sinfo);
-#   endif /* ACE_HAS_PHARLAP */
 
   const char* unknown = "???";
 
@@ -164,8 +150,6 @@ ACE_OS::uname (ACE_utsname *name)
 #     endif
         case PROCESSOR_ARCHITECTURE_UNKNOWN:
         default:
-          // @@ We could provide WinCE specific info here.  But let's
-          //    defer that to some later point.
           ACE_OS::strcpy (processor, "Unknown");
           break;
         }

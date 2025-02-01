@@ -90,7 +90,7 @@ class ACE_Event_Tuple
 {
 public:
   /// Default constructor.
-  ACE_Event_Tuple (void);
+  ACE_Event_Tuple ();
 
   /// Constructor.
   ACE_Event_Tuple (ACE_Event_Handler *eh, ACE_HANDLE h);
@@ -107,7 +107,6 @@ public:
 
   /// ACE_Event_Handler associated with the ACE_HANDLE.
   ACE_Event_Handler *event_handler_;
-
 };
 
 /**
@@ -129,10 +128,10 @@ class ACE_Export ACE_Select_Reactor_Notify : public ACE_Reactor_Notify
 {
 public:
   /// Constructor.
-  ACE_Select_Reactor_Notify (void);
+  ACE_Select_Reactor_Notify ();
 
   /// Destructor.
-  virtual ~ACE_Select_Reactor_Notify (void);
+  virtual ~ACE_Select_Reactor_Notify ();
 
   /// Initialize.
   virtual int open (ACE_Reactor_Impl *,
@@ -140,7 +139,7 @@ public:
                     int disable_notify_pipe = ACE_DISABLE_NOTIFY_PIPE_DEFAULT);
 
   /// Destroy.
-  virtual int close (void);
+  virtual int close ();
 
   /**
    * Called by a thread when it wants to unblock the
@@ -165,7 +164,7 @@ public:
   /// Returns the ACE_HANDLE of the notify pipe on which the reactor
   /// is listening for notifications so that other threads can unblock
   /// the Select_Reactor
-  virtual ACE_HANDLE notify_handle (void);
+  virtual ACE_HANDLE notify_handle ();
 
   /// Handle one of the notify call on the @c handle. This could be
   /// because of a thread trying to unblock the Reactor_Impl
@@ -207,7 +206,7 @@ public:
    * dispatch the ACE_Event_Handlers that are passed in via the
    * notify pipe before breaking out of its recv loop.
    */
-  virtual int max_notify_iterations (void);
+  virtual int max_notify_iterations ();
 
   /**
    * Purge any notifications pending in this reactor for the specified
@@ -328,7 +327,7 @@ public:
   int open (size_type size);
 
   /// Close down the repository.
-  int close (void);
+  int close ();
 
   // = Search structure operations.
 
@@ -348,7 +347,7 @@ public:
               ACE_Reactor_Mask mask);
 
   /// Remove all the <ACE_HANDLE, ACE_Event_Handler> tuples.
-  int unbind_all (void);
+  int unbind_all ();
 
   // = Sanity checking.
 
@@ -375,7 +374,6 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
-
   /// Remove the binding of @a handle corresponding to position @a pos
   /// in accordance with the @a mask.
   int unbind (ACE_HANDLE handle,
@@ -410,7 +408,6 @@ private:
 class ACE_Export ACE_Select_Reactor_Handler_Repository_Iterator
 {
 public:
-
   typedef
     ACE_Select_Reactor_Handler_Repository::map_type::const_iterator const_base_iterator;
 
@@ -428,7 +425,7 @@ public:
 
   /// Move forward by one element in the set.  Returns @c false when
   /// all the items in the set have been seen, else @c true.
-  bool advance (void);
+  bool advance ();
 
   /// Dump the state of an object.
   void dump () const;
@@ -437,7 +434,6 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
-
   /// Reference to the Handler_Repository we are iterating over.
   ACE_Select_Reactor_Handler_Repository const * const rep_;
 
@@ -479,7 +475,7 @@ public:
   /// its own ie. can it pass on the control of handle resumption to
   /// the application.  The select reactor has no handlers that can be
   /// resumed by the  application. So return 0;
-  virtual int resumable_handler (void);
+  virtual int resumable_handler ();
 
 protected:
   /// Allow manipulation of the <wait_set_> mask and <ready_set_> mask.
@@ -490,7 +486,7 @@ protected:
 
   /// Enqueue ourselves into the list of waiting threads at the
   /// appropriate point specified by <requeue_position_>.
-  virtual void renew (void) = 0;
+  virtual void renew () = 0;
 
   /// Check to see if the Event_Handler associated with @a handle is
   /// suspended. Returns 0 if not, 1 if so.
@@ -576,7 +572,7 @@ protected:
 
   /// Controls/access whether the notify handler should renew the
   /// Select_Reactor's token or not.
-  bool supress_notify_renew (void);
+  bool supress_notify_renew ();
   void supress_notify_renew (bool sr);
 
 private:

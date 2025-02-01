@@ -333,7 +333,7 @@ TAO_GIOP_Message_Generator_Parser_10::parse_request_header (
   if (!(input >> service_info))
     return -1;
 
-  CORBA::Boolean hdr_status = (CORBA::Boolean) input.good_bit ();
+  CORBA::Boolean hdr_status = input.good_bit ();
 
   CORBA::ULong req_id = 0;
 
@@ -392,7 +392,7 @@ TAO_GIOP_Message_Generator_Parser_10::parse_request_header (
       CORBA::OctetSeq oct_seq;
       input >> oct_seq;
       request.requesting_principal (oct_seq);
-      hdr_status = (CORBA::Boolean) input.good_bit ();
+      hdr_status = input.good_bit ();
     }
 
   return hdr_status ? 0 : -1;

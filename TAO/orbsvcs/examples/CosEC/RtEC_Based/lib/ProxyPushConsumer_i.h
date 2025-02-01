@@ -44,13 +44,13 @@ public:
                                  RtecEventChannelAdmin::ProxyPushConsumer_ptr proxypushconsumer);
 
   /// Destructor.
-  ~TAO_CosEC_ProxyPushConsumer_i (void);
+  ~TAO_CosEC_ProxyPushConsumer_i ();
 
   /// Suppliers call this method to pass data to connected consumers.
   virtual void push (const CORBA::Any &data);
 
   /// Disconnects the supplier from the event communication.
-  virtual void disconnect_push_consumer (void);
+  virtual void disconnect_push_consumer ();
 
   /// Connects a push supplier.
   virtual void connect_push_supplier(CosEventComm::PushSupplier_ptr push_supplier);
@@ -58,7 +58,7 @@ public:
 private:
   /// Returns 0 if a push_supplier is already connected to this
   /// ProxyPushConsumer, otherwise it returns a 1.
-  int connected (void);
+  int connected ();
 
   /// The SupplierQOS specified by the user of this class.
   const RtecEventChannelAdmin::SupplierQOS &qos_;

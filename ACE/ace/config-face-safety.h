@@ -216,8 +216,8 @@
 
 #ifdef ACE_FACE_SAFETY_EXTENDED
 
-# if defined ACE_WIN32 || defined ACE_HAS_WINCE
-#  error "FACE Safety profile not compatible with win32 or winCE"
+# if defined ACE_WIN32
+#  error "FACE Safety profile not compatible with win32"
 # endif
 
 # ifndef ACE_EMULATE_POSIX_DEVCTL

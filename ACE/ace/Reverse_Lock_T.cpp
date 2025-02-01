@@ -13,11 +13,6 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-template <class ACE_LOCKING_MECHANISM>
-ACE_Reverse_Lock<ACE_LOCKING_MECHANISM>::~ACE_Reverse_Lock ()
-{
-}
-
 // Explicitly destroy the lock.
 template <class ACE_LOCKING_MECHANISM> int
 ACE_Reverse_Lock<ACE_LOCKING_MECHANISM>::remove ()

@@ -243,17 +243,9 @@ rather than
         <strong><code>#if</code></strong> directive.  For example,
         <pre>
         #if defined (ACE_HAS_THREADS)
-        # if defined (ACE_HAS_STHREADS)
-        #   include /**/ &lt;synch.h&gt;
-        #   include /**/ &lt;thread.h&gt;
-        #   define ACE_SCOPE_PROCESS P_PID
-        #   define ACE_SCOPE_LWP P_LWPID
-        #   define ACE_SCOPE_THREAD (ACE_SCOPE_LWP + 1)
-        # else
-        #   define ACE_SCOPE_PROCESS 0
-        #   define ACE_SCOPE_LWP 1
-        #   define ACE_SCOPE_THREAD 2
-        # endif /* ACE_HAS_STHREADS */
+        #  define ACE_SCOPE_PROCESS 0
+        #  define ACE_SCOPE_LWP 1
+        #  define ACE_SCOPE_THREAD 2
         #endif /* ACE_HAS_THREADS */
         </pre><p>
 
@@ -379,13 +371,7 @@ If using g++, problems like this can be flagged as a warning by using the "<code
       #include "Foo_T.inl"
       #endif /* __ACE_INLINE__ */
 
-      #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
       #include "Foo_T.cpp"
-      #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-      #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-      #pragma implementation "Foo_T.cpp"
-      #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
       #endif /* FOO_T_H */
 </pre></p>
@@ -765,8 +751,7 @@ Foo::bar ()
 
     <li>It's a good idea to specify the include path (with <code>-I</code>)
         to include any directory which contains files with template
-        definitions.  The Compaq Tru64 cxx <code>-ptv</code> compiler option
-        may help diagnose missing template instantiation problems.<p>
+        definitions.<p>
 
     <li>When referring to member variables and functions, use
         <code>this-&gt;</code><em>member</em>. This makes it clear to the
@@ -809,6 +794,14 @@ Foo::bar ()
 
      <li>Do not use the Win32 <code>TCHAR</code> macros.  The wide character-ness of ACE
          is separate from UNICODE and _UNICODE.
+
+     <li>If you have a <code>printf</code>-like format specifier that
+         uses <code>%s</code> to format a string, certain WCHAR implementations
+         require <code>%ls</code> instead.
+         The macro <code>ACE_TEXT_PRIs</code> contains <code>"s"</code> or <code>"ls"</code>
+         depending upon the WCHAR implementation, and may be used as
+         <code>ACE_TEXT("%") ACE_TEXT_PRI_s</code>, where the first argument may also
+         contain flags and width specifiers.
 
      <li>For TAO, don't use <code>ACE_TCHAR</code> or <code>ACE_TEXT</code>.  The CORBA specification
          defines APIs as using char.  So most of the time there is no need
@@ -1189,9 +1182,7 @@ public:
       the code is removed.<p>
 
   <li>Be <strong>very</strong> careful with the code that you put
-      in a signal handler.  On Solaris, the man pages document systems
-      calls as being Async-Signal-Safe if they can be called from signal
-      handlers.  In general, it's best to just set a flag in a signal
+      in a signal handler. In general, it's best to just set a flag in a signal
       handler and take appropriate action elsewhere.  It's also best
       to avoid using signals, especially asynchronous signals.<p>
 
@@ -1206,8 +1197,7 @@ public:
       This avoids leaving the temporary file even if the program crashes.<p>
 
   <li>Be sure to specify the <code>THR_BOUND</code> thread creation
-    flag for time-critical threads.  This ensures that the thread competes
-    for resources globally on Solaris.  It is harmless on other platforms.<p>
+    flag for time-critical threads. It is harmless on other platforms.<p>
 </ul>
 
 

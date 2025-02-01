@@ -99,19 +99,19 @@ TAO_CEC_TypedEventChannel::destroy_proxy_collection (TAO_CEC_TypedProxyPushConsu
 }
 
 ACE_INLINE PortableServer::POA_ptr
-TAO_CEC_TypedEventChannel::typed_supplier_poa (void)
+TAO_CEC_TypedEventChannel::typed_supplier_poa ()
 {
   return PortableServer::POA::_duplicate (this->typed_supplier_poa_.in ());
 }
 
 ACE_INLINE PortableServer::POA_ptr
-TAO_CEC_TypedEventChannel::typed_consumer_poa (void)
+TAO_CEC_TypedEventChannel::typed_consumer_poa ()
 {
   return PortableServer::POA::_duplicate (this->typed_consumer_poa_.in ());
 }
 
 ACE_INLINE ACE_Lock*
-TAO_CEC_TypedEventChannel::create_consumer_lock (void)
+TAO_CEC_TypedEventChannel::create_consumer_lock ()
 {
   return this->factory_->create_consumer_lock ();
 }
@@ -123,7 +123,7 @@ TAO_CEC_TypedEventChannel::destroy_consumer_lock (ACE_Lock* x)
 }
 
 ACE_INLINE ACE_Lock*
-TAO_CEC_TypedEventChannel::create_supplier_lock (void)
+TAO_CEC_TypedEventChannel::create_supplier_lock ()
 {
   return this->factory_->create_supplier_lock ();
 }
@@ -171,19 +171,9 @@ TAO_CEC_TypedEventChannel::number_of_base_interfaces () const
 }
 
 ACE_INLINE TAO_CEC_TypedEventChannel::ServantRetryMap&
-TAO_CEC_TypedEventChannel::get_servant_retry_map (void)
+TAO_CEC_TypedEventChannel::get_servant_retry_map ()
 {
   return this->retry_map_;
-}
-
-ACE_INLINE
-TAO_CEC_Param::TAO_CEC_Param (void)
-{
-}
-
-ACE_INLINE
-TAO_CEC_Param::~TAO_CEC_Param (void)
-{
 }
 
 ACE_INLINE
@@ -194,7 +184,7 @@ TAO_CEC_Operation_Params::TAO_CEC_Operation_Params (CORBA::ULong num_params)
 }
 
 ACE_INLINE
-TAO_CEC_Operation_Params::~TAO_CEC_Operation_Params (void)
+TAO_CEC_Operation_Params::~TAO_CEC_Operation_Params ()
 {
   delete [] parameters_;
 }

@@ -12,7 +12,6 @@
 
 
 
-
 #include    <string>
 #include    <map>
 #include    <algorithm>
@@ -132,7 +131,6 @@ vary_temp(long temp)
     if (ACE_OS::rand() % 2)
         delta = -delta;
     return temp + delta;
-
 }
 
 //----------------------------------------------------------------
@@ -380,9 +378,6 @@ ICP_Persist::
 
 // Instantiate a single global instance of the class.
 static ICP_Persist mydb("/tmp/CCS_DB");
-
-
-
 
 
 

@@ -14,7 +14,7 @@ public:
   Hello (CORBA::ORB_ptr orb);
 
   // = The skeleton methods
-  virtual char * get_string (void);
+  virtual char * get_string ();
 
 private:
   /// Use an ORB reference to convert strings to objects and shutdown

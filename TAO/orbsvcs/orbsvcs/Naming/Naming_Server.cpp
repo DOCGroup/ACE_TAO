@@ -32,7 +32,7 @@
 #include "tao/AnyTypeCode/Any.h"
 
 #include "ace/Arg_Shifter.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_unistd.h"
 
@@ -260,7 +260,7 @@ TAO_Naming_Server::parse_args (int argc,
         this->round_trip_timeout_ = (int)1.0e7 * ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case '?':
-        // fallthrough
+        ACE_FALLTHROUGH;
       default:
 #if !defined (ACE_NLOGGING)
         const ACE_TCHAR *reqNonMinCorba=
@@ -572,7 +572,6 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
         // Initialize Persistent Naming Service.
         //
         {
-
           // Create Naming Context Implementation Factory to be used for the creation of
           // naming contexts by the TAO_Persistent_Context_Index
           TAO_Persistent_Naming_Context_Factory *naming_context_factory =
@@ -608,7 +607,6 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
                                                             TAO_ROOT_NAMING_CONTEXT,
                                                             context_size);
           this->assign (size_t(ROOT), false, new_context.in());
-
         }
 
 #if !defined (CORBA_E_MICRO)
@@ -787,7 +785,6 @@ TAO_Naming_Server::fini ()
     {
       if (!CORBA::is_nil (this->ns_poa_.in ()))
         this->ns_poa_->destroy (1, 1);
-
     }
   catch (const CORBA::Exception&)
     {
@@ -906,7 +903,6 @@ TAO_Naming_Server::bundle_at(size_t ndx) const
     }
   return &iors_[ndx];
   }
-
 
 
 int

@@ -41,7 +41,7 @@ public:
       this->line_ = line;
     }
 
-  ~Trace (void)
+  ~Trace ()
     {
       ACE_Log_Msg *lm = ACE_LOG_MSG;
       if (lm->tracing_enabled ()

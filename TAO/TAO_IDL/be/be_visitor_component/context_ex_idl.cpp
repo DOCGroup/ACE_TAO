@@ -110,7 +110,6 @@ be_visitor_context_ex_idl::visit_uses (be_uses *node)
     {
       os_ << IdentifierHelper::orig_sn (impl->name ()).c_str ()
           << " get_connection_" << lname << " ();";
-
     }
 
   return 0;

@@ -59,7 +59,7 @@ class ACE_Export ACE_ATM_Acceptor
 {
 public:
   /// Default constructor.
-  ACE_ATM_Acceptor (void);
+  ACE_ATM_Acceptor ();
 
   ~ACE_ATM_Acceptor ();
 
@@ -74,7 +74,7 @@ public:
                    ACE_ATM_Params params = ACE_ATM_Params());
 
   /// Close down the acceptor and release resources.
-  int close (void);
+  int close ();
 
   // = Passive connection acceptance method.
 

@@ -11,12 +11,8 @@ static const char prefix_[] = "sciop";
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_SCIOP_Protocol_Factory::TAO_SCIOP_Protocol_Factory (void)
+TAO_SCIOP_Protocol_Factory::TAO_SCIOP_Protocol_Factory ()
   :  TAO_Protocol_Factory (TAO_TAG_SCIOP_PROFILE)
-{
-}
-
-TAO_SCIOP_Protocol_Factory::~TAO_SCIOP_Protocol_Factory (void)
 {
 }
 
@@ -40,7 +36,7 @@ TAO_SCIOP_Protocol_Factory::options_delimiter () const
 }
 
 TAO_Acceptor *
-TAO_SCIOP_Protocol_Factory::make_acceptor (void)
+TAO_SCIOP_Protocol_Factory::make_acceptor ()
 {
   TAO_Acceptor *acceptor = 0;
 
@@ -58,7 +54,7 @@ TAO_SCIOP_Protocol_Factory::init (int /* argc */, ACE_TCHAR* /* argv */ [])
 }
 
 TAO_Connector *
-TAO_SCIOP_Protocol_Factory::make_connector (void)
+TAO_SCIOP_Protocol_Factory::make_connector ()
 {
   TAO_Connector *connector = 0;
 

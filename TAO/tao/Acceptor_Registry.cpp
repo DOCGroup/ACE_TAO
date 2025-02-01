@@ -14,7 +14,7 @@
 # include "tao/IIOP_Acceptor.h"
 #endif /* ACE_WIN32 && ACE_HAS_IPV6 */
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_ctype.h"
 #include <cstring>
@@ -682,7 +682,7 @@ TAO_Acceptor_Registry::open_i (TAO_ORB_Core *orb_core,
     }
 
   char *last_addr = nullptr;
-  ACE_Auto_Basic_Array_Ptr<char> addr_str (addrs.rep ());
+  std::unique_ptr<char[]> addr_str (addrs.rep ());
 
   const char *astr = ACE_OS::strtok_r (addr_str.get (), ",", &last_addr);
 

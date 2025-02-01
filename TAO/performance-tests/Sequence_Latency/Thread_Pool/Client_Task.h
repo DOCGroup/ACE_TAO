@@ -28,15 +28,15 @@ public:
 
 private:
   /// Make sure that the current thread has a connection available.
-  void validate_connection (void);
+  void validate_connection ();
 
   /// Some performance test methods
-  void test_octet_seq (void);
-  void test_long_seq (void);
-  void test_short_seq (void);
-  void test_char_seq (void);
-  void test_longlong_seq (void);
-  void test_double_seq (void);
+  void test_octet_seq ();
+  void test_long_seq ();
+  void test_short_seq ();
+  void test_char_seq ();
+  void test_longlong_seq ();
+  void test_double_seq ();
 
 private:
   /// The data type of the sequence load to be tested

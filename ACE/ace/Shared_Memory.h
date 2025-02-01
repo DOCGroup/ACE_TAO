@@ -8,7 +8,6 @@
  */
 //==========================================================================
 
-
 #ifndef ACE_SHARED_MEMORY_H
 #define ACE_SHARED_MEMORY_H
 
@@ -33,16 +32,16 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * This is a very simple-minded wrapper, i.e., it really is only
  * useful for allocating large contiguous chunks of shared
  * memory.  For a much more sophisticated version, please check
- * out the <ACE_Malloc> class.
+ * out the ACE_Malloc class.
  */
 class ACE_Export ACE_Shared_Memory
 {
 public:
-  virtual ~ACE_Shared_Memory (void);
+  virtual ~ACE_Shared_Memory ();
 
   // = Note that all the following methods are pure virtual.
-  virtual int close (void) = 0;
-  virtual int remove (void) = 0;
+  virtual int close () = 0;
+  virtual int remove () = 0;
   virtual void *malloc (size_t = 0) = 0;
   virtual int free (void *p) = 0;
   virtual size_t get_segment_size () const = 0;

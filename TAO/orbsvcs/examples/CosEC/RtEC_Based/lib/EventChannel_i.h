@@ -49,17 +49,17 @@ public:
 
   /// The for_consumers method will return the same ConsumerAdmin_ptr
   /// everytime its called.
-  virtual CosEventChannelAdmin::ConsumerAdmin_ptr for_consumers (void);
+  virtual CosEventChannelAdmin::ConsumerAdmin_ptr for_consumers ();
 
   /// The for_suppliers method will return the same SupplierAdmin_ptr
   /// everytime its called.
-  virtual CosEventChannelAdmin::SupplierAdmin_ptr for_suppliers (void);
+  virtual CosEventChannelAdmin::SupplierAdmin_ptr for_suppliers ();
 
   /// Destroys this Event Channel object.
-  virtual void destroy (void);
+  virtual void destroy ();
 
   /// destroys this Event Channel object and <delete>s this object.
-  void shutdown (void);
+  void shutdown ();
 
 private:
   /// ConsumerAdmin servant object.

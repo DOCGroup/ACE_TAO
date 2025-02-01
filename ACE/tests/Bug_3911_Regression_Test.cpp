@@ -20,14 +20,7 @@ init_test ()
 {
   // Cleanup the MMAP file so we won't trip over the leftover mmap
   // file from the previous crash.
-#if defined (ACE_HAS_WINCE) || defined (ACE_OPENVMS)
-  // WinCE cannot do fixed base, ever.
-  ACE_MMAP_Memory_Pool_Options options
-    (0,
-     ACE_MMAP_Memory_Pool_Options::NEVER_FIXED);
-#else
   ACE_MMAP_Memory_Pool_Options options (ACE_DEFAULT_BASE_ADDR);
-#endif /* ACE_HAS_WINCE */
   //FUZZ: disable check_for_lack_ACE_OS
   ACE_MMAP_Memory_Pool mmap (MMAP_FILENAME, &options);
   //FUZZ: enable check_for_lack_ACE_OS
@@ -135,7 +128,6 @@ public:
 
     return shared;
   };
-
 };
 
 ShmemMan* ShmemMan::c_instance = 0;

@@ -52,7 +52,7 @@
 #include "ace/Arg_Shifter.h"
 #include "ace/Argv_Type_Converter.h"
 #include "ace/Static_Object_Lock.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/CORBA_macros.h"
 #include "ace/Logging_Strategy.h"
 
@@ -258,7 +258,7 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid,
     valuetype_adapter_ (nullptr),
     parser_registry_ (),
     bidir_adapter_ (nullptr),
-    bidir_giop_policy_ (0),
+    bidir_giop_policy_ (false),
     ziop_adapter_ (nullptr),
     ziop_enabled_ (false),
     flushing_strategy_ (nullptr),
@@ -333,7 +333,6 @@ TAO_ORB_Core::~TAO_ORB_Core ()
 
   // This will destroy the service repository for this core
   (void) TAO::ORB::close_services (this->config_);
-
 }
 
 int
@@ -800,15 +799,6 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
             this->orb_params ()->ami_collication (true);
           else
             this->orb_params ()->ami_collication (false);
-
-          arg_shifter.consume_arg ();
-        }
-      else if (nullptr != (current_arg = arg_shifter.get_the_parameter
-                (ACE_TEXT("-ORBResources"))))
-        {
-          TAOLIB_DEBUG ((LM_WARNING,
-                      ACE_TEXT ("\"-ORBResources\" has been ")
-                      ACE_TEXT ("deprecated.\n")));
 
           arg_shifter.consume_arg ();
         }
@@ -1409,8 +1399,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
                                             (no_server_side_name_lookups
                                              || dotted_decimal_addresses);
 
-  this->orb_params ()->use_parallel_connects
-    (use_parallel_connects != 0);
+  this->orb_params ()->use_parallel_connects (use_parallel_connects != 0);
 
   this->orb_params ()->linger (linger);
   this->orb_params ()->accept_error_delay (accept_error_delay);
@@ -1729,7 +1718,6 @@ TAO_ORB_Core::collocation_resolver ()
 TAO::PolicyFactory_Registry_Adapter *
 TAO_ORB_Core::policy_factory_registry_i ()
 {
-
   TAO_PolicyFactory_Registry_Factory *loader =
     ACE_Dynamic_Service<TAO_PolicyFactory_Registry_Factory>::instance
       (this->configuration (),
@@ -2101,8 +2089,7 @@ TAO_ORB_Core::create_object (TAO_Stub *stub)
         if (this->is_collocation_enabled (other_core, mprofile))
           {
             other_core->_incr_refcnt();
-             TAO_ORB_Core_Auto_Ptr tmp_auto_ptr (other_core);
-             collocated_orb_core = tmp_auto_ptr;
+            collocated_orb_core.reset(other_core);
             break;
           }
       }
@@ -2166,12 +2153,10 @@ TAO_ORB_Core::initialize_object_i (TAO_Stub *stub, const TAO_MProfile &mprofile)
       {
         TAO_ORB_Core * const other_core = (*i).second.core ();
 
-        if (this->is_collocation_enabled (other_core,
-                                          mprofile))
+        if (this->is_collocation_enabled (other_core, mprofile))
           {
             other_core->_incr_refcnt ();
-            TAO_ORB_Core_Auto_Ptr tmp_auto_ptr (other_core);
-            collocated_orb_core = tmp_auto_ptr;
+            collocated_orb_core.reset(other_core);
             break;
           }
       }
@@ -2769,7 +2754,7 @@ TAO_ORB_Core::resolve_ior_table_i ()
 
       this->adapter_registry_.insert (iortable_adapter.get ());
 
-      // It is now (exception) safe to release ownership from the auto pointers
+      // It is now (exception) safe to release ownership from the unique pointers
       this->ior_table_= tmp_root._retn ();
       iortable_adapter.release ();
     }
@@ -2803,7 +2788,7 @@ TAO_ORB_Core::resolve_async_ior_table_i ()
 
       this->adapter_registry_.insert (iortable_adapter.get ());
 
-      // It is now (exception) safe to release ownership from the auto pointers
+      // It is now (exception) safe to release ownership from the unique pointers
       this->async_ior_table_= tmp_root._retn ();
       iortable_adapter.release ();
     }
@@ -2993,7 +2978,6 @@ TAO_ORB_Core::input_cdr_msgblock_allocator ()
 ACE_Allocator*
 TAO_ORB_Core::output_cdr_dblock_allocator ()
 {
-
   return this->lane_resources ().output_cdr_dblock_allocator ();
 }
 
@@ -3021,7 +3005,6 @@ TAO_ORB_Core::transport_message_buffer_allocator ()
 ACE_Data_Block*
 TAO_ORB_Core::create_input_cdr_data_block (size_t size)
 {
-
   ACE_Allocator *dblock_allocator = nullptr;
   ACE_Allocator *buffer_allocator = nullptr;
 
@@ -3098,7 +3081,6 @@ TAO_ORB_Core::implrepo_service ()
 
   if (CORBA::is_nil (this->implrepo_service_))
     {
-
       try
         {
           CORBA::Object_var temp =
@@ -3248,7 +3230,7 @@ TAO_ORB_Core::connection_timeout_hook (Timeout_Hook hook)
 
 #define TOCSRi TAO_ORB_Core_Static_Resources::instance ()
 
-  // A consern was raised that since this function is called by two
+  // A concern was raised that since this function is called by two
   // different initializers there may be a race condition that might
   // require a lock. We are not using a lock at this time because of
   // two callers, one happens only during service directive processing
@@ -3256,14 +3238,13 @@ TAO_ORB_Core::connection_timeout_hook (Timeout_Hook hook)
   // happens when the OC_Endpoint_Selector_Factory is loaded, the
   // latter is part of the messaging library. The messaging library
   // calls this function as part of pre_init processing, and this call
-  // happes for every ORB instance. This was the case before these The
+  // happens for every ORB instance. This was the case before these The
   // latter call occurs when the messaging library is loaded. The
   // redundant calls occurred then as well. Second, it isn't clear how
   // a lock in this static method would react in the face of windows
   // dlls, shared memory segments, etc. Therefore we are continuing to
   // keep this code lockless as it always was, assuming no
-  // simultanious overwrite will occur.
-
+  // simultaneous overwrite will occur.
   if (TOCSRi->connection_timeout_hook_ == nullptr)
     {
       if (TAO_debug_level > 2)
@@ -3517,7 +3498,6 @@ TAO_ORB_Core::add_interceptor (
       this->client_request_interceptor_adapter_->add_interceptor (
         interceptor,
         policies);
-
     }
   else
     {
@@ -3541,7 +3521,6 @@ TAO_ORB_Core::add_interceptor (
       this->server_request_interceptor_adapter_->add_interceptor (
         interceptor,
         policies);
-
     }
   else
     {

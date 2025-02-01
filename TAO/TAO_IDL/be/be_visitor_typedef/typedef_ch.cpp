@@ -175,8 +175,7 @@ be_visitor_typedef_ch::visit_array (be_array *node)
     }
   else
     {
-      *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-          << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+      TAO_INSERT_COMMENT (os);
 
       // Base type is simply an alias to an array node. Simply output the
       // required typedefs.
@@ -286,8 +285,7 @@ be_visitor_typedef_ch::visit_enum (be_enum *node)
         }
     }
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   // typedef the type and the _slice type.
   *os << "typedef " << bt->nested_type_name (scope)
@@ -317,8 +315,7 @@ be_visitor_typedef_ch::visit_interface (be_interface *node)
       bt = node;
     }
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   // Typedef the object.
   *os << "typedef " << bt->nested_type_name (scope) << " "
@@ -366,8 +363,7 @@ be_visitor_typedef_ch::visit_predefined_type (be_predefined_type *node)
       bt = node;
     }
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   // Typedef the type.
   *os << "typedef " << bt->nested_type_name (scope)
@@ -400,8 +396,7 @@ be_visitor_typedef_ch::visit_string (be_string *node)
   be_typedef *tdef = this->ctx_->tdef ();
   be_decl *scope = this->ctx_->scope ()->decl ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   if (node->width () == (long) sizeof (char))
     {
@@ -459,8 +454,54 @@ be_visitor_typedef_ch::visit_sequence (be_sequence *node)
     }
   else
     {
-      *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-          << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+      TAO_INSERT_COMMENT (os);
+
+      // Typedef the type.
+      *os << "typedef " << bt->nested_type_name (scope)
+          << " " << tdef->nested_type_name (scope) << ";" << be_nl;
+      // Typedef the _var and _out types.
+      *os << "typedef " << bt->nested_type_name (scope, "_var")
+          << " " << tdef->nested_type_name (scope, "_var") << ";" << be_nl;
+      *os << "typedef " << bt->nested_type_name (scope, "_out")
+          << " " << tdef->nested_type_name (scope, "_out") << ";";
+    }
+
+  return 0;
+}
+
+int
+be_visitor_typedef_ch::visit_map (be_map *node)
+{
+  TAO_OutStream *os = this->ctx_->stream ();
+  be_typedef *tdef = this->ctx_->tdef ();
+  be_decl *scope = this->ctx_->scope ()->decl ();
+  be_type *bt = nullptr;
+
+  // Typedef of a typedef?
+  if (this->ctx_->alias ())
+    {
+      bt = this->ctx_->alias ();
+    }
+  else
+    {
+      bt = node;
+    }
+
+  if (bt->node_type () == AST_Decl::NT_map)
+    {
+      // Let the base class visitor handle this case.
+      if (this->be_visitor_typedef::visit_map (node) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_typedef_ch::"
+                             "visit_map - "
+                             "base class visitor failed\n"),
+                            -1);
+        }
+    }
+  else
+    {
+      TAO_INSERT_COMMENT (os);
 
       // Typedef the type.
       *os << "typedef " << bt->nested_type_name (scope)
@@ -506,8 +547,7 @@ be_visitor_typedef_ch::visit_structure (be_structure *node)
         }
     }
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   // Typedef the type.
   *os << "typedef " << bt->nested_type_name (scope)
@@ -552,8 +592,7 @@ be_visitor_typedef_ch::visit_union (be_union *node)
         }
     }
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   // Typedef the type.
   *os << "typedef " << bt->nested_type_name (scope)
@@ -585,8 +624,7 @@ be_visitor_typedef_ch::visit_valuebox (be_valuebox *node)
       bt = node;
     }
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   // Typedef the object.
   *os << "typedef " << bt->nested_type_name (scope) << " "
@@ -621,8 +659,7 @@ be_visitor_typedef_ch::visit_valuetype (be_valuetype *node)
       bt = node;
     }
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   // Typedef the object.
   *os << "typedef " << bt->nested_type_name (scope) << " "

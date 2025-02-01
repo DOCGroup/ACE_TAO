@@ -116,17 +116,6 @@ inline struct tm *ace_localtime_r_helper (const time_t *clock, struct tm *res)
 }
 #endif /* !ACE_LACKS_LOCALTIME_R */
 
-#if !defined (ACE_LACKS_DIFFTIME)
-# if defined (_WIN32_WCE) && ((_WIN32_WCE >= 0x600) && (_WIN32_WCE <= 0x700)) && !defined (_USE_32BIT_TIME_T) \
-    && defined (_MSC_VER)
-    // The WinCE 6.0/7.0 SDK ships with a diff_time that uses __time32_t as type
-    // not time_t. This resolves in compilation warnings because time_t
-    // can be 64bit. Disable at this moment the warning for just this method
-    // else we get two compile warnings on each source file that includes
-    // this file.
-#   pragma warning (push)
-#   pragma warning (disable: 4244)
-# endif
 /// Helper for the ACE_OS::difftime() function
 /**
  * We moved the difftime code that used to be in ACE_OS::difftime()
@@ -140,19 +129,9 @@ inline double ace_difftime(time_t t1, time_t t0)
 {
   return difftime (t1, t0);
 }
-# if defined (_WIN32_WCE) && ((_WIN32_WCE >= 0x600) && (_WIN32_WCE <= 0x700)) && !defined (_USE_32BIT_TIME_T) \
-    && defined (_MSC_VER)
-#   pragma warning (pop)
-# endif
-#endif /* !ACE_LACKS_DIFFTIME */
 
 # if defined (ACE_WIN32)
-// 64-bit quad-word definitions.
-typedef unsigned __int64 ACE_QWORD;
 typedef unsigned __int64 ACE_hrtime_t;
-inline ACE_QWORD ACE_MAKE_QWORD (DWORD lo, DWORD hi) { return ACE_QWORD (lo) | (ACE_QWORD (hi) << 32); }
-inline DWORD ACE_LOW_DWORD  (ACE_QWORD q) { return (DWORD) q; }
-inline DWORD ACE_HIGH_DWORD (ACE_QWORD q) { return (DWORD) (q >> 32); }
 # elif defined (_TNS_R_TARGET)
 typedef long long ACE_hrtime_t;
 # else /* !ACE_WIN32 */
@@ -197,18 +176,10 @@ namespace ACE_OS
   ACE_NAMESPACE_INLINE_FUNCTION
   ACE_TCHAR *ctime (const time_t *t);
 
-#if defined (ACE_HAS_WINCE) && !defined (_DEBUG)
-  extern ACE_EXPORT_MACRO
-#else
   ACE_NAMESPACE_INLINE_FUNCTION
-#endif
   ACE_TCHAR *ctime_r (const time_t *clock, ACE_TCHAR *buf, int buflen);
 
-#if !defined (ACE_LACKS_DIFFTIME)
   ACE_NAMESPACE_INLINE_FUNCTION
-#else
-  extern ACE_Export
-#endif /* ! ACE_LACKS_DIFFTIME */
   double difftime (time_t t1,
                    time_t t0);
 

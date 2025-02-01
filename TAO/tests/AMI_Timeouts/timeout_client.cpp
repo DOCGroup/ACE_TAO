@@ -161,7 +161,6 @@ TimeoutClient::send (CORBA::Boolean async,
       // Trap this exception and continue...
       ACE_DEBUG ((LM_DEBUG,
                   " timeout "));
-
     }
 
   // get rid of the policy, you created before.

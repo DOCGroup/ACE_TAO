@@ -263,7 +263,7 @@ be_array::gen_ostream_operator (TAO_OutStream *os,
       AST_Expression *expr = this->dims ()[i];
 
       // Generate a loop for each dimension.
-      *os << "for ( ::CORBA::ULong i" << i << " = 0; i" << i << " < "
+      *os << "for (::CORBA::ULong i" << i << " = 0; i" << i << " < "
           << expr->ev ()->u.ulval << "; ++i" << i << ")" << be_idt_nl
           << "{" << be_idt_nl
           << "if (i" << i << " != 0)" << be_idt_nl

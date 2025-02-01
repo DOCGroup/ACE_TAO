@@ -27,7 +27,7 @@ ACE_Typed_SV_Message_Queue<T>::dump () const
 }
 
 template <class T>
-ACE_Typed_SV_Message_Queue<T>::ACE_Typed_SV_Message_Queue (void)
+ACE_Typed_SV_Message_Queue<T>::ACE_Typed_SV_Message_Queue ()
 {
   ACE_TRACE ("ACE_Typed_SV_Message_Queue<T>::ACE_Typed_SV_Message_Queue");
 }
@@ -44,7 +44,7 @@ ACE_Typed_SV_Message_Queue<T>::ACE_Typed_SV_Message_Queue (key_t external_id,
 }
 
 template <class T>
-ACE_Typed_SV_Message_Queue<T>::~ACE_Typed_SV_Message_Queue (void)
+ACE_Typed_SV_Message_Queue<T>::~ACE_Typed_SV_Message_Queue ()
 {
   ACE_TRACE ("ACE_Typed_SV_Message_Queue<T>::~ACE_Typed_SV_Message_Queue");
 }

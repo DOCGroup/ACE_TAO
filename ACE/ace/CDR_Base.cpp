@@ -239,12 +239,12 @@ ACE_CDR::swap_2_array (char const * orig, char* target, size_t n)
     ACE_CDR::swap_2 (orig, target);
     orig += 2;
     target += 2;
-    // fallthrough
+    ACE_FALLTHROUGH;
   case 2:
     ACE_CDR::swap_2 (orig, target);
     orig += 2;
     target += 2;
-    // fallthrough
+    ACE_FALLTHROUGH;
   case 1:
     ACE_CDR::swap_2 (orig, target);
   }
@@ -433,12 +433,12 @@ ACE_CDR::swap_4_array (char const * orig, char* target, size_t n)
     ACE_CDR::swap_4 (orig, target);
     orig += 4;
     target += 4;
-    // fallthrough
+    ACE_FALLTHROUGH;
   case 2:
     ACE_CDR::swap_4 (orig, target);
     orig += 4;
     target += 4;
-    // fallthrough
+    ACE_FALLTHROUGH;
   case 1:
     ACE_CDR::swap_4 (orig, target);
   }
@@ -811,7 +811,7 @@ ACE_CDR::Fixed ACE_CDR::Fixed::from_integer (ACE_CDR::ULongLong val)
 
 ACE_CDR::Fixed ACE_CDR::Fixed::from_floating (LongDouble val)
 {
-#if defined ACE_OPENVMS || (defined ACE_VXWORKS && !defined __RTP__)
+#if defined ACE_VXWORKS && !defined __RTP__
   typedef double BigFloat;
 #elif defined NONNATIVE_LONGDOUBLE
   typedef LongDouble::NativeImpl BigFloat;
@@ -932,7 +932,7 @@ ACE_CDR::Fixed ACE_CDR::Fixed::from_string (const char *str)
       ++f.digits_;
     }
 
-  if (!f.scale_ && str[span - f.digits_ - 1] == '.')
+  if (!f.scale_ && span > f.digits_ && str[span - f.digits_ - 1] == '.')
     f.scale_ = f.digits_;
 
   if (idx >= 0)

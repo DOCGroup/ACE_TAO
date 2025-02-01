@@ -14,7 +14,7 @@
 
 #include "orbsvcs/ESF/ESF_Proxy_Collection.h"
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 //#define DEBUG_LEVEL 9
 #ifndef DEBUG_LEVEL
@@ -41,7 +41,6 @@ TAO_Notify_ConsumerAdmin::get_admin_type_name () const
 {
   return "consumer_admin";
 }
-
 
 
 TAO_Notify_ConsumerAdmin::~TAO_Notify_ConsumerAdmin ()

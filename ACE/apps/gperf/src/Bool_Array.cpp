@@ -29,7 +29,7 @@
 
 // Prints out debugging diagnostics.
 
-Bool_Array::~Bool_Array (void)
+Bool_Array::~Bool_Array ()
 {
   if (option[DEBUGGING])
     ACE_DEBUG ((LM_DEBUG,
@@ -40,7 +40,7 @@ Bool_Array::~Bool_Array (void)
   delete [] this->storage_array_;
 }
 
-Bool_Array::Bool_Array (void)
+Bool_Array::Bool_Array ()
   : storage_array_ (0),
     generation_number_ (0),
     size_ (0)
@@ -82,7 +82,7 @@ Bool_Array::find (u_long slot)
 }
 
 void
-Bool_Array::reset (void)
+Bool_Array::reset ()
 {
   if (++generation_number_ == 0)
     {

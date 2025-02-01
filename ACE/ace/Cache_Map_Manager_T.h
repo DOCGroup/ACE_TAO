@@ -98,14 +98,14 @@ public:
 
   /// Close down a <Cache_Map_Manager> and release dynamically allocated
   /// resources.
-  virtual ~ACE_Cache_Map_Manager (void);
+  virtual ~ACE_Cache_Map_Manager ();
 
   /// Initialize a cache with size @a length.
   int open (size_t length = ACE_DEFAULT_MAP_SIZE,
             ACE_Allocator *alloc = nullptr);
 
   /// Close down a cache and release dynamically allocated resources.
-  int close (void);
+  int close ();
 
   /**
    * Associate @a key with @a value.  If @a key is already in the CMAP_TYPE
@@ -187,7 +187,7 @@ public:
               VALUE &value);
 
   /// Remove entries from the cache depending upon the strategy.
-  int purge (void);
+  int purge ();
 
   /// Return the current size of the cache.
   size_t current_size () const;
@@ -201,24 +201,23 @@ public:
   // = STL styled iterator factory functions.
 
   /// Return forward iterator.
-  ITERATOR begin (void);
-  ITERATOR end (void);
+  ITERATOR begin ();
+  ITERATOR end ();
 
   /// Return reverse iterator.
-  REVERSE_ITERATOR rbegin (void);
-  REVERSE_ITERATOR rend (void);
+  REVERSE_ITERATOR rbegin ();
+  REVERSE_ITERATOR rend ();
 
   /// The map managed by the Cache_Map_Manager.
-  CMAP_TYPE &map (void);
+  CMAP_TYPE &map ();
 
   /// The caching strategy used on the cache.
-  CACHING_STRATEGY &caching_strategy (void);
+  CACHING_STRATEGY &caching_strategy ();
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-
   /// The underlying map which needs to be cached.
   CMAP_TYPE map_;
 
@@ -258,7 +257,7 @@ public:
   /// Copy constructor.
   ACE_Cache_Map_Iterator (const ACE_Cache_Map_Iterator<KEY, VALUE, IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> &rhs);
 
-  virtual ~ACE_Cache_Map_Iterator (void);
+  virtual ~ACE_Cache_Map_Iterator () = default;
 
   // = Iteration methods.
 
@@ -279,20 +278,20 @@ public:
   // = STL styled iteration, compare, and reference functions.
 
   /// Prefix advance
-  ACE_Cache_Map_Iterator<KEY, VALUE, IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> &operator++ (void);
+  ACE_Cache_Map_Iterator<KEY, VALUE, IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> &operator++ ();
 
   /// Postfix advance.
   ACE_Cache_Map_Iterator<KEY, VALUE, IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> operator++ (int);
 
   /// Prefix reverse.
-  ACE_Cache_Map_Iterator<KEY, VALUE, IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> &operator-- (void);
+  ACE_Cache_Map_Iterator<KEY, VALUE, IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> &operator-- ();
 
   /// Postfix reverse.
   ACE_Cache_Map_Iterator<KEY, VALUE, IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> operator-- (int);
 
   /// Returns the iterator of the internal map in the custody of the
   /// Cache_Map_Manager.
-  IMPLEMENTATION &iterator_implementation (void);
+  IMPLEMENTATION &iterator_implementation ();
 
   /// Dump the state of an object.
   void dump () const;
@@ -331,7 +330,7 @@ public:
   /// Copy constructor.
   ACE_Cache_Map_Reverse_Iterator (const ACE_Cache_Map_Reverse_Iterator<KEY, VALUE, REVERSE_IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> &rhs);
 
-  ~ACE_Cache_Map_Reverse_Iterator (void);
+  ~ACE_Cache_Map_Reverse_Iterator () = default;
 
   // = Iteration methods.
 
@@ -352,20 +351,20 @@ public:
   // = STL styled iteration, compare, and reference functions.
 
   /// Prefix advance
-  ACE_Cache_Map_Reverse_Iterator<KEY, VALUE, REVERSE_IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> &operator++ (void);
+  ACE_Cache_Map_Reverse_Iterator<KEY, VALUE, REVERSE_IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> &operator++ ();
 
   /// Postfix advance.
   ACE_Cache_Map_Reverse_Iterator<KEY, VALUE, REVERSE_IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> operator++ (int);
 
   /// Prefix reverse.
-  ACE_Cache_Map_Reverse_Iterator<KEY, VALUE, REVERSE_IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> &operator-- (void);
+  ACE_Cache_Map_Reverse_Iterator<KEY, VALUE, REVERSE_IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> &operator-- ();
 
   /// Postfix reverse.
   ACE_Cache_Map_Reverse_Iterator<KEY, VALUE, REVERSE_IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> operator-- (int);
 
   /// Returns the iterator of the internal map in the custody of the
   /// Cache_Map_Manager.
-  REVERSE_IMPLEMENTATION &iterator_implementation (void);
+  REVERSE_IMPLEMENTATION &iterator_implementation ();
 
   /// Dump the state of an object.
   void dump () const;
@@ -385,13 +384,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #include "ace/Cache_Map_Manager_T.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Cache_Map_Manager_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Cache_Map_Manager_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 

@@ -10,13 +10,13 @@
 #include "ace/OS_NS_sys_time.h"
 
   // Constructor
-  Logger_Client::Logger_Client (void)
+  Logger_Client::Logger_Client ()
 {
   // Do nothing
 }
 
 // Destructor
-Logger_Client::~Logger_Client (void)
+Logger_Client::~Logger_Client ()
 {
   // Do nothing
 }
@@ -67,11 +67,10 @@ Logger_Client::init (int argc, ACE_TCHAR *argv[])
     }
 
   return 0;
-
 }
 
 int
-Logger_Client::init_naming_service (void)
+Logger_Client::init_naming_service ()
 {
   // Initialize the naming services
   if (my_name_client_.init (orb_.in ()) != 0)
@@ -125,7 +124,7 @@ Logger_Client::init_naming_service (void)
 }
 
 int
-Logger_Client::init_loggers (void)
+Logger_Client::init_loggers ()
 {
   // Retrieve the Logger obj ref corresponding to key1 and
   // key2.
@@ -175,7 +174,7 @@ Logger_Client::init_loggers (void)
 // Execute client example code.
 
 int
-Logger_Client::run (void)
+Logger_Client::run ()
 {
   try
     {
@@ -262,7 +261,7 @@ Logger_Client::run (void)
 // Parses the command line arguments and returns an error status.
 
 int
-Logger_Client::parse_args (void)
+Logger_Client::parse_args ()
 {
   ACE_Get_Opt get_opts (argc_, argv_, ACE_TEXT("d"));
   int c;

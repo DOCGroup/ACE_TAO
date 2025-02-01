@@ -611,7 +611,6 @@ int HandlersRegister::scheduleTimers (const ACE_Time_Value &p_TestTime)
                           -1);
 
       DgramHandlers_[ i ] ->expectedTriggers (DgramsToSend);
-
     }
 
   return 0;
@@ -900,7 +899,6 @@ void testQtReactor (int argc, ACE_TCHAR *argv[])
       0 <= handlersRegister.registerDgramHandlers () &&
       0 <= handlersRegister.registerTCPHandlers ())
     {
-
       app.exec (TotalTestTime);
 
       if (0  != handlersRegister.analyze ())

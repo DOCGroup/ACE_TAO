@@ -17,7 +17,7 @@ TAO::SSLIOP::Current::implementation (TAO::SSLIOP::Current_Impl *impl)
 }
 
 ACE_INLINE TAO::SSLIOP::Current_Impl *
-TAO::SSLIOP::Current::implementation (void)
+TAO::SSLIOP::Current::implementation ()
 {
   if (this->orb_core_ == 0)
     return 0;

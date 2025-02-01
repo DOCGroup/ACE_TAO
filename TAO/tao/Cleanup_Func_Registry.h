@@ -40,7 +40,7 @@ class TAO_Export TAO_Cleanup_Func_Registry
 
 public:
   /// Constructor.
-  TAO_Cleanup_Func_Registry ();
+  TAO_Cleanup_Func_Registry () = default;
 
   /// Return the number of registered cleanup functions.
   size_t size () const;

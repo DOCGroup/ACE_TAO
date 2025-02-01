@@ -28,7 +28,7 @@
 #include "ace/Null_Mutex.h"
 #include "ace/Mutex.h"
 #include "ace/RW_Thread_Mutex.h"
-#if defined (ACE_DISABLE_WIN32_ERROR_WINDOWS) && !defined (ACE_HAS_WINCE)
+#if defined (ACE_DISABLE_WIN32_ERROR_WINDOWS)
 # include "ace/OS_NS_stdlib.h"
 # include /**/ <crtdbg.h>
 #endif // ACE_DISABLE_WIN32_ERROR_WINDOWS
@@ -53,7 +53,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Note the following fix was derived from that proposed by Jochen Kalmbach
 // http://blog.kalmbachnet.de/?postid=75
-#if defined (ACE_DISABLE_WIN32_ERROR_WINDOWS) && !defined (ACE_HAS_WINCE)
+#if defined (ACE_DISABLE_WIN32_ERROR_WINDOWS)
 LPTOP_LEVEL_EXCEPTION_FILTER WINAPI ACEdisableSetUnhandledExceptionFilter (
   LPTOP_LEVEL_EXCEPTION_FILTER /*lpTopLevelExceptionFilter*/)
 {
@@ -257,7 +257,7 @@ ACE_Object_Manager::init ()
             }
 #     endif /* ACE_HAS_TSS_EMULATION */
 
-#if defined (ACE_DISABLE_WIN32_ERROR_WINDOWS) && !defined (ACE_HAS_WINCE)
+#if defined (ACE_DISABLE_WIN32_ERROR_WINDOWS)
 #if defined (_DEBUG) && (defined (_MSC_VER) || defined (__INTEL_COMPILER) || defined (__MINGW32__))
           _CrtSetReportMode( _CRT_ERROR, _CRTDBG_MODE_FILE );
           _CrtSetReportFile( _CRT_ERROR, _CRTDBG_FILE_STDERR );
@@ -353,13 +353,13 @@ ACE_Object_Manager::init ()
 
 #if defined (ACE_HAS_TSS_EMULATION)
 int
-ACE_Object_Manager::init_tss (void)
+ACE_Object_Manager::init_tss ()
 {
   return ACE_Object_Manager::instance ()->init_tss_i ();
 }
 
 int
-ACE_Object_Manager::init_tss_i (void)
+ACE_Object_Manager::init_tss_i ()
 {
   ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
     *instance_->internal_lock_, -1));

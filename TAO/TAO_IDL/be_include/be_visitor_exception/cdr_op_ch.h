@@ -25,7 +25,6 @@
  */
 class be_visitor_exception_cdr_op_ch : public be_visitor_exception
 {
-
 public:
   be_visitor_exception_cdr_op_ch (be_visitor_context *ctx);
   ~be_visitor_exception_cdr_op_ch ();

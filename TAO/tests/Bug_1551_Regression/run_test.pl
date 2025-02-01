@@ -114,7 +114,7 @@ while($n < $ntimes) {
 
     sleep (30);
 
-    $server_status = $SV->WaitKill ($server->ProcessStopWaitInterval() + 15);
+    $server_status = $SV->WaitKill ($server->ProcessStopWaitInterval() + 15, {self_crash => 1});
     if ($server_status < 0) {
         print STDERR "ERROR: server returned $server_status\n";
         $CL1->Kill (); $CL1->TimedWait (1);
@@ -123,7 +123,7 @@ while($n < $ntimes) {
         exit 1;
     }
 
-    $client_status = $CL1->WaitKill ($client1->ProcessStopWaitInterval());
+    $client_status = $CL1->WaitKill ($client1->ProcessStopWaitInterval(), {self_crash => 1});
     if ($client_status != 0) {
         print STDERR "ERROR: client returned $client_status\n";
         $CL2->Kill (); $CL2->TimedWait (1);
@@ -131,14 +131,14 @@ while($n < $ntimes) {
         exit 1;
     }
 
-    $client_status = $CL2->WaitKill ($client2->ProcessStopWaitInterval());
+    $client_status = $CL2->WaitKill ($client2->ProcessStopWaitInterval(), {self_crash => 1});
     if ($client_status != 0) {
         print STDERR "ERROR: client returned $client_status\n";
         $CL3->Kill (); $CL3->TimedWait (1);
         exit 1;
     }
 
-    $client_status = $CL3->WaitKill ($client3->ProcessStopWaitInterval());
+    $client_status = $CL3->WaitKill ($client3->ProcessStopWaitInterval(), {self_crash => 1});
     if ($client_status != 0) {
         print STDERR "ERROR: client returned $client_status\n";
         exit 1;

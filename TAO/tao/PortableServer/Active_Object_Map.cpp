@@ -7,7 +7,7 @@
 
 #include "tao/SystemException.h"
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/CORBA_macros.h"
 #include "tao/debug.h"
 #include "PortableServer_Functions.h"
@@ -115,7 +115,7 @@ TAO_Active_Object_Map::TAO_Active_Object_Map (
 #endif
     }
 
-  // Give ownership to the auto pointer.
+  // Give ownership to the unique pointer.
   std::unique_ptr<TAO_Id_Uniqueness_Strategy> new_id_uniqueness_strategy (id_uniqueness_strategy);
 
   TAO_Lifespan_Strategy *lifespan_strategy = 0;
@@ -139,7 +139,7 @@ TAO_Active_Object_Map::TAO_Active_Object_Map (
                         CORBA::NO_MEMORY ());
     }
 
-  // Give ownership to the auto pointer.
+  // Give ownership to the unique pointer.
   std::unique_ptr<TAO_Lifespan_Strategy> new_lifespan_strategy (lifespan_strategy);
 
   TAO_Id_Assignment_Strategy *id_assignment_strategy = 0;
@@ -174,7 +174,7 @@ TAO_Active_Object_Map::TAO_Active_Object_Map (
 #endif
     }
 
-  // Give ownership to the auto pointer.
+  // Give ownership to the unique pointer.
   std::unique_ptr<TAO_Id_Assignment_Strategy> new_id_assignment_strategy (id_assignment_strategy);
 
   TAO_Id_Hint_Strategy *id_hint_strategy = 0;
@@ -196,7 +196,7 @@ TAO_Active_Object_Map::TAO_Active_Object_Map (
                         CORBA::NO_MEMORY ());
     }
 
-  // Give ownership to the auto pointer.
+  // Give ownership to the unique pointer.
   std::unique_ptr<TAO_Id_Hint_Strategy> new_id_hint_strategy (id_hint_strategy);
 
   servant_map *sm = 0;
@@ -230,7 +230,7 @@ TAO_Active_Object_Map::TAO_Active_Object_Map (
         }
     }
 
-  // Give ownership to the auto pointer.
+  // Give ownership to the unique pointer.
   std::unique_ptr<servant_map> new_servant_map (sm);
 
   user_id_map *uim = 0;
@@ -300,7 +300,7 @@ TAO_Active_Object_Map::TAO_Active_Object_Map (
         }
     }
 
-  // Give ownership to the auto pointer.
+  // Give ownership to the unique pointer.
   std::unique_ptr<user_id_map> new_user_id_map (uim);
 
   id_uniqueness_strategy->set_active_object_map (this);
@@ -308,7 +308,7 @@ TAO_Active_Object_Map::TAO_Active_Object_Map (
   id_assignment_strategy->set_active_object_map (this);
 
   // Finally everything is fine.  Make sure to take ownership away
-  // from the auto pointer.
+  // from the unique pointer.
   this->id_uniqueness_strategy_ = std::move(new_id_uniqueness_strategy);
   this->lifespan_strategy_ =  std::move(new_lifespan_strategy);
   this->id_assignment_strategy_ = std::move(new_id_assignment_strategy);
@@ -322,7 +322,7 @@ TAO_Active_Object_Map::TAO_Active_Object_Map (
 #endif /* TAO_HAS_MONITOR_POINTS==1 */
 }
 
-TAO_Active_Object_Map::~TAO_Active_Object_Map (void)
+TAO_Active_Object_Map::~TAO_Active_Object_Map ()
 {
   user_id_map::iterator iterator = this->user_id_map_->begin ();
   user_id_map::iterator end = this->user_id_map_->end ();
@@ -376,10 +376,6 @@ TAO_Active_Object_Map::is_user_id_in_map (
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-
-TAO_Id_Uniqueness_Strategy::~TAO_Id_Uniqueness_Strategy (void)
-{
-}
 
 void
 TAO_Id_Uniqueness_Strategy::set_active_object_map (
@@ -790,10 +786,6 @@ TAO_Multiple_Id_Strategy::remaining_activations (
 }
 #endif
 
-TAO_Lifespan_Strategy::~TAO_Lifespan_Strategy (void)
-{
-}
-
 void
 TAO_Lifespan_Strategy::set_active_object_map (
   TAO_Active_Object_Map *active_object_map)
@@ -912,10 +904,6 @@ TAO_Active_Object_Map_Entry *&entry)
   return result;
 }
 #endif
-
-TAO_Id_Assignment_Strategy::~TAO_Id_Assignment_Strategy (void)
-{
-}
 
 void
 TAO_Id_Assignment_Strategy::set_active_object_map (
@@ -1071,18 +1059,8 @@ TAO_System_Id_With_Multiple_Id_Strategy::bind_using_system_id (
 
 ////////////////////////////////////////////////////////////////////////////////
 
-TAO_Id_Hint_Strategy::~TAO_Id_Hint_Strategy (void)
-{
-}
-
-////////////////////////////////////////////////////////////////////////////////
-
 TAO_Active_Hint_Strategy::TAO_Active_Hint_Strategy (CORBA::ULong map_size)
   : system_id_map_ (map_size)
-{
-}
-
-TAO_Active_Hint_Strategy::~TAO_Active_Hint_Strategy (void)
 {
 }
 
@@ -1118,7 +1096,7 @@ TAO_Active_Hint_Strategy::find (const PortableServer::ObjectId &system_id,
 }
 
 size_t
-TAO_Active_Hint_Strategy::hint_size (void)
+TAO_Active_Hint_Strategy::hint_size ()
 {
   return ACE_Active_Map_Manager_Key::size ();
 }
@@ -1134,10 +1112,6 @@ TAO_Active_Hint_Strategy::system_id (PortableServer::ObjectId_out system_id,
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-
-TAO_No_Hint_Strategy::~TAO_No_Hint_Strategy (void)
-{
-}
 
 int
 TAO_No_Hint_Strategy::recover_key (const PortableServer::ObjectId &system_id,
@@ -1172,7 +1146,7 @@ TAO_No_Hint_Strategy::find (const PortableServer::ObjectId &,
 }
 
 size_t
-TAO_No_Hint_Strategy::hint_size (void)
+TAO_No_Hint_Strategy::hint_size ()
 {
   return 0;
 }

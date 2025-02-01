@@ -39,7 +39,7 @@ namespace TAO
     /// Releases the lock, closes the file, and deletes the I/O stream.
     /// Destructors of derived classes should call this this will
     /// virtual functions are available.
-    void release (void);
+    void release ();
 
     /// Return when the object in memory has last changed
     virtual time_t get_object_last_changed () = 0;
@@ -52,7 +52,6 @@ namespace TAO
     /// the persistent store.
     enum Method_Type
     {
-
       /// Construction with persistent file already existing
       CREATE_WITH_FILE,
 
@@ -80,13 +79,13 @@ namespace TAO
 
     /// Complete the initialization of the containing object, should
     /// be called with lock held after calling init_no_load
-    void reload (void);
+    void reload ();
 
     /// Check if the object is current with the last update.
-    virtual bool object_obsolete (void);
+    virtual bool object_obsolete ();
 
     /// Mark the object as up to date
-    virtual void mark_object_current (void);
+    virtual void mark_object_current ();
 
     /// Indicate when the object in memory has last changed
     virtual void set_object_last_changed (const time_t & time) = 0;

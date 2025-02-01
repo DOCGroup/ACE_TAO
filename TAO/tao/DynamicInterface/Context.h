@@ -129,19 +129,19 @@ namespace CORBA
     ContextList (CORBA::ULong len, char **ctx_list);
 
     /// Destructor.
-    ~ContextList (void);
+    ~ContextList ();
 
     /// Return the number of elements.
-    CORBA::ULong count (void);
+    CORBA::ULong count ();
 
     /// Increment the reference count.
-    ContextList_ptr _duplicate (void);
+    ContextList_ptr _duplicate ();
 
     /// Increment the reference count.
     static ContextList_ptr _duplicate (ContextList *);
 
     /// Decrement the reference count and delete if it is 0.
-    void _destroy (void);
+    void _destroy ();
 
     /// Return null pointer of this type.
     static ContextList_ptr _nil ();

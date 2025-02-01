@@ -16,10 +16,6 @@
 #  include "ace/OS_NS_stdio.h"
 #endif /* ACE_LACKS_ACCESS */
 
-#if defined (ACE_HAS_ACCESS_EMULATION)
-#  include "ace/os_include/os_unistd.h"
-#endif /* ACE_HAS_ACCESS_EMULATION */
-
 #if defined (ACE_VXWORKS) && (ACE_VXWORKS <= 0x690)
 #  if defined (__RTP__)
 #    include "ace/os_include/os_strings.h"
@@ -39,23 +35,9 @@ ACE_OS::access (const char *path, int amode)
 {
   ACE_OS_TRACE ("ACE_OS::access");
 #if defined (ACE_LACKS_ACCESS)
-#  if defined (ACE_HAS_ACCESS_EMULATION)
-  // @@ WINCE: There should be a Win32 API that can do this.
-  // Hard coded read access here.
-  ACE_UNUSED_ARG (amode);
-  FILE* handle = ACE_OS::fopen (ACE_TEXT_CHAR_TO_TCHAR(path),
-                                ACE_TEXT ("r"));
-  if (handle != 0)
-    {
-      ACE_OS::fclose (handle);
-      return 0;
-    }
-  return -1;
-#  else
     ACE_UNUSED_ARG (path);
     ACE_UNUSED_ARG (amode);
     ACE_NOTSUP_RETURN (-1);
-#  endif  /* ACE_HAS_ACCESS_EMULATION */
 #elif defined(ACE_WIN32)
   // Windows doesn't support checking X_OK(6)
 #  if defined (ACE_ACCESS_EQUIVALENT)
@@ -73,11 +55,11 @@ ACE_OS::access (const char *path, int amode)
 ACE_INLINE int
 ACE_OS::access (const wchar_t *path, int amode)
 {
-#if defined (ACE_WIN32) && !defined (ACE_LACKS__WACCESS)
+#if defined (ACE_WIN32)
   return ::_waccess (path, amode);
-#else /* ACE_WIN32 && !ACE_HAS_WINCE */
+#else /* ACE_WIN32 */
   return ACE_OS::access (ACE_Wide_To_Ascii (path).char_rep (), amode);
-#endif /* ACE_WIN32 && !ACE_LACKS__WACCESS */
+#endif /* ACE_WIN32 */
 }
 #endif /* ACE_HAS_WCHAR */
 
@@ -97,11 +79,11 @@ ACE_INLINE long
 ACE_OS::getpagesize ()
 {
   ACE_OS_TRACE ("ACE_OS::getpagesize");
-#if defined (ACE_WIN32) && !defined (ACE_HAS_PHARLAP)
+#if defined (ACE_WIN32)
   SYSTEM_INFO sys_info;
   ::GetSystemInfo (&sys_info);
   return (long) sys_info.dwPageSize;
-#elif defined (_SC_PAGESIZE) && !defined (ACE_HAS_NOTSUP_SC_PAGESIZE)
+#elif defined (_SC_PAGESIZE)
   return ::sysconf (_SC_PAGESIZE);
 #elif defined (ACE_HAS_GETPAGESIZE)
   return ::getpagesize ();
@@ -127,26 +109,18 @@ ACE_INLINE int
 ACE_OS::chdir (const char *path)
 {
   ACE_OS_TRACE ("ACE_OS::chdir");
-#if defined (ACE_LACKS_CHDIR)
-  ACE_UNUSED_ARG (path);
-  ACE_NOTSUP_RETURN (-1);
-#elif defined (ACE_HAS_NONCONST_CHDIR)
-  return ::chdir (const_cast<char *> (path));
-#elif defined (ACE_CHDIR_EQUIVALENT)
+#if defined (ACE_CHDIR_EQUIVALENT)
   return ACE_CHDIR_EQUIVALENT (path);
 #else
   return ::chdir (path);
-#endif /* ACE_HAS_NONCONST_CHDIR */
+#endif /* ACE_CHDIR_EQUIVALENT */
 }
 
 #if defined (ACE_HAS_WCHAR)
 ACE_INLINE int
 ACE_OS::chdir (const wchar_t *path)
 {
-#if defined (ACE_LACKS_CHDIR)
-  ACE_UNUSED_ARG (path);
-  ACE_NOTSUP_RETURN (-1);
-#elif defined (ACE_WIN32)
+#if defined (ACE_WIN32)
   return ::_wchdir (path);
 #else /* ACE_WIN32 */
   return ACE_OS::chdir (ACE_Wide_To_Ascii (path).char_rep ());
@@ -157,11 +131,7 @@ ACE_OS::chdir (const wchar_t *path)
 ACE_INLINE int
 ACE_OS::rmdir (const char *path)
 {
-#if defined (ACE_HAS_WINCE)
-  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::RemoveDirectory (ACE_TEXT_CHAR_TO_TCHAR(path)),
-                                          ace_result_),
-                        int, -1);
-#elif defined (ACE_RMDIR_EQUIVALENT)
+#if defined (ACE_RMDIR_EQUIVALENT)
   return ACE_RMDIR_EQUIVALENT (path);
 #else
   return ::rmdir (path);
@@ -172,16 +142,12 @@ ACE_OS::rmdir (const char *path)
 ACE_INLINE int
 ACE_OS::rmdir (const wchar_t *path)
 {
-#if defined (ACE_HAS_WINCE)
-  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::RemoveDirectoryW (path),
-                                          ace_result_),
-                        int, -1);
-#elif defined (ACE_WIN32)
+#if defined (ACE_WIN32)
   return ::_wrmdir (path);
 #else
   ACE_Wide_To_Ascii n_path (path);
   return ACE_OS::rmdir (n_path.char_rep ());
-#endif /* ACE_HAS_WINCE */
+#endif /* ACE_WIN32 */
 }
 #endif /* ACE_HAS_WCHAR */
 
@@ -257,7 +223,7 @@ ACE_OS::dup(ACE_HANDLE handle, pid_t pid)
 #else
   ACE_UNUSED_ARG (pid);
   return ::dup(handle);
-#endif /*ACE_WIN32 &&  !ACE_HAS_WINCE*/
+#endif /* ACE_LACKS_DUP */
 }
 
 ACE_INLINE int
@@ -390,16 +356,9 @@ ACE_OS::ftruncate (ACE_HANDLE handle, ACE_OFF_T offset)
 {
   ACE_OS_TRACE ("ACE_OS::ftruncate");
 #if defined (ACE_WIN32)
-#  if !defined (ACE_LACKS_WIN32_SETFILEPOINTEREX)
   LARGE_INTEGER loff;
   loff.QuadPart = offset;
   if (::SetFilePointerEx (handle, loff, 0, FILE_BEGIN))
-#  else
-  if (::SetFilePointer (handle,
-                        offset,
-                        0,
-                        FILE_BEGIN) != INVALID_SET_FILE_POINTER)
-#  endif
     ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::SetEndOfFile (handle), ace_result_), int, -1);
   else
     ACE_FAIL_RETURN (-1);
@@ -414,11 +373,7 @@ ACE_INLINE char *
 ACE_OS::getcwd (char *buf, size_t size)
 {
   ACE_OS_TRACE ("ACE_OS::getcwd");
-#if defined (ACE_LACKS_GETCWD)
-  ACE_UNUSED_ARG (buf);
-  ACE_UNUSED_ARG (size);
-  ACE_NOTSUP_RETURN (0);
-#elif defined (ACE_GETCWD_EQUIVALENT)
+#if defined (ACE_GETCWD_EQUIVALENT)
   return ACE_GETCWD_EQUIVALENT (buf, static_cast<int> (size));
 #elif defined (ACE_WIN32)
   return ::getcwd (buf, static_cast<int> (size));
@@ -431,11 +386,7 @@ ACE_OS::getcwd (char *buf, size_t size)
 ACE_INLINE wchar_t *
 ACE_OS::getcwd (wchar_t *buf, size_t size)
 {
-#  if defined (ACE_HAS_WINCE)
-  ACE_UNUSED_ARG (buf);
-  ACE_UNUSED_ARG (size);
-  ACE_NOTSUP_RETURN (0);
-#  elif defined (ACE_WIN32)
+#  if defined (ACE_WIN32)
   return ::_wgetcwd (buf, static_cast<int> (size));
 #  else
   char *narrow_buf = new char[size];
@@ -554,19 +505,7 @@ ACE_INLINE int
 ACE_OS::hostname (char name[], size_t maxnamelen)
 {
   ACE_OS_TRACE ("ACE_OS::hostname");
-#if defined (ACE_HAS_PHARLAP)
-  // PharLap only can do net stuff with the RT version.
-#   if defined (ACE_HAS_PHARLAP_RT)
-  // @@This is not at all reliable... requires ethernet and BOOTP to be used.
-  // A more reliable way is to go thru the devices w/ EtsTCPGetDeviceCfg until
-  // a legit IP address is found, then get its name w/ gethostbyaddr.
-  ACE_SOCKCALL_RETURN (gethostname (name, maxnamelen), int, SOCKET_ERROR);
-#   else
-  ACE_UNUSED_ARG (name);
-  ACE_UNUSED_ARG (maxnamelen);
-  ACE_NOTSUP_RETURN (-1);
-#   endif /* ACE_HAS_PHARLAP_RT */
-#elif defined (ACE_VXWORKS) || defined (ACE_HAS_WINCE)
+#if defined (ACE_VXWORKS)
   return ::gethostname (name, maxnamelen);
 #elif defined (ACE_WIN32)
   if (::gethostname (name, ACE_Utils::truncate_cast<int> (maxnamelen)) == 0)
@@ -590,7 +529,7 @@ ACE_OS::hostname (char name[], size_t maxnamelen)
   return -1;
 #elif defined (ACE_LACKS_GETHOSTNAME)
   ACE_NOTSUP_RETURN (-1);
-#else /* ACE_HAS_PHARLAP */
+#else /* ACE_VXWORKS */
   ACE_utsname host_info;
 
   if (ACE_OS::uname (&host_info) == -1)
@@ -600,18 +539,18 @@ ACE_OS::hostname (char name[], size_t maxnamelen)
       ACE_OS::strsncpy (name, host_info.nodename, maxnamelen);
       return 0;
     }
-#endif /* ACE_HAS_PHARLAP */
+#endif /* ACE_VXWORKS */
 }
 
 #if defined (ACE_HAS_WCHAR)
 ACE_INLINE int
 ACE_OS::hostname (wchar_t name[], size_t maxnamelen)
 {
-#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
+#if defined (ACE_WIN32)
   ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (GetComputerNameW (name,
                                                         LPDWORD (&maxnamelen)),
                                           ace_result_), int, -1);
-#else /* ACE_WIN32 && !ACE_HAS_WINCE */
+#else /* ACE_WIN32 */
   // Emulate using the char version
   char *char_name = 0;
 
@@ -622,7 +561,7 @@ ACE_OS::hostname (wchar_t name[], size_t maxnamelen)
 
   delete [] char_name;
   return result;
-#endif /* ACE_WIN32 && !ACE_HAS_WINCE */
+#endif /* ACE_WIN32  */
 }
 #endif /* ACE_HAS_WCHAR */
 
@@ -729,7 +668,6 @@ ACE_OS::llseek (ACE_HANDLE handle, ACE_LOFF_T offset, int whence)
   return ::lseek64 (handle, offset, whence);
 #elif defined (ACE_HAS_LLSEEK)
 # if defined (ACE_WIN32)
-#  ifndef ACE_LACKS_WIN32_SETFILEPOINTEREX
   LARGE_INTEGER distance, new_file_pointer;
 
   distance.QuadPart = offset;
@@ -738,22 +676,6 @@ ACE_OS::llseek (ACE_HANDLE handle, ACE_LOFF_T offset, int whence)
     (::SetFilePointerEx (handle, distance, &new_file_pointer, whence)
      ? new_file_pointer.QuadPart
      : static_cast<ACE_LOFF_T> (-1));
-#  else
-  LARGE_INTEGER l_offset;
-  l_offset.QuadPart = offset;
-  LONG low_offset = l_offset.LowPart;
-  LONG high_offset = l_offset.HighPart;
-
-  l_offset.LowPart = ::SetFilePointer (handle,
-                                       low_offset,
-                                       &high_offset,
-                                       whence);
-  if (l_offset.LowPart == INVALID_SET_FILE_POINTER &&
-      GetLastError () != NO_ERROR)
-    return static_cast<ACE_LOFF_T> (-1);
-  l_offset.HighPart = high_offset;
-  return l_offset.QuadPart;
-#  endif  /* ACE_LACKS_WIN32_SETFILEPOINTEREX */
 # else
     return ::llseek (handle, offset, whence);
 # endif /* WIN32 */
@@ -780,7 +702,7 @@ ACE_OS::read (ACE_HANDLE handle, void *buf, size_t len)
   ssize_t result;
 
 # if defined (ACE_HAS_CHARPTR_SOCKOPT)
-  ACE_OSCALL (::read (handle, static_cast <char *> (buf), len), ssize_t, -result);
+  ACE_OSCALL (::read (handle, static_cast <char *> (buf), len), ssize_t, result);
 # else
   ACE_OSCALL (::read (handle, buf, len), ssize_t, result);
 # endif /* ACE_HAS_CHARPTR_SOCKOPT */
@@ -1097,18 +1019,10 @@ ACE_OS::sysconf (int name)
 }
 
 ACE_INLINE long
-ACE_OS::sysinfo (int cmd, char *buf, long count)
+ACE_OS::sysinfo (int /*cmd*/, char * /*buf*/, long /*count*/)
 {
   ACE_OS_TRACE ("ACE_OS::sysinfo");
-#if defined (ACE_HAS_SYSV_SYSINFO)
-  return ::sysinfo (cmd, buf, count);
-#else
-  ACE_UNUSED_ARG (cmd);
-  ACE_UNUSED_ARG (buf);
-  ACE_UNUSED_ARG (count);
-
   ACE_NOTSUP_RETURN (0);
-#endif /* ACE_HAS_SYSV_SYSINFO */
 }
 
 ACE_INLINE int
@@ -1117,33 +1031,16 @@ ACE_OS::truncate (const ACE_TCHAR *filename,
 {
   ACE_OS_TRACE ("ACE_OS::truncate");
 #if defined (ACE_WIN32)
-  ACE_HANDLE handle = ACE_OS::open (filename,
-                                    O_WRONLY,
-                                    ACE_DEFAULT_FILE_PERMS);
+  ACE_HANDLE handle = ACE_OS::open (filename, O_WRONLY, ACE_DEFAULT_FILE_PERMS);
 
-#  if !defined (ACE_LACKS_WIN32_SETFILEPOINTEREX)
   LARGE_INTEGER loffset;
   loffset.QuadPart = offset;
-#else
-  LONG low_offset = ACE_LOW_PART(offset);
-  LONG high_offset = ACE_HIGH_PART(offset);
-#endif
 
   if (handle == ACE_INVALID_HANDLE)
-    ACE_FAIL_RETURN (-1);
-
-#  if !defined (ACE_LACKS_WIN32_SETFILEPOINTEREX)
-  else if (::SetFilePointerEx (handle,
-                               loffset,
-                               0,
-                               FILE_BEGIN))
-#  else
-  else if (::SetFilePointer (handle,
-                             low_offset,
-                             &high_offset,
-                             FILE_BEGIN) != INVALID_SET_FILE_POINTER
-           || GetLastError () == NO_ERROR)
-#  endif /* ACE_LACKS_WIN32_SETFILEPOINTEREX */
+    {
+      ACE_FAIL_RETURN (-1);
+    }
+  else if (::SetFilePointerEx (handle, loffset, 0, FILE_BEGIN))
     {
       BOOL result = ::SetEndOfFile (handle);
       ::CloseHandle (handle);
@@ -1214,20 +1111,14 @@ ACE_INLINE int
 ACE_OS::unlink (const char *path)
 {
   ACE_OS_TRACE ("ACE_OS::unlink");
-# if defined (ACE_HAS_NONCONST_UNLINK)
-  return ::unlink (const_cast<char *> (path));
-# elif defined (ACE_HAS_WINCE)
-  // @@ The problem is, DeleteFile is not actually equals to unlink. ;(
-  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::DeleteFile (ACE_TEXT_CHAR_TO_TCHAR (path)), ace_result_),
-                        int, -1);
-# elif defined (ACE_LACKS_UNLINK)
+#if defined (ACE_LACKS_UNLINK)
   ACE_UNUSED_ARG (path);
   ACE_NOTSUP_RETURN (-1);
-# elif defined (ACE_UNLINK_EQUIVALENT)
+#elif defined (ACE_UNLINK_EQUIVALENT)
   return ACE_UNLINK_EQUIVALENT (path);
-# else
+#else
   return ::unlink (path);
-# endif /* ACE_HAS_NONCONST_UNLINK */
+#endif /* ACE_LACKS_UNLINK */
 }
 
 #if defined (ACE_HAS_WCHAR)
@@ -1235,16 +1126,12 @@ ACE_INLINE int
 ACE_OS::unlink (const wchar_t *path)
 {
   ACE_OS_TRACE ("ACE_OS::unlink");
-# if defined (ACE_HAS_WINCE)
-  // @@ The problem is, DeleteFile is not actually equals to unlink. ;(
-  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::DeleteFileW (path), ace_result_),
-                        int, -1);
-# elif defined (ACE_WIN32)
+# if defined (ACE_WIN32)
   return ::_wunlink (path);
 # else
   ACE_Wide_To_Ascii npath (path);
   return ACE_OS::unlink (npath.char_rep ());
-# endif /* ACE_HAS_WINCE */
+# endif /* ACE_WIN32 */
 }
 #endif /* ACE_HAS_WCHAR */
 

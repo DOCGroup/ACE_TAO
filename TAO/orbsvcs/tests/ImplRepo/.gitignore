@@ -2,3 +2,13 @@
 /airplane_server
 /nestea_client
 /nestea_server
+AirplaneC.cpp
+AirplaneC.h
+AirplaneC.inl
+AirplaneS.cpp
+AirplaneS.h
+NesteaC.cpp
+NesteaC.h
+NesteaC.inl
+NesteaS.cpp
+NesteaS.h

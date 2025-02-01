@@ -74,28 +74,28 @@ public:
                     ACE_Notification_Strategy * = 0);
 
   /// Close down the message queue and release all resources.
-  virtual int close (void);
+  virtual int close ();
 
   /// Close down the message queue and release all resources.
-  virtual ~ACE_Message_Queue_Vx (void);
+  virtual ~ACE_Message_Queue_Vx ();
 
   // = Queue statistic methods.
   /**
    * Number of total bytes on the queue, i.e., sum of the message
    * block sizes.
    */
-  virtual size_t message_bytes (void);
+  virtual size_t message_bytes ();
 
   /**
    * Number of total length on the queue, i.e., sum of the message
    * block lengths.
    */
-  virtual size_t message_length (void);
+  virtual size_t message_length ();
 
   /**
    * Number of total messages on the queue.
    */
-  virtual size_t message_count (void);
+  virtual size_t message_count ();
 
   // = Manual changes to these stats (used when queued message blocks
   // change size or lengths).
@@ -114,13 +114,13 @@ public:
   // = Flow control routines
 
   /// Get high watermark.
-  virtual size_t high_water_mark (void);
+  virtual size_t high_water_mark ();
 
   /// Set high watermark.
   virtual void high_water_mark (size_t hwm);
 
   /// Get low watermark.
-  virtual size_t low_water_mark (void);
+  virtual size_t low_water_mark ();
 
   /// Set low watermark.
   virtual void low_water_mark (size_t lwm);
@@ -164,10 +164,10 @@ protected:
 
   // = Check the boundary conditions (assumes locks are held).
   /// True if queue is full, else false.
-  virtual bool is_full_i (void);
+  virtual bool is_full_i ();
 
   /// True if queue is empty, else false.
-  virtual bool is_empty_i (void);
+  virtual bool is_empty_i ();
 
   // = Implementation of public <activate>/<deactivate> methods above.
 
@@ -181,13 +181,13 @@ protected:
   virtual int wait_not_empty_cond (ACE_Time_Value *tv);
 
   /// Inform any threads waiting to enqueue that they can procede.
-  virtual int signal_enqueue_waiters (void);
+  virtual int signal_enqueue_waiters ();
 
   /// Inform any threads waiting to dequeue that they can procede.
-  virtual int signal_dequeue_waiters (void);
+  virtual int signal_dequeue_waiters ();
 
   /// Access the underlying msgQ.
-  MSG_Q_ID msgq (void);
+  MSG_Q_ID msgq ();
 
 private:
   ACE_Message_Queue_Vx (const ACE_Message_Queue_Vx &) = delete;
@@ -204,10 +204,6 @@ private:
 
   /// Maximum message size, in bytes.
   int max_message_length_;
-
-  /// Native message queue options.
-  int options_;
-
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

@@ -50,7 +50,7 @@ void Publisher_impl::Worker::addSubscriber(Subscriber_ptr subscriber)
   s.count = 0;
 }
 
-int Publisher_impl::Worker::svc (void)
+int Publisher_impl::Worker::svc ()
 {
   double data = 0.0;
   bool doShutdown = false;

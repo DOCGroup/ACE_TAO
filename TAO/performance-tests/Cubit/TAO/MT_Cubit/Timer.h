@@ -32,10 +32,10 @@ class MT_Cubit_Timer
 public:
   MT_Cubit_Timer (u_int granularity);
 
-  void start (void);
-  void stop (void);
+  void start ();
+  void stop ();
 
-  ACE_timer_t get_elapsed (void);
+  ACE_timer_t get_elapsed ();
 
 private:
   /// timer.

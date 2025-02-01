@@ -52,7 +52,7 @@ Client::Client (CORBA::ORB_ptr orb)
 {
 }
 
-Client::~Client (void)
+Client::~Client ()
 {
 }
 
@@ -130,7 +130,7 @@ Client::stop_callback (Widget /*widget*/,
 }
 
 void
-Client::start_hook (void)
+Client::start_hook ()
 {
   try
     {
@@ -145,7 +145,7 @@ Client::start_hook (void)
 }
 
 void
-Client::stop_hook (void)
+Client::stop_hook ()
 {
   try
     {
@@ -155,7 +155,6 @@ Client::stop_hook (void)
     {
       ex._tao_print_exception (
         "Caught an exception in the stop button callback");
-      return;
     }
 }
 

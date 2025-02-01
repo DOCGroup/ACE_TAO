@@ -15,8 +15,8 @@ public:
 
   // Handle a timeout event, cancel, and close.
   virtual int handleEvent (const void *arg);
-  virtual int handleCancel (void);
-  virtual int handleClose (void);
+  virtual int handleCancel ();
+  virtual int handleClose ();
 
 private:
   long timerID_;

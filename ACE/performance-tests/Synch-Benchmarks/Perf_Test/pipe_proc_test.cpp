@@ -55,7 +55,7 @@ Pipe_Proc_Test::reader (ACE_HANDLE handle)
 
 
 int
-Pipe_Proc_Test::svc (void)
+Pipe_Proc_Test::svc ()
 {
   ssize_t length = performance_test_options.msg_size ();
   int ni = this->thr_id ();

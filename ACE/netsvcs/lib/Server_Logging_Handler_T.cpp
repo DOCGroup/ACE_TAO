@@ -2,7 +2,7 @@
 #define ACE_SERVER_LOGGING_HANDLERT_C
 
 #include "ace/config-all.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/Get_Opt.h"
 #include "ace/Log_Record.h"
 #include "ace/CDR_Stream.h"
@@ -39,7 +39,7 @@ ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_USE, LMR>::ha
 }
 
 template <ACE_PEER_STREAM_1, class COUNTER, ACE_SYNCH_DECL, class LMR> const ACE_TCHAR *
-ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_USE, LMR>::host_name (void)
+ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_USE, LMR>::host_name ()
 {
 #if !defined (__GNUG__)
   return this->receiver_.m_.fast_rep ();
@@ -245,7 +245,7 @@ ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_USE, LMR>::ha
 // established.
 
 template <ACE_PEER_STREAM_1, class COUNTER, ACE_SYNCH_DECL, class LMR> int
-ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_USE, LMR>::open_common (void)
+ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_USE, LMR>::open_common ()
 {
   // Shut off non-blocking IO if it was enabled...
   if (this->peer ().disable (ACE_NONBLOCK) == -1)
@@ -279,18 +279,18 @@ ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_USE, LMR>::op
 }
 
 template<class SLH, class LMR, class SST>
-ACE_Server_Logging_Acceptor_T<SLH, LMR, SST>::ACE_Server_Logging_Acceptor_T (void)
+ACE_Server_Logging_Acceptor_T<SLH, LMR, SST>::ACE_Server_Logging_Acceptor_T ()
 {
 }
 
 template<class SLH, class LMR, class SST> LMR &
-ACE_Server_Logging_Acceptor_T<SLH, LMR, SST>::receiver (void)
+ACE_Server_Logging_Acceptor_T<SLH, LMR, SST>::receiver ()
 {
   return receiver_;
 }
 
 template<class SLH, class LMR, class SST> SST &
-ACE_Server_Logging_Acceptor_T<SLH, LMR, SST>::scheduling_strategy (void)
+ACE_Server_Logging_Acceptor_T<SLH, LMR, SST>::scheduling_strategy ()
 {
 #if !defined (__GNUG__)
   return receiver_.m_;
@@ -446,7 +446,7 @@ ACE_Thr_Server_Logging_Handler<LOG_MESSAGE_RECEIVER>::open (void *)
 // Process remote logging records.
 
 template<class LOG_MESSAGE_RECEIVER> int
-ACE_Thr_Server_Logging_Handler<LOG_MESSAGE_RECEIVER>::svc (void)
+ACE_Thr_Server_Logging_Handler<LOG_MESSAGE_RECEIVER>::svc ()
 {
   int result = 0;
 

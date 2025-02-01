@@ -13,7 +13,7 @@
 #include "tao/PortableServer/Servant_Base.h"
 
 // -- ACE Include --
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_string.h"
 
@@ -165,7 +165,7 @@ TAO_Object_Adapter::TAO_Object_Adapter (const TAO_Server_Strategy_Factory::Activ
     ACE_NEW (hint_strategy,
              No_Hint_Strategy);
 
-  // Give ownership to the auto pointer.
+  // Give ownership to the unique pointer.
   std::unique_ptr<Hint_Strategy> new_hint_strategy (hint_strategy);
 
   new_hint_strategy->object_adapter (this);
@@ -192,7 +192,7 @@ TAO_Object_Adapter::TAO_Object_Adapter (const TAO_Server_Strategy_Factory::Activ
                persistent_poa_name_hash_map (creation_parameters.poa_map_size_));
       break;
     }
-  // Give ownership to the auto pointer.
+  // Give ownership to the unique pointer.
   std::unique_ptr<persistent_poa_name_map> new_persistent_poa_name_map (ppnm);
 
   transient_poa_map *tpm = 0;
@@ -222,7 +222,7 @@ TAO_Object_Adapter::TAO_Object_Adapter (const TAO_Server_Strategy_Factory::Activ
                transient_poa_active_map (creation_parameters.poa_map_size_));
       break;
     }
-  // Give ownership to the auto pointer.
+  // Give ownership to the unique pointer.
   std::unique_ptr<transient_poa_map> new_transient_poa_map (tpm);
 
   this->hint_strategy_ = new_hint_strategy.release ();
@@ -509,30 +509,30 @@ TAO_Object_Adapter::locate_servant_i (const TAO::ObjectKey &key)
   this->locate_poa (key, id, poa);
 
   PortableServer::Servant servant = 0;
-  TAO_SERVANT_LOCATION const servant_location =
+  TAO_Servant_Location const servant_location =
     poa->locate_servant_i (id, servant);
 
   switch (servant_location)
     {
-    case TAO_SERVANT_FOUND:
+    case TAO_Servant_Location::Found:
       // Optimistic attitude
-    case TAO_DEFAULT_SERVANT:
-    case TAO_SERVANT_MANAGER:
+    case TAO_Servant_Location::Default_Servant:
+    case TAO_Servant_Location::Servant_Manager:
       return 0;
 
-    case TAO_SERVANT_NOT_FOUND:
+    case TAO_Servant_Location::Not_Found:
       return -1;
     }
 
   return -1;
 }
 
-TAO_SERVANT_LOCATION
+TAO_Servant_Location
 TAO_Object_Adapter::find_servant_i (const TAO::ObjectKey &key,
                                     PortableServer::Servant &servant)
 {
   PortableServer::ObjectId id;
-  TAO_Root_POA *poa = 0;
+  TAO_Root_POA *poa = nullptr;
 
   this->locate_poa (key, id, poa);
 
@@ -547,7 +547,7 @@ TAO_Object_Adapter::open ()
 
   // If a POA extension hasn't changed the servant dispatcher, initialize the
   // default one.
-  if (this->servant_dispatcher_ == 0)
+  if (!this->servant_dispatcher_)
     {
       ACE_NEW (this->servant_dispatcher_,
                TAO_Default_Servant_Dispatcher);
@@ -560,8 +560,7 @@ TAO_Object_Adapter::open ()
 
   ::CORBA::PolicyList policy;
   PortableServer::POAManager_var poa_manager
-    = poa_manager_factory_->create_POAManager (TAO_DEFAULT_ROOTPOAMANAGER_NAME,
-                                              policy);
+    = poa_manager_factory_->create_POAManager (TAO_DEFAULT_ROOTPOAMANAGER_NAME, policy);
 #else
   PortableServer::POAManager_ptr poa_manager_ptr;
   ::CORBA::PolicyList policy_list;

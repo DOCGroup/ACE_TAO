@@ -34,7 +34,6 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE_OS {
-
   ACE_NAMESPACE_INLINE_FUNCTION
   int fcntl (ACE_HANDLE handle,
              int cmd,

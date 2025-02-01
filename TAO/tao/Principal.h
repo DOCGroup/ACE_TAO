@@ -74,16 +74,14 @@ namespace CORBA
     typedef Principal_var _var_type;
 
   protected:
-
     /// Destructor
     /**
      * Protected destructor to enforce proper memory management
      * through the reference counting mechanism.
      */
-    ~Principal (void);
+    ~Principal ();
 
   private:
-
     // = Prevent copying
     Principal &operator = (const CORBA::Principal_ptr &);
     Principal (const CORBA::Principal_ptr &);

@@ -16,28 +16,28 @@
 
 const CORBA::ULong TEST_BUFSIZE = 128;
 
-Generator::Generator (void)
+Generator::Generator ()
 {
 }
 
-Generator::~Generator (void)
+Generator::~Generator ()
 {
 }
 
 CORBA::Short
-Generator::gen_short (void)
+Generator::gen_short ()
 {
   return (CORBA::Short) (ACE_OS::rand () % TEST_BUFSIZE);
 }
 
 CORBA::Long
-Generator::gen_long (void)
+Generator::gen_long ()
 {
   return ::ACE_OS::rand () % TEST_BUFSIZE;
 }
 
 char *
-Generator::gen_string (void)
+Generator::gen_string ()
 {
   return gen_string (TEST_BUFSIZE);
 }
@@ -64,7 +64,7 @@ Generator::gen_string (int max_length)
 }
 
 CORBA::WChar *
-Generator::gen_wstring (void)
+Generator::gen_wstring ()
 {
   return gen_wstring (TEST_BUFSIZE);
 }
@@ -92,7 +92,7 @@ Generator::gen_wstring (int max_length)
 }
 
 const Param_Test::Fixed_Struct
-Generator::gen_fixed_struct (void)
+Generator::gen_fixed_struct ()
 {
   this->fixed_struct_.l = ACE_OS::rand ();
   this->fixed_struct_.c = ACE_OS::rand () % 128;
@@ -105,7 +105,7 @@ Generator::gen_fixed_struct (void)
 }
 
 const Param_Test::Step
-Generator::gen_step (void)
+Generator::gen_step ()
 {
   this->step_.name.id = this->gen_string ();
   this->step_.name.kind = this->gen_string ();

@@ -28,33 +28,32 @@ class IDL3_Client
 {
 public:
   /// Constructor
-  IDL3_Client (void);
+  IDL3_Client ();
 
   /// Destructor
-  ~IDL3_Client (void);
+  ~IDL3_Client ();
 
   /// Initialize the ORB and get the IFR object reference.
   int init (int argc,
             ACE_TCHAR *argv[]);
 
   /// Execute test code.
-  int run (void);
+  int run ();
 
 private:
   /// Process the command line arguments.
   int parse_args (int argc,
                   ACE_TCHAR *argv[]);
 
-  int component_test (void);
-  int home_test (void);
+  int component_test ();
+  int home_test ();
 
   // Also tests eventtype.
   int valuetype_test (const char *repo_id,
                       const char *prefix);
 
   int component_attribute_test (
-      CORBA::InterfaceAttrExtension::ExtFullInterfaceDescription_var &
-    );
+      CORBA::InterfaceAttrExtension::ExtFullInterfaceDescription_var &);
 
   int component_inheritance_test (CORBA::ComponentIR::ComponentDef_var &);
 
@@ -75,23 +74,19 @@ private:
 
   int valuetype_attribute_test (
       CORBA::ExtValueDef::ExtFullValueDescription_var &,
-      const char *prefix
-    );
+      const char *prefix);
 
   int valuetype_operation_test (
       CORBA::ExtValueDef::ExtFullValueDescription_var &,
-      const char *prefix
-    );
+      const char *prefix);
 
   int valuetype_member_test (
       CORBA::ExtValueDef::ExtFullValueDescription_var &,
-      const char *prefix
-    );
+      const char *prefix);
 
   int valuetype_factory_test (
       CORBA::ExtValueDef::ExtFullValueDescription_var &,
-      const char *prefix
-    );
+      const char *prefix);
 
   int home_inheritance_test (CORBA::ComponentIR::HomeDef_var &);
 

@@ -74,7 +74,7 @@ public:
   ACE_URL_Property (const ACE_URL_Property &p);
 
   /// Destructor.
-  ~ACE_URL_Property (void);
+  ~ACE_URL_Property ();
 
   /// Assignment operator.
   ACE_URL_Property &operator= (const ACE_URL_Property &rhs);
@@ -86,7 +86,7 @@ public:
   bool operator!= (const ACE_URL_Property &rhs) const;
 
   // = Query property name.
-  ACE_WString &name_rep (void);
+  ACE_WString &name_rep ();
   const ACE_WString &name () const;
 
   // = Set property name.
@@ -94,7 +94,7 @@ public:
   void name (const char *n);
 
   // = Query property value.
-  ACE_WString &value_rep (void);
+  ACE_WString &value_rep ();
   const ACE_WString &value () const;
 
   // = Set property value.
@@ -146,7 +146,7 @@ public:
   ACE_URL_Offer (const ACE_URL_Offer &o);
 
   /// Default destructor.
-  ~ACE_URL_Offer (void);
+  ~ACE_URL_Offer ();
 
   /// Assignment operator.
   ACE_URL_Offer &operator= (const ACE_URL_Offer &rhs);
@@ -158,7 +158,7 @@ public:
   bool operator!= (const ACE_URL_Offer &rhs) const;
 
   // = Get URL string.
-  ACE_WString &url_rep (void);
+  ACE_WString &url_rep ();
   const ACE_WString &url () const;
 
   // = Set URL.
@@ -166,7 +166,7 @@ public:
   void url (const ACE_UINT16 *url);
 
   /// Get properties of this offer.
-  ACE_URL_Property_Seq &url_properties (void);
+  ACE_URL_Property_Seq &url_properties ();
 
   /// Set properties of this offer.  This operation virtually get a
   /// copy of the passed in prop.

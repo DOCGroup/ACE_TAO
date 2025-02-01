@@ -46,7 +46,7 @@ class ACE_Export ACE_Name_Proxy : public ACE_Event_Handler
 {
 public:
   /// Default constructor.
-  ACE_Name_Proxy (void);
+  ACE_Name_Proxy ();
 
   // = Establish a binding with the ACE_Name Server.
   ACE_Name_Proxy (const ACE_INET_Addr &remote_addr, // Address of ACE_Name Server.
@@ -70,7 +70,7 @@ public:
   virtual ACE_HANDLE get_handle () const;
 
   /// Close down the connection to the server.
-  virtual ~ACE_Name_Proxy (void);
+  virtual ~ACE_Name_Proxy ();
 
   /// Dump the state of the object;
   void dump () const;
@@ -81,9 +81,6 @@ private:
 
   /// Connection to ACE_Name Server peer.
   ACE_SOCK_Stream peer_;
-
-  /// Pointer to ACE_Reactor (used if we are run in "reactive-mode").
-  ACE_Reactor *reactor_;
 
 private:
   ACE_Name_Proxy (const ACE_Name_Proxy &) = delete;

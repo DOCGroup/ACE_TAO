@@ -17,14 +17,10 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_SHMIOP_Connector::TAO_SHMIOP_Connector (void)
+TAO_SHMIOP_Connector::TAO_SHMIOP_Connector ()
   : TAO_Connector (TAO_TAG_SHMEM_PROFILE),
     connect_strategy_ (),
     base_connector_ (0)
-{
-}
-
-TAO_SHMIOP_Connector::~TAO_SHMIOP_Connector (void)
 {
 }
 
@@ -73,7 +69,7 @@ TAO_SHMIOP_Connector::open (TAO_ORB_Core *orb_core)
 }
 
 int
-TAO_SHMIOP_Connector::close (void)
+TAO_SHMIOP_Connector::close ()
 {
   delete this->base_connector_.concurrency_strategy ();
   delete this->base_connector_.creation_strategy ();
@@ -276,7 +272,7 @@ TAO_SHMIOP_Connector::create_profile (TAO_InputCDR& cdr)
 }
 
 TAO_Profile *
-TAO_SHMIOP_Connector::make_profile (void)
+TAO_SHMIOP_Connector::make_profile ()
 {
   // The endpoint should be of the form:
   //    N.n@port/object_key

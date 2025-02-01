@@ -90,7 +90,6 @@ private:
 
   void emit_boxed_member_var (be_decl *node,
                               const char * type_suffix);
-
 };
 
 #endif /* _BE_VISITOR_VALUEBOX_CH_H_ */

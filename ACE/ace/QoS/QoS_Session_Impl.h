@@ -38,7 +38,7 @@ class ACE_QoS_Export ACE_RAPI_Session : public ACE_QoS_Session
 {
 public:
   /// Default destructor.
-  ~ACE_RAPI_Session (void);
+  ~ACE_RAPI_Session ();
 
   /// Error handling for RSVP callback
   static int rsvp_error;
@@ -48,7 +48,7 @@ public:
                     ACE_Protocol_ID protocol_id);
 
   /// Close the RAPI QoS Session.
-  virtual int close (void);
+  virtual int close ();
 
   /// Returns the QoS for this RAPI session.
   virtual ACE_QoS qos () const;
@@ -73,7 +73,7 @@ public:
    * It is a mechanism of updating the QoS for this session asynchronously, as
    * RSVP events occur.
    */
-  virtual int update_qos (void);
+  virtual int update_qos ();
 
   /// Get methods for the flags_.
   virtual ACE_End_Point_Type flags () const;
@@ -88,13 +88,13 @@ public:
   virtual void session_id (const int session_id);
 
   /// Get the RAPI file descriptor for RSVP events.
-  virtual ACE_HANDLE rsvp_events_handle (void);
+  virtual ACE_HANDLE rsvp_events_handle ();
 
   ///Set the RAPI event that last occurred
   virtual void  rsvp_event_type (RSVP_Event_Type event_type);
 
   ///Get the RAPI event that last occurred
-  virtual RSVP_Event_Type rsvp_event_type (void);
+  virtual RSVP_Event_Type rsvp_event_type ();
 
   /// Get the destination address for this RAPI session.
   virtual ACE_INET_Addr dest_addr () const;
@@ -124,7 +124,7 @@ public:
 private:
   /// Default constuctor. Constructor is defined private so that only
   /// the friend factory can instantiate this class.
-  ACE_RAPI_Session (void);
+  ACE_RAPI_Session ();
 
   /// Construct a simplified RAPI Sender TSpec object
   /// from an ACE_Flow_Spec object. Used internally by this class.
@@ -139,7 +139,6 @@ private:
 
   /// Set receiving  QoS for this RAPI session.
   int receiving_qos (const ACE_QoS &ace_qos);
-
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
@@ -159,9 +158,8 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_QoS_Export ACE_GQoS_Session : public ACE_QoS_Session
 {
 public:
-
   /// Default destructor.
-  ~ACE_GQoS_Session (void);
+  ~ACE_GQoS_Session ();
 
   /// This is a session ID generator. It does a lot more than expected
   /// from an int!.
@@ -172,7 +170,7 @@ public:
                     ACE_Protocol_ID protocol_id);
 
   /// Close the GQoS Session.
-  virtual int close (void);
+  virtual int close ();
 
   /// Returns the QoS for this GQoS session.
   virtual ACE_QoS qos () const;
@@ -194,7 +192,7 @@ public:
 
   /// Calls the ioctl (ACE_SIO_GET_QOS). It is a mechanism of updating the
   /// QoS for this session asynchronously, as RSVP events occur.
-  virtual int update_qos (void);
+  virtual int update_qos ();
 
   /// Get/Set methods for the flags_.
   virtual ACE_End_Point_Type flags () const;
@@ -225,12 +223,12 @@ public:
   virtual void session_id (const int session_id);
 
   /// Get the file descriptor of the underlying socket.
-  virtual ACE_HANDLE rsvp_events_handle (void);
+  virtual ACE_HANDLE rsvp_events_handle ();
 
   virtual void  rsvp_event_type (RSVP_Event_Type event_type);
   ///Set the RAPI event that last occurred
 
-  virtual RSVP_Event_Type rsvp_event_type (void);
+  virtual RSVP_Event_Type rsvp_event_type ();
   ///Get the RAPI event that last occurred
 
   /// GQoS version.

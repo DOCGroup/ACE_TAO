@@ -28,7 +28,6 @@ namespace ACE
 {
   namespace HTBP
   {
-
     /**
      * @class Addr
      *
@@ -42,7 +41,7 @@ namespace ACE
     {
     public:
       /// Constructor
-      Addr ();
+      Addr () = default;
 
       Addr (const Addr &other);
 
@@ -80,7 +79,6 @@ namespace ACE
       /// HTID - web-obtained unique-identifier
       ACE_CString htid_;
     };
-
   }
 }
 

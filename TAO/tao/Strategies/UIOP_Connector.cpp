@@ -19,14 +19,14 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_UIOP_Connector::TAO_UIOP_Connector (void)
+TAO_UIOP_Connector::TAO_UIOP_Connector ()
   : TAO_Connector (TAO_TAG_UIOP_PROFILE),
     connect_strategy_ (),
     base_connector_ (0)
 {
 }
 
-TAO_UIOP_Connector::~TAO_UIOP_Connector (void)
+TAO_UIOP_Connector::~TAO_UIOP_Connector ()
 {
 }
 
@@ -62,7 +62,7 @@ TAO_UIOP_Connector::open (TAO_ORB_Core *orb_core)
 }
 
 int
-TAO_UIOP_Connector::close (void)
+TAO_UIOP_Connector::close ()
 {
   // Zap the creation strategy that we created earlier.
   delete this->base_connector_.creation_strategy ();
@@ -306,7 +306,7 @@ TAO_UIOP_Connector::create_profile (TAO_InputCDR& cdr)
 }
 
 TAO_Profile *
-TAO_UIOP_Connector::make_profile (void)
+TAO_UIOP_Connector::make_profile ()
 {
   TAO_Profile *profile = 0;
   ACE_NEW_THROW_EX (profile,

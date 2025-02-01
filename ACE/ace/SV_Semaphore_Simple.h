@@ -55,7 +55,7 @@ public:
     ACE_OPEN = 0
   };
 
-  ACE_SV_Semaphore_Simple (void);
+  ACE_SV_Semaphore_Simple ();
   ACE_SV_Semaphore_Simple (key_t key,
                            short flags = ACE_SV_Semaphore_Simple::ACE_CREATE,
                            int initial_value = 1,
@@ -74,7 +74,7 @@ public:
                            mode_t perms = ACE_DEFAULT_FILE_PERMS);
 #endif /* ACE_HAS_WCHAR */
 
-  ~ACE_SV_Semaphore_Simple (void);
+  ~ACE_SV_Semaphore_Simple ();
 
   int open (const char *name,
             short flags = ACE_SV_Semaphore_Simple::ACE_CREATE,
@@ -100,7 +100,7 @@ public:
 
   /// Close a ACE_SV_Semaphore, marking it as invalid for subsequent
   /// operations...
-  int close (void);
+  int close ();
 
   /**
    * Remove all SV_Semaphores associated with a particular key.  This

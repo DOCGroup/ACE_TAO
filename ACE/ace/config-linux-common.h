@@ -40,10 +40,13 @@
 
 #if (__GLIBC__  > 2)  || (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 3)
 #  define ACE_HAS_ISASTREAM_PROTOTYPE
-#  define ACE_HAS_PTHREAD_SIGMASK_PROTOTYPE
 #  define ACE_HAS_CPU_SET_T
 #  define ACE_HAS_GLIBC_2_2_3
 #endif /* __GLIBC__ > 2 || __GLIBC__ === 2 && __GLIBC_MINOR__ >= 3) */
+
+#  if (__GLIBC__ > 2) || (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 12)
+#  define ACE_HAS_PTHREAD_SETNAME_NP
+#endif /* __GLIBC__ > 2 || __GLIBC__ === 2 && __GLIBC_MINOR__ >= 12) */
 
 #if (__GLIBC__  > 2)  || (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 30)
 #  define ACE_LACKS_SYS_SYSCTL_H
@@ -53,8 +56,6 @@
 #  include "ace/config-icc-common.h"
 #elif defined (__GNUG__)
 #  include "ace/config-g++-common.h"
-#elif defined (__SUNCC_PRO) || defined (__SUNPRO_CC)
-#  include "ace/config-suncc-common.h"
 #elif defined (__PGI)
 // Portable group compiler
 #  define ACE_LACKS_SWAB
@@ -67,7 +68,7 @@
  * (TAO/orbsvcs/orbsvcs/SSLIOP/params_dup.{h,c}) that may indirectly
  * include this
  */
-#else  /* ! __GNUG__ && !__DECCXX && !__INTEL_COMPILER && && !__PGI */
+#else  /* ! __GNUG__ && !__INTEL_COMPILER && && !__PGI */
 #  ifdef __cplusplus  /* Let it slide for C compilers. */
 #    error unsupported compiler in ace/config-linux.h
 #  endif  /* __cplusplus */

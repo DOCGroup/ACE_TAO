@@ -31,11 +31,6 @@ ACE_OS::getrusage (int who, struct rusage *ru)
 #if defined (ACE_HAS_GETRUSAGE)
 # if defined (ACE_WIN32)
   ACE_UNUSED_ARG (who);
-
-#  if defined (ACE_LACKS_GETPROCESSTIMES)
-  ACE_UNUSED_ARG (ru);
-  ACE_NOTSUP_RETURN (-1);
-#  else
   FILETIME dummy_1;
   FILETIME dummy_2;
   ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::GetProcessTimes (::GetCurrentProcess(),
@@ -45,7 +40,6 @@ ACE_OS::getrusage (int who, struct rusage *ru)
                                                              &ru->ru_utime),
                                           ace_result_),
                         int, -1);
-#  endif /* ACE_LACKS_WIN32_GETPROCESSTIMES */
 # else
 #   if defined (ACE_HAS_RUSAGE_WHO_ENUM)
   return ::getrusage ((ACE_HAS_RUSAGE_WHO_ENUM) who, ru);

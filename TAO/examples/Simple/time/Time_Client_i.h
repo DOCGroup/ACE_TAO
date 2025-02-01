@@ -29,10 +29,10 @@ class Time_Client_i
 {
 public:
   /// Constructor
-  Time_Client_i (void);
+  Time_Client_i ();
 
   /// Destructor
-  ~Time_Client_i (void);
+  ~Time_Client_i ();
 
   /// Execute the methods
   int run (const char *, int, ACE_TCHAR**);

@@ -12,7 +12,7 @@ Service::run_test (Test::Callback_ptr callback)
 }
 
 void
-Service::shutdown (void)
+Service::shutdown ()
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Shuting down self (server)\n"));
 

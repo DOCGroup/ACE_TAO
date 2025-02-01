@@ -57,7 +57,7 @@ TAO_Transport::opened_as (TAO::Connection_Role role)
 }
 
 ACE_INLINE TAO::Transport_Cache_Manager::HASH_MAP_ENTRY *
-TAO_Transport::cache_map_entry (void)
+TAO_Transport::cache_map_entry ()
 {
   return this->cache_map_entry_;
 }
@@ -100,7 +100,7 @@ TAO_Transport::id (size_t id)
 }
 
 ACE_INLINE bool
-TAO_Transport::queue_is_empty (void)
+TAO_Transport::queue_is_empty ()
 {
   ACE_GUARD_RETURN (ACE_Lock,
                     ace_mon,
@@ -116,14 +116,14 @@ TAO_Transport::flush_timer_pending () const
 }
 
 ACE_INLINE void
-TAO_Transport::reset_flush_timer (void)
+TAO_Transport::reset_flush_timer ()
 {
   this->flush_timer_id_ = -1;
   this->current_deadline_ = ACE_Time_Value::zero;
 }
 
 ACE_INLINE TAO_GIOP_Message_Base *
-TAO_Transport::messaging_object (void)
+TAO_Transport::messaging_object ()
 {
   return this->messaging_object_;
 }
@@ -185,7 +185,7 @@ TAO_Transport::is_connected () const
 }
 
 ACE_INLINE TAO_Connection_Handler *
-TAO_Transport::connection_handler (void)
+TAO_Transport::connection_handler ()
 {
   return this->connection_handler_i();
 }
@@ -289,7 +289,7 @@ TAO::Transport::Stats::opened_since () const
 #endif /* TAO_HAS_TRANSPORT_CURRENT == 1 */
 
 ACE_INLINE int
-TAO_Transport::notify_reactor (void)
+TAO_Transport::notify_reactor ()
 {
   if (!this->ws_->is_registered ())
     {

@@ -16,7 +16,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_ALLOC_HOOK_DEFINE_Tc(ACE_Based_Pointer_Basic)
 
 template <class CONCRETE>
-ACE_Based_Pointer<CONCRETE>::ACE_Based_Pointer (void)
+ACE_Based_Pointer<CONCRETE>::ACE_Based_Pointer ()
 {
   ACE_TRACE ("ACE_Based_Pointer<CONCRETE>::ACE_Based_Pointer");
 }
@@ -44,14 +44,14 @@ ACE_Based_Pointer<CONCRETE>::ACE_Based_Pointer (CONCRETE *initial)
 }
 
 template <class CONCRETE>
-ACE_Based_Pointer<CONCRETE>::ACE_Based_Pointer (const void* base_addr, int)
+ACE_Based_Pointer<CONCRETE>::ACE_Based_Pointer (const void *base_addr, int)
   : ACE_Based_Pointer_Basic<CONCRETE> (base_addr, 0)
 {
   ACE_TRACE ("ACE_Based_Pointer_Basic<CONCRETE>::ACE_Based_Pointer_Basic");
 }
 
 template <class CONCRETE>
-ACE_Based_Pointer_Basic<CONCRETE>::ACE_Based_Pointer_Basic (void)
+ACE_Based_Pointer_Basic<CONCRETE>::ACE_Based_Pointer_Basic ()
   : target_ (0),
     base_offset_ (0)
 {
@@ -98,22 +98,6 @@ ACE_Based_Pointer_Basic<CONCRETE>::ACE_Based_Pointer_Basic (CONCRETE *rhs)
       this->base_offset_ = (char *) this - (char *) base_addr;
       this->target_ = ((char *) rhs - (char *) base_addr);
     }
-}
-
-template <class CONCRETE>
-ACE_Based_Pointer_Basic<CONCRETE>::ACE_Based_Pointer_Basic (const ACE_Based_Pointer_Basic<CONCRETE> &)
-{
-  ACE_TRACE ("ACE_Based_Pointer_Basic<CONCRETE>::ACE_Based_Pointer_Basic");
-
-  ACE_ASSERT (0); // not implemented.
-}
-
-template <class CONCRETE>
-ACE_Based_Pointer<CONCRETE>::ACE_Based_Pointer (const ACE_Based_Pointer<CONCRETE> &rhs)
-  : ACE_Based_Pointer_Basic<CONCRETE> (rhs)
-{
-  ACE_TRACE ("ACE_Based_Pointer<CONCRETE>::ACE_Based_Pointer");
-  ACE_ASSERT (0); // not implemented.
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

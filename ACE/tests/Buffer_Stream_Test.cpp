@@ -23,7 +23,6 @@
 #include "ace/OS_NS_time.h"
 
 
-
 #if defined (ACE_HAS_THREADS)
 
 static const char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
@@ -80,7 +79,6 @@ public:
   /// Receive message from Supplier and print to stdout.
   int svc () override;
 private:
-
   /// Amount of time to wait for a timeout.
   ACE_Time_Value timeout_;
 };

@@ -30,8 +30,8 @@ class ECT_Supplier_Driver : public ECT_Driver
   // = DESCRIPTION
   //
 public:
-  ECT_Supplier_Driver (void);
-  virtual ~ECT_Supplier_Driver (void);
+  ECT_Supplier_Driver ();
+  virtual ~ECT_Supplier_Driver ();
 
   virtual void shutdown_consumer (void* consumer_cookie);
   // Not used....
@@ -50,13 +50,13 @@ private:
 
   void connect_suppliers (RtecScheduler::Scheduler_ptr scheduler,
                           RtecEventChannelAdmin::EventChannel_ptr local_ec);
-  void disconnect_suppliers (void);
+  void disconnect_suppliers ();
   // Connect the suppliers.
 
-  void activate_suppliers (void);
+  void activate_suppliers ();
   // Activate the suppliers, i.e. they start generating events.
 
-  void dump_results (void);
+  void dump_results ();
   // Dump the results for each supplier.
 
 private:

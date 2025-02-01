@@ -95,8 +95,7 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
 
   *os << be_nl_2;
 
-  *os << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (os);
 
   if (idl_global->dcps_sequence_type_defined (node->full_name ()))
     {
@@ -185,7 +184,7 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
       if (node->unbounded ())
         {
           *os << be_nl
-              << node->local_name () << " ( ::CORBA::ULong max);";
+              << node->local_name () << " (::CORBA::ULong max);";
         }
 
       /// If we are using std::vector, we can't implement this

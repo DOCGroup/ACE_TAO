@@ -61,7 +61,7 @@ public:
 
   /// We need this destructor to keep some compilers from complaining.
   /// It's just a no-op, however.
-  ~ACE_ARGV_Queue_Entry_T ();
+  ~ACE_ARGV_Queue_Entry_T () = default;
 
   /// Dump the state of this object.
   void dump () const;
@@ -320,13 +320,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #include "ace/ARGV.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/ARGV.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("ARGV.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_ARGUMENT_VECTOR_H */

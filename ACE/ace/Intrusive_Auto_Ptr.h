@@ -48,7 +48,7 @@ class ACE_Intrusive_Auto_Ptr
 {
 protected:
   /// Used to define a proper boolean conversion for "if (sp) ..."
-  static void unspecified_bool(ACE_Intrusive_Auto_Ptr<X>***){};
+  static void unspecified_bool(ACE_Intrusive_Auto_Ptr<X>***){}
   typedef void (*unspecified_bool_type)(ACE_Intrusive_Auto_Ptr<X>***);
 
 public:
@@ -140,13 +140,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #include "ace/Intrusive_Auto_Ptr.inl"
 #endif /* __ACE_INLINE __ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Intrusive_Auto_Ptr.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Intrusive_Auto_Ptr.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 

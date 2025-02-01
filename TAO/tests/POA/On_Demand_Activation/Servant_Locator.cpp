@@ -16,8 +16,7 @@
 #include "ace/OS_NS_string.h"
 
 ServantLocator::ServantLocator (CORBA::ORB_ptr orb)
-  : counter_ (0),
-    orb_ (CORBA::ORB::_duplicate (orb))
+  : orb_ (CORBA::ORB::_duplicate (orb))
 {
 }
 

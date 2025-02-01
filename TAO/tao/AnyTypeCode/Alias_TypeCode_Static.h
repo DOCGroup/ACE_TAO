@@ -52,7 +52,6 @@ namespace TAO
         private TAO::Null_RefCount_Policy
     {
     public:
-
       /// Constructor.
       Alias (CORBA::TCKind kind,
              char const * id,
@@ -108,9 +107,7 @@ namespace TAO
        *       @c TypeCode::Alias.
        */
       CORBA::TypeCode_ptr const * content_type_;
-
     };
-
   }  // End namespace TypeCode
 }  // End namespace TAO
 
