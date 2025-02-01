@@ -128,6 +128,7 @@ FIFO_Test: !ACE_FOR_TAO
 Framework_Component_Test: !STATIC !nsk
 Future_Set_Test: !nsk !ACE_FOR_TAO
 Future_Test: !nsk !ACE_FOR_TAO
+Future_Stress_Test: !nsk !ACE_FOR_TAO
 Get_Opt_Test
 Handle_Set_Test: !ACE_FOR_TAO
 Hash_Map_Bucket_Iterator_Test
@@ -220,7 +221,7 @@ Reference_Counted_Event_Handler_Test -d 0
 Refcounted_Event_Handler_Test_DevPoll:
 Reverse_Lock_Test
 RW_Process_Mutex_Test: !VxWorks !ACE_FOR_TAO !PHARLAP !Cygwin
-Sendfile_Test: !QNX !NO_NETWORK !VxWorks !LabVIEW_RT
+Sendfile_Test: !NO_NETWORK !VxWorks !LabVIEW_RT
 Signal_Test: !VxWorks !Cygwin
 SOCK_Acceptor_Test: !NO_NETWORK
 SOCK_Connector_Test: !NO_NETWORK

@@ -12,13 +12,7 @@ TAO_CEC_TypedSupplierAdmin::TAO_CEC_TypedSupplierAdmin (TAO_CEC_TypedEventChanne
   :  typed_event_channel_ (ec),
      typed_push_admin_ (ec)
 {
-  this->default_POA_ =
-    this->typed_event_channel_->typed_supplier_poa ();
-}
-
-// Implementation skeleton destructor
-TAO_CEC_TypedSupplierAdmin::~TAO_CEC_TypedSupplierAdmin ()
-{
+  this->default_POA_ = this->typed_event_channel_->typed_supplier_poa ();
 }
 
 PortableServer::POA_ptr

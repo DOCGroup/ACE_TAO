@@ -131,7 +131,7 @@ jobs:
     - name: Install vcpkg
       uses: lukka/run-vcpkg@v11
       with:
-        vcpkgGitCommitId: c8696863d371ab7f46e213d8f5ca923c4aef2a00
+        vcpkgGitCommitId: c82f74667287d3dc386bce81e44964370c91a289
         runVcpkgInstall: true
     - name: create $ACE_ROOT/ace/config.h
       run: |
@@ -164,7 +164,7 @@ jobs:
         perl ${env:ACE_ROOT}/bin/mwc.pl -type ${{ matrix.mpctype }} ${env:TAO_ROOT}/tests/IDL_Test -workers 4 ${{ matrix.OptionalMpcArgs }}
       shell: pwsh
     - name: Setup msbuild
-      uses: microsoft/setup-msbuild@v1
+      uses: microsoft/setup-msbuild@v2
     - name: Build solution TAO/TAO_ACE.sln
       run: msbuild -maxcpucount -p:Platform=${{ matrix.BuildPlatform }} -p:Configuration=${{ matrix.BuildConfiguration }} TAO/TAO_ACE.sln
     - name: Build solution ACE/tests/tests.sln

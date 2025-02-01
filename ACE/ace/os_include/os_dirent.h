@@ -80,8 +80,13 @@ struct ACE_DIR {
 };
 #elif defined (ACE_WIN32) && (__BORLANDC__) && defined (ACE_USES_WCHAR)
 #define ACE_HAS_TCHAR_DIRENT
-#define ACE_DIRENT wdirent
+#if defined(__MINGW64__)
+# define ACE_DIRENT _wdirent
+typedef _WDIR ACE_DIR;
+#else
+# define ACE_DIRENT wdirent
 typedef wDIR ACE_DIR;
+#endif
 #else
 #define ACE_DIRENT dirent
 typedef DIR ACE_DIR;

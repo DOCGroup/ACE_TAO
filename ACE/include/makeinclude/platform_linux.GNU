@@ -10,16 +10,11 @@ else
   CXX_FOR_VERSION_TEST ?= g++
 endif
 
-CXX_FULL_VERSION := $(shell $(CXX_FOR_VERSION_TEST) --version)
-CXX_VERSION := $(shell $(CXX_FOR_VERSION_TEST) -dumpversion)
-
-ifeq (Ubuntu, $(findstring Ubuntu,$(LSB_RELEASE_ID)))
-  ifeq (7.10, $(findstring 7.10,$(LSB_RELEASE_RELEASE)))
-    no_hidden_visibility ?= 1
-  endif
-  ifeq (7.04, $(findstring 7.04,$(LSB_RELEASE_RELEASE)))
-    no_hidden_visibility ?= 1
-  endif
+ifndef CXX_FULL_VERSION
+  CXX_FULL_VERSION := $(shell $(CXX_FOR_VERSION_TEST) --version)
+endif
+ifndef CXX_VERSION
+  CXX_VERSION := $(shell $(CXX_FOR_VERSION_TEST) -dumpversion)
 endif
 
 ifeq ($(buildbits),32)
@@ -52,15 +47,8 @@ endif
 #
 include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
 
-# TAO with GCC 4.0.2 and -O3 seems to result in runtime issues, for example
-# the ForwardRequest PI test will fail. For GCC 4.0.2 we default to -O2
-ifeq ($(CXX_VERSION),4.0.2)
-  OCFLAGS ?= -O2
-  OCCFLAGS ?=-O2
-else
-  OCFLAGS ?= -O3
-  OCCFLAGS ?= -O3
-endif
+OCFLAGS ?= -O3
+OCCFLAGS ?= -O3
 
 #### GNU gas has a string limit of 4096 characters.  On Alphas,
 #### builds will fail due to running over that limit.  There are
