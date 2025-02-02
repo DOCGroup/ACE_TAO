@@ -36,16 +36,15 @@ $server4->DeleteFile ($naming_ior);
 $client->DeleteFile ($naming_ior);
 
 
-$NS = $server1->CreateProcess ("../../orbsvcs/Naming_Service/tao_cosnaming", "");
+$NS = $server1->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_cosnaming", "");
 $LS = $server2->CreateProcess ("$ENV{ACE_ROOT}/bin/tao_nslist", "");
 $AD = $server3->CreateProcess ("$ENV{ACE_ROOT}/bin/tao_nsadd", "");
 $DL = $server4->CreateProcess ("$ENV{ACE_ROOT}/bin/tao_nsdel", "");
-$CL = $client->CreateProcess ("../../orbsvcs/tests/Simple_Naming/client", "");
+$CL = $client->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/tests/Simple_Naming/client", "");
 
 # We want the nslist and nsadd executables to be found exactly in the path
 # given, without being modified by the value of -ExeSubDir.
 # So, we tell their Process objects to ignore the setting of -ExeSubDir.
-
 $LS->IgnoreExeSubDir (1);
 $AD->IgnoreExeSubDir (1);
 $DL->IgnoreExeSubDir (1);

@@ -4,7 +4,7 @@
 /**
  *  @file    SPIPE_Connector.h
  *
- *  @author Doug Schmidt <schmidt@cs.wustl.edu>
+ *  @author Doug Schmidt <d.schmidt@vanderbilt.edu>
  *  @author Prashant Jain <pjain@cs.wustl.edu>
  */
 //=============================================================================
@@ -32,9 +32,8 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_SPIPE_Connector
 {
 public:
-  // = Initialization method.
   /// Default constructor.
-  ACE_SPIPE_Connector (void);
+  ACE_SPIPE_Connector ();
 
   /**
    * Actively connect and produce a <new_stream> if things go well.
@@ -100,7 +99,7 @@ public:
   typedef ACE_SPIPE_Stream PEER_STREAM;
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;

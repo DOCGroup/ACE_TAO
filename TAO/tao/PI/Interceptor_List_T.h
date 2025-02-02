@@ -60,7 +60,7 @@ namespace TAO
     };
 
     /// Constructor.
-    Interceptor_List (void);
+    Interceptor_List ();
 
     void add_interceptor (InterceptorType_ptr_type i);
 
@@ -68,7 +68,7 @@ namespace TAO
     void add_interceptor (InterceptorType_ptr_type i,
                           const CORBA::PolicyList& policies);
 
-    void destroy_interceptors (void);
+    void destroy_interceptors ();
 
     /// Return the registered interceptor in sequence element @a index.
     RegisteredInterceptor& registered_interceptor (size_t index);
@@ -76,7 +76,7 @@ namespace TAO
     /// Return the interceptor in sequence element @a index.
     InterceptorType_ptr_type interceptor (size_t index);
 
-    size_t size (void) const;
+    size_t size () const;
 
   private:
     typedef ACE_Array_Base<RegisteredInterceptor > RegisteredArray;
@@ -88,13 +88,7 @@ namespace TAO
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "tao/PI/Interceptor_List_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Interceptor_List_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 

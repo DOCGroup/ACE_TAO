@@ -28,9 +28,8 @@ class Handler : public ACE_Svc_Handler<ACE_SOCK_IOStream, ACE_NULL_SYNCH>
   //     iostream characteristics of the peer.
 {
 public:
-  // = Initialization and termination methods.
-  Handler (void);
-  ~Handler (void);
+  Handler ();
+  ~Handler ();
 
   // = <Svc_Handler> hooks.
   virtual int open (void *);

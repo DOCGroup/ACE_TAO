@@ -4,7 +4,7 @@
 /**
  *  @file    FILE_IO.h
  *
- *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
 //=============================================================================
 
@@ -44,9 +44,8 @@ class ACE_Export ACE_FILE_IO : public ACE_FILE
 public:
   friend class ACE_FILE_Connector;
 
-  // = Initialization method.
   /// Default constructor.
-  ACE_FILE_IO (void);
+  ACE_FILE_IO ();
 
   /// send upto @a n bytes in @a buf.
   ssize_t send (const void *buf, size_t n) const;
@@ -99,7 +98,7 @@ public:
   ssize_t recv (iovec iov[], int n) const;
 
   /**
-   * Send N char *ptrs and int lengths.  Note that the char *'s
+   * Send @a n char *ptrs and int lengths.  Note that the char *'s
    * precede the ints (basically, an varargs version of writev).  The
    * count N is the *total* number of trailing arguments, *not* a
    * couple of the number of tuple pairs!
@@ -149,7 +148,7 @@ public:
                    int n) const;
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;

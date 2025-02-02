@@ -29,7 +29,6 @@ class UDP_Client_i
   //    This class wrapps the client functionality into one class
   //
 public:
-  // = Initialization and termination methods.
   /// Constructor
   UDP_Client_i (CORBA::ORB_ptr orb,
                 UDP_ptr udp,
@@ -38,11 +37,11 @@ public:
                 ACE_UINT32 iterations);
 
   /// Destructor
-  virtual ~UDP_Client_i (void);
+  virtual ~UDP_Client_i ();
 
 private:
   // Runs in a separate thread.
-  virtual int svc (void );
+  virtual int svc ();
 
 private:
   CORBA::ORB_var orb_;

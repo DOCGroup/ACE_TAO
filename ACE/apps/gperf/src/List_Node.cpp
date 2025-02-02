@@ -2,7 +2,7 @@
 
 /**
  * Copyright (C) 1989 Free Software Foundation, Inc.
- * written by Douglas C. Schmidt (schmidt@cs.wustl.edu)
+ * written by Douglas C. Schmidt (d.schmidt@vanderbilt.edu)
  *
  * This file is part of GNU GPERF.
  *
@@ -121,7 +121,7 @@ List_Node::List_Node (char *k, int len)
   sort (keysig, ACE_Utils::truncate_cast<int> (ptr - keysig));
 }
 
-List_Node::~List_Node (void)
+List_Node::~List_Node ()
 {
   delete [] this->key;
   delete [] this->keysig;

@@ -29,7 +29,7 @@ public:
   // The AMI_Test methods.
   CORBA::Long foo (CORBA::Long_out out_l);
 
-  void shutdown (void);
+  void shutdown ();
 
 private:
   CORBA::ORB_var orb_;

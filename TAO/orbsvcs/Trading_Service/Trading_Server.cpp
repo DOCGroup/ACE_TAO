@@ -3,7 +3,6 @@
 #include "ace/OS_main.h"
 
 // Driver function for the TAO Trading Service.
-
 int
 ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
@@ -11,7 +10,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 
   try
     {
-      int check = trader.init (argc, argv);
+      int const check = trader.init (argc, argv);
 
       if (check != -1)
         {

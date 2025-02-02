@@ -15,9 +15,8 @@ public:
   // = The skeleton methods
     virtual void test(
         BlobType1& blob1,
-        BlobType2& blob2
-      );
-  virtual void shutdown (void);
+        BlobType2& blob2);
+  virtual void shutdown ();
 
 private:
   /// Use an ORB reference to convert strings to objects and shutdown

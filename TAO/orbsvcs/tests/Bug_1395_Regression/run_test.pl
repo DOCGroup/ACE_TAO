@@ -23,7 +23,7 @@ my $activator = PerlACE::TestTarget::create_target (4) || die "Create target 4 f
 my $tao_imr   = PerlACE::TestTarget::create_target (5) || die "Create target 5 failed\n";
 
 # The location of the implementation repository binaries
-my $imr_bin_path  = "../../ImplRepo_Service";
+my $imr_bin_path  = "$ENV{TAO_ROOT}/orbsvcs/ImplRepo_Service";
 # The location of the tao_imr IMR utility
 my $tao_imr_bin_path = "$ENV{ACE_ROOT}/bin";
 

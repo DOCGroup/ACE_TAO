@@ -19,15 +19,14 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Reference counting for DSI ServerRequest object.
-
 CORBA::ULong
-CORBA::ServerRequest::_incr_refcount (void)
+CORBA::ServerRequest::_incr_refcount ()
 {
   return ++this->refcount_;
 }
 
 CORBA::ULong
-CORBA::ServerRequest::_decr_refcount (void)
+CORBA::ServerRequest::_decr_refcount ()
 {
   CORBA::ULong const new_count = --this->refcount_;
 
@@ -38,7 +37,7 @@ CORBA::ServerRequest::_decr_refcount (void)
 }
 
 CORBA::ServerRequest::ServerRequest (TAO_ServerRequest &orb_server_request)
-  : lazy_evaluation_ (0),
+  : lazy_evaluation_ (false),
     ctx_ (CORBA::Context::_nil ()),
     params_ (CORBA::NVList::_nil ()),
     retval_ (0),
@@ -50,7 +49,7 @@ CORBA::ServerRequest::ServerRequest (TAO_ServerRequest &orb_server_request)
   this->orb_server_request_.is_dsi ();
 }
 
-CORBA::ServerRequest::~ServerRequest (void)
+CORBA::ServerRequest::~ServerRequest ()
 {
   if (this->params_ != 0)
     {
@@ -160,7 +159,7 @@ CORBA::ServerRequest::set_exception (const CORBA::Any &value)
 // This method will be utilized by the DSI servant to marshal outgoing
 // parameters.
 void
-CORBA::ServerRequest::dsi_marshal (void)
+CORBA::ServerRequest::dsi_marshal ()
 {
   // There was a user exception, no need to marshal any parameters.
   if (this->sent_gateway_exception_)
@@ -265,8 +264,7 @@ CORBA::ServerRequest::gateway_exception_reply (ACE_CString &raw_exception)
   // to the original source of the reply.
   this->orb_server_request_.outgoing ()->write_octet_array (
       reinterpret_cast<const CORBA::Octet *> (raw_exception.fast_rep ()),
-      static_cast<CORBA::ULong> (raw_exception.length () + ACE_CDR::MAX_ALIGNMENT)
-    );
+      static_cast<CORBA::ULong> (raw_exception.length () + ACE_CDR::MAX_ALIGNMENT));
 
   // This will prevent the marshaling of any parameters into this reply.
   this->sent_gateway_exception_ = true;

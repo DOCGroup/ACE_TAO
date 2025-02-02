@@ -47,13 +47,13 @@ EC_Consumer::connect (
 }
 
 int
-EC_Consumer::connected (void) const
+EC_Consumer::connected () const
 {
   return !CORBA::is_nil (this->supplier_proxy_.in ());
 }
 
 void
-EC_Consumer::disconnect (void)
+EC_Consumer::disconnect ()
 {
   if (CORBA::is_nil (this->supplier_proxy_.in ()))
     return;
@@ -65,7 +65,7 @@ EC_Consumer::disconnect (void)
 }
 
 void
-EC_Consumer::shutdown (void)
+EC_Consumer::shutdown ()
 {
   if (!this->is_active_)
     return;
@@ -137,7 +137,7 @@ EC_Consumer::push (const RtecEventComm::EventSet& events)
 }
 
 void
-EC_Consumer::disconnect_push_consumer (void)
+EC_Consumer::disconnect_push_consumer ()
 {
   this->driver_->consumer_disconnect (this->cookie_);
   this->supplier_proxy_ =

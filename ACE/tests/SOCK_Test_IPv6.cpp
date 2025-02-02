@@ -10,7 +10,7 @@
  * connect and exchange data.
  *
  * @author Prashant Jain <pjain@cs.wustl.edu>
- *         Doug Schmidt <schmidt@cs.wustl.edu>
+ *         Doug Schmidt <d.schmidt@vanderbilt.edu>
  *         Brian Buesker <bbuesker@qualcomm.com>
  */
 // ============================================================================
@@ -208,7 +208,7 @@ server (void *arg)
 }
 
 static void
-spawn (void)
+spawn ()
 {
   // Acceptor
   ACE_SOCK_Acceptor peer_acceptor;

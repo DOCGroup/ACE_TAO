@@ -31,7 +31,6 @@ class TAO_GIOP_Message_Generator_Parser_10:
   public TAO_GIOP_Message_Generator_Parser
 {
 public:
-
   /// Write the request header in to @a msg
   virtual bool write_request_header (
       const TAO_Operation_Details &opdetails,
@@ -76,11 +75,11 @@ public:
                                   TAO_Pluggable_Reply_Params &params);
 
   /// Our versions
-  virtual CORBA::Octet major_version (void) const;
-  virtual CORBA::Octet minor_version (void) const;
+  virtual CORBA::Octet major_version () const;
+  virtual CORBA::Octet minor_version () const;
 
   /// The header length of a fragment
-  virtual size_t fragment_header_length (void) const;
+  virtual size_t fragment_header_length () const;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

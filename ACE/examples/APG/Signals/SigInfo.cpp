@@ -15,9 +15,7 @@ public:
   { }
 
   // Listing A code/ch11
-  int handle_signal (int signum,
-                     siginfo_t * siginfo = 0,
-                     ucontext_t * = 0)
+  int handle_signal (int signum, siginfo_t * siginfo = 0, ucontext_t * = 0)
   {
     ACE_DEBUG ((LM_INFO, ACE_TEXT ("Received signal [%S]\n"),
                 signum));

@@ -2,7 +2,7 @@
 
 /**
  * Copyright (C) 1989 Free Software Foundation, Inc.
- * written by Douglas C. Schmidt (schmidt@cs.wustl.edu)
+ * written by Douglas C. Schmidt (d.schmidt@vanderbilt.edu)
  *
  * This file is part of GNU GPERF.
  *
@@ -54,7 +54,7 @@ public:
             int word_end,
             int bad_val,
             int key_end);
-  int operator () (void);
+  int operator () ();
 
 private:
   /// A pointer to the string provided by the user.

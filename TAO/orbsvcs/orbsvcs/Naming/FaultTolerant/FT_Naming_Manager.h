@@ -33,7 +33,6 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
@@ -59,9 +58,8 @@ class TAO_FtNaming_Export TAO_FT_Naming_Manager
     public ACE_Task_Base
 {
 public:
-
   /// Constructor.
-  TAO_FT_Naming_Manager (void);
+  TAO_FT_Naming_Manager ();
 
   void set_replicator (TAO_FT_Naming_Replication_Manager *repl);
 
@@ -109,7 +107,6 @@ public:
    * Methods required by the PortableGroup::PropertyManager interface.
    */
   //@{
-
   /// Set the default properties to be used by all object groups.
   virtual void set_default_properties (
       const PortableGroup::Properties & props);
@@ -169,7 +166,6 @@ public:
    * interface.
    */
   //@{
-
   /// Create a member using the load balancer ObjectGroupManager, and
   /// add the created object to the ObjectGroup.
   virtual PortableGroup::ObjectGroup_ptr create_member (
@@ -232,7 +228,6 @@ public:
    * Methods required by the PortableGroup::GenericFactory interface.
    */
   //@{
-
   /**
    * Create an object of the specified type that adheres to the
    * restrictions defined by the provided Criteria.  The out
@@ -286,7 +281,7 @@ public:
   void set_global_strategy (const ACE_TCHAR *strat_name);
 
   /// Destructor.
-  ~TAO_FT_Naming_Manager (void);
+  ~TAO_FT_Naming_Manager ();
 
 private:
   /// A utility to ensure we can access the latest object reference for
@@ -323,7 +318,6 @@ private:
    * and Random are supported.
    */
   //@{
-
   /// The "RoundRobin" load balancing strategy.
   TAO_FT_Round_Robin round_robin_;
   /// The "Random" load balancing strategy.
@@ -340,9 +334,7 @@ private:
   PortableGroup::Name built_in_balancing_strategy_name_;
 
   PortableGroup::Name object_group_property_name_;
-
 };
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

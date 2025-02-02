@@ -31,12 +31,11 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Dynamic_TP_Export TAO_DTP_POA_Loader : public ACE_Service_Object
 {
 public:
-
   /// Constructor.
-  TAO_DTP_POA_Loader (void);
+  TAO_DTP_POA_Loader ();
 
   /// Destructor.
-  virtual ~TAO_DTP_POA_Loader (void);
+  virtual ~TAO_DTP_POA_Loader ();
 
   /// Initialize the DynamicTP loader hooks.
   virtual int init (int argc, ACE_TCHAR* []);

@@ -41,7 +41,7 @@ public:
   TAO_UnionDef_i (TAO_Repository_i *repo);
 
   /// Destructor
-  virtual ~TAO_UnionDef_i (void);
+  virtual ~TAO_UnionDef_i ();
 
   /// Return our definition kind.
   virtual CORBA::DefinitionKind def_kind ();
@@ -75,11 +75,9 @@ public:
 
   CORBA::UnionMemberSeq *members_i ();
 
-  virtual void members (
-    const CORBA::UnionMemberSeq &members);
+  virtual void members (const CORBA::UnionMemberSeq &members);
 
-  void members_i (
-    const CORBA::UnionMemberSeq &members);
+  void members_i (const CORBA::UnionMemberSeq &members);
 
 private:
   /// Used by members() to get each member's label value.

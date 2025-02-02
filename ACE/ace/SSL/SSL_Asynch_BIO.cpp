@@ -1,7 +1,7 @@
 // -*- C++ -*-
 #include "SSL_Asynch_BIO.h"
 
-#if OPENSSL_VERSION_NUMBER > 0x0090581fL && ((defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) || (defined (ACE_HAS_AIO_CALLS)))
+#if OPENSSL_VERSION_NUMBER > 0x0090581fL && (defined (ACE_WIN32) || (defined (ACE_HAS_AIO_CALLS)))
 
 #include "SSL_Asynch_Stream.h"
 #include "ace/OS_NS_string.h"
@@ -41,7 +41,7 @@ extern "C"
 
 #define BIO_TYPE_ACE  ( 21 | BIO_TYPE_SOURCE_SINK )
 
-#if OPENSSL_VERSION_NUMBER < 0x10100000L
+#if OPENSSL_VERSION_NUMBER < 0x10100000L || (defined(LIBRESSL_VERSION_NUMBER) && LIBRESSL_VERSION_NUMBER < 0x30500000L)
 static BIO_METHOD methods_ACE =
   {
     BIO_TYPE_ACE, // BIO_TYPE_PROXY_SERVER,
@@ -58,7 +58,9 @@ static BIO_METHOD methods_ACE =
 # define BIO_set_init(b, val) b->init = val
 # define BIO_set_data(b, val) b->ptr = val
 # define BIO_set_num(b, val) b->num = val
-# define BIO_set_flags(b, val) b->flags = val
+# if !defined (BIO_set_flags)
+#  define BIO_set_flags(b, val) b->flags = val
+# endif /* !BIO_set_flags */
 # define BIO_set_shutdown(b, val) b->shutdown = val
 # define BIO_get_init(b) b->init
 # define BIO_get_data(b) b->ptr
@@ -66,14 +68,14 @@ static BIO_METHOD methods_ACE =
 #else
 static BIO_METHOD* methods_ACE;
 # define BIO_set_num(b, val)
-#endif /* OPENSSL_VERSION_NUMBER < 0x10100000L */
+#endif /* OPENSSL_VERSION_NUMBER < 0x10100000L || (defined(LIBRESSL_VERSION_NUMBER) && LIBRESSL_VERSION_NUMBER < 0x30500000L) */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 BIO *
 ACE_SSL_make_BIO (void * ssl_asynch_stream)
 {
-#if OPENSSL_VERSION_NUMBER < 0x10100000L
+#if OPENSSL_VERSION_NUMBER < 0x10100000L || (defined(LIBRESSL_VERSION_NUMBER) && LIBRESSL_VERSION_NUMBER < 0x30500000L)
   BIO * const pBIO = BIO_new (&methods_ACE);
 #else
   if (!methods_ACE)

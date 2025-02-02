@@ -70,19 +70,18 @@ public:
     target_ (Test::Hello::_duplicate(h))
   {}
 
-  int svc (void);
+  int svc ();
 
   int replies_;
   int nis_;
   int exs_;
 
 private:
-
   ACE_Mutex lock_;
   Test::Hello_var target_;
 };
 
-int ClientTask::svc (void)
+int ClientTask::svc ()
 {
   int ndx = 0;
   {

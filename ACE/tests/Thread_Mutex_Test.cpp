@@ -7,7 +7,7 @@
  *   ACE_Thread_Mutex. The test acquires and releases mutexes. No
  *   command line arguments are needed to run the test.
  *
- *  @author Prashant Jain <pjain@cs.wustl.edu> and Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ *  @author Prashant Jain <pjain@cs.wustl.edu> and Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
 //=============================================================================
 
@@ -17,7 +17,6 @@
 #include "ace/OS_NS_sys_time.h"
 #include "ace/OS_NS_time.h"
 #include "ace/OS_NS_unistd.h"
-
 
 
 #if defined (ACE_HAS_THREADS)
@@ -32,7 +31,7 @@
   typedef ACE_Process_Mutex ACE_TEST_MUTEX;
 #else
 # include "ace/Thread_Mutex.h"
-  typedef ACE_Thread_Mutex ACE_TEST_MUTEX;
+  using ACE_TEST_MUTEX = ACE_Thread_Mutex;
 #endif
 
 #if !defined (ACE_HAS_MUTEX_TIMEOUTS)
@@ -236,7 +235,7 @@ test (void *args)
 #endif /* ACE_HAS_THREADS */
 
 static void
-spawn (void)
+spawn ()
 {
 #if defined (ACE_HAS_THREADS)
   ACE_TEST_MUTEX mutex;

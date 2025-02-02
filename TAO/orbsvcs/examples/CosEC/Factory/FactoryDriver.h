@@ -34,18 +34,17 @@
 class FactoryDriver
 {
  public:
-  // = Initialization and termination code.
   /// Constructor.
   FactoryDriver (const ACE_TCHAR* factory = ACE_TEXT("CosEC_Factory"));
 
   /// Destructor.
-  ~FactoryDriver (void);
+  ~FactoryDriver () = default;
 
   /// Start the driver.
   int start (int argc, ACE_TCHAR *argv []);
 
-  ///Stop the driver.
-  int stop (void);
+  /// Stop the driver.
+  int stop ();
 
  protected:
   /// Parse the command-line arguments and set options.
@@ -71,6 +70,5 @@ class FactoryDriver
 
   /// Use a naming client.
   TAO_Naming_Client naming_client_;
-
 };
 #endif /*  TAO_FACTORYDRIVER_H */

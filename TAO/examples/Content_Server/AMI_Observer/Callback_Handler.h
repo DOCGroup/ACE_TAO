@@ -72,7 +72,7 @@ public:
                     Web_Server::Callback_ptr callback);
 
   /// The callback for this reply handler.
-  virtual void next_chunk (void);
+  virtual void next_chunk ();
 
   virtual void next_chunk_excep (::Messaging::ExceptionHolder *);
 
@@ -82,21 +82,20 @@ public:
    * incremented when file retrieval begins, and decremented when file
    * retrieval completes.
    */
-  void run (void);
+  void run ();
 
 private:
   /// Destructor (private to ensure that Callback_Handler is allocated
   /// on the heap).
-  ~Callback_Handler (void);
+  ~Callback_Handler ();
 
   /// Open the file to be uploaded to the client callback.
-  void open_file (void);
+  void open_file ();
 
   /// Deactivate this reply handler.
-  void deactivate (void);
+  void deactivate ();
 
 private:
-
   /// The Addr corresponding to the retrieved file.
   ACE_FILE_Addr file_;
 

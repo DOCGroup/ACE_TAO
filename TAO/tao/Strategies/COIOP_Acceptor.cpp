@@ -1,4 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
 #include "tao/Strategies/COIOP_Acceptor.h"
 
 #if defined (TAO_HAS_COIOP) && (TAO_HAS_COIOP != 0)
@@ -11,12 +10,12 @@
 #include "tao/Codeset_Manager.h"
 #include "tao/CDR.h"
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/OS_NS_string.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_COIOP_Acceptor::TAO_COIOP_Acceptor (void)
+TAO_COIOP_Acceptor::TAO_COIOP_Acceptor ()
   : TAO_Acceptor (TAO_TAG_COIOP_PROFILE),
     uuid_ (*ACE_Utils::UUID_GENERATOR::instance ()->generate_UUID ()),
     version_ (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR),
@@ -24,7 +23,7 @@ TAO_COIOP_Acceptor::TAO_COIOP_Acceptor (void)
 {
 }
 
-TAO_COIOP_Acceptor::~TAO_COIOP_Acceptor (void)
+TAO_COIOP_Acceptor::~TAO_COIOP_Acceptor ()
 {
   // Make sure we are closed before we start destroying the
   // strategies.
@@ -160,7 +159,7 @@ TAO_COIOP_Acceptor::is_collocated (const TAO_Endpoint *endpoint)
 }
 
 int
-TAO_COIOP_Acceptor::close (void)
+TAO_COIOP_Acceptor::close ()
 {
   return 0;
 }
@@ -208,7 +207,7 @@ TAO_COIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
 }
 
 CORBA::ULong
-TAO_COIOP_Acceptor::endpoint_count (void)
+TAO_COIOP_Acceptor::endpoint_count ()
 {
   return 1;
 }

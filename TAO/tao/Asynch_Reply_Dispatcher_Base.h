@@ -70,12 +70,11 @@ public:
    * Why are we clumping everything in one method. Answer is we need
    * atomicity?
    */
-  bool try_dispatch_reply (void);
+  bool try_dispatch_reply ();
 
 protected:
-
   /// Destructor.
-  virtual ~TAO_Asynch_Reply_Dispatcher_Base (void);
+  virtual ~TAO_Asynch_Reply_Dispatcher_Base ();
 
 private:
   void operator= (const TAO_Asynch_Reply_Dispatcher_Base &);
@@ -133,9 +132,8 @@ namespace TAO
   class TAO_Export ARDB_Refcount_Functor
   {
   public:
-    void operator() (TAO_Asynch_Reply_Dispatcher_Base *ardb) throw ();
+    void operator() (TAO_Asynch_Reply_Dispatcher_Base *ardb) noexcept;
   };
-
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

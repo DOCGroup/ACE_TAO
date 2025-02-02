@@ -8,11 +8,9 @@
 #include "ace/Dynamic.inl"
 #endif /* __ACE_INLINE__ */
 
-
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_Dynamic::ACE_Dynamic (void)
+ACE_Dynamic::ACE_Dynamic ()
   : is_dynamic_ (false)
 {
   ACE_TRACE ("ACE_Dynamic::ACE_Dynamic");
@@ -21,7 +19,7 @@ ACE_Dynamic::ACE_Dynamic (void)
 ACE_ALLOC_HOOK_DEFINE(ACE_Dynamic)
 
 /* static */ ACE_Dynamic *
-ACE_Dynamic::instance (void)
+ACE_Dynamic::instance ()
 {
   return ACE_TSS_Singleton<ACE_Dynamic, ACE_SYNCH_NULL_MUTEX>::instance ();
 }

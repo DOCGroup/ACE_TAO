@@ -17,10 +17,6 @@ ace_tkreactor   = 1
 fl              = 1
 ace_flreactor   = 1
 
-qt              = 0
-qt4             = 0
-ace_qtreactor   = 0
-
 fox             = 1
 ace_foxreactor  = 1
 

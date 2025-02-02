@@ -24,8 +24,6 @@ my $con = PerlACE::TestTarget::create_target (4) || die "Create target 4 failed\
 $sup->AddLibPath ('../lib');
 $con->AddLibPath ('../lib');
 
-PerlACE::check_privilege_group();
-
 $port = $ns->RandomPort ();
 $host = $ns->HostName ();
 
@@ -41,9 +39,9 @@ $nfs->DeleteFile ($nfsiorfile);
 $sup->DeleteFile ($supiorfile);
 $con->DeleteFile ($supiorfile);
 
-$NS = $ns->CreateProcess ("../../../Naming_Service/tao_cosnaming",
+$NS = $ns->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_cosnaming",
                             "-ORBEndpoint iiop://$host:$port");
-$NFS = $nfs->CreateProcess ("../../../Notify_Service/tao_cosnotification",
+$NFS = $nfs->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Notify_Service/tao_cosnotification",
                             "-ORBInitRef NameService=iioploc://" .
                             "$host:$port/NameService " .
                             "-IORoutput $nfs_nfsiorfile -ORBSvcConf " .

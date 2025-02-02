@@ -40,8 +40,6 @@ class TAO_Log_Serv_Export TAO_Hash_LogStore
   : public TAO_LogStore
 {
 public:
-  // = Initialization and Termination Methods
-
   /// Constructor.
   TAO_Hash_LogStore (TAO_LogMgr_i* mgr);
 
@@ -51,11 +49,11 @@ public:
 
   /// Lists all logs created by the log factory.
   virtual DsLogAdmin::LogList *
-    list_logs (void);
+    list_logs ();
 
   /// Lists all log ids.
   virtual DsLogAdmin::LogIdList *
-    list_logs_by_id (void);
+    list_logs_by_id ();
 
   /// Returns a reference to the log with the supplied id.
   virtual DsLogAdmin::Log_ptr

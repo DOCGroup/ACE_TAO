@@ -4,11 +4,9 @@
 /**
  *  @file   OS_NS_stdio.h
  *
- *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  *  @author Jesper S. M|ller<stophph@diku.dk>
  *  @author and a cast of thousands...
- *
- *  Originally in OS.h.
  */
 //=============================================================================
 
@@ -26,14 +24,14 @@
 #include "ace/os_include/os_stdio.h"
 #include "ace/os_include/os_fcntl.h"
 #include "ace/os_include/os_inttypes.h"
+#include "ace/os_include/os_errno.h"
 #include /**/ "ace/ACE_export.h"
 
-/* OPENVMS needs unistd for cuserid() */
-#if defined (CYGWIN32) || defined (ACE_OPENVMS)
+#if defined (CYGWIN32)
 #  include "ace/os_include/os_unistd.h"
-#endif /* CYGWIN32 || ACE_OPENVMS */
+#endif /* CYGWIN32 */
 
-#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
+#if defined (ACE_WIN32)
 # include "io.h"
 #endif
 
@@ -48,23 +46,13 @@
  * be usable later as there is no way to save the macro definition
  * using the pre-processor.
  */
-inline void ace_clearerr_helper (FILE *stream)
-{
-#if defined (clearerr)
-  clearerr (stream);
-#undef clearerr
-#else
-  ACE_STD_NAMESPACE::clearerr (stream);
-#endif /* defined (clearerr) */
-}
-
 inline int ace_fgetc_helper (FILE *fp)
 {
 #if defined (fgetc)
   return fgetc (fp);
 #undef fgetc
 #else
-  return ACE_STD_NAMESPACE::fgetc (fp);
+  return ::fgetc (fp);
 #endif /* defined (fgetc) */
 }
 
@@ -75,7 +63,7 @@ inline int ace_fputc_helper (int ch, FILE *fp)
   return fputc (ch, fp);
 #undef fputc
 #else
-  return ACE_STD_NAMESPACE::fputc (ch, fp);
+  return ::fputc (ch, fp);
 #endif /* defined (fputc) */
 }
 #endif /* !ACE_LACKS_FPUTC */
@@ -87,7 +75,7 @@ inline int ace_getc_helper (FILE *fp)
   return getc (fp);
 #undef getc
 #else
-  return ACE_STD_NAMESPACE::getc (fp);
+  return ::getc (fp);
 #endif /* defined (getc) */
 }
 #elif defined getc
@@ -100,7 +88,7 @@ inline int ace_putc_helper (int ch, FILE *fp)
   return putc (ch, fp);
 #undef putc
 #elif !defined (ACE_LACKS_PUTC)
-  return ACE_STD_NAMESPACE::putc (ch, fp);
+  return ::putc (ch, fp);
 #else
   ACE_UNUSED_ARG (ch);
   ACE_UNUSED_ARG (fp);
@@ -108,24 +96,15 @@ inline int ace_putc_helper (int ch, FILE *fp)
 #endif /* defined (putc) */
 }
 
-#if !defined (ACE_LACKS_UNGETC)
-inline int ace_ungetc_helper (int ch, FILE *fp)
-{
-#if defined (ungetc)
-  return ungetc (ch, fp);
-#undef ungetc
-#else
-  return ACE_STD_NAMESPACE::ungetc (ch, fp);
-#endif /* defined (ungetc) */
-}
-#endif /* !ACE_LACKS_UNGETC */
-
 #if !defined ACE_FILENO_EQUIVALENT
 inline ACE_HANDLE ace_fileno_helper (FILE *fp)
 {
 # if defined (fileno)
   return (ACE_HANDLE)fileno (fp);
 # undef fileno
+# elif defined (ACE_LACKS_FILENO)
+  ACE_UNUSED_ARG (fp);
+  ACE_NOTSUP_RETURN (ACE_INVALID_HANDLE);
 # else
   return (ACE_HANDLE)(intptr_t)ACE_STD_NAMESPACE::fileno (fp);
 # endif /* defined (fileno) */
@@ -155,10 +134,9 @@ inline char *ace_cuserid(char *user)
 #endif /* !ACE_LACKS_CUSERID && !ACE_HAS_ALT_CUSERID && ... */
 
 # if defined (ACE_LACKS_FILELOCKS)
-#   if ! defined (ACE_VXWORKS) && ! defined (ACE_HAS_RTEMS) && !defined (INTEGRITY)
+#   if ! defined (ACE_VXWORKS) && !defined (INTEGRITY)
 // VxWorks defines struct flock in sys/fcntlcom.h.  But it doesn't
-// appear to support flock ().  RTEMS defines struct flock but
-// currently does not support locking.
+// appear to support flock ().
 struct flock
 {
   short l_type;
@@ -175,7 +153,6 @@ struct flock
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE_OS {
-
   /**
    * @class ace_flock_t
    *
@@ -185,7 +162,7 @@ namespace ACE_OS {
   {
   public:
   /// Dump state of the object.
-    void dump (void) const;
+    void dump () const;
 
 # if defined (ACE_WIN32)
     ACE_OVERLAPPED overlapped_;
@@ -320,7 +297,7 @@ namespace ACE_OS {
   ACE_NAMESPACE_INLINE_FUNCTION
   ACE_HANDLE fileno (FILE *stream);
 
-#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
+#if defined (ACE_WIN32)
   extern ACE_Export
 #else
   ACE_NAMESPACE_INLINE_FUNCTION
@@ -328,19 +305,19 @@ namespace ACE_OS {
   FILE *fopen (const char *filename, const char *mode);
 
 #if defined (ACE_HAS_WCHAR)
-#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
+#if defined (ACE_WIN32)
   extern ACE_Export
 #else
   ACE_NAMESPACE_INLINE_FUNCTION
 #endif /* ACE_WIN32 */
   FILE *fopen (const char *filename, const wchar_t *mode);
-#  if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
+#  if defined (ACE_WIN32)
   extern ACE_Export
 #  else
   ACE_NAMESPACE_INLINE_FUNCTION
 #  endif /* ACE_WIN32 */
   FILE *fopen (const wchar_t *filename, const wchar_t *mode);
-#  if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
+#  if defined (ACE_WIN32)
   extern ACE_Export
 #  else
   ACE_NAMESPACE_INLINE_FUNCTION
@@ -360,14 +337,14 @@ namespace ACE_OS {
   // = Win32 OS version determination function.
   /// Return the win32 OSVERSIONINFO structure.
   ACE_NAMESPACE_INLINE_FUNCTION
-  const ACE_TEXT_OSVERSIONINFO &get_win32_versioninfo (void);
+  const ACE_TEXT_OSVERSIONINFO &get_win32_versioninfo ();
 
   // = A pair of functions for modifying ACE's Win32 resource usage.
   /// Return the handle of the module containing ACE's resources. By
   /// default, for a DLL build of ACE this is a handle to the ACE DLL
   /// itself, and for a static build it is a handle to the executable.
   ACE_NAMESPACE_INLINE_FUNCTION
-  HINSTANCE get_win32_resource_module (void);
+  HINSTANCE get_win32_resource_module ();
 
   /// Allow an application to modify which module contains ACE's
   /// resources. This is mainly useful for a static build of ACE where

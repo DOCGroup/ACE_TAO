@@ -21,18 +21,17 @@ TAO::be_visitor_alias_typecode::be_visitor_alias_typecode (
 int
 TAO::be_visitor_alias_typecode::visit_typedef (be_typedef * node)
 {
-  be_type * const base = be_type::narrow_from_decl (node->base_type ());
+  be_type * const base = dynamic_cast<be_type*> (node->base_type ());
 
 
   return this->common (node, base, "tk_alias");
-
 }
 
 
 int
 TAO::be_visitor_alias_typecode::visit_valuebox (be_valuebox * node)
 {
-  be_type * const base = be_type::narrow_from_decl (node->boxed_type ());
+  be_type * const base = dynamic_cast<be_type*> (node->boxed_type ());
 
   return this->common (node, base, "tk_value_box");
 }
@@ -44,9 +43,7 @@ TAO::be_visitor_alias_typecode::common (be_type * node,
 {
   TAO_OutStream & os = *this->ctx_->stream ();
 
-  os << be_nl_2
-     << "// TAO_IDL - Generated from" << be_nl
-     << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (&os);
 
   this->ctx_->sub_state (TAO_CodeGen::TAO_TC_DEFN_TYPECODE_NESTED);
 

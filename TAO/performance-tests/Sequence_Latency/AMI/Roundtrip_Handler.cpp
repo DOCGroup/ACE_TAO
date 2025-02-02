@@ -7,7 +7,7 @@ Roundtrip_Handler::Roundtrip_Handler (int expected_callbacks)
 }
 
 int
-Roundtrip_Handler::pending_callbacks (void) const
+Roundtrip_Handler::pending_callbacks () const
 {
   return this->pending_callbacks_;
 }
@@ -173,7 +173,7 @@ Roundtrip_Handler::test_longlong_method_excep (::Messaging::ExceptionHolder *hol
 // = Other methods
 
 void
-Roundtrip_Handler::shutdown (void)
+Roundtrip_Handler::shutdown ()
 {
 }
 

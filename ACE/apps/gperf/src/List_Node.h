@@ -2,7 +2,7 @@
 
 /**
  * Copyright (C) 1989 Free Software Foundation, Inc.
- * written by Douglas C. Schmidt (schmidt@cs.wustl.edu)
+ * written by Douglas C. Schmidt (d.schmidt@vanderbilt.edu)
  *
  * This file is part of GNU GPERF.
  *
@@ -44,7 +44,7 @@ public:
   List_Node (char *key, int len);
 
   /// Destructor.
-  ~List_Node (void);
+  ~List_Node ();
 
   static void sort (char *base, int len);
 

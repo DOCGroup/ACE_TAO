@@ -34,7 +34,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   try
     {
-
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) client - test started.\n"));
 
       CORBA::ORB_var orb =

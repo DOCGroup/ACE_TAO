@@ -39,7 +39,7 @@ $client->DeleteFile($iorbase);
 $nstarget->DeleteFile($iorbase);
 $starter->DeleteFile($iorbase);
 
-$NS = $nstarget->CreateProcess ("../../../orbsvcs/Naming_Service/tao_cosnaming",
+$NS = $nstarget->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_cosnaming",
                                 "-o $nstarget_iorfile");
 $SV = $server->CreateProcess ("test",
                               "-ORBInitRef NameService=file://$server_iorfile ".

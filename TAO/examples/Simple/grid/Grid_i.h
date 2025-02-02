@@ -14,7 +14,7 @@
 
 #include "GridS.h"
 #include "ace/Vector_T.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 /**
  * @class Grid_i:
@@ -26,23 +26,21 @@
 class Grid_i: public POA_Grid
 {
 public:
-  // = Initialization and termination methods.
-
   /// Constructor
-  Grid_i (void);
+  Grid_i ();
 
   /// Constructor.
   Grid_i (CORBA::Short,
           CORBA::Short);
 
   /// Destructor
-  virtual ~Grid_i (void);
+  virtual ~Grid_i ();
 
   /// Returns the width of the grid
-  virtual CORBA::Short width (void);
+  virtual CORBA::Short width ();
 
   /// Returns the height of the grid
-  virtual CORBA::Short height (void);
+  virtual CORBA::Short height ();
 
   /// Sets the width of the grid.
   virtual void width (CORBA::Short);
@@ -60,7 +58,7 @@ public:
                            CORBA::Short);
 
   /// Destroy the grid.
-  virtual void destroy (void);
+  virtual void destroy ();
 
 private:
   /// Allocates array
@@ -73,10 +71,10 @@ private:
   CORBA::Short height_;
 
   /// Pointer to the matrix.  This is organized as an "array of arrays."
-  typedef ACE_Auto_Array_Ptr<CORBA::Long> GridArray;
+  typedef std::unique_ptr<CORBA::Long[]> GridArray;
   GridArray array_;
 
-  /// Solaris and some Windows compilers don't have min in std namespaces
+  /// Some Windows compilers don't have min in std namespaces
   static CORBA::UShort ushort_min (CORBA::UShort, CORBA::UShort);
 };
 
@@ -88,19 +86,18 @@ private:
 class Grid_Factory_i : public POA_Grid_Factory
 {
 public:
-  // = Initialization and termination methods.
   /// Constructor.
-  Grid_Factory_i (void);
+  Grid_Factory_i ();
 
   /// Destructor.
-  virtual ~Grid_Factory_i (void);
+  virtual ~Grid_Factory_i ();
 
   /// This function creates and returns a <Grid>.
   virtual Grid_ptr make_grid (CORBA::Short,
                               CORBA::Short);
 
   /// Shutdown the server.
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
   /// Set the ORB pointer.
   void orb (CORBA::ORB_ptr o);

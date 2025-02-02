@@ -19,7 +19,7 @@ TimeStamp_Protocol_Object::TimeStamp_Protocol_Object (TAO_AV_Callback *callback,
 
 
 int
-TimeStamp_Protocol_Object::handle_input (void)
+TimeStamp_Protocol_Object::handle_input ()
 {
   ssize_t n = this->transport_->recv (this->frame_->rd_ptr (),
                                       this->frame_->size ());
@@ -33,7 +33,7 @@ TimeStamp_Protocol_Object::handle_input (void)
 }
 
 //  int
-//  TimeStamp_Protocol_Object::handle_input (void)
+//  TimeStamp_Protocol_Object::handle_input ()
 //  {
 //    iovec iov;
 //    int iovcnt;
@@ -56,7 +56,7 @@ TimeStamp_Protocol_Object::handle_input (void)
 //                    ACE_Message_Block(frame_size),
 //                    -1);
 
-//        ACE_OS_String::memmove (mb->rd_ptr (), iov.iov_base, frame_size);
+//        ACE_OS::memmove (mb->rd_ptr (), iov.iov_base, frame_size);
 //        mb->wr_ptr (mb->rd_ptr () + frame_size);
 
 //        //      iov_base += frame_size;
@@ -83,12 +83,11 @@ TimeStamp_Protocol_Object::handle_input (void)
 //      ACE_DEBUG ((LM_DEBUG,
 //                  "(%N|%l) Frame Size %d\n",
 //                    n));
-//      ACE_OS_String::memmove (this->frame_->rd_ptr (), iov.iov_base, n);
+//      ACE_OS::memmove (this->frame_->rd_ptr (), iov.iov_base, n);
 //      this->frame_->wr_ptr (this->frame_->rd_ptr () + n);
 //        }
 //      else
 //        {
-
 //      ACE_DEBUG ((LM_DEBUG,
 //                  "(%N|%l) Frame Size %d\n",
 //                  n));
@@ -98,7 +97,7 @@ TimeStamp_Protocol_Object::handle_input (void)
 //                      ACE_Message_Block (frame_size),
 //                      -1);
 
-//      ACE_OS_String::memmove (mb->rd_ptr (), iov.iov_base, n);
+//      ACE_OS::memmove (mb->rd_ptr (), iov.iov_base, n);
 //      mb->wr_ptr (mb->rd_ptr () + n);
 //      prev->cont (mb);
 //        }
@@ -137,7 +136,7 @@ TimeStamp_Protocol_Object::send_frame (ACE_Message_Block *frame,
               "Time Stamp %u usecs\n",
               val_1));
 
-  ACE_OS_String::memcpy (timestamp->wr_ptr (), &now, sizeof (now));
+  ACE_OS::memcpy (timestamp->wr_ptr (), &now, sizeof (now));
   timestamp->wr_ptr (sizeof (now));
 
   frame->cont (timestamp);
@@ -168,18 +167,18 @@ TimeStamp_Protocol_Object::send_frame (const char* buf,
 
 /// end the stream.
 int
-TimeStamp_Protocol_Object::destroy (void)
+TimeStamp_Protocol_Object::destroy ()
 {
   this->callback_->handle_destroy ();
   return 0;
 }
 
 
-TimeStamp_Protocol_Factory::TimeStamp_Protocol_Factory (void)
+TimeStamp_Protocol_Factory::TimeStamp_Protocol_Factory ()
 {
 }
 
-TimeStamp_Protocol_Factory::~TimeStamp_Protocol_Factory (void)
+TimeStamp_Protocol_Factory::~TimeStamp_Protocol_Factory ()
 {
 }
 
@@ -232,8 +231,6 @@ ACE_STATIC_SVC_DEFINE (TimeStamp_Protocol_Factory,
                        ACE_Service_Type::DELETE_THIS |
                        ACE_Service_Type::DELETE_OBJ,
                        0)
-
-
 
 
 

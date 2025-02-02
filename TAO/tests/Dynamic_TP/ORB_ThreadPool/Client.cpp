@@ -7,7 +7,7 @@ class MT_Requestor : public virtual ACE_Task_Base
 public:
   MT_Requestor (Test::Middle_ptr m, CORBA::Short sec);
 
-  virtual int svc (void);
+  virtual int svc ();
 private:
   Test::Middle_var middle_;
   CORBA::Short seconds_;
@@ -91,7 +91,6 @@ parse_args (int argc, ACE_TCHAR *argv[])
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-
   try
     {
       CORBA::ORB_var orb =

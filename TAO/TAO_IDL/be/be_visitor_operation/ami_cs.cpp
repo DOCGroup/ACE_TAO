@@ -18,7 +18,7 @@ be_visitor_operation_ami_cs::be_visitor_operation_ami_cs (
 {
 }
 
-be_visitor_operation_ami_cs::~be_visitor_operation_ami_cs (void)
+be_visitor_operation_ami_cs::~be_visitor_operation_ami_cs ()
 {
 }
 
@@ -51,8 +51,7 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
   TAO_OutStream *os = this->ctx_->stream ();
   this->ctx_->node (node);
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (os);
 
   // Generate the return type mapping. Return type is simply void.
   *os << be_nl_2
@@ -62,9 +61,9 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
 
   // Grab the scope name.
   be_decl *parent =
-    be_scope::narrow_from_scope (node->defined_in ())->decl ();
+    dynamic_cast<be_scope*> (node->defined_in ())->decl ();
 
-  if (parent == 0)
+  if (parent == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_operation_ami_cs::"
@@ -103,7 +102,7 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
   if (node->has_native ()) // native exists => no stub
     {
       be_predefined_type bpt (AST_PredefinedType::PT_void,
-                              0);
+                              nullptr);
 
       int const status = this->gen_raise_exception ("::CORBA::MARSHAL",
                                                     "");
@@ -136,7 +135,7 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
       // type is void.  No need to generate argument list.
 
       *os << be_nl_2
-          << "TAO::Argument ** _the_tao_operation_signature = 0;";
+          << "TAO::Argument ** _the_tao_operation_signature {};";
       nargs = 0; // Don't count the reply handler.
     }
   else
@@ -154,9 +153,9 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
       *os << be_nl_2
           << "TAO::Argument *_the_tao_operation_signature[] =" << be_idt_nl
           << "{" << be_idt_nl
-          << "&_tao_retval";
+          << "std::addressof(_tao_retval)";
 
-      AST_Argument *arg = 0;
+      AST_Argument *arg = nullptr;
       UTL_ScopeActiveIterator arg_list_iter (ami_op,
                                              UTL_Scope::IK_decls);
 
@@ -165,10 +164,10 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
 
       for (; ! arg_list_iter.is_done (); arg_list_iter.next ())
         {
-          arg = AST_Argument::narrow_from_decl (arg_list_iter.item ());
+          arg = dynamic_cast<AST_Argument*> (arg_list_iter.item ());
 
           *os << "," << be_nl
-              << "&_tao_" << arg->local_name ();
+              << "std::addressof(_tao_" << arg->local_name () << ")";
         }
 
       *os << be_uidt_nl
@@ -190,7 +189,7 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
   ACE_CString::size_type len = opname.length ();
 
   *os << be_nl_2
-      << "TAO::Asynch_Invocation_Adapter _tao_call (" << be_idt << be_idt_nl
+      << "TAO::Asynch_Invocation_Adapter _invocation_call (" << be_idt << be_idt_nl
       << "this," << be_nl
       << "_the_tao_operation_signature," << be_nl
       << nargs << "," << be_nl
@@ -218,14 +217,14 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
       << ");" << be_uidt;
 
   *os << be_nl_2
-      << "_tao_call.invoke (" << be_idt << be_idt_nl
+      << "_invocation_call.invoke (" << be_idt << be_idt_nl
       << "ami_handler," << be_nl
       << "&";
 
   if (parent->is_nested ())
     {
       be_decl *gparent =
-        be_scope::narrow_from_scope (parent->defined_in ())->decl ();
+        dynamic_cast<be_scope*> (parent->defined_in ())->decl ();
 
       *os << gparent->name () << "::";
     }
@@ -245,10 +244,10 @@ int
 be_visitor_operation_ami_cs::visit_argument (be_argument *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  be_type *bt = 0; // argument type
+  be_type *bt = nullptr; // argument type
 
   // Retrieve the type for this argument.
-  bt = be_type::narrow_from_decl (node->field_type ());
+  bt = dynamic_cast<be_type*> (node->field_type ());
 
   if (!bt)
     {

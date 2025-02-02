@@ -52,7 +52,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace CORBA
 {
-
   // TAO_IDL - Generated from
   // be\be_visitor_exception/exception_ch.cpp:53
 
@@ -62,10 +61,9 @@ namespace CORBA
   class TAO_Export WrongTransaction : public CORBA::UserException
   {
   public:
-
-    WrongTransaction (void);
+    WrongTransaction ();
     WrongTransaction (const WrongTransaction &);
-    ~WrongTransaction (void);
+    ~WrongTransaction ();
 
     WrongTransaction &operator= (const WrongTransaction &);
 
@@ -74,24 +72,22 @@ namespace CORBA
     static WrongTransaction *_downcast (CORBA::Exception *);
     static const WrongTransaction *_downcast (CORBA::Exception const *);
 
-    static CORBA::Exception *_alloc (void);
+    static CORBA::Exception *_alloc ();
 
-    virtual CORBA::Exception *_tao_duplicate (void) const;
+    virtual CORBA::Exception *_tao_duplicate () const;
 
-    virtual void _raise (void) const;
+    virtual void _raise () const;
 
     virtual void _tao_encode (
-        TAO_OutputCDR &
-      ) const;
+        TAO_OutputCDR &) const;
 
     virtual void _tao_decode (
-        TAO_InputCDR &
-      );
+        TAO_InputCDR &);
 
     // TAO_IDL - Generated from
     // be\be_visitor_exception/exception_ch.cpp:129
 
-    virtual CORBA::TypeCode_ptr _tao_type (void) const;
+    virtual CORBA::TypeCode_ptr _tao_type () const;
   };
 
 #endif /* end #if !defined */

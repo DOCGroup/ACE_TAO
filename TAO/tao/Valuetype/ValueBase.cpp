@@ -54,7 +54,7 @@ TAO_ChunkInfo::TAO_ChunkInfo (CORBA::Boolean do_chunking,
 }
 
 CORBA::ValueBase *
-CORBA::ValueBase::_copy_value (void)
+CORBA::ValueBase::_copy_value ()
 {
   // Note that TAO traditionally has not enforced this functions PURE
   // virtual nature, thus the end user didn't have to provide an
@@ -68,11 +68,11 @@ CORBA::ValueBase::_copy_value (void)
   ACE_VERSIONED_NAMESPACE_NAME::__ace_assert (
     __FILE__,
     __LINE__,
-    ACE_TEXT_CHAR_TO_TCHAR ("Valuetype's _copy_value() should be implimented in user's most derived class"));
+    ACE_TEXT_CHAR_TO_TCHAR ("Valuetype's _copy_value() should be implemented in user's most derived class"));
   return 0;
 }
 
-CORBA::ValueBase::ValueBase (void)
+CORBA::ValueBase::ValueBase ()
   : is_truncatable_(0),
     chunking_(0)
 {
@@ -81,10 +81,6 @@ CORBA::ValueBase::ValueBase (void)
 CORBA::ValueBase::ValueBase (const ValueBase& val)
   : is_truncatable_ (val.is_truncatable_),
     chunking_ (val.chunking_)
-{
-}
-
-CORBA::ValueBase::~ValueBase (void)
 {
 }
 
@@ -1255,7 +1251,7 @@ CORBA::ValueBase::_tao_read_codebase_url (TAO_InputCDR& strm,
 
   if (!strm.read_ulong (length))
     {
-      return 0;
+      return false;
     }
 
   VERIFY_MAP (TAO_InputCDR, codebase_url_map, Codebase_URL_Map);
@@ -1280,11 +1276,11 @@ CORBA::ValueBase::_tao_read_codebase_url (TAO_InputCDR& strm,
 
   if (!url_stream.good_bit ())
     {
-      return 0;
+      return false;
     }
 
   if (! url_stream.read_string (codebase_url))
-    return 0;
+    return false;
 
   // It's possible the codebase url is read again from an indirection stream,
   // so make sure the codebase url is the same.
@@ -1320,7 +1316,7 @@ CORBA::ValueBase::_tao_read_codebase_url (TAO_InputCDR& strm,
 
   strm.skip_bytes (length);
 
-  return 1;
+  return true;
 }
 
 void
@@ -1372,31 +1368,31 @@ namespace CORBA
 // member functions for CORBA::DefaultValueRefCountBase ============
 
 // destructor
-CORBA::DefaultValueRefCountBase::~DefaultValueRefCountBase (void)
+CORBA::DefaultValueRefCountBase::~DefaultValueRefCountBase ()
 {
 }
 
 void
-CORBA::DefaultValueRefCountBase::_add_ref (void)
+CORBA::DefaultValueRefCountBase::_add_ref ()
 {
   this->_tao_add_ref ();
 }
 
 void
-CORBA::DefaultValueRefCountBase::_remove_ref (void)
+CORBA::DefaultValueRefCountBase::_remove_ref ()
 {
   this->_tao_remove_ref ();
 }
 
 CORBA::ULong
-CORBA::DefaultValueRefCountBase::_refcount_value (void)
+CORBA::DefaultValueRefCountBase::_refcount_value ()
 {
   return this->_tao_refcount_value ();
 }
 
 // ===========================================================
 
-CORBA::DefaultValueRefCountBase::DefaultValueRefCountBase (void)
+CORBA::DefaultValueRefCountBase::DefaultValueRefCountBase ()
   : refcount_ (1)
 {
 }
@@ -1411,13 +1407,13 @@ CORBA::DefaultValueRefCountBase::DefaultValueRefCountBase
 }
 
 void
-CORBA::DefaultValueRefCountBase::_tao_add_ref (void)
+CORBA::DefaultValueRefCountBase::_tao_add_ref ()
 {
   ++this->refcount_;
 }
 
 void
-CORBA::DefaultValueRefCountBase::_tao_remove_ref (void)
+CORBA::DefaultValueRefCountBase::_tao_remove_ref ()
 {
   CORBA::ULong const new_count = --this->refcount_;
 
@@ -1426,13 +1422,9 @@ CORBA::DefaultValueRefCountBase::_tao_remove_ref (void)
 }
 
 CORBA::ULong
-CORBA::DefaultValueRefCountBase::_tao_refcount_value (void) const
+CORBA::DefaultValueRefCountBase::_tao_refcount_value () const
 {
-#if defined (ACE_HAS_CPP11)
   return this->refcount_;
-#else
-  return this->refcount_.value ();
-#endif /* ACE_HAS_CPP11 */
 }
 
 // ===========================================================
@@ -1444,8 +1436,7 @@ operator<< (TAO_OutputCDR &strm,
   return CORBA::ValueBase::_tao_marshal (
              strm,
              _tao_valuetype,
-             reinterpret_cast<ptrdiff_t> (&CORBA::ValueBase::_downcast)
-           );
+             reinterpret_cast<ptrdiff_t> (&CORBA::ValueBase::_downcast));
 }
 
 CORBA::Boolean

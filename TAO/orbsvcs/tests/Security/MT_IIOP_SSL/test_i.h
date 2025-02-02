@@ -27,13 +27,13 @@ public:
   Simple_Server_i (CORBA::ORB_ptr orb);
 
   // = The Simple_Server methods.
-  void ping (void);
+  void ping ();
 
-  void validate_protocol (void);
+  void validate_protocol ();
 
   CORBA::Long test_method (CORBA::Long x);
 
-  void shutdown (void);
+  void shutdown ();
 
 private:
   /// The ORB

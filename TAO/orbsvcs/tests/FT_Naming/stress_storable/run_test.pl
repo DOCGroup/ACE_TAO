@@ -125,7 +125,7 @@ my $args = "-ORBEndPoint $ns_endpoint1 " .
     "-o $ns_iorfile -h $nm_iorfile " .
     "-ORBDebuglevel $debug_level -ORBVerboseLogging 1 -ORBLogFile $primary_logfile ";
 
-my $prog = "$startdir/../../../FT_Naming_Service/tao_ft_naming";
+my $prog = "$ENV{TAO_ROOT}/orbsvcs/FT_Naming_Service/tao_ft_naming";
 
 print STDERR "Starting Primary: $prog $args\n";
 

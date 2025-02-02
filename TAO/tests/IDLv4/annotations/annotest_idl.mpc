@@ -1,0 +1,4 @@
+project: aceexe, tao_idl_fe {
+  exename = *
+  includes += .
+}

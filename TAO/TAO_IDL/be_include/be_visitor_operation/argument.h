@@ -33,7 +33,7 @@ public:
   be_visitor_operation_argument (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_operation_argument (void);
+  ~be_visitor_operation_argument ();
 
   /// stuff to o/p after each element of the scope is handled
   virtual int post_process (be_decl *);

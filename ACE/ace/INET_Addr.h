@@ -4,7 +4,7 @@
 /**
  *  @file    INET_Addr.h
  *
- *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
 //=============================================================================
 
@@ -36,10 +36,8 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_INET_Addr : public ACE_Addr
 {
 public:
-  // = Initialization methods.
-
   /// Default constructor.
-  ACE_INET_Addr (void);
+  ACE_INET_Addr ();
 
   /// Copy constructor.
   ACE_INET_Addr (const ACE_INET_Addr &);
@@ -57,10 +55,14 @@ public:
 
   /**
    * Initializes an ACE_INET_Addr from the @a address, which can be
-   * "ip-number:port-number" (e.g., "tango.cs.wustl.edu:1234" or
-   * "128.252.166.57:1234").  If there is no ':' in the @a address it
-   * is assumed to be a port number, with the IP address being
-   * INADDR_ANY.
+   * "ip-addr:port-number" (e.g., "tango.cs.wustl.edu:1234"),
+   * "ip-addr:port-name" (e.g., "tango.cs.wustl.edu:telnet"),
+   * "ip-number:port-number" (e.g., "128.252.166.57:1234"),
+   * "ip-number:port-name" (e.g., "128.252.166.57:telnet"),
+   * "[ipv6-number]:port-number (e.g, "[2001:db8::57]:1234") or
+   * "[ipv6-number]:port-name (e.g, "[2001:db8::57]:telnet").
+   * If there is no ':' in the @a address it is assumed to be a port number,
+   * with the IP address being INADDR_ANY.
    */
   explicit ACE_INET_Addr (const char address[],
                           int address_family = AF_UNSPEC);
@@ -107,7 +109,7 @@ public:
 #endif /* ACE_HAS_WCHAR */
 
   /// Default dtor.
-  ~ACE_INET_Addr (void);
+  ~ACE_INET_Addr ();
 
   // = Direct initialization methods.
 
@@ -174,11 +176,15 @@ public:
            const char protocol[] = "tcp");
 
   /**
-   * Initializes an ACE_INET_Addr from the @a addr, which can be
-   * "ip-number:port-number" (e.g., "tango.cs.wustl.edu:1234" or
-   * "128.252.166.57:1234").  If there is no ':' in the @a address it
-   * is assumed to be a port number, with the IP address being
-   * INADDR_ANY.
+   * Initializes an ACE_INET_Addr from the @a address, which can be
+   * "ip-addr:port-number" (e.g., "tango.cs.wustl.edu:1234"),
+   * "ip-addr:port-name" (e.g., "tango.cs.wustl.edu:telnet"),
+   * "ip-number:port-number" (e.g., "128.252.166.57:1234"),
+   * "ip-number:port-name" (e.g., "128.252.166.57:telnet"),
+   * "[ipv6-number]:port-number (e.g, "[2001:db8::57]:1234") or
+   * "[ipv6-number]:port-name (e.g, "[2001:db8::57]:telnet").
+   * If there is no ':' in the @a address it is assumed to be a port number,
+   * with the IP address being INADDR_ANY.
    */
   int set (const char addr[], int address_family = AF_UNSPEC);
 
@@ -204,8 +210,8 @@ public:
 #endif /* ACE_HAS_WCHAR */
 
   /// Return a pointer to the underlying network address.
-  virtual void *get_addr (void) const;
-  int get_addr_size(void) const;
+  virtual void *get_addr () const;
+  int get_addr_size() const;
 
   /// Set a pointer to the address.
   virtual void set_addr (const void *, int len);
@@ -216,8 +222,8 @@ public:
   /**
    * Transform the current ACE_INET_Addr address into string format.
    * If @a ipaddr_format is true this produces "ip-number:port-number"
-   * (e.g., "128.252.166.57:1234"), whereas if @a ipaddr_format is false
-   * this produces "ip-name:port-number" (e.g.,
+   * (e.g., "128.252.166.57:1234" or "[2001:db8::57]:1234"), whereas
+   * if @a ipaddr_format is false this produces "ip-name:port-number" (e.g.,
    * "tango.cs.wustl.edu:1234").  Returns -1 if the @a size of the
    * @a buffer is too small, else 0.
    */
@@ -229,9 +235,11 @@ public:
    * Initializes an ACE_INET_Addr from the @a address, which can be
    * "ip-addr:port-number" (e.g., "tango.cs.wustl.edu:1234"),
    * "ip-addr:port-name" (e.g., "tango.cs.wustl.edu:telnet"),
-   * "ip-number:port-number" (e.g., "128.252.166.57:1234"), or
-   * "ip-number:port-name" (e.g., "128.252.166.57:telnet").  If there
-   * is no ':' in the @a address it is assumed to be a port number,
+   * "ip-number:port-number" (e.g., "128.252.166.57:1234"),
+   * "ip-number:port-name" (e.g., "128.252.166.57:telnet"),
+   * "[ipv6-number]:port-number (e.g, "[2001:db8::57]:1234") or
+   * "[ipv6-number]:port-name (e.g, "[2001:db8::57]:telnet").
+   * If there is no ':' in the @a address it is assumed to be a port number,
    * with the IP address being INADDR_ANY.
    */
   virtual int string_to_addr (const char address[],
@@ -276,7 +284,7 @@ public:
 #endif /* (ACE_LINUX || ACE_WIN32) && ACE_HAS_IPV6 */
 
   /// Return the port number, converting it into host byte-order.
-  u_short get_port_number (void) const;
+  u_short get_port_number () const;
 
   /**
    * Return the character representation of the name of the host,
@@ -301,7 +309,7 @@ public:
    * (2) use the "reentrant" version of get_host_name() described
    * above.
    */
-  const char *get_host_name (void) const;
+  const char *get_host_name () const;
 
   /**
    * Return the "dotted decimal" Internet address representation of
@@ -318,30 +326,33 @@ public:
    * using strdup() or (2) use the "reentrant" version of
    * get_host_addr() described above.
    */
-  const char *get_host_addr (void) const;
+  const char *get_host_addr () const;
 
   /// Return the 4-byte IP address, converting it into host byte
   /// order.
-  ACE_UINT32 get_ip_address (void) const;
+  ACE_UINT32 get_ip_address () const;
 
   /// Return @c true if the IP address is INADDR_ANY or IN6ADDR_ANY.
-  bool is_any (void) const;
+  bool is_any () const;
 
   /// Return @c true if the IP address is IPv4/IPv6 loopback address.
-  bool is_loopback (void) const;
+  bool is_loopback () const;
 
   /// Return @c true if the IP address is IPv4/IPv6 multicast address.
-  bool is_multicast (void) const;
+  bool is_multicast () const;
 
 #if defined (ACE_HAS_IPV6)
   /// Return @c true if the IP address is IPv6 linklocal address.
-  bool is_linklocal (void) const;
+  bool is_linklocal () const;
+
+  /// Return @c true if the IP address is IPv6 sitelocal address.
+  bool is_sitelocal () const;
 
   /// Return @c true if the IP address is IPv4-mapped IPv6 address.
-  bool is_ipv4_mapped_ipv6 (void) const;
+  bool is_ipv4_mapped_ipv6 () const;
 
   /// Return @c true if the IP address is IPv4-compatible IPv6 address.
-  bool is_ipv4_compat_ipv6 (void) const;
+  bool is_ipv4_compat_ipv6 () const;
 #endif /* ACE_HAS_IPV6 */
 
   /**
@@ -364,17 +375,17 @@ public:
   bool is_ip_equal (const ACE_INET_Addr &SAP) const;
 
   /// Computes and returns hash value.
-  virtual u_long hash (void) const;
+  virtual u_long hash () const;
 
   /// If there is another address to examine, move to it and return true;
   /// else return false.
-  bool next (void);
+  bool next ();
 
   /// Reset the set of address so they can be scanned again using next().
-  void reset (void);
+  void reset ();
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -385,12 +396,12 @@ private:
 
   // Methods to gain access to the actual address of
   // the underlying internet address structure.
-  void *ip_addr_pointer (void) const;
-  int ip_addr_size (void) const;
-  int determine_type (void) const;
+  void *ip_addr_pointer () const;
+  int ip_addr_size () const;
+  int determine_type () const;
 
   /// Initialize underlying inet_addr_ to default values
-  void reset_i (void);
+  void reset_i ();
 
   /// Underlying representation.
   /// This union uses the knowledge that the two structures share the

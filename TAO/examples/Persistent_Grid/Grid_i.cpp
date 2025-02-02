@@ -3,7 +3,7 @@
 
 // Default constructor.
 
-Grid_i::Grid_i (void)
+Grid_i::Grid_i ()
   : width_ (0),
     height_ (0),
     array_ (0)
@@ -58,9 +58,8 @@ Grid_i::Grid_i (CORBA::Short x,
 
 // Default destructor.
 
-Grid_i::~Grid_i (void)
+Grid_i::~Grid_i ()
 {
-  // no-op.
 }
 
 //  Set a value in the grid.
@@ -97,13 +96,13 @@ Grid_i::get (CORBA::Short x,
 // Access methods.
 
 CORBA::Short
-Grid_i::width (void)
+Grid_i::width ()
 {
   return this->width_;
 }
 
 CORBA::Short
-Grid_i::height (void)
+Grid_i::height ()
 {
   return this->height_;
 }
@@ -143,20 +142,18 @@ Grid_i::set_pool (pool_t *pool)
 }
 // Constructor
 
-Grid_Factory_i::Grid_Factory_i (void)
+Grid_Factory_i::Grid_Factory_i ()
   : orb_ (0),
     pool_name_ (0),
     pool_t_ (0)
 {
-  // no-op
 }
 
 // Destructor
 
-Grid_Factory_i::~Grid_Factory_i (void)
+Grid_Factory_i::~Grid_Factory_i ()
 {
   delete this->pool_t_;
-  // no-op
 }
 
 // Make a <Grid>.
@@ -210,7 +207,7 @@ Grid_Factory_i::orb (CORBA::ORB_ptr o)
 
 // Shutdown.
 void
-Grid_Factory_i::shutdown (void)
+Grid_Factory_i::shutdown ()
 {
   ACE_DEBUG ((LM_DEBUG,
               " (%P|%t) %s\n",
@@ -221,7 +218,7 @@ Grid_Factory_i::shutdown (void)
 }
 
 void
-Grid_Factory_i::cleanup (void)
+Grid_Factory_i::cleanup ()
 {
   const char *name = "Array";
 

@@ -27,7 +27,7 @@ class be_visitor_home_exs : public be_visitor_scope
 public:
   be_visitor_home_exs (be_visitor_context *ctx);
 
-  ~be_visitor_home_exs (void);
+  ~be_visitor_home_exs ();
 
   virtual int visit_home (be_home *node);
   virtual int visit_operation (be_operation *node);
@@ -35,9 +35,9 @@ public:
   virtual int visit_factory (be_factory *node);
 
 private:
-  int gen_exec_class (void);
+  int gen_exec_class ();
 
-  void gen_entrypoint (void);
+  void gen_entrypoint ();
 
 private:
   be_home *node_;

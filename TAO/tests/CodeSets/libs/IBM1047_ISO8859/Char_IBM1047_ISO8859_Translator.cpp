@@ -18,11 +18,11 @@
 
 // ****************************************************************
 
-IBM1047_ISO8859::IBM1047_ISO8859 (void)
+IBM1047_ISO8859::IBM1047_ISO8859 ()
 {
 }
 
-IBM1047_ISO8859::~IBM1047_ISO8859 (void)
+IBM1047_ISO8859::~IBM1047_ISO8859 ()
 {
 }
 
@@ -122,11 +122,11 @@ IBM1047_ISO8859::write_char_array (ACE_OutputCDR& out,
           buf[i] = (unsigned char)from_IBM1047[(unsigned char)buf[i]];
         }
 
-      return 1;
+      return true;
     }
 
   this->good_bit(out, 0);
-  return 0;
+  return false;
 }
 
 // ****************************************************************

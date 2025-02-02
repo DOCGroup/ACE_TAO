@@ -1,7 +1,6 @@
 #include "orbsvcs/IFRService/AliasDef_i.h"
 #include "orbsvcs/IFRService/Repository_i.h"
 #include "orbsvcs/IFRService/IFR_Service_Utils.h"
-#include "ace/Auto_Ptr.h"
 #include "ace/SString.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -14,18 +13,18 @@ TAO_AliasDef_i::TAO_AliasDef_i (TAO_Repository_i *repo)
 {
 }
 
-TAO_AliasDef_i::~TAO_AliasDef_i (void)
+TAO_AliasDef_i::~TAO_AliasDef_i ()
 {
 }
 
 CORBA::DefinitionKind
-TAO_AliasDef_i::def_kind (void)
+TAO_AliasDef_i::def_kind ()
 {
   return CORBA::dk_Alias;
 }
 
 CORBA::TypeCode_ptr
-TAO_AliasDef_i::type (void)
+TAO_AliasDef_i::type ()
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::TypeCode::_nil ());
 
@@ -35,7 +34,7 @@ TAO_AliasDef_i::type (void)
 }
 
 CORBA::TypeCode_ptr
-TAO_AliasDef_i::type_i (void)
+TAO_AliasDef_i::type_i ()
 {
   ACE_TString id;
   this->repo_->config ()->get_string_value (this->section_key_,
@@ -62,13 +61,13 @@ TAO_AliasDef_i::type_i (void)
 
   CORBA::TypeCode_var tc = impl->type_i ();
 
-  return this->repo_->tc_factory ()->create_alias_tc (id.c_str (),
-                                                      name.c_str (),
-                                                      ACE_TEXT_ALWAYS_CHAR (tc.in ()));
+  return this->repo_->tc_factory ()->create_alias_tc (ACE_TEXT_ALWAYS_CHAR (id.c_str ()),
+                                                      ACE_TEXT_ALWAYS_CHAR (name.c_str ()),
+                                                      tc.in ());
 }
 
 CORBA::IDLType_ptr
-TAO_AliasDef_i::original_type_def (void)
+TAO_AliasDef_i::original_type_def ()
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::IDLType::_nil ());
 
@@ -78,7 +77,7 @@ TAO_AliasDef_i::original_type_def (void)
 }
 
 CORBA::IDLType_ptr
-TAO_AliasDef_i::original_type_def_i (void)
+TAO_AliasDef_i::original_type_def_i ()
 {
   ACE_TString original_type;
   this->repo_->config ()->get_string_value (this->section_key_,
@@ -110,7 +109,7 @@ TAO_AliasDef_i::original_type_def_i (CORBA::IDLType_ptr original_type_def)
 
   this->repo_->config ()->set_string_value (this->section_key_,
                                             ACE_TEXT("original_type"),
-                                            original_type);
+                                            ACE_TEXT_CHAR_TO_TCHAR(original_type));
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

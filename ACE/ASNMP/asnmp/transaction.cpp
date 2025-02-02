@@ -63,7 +63,6 @@ int transaction::run()
   // register a time handler and a socket with this
 
   while (!done) {
-
     if ((rc = this->send()) < 0)      // send pkt to agent
         return rc;
     else {

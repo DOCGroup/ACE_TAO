@@ -12,17 +12,9 @@
 #include "ace/If_Then_Else.h"
 #include "ace/OS_NS_math.h"
 #include "ace/Time_Policy.h"
-
-#ifdef ACE_HAS_CPP98_IOSTREAMS
-# include <ostream>
-# include <iomanip>
-#endif /* ACE_HAS_CPP98_IOSTREAMS */
-
+#include <iomanip>
 #include <cstdlib>
-
-#ifdef ACE_HAS_CPP11
-# include <cmath>
-#endif /* ACE_HAS_CPP11 */
+#include <cmath>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -42,9 +34,6 @@ const ACE_Time_Value ACE_Time_Value::max_time (
 
 ACE_ALLOC_HOOK_DEFINE (ACE_Time_Value)
 
-ACE_Time_Value::~ACE_Time_Value()
-{}
-
 /// Increment microseconds (the only reason this is here is to allow
 /// the use of ACE_Atomic_Op with ACE_Time_Value).
 ACE_Time_Value
@@ -57,9 +46,9 @@ ACE_Time_Value::operator ++ (int)
 }
 
 ACE_Time_Value &
-ACE_Time_Value::operator ++ (void)
+ACE_Time_Value::operator ++ ()
 {
-  // ACE_OS_TRACE ("ACE_Time_Value::operator ++ (void)");
+  // ACE_OS_TRACE ("ACE_Time_Value::operator ++ ()");
   this->usec (this->usec () + 1);
   this->normalize ();
   return *this;
@@ -77,9 +66,9 @@ ACE_Time_Value::operator -- (int)
 }
 
 ACE_Time_Value &
-ACE_Time_Value::operator -- (void)
+ACE_Time_Value::operator -- ()
 {
-  // ACE_OS_TRACE ("ACE_Time_Value::operator -- (void)");
+  // ACE_OS_TRACE ("ACE_Time_Value::operator -- ()");
   this->usec (this->usec () - 1);
   this->normalize ();
   return *this;
@@ -169,7 +158,7 @@ ACE_Time_Value::duplicate () const
 }
 
 void
-ACE_Time_Value::dump (void) const
+ACE_Time_Value::dump () const
 {
 }
 
@@ -180,8 +169,8 @@ ACE_Time_Value::normalize (bool saturate)
   if (this->tv_.tv_usec >= ACE_ONE_SECOND_IN_USECS ||
       this->tv_.tv_usec <= -ACE_ONE_SECOND_IN_USECS)
     {
-      time_t sec = std::abs(this->tv_.tv_usec) / ACE_ONE_SECOND_IN_USECS * (this->tv_.tv_usec > 0 ? 1 : -1);
-      suseconds_t usec = static_cast<suseconds_t> (this->tv_.tv_usec - sec * ACE_ONE_SECOND_IN_USECS);
+      time_t const sec = std::abs(this->tv_.tv_usec) / ACE_ONE_SECOND_IN_USECS * (this->tv_.tv_usec > 0 ? 1 : -1);
+      suseconds_t const usec = static_cast<suseconds_t> (this->tv_.tv_usec - sec * ACE_ONE_SECOND_IN_USECS);
 
       if (saturate && this->tv_.tv_sec > 0 && sec > 0 &&
           ACE_Numeric_Limits<time_t>::max() - this->tv_.tv_sec < sec)
@@ -235,9 +224,7 @@ ACE_Time_Value::operator *= (double d)
   // Since this is a costly operation, we try to detect as soon as
   // possible if we are having a saturation in order to abort the rest
   // of the computation.
-  typedef ACE::If_Then_Else<(sizeof (double) > sizeof (time_t)),
-    double,
-    long double>::result_type float_type;
+  using float_type = ACE::If_Then_Else<(sizeof(double) > sizeof(time_t)), double, long double>::result_type;
 
   float_type sec_total = static_cast<float_type> (this->sec());
   sec_total *= d;
@@ -314,21 +301,16 @@ ACE_Time_Value::operator *= (double d)
   return *this;
 }
 
-#ifdef ACE_HAS_CPP98_IOSTREAMS
-ostream &operator<<(ostream &o, const ACE_Time_Value &v)
+std::ostream &operator<<(std::ostream &o, const ACE_Time_Value &v)
 {
-  char oldFiller = o.fill ();
+  char const oldFiller = o.fill ();
   o.fill ('0');
   const timeval *tv = v;
   if (tv->tv_sec)
     {
       o << tv->tv_sec;
       if (tv->tv_usec)
-#ifdef ACE_HAS_CPP11
         o << '.' << std::setw (6) << std::labs (tv->tv_usec);
-#else
-        o << '.' << std::setw (6) << ACE_STD_NAMESPACE::labs (tv->tv_usec);
-#endif
     }
   else if (tv->tv_usec < 0)
     o << "-0." << std::setw (6) << - tv->tv_usec;
@@ -342,6 +324,5 @@ ostream &operator<<(ostream &o, const ACE_Time_Value &v)
   o.fill (oldFiller);
   return o;
 }
-#endif /* ACE_HAS_CPP98_IOSTREAMS */
 
 ACE_END_VERSIONED_NAMESPACE_DECL

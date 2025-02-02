@@ -4,11 +4,9 @@
 /**
  *  @file   OS_NS_sys_mman.h
  *
- *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  *  @author Jesper S. M|ller<stophph@diku.dk>
  *  @author and a cast of thousands...
- *
- *  Originally in OS.h.
  */
 //=============================================================================
 
@@ -37,7 +35,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE_OS
 {
-
   //@{ @name A set of wrappers for memory mapped files.
   ACE_NAMESPACE_INLINE_FUNCTION
   int madvise (caddr_t addr,
@@ -78,7 +75,6 @@ namespace ACE_OS
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int shm_unlink (const ACE_TCHAR *path);
-
 } /* namespace ACE_OS */
 
 ACE_END_VERSIONED_NAMESPACE_DECL

@@ -1,7 +1,7 @@
 *.vcxproj*
 *.tlog
 *.log
-*.obj
+*.obj*
 *.ilk
 *.exe
 *.dll
@@ -15,17 +15,23 @@
 *S_T.cpp
 *S_T.h
 *S_T.inl
+*.bmak
+*.recipe
 
 .depend.*
 GNUmakefile*
+local.mwc
 *.ior
 .obj/
+*.iobj
+*.ipdb
 .shobj/
 lib*.a
 lib*.so*
 lib*.dylib
 *~
 ipch/
+*.vsidx
 
 /ACE/ace/config.h
 /ACE/bin/MakeProjectCreator/config/default.features
@@ -33,8 +39,15 @@ ipch/
 /setenv.cmd
 /setenv.sh
 /build
+/ACE/build
+/TAO/build
+/MPC
 
 *.o
 *.res
 *.opendb
-*.VC.db
+*.VC.db*
+*.tds
+*.*codeanalysis*
+read.lock
+fileList.bin

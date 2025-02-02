@@ -23,7 +23,7 @@ TAO::Objref_Traits<fwd_mock_reference>::release (
 }
 
 fwd_mock_reference_ptr
-TAO::Objref_Traits<fwd_mock_reference>::nil (void)
+TAO::Objref_Traits<fwd_mock_reference>::nil ()
 {
   return 0;
 }

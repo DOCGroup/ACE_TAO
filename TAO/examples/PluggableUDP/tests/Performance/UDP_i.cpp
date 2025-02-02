@@ -1,19 +1,16 @@
 #include "UDP_i.h"
 
 
-
 // Constructor
-UDP_i::UDP_i (void)
+UDP_i::UDP_i ()
   : messages_count_ (0)
   , wrong_messages_count_ (0)
 {
-  // no-op
 }
 
 // Destructor
-UDP_i::~UDP_i (void)
+UDP_i::~UDP_i ()
 {
-  // no-op
 }
 
 // Set the ORB pointer.
@@ -107,7 +104,7 @@ UDP_i::reset (const char * client_name)
 // Shutdown.
 
 void
-UDP_i::shutdown (void)
+UDP_i::shutdown ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "%s\n",
@@ -116,7 +113,7 @@ UDP_i::shutdown (void)
   try
     {
       // Instruct the ORB to shutdown.
-      this->orb_->shutdown (0);
+      this->orb_->shutdown (false);
     }
   catch (const CORBA::Exception& ex)
     {

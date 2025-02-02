@@ -3,10 +3,9 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// Allocates a <keyp> that is used to identify data that is specific
-// to each thread in the process.  The key is global to all threads in
-// the process.
-
+/// Allocates a @a keyp that is used to identify data that is specific
+/// to each thread in the process.  The key is global to all threads in
+/// the process.
 ACE_INLINE int
 ACE_Thread::keycreate (ACE_thread_key_t *keyp,
 #if defined (ACE_HAS_THR_C_DEST)
@@ -20,8 +19,7 @@ ACE_Thread::keycreate (ACE_thread_key_t *keyp,
   return ACE_OS::thr_keycreate (keyp, destructor);
 }
 
-// Free up the key so that other threads can reuse it.
-
+/// Free up the key so that other threads can reuse it.
 ACE_INLINE int
 ACE_Thread::keyfree (ACE_thread_key_t key)
 {
@@ -29,9 +27,8 @@ ACE_Thread::keyfree (ACE_thread_key_t key)
   return ACE_OS::thr_keyfree (key);
 }
 
-// Bind value to the thread-specific data key, <key>, for the calling
-// thread.
-
+/// Bind value to the thread-specific data key, @a key, for the calling
+/// thread.
 ACE_INLINE int
 ACE_Thread::setspecific (ACE_thread_key_t key, void *value)
 {
@@ -39,9 +36,8 @@ ACE_Thread::setspecific (ACE_thread_key_t key, void *value)
   return ACE_OS::thr_setspecific (key, value);
 }
 
-// Stores the current value bound to <key> for the calling thread
-// into the location pointed to by <valuep>.
-
+/// Stores the current value bound to @a key> for the calling thread
+/// into the location pointed to by @a valuep.
 ACE_INLINE int
 ACE_Thread::getspecific (ACE_thread_key_t key, void **valuep)
 {
@@ -50,7 +46,7 @@ ACE_Thread::getspecific (ACE_thread_key_t key, void **valuep)
 }
 
 ACE_INLINE ACE_thread_t
-ACE_Thread::self (void)
+ACE_Thread::self ()
 {
 //  ACE_TRACE ("ACE_Thread::self");
   return ACE_OS::thr_self ();
@@ -64,7 +60,7 @@ ACE_Thread::exit (ACE_THR_FUNC_RETURN status)
 }
 
 ACE_INLINE void
-ACE_Thread::yield (void)
+ACE_Thread::yield ()
 {
   ACE_TRACE ("ACE_Thread::yield");
   ACE_OS::thr_yield ();
@@ -135,7 +131,7 @@ ACE_Thread::join (ACE_hthread_t wait_for,
 }
 
 ACE_INLINE int
-ACE_Thread::getconcurrency (void)
+ACE_Thread::getconcurrency ()
 {
   ACE_TRACE ("ACE_Thread::getconcurrency");
   return ACE_OS::thr_getconcurrency ();
@@ -245,7 +241,7 @@ ACE_Thread::cancel (ACE_thread_t t_id)
 }
 
 ACE_INLINE void
-ACE_Thread::testcancel (void)
+ACE_Thread::testcancel ()
 {
   ACE_TRACE ("ACE_Thread::testcancel");
 

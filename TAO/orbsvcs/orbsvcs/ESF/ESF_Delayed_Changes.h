@@ -86,17 +86,17 @@ template<class PROXY, class COLLECTION, class ITERATOR, ACE_SYNCH_DECL>
 class TAO_ESF_Delayed_Changes : public TAO_ESF_Proxy_Collection<PROXY>
 {
 public:
-  TAO_ESF_Delayed_Changes (void);
+  TAO_ESF_Delayed_Changes ();
   TAO_ESF_Delayed_Changes (const COLLECTION &collection);
 
-  int busy (void);
-  int idle (void);
-  int execute_delayed_operations (void);
+  int busy ();
+  int idle ();
+  int execute_delayed_operations ();
 
   void connected_i (PROXY *proxy);
   void reconnected_i (PROXY *proxy);
   void disconnected_i (PROXY *proxy);
-  void shutdown_i (void);
+  void shutdown_i ();
 
   typedef TAO_ESF_Connected_Command<TAO_ESF_Delayed_Changes<PROXY,COLLECTION,ITERATOR,ACE_SYNCH_USE>,PROXY> Connected_Command;
   typedef TAO_ESF_Reconnected_Command<TAO_ESF_Delayed_Changes<PROXY,COLLECTION,ITERATOR,ACE_SYNCH_USE>,PROXY> Reconnected_Command;
@@ -108,7 +108,7 @@ public:
   virtual void connected (PROXY *proxy);
   virtual void reconnected (PROXY *proxy);
   virtual void disconnected (PROXY *proxy);
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
 private:
   COLLECTION collection_;
@@ -132,20 +132,12 @@ private:
   ACE_Unbounded_Queue<ACE_Command_Base*> command_queue_;
 };
 
-// ****************************************************************
-
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "orbsvcs/ESF/ESF_Delayed_Changes.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "orbsvcs/ESF/ESF_Delayed_Changes.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("ESF_Delayed_Changes.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #endif /* TAO_ESF_DELAYED_CHANGES_H */

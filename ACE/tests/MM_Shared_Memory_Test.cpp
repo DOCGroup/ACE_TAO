@@ -9,10 +9,9 @@
  *   exchange data using shared memory. No user input is required as
  *   far as command line arguments are concerned.
  *
- *  @author Prashant Jain <pjain@cs.wustl.edu> and Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ *  @author Prashant Jain <pjain@cs.wustl.edu> and Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
 //=============================================================================
-
 
 #include "test_config.h"
 #include "ace/Shared_Memory_MM.h"
@@ -22,8 +21,7 @@
 #include "ace/Lib_Find.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
-
-
+#include "ace/ACE.h"
 
 #if !defined (ACE_LACKS_MMAP)
 
@@ -138,7 +136,7 @@ parent (void * = 0)
 }
 
 static int
-spawn (void)
+spawn ()
 {
   // Create the synchronizer before spawning the child process/thread,
   // to avoid race condition between the creation in the parent and

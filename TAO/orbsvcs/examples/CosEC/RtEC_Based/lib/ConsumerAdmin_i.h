@@ -30,23 +30,22 @@ class TAO_RTEC_COSEC_Export TAO_CosEC_ConsumerAdmin_i :
   //   This implementation of the ConsumerAdmin uses the
   //   RtecEventChannelAdmin::ConsumerAdmin.
 public:
-  // = Initialization and termination methods.
   /// Constructor.
-  TAO_CosEC_ConsumerAdmin_i (void);
+  TAO_CosEC_ConsumerAdmin_i ();
 
   /// Destructor.
-  ~TAO_CosEC_ConsumerAdmin_i (void);
+  ~TAO_CosEC_ConsumerAdmin_i () = default;
 
   int init (const RtecEventChannelAdmin::ConsumerQOS &consumerqos,
             RtecEventChannelAdmin::ConsumerAdmin_ptr rtec_consumeradmin);
 
   /// Returns a new ProxyPushSupplier_ptr.
   virtual CosEventChannelAdmin::ProxyPushSupplier_ptr
-    obtain_push_supplier(void);
+    obtain_push_supplier();
 
   /// Returns a new ProxyPullSupplier_ptr.
   virtual CosEventChannelAdmin::ProxyPullSupplier_ptr
-    obtain_pull_supplier(void);
+    obtain_pull_supplier();
 
 private:
   /// The ConsumerQOS specified by the user of this class.

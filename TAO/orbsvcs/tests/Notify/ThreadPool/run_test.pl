@@ -21,8 +21,6 @@ my $nfs = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\
 my $sup = PerlACE::TestTarget::create_target (3) || die "Create target 3 failed\n";
 my $con = PerlACE::TestTarget::create_target (4) || die "Create target 4 failed\n";
 
-PerlACE::check_privilege_group();
-
 $experiment_timeout = 120;
 $startup_timeout = 120;
 $nfsconffile = "notify.conf";
@@ -50,10 +48,10 @@ $nfs->DeleteFile ($nfsiorfile);
 $sup->DeleteFile ($supiorfile);
 $con->DeleteFile ($supiorfile);
 
-$NS = $ns->CreateProcess ("../../../Naming_Service/tao_cosnaming",
+$NS = $ns->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_cosnaming",
                           " -o $ns_nsiorfile");
 
-$NFS = $nfs->CreateProcess ("../../../Notify_Service/tao_cosnotification");
+$NFS = $nfs->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Notify_Service/tao_cosnotification");
 $NFS_Args = "-ORBInitRef NameService=file://$nfs_nsiorfile -IORoutput $nfs_nfsiorfile -ORBSvcConf $nfs_nfsconffile";
 
 $SUP = $sup->CreateProcess ("../Driver/Notify_Tests_Driver");

@@ -45,28 +45,21 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Export TAO_IIOP_Acceptor : public TAO_Acceptor
 {
 public:
-
-  /*
-   * Hook that marks beginning of all concrete i.e. non virtual
-   * methods implemented in IIOP_Acceptor class.
-   */
-  //@@ TAO_ACCEPTOR_SPL_CONCRETE_METHODS_COPY_HOOK_START
-
   /// Constructor.
-  TAO_IIOP_Acceptor (void);
+  TAO_IIOP_Acceptor ();
 
   /// Destructor.
-  ~TAO_IIOP_Acceptor (void);
+  ~TAO_IIOP_Acceptor ();
 
   /// @@ Helper method for the implementation repository, should go
   ///    away
-  const ACE_INET_Addr& address (void) const;
+  const ACE_INET_Addr& address () const;
 
   /// Returns the array of endpoints in this acceptor
-  const ACE_INET_Addr *endpoints (void);
+  const ACE_INET_Addr *endpoints ();
 
   /// Returns address for default endpoint
-  const ACE_INET_Addr& default_address (void) const;
+  const ACE_INET_Addr& default_address () const;
 
   /// Set address for default endpoint
   void set_default_address (const ACE_INET_Addr& addr);
@@ -75,8 +68,6 @@ public:
   typedef TAO_Creation_Strategy<TAO_IIOP_Connection_Handler> CREATION_STRATEGY;
   typedef TAO_Concurrency_Strategy<TAO_IIOP_Connection_Handler> CONCURRENCY_STRATEGY;
   typedef TAO_Accept_Strategy<TAO_IIOP_Connection_Handler, ACE_SOCK_ACCEPTOR> ACCEPT_STRATEGY;
-
-  //@@ TAO_ACCEPTOR_SPL_CONCRETE_METHODS_COPY_HOOK_END
 
   /**
    * The TAO_Acceptor methods, check the documentation in
@@ -93,17 +84,16 @@ public:
                             int version_major,
                             int version_minor,
                             const char *options = 0);
-  virtual int close (void);
+  virtual int close ();
   virtual int create_profile (const TAO::ObjectKey &object_key,
                               TAO_MProfile &mprofile,
                               CORBA::Short priority);
   virtual int is_collocated (const TAO_Endpoint *endpoint);
-  virtual CORBA::ULong endpoint_count (void);
+  virtual CORBA::ULong endpoint_count ();
 
   virtual int object_key (IOP::TaggedProfile &profile,
                           TAO::ObjectKey &key);
 
-  //@@ TAO_ACCEPTOR_SPL_CONCRETE_METHODS_COPY_HOOK_START
   /**
    * Set the host name for the given @a addr.
    * A hostname may be forced by using @a specified_hostname.  This
@@ -127,7 +117,6 @@ public:
                         const char *specified_hostname = 0);
 
 protected:
-
   /**
    * Helper method
    * Clear out 'addr' & 'specified_hostname' and initialize them based
@@ -208,15 +197,12 @@ protected:
   int create_shared_profile (const TAO::ObjectKey &object_key,
                              TAO_MProfile &mprofile,
                              CORBA::Short priority);
-  //@@ TAO_ACCEPTOR_SPL_CONCRETE_METHODS_COPY_HOOK_END
 
 private:
   void operator= (const TAO_IIOP_Acceptor &);
   TAO_IIOP_Acceptor (const TAO_IIOP_Acceptor &);
 
-  //@@ TAO_ACCEPTOR_SPL_DATA_MEMBERS_COPY_HOOK_START
 protected:
-
   /// Array of ACE_INET_Addr instances, each one corresponding to a
   /// given network interface.
   ACE_INET_Addr *addrs_;
@@ -263,7 +249,6 @@ protected:
   ACE_INET_Addr default_address_;
 
 private:
-
   /// The concrete acceptor, as a pointer to it's base class.
   BASE_ACCEPTOR base_acceptor_;
 
@@ -271,8 +256,6 @@ private:
   CREATION_STRATEGY *creation_strategy_;
   CONCURRENCY_STRATEGY *concurrency_strategy_;
   ACCEPT_STRATEGY *accept_strategy_;
-
-  //@@ TAO_ACCEPTOR_SPL_DATA_MEMBERS_COPY_HOOK_END
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -101,7 +101,7 @@ create_consumeradmin (CosNotifyChannelAdmin::EventChannel_ptr ec)
       constraint_list[0].constraint_expr =
                                  CORBA::string_dup ("type == 'even'");
 
-      filter->add_constraints (constraint_list);
+      CosNotifyFilter::ConstraintInfoSeq_var cons_info = filter->add_constraints (constraint_list);
 
       admin->add_filter (filter.in ());
       // End One Filter
@@ -183,7 +183,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
               // Tell the supplier to go
               sig->go ();
 
-              client.ORB_run( );
+              client.ORB_run();
               ACE_DEBUG((LM_DEBUG, "Consumer done.\n"));
 
               sig->done ();

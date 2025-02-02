@@ -19,19 +19,19 @@ public:
   Hello (CORBA::ORB_ptr orb, Test::Hello_ptr server, CORBA::ULong server_id = 0);
 
   // = The skeleton methods
-  virtual char * get_string (void);
+  virtual char * get_string ();
 
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
-  virtual void throw_exception (void);
+  virtual void throw_exception ();
 
   virtual CORBA::Boolean call_me_back (Test::Hello_ptr me);
 
-  virtual CORBA::Boolean call_back (void);
+  virtual CORBA::Boolean call_back ();
 
-  virtual CORBA::Boolean check_request_id (void);
+  virtual CORBA::Boolean check_request_id ();
 
-  virtual CORBA::ULong drop_down_dead (void);
+  virtual CORBA::ULong drop_down_dead ();
 
   static CORBA::Boolean ids_differ_;
 

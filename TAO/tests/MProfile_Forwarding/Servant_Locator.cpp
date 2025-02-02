@@ -17,15 +17,12 @@
 #include "ace/OS_NS_string.h"
 
 Servant_Locator::Servant_Locator (CORBA::ORB_ptr orb_ptr)
-
   : orb_var_ (CORBA::ORB::_duplicate (orb_ptr))
 {
-  // no-op
 }
 
 Servant_Locator::~Servant_Locator ()
 {
-  //delete servant_ptr_;
 }
 
 
@@ -35,7 +32,6 @@ Servant_Locator::preinvoke (const PortableServer::ObjectId &oid,
                             const char * /*operation*/,
                             PortableServer::ServantLocator::Cookie & /* cookie */)
 {
-
   CORBA::String_var s = PortableServer::ObjectId_to_string (oid);
 
   ACE_DEBUG ((LM_DEBUG,
@@ -58,7 +54,6 @@ Servant_Locator::preinvoke (const PortableServer::ObjectId &oid,
   throw PortableServer::ForwardRequest (
     CORBA::Object::_duplicate (
       server.in ()));
-
 }
 
 void

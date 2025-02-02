@@ -12,7 +12,7 @@
  * Based on Command Pattern implementations originally done by
  *
  * Carlos O'Ryan        <coryan@cs.wustl.edu>
- * Douglas C. Schmidt   <schmidt@cs.wustl.edu>
+ * Douglas C. Schmidt   <d.schmidt@vanderbilt.edu>
  * Sergio Flores-Gaitan <sergio@cs.wustl.edu>
  *
  * and on STL-style functor implementations originally done by
@@ -29,17 +29,7 @@
 #include "ace/Functor.inl"
 #endif /* __ACE_INLINE__ */
 
-
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
-ACE_Command_Base::~ACE_Command_Base (void)
-{
-}
-
-ACE_Noop_Command::ACE_Noop_Command()
-{
-}
 
 int
 ACE_Noop_Command::execute(void*)

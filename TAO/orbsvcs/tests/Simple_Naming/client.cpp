@@ -8,7 +8,7 @@
  *
  *  @author   Sergio Flores-Gaitan <sergio@cs.wustl.edu>
  *  @author   Marina Spivak <marina@cs.wustl.edu>
- *  @author and   Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ *  @author and   Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
 //=============================================================================
 
@@ -16,8 +16,6 @@
 #include "client.h"
 #include "tao/debug.h"
 #include "ace/Get_Opt.h"
-
-
 
 #if defined (_MSC_VER)
 # pragma warning (disable : 4250)
@@ -27,12 +25,11 @@ class My_Test_Object :
   public virtual POA_Test_Object
 {
 public:
-  // = Initialization and termination methods.
   /// Constructor.
   My_Test_Object (CORBA::Short id = 0);
 
   /// Destructor.
-  ~My_Test_Object (void);
+  ~My_Test_Object ();
 
   // = Interface implementation accessor methods.
 
@@ -40,7 +37,7 @@ public:
   void id (CORBA::Short id);
 
   /// Gets id.
-  CORBA::Short id (void);
+  CORBA::Short id ();
 
 private:
   short id_;
@@ -51,12 +48,12 @@ My_Test_Object::My_Test_Object (CORBA::Short id)
 {
 }
 
-My_Test_Object::~My_Test_Object (void)
+My_Test_Object::~My_Test_Object ()
 {
 }
 
 CORBA::Short
-My_Test_Object::id (void)
+My_Test_Object::id ()
 {
   return id_;
 }
@@ -69,7 +66,7 @@ My_Test_Object::id (CORBA::Short id)
 
 // Constructor.
 
-CosNaming_Client::CosNaming_Client (void)
+CosNaming_Client::CosNaming_Client ()
   : argc_ (0),
     argv_ (0),
     test_ (0)
@@ -79,7 +76,7 @@ CosNaming_Client::CosNaming_Client (void)
 // Parses the command line arguments and returns an error status.
 
 int
-CosNaming_Client::parse_args (void)
+CosNaming_Client::parse_args ()
 {
   ACE_Get_Opt get_opts (argc_, argv_, ACE_TEXT("p:dstieym:c:l"));
   int c;
@@ -191,12 +188,12 @@ CosNaming_Client::parse_args (void)
 // Execute client example code.
 
 int
-CosNaming_Client::run (void)
+CosNaming_Client::run ()
 {
   return test_->execute (naming_client_);
 }
 
-CosNaming_Client::~CosNaming_Client (void)
+CosNaming_Client::~CosNaming_Client ()
 {
   delete test_;
 }
@@ -236,7 +233,7 @@ Naming_Test::Naming_Test (PortableServer::POA_ptr poa)
 {
 }
 
-Naming_Test::~Naming_Test (void)
+Naming_Test::~Naming_Test ()
 {
 }
 
@@ -251,7 +248,7 @@ MT_Test::MT_Test (CORBA::ORB_ptr orb,
 }
 
 int
-MT_Test::svc (void)
+MT_Test::svc ()
 {
   // Obtain object reference to the Naming Service (create new stub.)
 
@@ -296,11 +293,6 @@ MT_Test::svc (void)
     {
       ex._tao_print_exception (
         "Unexpected exception in MT test bind");
-      // This debug statement works around a IRIX/MIPSPro 7.3 bug (it
-      // fails with optimize=1 debug=0; but works with any other
-      // settings for those flags).
-      ACE_DEBUG ((LM_DEBUG, "MT_Test(%t) - bind[3] %d\n",
-                  test_name_.length ()));
       return -1;
     }
 
@@ -392,7 +384,6 @@ MT_Test::execute (TAO_Naming_Client &root_context)
 
       name_service_ior_ =
         orb_->object_to_string (context.in ());
-
     }
   catch (const CORBA::Exception& ex)
     {
@@ -1057,7 +1048,7 @@ Persistent_Test_Begin::Persistent_Test_Begin (CORBA::ORB_ptr orb,
 {
 }
 
-Persistent_Test_Begin::~Persistent_Test_Begin (void)
+Persistent_Test_Begin::~Persistent_Test_Begin ()
 {
 }
 
@@ -1110,7 +1101,7 @@ Persistent_Test_End::Persistent_Test_End (CORBA::ORB_ptr orb,
 {
 }
 
-Persistent_Test_End::~Persistent_Test_End (void)
+Persistent_Test_End::~Persistent_Test_End ()
 {
 }
 
@@ -1170,7 +1161,7 @@ Persistent_List_Test::Persistent_List_Test (CORBA::ORB_ptr orb,
 {
 }
 
-Persistent_List_Test::~Persistent_List_Test (void)
+Persistent_List_Test::~Persistent_List_Test ()
 {
 }
 

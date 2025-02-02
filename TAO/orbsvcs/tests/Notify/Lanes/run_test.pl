@@ -7,8 +7,6 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::TestTarget;
 
-PerlACE::check_privilege_group();
-
 $status = 0;
 $debug_level = '0';
 
@@ -62,10 +60,10 @@ my $client2_client_ior = $client2->LocalFile ($client_ior);
 $client2->DeleteFile($ior1file);
 $client2->DeleteFile($client_ior);
 
-$SV1 = $server1->CreateProcess ("../../../Naming_Service/tao_cosnaming",
+$SV1 = $server1->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_cosnaming",
                               "-o $server1_ior1file");
 
-$SV2 = $server2->CreateProcess ("../../../Notify_Service/tao_cosnotification",
+$SV2 = $server2->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Notify_Service/tao_cosnotification",
                                 "-ORBInitRef NameService=file://$server2_ior1file " .
                                 "-IORoutput $server2_ior2file " .
                                 "-ORBSvcConf $server2_conf");

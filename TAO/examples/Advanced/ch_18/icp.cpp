@@ -12,7 +12,6 @@
 
 
 
-
 #include    <string>
 #include    <map>
 #include    <algorithm>
@@ -133,7 +132,6 @@ vary_temp(long temp)
     if (ACE_OS::rand() % 2)
       delta = -delta;
   return temp + delta;
-
 }
 
 //----------------------------------------------------------------
@@ -147,8 +145,7 @@ public:
                 const StateMap::iterator & pos
             ) : m_pos(pos) {}
     bool    operator()(
-                pair<const unsigned long, DeviceState> & p
-            ) const
+                pair<const unsigned long, DeviceState> & p) const
             {
                 return(
                         p.second.type == thermostat

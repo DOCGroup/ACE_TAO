@@ -7,7 +7,7 @@ Server_Request_Interceptor::Server_Request_Interceptor (bool & destroy_called)
   this->destroy_called_ = false;  // Sanity check.
 }
 
-Server_Request_Interceptor::~Server_Request_Interceptor (void)
+Server_Request_Interceptor::~Server_Request_Interceptor ()
 {
   // ORB::destroy() should have been called, which in turn should have
   // called the Interceptor::destroy() method in all registered
@@ -16,13 +16,13 @@ Server_Request_Interceptor::~Server_Request_Interceptor (void)
 }
 
 char *
-Server_Request_Interceptor::name (void)
+Server_Request_Interceptor::name ()
 {
   return CORBA::string_dup ("Server_Request_Interceptor");
 }
 
 void
-Server_Request_Interceptor::destroy (void)
+Server_Request_Interceptor::destroy ()
 {
   this->destroy_called_ = true;
 }

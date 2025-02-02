@@ -17,7 +17,7 @@ TAO_ExtValueDef_i::TAO_ExtValueDef_i (TAO_Repository_i *repo)
 {
 }
 
-TAO_ExtValueDef_i::~TAO_ExtValueDef_i (void)
+TAO_ExtValueDef_i::~TAO_ExtValueDef_i ()
 {
 }
 
@@ -836,7 +836,7 @@ TAO_ExtValueDef_i::fill_exceptions (CORBA::ExcDescriptionSeq &exceptions,
       exceptions[i].type = impl.type_i ();
 
       this->repo_->config ()->get_string_value (except_key,
-                                                "container_id",
+                                                ACE_TEXT("container_id"),
                                                 holder);
       exceptions[i].defined_in = holder.fast_rep ();
       this->repo_->config ()->get_string_value (except_key,

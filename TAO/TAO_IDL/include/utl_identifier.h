@@ -72,22 +72,31 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 class TAO_IDL_FE_Export Identifier
 {
 public:
-  Identifier (void);
+  Identifier ();
   // Default Constructor.
 
   Identifier (const char *s);
   // Constructor.
 
-  virtual ~Identifier (void);
+  Identifier (const Identifier &other);
+
+  virtual ~Identifier ();
   // Destructor.
 
   // Operations
 
-  char *get_string (void);
-  // Get the underlying string.
+  /**
+   * Get the underlying string.
+   */
+  ///{
+  char *get_string ();
+  const char *get_string () const;
+  ///}
 
-  void replace_string (const char * s);
+  void replace_string (const char *s);
   // Replace the underlying string and free the old one.
+
+  void preprocess_and_replace_string (const char *s);
 
   bool compare (Identifier *other);
   // Compare with other Identifier.
@@ -98,24 +107,28 @@ public:
   bool case_compare_quiet (Identifier *other);
   // Like the above but suppressing error or warning I/O
 
-  Identifier *copy (void);
+  Identifier *copy ();
   // Create a deep copy.
 
-  bool escaped (void) const;
+  bool escaped () const;
   // Accessor for the member.
 
   virtual void dump (ACE_OSTREAM_TYPE &o);
   // Dump to an ostream.
 
-  virtual void destroy (void);
+  virtual void destroy ();
   // Cleanup function.
 
-private:
-    // Storage for data.
-    char *pv_string;
+  bool operator== (const Identifier &other) const;
 
-    // Did the IDL string have a leading underscore?
-    bool escaped_;
+  Identifier &operator= (const Identifier &other);
+
+private:
+  // Storage for data.
+  char *pv_string;
+
+  // Did the IDL string have a leading underscore?
+  bool escaped_;
 };
 
 #endif          // _UTL_IDENTIFIER_UTL_IDENTIFIER_HH

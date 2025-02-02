@@ -22,10 +22,6 @@ be_visitor_enum_cs::be_visitor_enum_cs (be_visitor_context *ctx)
 {
 }
 
-be_visitor_enum_cs::~be_visitor_enum_cs (void)
-{
-}
-
 // visit the Enum_cs node and its scope
 int
 be_visitor_enum_cs::visit_enum (be_enum *node)

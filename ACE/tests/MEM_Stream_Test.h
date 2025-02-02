@@ -5,8 +5,7 @@
  *  @file    MEM_Stream_Test.h
  *
  * This file has the class definitions needed for template generation in
- * MEM_Stream_Test.cpp.  They have to be in a separate file so AIX xlC can
- * find them at auto-instantiate time.
+ * MEM_Stream_Test.cpp.
  *
  *  @author Steve Huston <shuston@riverace.com>
  */
@@ -38,11 +37,11 @@ public:
   /// The Svc_Handler callbacks.
   Echo_Handler (ACE_Thread_Manager *thr_mgr = 0);
   virtual int open (void *);
-  static void reset_handler (void);
+  static void reset_handler ();
   virtual int handle_input (ACE_HANDLE h);
   virtual int handle_close (ACE_HANDLE handle,
                             ACE_Reactor_Mask close_mask);
-  virtual int svc (void);
+  virtual int svc ();
 
 private:
   ACE_TCHAR name_[MAXPATHLEN];

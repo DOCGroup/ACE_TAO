@@ -87,7 +87,7 @@ TAO_GIOP_Message_State::parse_magic_bytes (char *buf)
         && buf [3] == 0x50)) // 'P'
     {
       if (TAO_debug_level > 0)
-        TAOLIB_DEBUG ((LM_DEBUG,
+        TAOLIB_ERROR ((LM_ERROR,
                     ACE_TEXT ("TAO (%P|%t) - ")
                     ACE_TEXT ("TAO_GIOP_Message_State::parse_magic_bytes, ")
                     ACE_TEXT ("bad %cIOP header: ")
@@ -112,8 +112,8 @@ TAO_GIOP_Message_State::get_version_info (char *buf)
     }
 
   // We have a GIOP message on hand. Get its revision numbers
-  CORBA::Octet incoming_major = buf[TAO_GIOP_VERSION_MAJOR_OFFSET];
-  CORBA::Octet incoming_minor = buf[TAO_GIOP_VERSION_MINOR_OFFSET];
+  CORBA::Octet const incoming_major = buf[TAO_GIOP_VERSION_MAJOR_OFFSET];
+  CORBA::Octet const incoming_minor = buf[TAO_GIOP_VERSION_MINOR_OFFSET];
 
   // Check the revision information
   if (TAO_GIOP_Message_Generator_Parser_Impl::check_revision (

@@ -28,7 +28,7 @@ my $test = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed
 
 # Variables for command-line arguments to client and server
 # executables.
-$ns_multicast_port = 10001 + $test->RandomPort(); # Can not be 10000 on Chorus 4.0
+$ns_multicast_port = 10001 + $test->RandomPort();
 $ns_orb_port = 12000 + $test->RandomPort();
 
 $iorfile = "ns.ior";
@@ -66,7 +66,7 @@ $test->DeleteFile($persistent_ior_file);
 sub name_server
 {
     my $args = "-ORBMulticastDiscoveryEndpoint $multicast:$ns_multicast_port -o $test_iorfile -m 1 @_";
-    my $prog = "$startdir/../../Naming_Service/tao_cosnaming";
+    my $prog = "$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_cosnaming";
 
     $SV = $test->CreateProcess ("$prog", "$args");
 
@@ -95,7 +95,6 @@ sub client
         print STDERR "ERROR: client returned $client_status\n";
         $status = 1;
     }
-
 }
 
 ## The options below have been reordered due to a

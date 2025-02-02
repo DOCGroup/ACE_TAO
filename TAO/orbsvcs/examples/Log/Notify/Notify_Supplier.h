@@ -34,7 +34,7 @@ class Supplier
   //   This class is a supplier of events.
   //
 public:
-  Supplier (void);
+  Supplier ();
   // Constructor
 
   ~Supplier ();
@@ -44,7 +44,6 @@ public:
   // Run the test
 
 private:
-
   // = Data Members
   CORBA::ORB_var orb_;
   // The ORB that we use.
@@ -72,15 +71,14 @@ class Filter_StructuredPushSupplier
   //   Supplier for the filter example.
   //
  public:
-  // = Initialization and Termination code
-  Filter_StructuredPushSupplier (void);
+  Filter_StructuredPushSupplier ();
   // Constructor.
 
   void connect (CosNotifyChannelAdmin::SupplierAdmin_ptr supplier_admin);
   // Connect the Supplier to the EventChannel.
   // Creates a new proxy supplier and connects to it.
 
-  void disconnect (void);
+  void disconnect ();
   // Disconnect from the supplier.
 
   virtual void send_event (const CosNotification::StructuredEvent& event);
@@ -101,12 +99,10 @@ protected:
   // = NotifySubscribe
   virtual void subscription_change (
         const CosNotification::EventTypeSeq & added,
-        const CosNotification::EventTypeSeq & removed
-      );
+        const CosNotification::EventTypeSeq & removed);
 
   // = StructuredPushSupplier method
-    virtual void disconnect_structured_push_supplier (
-      );
+  virtual void disconnect_structured_push_supplier ();
 };
 
 

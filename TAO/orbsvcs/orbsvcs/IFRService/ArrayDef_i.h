@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-
 //=============================================================================
 /**
  *  @file    ArrayDef_i.h
@@ -10,7 +9,6 @@
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */
 //=============================================================================
-
 
 #ifndef TAO_ARRAYDEF_I_H
 #define TAO_ARRAYDEF_I_H
@@ -43,7 +41,7 @@ public:
   TAO_ArrayDef_i (TAO_Repository_i *repo);
 
   /// Destructor
-  virtual ~TAO_ArrayDef_i (void);
+  virtual ~TAO_ArrayDef_i ();
 
   /// Return our definition kind.
   virtual CORBA::DefinitionKind def_kind ();

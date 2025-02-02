@@ -1,4 +1,3 @@
-
 //=============================================================================
 /**
  *  @file    Timer_Cancellation_Test.cpp
@@ -9,29 +8,25 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/Reactor.h"
 #include "ace/TP_Reactor.h"
 #include "ace/Task.h"
 
-
-
 #if defined (ACE_HAS_THREADS)
 
 class Deadlock : public ACE_Task_Base
 {
 public:
-
-  int svc (void);
+  int svc () override;
 
   int handle_timeout (const ACE_Time_Value &current_time,
-                      const void *act);
+                      const void *act) override;
 };
 
 int
-Deadlock::svc (void)
+Deadlock::svc ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Deadlock starts accessing Reactor and Timer Queue....\n")));
@@ -59,14 +54,13 @@ Deadlock::handle_timeout (const ACE_Time_Value &,
 class Event_Handler : public ACE_Event_Handler
 {
 public:
-
   Event_Handler (Deadlock &deadlock);
 
   int handle_timeout (const ACE_Time_Value &current_time,
-                      const void *act);
+                      const void *act) override;
 
   int handle_close (ACE_HANDLE handle,
-                    ACE_Reactor_Mask close_mask);
+                    ACE_Reactor_Mask close_mask) override;
 
   Deadlock &deadlock_;
 };
@@ -116,8 +110,7 @@ run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Timer_Cancellation_Test"));
 
-  ACE_Reactor reactor (new ACE_TP_Reactor,
-                       1);
+  ACE_Reactor reactor (new ACE_TP_Reactor, true);
 
   Deadlock deadlock;
   deadlock.reactor (&reactor);

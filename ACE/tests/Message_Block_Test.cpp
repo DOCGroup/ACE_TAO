@@ -7,7 +7,7 @@
  *    <ACE_Message_Block> reference counting works in multi-threaded
  *    code.
  *
- *  @author Doug Schmidt <schmidt@cs.wustl.edu> and Nanbor Wang <nanbor@cs.wustl.edu>
+ *  @author Doug Schmidt <d.schmidt@vanderbilt.edu> and Nanbor Wang <nanbor@cs.wustl.edu>
  */
 //=============================================================================
 
@@ -28,6 +28,20 @@ static const int ACE_ALLOC_SIZE = 5;
 // Amount of memory block preallocated.
 static const size_t ACE_ALLOC_AMOUNT = 48;
 
+// For the user-defined data block test
+static bool user_data_dtor_called = false;
+class User_Data : public ACE_Data_Block
+{
+public:
+  User_Data() {}
+
+  ~User_Data() override
+  {
+    ACE_DEBUG((LM_DEBUG, ACE_TEXT ("User_Data dtor\n")));
+    user_data_dtor_called = true;
+  }
+};
+
 #if defined (ACE_HAS_THREADS)
 
 #include "ace/Lock_Adapter_T.h"
@@ -44,20 +58,20 @@ class Worker_Task : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
   /// Activate the task.
-  Worker_Task (void);
+  Worker_Task ();
 
   /// Iterate <n_iterations> time printing off a message and "waiting"
   /// for all other threads to complete this iteration.
-  virtual int svc (void);
+  int svc () override;
 
   /// Allows the producer to pass messages to the <Message_Block>.
-  virtual int put (ACE_Message_Block *mb, ACE_Time_Value *tv = 0);
+  int put (ACE_Message_Block *mb, ACE_Time_Value *tv = 0) override;
 
 private:
   //FUZZ: disable check_for_lack_ACE_OS
   /// Close hook.
   ///FUZZ: enable check_for_lack_ACE_OS
-  virtual int close (u_long);
+  int close (u_long) override;
 };
 
 int
@@ -79,7 +93,7 @@ Worker_Task::put (ACE_Message_Block *mb, ACE_Time_Value *tv)
 // other threads to complete this iteration.
 
 int
-Worker_Task::svc (void)
+Worker_Task::svc ()
 {
   // The <ACE_Task::svc_run()> method automatically adds us to the
   // process-wide <ACE_Thread_Manager> when the thread begins.
@@ -224,7 +238,7 @@ Worker_Task::svc (void)
   return 0;
 }
 
-Worker_Task::Worker_Task (void)
+Worker_Task::Worker_Task ()
 {
   // Make us an Active Object.
   if (this->activate (THR_NEW_LWP) == -1)
@@ -345,6 +359,27 @@ int
 run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Message_Block_Test"));
+
+  // A quick user-defined data block test, then the main event
+  User_Data *user_data_block = 0;
+  ACE_NEW_MALLOC_RETURN (user_data_block,
+                         static_cast<User_Data *>(
+                           ACE_Allocator::instance()->malloc(sizeof (User_Data))),
+                         User_Data (),
+                         -1);
+
+  // Create a new message block referring to the User_Data block and
+  // ensure it is released and freed correctly.
+  ACE_Message_Block *wrapper_mb = 0;
+  ACE_NEW_RETURN (wrapper_mb,
+                  ACE_Message_Block (user_data_block),
+                  -1);
+
+  wrapper_mb->release ();
+  wrapper_mb = 0;
+  if (!user_data_dtor_called)
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("User-defined data block not freed correctly.\n")));
+
 #if defined (ACE_HAS_THREADS)
   int n_threads = ACE_MAX_THREADS;
 

@@ -36,17 +36,15 @@ template <class OBJ, class ACE_LOCK>
 class TAO_Intrusive_Ref_Count_Object : public TAO_Intrusive_Ref_Count_Base <ACE_LOCK>
 {
 public:
-
   /// take ownership of obj.
   TAO_Intrusive_Ref_Count_Object (OBJ* obj);
-  virtual ~TAO_Intrusive_Ref_Count_Object (void);
+  virtual ~TAO_Intrusive_Ref_Count_Object ();
 
   OBJ* get () const;
 
 private:
-
   // Prevent default constructor used.
-  TAO_Intrusive_Ref_Count_Object (void);
+  TAO_Intrusive_Ref_Count_Object ();
 
   // Prevent copying/assignment.
   TAO_Intrusive_Ref_Count_Object (const TAO_Intrusive_Ref_Count_Object&);
@@ -61,13 +59,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #include "tao/Intrusive_Ref_Count_Object_T.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "tao/Intrusive_Ref_Count_Object_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Intrusive_Ref_Count_Object_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 

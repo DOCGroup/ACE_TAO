@@ -4,7 +4,7 @@
 /**
  *  @file    Iterators.h
  *
- *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
 //=============================================================================
 
@@ -31,9 +31,8 @@
 class URL_Iterator
 {
 public:
-  // = Initialization and termination methods.
   /// "virtual" destructor.
-  virtual int destroy (void);
+  virtual int destroy ();
 
   // = Iterator methods.
   /// Pass back the next <string> that hasn't been seen yet.  Returns 0
@@ -42,7 +41,7 @@ public:
 
 protected:
   /// C++ destructor.
-  virtual ~URL_Iterator (void);
+  virtual ~URL_Iterator ();
 };
 
 /**
@@ -53,7 +52,6 @@ protected:
 class HTML_Body_Iterator : public URL_Iterator
 {
 public:
-  // = Initialization and termination methods.
   /// Constructor.
   HTML_Body_Iterator (URL &url);
 
@@ -78,7 +76,6 @@ private:
 class HTTP_Header_Iterator : public URL_Iterator
 {
 public:
-  // = Initialization and termination methods.
   /// Constructor.
   HTTP_Header_Iterator (URL &url);
 
@@ -109,7 +106,6 @@ private:
 class URL_Download_Iterator : public URL_Iterator
 {
 public:
-  // = Initialization and termination methods.
   /// Constructor.
   URL_Download_Iterator (URL &url);
 

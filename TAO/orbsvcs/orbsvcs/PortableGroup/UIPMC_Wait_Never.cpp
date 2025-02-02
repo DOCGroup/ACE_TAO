@@ -10,24 +10,20 @@ TAO_UIPMC_Wait_Never::TAO_UIPMC_Wait_Never (TAO_Transport *transport)
 {
 }
 
-TAO_UIPMC_Wait_Never::~TAO_UIPMC_Wait_Never (void)
-{
-}
-
 int
-TAO_UIPMC_Wait_Never::register_handler (void)
+TAO_UIPMC_Wait_Never::register_handler ()
 {
   return -1;
 }
 
 bool
-TAO_UIPMC_Wait_Never::non_blocking (void) const
+TAO_UIPMC_Wait_Never::non_blocking () const
 {
   return true;
 }
 
 bool
-TAO_UIPMC_Wait_Never::can_process_upcalls (void) const
+TAO_UIPMC_Wait_Never::can_process_upcalls () const
 {
   return true;
 }

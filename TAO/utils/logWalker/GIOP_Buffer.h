@@ -31,7 +31,6 @@ class Thread;
 class GIOP_Buffer
 {
 public:
-
   static const char *size_leadin;
   static size_t leadin_len;
   static const size_t giop_header_len;
@@ -41,52 +40,52 @@ public:
                size_t offset,
                Thread *thread,
                Invocation *owner = 0);
-  GIOP_Buffer (void);
-  ~GIOP_Buffer (void);
+  GIOP_Buffer ();
+  ~GIOP_Buffer ();
 
   void owner (Invocation *);
-  Invocation *owner (void);
+  Invocation *owner ();
 
   void init_buf (const char *text, size_t offset);
   int add_octets(const char *text, size_t offset);
-  char type (void) const;
-  char expected_type (void) const;
-  bool sending (void) const;
-  char minor_version (void) const;
-  size_t reply_status (void) const;
-  size_t num_contexts (void) const;
-  bool is_oneway (void);
-  bool is_full (void) const;
-  size_t log_posn (void) const;
-  Thread *thread (void);
+  char type () const;
+  char expected_type () const;
+  bool sending () const;
+  char minor_version () const;
+  size_t reply_status () const;
+  size_t num_contexts () const;
+  bool is_oneway ();
+  bool is_full () const;
+  size_t log_posn () const;
+  Thread *thread ();
 
-  const ACE_Time_Value & time (void) const;
+  const ACE_Time_Value & time () const;
   void time (const ACE_Time_Value &);
 
-  const ACE_CString &preamble(void) const;
-  size_t expected_req_id(void) const;
-  size_t actual_req_id(void);
+  const ACE_CString &preamble() const;
+  size_t expected_req_id() const;
+  size_t actual_req_id();
 
-  size_t expected_size (void) const;
-  size_t buf_size (void) const;
-  size_t cur_size(void) const;
-  size_t msg_size (void);
+  size_t expected_size () const;
+  size_t buf_size () const;
+  size_t cur_size() const;
+  size_t msg_size ();
 
   const char * target_oid (size_t &len);
-  const char * operation (void);
-  ACE_InputCDR &payload (void);
+  const char * operation ();
+  ACE_InputCDR &payload ();
 
-  bool has_octets (void) const;
-  bool validate (void);
+  bool has_octets () const;
+  bool validate ();
   bool matches (GIOP_Buffer *other) const;
 
-  void reset (void);
+  void reset ();
   void transfer_from (GIOP_Buffer *other);
   void swap (GIOP_Buffer *other);
 
 private:
-  bool parse_svc_contexts (void);
-  bool parse_header (void);
+  bool parse_svc_contexts ();
+  bool parse_header ();
 
   ACE_InputCDR *cdr_;
   ACE_CString preamble_;

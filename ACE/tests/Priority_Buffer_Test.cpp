@@ -8,7 +8,7 @@
  *    to enqueue a bunch of messages with different priorities which
  *    are then dequeued by the consumer.
  *
- *  @author Prashant Jain <pjain@cs.wustl.edu> and Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ *  @author Prashant Jain <pjain@cs.wustl.edu> and Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
 //=============================================================================
 
@@ -16,7 +16,6 @@
 #include "test_config.h"
 #include "ace/Message_Queue.h"
 #include "ace/Thread_Manager.h"
-
 
 
 #if defined (ACE_HAS_THREADS)

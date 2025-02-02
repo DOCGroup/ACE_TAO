@@ -4,7 +4,7 @@
 /**
  *  @file    Containers.h
  *
- *  @author Douglas C.  Schmidt <schmidt@cs.wustl.edu>
+ *  @author Douglas C.  Schmidt <d.schmidt@vanderbilt.edu>
  */
 //=============================================================================
 
@@ -53,7 +53,7 @@ public:
   ACE_DLList_Node *prev_;
 
 protected:
-  ACE_DLList_Node (void);
+  ACE_DLList_Node ();
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

@@ -43,9 +43,8 @@ class ACE_Str_Buf;
 class ACE_Export ACE_FIFO_Recv_Msg : public ACE_FIFO_Recv
 {
 public:
-  // = Initialization methods.
   /// Default constructor.
-  ACE_FIFO_Recv_Msg (void);
+  ACE_FIFO_Recv_Msg ();
 
   /// Open up a record-oriented named pipe for reading.
   ACE_FIFO_Recv_Msg (const ACE_TCHAR *rendezvous,
@@ -120,7 +119,7 @@ public:
 #endif /* ACE_HAS_STREAM_PIPES */
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;

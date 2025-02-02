@@ -27,22 +27,21 @@
 class Airplane_Server_i
 {
 public:
-  // = Initialization and termination methods.
   /// Default constructor
-  Airplane_Server_i (void);
+  Airplane_Server_i ();
 
   /// Destructor
-  ~Airplane_Server_i (void);
+  ~Airplane_Server_i ();
 
   /// Initialize the Server state - parsing arguments and waiting
   int init (int argc, ACE_TCHAR **argv);
 
   /// Run the orb
-  int run (void);
+  int run ();
 
 private:
   /// Parses the commandline arguments.
-  int parse_args (void);
+  int parse_args ();
 
   /// Number of command line arguments.
   int argc_;

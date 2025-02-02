@@ -31,18 +31,18 @@
 class Event_Service : public POA_RtecEventChannelAdmin::EventChannel
 {
 public:
-  Event_Service (void);
-  virtual ~Event_Service (void);
+  Event_Service ();
+  virtual ~Event_Service ();
 
   /// Run the event service.
   int run (int argc, ACE_TCHAR* argv[]);
 
   // = The RtecEventChannelAdmin::Event_Channel methods
   virtual RtecEventChannelAdmin::ConsumerAdmin_ptr
-    for_consumers (void);
+    for_consumers ();
   virtual RtecEventChannelAdmin::SupplierAdmin_ptr
-    for_suppliers (void);
-  virtual void destroy (void);
+    for_suppliers ();
+  virtual void destroy ();
   virtual RtecEventChannelAdmin::Observer_Handle
     append_observer (RtecEventChannelAdmin::Observer_ptr observer);
   virtual void remove_observer (RtecEventChannelAdmin::Observer_Handle);

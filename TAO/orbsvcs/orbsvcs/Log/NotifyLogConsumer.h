@@ -51,8 +51,6 @@ class TAO_Notify_LogConsumer :
   public virtual POA_CosNotifyComm::PushConsumer
 {
 public:
-  // = Initialization and Termination methods.
-
   /// Constructor.
   TAO_Notify_LogConsumer (TAO_NotifyLog_i *log);
 
@@ -60,11 +58,11 @@ public:
   void connect (CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin);
 
   /// Disconnect from NotifyLog.
-  virtual void disconnect (void);
+  virtual void disconnect ();
 
 protected:
   /// Destructor.
-  virtual ~TAO_Notify_LogConsumer (void);
+  virtual ~TAO_Notify_LogConsumer ();
 
   // = NotifyPublish method
   virtual void offer_change (
@@ -75,7 +73,7 @@ protected:
   // = PushSupplier methods
   virtual void push (const CORBA::Any & event);
 
-  virtual void disconnect_push_consumer (void);
+  virtual void disconnect_push_consumer ();
 
   /// ProxyPushSupplier used to connect to NotifyLog.
   CosNotifyChannelAdmin::ProxyPushSupplier_var proxy_supplier_;

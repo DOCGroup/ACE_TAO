@@ -32,13 +32,11 @@ template <class Servant>
 class Server
 {
 public:
-  // = Initialization and termination methods.
-
   /// Constructor.
-  Server (void);
+  Server ();
 
   /// Destructor.
-  ~Server (void);
+  ~Server ();
 
   /// Initialize the Server state - parsing arguments and waiting.
   /// interface_name is the name used to register the Servant.
@@ -46,12 +44,12 @@ public:
             int argc,
             ACE_TCHAR *argv[]);
 
-  // int register_name (void);
+  // int register_name ();
   // After calling <init>, this method will register the server with
   // the TAO Naming Service using the servant_name passed to <init>.
 
   /// Run the orb.
-  int run (void);
+  int run ();
 
  protected:
   /// Servant class
@@ -61,7 +59,7 @@ public:
   const char *name;
 
   /// Parses the commandline arguments.
-  int parse_args (void);
+  int parse_args ();
 
   /// The ORB manager - a helper class for accessing the POA and
   /// registering objects.
@@ -78,7 +76,6 @@ public:
 
   /// The command line arguments.
   ACE_TCHAR **argv_;
-
 };
 
 
@@ -97,13 +94,11 @@ template <class InterfaceObj, class Var>
 class Client
 {
 public:
-
-  // = Initialization and termination methods.
   /// Constructor.
-  Client (void);
+  Client ();
 
   /// Destructor.
-  ~Client (void);
+  ~Client ();
 
   /// Initialize the client communication endpoint with server.
   int init (const char *name,int argc, ACE_TCHAR *argv[]);
@@ -112,20 +107,20 @@ public:
   InterfaceObj *operator-> () { return server_.in ();};
 
   /// Returns the shutdown flag.
-  int shutdown (void );
+  int shutdown ();
 
   /// Fills in the shutdwon flag.
   void shutdown (int);
 
   /// Initialize naming service
-  int obtain_initial_references (void);
+  int obtain_initial_references ();
 
 protected:
   /// Function to read the server IOR from a file.
   int read_ior (ACE_TCHAR *filename);
 
   /// Parses the arguments passed on the command line.
-  int parse_args (void);
+  int parse_args ();
 
   /// Remember our orb.
   CORBA::ORB_var orb_;
@@ -149,11 +144,6 @@ protected:
   Var server_;
 };
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "Simple_util.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Simple_util.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #endif /* TAO_UTIL_H */

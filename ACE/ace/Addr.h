@@ -4,7 +4,7 @@
 /**
  *  @file    Addr.h
  *
- *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
 //=============================================================================
 
@@ -30,17 +30,16 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Addr
 {
 public:
-  // = Initialization and termination methods.
   /// Initializes instance variables.
   ACE_Addr (int type = -1, int size = -1);
 
   /// Destructor.
-  virtual ~ACE_Addr (void);
+  virtual ~ACE_Addr () = default;
 
   // = Get/set the size of the address.
 
   /// Return the size of the address.
-  int get_size (void) const;
+  int get_size () const;
 
   /// Sets the size of the address.
   void set_size (int size);
@@ -48,13 +47,13 @@ public:
   // = Get/set the type of the address.
 
   /// Get the type of the address.
-  int get_type (void) const;
+  int get_type () const;
 
   /// Set the type of the address.
   void set_type (int type);
 
   /// Return a pointer to the address.
-  virtual void *get_addr (void) const;
+  virtual void *get_addr () const;
 
   /// Set a pointer to the address.
   virtual void set_addr (const void *, int len);
@@ -74,10 +73,10 @@ public:
 
   /// Returns a hash value.  This should be overwritten by a subclass
   /// that can produce a better hash value.
-  virtual unsigned long hash (void) const;
+  virtual unsigned long hash () const;
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;

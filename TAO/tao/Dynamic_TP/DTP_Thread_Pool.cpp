@@ -15,7 +15,7 @@
 #include "tao/debug.h"
 #include "tao/LF_Follower.h"
 #include "tao/Leader_Follower.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -26,7 +26,7 @@ TAO_DTP_New_Leader_Generator::TAO_DTP_New_Leader_Generator (
 }
 
 bool
-TAO_DTP_New_Leader_Generator::no_leaders_available (void)
+TAO_DTP_New_Leader_Generator::no_leaders_available ()
 {
   return this->pool_.new_dynamic_thread ();
 }
@@ -38,7 +38,7 @@ TAO_DTP_Termination_Waiter::TAO_DTP_Termination_Waiter (TAO_DTP_Thread_Pool &p)
 }
 
 int
-TAO_DTP_Termination_Waiter::svc (void)
+TAO_DTP_Termination_Waiter::svc ()
 {
   do
     {
@@ -61,9 +61,8 @@ TAO_DTP_Thread_Pool_Threads::TAO_DTP_Thread_Pool_Threads (TAO_DTP_Thread_Pool &p
 }
 
 int
-TAO_DTP_Thread_Pool_Threads::svc (void)
+TAO_DTP_Thread_Pool_Threads::svc ()
 {
-
   if (TAO_debug_level > 7)
     {
       TAOLIB_DEBUG ((LM_DEBUG,
@@ -170,14 +169,14 @@ TAO_DTP_Thread_Pool_Threads::run (TAO_ORB_Core &orb_core)
 }
 
 bool
-TAO_DTP_Thread_Pool::above_minimum (void)
+TAO_DTP_Thread_Pool::above_minimum ()
 {
   return this->definition_.min_threads_ > 0 &&
     (int)this->active_count_ > this->definition_.min_threads_;
 }
 
 CORBA::ULong
-TAO_DTP_Thread_Pool::current_threads (void) const
+TAO_DTP_Thread_Pool::current_threads () const
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                     mon,
@@ -188,7 +187,7 @@ TAO_DTP_Thread_Pool::current_threads (void) const
 }
 
 void
-TAO_DTP_Thread_Pool::add_active (void)
+TAO_DTP_Thread_Pool::add_active ()
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, mon, this->lock_);
   ++this->active_count_;
@@ -207,7 +206,7 @@ TAO_DTP_Thread_Pool::remove_active (bool force)
 }
 
 int
-TAO_DTP_Thread_Pool::create_initial_threads (void)
+TAO_DTP_Thread_Pool::create_initial_threads ()
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                     mon,
@@ -237,7 +236,7 @@ TAO_DTP_Thread_Pool::create_initial_threads (void)
 }
 
 bool
-TAO_DTP_Thread_Pool::new_dynamic_thread (void)
+TAO_DTP_Thread_Pool::new_dynamic_thread ()
 {
   // Note that we are checking this condition below without the lock
   // held.
@@ -313,7 +312,7 @@ TAO_DTP_Thread_Pool::create_threads_i (size_t count)
 
   // Make sure the dynamically created stack size array is properly
   // deleted.
-  ACE_Auto_Basic_Array_Ptr<size_t> auto_stack_size_array (stack_size_array);
+  std::unique_ptr<size_t[]> auto_stack_size_array (stack_size_array);
 
   TAO_ORB_Core &orb_core = manager_.orb_core ();
 
@@ -394,17 +393,17 @@ TAO_DTP_Thread_Pool::TAO_DTP_Thread_Pool (TAO_DTP_Thread_Pool_Manager &manager,
 }
 
 void
-TAO_DTP_Thread_Pool::open (void)
+TAO_DTP_Thread_Pool::open ()
 {
   // Nothing to do for now
 }
 
-TAO_DTP_Thread_Pool::~TAO_DTP_Thread_Pool (void)
+TAO_DTP_Thread_Pool::~TAO_DTP_Thread_Pool ()
 {
 }
 
 void
-TAO_DTP_Thread_Pool::shutting_down (void)
+TAO_DTP_Thread_Pool::shutting_down ()
 {
   ACE_GUARD (TAO_SYNCH_MUTEX,
              mon,
@@ -417,7 +416,7 @@ TAO_DTP_Thread_Pool::shutting_down (void)
 
 
 void
-TAO_DTP_Thread_Pool::wait (void)
+TAO_DTP_Thread_Pool::wait ()
 {
   this->waiter_.wait ();
 }
@@ -441,7 +440,7 @@ TAO_DTP_Thread_Pool_Manager::TAO_DTP_Thread_Pool_Manager (TAO_ORB_Core &orb_core
 {
 }
 
-TAO_DTP_Thread_Pool_Manager::~TAO_DTP_Thread_Pool_Manager (void)
+TAO_DTP_Thread_Pool_Manager::~TAO_DTP_Thread_Pool_Manager ()
 {
   // Delete all the pools.
   for (THREAD_POOLS::ITERATOR iterator = this->thread_pools_.begin ();
@@ -452,7 +451,7 @@ TAO_DTP_Thread_Pool_Manager::~TAO_DTP_Thread_Pool_Manager (void)
 
 
 void
-TAO_DTP_Thread_Pool_Manager::wait (void)
+TAO_DTP_Thread_Pool_Manager::wait ()
 {
   for (THREAD_POOLS::ITERATOR iterator = this->thread_pools_.begin ();
        iterator != this->thread_pools_.end ();
@@ -496,7 +495,6 @@ TAO_DTP_Thread_Pool_Manager::destroy_threadpool (CORBA::ULong threadpool)
 
   // Delete the thread pool.
   delete tao_thread_pool;
-
 }
 
 CORBA::ULong
@@ -519,11 +517,7 @@ CORBA::ULong
 TAO_DTP_Thread_Pool_Manager::create_threadpool_helper (TAO_DTP_Thread_Pool *thread_pool)
 {
   // Make sure of safe deletion in case of errors.
-#if defined (ACE_HAS_CPP11)
   std::unique_ptr<TAO_DTP_Thread_Pool> safe_thread_pool (thread_pool);
-#else
-  auto_ptr<TAO_DTP_Thread_Pool> safe_thread_pool (thread_pool);
-#endif /* ACE_HAS_CPP11 */
 
   // Open the pool.
   thread_pool->open ();
@@ -568,7 +562,7 @@ TAO_DTP_Thread_Pool_Manager::create_threadpool_helper (TAO_DTP_Thread_Pool *thre
 }
 
 TAO_ORB_Core &
-TAO_DTP_Thread_Pool_Manager::orb_core (void) const
+TAO_DTP_Thread_Pool_Manager::orb_core () const
 {
   return this->orb_core_;
 }

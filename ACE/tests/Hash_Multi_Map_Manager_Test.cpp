@@ -16,19 +16,14 @@
 #include "ace/Null_Mutex.h"
 
 
+using HASH_STRING_MAP = ACE_Hash_Multi_Map_Manager<const ACE_TCHAR *, const ACE_TCHAR *, ACE_Hash<const ACE_TCHAR *>, ACE_Equal_To<const ACE_TCHAR *>, ACE_Null_Mutex>;
 
-typedef ACE_Hash_Multi_Map_Manager<const ACE_TCHAR *,
-                                   const ACE_TCHAR *,
-                                   ACE_Hash<const ACE_TCHAR *>,
-                                   ACE_Equal_To<const ACE_TCHAR *>,
-                                   ACE_Null_Mutex> HASH_STRING_MAP;
-
-typedef HASH_STRING_MAP::ENTRY HASH_STRING_ENTRY;
-typedef HASH_STRING_ENTRY::VALUE_SET HASH_STRING_VALUE_SET;
-typedef HASH_STRING_ENTRY::VALUE_SET_ITERATOR HASH_STRING_VALUE_SET_ITERATOR;
-typedef HASH_STRING_MAP::ITERATOR HASH_STRING_ITERATOR;
-typedef HASH_STRING_MAP::CONST_ITERATOR HASH_STRING_CONST_ITERATOR;
-typedef HASH_STRING_MAP::REVERSE_ITERATOR HASH_STRING_REVERSE_ITERATOR;
+using HASH_STRING_ENTRY = HASH_STRING_MAP::ENTRY;
+using HASH_STRING_VALUE_SET = HASH_STRING_ENTRY::VALUE_SET;
+using HASH_STRING_VALUE_SET_ITERATOR = HASH_STRING_ENTRY::VALUE_SET_ITERATOR;
+using HASH_STRING_ITERATOR = HASH_STRING_MAP::ITERATOR;
+using HASH_STRING_CONST_ITERATOR = HASH_STRING_MAP::CONST_ITERATOR;
+using HASH_STRING_REVERSE_ITERATOR = HASH_STRING_MAP::REVERSE_ITERATOR;
 
 static const ACE_TCHAR *color_sorts[] = {ACE_TEXT ("warm"), ACE_TEXT ("cold"), ACE_TEXT ("neutral"), 0};
 static const ACE_TCHAR *warm_colors[] = {ACE_TEXT ("red"), ACE_TEXT ("yellow"), ACE_TEXT ("orange"), 0};
@@ -36,7 +31,7 @@ static const ACE_TCHAR *cold_colors[] = {ACE_TEXT ("blue"), ACE_TEXT ("cyan"), 0
 static const ACE_TCHAR *neutral_colors[] = {ACE_TEXT ("green"), ACE_TEXT ("purple"), 0};
 
 static int
-run_test (void)
+run_test ()
 {
   HASH_STRING_MAP colors;
 

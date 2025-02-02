@@ -16,9 +16,6 @@
 #include /**/ "ace/config-all.h"
 #include /**/ "ace/ACE_export.h"
 #include "ace/os_include/os_stdio.h"
-#if defined (ACE_OPENVMS)
-# include "ace/OS_NS_dlfcn.h"
-#endif
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -29,7 +26,7 @@ namespace ACE
   /**
    * Finds the file @a filename either using an absolute path or using
    * a relative path in conjunction with ACE_LD_SEARCH_PATH (e.g.,
-   * $LD_LIBRARY_PATH on UNIX or the directories scaned by Win32 API
+   * $LD_LIBRARY_PATH on UNIX or the directories scanned by Win32 API
    * SearchPath on Win32).  This function will add appropriate suffix
    * (e.g., .dll on Win32 or .so on UNIX) according to the OS
    * platform.  In addition, this function will apply the appropriate
@@ -57,26 +54,6 @@ namespace ACE
    */
   extern ACE_Export ACE_TCHAR *ldname (const ACE_TCHAR *entry_point);
 
-
-#if defined (ACE_OPENVMS)
-  /**
-   * Registers an @a entry_point and its address for later retrieval
-   * through the ACE::ldsymbol () method.
-   * For use in cases where the OS compiler encodes long symbolnames.
-   */
-  extern ACE_Export void ldregister (const ACE_TCHAR *entry_point,
-                                     void* entry_addr);
-
-  /**
-   * Looks up an @a entry_point address either from previously registered
-   * symbols or through ACE_OS::dlsym ().
-   * Returns 0 in case the entry_point is not found, otherwise nonzero.
-   * For use in cases where the OS compiler encodes long symbolnames.
-   */
-  extern ACE_Export void *ldsymbol (ACE_SHLIB_HANDLE sh,
-                                    const ACE_TCHAR *entry_point);
-#endif
-
   /**
    * Returns the temporary directory including the trailing slash in
    * @a buffer.  Returns -1 for an error or if the buffer_len is not
@@ -90,7 +67,7 @@ namespace ACE
                                                int mode,
                                                int perm = 0);
 
-  // @@ Though the following functions dont come under the same category as
+  // @@ Though the following functions don't come under the same category as
   // above, these are used only in the functions in this class. So it makes
   // more sense to move these functions too to this class.
   //

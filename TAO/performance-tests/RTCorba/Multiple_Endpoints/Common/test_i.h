@@ -24,7 +24,7 @@ class RTCORBA_COMMON_Export Test_i : public POA_Test
 {
 public:
   /// ctor
-  Test_i (void);
+  Test_i ();
 
   // = The Test methods.
   void test_method (CORBA::Long id);

@@ -11,7 +11,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
-ACE_Log_Record::~ACE_Log_Record (void)
+ACE_Log_Record::~ACE_Log_Record ()
 {
   if (this->msg_data_)
 #if defined (ACE_HAS_ALLOC_HOOKS)
@@ -22,7 +22,7 @@ ACE_Log_Record::~ACE_Log_Record (void)
 }
 
 ACE_INLINE ACE_UINT32
-ACE_Log_Record::type (void) const
+ACE_Log_Record::type () const
 {
   ACE_TRACE ("ACE_Log_Record::type");
   return this->type_;
@@ -37,7 +37,7 @@ ACE_Log_Record::category (ACE_Log_Category_TSS* t)
 
 
 ACE_INLINE ACE_Log_Category_TSS*
-ACE_Log_Record::category (void) const
+ACE_Log_Record::category () const
 {
   ACE_TRACE ("ACE_Log_Record::category");
   return this->category_;
@@ -51,7 +51,7 @@ ACE_Log_Record::type (ACE_UINT32 t)
 }
 
 ACE_INLINE long
-ACE_Log_Record::length (void) const
+ACE_Log_Record::length () const
 {
   ACE_TRACE ("ACE_Log_Record::length");
   return (long) this->length_;
@@ -65,7 +65,7 @@ ACE_Log_Record::length (long l)
 }
 
 ACE_INLINE ACE_Time_Value
-ACE_Log_Record::time_stamp (void) const
+ACE_Log_Record::time_stamp () const
 {
   ACE_TRACE ("ACE_Log_Record::time_stamp");
   return ACE_Time_Value (this->secs_, (long) this->usecs_);
@@ -80,7 +80,7 @@ ACE_Log_Record::time_stamp (const ACE_Time_Value &ts)
 }
 
 ACE_INLINE long
-ACE_Log_Record::pid (void) const
+ACE_Log_Record::pid () const
 {
   ACE_TRACE ("ACE_Log_Record::pid");
   return (long) this->pid_;
@@ -94,14 +94,14 @@ ACE_Log_Record::pid (long p)
 }
 
 ACE_INLINE const ACE_TCHAR *
-ACE_Log_Record::msg_data (void) const
+ACE_Log_Record::msg_data () const
 {
   ACE_TRACE ("ACE_Log_Record::msg_data");
   return this->msg_data_;
 }
 
 ACE_INLINE size_t
-ACE_Log_Record::msg_data_len (void) const
+ACE_Log_Record::msg_data_len () const
 {
   ACE_TRACE ("ACE_Log_Record::msg_data_len");
   return ACE_OS::strlen (this->msg_data_) + 1;

@@ -4,11 +4,9 @@
 /**
  *  @file   OS_NS_stropts.h
  *
- *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  *  @author Jesper S. M|ller<stophph@diku.dk>
  *  @author and a cast of thousands...
- *
- *  Originally in OS.h.
  */
 //=============================================================================
 
@@ -73,7 +71,6 @@ typedef unsigned long ACE_SOCK_GROUP;
 class ACE_Export ACE_Str_Buf : public strbuf
 {
 public:
-  // = Initialization method
   /// Constructor.
   ACE_Str_Buf (void *b = 0, int l = 0, int max = 0);
 
@@ -84,7 +81,6 @@ public:
 class ACE_QoS;
 
 namespace ACE_OS {
-
   ACE_NAMESPACE_INLINE_FUNCTION
   int getmsg (ACE_HANDLE handle,
               struct strbuf *ctl,
@@ -151,7 +147,6 @@ namespace ACE_OS {
                const struct strbuf *data,
                int band,
                int flags);
-
 } /* namespace ACE_OS */
 
 ACE_END_VERSIONED_NAMESPACE_DECL

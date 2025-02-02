@@ -30,19 +30,17 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-/// Messaging ORB initializer.
+/// BiDIR ORB initializer.
 class TAO_BiDir_ORBInitializer
   : public virtual PortableInterceptor::ORBInitializer
   , public virtual ::CORBA::LocalObject
 {
 public:
+  void pre_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 
-  virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info);
-
-  virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info);
+  void post_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 
 private:
-
   /// Register BiDir policy factories.
   void register_policy_factories (PortableInterceptor::ORBInitInfo_ptr info);
 };

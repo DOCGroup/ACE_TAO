@@ -29,48 +29,46 @@ class Subscribe_StructuredPushSupplier;
  */
 class Subscribe
 {
-
- public:
-  // = Initialization and Termination
-  Subscribe (void);
+public:
+  Subscribe ();
   ~Subscribe ();
 
   /// Init the Client.
   void init (int argc, ACE_TCHAR *argv []);
 
   /// Run the demo.
-  void run (void);
+  void run ();
 
   /// Called when all events we are waiting for have occurred.
-  void done (void);
+  void done ();
 
  protected:
   /// Initializes the ORB.
   void init_ORB (int argc, ACE_TCHAR *argv []);
 
   /// Try to get hold of a running naming service.
-  void resolve_naming_service (void);
+  void resolve_naming_service ();
 
   /// Try to resolve the Notify factory from the Naming service.
-  void resolve_Notify_factory (void);
+  void resolve_Notify_factory ();
 
   /// Create an EC.
-  void create_EC (void);
+  void create_EC ();
 
   /// Create the Supplier Admin.
-  void create_supplieradmin(void);
+  void create_supplieradmin();
 
   /// Create the Consumer Admin.
-  void create_consumeradmin (void);
+  void create_consumeradmin ();
 
   /// Create and initialize the consumers.
-  void create_consumers (void);
+  void create_consumers ();
 
   /// create and initialize the suppliers.
-  void create_suppliers (void);
+  void create_suppliers ();
 
   /// send the events.
-  void send_events (void);
+  void send_events ();
 
   // = Data Members
   /// Reference to the root poa.
@@ -123,9 +121,7 @@ class Subscribe_StructuredPushConsumer
   // = DESCRIPTION
   //   Consumer for the Subscribe example.
   //
-
- public:
-  // = Initialization and Termination code
+public:
   /// Constructor.
   Subscribe_StructuredPushConsumer (Subscribe* subscribe);
 
@@ -134,10 +130,10 @@ class Subscribe_StructuredPushConsumer
   void connect (CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin);
 
   /// Disconnect from the supplier.
-  virtual void disconnect (void);
+  virtual void disconnect ();
 
   /// Accessor for the Proxy that we're connected to.
-  CosNotifyChannelAdmin::StructuredProxyPushSupplier_ptr get_proxy_supplier (void);
+  CosNotifyChannelAdmin::StructuredProxyPushSupplier_ptr get_proxy_supplier ();
 
   // public data member for evaluating the results of subscription.
   CosNotification::EventTypeSeq expected_subscription_;
@@ -154,21 +150,18 @@ protected:
 
   // = Methods
   /// Destructor
-  virtual ~Subscribe_StructuredPushConsumer (void);
+  virtual ~Subscribe_StructuredPushConsumer ();
 
   // = NotifyPublish method
     virtual void offer_change (
         const CosNotification::EventTypeSeq & added,
-        const CosNotification::EventTypeSeq & removed
-      );
+        const CosNotification::EventTypeSeq & removed);
 
   // = StructuredPushSupplier methods
   virtual void push_structured_event (
-        const CosNotification::StructuredEvent & notification
-      );
+        const CosNotification::StructuredEvent & notification);
 
-  virtual void disconnect_structured_push_consumer (
-        );
+  virtual void disconnect_structured_push_consumer ();
 };
 
 /*****************************************************************/
@@ -182,17 +175,16 @@ class Subscribe_StructuredPushSupplier
   // = DESCRIPTION
   //   Supplier for the SUBSCRIBE example.
   //
- public:
-  // = Initialization and Termination code
+public:
   /// Constructor.
-  Subscribe_StructuredPushSupplier (void);
+  Subscribe_StructuredPushSupplier ();
 
   /// Connect the Supplier to the EventChannel.
   /// Creates a new proxy consumer and connects to it.
   void connect (CosNotifyChannelAdmin::SupplierAdmin_ptr supplier_admin);
 
   /// Disconnect from the supplier.
-  void disconnect (void);
+  void disconnect ();
 
   /// Send one event.
   virtual void send_event (const CosNotification::StructuredEvent& event);
@@ -212,12 +204,10 @@ protected:
   // = NotifySubscribe
   virtual void subscription_change (
         const CosNotification::EventTypeSeq & added,
-        const CosNotification::EventTypeSeq & removed
-      );
+        const CosNotification::EventTypeSeq & removed);
 
   // = StructuredPushSupplier method
-    virtual void disconnect_structured_push_supplier (
-      );
+  virtual void disconnect_structured_push_supplier ();
 };
 
 #endif /* NOTIFY_SUBSCRIBE_CLIENT_H */

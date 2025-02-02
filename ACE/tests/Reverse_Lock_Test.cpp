@@ -11,16 +11,13 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/Synch_Traits.h"
 #include "ace/Thread_Mutex.h"
 #include "ace/Guard_T.h"
 #include "ace/Reverse_Lock_T.h"
 
-
-
-typedef ACE_Reverse_Lock<ACE_SYNCH_MUTEX> REVERSE_MUTEX;
+using REVERSE_MUTEX = ACE_Reverse_Lock<ACE_MT_SYNCH::MUTEX>;
 
 int
 run_main (int, ACE_TCHAR *[])

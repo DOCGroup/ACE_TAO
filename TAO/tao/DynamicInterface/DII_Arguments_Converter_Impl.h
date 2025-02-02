@@ -39,7 +39,6 @@ class TAO_DynamicInterface_Export TAO_DII_Arguments_Converter_Impl
   : public TAO::Collocated_Arguments_Converter
 {
 public:
-
   virtual void convert_request (TAO_ServerRequest & server_request,
                                 TAO::Argument * const args[],
                                 size_t nargs);
@@ -58,7 +57,7 @@ public:
                                        CORBA::Exception *exception);
 
   // Used to force the initialization of the ORB code.
-  static int Initializer (void);
+  static int Initializer ();
 };
 
 static int

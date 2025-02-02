@@ -10,7 +10,7 @@ Crash_Task::Crash_Task (ACE_Thread_Manager *thr_mgr,
 }
 
 int
-Crash_Task::svc (void)
+Crash_Task::svc ()
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Starting crash task\n"));
   ACE_OS::sleep (this->running_time_);

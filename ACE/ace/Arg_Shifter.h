@@ -53,7 +53,6 @@ template <typename CHAR_TYPE>
 class ACE_Arg_Shifter_T
 {
 public:
-  // = Initialization and termination methods.
   /**
    * Initialize the ACE_Arg_Shifter to the vector over which to
    * iterate. Optionally, also provide the temporary array for
@@ -75,21 +74,21 @@ public:
    *    (the default) the object will allocate and free the temporary
    *    vector transparently.
    */
-  ACE_Arg_Shifter_T (int& argc,
+  ACE_Arg_Shifter_T (int &argc,
                      const CHAR_TYPE **argv,
                      const CHAR_TYPE **temp = 0);
 
   /// Same behavior as the preceding constructor, but without the
   /// "const" qualifier.
-  ACE_Arg_Shifter_T (int& argc,
+  ACE_Arg_Shifter_T (int &argc,
                      CHAR_TYPE **argv,
                      CHAR_TYPE **temp = 0);
 
   /// Destructor.
-  ~ACE_Arg_Shifter_T (void);
+  ~ACE_Arg_Shifter_T ();
 
   /// Get the current head of the vector.
-  const CHAR_TYPE *get_current (void) const;
+  const CHAR_TYPE *get_current () const;
 
   /**
    * If the @a flag matches the current_arg of arg shifter
@@ -98,12 +97,12 @@ public:
    *
    * Safe to call without checking that a current arg exists
    *
-   * In the following examples, a pointer to the char* "value" is ret
+   * In the following examples, a pointer to the char* "value" is returned
    *
    * eg: main -foobar value, main -FooBar value
    *     main -FOOBARvalue
    *
-   *     all of the above will all match the @a flag == -FooBar
+   *     all of the above will match the @a flag == -FooBar
    *     and will return a char* to "value"
    *
    *     main -foobar 4 would succeed and return a char* to "4"
@@ -123,7 +122,7 @@ public:
    * together '-foobarflagVALUE', the flag is NOT consumed
    * and the cur arg is left pointing to the entire flag/value pair
    */
-  const CHAR_TYPE *get_the_parameter (const CHAR_TYPE* flag);
+  const CHAR_TYPE *get_the_parameter (const CHAR_TYPE *flag);
 
   /**
    * Check if the current argument matches (case insensitive) @a flag
@@ -134,7 +133,7 @@ public:
    * 0 is returned.
    *
    *     ie: when current_arg = "-foobar" or "-FOOBAR" or "-fooBAR"
-   *         this->cur_arg_strncasecmp ("-FooBar);
+   *         this->cur_arg_strncasecmp ("-FooBar");
    *         will return 0
    *
    * ------------------------------------------------------------
@@ -142,10 +141,18 @@ public:
    * Case B: Perfect Match (case insensitive) but the current_arg
    * is longer than the flag. Returns a number equal to the index
    * in the char* indicating the start of the extra characters
+   * after any initial spaces (see below).
    *
    *     ie: when current_arg = "-foobar98023"
-   *         this->cur_arg_strncasecmp ("-FooBar);
+   *         this->cur_arg_strncasecmp ("-FooBar");
    *         will return 7
+   *
+   * Spaces separating the flag from its value (that are still part
+   * of the same argv element) are counted as part of the return value
+   *
+   *     ie: when current_arg = "-foobar 98023"
+   *         this->cur_arg_strncasecmp ("-FooBar");
+   *         will return 8
    *
    * Notice: this number will always be > 0
    *
@@ -165,31 +172,31 @@ public:
   int ignore_arg (int number = 1);
 
   /// Returns the number of args left to see in the vector.
-  int is_anything_left (void) const;
+  int is_anything_left () const;
 
   /// Returns 1 if there's a next item in the vector and it begins with
   /// '-'.
-  int is_option_next (void) const;
+  int is_option_next () const;
 
   /// Returns 1 if there's a next item in the vector and it doesn't
   /// begin with '-'.
-  int is_parameter_next (void) const;
+  int is_parameter_next () const;
 
   /// Returns the number of irrelevant args seen.
-  int num_ignored_args (void) const;
+  int num_ignored_args () const;
 
 private:
   /// Copy Constructor should not be used.
-  ACE_UNIMPLEMENTED_FUNC (ACE_Arg_Shifter_T (const ACE_Arg_Shifter_T<CHAR_TYPE>&))
+  ACE_Arg_Shifter_T (const ACE_Arg_Shifter_T<CHAR_TYPE> &) = delete;
 
   /// Assignment '=' operator should not be used.
-  ACE_UNIMPLEMENTED_FUNC (ACE_Arg_Shifter_T operator= (const ACE_Arg_Shifter_T<CHAR_TYPE>&))
+  ACE_Arg_Shifter_T operator= (const ACE_Arg_Shifter_T<CHAR_TYPE> &) = delete;
 
   /// Refactor the constructor logic.
-  void init (void);
+  void init ();
 
   /// The size of the argument vector.
-  int& argc_;
+  int &argc_;
 
   /// The size of argv_.
   int total_size_;
@@ -219,13 +226,7 @@ typedef ACE_Arg_Shifter_T<ACE_TCHAR> ACE_Arg_Shifter;
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Arg_Shifter.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Arg_Shifter.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 

@@ -3,16 +3,19 @@ project(TAO_IDL_GEN) {
   requires += tao_idl_fe_gen
   custom_only = 1
 
+  verbatim(gnuace, extension, 1) {
+    OUTPUT_DIRECTORY =
+  }
+
   verbatim(gnuace, local) {
+    BISON_FLAGS := -d --feature=caret --warnings=error=deprecated --warnings=error=empty-rule --warnings=error=conflicts-rr
     all: fe/fe_lookup.cpp fe/idl.yy.cpp fe/idl.tab.cpp fe/idl.tab.hpp
-    fe/fe_lookup.cpp: fe/keywords.dat
-    "	echo '#include \"fe_private.h\"' > $@"
-    "	echo '#include \"ace/OS_NS_string.h\"' >> $@"
-    "	echo '' >> $@"
-    "	$(ACE_ROOT)/bin/ace_gperf -M -J -c -C -D -E -T -f 0 -a -o -t -p -K keyword_ -L C++ -Z TAO_IDL_CPP_Keyword_Table -N lookup -k1,2,$$ $^ | \\"
-    "	sed -e 's/,}/,0}/g' \\"
-    "	    -e 's/\\*str == \\*s && !ACE_OS::strncmp/len == static_cast<unsigned int> (ACE_OS::strlen (s)) \\&\\& *str == *s \\&\\& !ACE_OS::strncmp/g' \\"
-    "	>> $@"
+    GPERF ?= $(ACE_ROOT)/bin/ace_gperf
+    fe/keywords.dat.tmp: fe/keywords.dat
+    "	$(GPERF) -M -J -c -C -D -E -T -f 0 -a -o -t -p -K keyword_ -L C++ -Z TAO_IDL_CPP_Keyword_Table -N lookup -k1,2,$$ $^ > $@"
+
+    fe/fe_lookup.cpp: fe/keywords.dat.tmp
+    "	sed -f fe/post_gperf.sed $^ > $@"
 
     fe/idl.yy.cpp: fe/idl.ll
     "	@echo 'WARNING: Potentially outdated $@'"
@@ -24,17 +27,7 @@ project(TAO_IDL_GEN) {
     lex.yy:
     "ifeq ($(notdir $(LEX)), flex)"
     "	$(LEX) -t -P tao_yy -ofe/idl.yy.cpp fe/idl.ll | \\"
-    "	sed -e 's/ NULL/ 0/g' \\"
-    "	    -e 's/	/    /g' \\"
-    "	    -e 's/  *$$\/\/g' \\"
-    "	    -e 's/YY_BREAK break;/YY_BREAK ACE_NOTREACHED (break;)/g' \\"
-    "	    -e 's@#include <errno\.h>@#include \"ace/OS_NS_errno.h\"@' \\"
-    "	    -e 's@#include <stdio\.h>@#include \"ace/OS_NS_stdio.h\"@' \\"
-    "	    -e 's@#include <unistd\.h>@#include \"ace/os_include/os_ctype.h\"@' \\"
-    "	    -e 's@c = getc@c = ACE_OS::getc@' \\"
-    "	    -e 's@199901L@199901L || defined (__HP_aCC)@' \\"
-    "	    -e '/#include <[seu]/d' \\"
-    "	> fe/idl.yy.cpp"
+    "	sed -f fe/post_flex.sed > fe/idl.yy.cpp"
     "else"
     "	@echo 'ERROR: You must use flex 2.6.4 or higher to process this file'"
     "	@/bin/false"
@@ -46,10 +39,13 @@ project(TAO_IDL_GEN) {
     "	@echo '         generate it using:'"
     "	@echo '    make y.tab'"
 
+    debug_bison: BISON_FLAGS += --report=all --report-file=bison_report
+    debug_bison: y.tab
+
     .PHONY: y.tab
     y.tab: fe/idl.ypp
     "ifeq ($(notdir $(YACC)), bison)"
-    "	$(YACC) -d -p tao_yy -b fe/idl fe/idl.ypp"
+    "	$(YACC) $(BISON_FLAGS) -p tao_yy -b fe/idl fe/idl.ypp"
     "else"
     "	@echo 'ERROR: You must use bison 3 or higher to process this file'"
     "	@/bin/false"
@@ -57,7 +53,7 @@ project(TAO_IDL_GEN) {
   }
 }
 
-project(TAO_IDL_FE) : acelib, conv_lib, tao_output {
+project(TAO_IDL_FE) : acelib, install_lib, tao_rules, tao_output {
   sharedname   = TAO_IDL_FE
   dynamicflags += TAO_IDL_FE_BUILD_DLL
   includes    += $(TAO_ROOT)

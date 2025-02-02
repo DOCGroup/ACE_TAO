@@ -26,6 +26,9 @@ ACE_Process_Manager_cleanup (void *instance, void *arg)
 {
   ACE_Process_Manager::cleanup (instance, arg);
 }
+#define ACE_PROCESS_MANAGER_CLEANUP_FUNCTION ACE_Process_Manager_cleanup
+#else
+#define ACE_PROCESS_MANAGER_CLEANUP_FUNCTION ACE_Process_Manager::cleanup
 #endif
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -53,18 +56,18 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Process_Manager)
 // Singleton instance.
 ACE_Process_Manager *ACE_Process_Manager::instance_ = 0;
 
-// Controls whether the <Process_Manager> is deleted when we shut down
+// Controls whether the Process_Manager is deleted when we shut down
 // (we can only delete it safely if we created it!)
 bool ACE_Process_Manager::delete_instance_ = false;
 
-ACE_Process_Manager::Process_Descriptor::~Process_Descriptor (void)
+ACE_Process_Manager::Process_Descriptor::~Process_Descriptor ()
 {
 }
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Process_Manager::Process_Descriptor)
 
 void
-ACE_Process_Manager::Process_Descriptor::dump (void) const
+ACE_Process_Manager::Process_Descriptor::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Process_Manager::Process_Descriptor::dump");
@@ -79,7 +82,7 @@ ACE_Process_Manager::Process_Descriptor::dump (void) const
 }
 
 void
-ACE_Process_Manager::dump (void) const
+ACE_Process_Manager::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Process_Manager::dump");
@@ -96,7 +99,7 @@ ACE_Process_Manager::dump (void) const
 #endif /* ACE_HAS_DUMP */
 }
 
-ACE_Process_Manager::Process_Descriptor::Process_Descriptor (void)
+ACE_Process_Manager::Process_Descriptor::Process_Descriptor ()
   : process_ (0),
     exit_notify_ (0)
 {
@@ -104,7 +107,7 @@ ACE_Process_Manager::Process_Descriptor::Process_Descriptor (void)
 }
 
 ACE_Process_Manager *
-ACE_Process_Manager::instance (void)
+ACE_Process_Manager::instance ()
 {
   ACE_TRACE ("ACE_Process_Manager::instance");
 
@@ -124,19 +127,10 @@ ACE_Process_Manager::instance (void)
           // Register with the Object_Manager so that the wrapper to
           // delete the proactor will be called when Object_Manager is
           // being terminated.
-
-#if defined ACE_HAS_SIG_C_FUNC
           ACE_Object_Manager::at_exit (ACE_Process_Manager::instance_,
-                                       ACE_Process_Manager_cleanup,
+                                       ACE_PROCESS_MANAGER_CLEANUP_FUNCTION,
                                        0,
-                                       typeid (*ACE_Process_Manager::instance_).name ());
-#else
-          ACE_Object_Manager::at_exit (ACE_Process_Manager::instance_,
-                                       ACE_Process_Manager::cleanup,
-                                       0,
-                                       typeid (*ACE_Process_Manager::instance_).name ());
-#endif /* ACE_HAS_SIG_C_FUNC */
-
+                                       typeid (ACE_Process_Manager).name ());
         }
     }
 
@@ -157,25 +151,17 @@ ACE_Process_Manager::instance (ACE_Process_Manager *tm)
   // Register with the Object_Manager so that the wrapper to
   // delete the proactor will be called when Object_Manager is
   // being terminated.
-
-#if defined ACE_HAS_SIG_C_FUNC
   ACE_Object_Manager::at_exit (ACE_Process_Manager::instance_,
-                                ACE_Process_Manager_cleanup,
-                                0,
-                                typeid (*ACE_Process_Manager::instance_).name ());
-#else
-  ACE_Object_Manager::at_exit (ACE_Process_Manager::instance_,
-                                ACE_Process_Manager::cleanup,
-                                0,
-                                typeid (*ACE_Process_Manager::instance_).name ());
-#endif /* ACE_HAS_SIG_C_FUNC */
+                               ACE_PROCESS_MANAGER_CLEANUP_FUNCTION,
+                               0,
+                               typeid (*t).name ());
 
   ACE_Process_Manager::instance_ = tm;
   return t;
 }
 
 void
-ACE_Process_Manager::close_singleton( void )
+ACE_Process_Manager::close_singleton( )
 {
   ACE_TRACE ("ACE_Process_Manager::close_singleton");
 
@@ -219,7 +205,6 @@ ACE_Process_Manager::resize (size_t size)
 }
 
 // Create and initialize the table to keep track of the process pool.
-
 int
 ACE_Process_Manager::open (size_t size, ACE_Reactor *r)
 {
@@ -243,7 +228,6 @@ ACE_Process_Manager::open (size_t size, ACE_Reactor *r)
 }
 
 // Initialize the synchronization variables.
-
 ACE_Process_Manager::ACE_Process_Manager (size_t size,
                                           ACE_Reactor *r)
   : ACE_Event_Handler (),
@@ -266,9 +250,8 @@ ACE_Process_Manager::ACE_Process_Manager (size_t size,
 }
 
 // Close up and release all resources.
-
 int
-ACE_Process_Manager::close (void)
+ACE_Process_Manager::close ()
 {
   ACE_TRACE ("ACE_Process_Manager::close");
 
@@ -300,7 +283,7 @@ ACE_Process_Manager::close (void)
   return 0;
 }
 
-ACE_Process_Manager::~ACE_Process_Manager (void)
+ACE_Process_Manager::~ACE_Process_Manager ()
 {
   ACE_TRACE ("ACE_Process_Manager::~ACE_Process_Manager");
   this->close ();
@@ -313,7 +296,6 @@ ACE_Process_Manager::~ACE_Process_Manager (void)
 // routine, which fooled the Reactor into thinking that this routine
 // needed to be called.  Since we don't know which Process exited, we
 // must reap as many exit statuses as are immediately available.
-
 int
 ACE_Process_Manager::handle_input (ACE_HANDLE)
 {
@@ -322,8 +304,7 @@ ACE_Process_Manager::handle_input (ACE_HANDLE)
    pid_t pid;
 
    do
-     pid = this->wait (0,
-                       ACE_Time_Value::zero);
+     pid = this->wait (0, ACE_Time_Value::zero);
    while (pid != 0 && pid != ACE_INVALID_PID);
 
   return 0;
@@ -351,11 +332,8 @@ ACE_Process_Manager::handle_close (ACE_HANDLE /* handle */,
 //
 // On Win32, this routine is called synchronously, and is passed the
 // HANDLE of the Process that exited, so we can do all our work here.
-
 int
-ACE_Process_Manager::handle_signal (int,
-                                    siginfo_t *si,
-                                    ucontext_t *)
+ACE_Process_Manager::handle_signal (int, siginfo_t *si, ucontext_t *)
 {
 #if defined (ACE_WIN32)
   ACE_HANDLE proc = si->si_handle_;
@@ -391,7 +369,7 @@ ACE_Process_Manager::handle_signal (int,
     {
       // <GetExitCodeProcess> failed.
       ACELIB_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("GetExitCodeProcess failed")),
+                         ACE_TEXT ("GetExitCodeProcess failed\n")),
                         -1); // return -1: unregister
     }
 #else /* !ACE_WIN32 */
@@ -431,7 +409,6 @@ ACE_Process_Manager::register_handler (ACE_Event_Handler *eh,
 }
 
 // Create a new process.
-
 pid_t
 ACE_Process_Manager::spawn (ACE_Process_Options &options,
                             ACE_Event_Handler *event_handler)
@@ -449,7 +426,6 @@ ACE_Process_Manager::spawn (ACE_Process_Options &options,
 }
 
 // Create a new process.
-
 pid_t
 ACE_Process_Manager::spawn (ACE_Process *process,
                             ACE_Process_Options &options,
@@ -474,7 +450,6 @@ ACE_Process_Manager::spawn (ACE_Process *process,
 }
 
 // Create N new processs.
-
 int
 ACE_Process_Manager::spawn_n (size_t n,
                               ACE_Process_Options &options,
@@ -506,7 +481,6 @@ ACE_Process_Manager::spawn_n (size_t n,
 
 // Append a process into the pool (does not check for duplicates).
 // Must be called with locks held.
-
 int
 ACE_Process_Manager::append_proc (ACE_Process *proc,
                                   ACE_Event_Handler *event_handler)
@@ -545,7 +519,6 @@ ACE_Process_Manager::append_proc (ACE_Process *proc,
 
 // Insert a process into the pool (checks for duplicates and doesn't
 // allow them to be inserted twice).
-
 int
 ACE_Process_Manager::insert_proc (ACE_Process *proc,
                                   ACE_Event_Handler *event_handler)
@@ -561,7 +534,6 @@ ACE_Process_Manager::insert_proc (ACE_Process *proc,
 }
 
 // Remove a process from the pool.
-
 int
 ACE_Process_Manager::remove (pid_t pid)
 {
@@ -579,7 +551,6 @@ ACE_Process_Manager::remove (pid_t pid)
 }
 
 // Remove a process from the pool.  Must be called with locks held.
-
 int
 ACE_Process_Manager::remove_proc (size_t i)
 {
@@ -654,7 +625,6 @@ ACE_Process_Manager::terminate (pid_t pid, int sig)
   return ACE_OS::kill (pid, sig);
 }
 
-
 int
 ACE_Process_Manager::set_scheduler (const ACE_Sched_Params & params,
                                     pid_t pid)
@@ -694,7 +664,6 @@ ACE_Process_Manager::set_scheduler_all (const ACE_Sched_Params & params)
 
 // Locate the index in the table associated with <pid>.  Must be
 // called with the lock held.
-
 ssize_t
 ACE_Process_Manager::find_proc (pid_t pid)
 {
@@ -714,7 +683,6 @@ ACE_Process_Manager::find_proc (pid_t pid)
 #if defined (ACE_WIN32)
 // Locate the index in the table associated with <h>.  Must be
 // called with the lock held.
-
 ssize_t
 ACE_Process_Manager::find_proc (ACE_HANDLE h)
 {
@@ -732,9 +700,8 @@ ACE_Process_Manager::find_proc (ACE_HANDLE h)
 }
 #endif /* ACE_WIN32 */
 
-// Wait for all the Processs to exit, or until <timeout> elapses.
+// Wait for all the Processs to exit, or until @a timeout elapses.
 // Returns the number of Processes remaining, or -1 on an error.
-
 int
 ACE_Process_Manager::wait (const ACE_Time_Value &timeout)
 {
@@ -773,7 +740,6 @@ ACE_Process_Manager::wait (const ACE_Time_Value &timeout)
 // near as possible -- on Unix, we might accidentally get some other
 // Process_Manager's Process, or an unmanaged Process, or a child
 // process started by some other means.
-
 pid_t
 ACE_Process_Manager::wait (pid_t pid,
                            ACE_exitcode *status)
@@ -785,10 +751,9 @@ ACE_Process_Manager::wait (pid_t pid,
                      status);
 }
 
-// Collect a single child processes' exit status, unless <timeout>
+// Collect a single child processes' exit status, unless @a timeout
 // elapses before the process exits.  Same caveats about accidental
 // Process reaping on Unix as above.
-
 pid_t
 ACE_Process_Manager::wait (pid_t pid,
                            const ACE_Time_Value &timeout,
@@ -921,7 +886,8 @@ ACE_Process_Manager::wait (pid_t pid,
           ACE_Sig_Action old_action;
           if (this->reactor () == 0)
             {
-              ACE_Sig_Action do_sigchld ((ACE_SignalHandler)sigchld_nop);
+              ACE_Sig_Handler_Ex sigchld_nop_ptr = sigchld_nop;
+              ACE_Sig_Action do_sigchld (reinterpret_cast<ACE_SignalHandler> (reinterpret_cast<void*> (sigchld_nop_ptr)));
               do_sigchld.register_action (SIGCHLD, &old_action);
             }
 
@@ -985,7 +951,6 @@ ACE_Process_Manager::wait (pid_t pid,
 // Notify either the process-specific handler or the generic handler.
 // If process-specific, call handle_close on the handler.  Returns 1
 // if process found, 0 if not.  Must be called with locks held.
-
 int
 ACE_Process_Manager::notify_proc_handler (size_t i,
                                           ACE_exitcode exit_code)
@@ -1002,9 +967,7 @@ ACE_Process_Manager::notify_proc_handler (size_t i,
       else if (this->default_exit_handler_ != 0
                && this->default_exit_handler_->handle_exit (proc_desc.process_) < 0)
         {
-          this->default_exit_handler_->handle_close
-            (ACE_INVALID_HANDLE,
-             0);
+          this->default_exit_handler_->handle_close (ACE_INVALID_HANDLE, 0);
           this->default_exit_handler_ = 0;
         }
       return 1;

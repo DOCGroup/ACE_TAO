@@ -71,12 +71,11 @@ template class ACE_Svc_Export ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
 class ACE_Svc_Export Peer_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 {
 public:
-  // = Initialization and termination methods.
   /// Initialize the peer.
-  Peer_Handler (void);
+  Peer_Handler ();
 
   /// Shutdown the Peer.
-  ~Peer_Handler (void);
+  ~Peer_Handler ();
 
   /// Initialize the handler when called by
   /// <ACE_Acceptor::handle_input>.
@@ -119,21 +118,21 @@ protected:
   virtual int nonblk_put (ACE_Message_Block *mb);
 
   /// Register Consumer subscriptions with the gateway.
-  int subscribe (void);
+  int subscribe ();
 
   // = Event/state/action handlers.
   /// Receive a event from stdin and send it to the gateway.
-  int transmit_stdin (void);
+  int transmit_stdin ();
 
   /// Action that receives the route id.
-  int await_connection_id (void);
+  int await_connection_id ();
 
   /// Action that receives events.
-  int await_events (void);
+  int await_events ();
 
   /// Pointer-to-member-function for the current action to run in this
   /// state.  This points to one of the preceding 3 methods.
-  int (Peer_Handler::*do_action_)(void);
+  int (Peer_Handler::*do_action_)();
 
   /// Connection ID of the peer, which is obtained from the gatewayd.
   CONNECTION_ID connection_id_;
@@ -164,15 +163,14 @@ template class ACE_Svc_Export ACE_Acceptor<Peer_Handler, ACE_SOCK_ACCEPTOR>;
 class ACE_Svc_Export Peer_Acceptor : public ACE_Acceptor<Peer_Handler, ACE_SOCK_ACCEPTOR>
 {
 public:
-  // = Initialization and termination methods.
   /// Default initialization.
-  Peer_Acceptor (void);
+  Peer_Acceptor ();
 
   ///  the <Peer_Acceptor>.
   int start (u_short);
 
   /// Terminate the <Peer_Acceptor>.
-  int close (void);
+  int close ();
 
   /// Factory method that creates a <Peer_Handler> just once.
   virtual int make_svc_handler (Peer_Handler *&);
@@ -204,7 +202,6 @@ template class ACE_Svc_Export ACE_Connector<Peer_Handler, ACE_SOCK_CONNECTOR>;
 class ACE_Svc_Export Peer_Connector : public ACE_Connector<Peer_Handler, ACE_SOCK_CONNECTOR>
 {
 public:
-  // = Initialization method.
   /**
    * Initialize the <Peer_Connector>.  NOTE:  the arguments are
    * ignored.  They are only provided to avoid a compiler warning
@@ -239,7 +236,7 @@ public:
   virtual int init (int argc, ACE_TCHAR *argv[]);
 
   /// Perform termination activities.
-  virtual int fini (void);
+  virtual int fini ();
 
   /// Return info about this service.
   virtual int info (ACE_TCHAR **, size_t) const;

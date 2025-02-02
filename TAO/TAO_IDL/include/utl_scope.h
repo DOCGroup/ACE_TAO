@@ -1,4 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
 /*
 
 COPYRIGHT
@@ -82,9 +81,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "fe_utils.h"
 
-// This is for AIX w/IBM C++.
 class Identifier;
-
 class AST_PredefinedType;
 class AST_Module;
 class AST_Template_Module_Inst;
@@ -131,6 +128,8 @@ class AST_Mirror_Port;
 class AST_Connector;
 class UTL_StrList;
 class UTL_NameList;
+class AST_Annotation_Decl;
+class AST_Annotation_Member;
 
 // Forward declaration of active iterator for UTL_Scope.
 class UTL_ScopeActiveIterator;
@@ -153,21 +152,17 @@ public:
   // Operations.
 
   // Constructor(s).
-  UTL_Scope (void);
+  UTL_Scope ();
   UTL_Scope (AST_Decl::NodeType nt);
 
   // Destructor.
-  virtual ~UTL_Scope (void);
+  virtual ~UTL_Scope ();
 
   // Data Accessors.
-  AST_Decl::NodeType scope_node_type (void)
+  AST_Decl::NodeType scope_node_type ()
   {
     return pd_scope_node_type;
   }
-
-  // Narrowing.
-
-  DEF_NARROW_FROM_SCOPE(UTL_Scope);
 
   // AST Dumping.
   virtual void dump (ACE_OSTREAM_TYPE &o);
@@ -196,6 +191,8 @@ public:
   // Look up one of the pseudo-object types.
   AST_Decl *lookup_pseudo (Identifier *);
 
+  AST_Decl *lookup_by_name (const char *name);
+
   virtual AST_Decl *look_in_prev_mods_local (Identifier *e,
                                              bool ignore_fwd = false);
 
@@ -206,7 +203,7 @@ public:
                                     AST_Decl *&final_parent_decl);
 
   // How many entries are used?
-  virtual unsigned long nmembers (void);
+  virtual unsigned long nmembers ();
 
   // If the Identifier string (from the scoped name which has been
   // already determined to be of length 1) matches a param,
@@ -227,11 +224,11 @@ public:
   void add_to_name_referenced (Identifier *id);
 
   // Accessors for the has_prefix_ member.
-  bool has_prefix (void);
+  bool has_prefix ();
   void has_prefix (bool val);
 
   // Cleanup function.
-  virtual void destroy (void);
+  virtual void destroy ();
 
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
@@ -492,6 +489,14 @@ public:
   virtual
   AST_Mirror_Port *fe_add_mirror_port (AST_Mirror_Port *mp);
 
+  virtual
+  AST_Annotation_Decl *fe_add_annotation_decl (
+    AST_Annotation_Decl *annotation_decl);
+
+  virtual
+  AST_Annotation_Member *fe_add_annotation_member (
+    AST_Annotation_Member *annotation_member);
+
 protected:
   /// Quick check on the head of a name to see if it's global.
   bool is_global_name (Identifier *i);
@@ -525,19 +530,19 @@ public:
                            UTL_Scope::ScopeIterationKind ik);
 
   // Advance to next item.
-  void next (void);
+  void next ();
 
   // Get current item.
-  AST_Decl *item (void);
+  AST_Decl *item ();
 
   // Have we iterated over entire scope?
-  bool is_done (void);
+  bool is_done ();
 
   // What kind of iterator is this?
-  UTL_Scope::ScopeIterationKind iteration_kind (void);
+  UTL_Scope::ScopeIterationKind iteration_kind ();
 
   // What stage are we in with this iterator?
-  UTL_Scope::ScopeIterationKind iteration_stage (void);
+  UTL_Scope::ScopeIterationKind iteration_stage ();
 
 private:
   // Scope to iterate over.
@@ -553,12 +558,6 @@ private:
   long il;
 };
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "utl_scope_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("utl_scope_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #endif           // _UTL_SCOPE_UTL_SCOPE_HH

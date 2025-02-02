@@ -59,7 +59,7 @@ $sup->DeleteFile ($reliorfile);
 $con->DeleteFile ($chighdat);
 $sup->DeleteFile ($shighdat);
 
-$NS = $ns->CreateProcess ("../../../../../../Naming_Service/tao_cosnaming",
+$NS = $ns->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_cosnaming",
                           "-o $ns_nsiorfile");
 
 $SUP = $sup->CreateProcess ("../../../../Driver/Notify_Tests_Driver");

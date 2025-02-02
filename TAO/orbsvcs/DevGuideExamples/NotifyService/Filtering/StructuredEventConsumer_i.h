@@ -7,22 +7,19 @@ class StructuredEventConsumer_i :
   public virtual POA_CosNotifyComm::StructuredPushConsumer
 {
 public:
-    StructuredEventConsumer_i(CORBA::ORB_ptr orb);
+  StructuredEventConsumer_i(CORBA::ORB_ptr orb);
 
-    virtual void push_structured_event(
-      const CosNotification::StructuredEvent &notification
-      );
+  virtual void push_structured_event(
+      const CosNotification::StructuredEvent &notification);
 
-   virtual void offer_change (
+  virtual void offer_change (
         const CosNotification::EventTypeSeq & added,
-        const CosNotification::EventTypeSeq & removed
-      );
+        const CosNotification::EventTypeSeq & removed);
 
-   virtual void disconnect_structured_push_consumer(
-      );
+  virtual void disconnect_structured_push_consumer();
 
 private:
-    CORBA::ORB_var orb_;
+  CORBA::ORB_var orb_;
 };
 
 #endif

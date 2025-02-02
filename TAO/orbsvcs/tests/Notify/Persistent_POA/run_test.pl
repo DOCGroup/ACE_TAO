@@ -49,10 +49,10 @@ $sup->DeleteFile ($nfs2iorfile);
 $sup->DeleteFile ($supiorfile);
 $con->DeleteFile ($supiorfile);
 
-$NS = $ns->CreateProcess ("../../../Naming_Service/tao_cosnaming",
+$NS = $ns->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_cosnaming",
                             "-ORBEndpoint iiop://$host:$port ".
                             "-o $ns_nsiorfile");
-$NFS = $nfs->CreateProcess ("../../../Notify_Service/tao_cosnotification",
+$NFS = $nfs->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Notify_Service/tao_cosnotification",
                             "-ORBEndpoint iiop://$nfs_host:$nfs_port " .
                             "-ORBInitRef NameService=iioploc://" .
                             "$host:$port/NameService " .

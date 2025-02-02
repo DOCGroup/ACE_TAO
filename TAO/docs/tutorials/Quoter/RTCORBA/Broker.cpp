@@ -70,7 +70,6 @@ parse_args (int argc, ACE_TCHAR *argv[])
               std::cerr << "Warning: Invalid priority detected, defaulting to very low.\n";
               priority_level = Priority_Mapping::VERY_LOW;
               break;
-
             }
           break;
 
@@ -198,7 +197,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       orb->run ();
 
       // Cleanup the POA and ORB.
-      poa->destroy (1, 1);
+      poa->destroy (true, true);
       orb->destroy ();
     }
   catch (const CORBA::Exception &ex)

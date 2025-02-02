@@ -45,13 +45,11 @@ class TAO_Naming_Serv_Export TAO_Naming_Context :
   public virtual POA_CosNaming::NamingContextExt
 {
 public:
-
-  // = Initialization and termination methods.
   /// Constructor.  Initializes <impl_> with a concrete implementation.
   TAO_Naming_Context (TAO_Naming_Context_Impl *impl);
 
   /// Destructor.
-  ~TAO_Naming_Context (void);
+  ~TAO_Naming_Context ();
 
   // = CosNaming::NamingContext idl interface methods.
 
@@ -133,7 +131,7 @@ public:
    * NOTE: after <destroy> is invoked on a Naming Context, all
    * BindingIterators associated with that Naming Context are also destroyed.
    */
-  virtual void destroy (void);
+  virtual void destroy ();
 
   /**
    * Returns at most the requested number of bindings <how_many> in
@@ -182,10 +180,9 @@ public:
   void stale (bool value);
 
   /// Returns the Default POA of this Servant object
-  virtual PortableServer::POA_ptr _default_POA (void);
+  virtual PortableServer::POA_ptr _default_POA ();
 
 private:
-
   enum Hint
     {
       HINT_ID,
@@ -229,7 +226,6 @@ private:
                                                   const char *sn);
 
 protected:
-
   /// A concrete implementor of the NamingContext functions.
   TAO_Naming_Context_Impl *impl_;
 };
@@ -245,11 +241,9 @@ protected:
  */
 class TAO_Naming_Serv_Export TAO_Naming_Context_Impl
 {
-
 public:
-
   /// Destructor.
-  virtual ~TAO_Naming_Context_Impl (void);
+  virtual ~TAO_Naming_Context_Impl ();
 
   // = CosNaming::NamingContext idl interface methods.
 
@@ -311,7 +305,7 @@ public:
    * same naming server in which the operation was invoked.  The
    * context is not bound.
    */
-  virtual CosNaming::NamingContext_ptr new_context (void) = 0;
+  virtual CosNaming::NamingContext_ptr new_context () = 0;
 
   /**
    * This operation creates a new context and binds it to the name
@@ -329,7 +323,7 @@ public:
    * NOTE: after <destroy> is invoked on a Naming Context, all
    * BindingIterators associated with that Naming Context are also destroyed.
    */
-  virtual void destroy (void) = 0;
+  virtual void destroy () = 0;
 
   /**
    * Returns at most the requested number of bindings <how_many> in
@@ -342,7 +336,7 @@ public:
                      CosNaming::BindingIterator_out &bi) = 0;
 
   /// Returns the Default POA of this Servant object
-  virtual PortableServer::POA_ptr _default_POA (void) = 0;
+  virtual PortableServer::POA_ptr _default_POA () = 0;
 
   /**
    * Set the stale flag for replicated persistence support.
@@ -353,8 +347,7 @@ public:
    * Query if the the implementation is stale for replicated
    * persistence support.
    */
-  virtual bool stale (void);
-
+  virtual bool stale ();
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

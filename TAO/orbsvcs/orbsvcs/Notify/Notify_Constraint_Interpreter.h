@@ -37,11 +37,10 @@ class TAO_Notify_Serv_Export TAO_Notify_Constraint_Interpreter
   : public ETCL_Interpreter
 {
 public:
-  // = Initialization and termination methods.
-  TAO_Notify_Constraint_Interpreter (void);
+  TAO_Notify_Constraint_Interpreter ();
 
   /// Destructor
-  virtual ~TAO_Notify_Constraint_Interpreter (void);
+  virtual ~TAO_Notify_Constraint_Interpreter ();
 
   /**
    * This method builds an expression tree representing the

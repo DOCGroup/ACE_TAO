@@ -96,13 +96,14 @@ long DRV_nfiles = 0;
 long DRV_file_index = -1;
 
 void
-DRV_version (void)
+DRV_version ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "%C\n"
-              "TAO_IDL_FE, version %s (Based on Sun IDL FE, version %s)\n",
+              "TAO_IDL_FE, version %s%s (Based on Sun IDL FE, version %s)\n",
               idl_global->prog_name (),
               ACE_TEXT (TAO_VERSION),
+              ACE_TEXT (TAO_PATCH),
               ACE_TEXT (SUN_IDL_FE_VERSION)));
 
   BE_version ();
@@ -134,19 +135,19 @@ DRV_init (int &argc, ACE_TCHAR *argv[])
 }
 
 void
-DRV_refresh (void)
+DRV_refresh ()
 {
   idl_global->set_err_count (0);
-  idl_global->set_filename (0);
-  idl_global->set_main_filename (0);
-  idl_global->set_real_filename (0);
-  idl_global->set_stripped_filename (0);
+  idl_global->set_filename (nullptr);
+  idl_global->set_main_filename (nullptr);
+  idl_global->set_real_filename (nullptr);
+  idl_global->set_stripped_filename (nullptr);
   idl_global->set_lineno (-1);
   idl_global->reset_flag_seen ();
 }
 
 void
-DRV_cleanup (void)
+DRV_cleanup ()
 {
   // In case we got here via an init error or
   // usage/version option - otherwise it's idempotent.
@@ -154,11 +155,11 @@ DRV_cleanup (void)
 
   be_global->destroy ();
   delete be_global;
-  be_global = 0;
+  be_global = nullptr;
 
   idl_global->fini ();
   delete idl_global;
-  idl_global = 0;
+  idl_global = nullptr;
 
   for (DRV_file_index = 0;
        DRV_file_index < DRV_nfiles;
@@ -193,7 +194,7 @@ DRV_drive (const char *s)
 {
   // Set the name of the IDL file we are parsing. This is useful to
   // the backend when it generates C++ headers and files.
-  UTL_String *utl_string = 0;
+  UTL_String *utl_string = nullptr;
   ACE_NEW (utl_string,
            UTL_String (s, true));
 
@@ -232,7 +233,8 @@ DRV_drive (const char *s)
 
   // This option creates a single IDL file that includes all
   // input files. The backend outputs their names individually.
-  if (!idl_global->multi_file_input ())
+  if (!idl_global->multi_file_input () &&
+      (idl_global->compile_flags () & IDL_CF_INFORMATIVE))
     {
       // Filename set by FE_yyparse(), so we output it immediately after.
       ACE_DEBUG ((LM_DEBUG,
@@ -279,6 +281,12 @@ DRV_drive (const char *s)
       idl_global->root ()->dump (*ACE_DEFAULT_LOG_STREAM);
     }
 
+  if (idl_global->syntax_only_)
+    {
+      // Set error count for syntax errors
+      throw Bailout (idl_global->err_count ());
+    }
+
   // Call the main entry point for the BE.
   if (idl_global->compile_flags () & IDL_CF_INFORMATIVE)
     {
@@ -323,38 +331,39 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           throw Bailout ();
         }
 
+      // Give BE chance to set default IDL version using BE_init
+      idl_global->idl_version_ = idl_global->default_idl_version_;
+
       // Parse arguments.
       DRV_parse_args (atc.get_argc (), atc.get_ASCII_argv ());
 
-      // If a version message is requested, print it and exit cleanly.
-      if (idl_global->compile_flags () & IDL_CF_VERSION)
-        {
-          DRV_version ();
-          DRV_cleanup ();
-          return 0;
-        }
-
-      // If a usage message is requested, print it and exit cleanly.
-      if (idl_global->compile_flags () & IDL_CF_ONLY_USAGE)
+      // Print Help Message
+      if (idl_global->print_help_)
         {
           DRV_usage ();
-          DRV_cleanup ();
-          return 0;
         }
 
-      // If there are no input files, and we are not using the
-      // directory recursion option, there's no sense going any further.
-      if (0 == DRV_nfiles && 0 == idl_global->recursion_start ())
+      // If a version message is requested, print it
+      if (idl_global->print_version_)
         {
-          ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("IDL: No input files\n")));
+          DRV_version ();
+        }
 
-          throw Bailout ();
+      // If exiting because of arguments, do it now
+      if (idl_global->parse_args_exit_)
+        {
+          int status = idl_global->parse_args_exit_status_;
+          if (status)
+            {
+              ACE_ERROR ((LM_ERROR,
+                ACE_TEXT ("Use \"-h\" or \"--help\" to see valid options.\n")));
+            }
+          throw Bailout (status);
         }
 
       AST_Generator *gen = be_util::generator_init ();
 
-      if (0 == gen)
+      if (nullptr == gen)
         {
           ACE_ERROR ((
               LM_ERROR,
@@ -375,7 +384,31 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Does various things in various backends.
       BE_post_init (DRV_files, DRV_nfiles);
 
-      FILE *output_file = 0;
+      // Dump Builtin IDL AST
+      if (idl_global->just_dump_builtins_)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+            ACE_TEXT ("Dump Builtin IDL defined by Compiler:\n")));
+          idl_global->root ()->dump (*ACE_DEFAULT_LOG_STREAM);
+          idl_global->ignore_files_ = true;
+        }
+
+      if (idl_global->ignore_files_)
+        {
+          throw Bailout (idl_global->err_count ());
+        }
+
+      // If there are no input files, and we are not using the
+      // directory recursion option, there's no sense going any further.
+      if (0 == DRV_nfiles && nullptr == idl_global->recursion_start ())
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("IDL: No input files\n")));
+
+          throw Bailout ();
+        }
+
+      FILE *output_file = nullptr;
 
       if (idl_global->multi_file_input ())
         {
@@ -406,13 +439,20 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           ACE_OS::unlink (idl_global->big_file_name ());
         }
     }
-  catch (Bailout)
+  catch (const Bailout &bailout)
     {
-      // Incrementing here may be redundant, but the error count
-      // is the exit value, and we want to make sure it isn't 0
-      // if there was in fact an error. If a non-zero value is
-      // off by 1, it's not so important.
-      idl_global->set_err_count (idl_global->err_count () + 1);
+      if (bailout.increment_errors_)
+        {
+          // Incrementing here may be redundant, but the error count
+          // is the exit value, and we want to make sure it isn't 0
+          // if there was in fact an error. If a non-zero value is
+          // off by 1, it's not so important.
+          idl_global->set_err_count (idl_global->err_count () + 1);
+        }
+      else
+        {
+          idl_global->set_err_count (bailout.errors_);
+        }
     }
 
   int const retval = idl_global->err_count ();

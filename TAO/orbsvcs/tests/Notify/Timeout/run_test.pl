@@ -25,8 +25,6 @@ $sup->AddLibPath ('../lib');
 $con->AddLibPath ('../lib');
 $ns->AddLibPath ('../lib');
 
-PerlACE::check_privilege_group();
-
 #my $nscorbaloc = "-ORBInitRef NameService=file://$namingior";
 
 my $supiorfile = "supplier.ior";
@@ -48,9 +46,9 @@ $nfs->DeleteFile ($nfsiorfile);
 $sup->DeleteFile ($supiorfile);
 $con->DeleteFile ($supiorfile);
 
-my $NS = $ns->CreateProcess ("../../../Naming_Service/tao_cosnaming",
+my $NS = $ns->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_cosnaming",
                              "-o $ns_nsiorfile");
-my $NFS = $ns->CreateProcess ("../../../Notify_Service/tao_cosnotification",
+my $NFS = $ns->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Notify_Service/tao_cosnotification",
                               "-ORBInitRef NameService=file://$nfs_nsiorfile " .
                               "-IORoutput $nfs_nfsiorfile -Timeout 750");
 my $SUP = $ns->CreateProcess("Structured_Supplier",

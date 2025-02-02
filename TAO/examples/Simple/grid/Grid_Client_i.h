@@ -28,12 +28,11 @@
 class Grid_Client_i
 {
 public:
-  // = Initialization and termination methods.
   /// Constructor
-  Grid_Client_i (void);
+  Grid_Client_i ();
 
   /// Destructor
-  ~Grid_Client_i (void);
+  ~Grid_Client_i ();
 
   /// Execute the methods.
   int run (const char *, int, ACE_TCHAR *[]);

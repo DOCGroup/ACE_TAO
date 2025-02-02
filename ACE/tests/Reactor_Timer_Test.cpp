@@ -1,4 +1,3 @@
-
 //=============================================================================
 /**
  *  @file    Reactor_Timer_Test.cpp
@@ -8,10 +7,9 @@
  *    handling expired timers and cancelling scheduled timers are
  *    all exercised in this test.
  *
- *  @author Prashant Jain <pjain@cs.wustl.edu> and Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ *  @author Prashant Jain <pjain@cs.wustl.edu> and Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
 //=============================================================================
-
 
 #include "test_config.h"
 #include "ace/Timer_Queue.h"
@@ -21,9 +19,7 @@
 #include "ace/Recursive_Thread_Mutex.h"
 #include "ace/Log_Msg.h"
 #include "ace/Timer_Heap.h"
-#include "ace/Auto_Ptr.h"
-
-
+#include <memory>
 
 static int done = 0;
 static int the_count = 0;
@@ -36,15 +32,15 @@ public:
   Time_Handler ();
 
   /// Handle the timeout.
-  virtual int handle_timeout (const ACE_Time_Value &tv,
-                              const void *arg);
+  int handle_timeout (const ACE_Time_Value &tv,
+                              const void *arg) override;
 
   /// Called when <Time_Handler> is removed.
-  virtual int handle_close (ACE_HANDLE handle,
-                            ACE_Reactor_Mask close_mask);
+  int handle_close (ACE_HANDLE handle,
+                            ACE_Reactor_Mask close_mask) override;
 
   /// Return our timer id.
-  long timer_id (void) const;
+  long timer_id () const;
 
   /// Set our timer id;
   void timer_id (long);
@@ -98,13 +94,8 @@ Time_Handler::handle_timeout (const ACE_Time_Value &tv,
     }
   else if (current_count == -1)
     {
-#if defined (ACE_HAS_CPP11)
       int result = ACE_Reactor::instance ()->reset_timer_interval (this->timer_id (),
                                                                    std::chrono::seconds {the_count + 1});
-#else
-      int result = ACE_Reactor::instance ()->reset_timer_interval (this->timer_id (),
-                                                                   ACE_Time_Value (the_count + 1));
-#endif
       if (result == -1)
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("Error resetting timer interval\n")));
@@ -114,7 +105,7 @@ Time_Handler::handle_timeout (const ACE_Time_Value &tv,
 }
 
 long
-Time_Handler::timer_id (void) const
+Time_Handler::timer_id () const
 {
   return this->timer_id_;
 }
@@ -126,7 +117,7 @@ Time_Handler::timer_id (long t)
 }
 
 static void
-test_registering_all_handlers (void)
+test_registering_all_handlers ()
 {
   ACE_Trace t (ACE_TEXT ("test_registering_all_handler"),
                __LINE__,
@@ -137,15 +128,9 @@ test_registering_all_handlers (void)
   for (size_t i = 0; i < ACE_MAX_TIMERS; i++)
     {
       t_id[i] =
-#if defined (ACE_HAS_CPP11)
         ACE_Reactor::instance ()->schedule_timer (&rt[i],
                                                   (const void *) i,
                                                   std::chrono::seconds {2 * i + 1});
-#else
-        ACE_Reactor::instance ()->schedule_timer (&rt[i],
-                                                  (const void *) i,
-                                                  ACE_Time_Value (2 * i + 1));
-#endif
       ACE_TEST_ASSERT (t_id[i] != -1);
       rt[i].timer_id (t_id[i]);
     }
@@ -155,7 +140,7 @@ test_registering_all_handlers (void)
 }
 
 static void
-test_registering_one_handler (void)
+test_registering_one_handler ()
 {
   ACE_Trace t (ACE_TEXT ("test_registering_one_handler"),
                __LINE__,
@@ -180,7 +165,7 @@ test_registering_one_handler (void)
 }
 
 static void
-test_canceling_odd_timers (void)
+test_canceling_odd_timers ()
 {
   ACE_Trace t (ACE_TEXT ("test_canceling_odd_timers"),
                __LINE__,
@@ -217,7 +202,7 @@ test_canceling_odd_timers (void)
 }
 
 static void
-test_resetting_timer_intervals (void)
+test_resetting_timer_intervals ()
 {
   ACE_Trace t (ACE_TEXT ("test_resetting_timer_intervals"),
                __LINE__,
@@ -269,7 +254,7 @@ run_main (int argc, ACE_TCHAR *[])
       // to do it right in at least one test.  Notice the lack of
       // ACE_NEW_RETURN, that monstrosity has no business in proper C++
       // code ...
-      auto_ptr<ACE_Timer_Heap_Variable_Time_Source> tq(
+      std::unique_ptr<ACE_Timer_Heap_Variable_Time_Source> tq(
           new ACE_Timer_Heap_Variable_Time_Source);
       // ... notice how the policy is in the derived timer queue type.
       // The abstract timer queue does not have a time policy ...

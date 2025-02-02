@@ -8,7 +8,6 @@
 #include "ace/Atomic_Op.h"
 
 
-
 #if defined (ACE_HAS_THREADS)
 
 #include "ace/Guard_T.h"
@@ -40,7 +39,7 @@ static ACE_Thread_Manager thr_mgr;
 
 // Explain usage and exit.
 static void
-print_usage_and_die (void)
+print_usage_and_die ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "usage: %n [-r n_readers] [-w n_writers] [-n iteration_count]\n"));

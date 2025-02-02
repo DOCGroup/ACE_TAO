@@ -32,16 +32,12 @@ public:
   /**
    * It is a no-op, but it shuts up g++
    */
-  ~SyncScope_Setup (void);
+  ~SyncScope_Setup ();
 
 private:
   /// Implement the shared code between both constructors
   void init (CORBA::ORB_ptr orb,
              Messaging::SyncScope value);
 };
-
-#if defined(__ACE_INLINE__)
-#include "SyncScope_Setup.inl"
-#endif /* __ACE_INLINE__ */
 
 #endif /* TAO_PERF_RTEC_SYNCSCOPE_SETUP_H */

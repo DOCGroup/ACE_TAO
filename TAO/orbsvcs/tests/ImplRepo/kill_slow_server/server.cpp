@@ -16,7 +16,7 @@ class ORB_Runner : public ACE_Task_Base
 {
 public:
   ORB_Runner (CORBA::ORB_var orb) : orb_(orb) {}
-  int svc (void)
+  int svc ()
   {
     this->orb_->run ();
     return 0;
@@ -46,12 +46,12 @@ createPOAs(ACE_CString &base)
 
   PortableServer::POAManager_var mgr = PortableServer::POAManager::_nil();
   ACE_CString poa_name = base + ACE_CString ("_a");
-  ACE_DEBUG ((LM_DEBUG, "%P server creating POA %s\n", poa_name.c_str()));
+  ACE_DEBUG ((LM_DEBUG, "%P server creating POA %C\n", poa_name.c_str()));
   poa_a = root_poa->create_POA(poa_name.c_str(), mgr.in(), pols);
 }
 
 void
-activatePOAs (void)
+activatePOAs ()
 {
   PortableServer::POAManager_var mgr = root_poa->the_POAManager ();
   mgr->activate ();
@@ -114,7 +114,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         ofstream out(status_file.c_str (), ios_base::app);
         if (!out.good())
           {
-            ACE_DEBUG ((LM_DEBUG, "server did not get good bit from %s\n", status_file.c_str()));
+            ACE_DEBUG ((LM_DEBUG, "server did not get good bit from %C\n", status_file.c_str()));
           }
         out << ACE_OS::getpid () << endl;
         out.close ();
@@ -136,7 +136,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       test_ior = orb->object_to_string (tva.in());
       base += "_a";
-      ACE_DEBUG ((LM_DEBUG, "%s:\n%s\n", base.c_str(), test_ior.in()));
+      ACE_DEBUG ((LM_DEBUG, "%C:\n%C\n", base.c_str(), test_ior.in()));
       table->bind (base.c_str (), test_ior.in ());
 
       runner->wait ();

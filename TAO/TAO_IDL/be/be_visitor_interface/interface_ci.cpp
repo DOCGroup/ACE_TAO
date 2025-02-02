@@ -16,7 +16,7 @@ be_visitor_interface_ci::be_visitor_interface_ci (be_visitor_context *ctx)
 {
 }
 
-be_visitor_interface_ci::~be_visitor_interface_ci (void)
+be_visitor_interface_ci::~be_visitor_interface_ci ()
 {
 }
 
@@ -55,15 +55,14 @@ be_visitor_interface_ci::visit_interface (be_interface *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (os);
 
   if (node->is_abstract ())
     {
       *os << be_nl_2
           << "ACE_INLINE" << be_nl
           << node->name () << "::" << node->local_name ()
-          << " (void)" << be_nl
+          << " ()" << be_nl
           << "{}" << be_nl_2;
 
       *os << "ACE_INLINE" << be_nl

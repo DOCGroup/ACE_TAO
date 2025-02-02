@@ -18,11 +18,6 @@ TAO_Asynch_Timeout_Handler::TAO_Asynch_Timeout_Handler (
     ACE_Event_Handler::Reference_Counting_Policy::ENABLED);
 }
 
-TAO_Asynch_Timeout_Handler::~TAO_Asynch_Timeout_Handler ()
-{
-}
-
-
 long
 TAO_Asynch_Timeout_Handler::schedule_timer (TAO_Transport_Mux_Strategy *tms,
                                             CORBA::ULong request_id,
@@ -49,7 +44,7 @@ TAO_Asynch_Timeout_Handler::handle_timeout (const ACE_Time_Value &,
         {
           TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO_Messaging (%P|%t) - Asynch_Timeout_Handler")
-                      ACE_TEXT ("::handle_timeout, request %d timed out\n"),
+                      ACE_TEXT ("::handle_timeout, request [%d] timed out\n"),
                                 this->request_id_));
         }
     }
@@ -59,7 +54,7 @@ TAO_Asynch_Timeout_Handler::handle_timeout (const ACE_Time_Value &,
         {
           TAOLIB_ERROR ((LM_ERROR,
                       ACE_TEXT ("TAO_Messaging (%P|%t) - Asynch_Timeout_Handler")
-                      ACE_TEXT ("::handle_timeout, unable to dispatch timed out request %d\n"),
+                      ACE_TEXT ("::handle_timeout, unable to dispatch timed out request [%d]\n"),
                                 this->request_id_));
         }
     }

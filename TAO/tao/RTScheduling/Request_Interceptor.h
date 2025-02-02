@@ -13,60 +13,56 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-extern ACE_Atomic_Op<TAO_SYNCH_MUTEX, long> server_guid_counter;
+extern std::atomic<long> server_guid_counter;
 
 class TAO_RTScheduler_Export Client_Interceptor:
   public PortableInterceptor::ClientRequestInterceptor,
   public ::CORBA::LocalObject
 {
 public:
-
   //  Client_Interceptor (RTScheduling::Current_ptr current);
-  virtual void send_request (PortableInterceptor::ClientRequestInfo_ptr ri);
+  void send_request (PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
-  virtual void send_poll (PortableInterceptor::ClientRequestInfo_ptr ri);
+  void send_poll (PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
-  virtual void receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri);
+  void receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
-  virtual void receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri);
+  void receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
-  virtual void receive_other (PortableInterceptor::ClientRequestInfo_ptr ri);
+  void receive_other (PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
-  virtual char* name (void);
+  char* name () override;
 
-  virtual void destroy (void);
+  void destroy () override;
 
   static const IOP::ServiceId SchedulingInfo;
-
 };
 
 class TAO_RTScheduler_Export Server_Interceptor :
   public PortableInterceptor::ServerRequestInterceptor,
   public ::CORBA::LocalObject
 {
-
 public:
   Server_Interceptor (TAO_RTScheduler_Current_ptr current);
 
-  virtual void receive_request_service_contexts (PortableInterceptor::ServerRequestInfo_ptr ri);
+  void receive_request_service_contexts (PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-  virtual void receive_request (PortableInterceptor::ServerRequestInfo_ptr ri);
+  void receive_request (PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-  virtual void send_reply (PortableInterceptor::ServerRequestInfo_ptr ri);
+  void send_reply (PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-  virtual void send_exception (PortableInterceptor::ServerRequestInfo_ptr ri);
+  void send_exception (PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-  virtual void send_other (PortableInterceptor::ServerRequestInfo_ptr ri);
+  void send_other (PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-  virtual char* name (void);
+  char* name () override;
 
-  virtual void destroy (void);
+  void destroy () override;
 
   static const IOP::ServiceId SchedulingInfo;
 
  private:
   TAO_RTScheduler_Current_var current_;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

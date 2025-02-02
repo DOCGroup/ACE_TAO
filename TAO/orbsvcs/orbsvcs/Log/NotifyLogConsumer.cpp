@@ -9,7 +9,7 @@ TAO_Notify_LogConsumer::TAO_Notify_LogConsumer (TAO_NotifyLog_i *log)
 {
 }
 
-TAO_Notify_LogConsumer::~TAO_Notify_LogConsumer (void)
+TAO_Notify_LogConsumer::~TAO_Notify_LogConsumer ()
 {
 }
 
@@ -34,11 +34,10 @@ TAO_Notify_LogConsumer::connect (
   ACE_ASSERT (!CORBA::is_nil (proxy_supplier_.in ()));
 
   proxy_supplier_->connect_any_push_consumer (objref.in ());
-
 }
 
 void
-TAO_Notify_LogConsumer::disconnect (void)
+TAO_Notify_LogConsumer::disconnect ()
 {
   this->proxy_supplier_->
     disconnect_push_supplier();
@@ -111,7 +110,7 @@ TAO_Notify_LogConsumer::push
 
 void
 TAO_Notify_LogConsumer::disconnect_push_consumer
-   (void)
+   ()
 {
 }
 

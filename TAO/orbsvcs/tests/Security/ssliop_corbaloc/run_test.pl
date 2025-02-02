@@ -44,7 +44,7 @@ while (my $argument = shift) {
 
 # Variables for command-line arguments to client and server
 # executables.
-$ns_multicast_port = $ns->RandomPort (); # Can not be 10000 on Chorus 4.0
+$ns_multicast_port = $ns->RandomPort ();
 $ns_orb_port = 2000 + $ns->RandomPort ();
 $ns_ssl_port = 4000 + $ns->RandomPort ();
 $nsiorfile = "ns.ior";
@@ -65,7 +65,7 @@ $cli->DeleteFile ($nsiorfile);
 sub name_server
 {
     my $args = "-ORBNameServicePort $ns_multicast_port -o $ns_nsiorfile -m 1 @_";
-    my $prog = "../../../Naming_Service/tao_cosnaming";
+    my $prog = "$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_cosnaming";
     $NS = $ns->CreateProcess ($prog, $args);
 
     $ns->DeleteFile ($nsiorfile);
@@ -120,6 +120,8 @@ $orb_debug_level =  ($quiet || $debug_level == 0) ? "" : "-ORBDebugLevel $debug_
 @opts = (
          "-s -ORBInitRef NameService=corbaloc:ssliop:$TARGETHOSTNAME:$ns_ssl_port/NameService"
                 . " -ORBSvcConf $cli_cliconffile $orb_debug_level",
+         "-s -ORBInitRef NameService=corbaloc:ssliop:$TARGETHOSTNAME:$ns_ssl_port,iiop:$TARGETHOSTNAME:$ns_orb_port/NameService"
+                . " -ORBSvcConf $cli_cliconffile $orb_debug_level",
          "-t -ORBInitRef NameService=corbaloc:ssliop:$TARGETHOSTNAME:$ns_ssl_port/NameService"
                 . " -ORBSvcConf $cli_cliconffile $orb_debug_level",
          "-i -ORBInitRef NameService=corbaloc:ssliop:$TARGETHOSTNAME:$ns_ssl_port/NameService"
@@ -142,11 +144,13 @@ $orb_debug_level =  ($quiet || $debug_level == 0) ? "" : "-ORBDebugLevel $debug_
                         . " -ORBSvcConf $ns_nsconffile $orb_debug_level",
                 "-ORBEndpoint iiop://$TARGETHOSTNAME:$ns_orb_port/ssl_port=$ns_ssl_port"
                         . " -ORBSvcConf $ns_nsconffile $orb_debug_level",
-
+                "-ORBEndpoint iiop://$TARGETHOSTNAME:$ns_orb_port/ssl_port=$ns_ssl_port"
+                        . " -ORBSvcConf $ns_nsconffile $orb_debug_level",
                 );
 
 @comments = (
              "(SSL) Simple Test:",
+             "(SSL) Simple Multi-Profile Corbaloc Test:",
              "(SSL) Tree Test:",
              "(SSL) Iterator Test:",
              "(SSL) Exceptions Test:",

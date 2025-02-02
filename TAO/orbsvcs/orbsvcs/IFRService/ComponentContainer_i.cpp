@@ -17,7 +17,7 @@ TAO_ComponentContainer_i::TAO_ComponentContainer_i (TAO_Repository_i *repo)
 {
 }
 
-TAO_ComponentContainer_i::~TAO_ComponentContainer_i (void)
+TAO_ComponentContainer_i::~TAO_ComponentContainer_i ()
 {
 }
 
@@ -91,7 +91,7 @@ TAO_ComponentContainer_i::create_component_i (
 //                                                "id",
 //                                                base_id);
       this->repo_->config ()->set_string_value (new_key,
-                                                "base_component",
+                                                ACE_TEXT("base_component"),
                                                 base_path);
     }
 

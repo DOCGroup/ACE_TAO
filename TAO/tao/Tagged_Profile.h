@@ -42,7 +42,6 @@ namespace TAO
 class TAO_Export TAO_Tagged_Profile
 {
 public:
-
   /// Declare FW_Server_Request_Wrapper a friend
   /// This friendship makes the FW_Server_Request_Wrapper be able to
   /// clone the TAO_Tagged_Profile data member in TAO_ServerRequest.
@@ -58,27 +57,27 @@ public:
   CORBA::Boolean unmarshall_object_key (TAO_InputCDR &cdr);
 
   /// Return the object key
-  TAO::ObjectKey &object_key (void);
+  TAO::ObjectKey &object_key ();
 
   /// Save the object key
   void object_key (TAO::ObjectKey &object_key);
 
   /// Return a const object key
-  const TAO::ObjectKey &object_key (void) const;
+  const TAO::ObjectKey &object_key () const;
 
   /// Get the tagged_profile
-  const IOP::TaggedProfile &tagged_profile (void) const;
+  const IOP::TaggedProfile &tagged_profile () const;
 
   /// Get the profile index, that needs to be used in the
   /// sequnce of TaggedProfiles contained  IOP::IOR that is
   /// received from the client.
-  CORBA::ULong profile_index (void) const;
+  CORBA::ULong profile_index () const;
 
   /// Accessor to the type_id contained in the IOP::IOR received from
   /// the client.
-  const char* type_id (void) const;
+  const char* type_id () const;
 
-  CORBA::Short discriminator (void) const;
+  CORBA::Short discriminator () const;
 
 private:
   /// Extract the object key from the TaggedProfile and store it in

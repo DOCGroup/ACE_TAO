@@ -3,10 +3,11 @@
 #include "orbsvcs/Log_Macros.h"
 #include "ace/Guard_T.h"
 
-#if ( TAO_NOTIFY_REFCOUNT_DIAGNOSTICS != 0 )
+#if (TAO_NOTIFY_REFCOUNT_DIAGNOSTICS != 0)
 
 #include <map>
 #include <string>
+#include <memory>
 #include <typeinfo.h>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -32,11 +33,11 @@ public:
 
   static TAO_Notify_Tracker& get_instance();
 
-  void add( TAO_Notify_Refcountable* p );
+  void add( TAO_Notify_Refcountable* p);
 
-  void remove( const TAO_Notify_Refcountable* p );
+  void remove( const TAO_Notify_Refcountable* p);
 
-  Entry find( const TAO_Notify_Refcountable* p ) const;
+  Entry find( const TAO_Notify_Refcountable* p) const;
 
   void dump( const char* title = 0 );
 
@@ -44,8 +45,8 @@ private:
   TAO_Notify_Tracker();
   ~TAO_Notify_Tracker();
 
-  friend class std::auto_ptr< TAO_Notify_Tracker >;
-  static std::auto_ptr< TAO_Notify_Tracker > s_instance;
+  friend class std::unique_ptr< TAO_Notify_Tracker >;
+  static std::unique_ptr< TAO_Notify_Tracker > s_instance;
   mutable TAO_SYNCH_MUTEX lock_;
   typedef std::map<int, Entry> EntityMap;
   EntityMap map_;
@@ -62,13 +63,13 @@ TAO_Notify_Refcountable::diagnostic_dump( const char* title )
 #endif /* TAO_NOTIFY_REFCOUNT_DIAGNOSTICS */
 
 
-TAO_Notify_Refcountable::TAO_Notify_Refcountable (void)
+TAO_Notify_Refcountable::TAO_Notify_Refcountable ()
 {
 }
 
 TAO_Notify_Refcountable::~TAO_Notify_Refcountable ()
 {
-#if ( TAO_NOTIFY_REFCOUNT_DIAGNOSTICS != 0 )
+#if (TAO_NOTIFY_REFCOUNT_DIAGNOSTICS != 0)
   TAO_Notify_Tracker::Entry e = TAO_Notify_Tracker::get_instance().find( this );
   if ( e.obj != 0 )
   {
@@ -90,14 +91,14 @@ TAO_Notify_Refcountable::~TAO_Notify_Refcountable ()
 
 
 CORBA::ULong
-TAO_Notify_Refcountable::_incr_refcnt (void)
+TAO_Notify_Refcountable::_incr_refcnt ()
 {
   CORBA::Long refcount = ++this->refcount_;
   if (TAO_debug_level > 1 )
   {
     ORBSVCS_DEBUG ((LM_DEBUG,"object:%x incr refcount = %d\n", this, refcount ));
   }
-#if ( TAO_NOTIFY_REFCOUNT_DIAGNOSTICS != 0 )
+#if (TAO_NOTIFY_REFCOUNT_DIAGNOSTICS != 0)
   // Stack-instantiated-non-servants should never have _incr_refcnt called.
   // We do not care about stack-instances. Stack-instantiated servants break
   // the tracker.
@@ -110,7 +111,7 @@ TAO_Notify_Refcountable::_incr_refcnt (void)
 }
 
 CORBA::ULong
-TAO_Notify_Refcountable::_decr_refcnt (void)
+TAO_Notify_Refcountable::_decr_refcnt ()
 {
   CORBA::Long refcount = --this->refcount_;
 
@@ -131,9 +132,9 @@ TAO_Notify_Refcountable::_decr_refcnt (void)
   return refcount;
 }
 
-#if ( TAO_NOTIFY_REFCOUNT_DIAGNOSTICS != 0 )
+#if (TAO_NOTIFY_REFCOUNT_DIAGNOSTICS != 0)
 
-std::auto_ptr< TAO_Notify_Tracker > TAO_Notify_Tracker::s_instance;
+std::unique_ptr< TAO_Notify_Tracker > TAO_Notify_Tracker::s_instance;
 
 TAO_Notify_Tracker::TAO_Notify_Tracker()
 : id_counter_(0)
@@ -227,7 +228,7 @@ TAO_Notify_Tracker::remove( const TAO_Notify_Refcountable* p )
 
 
 TAO_Notify_Tracker::Entry
-TAO_Notify_Tracker::find( const TAO_Notify_Refcountable* p ) const
+TAO_Notify_Tracker::find( const TAO_Notify_Refcountable* p) const
 {
   Entry e = { 0, "" };
   if ( p == 0 ) return e;

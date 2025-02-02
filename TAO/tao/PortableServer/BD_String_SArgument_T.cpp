@@ -1,10 +1,6 @@
 #ifndef TAO_BD_STRING_SARGUMENT_T_CPP
 #define TAO_BD_STRING_SARGUMENT_T_CPP
 
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#include "tao/PortableServer/BD_String_SArgument_T.h"
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
-
 #include "tao/SystemException.h"
 
 #if !defined (__ACE_INLINE__)
@@ -133,8 +129,7 @@ template<typename S_var,
          template <typename> class Insert_Policy>
 CORBA::Boolean
 TAO::Ret_BD_String_SArgument_T<S_var,BOUND,Insert_Policy>::marshal (
-    TAO_OutputCDR & cdr
-  )
+    TAO_OutputCDR & cdr)
 {
   if (this->x_.in () != 0 && ACE_OS::strlen (this->x_.in ()) > BOUND)
     {
@@ -155,8 +150,7 @@ interceptor_value (CORBA::Any *any) const
   typedef typename S_var::s_traits::from_type from_type;
   Insert_Policy<from_type>::any_insert (
       any,
-      from_type (this->x_.in (), BOUND)
-    );
+      from_type (this->x_.in (), BOUND));
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */

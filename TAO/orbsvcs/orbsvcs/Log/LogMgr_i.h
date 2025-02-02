@@ -39,9 +39,6 @@ class TAO_Log_Serv_Export TAO_LogMgr_i
   : public virtual POA_DsLogAdmin::LogMgr
 {
 public:
-
-  // = Initialization and Termination Methods
-
   /// Constructor.
   TAO_LogMgr_i ();
 
@@ -50,11 +47,11 @@ public:
 
   /// Lists all log object references.
   DsLogAdmin::LogList *
-    list_logs (void);
+    list_logs ();
 
   /// Lists all log ids.
   DsLogAdmin::LogIdList *
-    list_logs_by_id (void);
+    list_logs_by_id ();
 
   /// Returns a reference to the log with the supplied id.
   DsLogAdmin::Log_ptr

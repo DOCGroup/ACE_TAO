@@ -6,7 +6,7 @@
  *    using an <ACE_Timer_Heap>. It also demonstrates using a custom handler for
  *    timer events.
  *
- *  @author Carlos O'Ryan <coryan@cs.wustl.edu> and Douglas C. Schmidt <schmidt@cs.wustl.edu> and Alon Diamant <diamant.alon@gmail.com>
+ *  @author Carlos O'Ryan <coryan@cs.wustl.edu> and Douglas C. Schmidt <d.schmidt@vanderbilt.edu> and Alon Diamant <diamant.alon@gmail.com>
  */
 //=============================================================================
 
@@ -35,7 +35,7 @@ Custom_Handler_Input_Task::Custom_Handler_Input_Task (Thread_Timer_Queue *queue,
 // user.
 
 int
-Custom_Handler_Input_Task::svc (void)
+Custom_Handler_Input_Task::svc ()
 {
   for (;;)
     // call back to the driver's implementation on how to read and
@@ -127,7 +127,7 @@ Custom_Handler_Input_Task::shutdown_timer (void *)
 }
 
 void
-Custom_Handler_Input_Task::dump (void)
+Custom_Handler_Input_Task::dump ()
 {
   ACE_GUARD (ACE_SYNCH_RECURSIVE_MUTEX, ace_mon, this->queue_->mutex ());
 
@@ -145,24 +145,24 @@ Custom_Handler_Input_Task::dump (void)
 
 // constructor
 
-Thread_Timer_Queue_Custom_Handler_Test::Thread_Timer_Queue_Custom_Handler_Test (void)
+Thread_Timer_Queue_Custom_Handler_Test::Thread_Timer_Queue_Custom_Handler_Test ()
   : input_task_ (&timer_queue_, *this)
 {
 }
 
-Thread_Timer_Queue_Custom_Handler_Test::~Thread_Timer_Queue_Custom_Handler_Test (void)
+Thread_Timer_Queue_Custom_Handler_Test::~Thread_Timer_Queue_Custom_Handler_Test ()
 {
 }
 
 int
-Thread_Timer_Queue_Custom_Handler_Test::run_test (void)
+Thread_Timer_Queue_Custom_Handler_Test::run_test ()
 {
   this->init ();
   return 0;
 }
 
 int
-Thread_Timer_Queue_Custom_Handler_Test::display_menu (void)
+Thread_Timer_Queue_Custom_Handler_Test::display_menu ()
 {
   static char menu[] =
     "Usage:\n"
@@ -178,7 +178,7 @@ Thread_Timer_Queue_Custom_Handler_Test::display_menu (void)
 }
 
 int
-Thread_Timer_Queue_Custom_Handler_Test::init (void)
+Thread_Timer_Queue_Custom_Handler_Test::init ()
 {
   typedef Command<Custom_Handler_Input_Task, Custom_Handler_Input_Task::ACTION> CMD;
 

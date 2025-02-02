@@ -45,7 +45,7 @@ public:
                 size_t n_tasks,
                 size_t n_threads,
                 size_t n_iterations);
-  virtual int svc (void);
+  virtual int svc ();
   // creats <n_tasks> and wait for them to finish
 
 private:
@@ -63,7 +63,7 @@ public:
   Worker_Task (ACE_Thread_Manager *thr_mgr,
                size_t n_threads,
                size_t n_iterations);
-  virtual int svc (void);
+  virtual int svc ();
 
   //FUZZ: disable check_for_lack_ACE_OS
   // Does a small work...
@@ -119,7 +119,7 @@ Worker_Task::open (void *)
 }
 
 int
-Worker_Task::svc (void)
+Worker_Task::svc ()
 {
   ACE_DEBUG ((LM_DEBUG,
               " (%t) in worker %d\n",
@@ -167,7 +167,7 @@ Invoker_Task::Invoker_Task (ACE_Thread_Manager *thr_mgr,
 // for all other threads to complete this iteration.
 
 int
-Invoker_Task::svc (void)
+Invoker_Task::svc ()
 {
   // Note that the ACE_Task::svc_run () method automatically adds us
   // to the Thread_Manager when the thread begins.

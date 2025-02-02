@@ -18,7 +18,7 @@ class Client_Task : public ACE_Task_Base
       caught_object_not_exist_ (false)
     {}
 
-    virtual int svc (void)
+    virtual int svc ()
     {
       ACE_Time_Value start = ACE_OS::gettimeofday ();
       ACE_Time_Value elapsed;
@@ -146,11 +146,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
     if (task.test_passed ())
     {
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t)Client test passed \n")));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Client test passed \n")));
     }
     else
     {
-      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%P|%t)Client test failed.\n")), 1);
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%P|%t) Client test failed.\n")), 1);
     }
   }
   catch (const CORBA::Exception &ex)

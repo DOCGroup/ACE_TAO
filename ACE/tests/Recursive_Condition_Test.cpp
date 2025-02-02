@@ -7,10 +7,9 @@
  *    ACE_Condition<ACE_Recursive_Thread_Mutex> template
  *    specialization.
  *
- *  @author Stephen Howard <stephen.e.howard@lmco.com> and Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ *  @author Stephen Howard <stephen.e.howard@lmco.com> and Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
 //=============================================================================
-
 
 #include "test_config.h"
 #include "ace/OS_NS_unistd.h"
@@ -21,20 +20,18 @@
 #include "ace/Timer_Heap.h"
 #include "ace/Timer_Queue_Adapters.h"
 
-
-
 #if defined (ACE_HAS_THREADS)
 
-typedef ACE_Thread_Timer_Queue_Adapter<ACE_Timer_Heap> Thread_Timer_Queue;
+using Thread_Timer_Queue = ACE_Thread_Timer_Queue_Adapter<ACE_Timer_Heap>;
 
 class Test_Handler : public ACE_Event_Handler
 {
 public:
-  Test_Handler (void) : nr_expirations_ (0) {}
-  int nr_expirations (void) { return this->nr_expirations_; }
+  Test_Handler () : nr_expirations_ (0) {}
+  int nr_expirations () { return this->nr_expirations_; }
 
-  virtual int handle_timeout (const ACE_Time_Value &,
-                              const void *arg)
+  int handle_timeout (const ACE_Time_Value &,
+                              const void *arg) override
   {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Test_Handler::handle_timeout\n")));
     ++this->nr_expirations_;
@@ -90,7 +87,7 @@ waiter (void *)
 }
 
 static int
-test_1 (void)
+test_1 ()
 {
   protected_int = 1;
   if (ACE_Thread_Manager::instance()->spawn (waiter) == -1)
@@ -119,7 +116,7 @@ test_1 (void)
 }
 
 static int
-test_2 (void)
+test_2 ()
 {
   protected_int = 1;
   if (ACE_Thread_Manager::instance()->spawn (waiter) == -1)
@@ -149,7 +146,7 @@ test_2 (void)
 }
 
 static int
-test_3 (void)
+test_3 ()
 {
   protected_int = 1;
   if (ACE_Thread_Manager::instance()->spawn_n (4, waiter) == -1)
@@ -177,7 +174,7 @@ test_3 (void)
 }
 
 static int
-test_4 (void)
+test_4 ()
 {
   const int recurse_count = 3;
 

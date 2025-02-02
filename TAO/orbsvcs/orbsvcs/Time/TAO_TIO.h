@@ -34,13 +34,12 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Time_Serv_Export TAO_TIO : public POA_CosTime::TIO
 {
 public:
-  // = Initialization and termination methods.
   /// Constructor.
   TAO_TIO (TimeBase::TimeT lower,
            TimeBase::TimeT upper);
 
   /// Destructor.
-  ~TAO_TIO (void);
+  ~TAO_TIO ();
 
   /// This is the get method for the attribute time interval.
   virtual TimeBase::IntervalT  time_interval ();
@@ -71,7 +70,7 @@ public:
    * time interval in the TIO and time value is the midpoint of the
    * interval.
    */
-  virtual CosTime::UTO_ptr time (void);
+  virtual CosTime::UTO_ptr time ();
 
 private:
   /// This attribute returns an IntervalT structure with the values of

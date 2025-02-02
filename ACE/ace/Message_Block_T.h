@@ -4,7 +4,7 @@
 /**
  *  @file    Message_Block_T.h
  *
- *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  *  @author Carlos O'Ryan <coryan@atdesk.com>
  */
 //=============================================================================
@@ -36,9 +36,8 @@ template <class ACE_LOCK>
 class ACE_Locked_Data_Block : public ACE_Data_Block
 {
 public:
-  // = Initialization and termination methods.
   /// Default "do-nothing" constructor.
-  ACE_Locked_Data_Block (void);
+  ACE_Locked_Data_Block ();
 
   /// Initialize.
   ACE_Locked_Data_Block (size_t size,
@@ -49,7 +48,7 @@ public:
                          ACE_Allocator *data_block_allocator);
 
   /// Delete all the resources held in the message.
-  virtual ~ACE_Locked_Data_Block (void);
+  virtual ~ACE_Locked_Data_Block ();
 
   /**
    * Return an exact "deep copy" of the message, the dynamic type is
@@ -64,8 +63,8 @@ private:
   ACE_LOCK lock_;
 
   // = Disallow these operations.
-  ACE_UNIMPLEMENTED_FUNC (ACE_Locked_Data_Block<ACE_LOCK> &operator= (const ACE_Locked_Data_Block<ACE_LOCK> &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Locked_Data_Block (const ACE_Locked_Data_Block<ACE_LOCK> &))
+  ACE_Locked_Data_Block<ACE_LOCK> &operator= (const ACE_Locked_Data_Block<ACE_LOCK> &) = delete;
+  ACE_Locked_Data_Block (const ACE_Locked_Data_Block<ACE_LOCK> &) = delete;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
@@ -74,13 +73,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #include "ace/Message_Block_T.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Message_Block_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Message_Block_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_MESSAGE_BLOCK_T_H */

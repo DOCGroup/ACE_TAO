@@ -33,24 +33,24 @@ template<typename T>
 class TAO_Var_Base_T
 {
 public:
-  TAO_Var_Base_T (void);
+  TAO_Var_Base_T ();
   TAO_Var_Base_T (T *);
   TAO_Var_Base_T (const TAO_Var_Base_T<T> &);
 
-  ~TAO_Var_Base_T (void);
+  ~TAO_Var_Base_T ();
 
-  T * operator-> (void);
-  const T * operator-> (void) const;
+  T * operator-> ();
+  const T * operator-> () const;
 
   typedef const T &   _in_type;
   typedef       T &   _inout_type;
 
   // Common mapping for fixed and variable size types.
-  _in_type      in (void) const;
-  _inout_type   inout (void);
+  _in_type      in () const;
+  _inout_type   inout ();
 
   // TAO extension.
-  T * ptr (void) const;
+  T * ptr () const;
   operator T *& ();
 
 protected:
@@ -67,7 +67,7 @@ template<typename T>
 class TAO_Fixed_Var_T : public TAO_Var_Base_T<T>
 {
 public:
-  TAO_Fixed_Var_T (void);
+  TAO_Fixed_Var_T ();
   TAO_Fixed_Var_T (T *);
   TAO_Fixed_Var_T (const TAO_Fixed_Var_T<T> &);
 
@@ -88,8 +88,8 @@ public:
   typedef T     _retn_type;
 
   // Mapping for fixed size types.
-  _out_type     out (void);
-  _retn_type    _retn (void);
+  _out_type     out ();
+  _retn_type    _retn ();
 };
 
 /**
@@ -102,7 +102,7 @@ template<typename T>
 class TAO_Var_Var_T : public TAO_Var_Base_T<T>
 {
 public:
-  TAO_Var_Var_T (void);
+  TAO_Var_Var_T ();
   TAO_Var_Var_T (T *);
   TAO_Var_Var_T (const TAO_Var_Var_T<T> &);
 
@@ -117,8 +117,8 @@ public:
   typedef T *   _retn_type;
 
   // Mapping for variable size types.
-  _out_type     out (void);
-  _retn_type    _retn (void);
+  _out_type     out ();
+  _retn_type    _retn ();
 };
 
 /**
@@ -141,8 +141,8 @@ public:
   TAO_Out_T &operator= (T *);
 
   operator T *& ();
-  T *& ptr (void);
-  T * operator-> (void);
+  T *& ptr ();
+  T * operator-> ();
 
 private:
   T *& ptr_;
@@ -157,13 +157,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #include "tao/VarOut_T.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "tao/VarOut_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("VarOut_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 

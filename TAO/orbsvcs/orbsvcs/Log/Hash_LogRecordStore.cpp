@@ -72,44 +72,44 @@ TAO_Hash_LogRecordStore::TAO_Hash_LogRecordStore (
     log_poa->create_POA(buf, poa_manager.in(), policies);
 }
 
-TAO_Hash_LogRecordStore::~TAO_Hash_LogRecordStore (void)
+TAO_Hash_LogRecordStore::~TAO_Hash_LogRecordStore ()
 {
   this->iterator_poa_->destroy (1, 0);
 }
 
 int
-TAO_Hash_LogRecordStore::open (void)
+TAO_Hash_LogRecordStore::open ()
 {
   return rec_map_.open ();
 }
 
 int
-TAO_Hash_LogRecordStore::close (void)
+TAO_Hash_LogRecordStore::close ()
 {
   // Close the hash
   return rec_map_.close ();
 }
 
 CORBA::ULongLong
-TAO_Hash_LogRecordStore::get_current_size (void)
+TAO_Hash_LogRecordStore::get_current_size ()
 {
   return this->current_size_;
 }
 
 CORBA::ULongLong
-TAO_Hash_LogRecordStore::get_n_records (void)
+TAO_Hash_LogRecordStore::get_n_records ()
 {
   return this->num_records_;
 }
 
 CORBA::ULongLong
-TAO_Hash_LogRecordStore::get_gauge (void)
+TAO_Hash_LogRecordStore::get_gauge ()
 {
   return this->gauge_;
 }
 
 void
-TAO_Hash_LogRecordStore::reset_gauge (void)
+TAO_Hash_LogRecordStore::reset_gauge ()
 {
   this->gauge_ = 0;
 }
@@ -209,7 +209,7 @@ TAO_Hash_LogRecordStore::remove_i (LOG_RECORD_STORE_ITER iter)
 }
 
 int
-TAO_Hash_LogRecordStore::purge_old_records (void)
+TAO_Hash_LogRecordStore::purge_old_records ()
 {
   CORBA::ULongLong num_records_to_purge = this->num_records_ * 5U / 100U;
 
@@ -315,7 +315,7 @@ TAO_Hash_LogRecordStore::get_record_attribute (DsLogAdmin::RecordId id)
 
 
 int
-TAO_Hash_LogRecordStore::flush (void)
+TAO_Hash_LogRecordStore::flush ()
 {
   return 0;
 }
@@ -543,7 +543,7 @@ TAO_Hash_LogRecordStore::delete_records_by_id (const DsLogAdmin::RecordIdList &i
 }
 
 CORBA::ULong
-TAO_Hash_LogRecordStore::remove_old_records (void)
+TAO_Hash_LogRecordStore::remove_old_records ()
 {
   if (this->max_record_life_ == 0) {
     return 0;
@@ -597,7 +597,7 @@ TAO_Hash_LogRecordStore::check_grammar (const char* grammar)
 
 
 DsLogAdmin::AdministrativeState
-TAO_Hash_LogRecordStore::get_administrative_state (void) const
+TAO_Hash_LogRecordStore::get_administrative_state () const
 {
   return this->admin_state_;
 }
@@ -610,7 +610,7 @@ TAO_Hash_LogRecordStore::set_administrative_state (DsLogAdmin::AdministrativeSta
 
 
 DsLogAdmin::CapacityAlarmThresholdList*
-TAO_Hash_LogRecordStore::get_capacity_alarm_thresholds (void) const
+TAO_Hash_LogRecordStore::get_capacity_alarm_thresholds () const
 {
   DsLogAdmin::CapacityAlarmThresholdList* ret_val;
   ACE_NEW_THROW_EX (ret_val,
@@ -627,9 +627,8 @@ TAO_Hash_LogRecordStore::set_capacity_alarm_thresholds (const DsLogAdmin::Capaci
 }
 
 
-
 DsLogAdmin::ForwardingState
-TAO_Hash_LogRecordStore::get_forwarding_state (void) const
+TAO_Hash_LogRecordStore::get_forwarding_state () const
 {
   return this->forward_state_;
 }
@@ -641,7 +640,7 @@ TAO_Hash_LogRecordStore::set_forwarding_state (DsLogAdmin::ForwardingState state
 }
 
 DsLogAdmin::TimeInterval
-TAO_Hash_LogRecordStore::get_interval (void) const
+TAO_Hash_LogRecordStore::get_interval () const
 {
   return this->interval_;
 }
@@ -654,7 +653,7 @@ TAO_Hash_LogRecordStore::set_interval (const DsLogAdmin::TimeInterval &interval)
 
 
 DsLogAdmin::LogFullActionType
-TAO_Hash_LogRecordStore::get_log_full_action (void) const
+TAO_Hash_LogRecordStore::get_log_full_action () const
 {
   return this->log_full_action_;
 }
@@ -666,7 +665,7 @@ TAO_Hash_LogRecordStore::set_log_full_action (DsLogAdmin::LogFullActionType acti
 }
 
 DsLogAdmin::QoSList *
-TAO_Hash_LogRecordStore::get_log_qos (void) const
+TAO_Hash_LogRecordStore::get_log_qos () const
 {
   DsLogAdmin::QoSList* ret_val = 0;
   ACE_NEW_THROW_EX (ret_val,
@@ -683,7 +682,7 @@ TAO_Hash_LogRecordStore::set_log_qos (const DsLogAdmin::QoSList& qos)
 }
 
 CORBA::ULong
-TAO_Hash_LogRecordStore::get_max_record_life (void) const
+TAO_Hash_LogRecordStore::get_max_record_life () const
 {
   return this->max_record_life_;
 }
@@ -695,7 +694,7 @@ TAO_Hash_LogRecordStore::set_max_record_life (CORBA::ULong max_record_life)
 }
 
 CORBA::ULongLong
-TAO_Hash_LogRecordStore::get_max_size (void) const
+TAO_Hash_LogRecordStore::get_max_size () const
 {
   return this->max_size_;
 }
@@ -707,7 +706,7 @@ TAO_Hash_LogRecordStore::set_max_size (CORBA::ULongLong size)
 }
 
 DsLogAdmin::WeekMask*
-TAO_Hash_LogRecordStore::get_week_mask (void)
+TAO_Hash_LogRecordStore::get_week_mask ()
 {
   DsLogAdmin::WeekMask* ret_val = 0;
   ACE_NEW_THROW_EX (ret_val,

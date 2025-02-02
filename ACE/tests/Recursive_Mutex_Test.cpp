@@ -7,7 +7,7 @@
  *    implementation of recursive mutexes on Win32 and Posix
  *    pthreads.
  *
- *  @author Prashant Jain <pjain@cs.wustl.edu> and Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ *  @author Prashant Jain <pjain@cs.wustl.edu> and Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
 //=============================================================================
 
@@ -19,7 +19,6 @@
 #include "ace/OS_NS_sys_time.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/Recursive_Thread_Mutex.h"
-
 
 
 #if defined (ACE_HAS_THREADS)
@@ -35,7 +34,7 @@
   typedef ACE_Process_Mutex ACE_TEST_MUTEX;
 #else
 # include "ace/Thread_Mutex.h"
-  typedef ACE_Recursive_Thread_Mutex ACE_TEST_MUTEX;
+  using ACE_TEST_MUTEX = ACE_Recursive_Thread_Mutex;
 #endif
 
 #if !defined (ACE_HAS_MUTEX_TIMEOUTS)

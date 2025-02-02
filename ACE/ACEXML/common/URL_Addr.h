@@ -2,7 +2,7 @@
 
 /** @file   URL_Addr.h
  *
- *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  *  @author Krishnakumar B <kitty@cs.wustl.edu>
  */
 
@@ -30,7 +30,7 @@ class ACEXML_Export ACEXML_URL_Addr : public ACE_INET_Addr
 {
 public:
   /// Initialization and termination methods.
-  ACEXML_URL_Addr (void);
+  ACEXML_URL_Addr ();
 
   /// Constructor.
   ACEXML_URL_Addr (const ACEXML_Char *host_name,
@@ -74,10 +74,10 @@ public:
                               int ipaddr_format = 1) const;
 
   /**
-   *  Transform the current <ACE_INET_Addr> address into string format. If
-   *  <ipaddr_format> is non-0 this produces
+   *  Transform the current ACE_INET_Addr address into string format. If
+   *  @a ipaddr_format is non-0 this produces
    *  "ip-number:port-number/path-name" (e.g.,
-   *  "128.252.166.57:80/~schmidt/"), whereas if <ipaddr_format> is 0 this
+   *  "128.252.166.57:80/~schmidt/"), whereas if @a ipaddr_format is 0 this
    *  produces "ip-name:port-number" (e.g.,
    *  "www.cs.wustl.edu:80/~schmidt/"). Uses dynamic memory, which is
    *  allocated on demand and deallocated when the object is destroyed.
@@ -89,7 +89,7 @@ public:
   void operator= (const ACEXML_URL_Addr &addr);
 
   /// Destructor.
-  ~ACEXML_URL_Addr (void);
+  ~ACEXML_URL_Addr ();
 
   /**
    *  Compare two addresses for equality.  The addresses are considered
@@ -101,16 +101,15 @@ public:
   bool operator != (const ACEXML_URL_Addr &SAP) const;
 
   /// Computes and returns hash value.
-  virtual u_long hash (void) const;
+  virtual u_long hash () const;
 
   /// Return the path name.
-  const ACEXML_Char *get_path_name (void) const;
+  const ACEXML_Char *get_path_name () const;
 
   /// Commit suicide.
-  int destroy (void);
+  int destroy ();
 
 private:
-
   /// Calculate the maximum length of the address string
   size_t calculate_length (int ipaddr_format) const;
 

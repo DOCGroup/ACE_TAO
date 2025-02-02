@@ -99,23 +99,34 @@ public:
              UTL_ScopedName *n,
              Visibility vis = vis_NA);
 
-  virtual ~AST_Field (void);
+  /**
+   * A sort of copy constructor that creates a copy of the AST_Field for a new
+   * scope.
+   * The new name must be calculated beforehand.
+   * This was created for Annotation Instances and Extended Structs.
+   */
+  AST_Field (
+    UTL_ScopedName *name,
+    AST_Field *other);
+
+  virtual ~AST_Field ();
 
   // Data Accessors.
-  AST_Type *field_type (void) const;
-  Visibility visibility (void) const;
+  AST_Type *field_type () const;
+
+  /// Get and Set Visibility
+  ///{
+  Visibility visibility () const;
+  void visibility (Visibility val);
+  ///}
 
   // Are we or do we contain a wstring?
-  virtual int contains_wstring (void);
+  virtual int contains_wstring ();
 
   // Determine this bit of state after we have
   // be added to our aggregate type and before
   // we are destroyed.
-  void set_recursive_flag (void);
-
-  // Narrowing.
-
-  DEF_NARROW_FROM_DECL (AST_Field);
+  void set_recursive_flag ();
 
   // AST Dumping.
   virtual void dump (ACE_OSTREAM_TYPE &o);
@@ -124,9 +135,11 @@ public:
   virtual int ast_accept (ast_visitor *visitor);
 
   // Cleanup.
-  virtual void destroy (void);
+  virtual void destroy ();
 
   static AST_Decl::NodeType const NT;
+
+  virtual bool annotatable () const;
 
 protected:
   // Data.

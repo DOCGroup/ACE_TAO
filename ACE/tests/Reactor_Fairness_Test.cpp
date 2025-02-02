@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "Reactor_Fairness_Test.h"
 #include "ace/Get_Opt.h"
@@ -23,18 +22,15 @@
 #include "ace/WFMO_Reactor.h"
 #include "ace/Select_Reactor.h"
 #include "ace/TP_Reactor.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/Numeric_Limits.h"
 #include "ace/Signal.h"
 #include "ace/Atomic_Op.h"
 #include "ace/Thread_Mutex.h"
 
-
-
 #if defined (ACE_HAS_THREADS)
 
 namespace {
-
   const char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
 
   // Number of connections to run
@@ -54,7 +50,7 @@ namespace {
   // Class to collect and report on data handling for each test pass.
   struct Result_Set {
     int nr_conns;
-    typedef ACE_Array_Map<ACE_HANDLE, unsigned int> report_map;
+    using report_map = ACE_Array_Map<ACE_HANDLE, unsigned int>;
     report_map reports;
 
     void reset (int n_connections)   // Reset for next run
@@ -70,7 +66,7 @@ namespace {
     }
 
     // Return 1 if this looks like a failure wrt fairness.
-    int analyze_reports (void)
+    int analyze_reports ()
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("Results (%d entries):\n"),
@@ -186,7 +182,7 @@ sender (void *arg)
   ACE_NEW_RETURN (temp_socks,
                   ACE_SOCK_Stream [opt_nconnections],
                   0);
-  ACE_Auto_Basic_Array_Ptr <ACE_SOCK_Stream> socks (temp_socks);
+  std::unique_ptr <ACE_SOCK_Stream[]> socks (temp_socks);
 
   // Connection all <opt_nconnections> connections before sending data.
   ACE_SOCK_Connector c;

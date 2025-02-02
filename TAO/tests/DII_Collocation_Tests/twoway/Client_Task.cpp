@@ -26,7 +26,7 @@ Client_Task::Client_Task (const ACE_TCHAR *ior,
 }
 
 int
-Client_Task::svc (void)
+Client_Task::svc ()
 {
   try
     {
@@ -61,7 +61,7 @@ Client_Task::svc (void)
       req->invoke ();
       if (req->response_received ())
       {
-        for (CORBA::ULong count=0; count<req->arguments ()->count () ;++count)
+        for (CORBA::ULong count=0; count<req->arguments ()->count (); ++count)
         {
             CORBA::NamedValue_ptr arg = req->arguments ()->item (count);
             if (ACE_OS::strcmp (arg->name (), "x") == 0)
@@ -109,7 +109,7 @@ Client_Task::svc (void)
       req->invoke ();
       if (req->response_received ())
       {
-        for (CORBA::ULong count=0; count<req->arguments ()->count () ;++count)
+        for (CORBA::ULong count=0; count<req->arguments ()->count (); ++count)
         {
             CORBA::NamedValue_ptr arg = req->arguments ()->item (count);
             if (ACE_OS::strcmp (arg->name (), "x") == 0)
@@ -275,8 +275,6 @@ Client_Task::svc (void)
       req = obj->_request ("shutdown");
 
       req->send_oneway ();
-
-
     }
   catch (const CORBA::Exception& ex)
     {
@@ -292,7 +290,6 @@ Client_Task::svc (void)
     }
 
   return 0;
-
 }
 
 CORBA::ULong

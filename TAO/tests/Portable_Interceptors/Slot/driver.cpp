@@ -25,7 +25,6 @@ public:
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-
   try
   {
     PortableInterceptor::ORBInitializer_var orb_initializer = new ORB_Initializer ();

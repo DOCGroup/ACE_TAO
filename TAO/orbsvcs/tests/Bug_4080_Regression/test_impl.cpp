@@ -9,7 +9,7 @@ UIPMC_Object_Impl::UIPMC_Object_Impl (CORBA::ORB_ptr orb,
 {
 }
 
-UIPMC_Object_Impl::~UIPMC_Object_Impl (void)
+UIPMC_Object_Impl::~UIPMC_Object_Impl ()
 {
 }
 
@@ -28,7 +28,7 @@ UIPMC_Object_Impl::process ()
           ACE_DEBUG ((LM_DEBUG, "Server %t Shutting down\n"));
           try
             {
-              this->orb_->shutdown (0);
+              this->orb_->shutdown (false);
             }
           catch (const CORBA::Exception& ex)
             {

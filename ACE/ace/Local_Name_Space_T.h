@@ -6,7 +6,7 @@
  *
  *  @author Prashant Jain <pjain@cs.wustl.edu>
  *  @author Irfan Pyarali <irfan@wuerl.wustl.edu> and
- *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
 //=============================================================================
 
@@ -102,9 +102,8 @@ template <ACE_MEM_POOL_1, class ACE_LOCK>
 class ACE_Local_Name_Space : public ACE_Name_Space
 {
 public:
-  // = Initialization and termination methods.
   /// "Do-nothing" constructor.
-  ACE_Local_Name_Space (void);
+  ACE_Local_Name_Space ();
 
   /**
    * Specifies the scope of this namespace, opens and memory-maps the
@@ -123,7 +122,7 @@ public:
 
   /// Destructor, do some cleanup :TBD: last dtor should "compress"
   /// file
-  ~ACE_Local_Name_Space (void);
+  ~ACE_Local_Name_Space ();
 
   /// Bind a new name to a naming context (Wide character strings).
   virtual int bind (const ACE_NS_WString &name,
@@ -205,8 +204,8 @@ public:
                                    const ACE_NS_WString &pattern);
 
   /// Dump the state of the object
-  virtual void dump (void) const;
-  virtual void dump_i (void) const;
+  virtual void dump () const;
+  virtual void dump_i () const;
 
   // = I just know this is going to cause problems on some platform...
   typedef ACE_Allocator_Adapter <ACE_Malloc <ACE_MEM_POOL_2, ACE_LOCK> >
@@ -230,8 +229,8 @@ private:
 
   /// Allocate the appropriate type of map manager that stores the
   /// key/value binding.
-  int create_manager (void);
-  int create_manager_i (void);
+  int create_manager ();
+  int create_manager_i ();
 
   /// Pointer to the allocator
   ALLOCATOR *allocator_;
@@ -255,13 +254,7 @@ private:
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Local_Name_Space_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Local_Name_Space_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_LOCAL_NAME_SPACE_T_H */

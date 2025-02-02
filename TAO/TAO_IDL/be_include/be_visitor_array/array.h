@@ -13,10 +13,6 @@
 #ifndef _BE_VISITOR_ARRAY_ARRAY_H_
 #define _BE_VISITOR_ARRAY_ARRAY_H_
 
-// ************************************************************
-// class be_visitor_array
-// ************************************************************
-
 /**
  * @class be_visitor_array
  *
@@ -31,7 +27,7 @@ public:
   be_visitor_array (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_array (void);
+  ~be_visitor_array ();
 
   /// visit the array node
   virtual int visit_array (be_array *);
@@ -75,13 +71,11 @@ public:
   virtual int visit_union (be_union *node);
 
 protected:
-
   /// helper that does the common job
   int visit_node (be_type *);
 
   /// helper that does the common job
   int emit_common (be_type *node);
-
 };
 
 #endif /* _BE_VISITOR_ARRAY_ARRAY_H_*/

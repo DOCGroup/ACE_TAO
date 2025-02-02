@@ -15,7 +15,6 @@ namespace
 
 namespace Kokyu
 {
-
 typedef ACE_Cached_Allocator<Dispatch_Queue_Item, ACE_SYNCH_MUTEX>
 Dispatch_Queue_Item_Allocator;
 
@@ -66,7 +65,7 @@ Dispatcher_Task::initialize ()
 }
 
 int
-Dispatcher_Task::svc (void)
+Dispatcher_Task::svc ()
 {
   int done = 0;
 

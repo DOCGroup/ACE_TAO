@@ -1,7 +1,6 @@
 #include "Hello.h"
 
 
-
 CORBA::Boolean
 Hello::normal_context_ok_ = 0;
 
@@ -16,7 +15,7 @@ Hello::Hello (CORBA::ORB_ptr orb)
 void
 Hello::shutdown ()
 {
-  this->orb_->shutdown (0 );
+  this->orb_->shutdown (0);
 }
 
 void

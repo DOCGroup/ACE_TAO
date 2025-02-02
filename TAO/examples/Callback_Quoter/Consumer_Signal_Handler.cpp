@@ -10,15 +10,10 @@
  */
 //=============================================================================
 
-
 #include "Consumer_Signal_Handler.h"
 
 Consumer_Signal_Handler::Consumer_Signal_Handler (Consumer_Handler *consumer_handler)
   : consumer_handler_ (consumer_handler)
-{
-}
-
-Consumer_Signal_Handler:: ~Consumer_Signal_Handler (void)
 {
 }
 
@@ -28,8 +23,7 @@ Consumer_Signal_Handler::handle_signal (int /* signum */,
                                         siginfo_t*,
                                         ucontext_t*)
 {
-  ACE_DEBUG ((LM_DEBUG,
-              " Exiting on receiving ^C\n"));
+  ACE_DEBUG ((LM_DEBUG, " Exiting on receiving ^C\n"));
 
   quit_on_signal ();
 
@@ -38,8 +32,7 @@ Consumer_Signal_Handler::handle_signal (int /* signum */,
 
 // Method called before the Event_Handler dies.
 int
-Consumer_Signal_Handler::handle_close (ACE_HANDLE,
-                                       ACE_Reactor_Mask)
+Consumer_Signal_Handler::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
 {
   // End of the signal handler.
   delete this;
@@ -48,12 +41,10 @@ Consumer_Signal_Handler::handle_close (ACE_HANDLE,
 }
 
 int
-Consumer_Signal_Handler::quit_on_signal (void)
+Consumer_Signal_Handler::quit_on_signal ()
 {
   // Only if the consumer is registered and wants to shut down, its
   // necessary to unregister and then shutdown.
-
-
   try
     {
       if (consumer_handler_->unregistered_ != 1

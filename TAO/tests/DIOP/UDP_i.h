@@ -33,19 +33,18 @@
 class UDP_i: public POA_UDP
 {
 public:
-  // = Initialization and termination methods.
   /// Constructor
   UDP_i (CORBA::ORB_ptr o);
 
   /// Destructor
-  ~UDP_i (void);
+  ~UDP_i ();
 
   virtual void invoke (const char *client_name,
                        UDP_ptr udpHandler,
                        CORBA::Long request_id);
 
   /// Shutdown the server.
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
 private:
   /// ORB pointer.

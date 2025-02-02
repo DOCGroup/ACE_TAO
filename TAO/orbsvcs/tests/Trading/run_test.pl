@@ -39,7 +39,7 @@ $import_test->DeleteFile($iorbase);
 my $export_ready_file = $export_test->LocalFile ($ready);
 $export_test->DeleteFile($ready);
 
-$SV = $server->CreateProcess ("../../Trading_Service/tao_costrading",
+$SV = $server->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Trading_Service/tao_costrading",
                               "-ORBdebuglevel $debug_level ".
                               "-ORBlogfile trader.log " .
                               "-ORBEndpoint iiop://:$port " .

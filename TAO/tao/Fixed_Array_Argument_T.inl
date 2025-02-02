@@ -6,19 +6,7 @@ template<typename S_forany,
 ACE_INLINE
 TAO::In_Fixed_Array_Argument_T<S_forany,Insert_Policy>::
 In_Fixed_Array_Argument_T (const typename S_forany::_slice_type * x)
-  : x_ (
-#if defined __IBMCPP__ && __IBMCPP__ <= 800
-        // @@ (OO) IBMCPP can't handle the const_cast<> in the
-        //         multi-dimensional array case so C-style
-        //         "sledgehammer" cast instead (reinterpret_cast<>
-        //         doesn't work either).  It's not clear if this is
-        //         really the right thing to do but the code won't
-        //         compile without it.
-        (typename S_forany::_slice_type *) x
-#else
-        const_cast<typename S_forany::_slice_type *> (x)
-#endif  /* IBMCPP */
-        )
+  : x_ (const_cast<typename S_forany::_slice_type *> (x))
 {
 }
 
@@ -26,7 +14,7 @@ template<typename S_forany,
          template <typename> class Insert_Policy>
 ACE_INLINE
 const typename S_forany::_slice_type *
-TAO::In_Fixed_Array_Argument_T<S_forany,Insert_Policy>::arg (void) const
+TAO::In_Fixed_Array_Argument_T<S_forany,Insert_Policy>::arg () const
 {
   return this->x_.in ();
 }
@@ -56,7 +44,7 @@ template<typename S_forany,
          template <typename> class Insert_Policy>
 ACE_INLINE
 typename S_forany::_slice_type *
-TAO::Inout_Fixed_Array_Argument_T<S_forany,Insert_Policy>::arg (void)
+TAO::Inout_Fixed_Array_Argument_T<S_forany,Insert_Policy>::arg ()
 {
   return this->x_.inout ();
 }
@@ -77,7 +65,7 @@ template<typename S_forany,
          template <typename> class Insert_Policy>
 ACE_INLINE
 typename S_forany::_slice_type *&
-TAO::Out_Fixed_Array_Argument_T<S_forany,Insert_Policy>::arg (void)
+TAO::Out_Fixed_Array_Argument_T<S_forany,Insert_Policy>::arg ()
 {
   return this->x_.out ();
 }
@@ -89,7 +77,7 @@ template<typename S_var,
          template <typename> class Insert_Policy>
 ACE_INLINE
 TAO::Ret_Fixed_Array_Argument_T<S_var,S_forany,Insert_Policy>::
-Ret_Fixed_Array_Argument_T (void)
+Ret_Fixed_Array_Argument_T ()
 {}
 
 template<typename S_var,
@@ -97,7 +85,7 @@ template<typename S_var,
          template <typename> class Insert_Policy>
 ACE_INLINE
 typename S_forany::_slice_type *&
-TAO::Ret_Fixed_Array_Argument_T<S_var,S_forany,Insert_Policy>::arg (void)
+TAO::Ret_Fixed_Array_Argument_T<S_var,S_forany,Insert_Policy>::arg ()
 {
   return this->x_._retn_arg ();
 }
@@ -107,7 +95,7 @@ template<typename S_var,
          template <typename> class Insert_Policy>
 ACE_INLINE
 typename S_forany::_slice_type *
-TAO::Ret_Fixed_Array_Argument_T<S_var,S_forany,Insert_Policy>::excp (void)
+TAO::Ret_Fixed_Array_Argument_T<S_var,S_forany,Insert_Policy>::excp ()
 {
   return this->x_.ptr ();
 }
@@ -117,7 +105,7 @@ template<typename S_var,
          template <typename> class Insert_Policy>
 ACE_INLINE
 typename S_forany::_slice_type *
-TAO::Ret_Fixed_Array_Argument_T<S_var,S_forany,Insert_Policy>::retn (void)
+TAO::Ret_Fixed_Array_Argument_T<S_var,S_forany,Insert_Policy>::retn ()
 {
   return this->x_._retn ();
 }

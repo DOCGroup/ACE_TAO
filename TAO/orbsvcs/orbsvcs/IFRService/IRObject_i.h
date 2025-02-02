@@ -50,27 +50,22 @@ public:
   TAO_IRObject_i (TAO_Repository_i *repo);
 
   /// Destructor.
-  virtual ~TAO_IRObject_i (void);
+  virtual ~TAO_IRObject_i ();
 
-  virtual CORBA::DefinitionKind def_kind (
-    );
+  virtual CORBA::DefinitionKind def_kind ();
 
   /// Pure virtual.
-  virtual void destroy (
-    )
-    = 0;
+  virtual void destroy () = 0;
 
   /// Pure virtual - the unlocked version called by the destroy() wrapper.
-  virtual void destroy_i (
-    )
-    = 0;
+  virtual void destroy_i () = 0;
 
   /// Plug in the section key.
   void section_key (ACE_Configuration_Section_Key &key);
 
 protected:
   /// Set our key from the object ID via POACurrent.
-  void update_key (void);
+  void update_key ();
 
 protected:
   /// Pointer to the repository we were constructed from.

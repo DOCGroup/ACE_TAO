@@ -1,4 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
 /*
 
 COPYRIGHT
@@ -88,20 +87,25 @@ class AST_Publishes;
 class AST_Emits;
 class AST_Consumes;
 class AST_Template_Module;
+class AST_Map;
 class AST_Template_Module_Inst;
 class AST_Template_Module_Ref;
 class AST_Param_Holder;
 class AST_Finder;
 class AST_Fixed;
 
+#include "ast_annotation_appl.h"
+
+class AST_Annotation_Member;
+
 // Defines base class for node generators.
 
 class TAO_IDL_FE_Export AST_Generator
 {
 public:
-  AST_Generator (void) {}
+  AST_Generator () {}
 
-  virtual ~AST_Generator (void) {}
+  virtual ~AST_Generator () {}
 
   // Operations.
 
@@ -325,6 +329,14 @@ public:
                                          bool is_local,
                                          bool is_abstract);
 
+  // Create a node representing a map type.
+  virtual AST_Map *create_map (AST_Expression *v,
+                              AST_Type *key_bt,
+                              AST_Type *val_bt,
+                              UTL_ScopedName *n,
+                              bool is_local,
+                              bool is_abstract);
+
   // Create a node representing a string type.
   virtual AST_String *create_string (AST_Expression *v);
 
@@ -413,6 +425,18 @@ public:
   AST_Param_Holder *create_param_holder (
     UTL_ScopedName *parameter_name,
     FE_Utils::T_Param_Info *info);
+
+  virtual AST_Annotation_Decl * create_annotation_decl (
+    UTL_ScopedName *name);
+
+  virtual AST_Annotation_Member * create_annotation_member (
+    AST_Expression::ExprType expr_type,
+    AST_Type *type,
+    UTL_ScopedName *name);
+
+  virtual AST_Annotation_Appl * create_annotation_appl (
+    UTL_ScopedName *name,
+    AST_Annotation_Appl::Params *params);
 };
 
 #endif           // _AST_GENERATOR_AST_GENERATOR_HH

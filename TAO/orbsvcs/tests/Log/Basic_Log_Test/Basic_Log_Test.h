@@ -24,15 +24,13 @@ class BasicLog_Test
    //  This class exercises various methods of the DsLogAdmin::BasicLog
    //  interface.
  public:
-
-
   enum
   { MAX_LOG_SIZE = 8192 };
 
-  BasicLog_Test(void);
+  BasicLog_Test();
   // constructor
 
-  ~BasicLog_Test(void);
+  ~BasicLog_Test();
   // destructor
 
   int init(int argc, ACE_TCHAR *argv[]);
@@ -87,7 +85,7 @@ delete_records (CORBA::ULongLong numberOfRecords);
   // 4. retrieve the records backwards. Compare to records writen.
   // 5. repeat 3 and 4 using iterator.
 
-  int test_query(CORBA::ULong numberOfRecords  = 1000 );
+  int test_query(CORBA::ULong numberOfRecords  = 1000);
   // 1. write the records with NVList.
   // 2. query the records and compare the records
 
@@ -107,7 +105,7 @@ private:
   BasicLog_Test& operator=(const BasicLog_Test&);
 
   int
-    init_factory (void);
+    init_factory ();
 
   int
     parse_args(int argc, ACE_TCHAR *argv[]);
@@ -117,11 +115,11 @@ private:
   // writes enough records to fill the log. Default write enough to fill log. Hopefully, not infinite.
 
   void
-    resolve_basic_factory (void);
+    resolve_basic_factory ();
   // resolve log factory
 
   void
-    resolve_naming_service (void);
+    resolve_naming_service ();
   // resolve nameing service
 
   void
@@ -148,9 +146,8 @@ private:
 
   static const char* basic_log_factory_name_;
 
-  static const char* naming_sevice_name_;
+  static const char* naming_service_name_;
   // strings for log factory and naming service
-
 };
 
 #endif  /* TAO_BASIC_LOG_TEST_H */

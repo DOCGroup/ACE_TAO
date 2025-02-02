@@ -39,7 +39,6 @@ namespace TAO
 {
   namespace Security
   {
-
     /**
      * @class ORBInitializer
      *
@@ -55,7 +54,6 @@ namespace TAO
         public virtual ::CORBA::LocalObject
     {
     public:
-
       /**
        * @name PortableInterceptor::ORBInitializer Methods.
        *
@@ -69,18 +67,14 @@ namespace TAO
       //@}
 
     private:
-
       /// Register Security policy factories.
       void register_policy_factories (PortableInterceptor::ORBInitInfo_ptr info);
 
     private:
-
       /// PolicyFactory that is used to create all security related
       /// policies capable of being created via ORB::create_policy().
       PortableInterceptor::PolicyFactory_var policy_factory_;
-
     };
-
   } // End Security namespace
 }  // End TAO namespace
 

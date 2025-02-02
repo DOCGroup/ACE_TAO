@@ -34,7 +34,6 @@ class TAO_GIOP_Message_Generator_Parser_12 :
   public TAO_GIOP_Message_Generator_Parser
 {
 public:
-
   /// Write the request header in to @a msg
   virtual bool write_request_header (
       const TAO_Operation_Details &opdetails,
@@ -78,20 +77,18 @@ public:
                                   TAO_Pluggable_Reply_Params &params);
 
   /// Our versions
-  virtual CORBA::Octet major_version (void) const;
-  virtual CORBA::Octet minor_version (void) const;
+  virtual CORBA::Octet major_version () const;
+  virtual CORBA::Octet minor_version () const;
 
   /// Is the messaging object ready for processing BiDirectional
   /// request/response?
-  virtual bool is_ready_for_bidirectional (void) const;
+  virtual bool is_ready_for_bidirectional () const;
 
   /// The header length of a fragment
-  virtual size_t fragment_header_length (void) const;
+  virtual size_t fragment_header_length () const;
 
 private:
-
   /// Marshall the TargetSpecification
-
   /// This method may be required for other GIOP version coming out
   /// later than 1.2. We need to share this method
   bool marshall_target_spec (TAO_Target_Specification &spec,

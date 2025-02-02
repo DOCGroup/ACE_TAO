@@ -10,7 +10,7 @@
 #include "orbsvcs/NotifyExtC.h"
 
 template <class Peer_Traits>
-TAO_Notify_Tests_Peer_T<Peer_Traits>::TAO_Notify_Tests_Peer_T (void)
+TAO_Notify_Tests_Peer_T<Peer_Traits>::TAO_Notify_Tests_Peer_T ()
   : proxy_id_ (0)
 {
 }
@@ -22,14 +22,14 @@ TAO_Notify_Tests_Peer_T<Peer_Traits>::~TAO_Notify_Tests_Peer_T ()
 
 template <class Peer_Traits>
 typename TAO_Notify_Tests_Peer_T<Peer_Traits>::Proxy_Traits_PTR
-TAO_Notify_Tests_Peer_T<Peer_Traits>::get_proxy (void)
+TAO_Notify_Tests_Peer_T<Peer_Traits>::get_proxy ()
 {
   return proxy_.in ();
 }
 
 template <class Peer_Traits>
 typename TAO_Notify_Tests_Peer_T<Peer_Traits>::Peer_Traits_PTR
-TAO_Notify_Tests_Peer_T<Peer_Traits>::activate (void)
+TAO_Notify_Tests_Peer_T<Peer_Traits>::activate ()
 {
   return this->_this ();
 }
@@ -76,7 +76,7 @@ TAO_Notify_Tests_Peer_T<Peer_Traits>::connect (Admin_Traits_PTR admin_ptr)
 
 template <class Peer_Traits>
 void
-TAO_Notify_Tests_Peer_T<Peer_Traits>::connect (void)
+TAO_Notify_Tests_Peer_T<Peer_Traits>::connect ()
 {
   // Get the POA
   PortableServer::POA_var poa;
@@ -118,7 +118,7 @@ TAO_Notify_Tests_Peer_T<Peer_Traits>::set_qos (
 
 template <class Peer_Traits>
 void
-TAO_Notify_Tests_Peer_T<Peer_Traits>::status (void)
+TAO_Notify_Tests_Peer_T<Peer_Traits>::status ()
 {
 #if (TAO_HAS_MINIMUM_CORBA == 0)
   try
@@ -158,7 +158,7 @@ TAO_Notify_Tests_Peer_T<Peer_Traits>::status (void)
 
 template <class Peer_Traits>
 void
-TAO_Notify_Tests_Peer_T<Peer_Traits>::disconnect (void)
+TAO_Notify_Tests_Peer_T<Peer_Traits>::disconnect ()
 {
   ACE_ASSERT (!CORBA::is_nil (this->proxy_.in ()));
 
@@ -195,7 +195,7 @@ TAO_Notify_Tests_Peer_T<Peer_Traits>::_default_POA (
 
 template <class Peer_Traits>
 void
-TAO_Notify_Tests_Peer_T<Peer_Traits>::deactivate (void)
+TAO_Notify_Tests_Peer_T<Peer_Traits>::deactivate ()
 {
   PortableServer::POA_var poa = this->_default_POA ();
 

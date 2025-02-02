@@ -32,7 +32,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_GIOP_Locate_Request_Header
 {
 public:
-
   /// Constructor
   TAO_GIOP_Locate_Request_Header (TAO_InputCDR &msg,
                                   TAO_ORB_Core *core);
@@ -41,19 +40,19 @@ public:
   void request_id (CORBA::ULong id);
 
   /// Get the request id
-  CORBA::ULong request_id (void) const;
+  CORBA::ULong request_id () const;
 
   /// Get the object_key in read mode..
-  const TAO::ObjectKey &object_key (void) const;
+  const TAO::ObjectKey &object_key () const;
 
   /// Get the object_key in read/write mode..
-  TAO::ObjectKey &object_key (void);
+  TAO::ObjectKey &object_key ();
 
   /// Get the reference to the underlying profile
-  TAO_Tagged_Profile &profile (void);
+  TAO_Tagged_Profile &profile ();
 
   /// Get the CDR stream for read/write
-  TAO_InputCDR &incoming_stream (void);
+  TAO_InputCDR &incoming_stream ();
 
 private:
   /// Request id

@@ -84,7 +84,7 @@ ACE_NT_SERVICE_DEFINE (service, Activator_NT_Service, IMR_ACTIVATOR_SERVICE_NAME
 #endif /* ACE_WIN32 && !ACE_LACKS_WIN32_SERVICES */
 
 int
-run_service (void)
+run_service ()
 {
 #if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_SERVICES)
   SERVICE::instance()->name (IMR_ACTIVATOR_SERVICE_NAME, IMR_ACTIVATOR_DISPLAY_NAME);
@@ -150,7 +150,7 @@ run_service_command (Activator_Options& opts)
           }
       if (ret != -1)
         {
-          ORBSVCS_DEBUG ((LM_DEBUG, "ImR Activator: Service installed.\n"));
+          ORBSVCS_DEBUG ((LM_DEBUG, "ImR Activator: Service installed\n"));
           opts.save_registry_options ();
         }
       else
@@ -163,7 +163,7 @@ run_service_command (Activator_Options& opts)
   else if (opts.service_command () == Activator_Options::SC_REMOVE)
     {
       int ret = SERVICE::instance ()->remove ();
-      ORBSVCS_DEBUG ((LM_DEBUG, "ImR Activator: Service removed.\n"));
+      ORBSVCS_DEBUG ((LM_DEBUG, "ImR Activator: Service removed\n"));
       if (ret == 0)
         return 1; // If successful, then we don't want to continue.
     }

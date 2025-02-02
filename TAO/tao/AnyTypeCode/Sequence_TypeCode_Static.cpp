@@ -48,21 +48,20 @@ TAO::TypeCode::Sequence<CORBA::TypeCode_ptr const *,
 
 void
 TAO::TypeCode::Sequence<CORBA::TypeCode_ptr const *,
-                        TAO::Null_RefCount_Policy>::tao_duplicate (void)
+                        TAO::Null_RefCount_Policy>::tao_duplicate ()
 {
 }
 
 void
 TAO::TypeCode::Sequence<CORBA::TypeCode_ptr const *,
-                        TAO::Null_RefCount_Policy>::tao_release (void)
+                        TAO::Null_RefCount_Policy>::tao_release ()
 {
 }
 
 CORBA::Boolean
 TAO::TypeCode::Sequence<CORBA::TypeCode_ptr const *,
                         TAO::Null_RefCount_Policy>::equal_i (
-  CORBA::TypeCode_ptr tc
-  ) const
+  CORBA::TypeCode_ptr tc) const
 {
   // The following calls won't throw since CORBA::TypeCode::equal()
   // has already established the kind of tc is the same as our kind.
@@ -76,15 +75,13 @@ TAO::TypeCode::Sequence<CORBA::TypeCode_ptr const *,
 
   return
     Traits<CORBA::TypeCode_ptr const *>::get_typecode (this->content_type_)->equal (
-      rhs_content_type.in ()
-     );
+      rhs_content_type.in ());
 }
 
 CORBA::Boolean
 TAO::TypeCode::Sequence<CORBA::TypeCode_ptr const *,
                         TAO::Null_RefCount_Policy>::equivalent_i (
-  CORBA::TypeCode_ptr tc
-  ) const
+  CORBA::TypeCode_ptr tc) const
 {
   // The following calls won't throw since CORBA::TypeCode::equal()
   // has already established the kind of tc is the same as our kind.
@@ -98,14 +95,12 @@ TAO::TypeCode::Sequence<CORBA::TypeCode_ptr const *,
 
   return
     Traits<CORBA::TypeCode_ptr const *>::get_typecode (this->content_type_)->equivalent (
-      rhs_content_type.in ()
-     );
+      rhs_content_type.in ());
 }
 
 CORBA::TypeCode_ptr
 TAO::TypeCode::Sequence<CORBA::TypeCode_ptr const *,
-                        TAO::Null_RefCount_Policy>::get_compact_typecode_i (
-  void) const
+                        TAO::Null_RefCount_Policy>::get_compact_typecode_i () const
 {
   // Already compact since tk_sequence and tk_array TypeCodes have no
   // name or member names, meaning that we can simply call
@@ -115,7 +110,6 @@ TAO::TypeCode::Sequence<CORBA::TypeCode_ptr const *,
   //    and const since it may have been placed in read-only memory by
   //    the compiler.  A const_cast<> can return undefined results in
   //    that case.
-
   CORBA::TypeCode_ptr mutable_tc =
     const_cast<TAO::TypeCode::Sequence<CORBA::TypeCode_ptr const *,
     TAO::Null_RefCount_Policy> *> (this);
@@ -125,16 +119,14 @@ TAO::TypeCode::Sequence<CORBA::TypeCode_ptr const *,
 
 CORBA::ULong
 TAO::TypeCode::Sequence<CORBA::TypeCode_ptr const *,
-                        TAO::Null_RefCount_Policy>::length_i (
-  void) const
+                        TAO::Null_RefCount_Policy>::length_i () const
 {
   return this->length_;
 }
 
 CORBA::TypeCode_ptr
 TAO::TypeCode::Sequence<CORBA::TypeCode_ptr const *,
-                        TAO::Null_RefCount_Policy>::content_type_i (
-  void) const
+                        TAO::Null_RefCount_Policy>::content_type_i () const
 {
   return
     CORBA::TypeCode::_duplicate (

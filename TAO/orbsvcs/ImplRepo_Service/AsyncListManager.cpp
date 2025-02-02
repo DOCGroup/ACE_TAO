@@ -21,12 +21,11 @@ AsyncListManager::AsyncListManager (const Locator_Repository *repo,
    first_ (0),
    how_many_ (0),
    waiters_ (0),
-   refcount_ (1),
-   lock_ ()
+   refcount_ (1)
 {
 }
 
-AsyncListManager::~AsyncListManager (void)
+AsyncListManager::~AsyncListManager ()
 {
   if (ImR_Locator_i::debug() > 4)
     {
@@ -37,15 +36,15 @@ AsyncListManager::~AsyncListManager (void)
 }
 
 PortableServer::POA_ptr
-AsyncListManager::poa (void)
+AsyncListManager::poa ()
 {
   return PortableServer::POA::_duplicate (this->poa_.in());
 }
 
 void
-AsyncListManager::init_list (void)
+AsyncListManager::init_list ()
 {
-  CORBA::ULong len =
+  CORBA::ULong const len =
     static_cast<CORBA::ULong> (this->repo_->servers ().current_size ());
   Locator_Repository::SIMap::ENTRY* entry = 0;
   Locator_Repository::SIMap::CONST_ITERATOR it (this->repo_->servers ());
@@ -78,7 +77,7 @@ AsyncListManager::init_list (void)
             {
               if (!evaluate_status (i, l->status(), info->pid))
                 {
-                  this->waiters_++;
+                  ++this->waiters_;
                 }
               else
                 {
@@ -91,8 +90,8 @@ AsyncListManager::init_list (void)
   if (ImR_Locator_i::debug() > 4)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) AsyncListManager(%@)::init_list, %d waiters")
-                      ACE_TEXT (" out of %d regsitered servers\n"),
+                      ACE_TEXT ("(%P|%t) AsyncListManager(%@)::init_list, <%d> waiters")
+                      ACE_TEXT (" out of <%d> registered servers\n"),
                       this, this->waiters_, len));
     }
 }
@@ -147,7 +146,7 @@ AsyncListManager::make_iterator (ImplementationRepository::ServerInformationIter
 }
 
 void
-AsyncListManager::final_state (void)
+AsyncListManager::final_state ()
 {
   if (ImR_Locator_i::debug() > 4)
     {
@@ -163,7 +162,7 @@ AsyncListManager::final_state (void)
     }
 
   bool excepted = false;
-  CORBA::ULong len = this->server_list_.length ();
+  CORBA::ULong const len = this->server_list_.length ();
   ImplementationRepository::ServerInformationList alt_list (this->how_many_);
   ImplementationRepository::ServerInformationList *sil = &this->server_list_;
   if (this->first_ > 0 || this->how_many_ < len)
@@ -301,7 +300,7 @@ AsyncListManager::ping_replied (CORBA::ULong index, LiveStatus status, int pid)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%P|%t) AsyncListManager(%@)::ping_replied, index <%d> ")
-                      ACE_TEXT ("status <%C>, server pid <%d>, waiters <%d>\n"),
+                      ACE_TEXT ("status <%C> server pid <%d> waiters <%d>\n"),
                       this,index, LiveEntry::status_name (status), pid, this->waiters_));
     }
   if (evaluate_status (index, status, pid))
@@ -310,26 +309,21 @@ AsyncListManager::ping_replied (CORBA::ULong index, LiveStatus status, int pid)
         {
           this->final_state ();
         }
-      return;
     }
 }
 
 AsyncListManager *
-AsyncListManager::_add_ref (void)
+AsyncListManager::_add_ref ()
 {
-  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, mon, this->lock_, 0);
   ++this->refcount_;
   return this;
 }
 
 void
-AsyncListManager::_remove_ref (void)
+AsyncListManager::_remove_ref ()
 {
-  int count = 0;
-  {
-    ACE_GUARD (TAO_SYNCH_MUTEX, mon, this->lock_);
-    count = --this->refcount_;
-  }
+  int const count = --this->refcount_;
+
   if (count == 0)
     {
       delete this;
@@ -354,26 +348,26 @@ ListLiveListener::ListLiveListener (const char *server,
 {
 }
 
-ListLiveListener::~ListLiveListener (void)
+ListLiveListener::~ListLiveListener ()
 {
 }
 
 bool
-ListLiveListener::start (void)
+ListLiveListener::start ()
 {
-  bool rtn = this->pinger_.add_poll_listener (this);
+  bool const rtn = this->pinger_.add_poll_listener (this);
   this->started_ = true;
   return rtn;
 }
 
 LiveStatus
-ListLiveListener::status (void)
+ListLiveListener::status ()
 {
   return this->status_;
 }
 
 void
-ListLiveListener::cancel (void)
+ListLiveListener::cancel ()
 {
   this->pinger_.remove_listener (this);
 }
@@ -389,7 +383,9 @@ ListLiveListener::status_changed (LiveStatus status)
   else
     {
       if (this->started_)
-        this->owner_->ping_replied (this->index_, status, this->pid_);
+        {
+          this->owner_->ping_replied (this->index_, status, this->pid_);
+        }
     }
   return true;
 }

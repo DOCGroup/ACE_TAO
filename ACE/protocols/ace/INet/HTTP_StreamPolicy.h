@@ -80,19 +80,12 @@ namespace ACE
           };
 
         typedef ChunkedTransferStreamPolicyBase<StreamBuffer> ChunkedTransferStreamPolicy;
-
       }
   }
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/INet/HTTP_StreamPolicy.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("HTTP_StreamPolicy.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_HTTP_STREAM_POLICY_H */

@@ -3,14 +3,8 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// Constructor
-ACE::HTBP::Addr::Addr ()
-{
-}
-
 // Creates a ACE_INET_Addr from a PORT_NUMBER and the remote
 // HOST_NAME.
-
 ACE::HTBP::Addr::Addr (u_short port_number,
                        const char host_name[],
                        int address_family)
@@ -27,12 +21,6 @@ ACE::HTBP::Addr::Addr (const char *htid)
 ACE::HTBP::Addr::Addr (const ACE::HTBP::Addr &other)
   : ACE_INET_Addr (other),
     htid_(other.htid_)
-{
-
-}
-
-// Destructor
-ACE::HTBP::Addr::~Addr ()
 {
 }
 
@@ -55,7 +43,7 @@ ACE::HTBP::Addr::set_htid (const char *htid)
 }
 
 const char *
-ACE::HTBP::Addr::get_htid (void) const
+ACE::HTBP::Addr::get_htid () const
 {
   return this->htid_.c_str();
 }

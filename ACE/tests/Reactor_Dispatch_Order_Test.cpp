@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/OS_NS_string.h"
 #include "ace/Reactor.h"
@@ -20,26 +19,23 @@
 #include "ace/Pipe.h"
 #include "ace/ACE.h"
 
-
-
-static const char *message =
-"Hello there! Hope you get this message";
+static const char *message = "Hello there! Hope you get this message";
 
 class Handler : public ACE_Event_Handler
 {
 public:
   Handler (ACE_Reactor &reactor);
 
-  ~Handler();
+  ~Handler() override;
 
   int handle_timeout (const ACE_Time_Value &tv,
-                      const void *arg);
+                      const void *arg) override;
 
-  int handle_input (ACE_HANDLE fd);
+  int handle_input (ACE_HANDLE fd) override;
 
-  int handle_output (ACE_HANDLE fd);
+  int handle_output (ACE_HANDLE fd) override;
 
-  ACE_HANDLE get_handle (void) const;
+  ACE_HANDLE get_handle () const override;
 
   // We need to add MSG_OOB data transfer to this test to check the
   // order of when <handle_exception> gets called.  I tried with
@@ -80,14 +76,14 @@ Handler::Handler (ACE_Reactor &reactor)
 }
 
 
-Handler::~Handler (void)
+Handler::~Handler ()
 {
   this->pipe_.close ();
 }
 
 
 ACE_HANDLE
-Handler::get_handle (void) const
+Handler::get_handle () const
 {
   return this->pipe_.read_handle ();
 }

@@ -53,22 +53,18 @@ class TAO_EventLogFactory_i;
 class TAO_Event_LogConsumer : public virtual POA_CosEventComm::PushConsumer
 {
 public:
-
-  // = Initialization and Termination methods.
-
   /// Constructor.
   TAO_Event_LogConsumer (TAO_EventLog_i *log);
 
   /// Destructor.
-  ~TAO_Event_LogConsumer (void);
+  ~TAO_Event_LogConsumer ();
 
   /// Connect to EventLog.
   void connect (CosEventChannelAdmin::ConsumerAdmin_ptr consumer_admin);
 
 private:
-
   /// Disconnect from EventLog.
-  void disconnect_push_consumer (void);
+  void disconnect_push_consumer ();
 
   /// This method will call TAO_Log_i::log() to write
   /// the event to the Log.

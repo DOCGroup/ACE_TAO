@@ -1,7 +1,7 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/Sbrk_Memory_Pool.h"
 #include "ace/Log_Category.h"
-
+#include "ace/Malloc_Base.h"
 
 
 #if !defined (ACE_LACKS_SBRK)
@@ -85,7 +85,7 @@ ACE_Sbrk_Memory_Pool::init_acquire (size_t nbytes,
 }
 
 void
-ACE_Sbrk_Memory_Pool::dump (void) const
+ACE_Sbrk_Memory_Pool::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Sbrk_Memory_Pool::dump");
@@ -98,12 +98,12 @@ ACE_Sbrk_Memory_Pool::ACE_Sbrk_Memory_Pool (const ACE_TCHAR *,
   ACE_TRACE ("ACE_Sbrk_Memory_Pool::ACE_Sbrk_Memory_Pool");
 }
 
-ACE_Sbrk_Memory_Pool::~ACE_Sbrk_Memory_Pool (void)
+ACE_Sbrk_Memory_Pool::~ACE_Sbrk_Memory_Pool ()
 {
 }
 
 void *
-ACE_Sbrk_Memory_Pool::base_addr (void) const
+ACE_Sbrk_Memory_Pool::base_addr () const
 {
   return 0;
 }

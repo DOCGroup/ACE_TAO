@@ -55,7 +55,7 @@ class Worker : public ACE_Task_Base
 {
 public:
   Worker (CORBA::ORB_ptr);
-  virtual int svc (void);
+  virtual int svc ();
 
 private:
   // The ORB
@@ -73,7 +73,7 @@ Worker::Worker (CORBA::ORB_ptr orb)
 /// interceptor
 
 int
-Worker::svc (void)
+Worker::svc ()
 {
   try
     {
@@ -93,7 +93,6 @@ server_main (int argc,
              ACE_TCHAR *argv[],
              Test::Server_Request_Interceptor *cri)
 {
-
 #if TAO_HAS_TRANSPORT_CURRENT == 1
 
   try
@@ -198,14 +197,13 @@ server_main (int argc,
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("Server (%P|%t) ERROR: Interceptor self_test failed\n")));
 
-      root_poa->destroy (1, 1);
+      root_poa->destroy (true, true);
 
       server->shutdown ();
 
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Server (%P|%t) Invoking orb->destroy ()\n")));
 
       orb->destroy ();
-
     }
   catch (const CORBA::Exception& ex)
     {

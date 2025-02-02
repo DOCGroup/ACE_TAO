@@ -55,7 +55,6 @@ namespace TAO
   class TAO_PortableServer_Export Upcall_Wrapper
   {
   public:
-
     /**
      * @note The TAO::Argument corresponding to the return value is
      *       always the first element in the array, regardless of
@@ -90,8 +89,6 @@ namespace TAO
                 );
 
   private:
-
-
     /// Perform pre-upcall operations.
     /**
      * Perform pre-upcall operations, including operation @c IN and
@@ -110,7 +107,6 @@ namespace TAO
                       TAO::Argument * const * args,
                       size_t nargs);
   };
-
 }  // End namespace TAO
 
 TAO_END_VERSIONED_NAMESPACE_DECL

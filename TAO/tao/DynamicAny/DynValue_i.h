@@ -39,7 +39,7 @@ public:
   TAO_DynValue_i (CORBA::Boolean allow_truncation=true);
 
   /// Destructor.
-  ~TAO_DynValue_i (void);
+  ~TAO_DynValue_i ();
 
   /// Initialize using an Any.
   void init (const CORBA::Any& any);
@@ -54,15 +54,15 @@ public:
   static TAO_DynValue_i *_narrow (CORBA::Object_ptr obj);
 
   // = Functions specific to DynValue.
-  virtual DynamicAny::FieldName current_member_name (void);
+  virtual DynamicAny::FieldName current_member_name ();
 
-  virtual CORBA::TCKind current_member_kind (void);
+  virtual CORBA::TCKind current_member_kind ();
 
-  virtual DynamicAny::NameValuePairSeq * get_members (void);
+  virtual DynamicAny::NameValuePairSeq * get_members ();
 
   virtual void set_members (const DynamicAny::NameValuePairSeq & value);
 
-  virtual DynamicAny::NameDynAnyPairSeq * get_members_as_dyn_any (void);
+  virtual DynamicAny::NameDynAnyPairSeq * get_members_as_dyn_any ();
 
   virtual void set_members_as_dyn_any (
       const DynamicAny::NameDynAnyPairSeq & value);
@@ -70,20 +70,20 @@ public:
   // = DynAny common functions not implemented in class TAO_DynCommon.
   virtual void from_any (const CORBA::Any & value);
 
-  virtual CORBA::Any * to_any (void);
+  virtual CORBA::Any * to_any ();
 
   virtual CORBA::Boolean equal (DynamicAny::DynAny_ptr dyn_any);
 
-  virtual void destroy (void);
+  virtual void destroy ();
 
-  virtual DynamicAny::DynAny_ptr current_component (void);
+  virtual DynamicAny::DynAny_ptr current_component ();
 
   virtual void insert_val (CORBA::ValueBase * value);
 
-  virtual CORBA::ValueBase * get_val (void);
+  virtual CORBA::ValueBase * get_val ();
 
   // = DynValueCommon needed to be provided here
-  virtual void set_to_value (void);
+  virtual void set_to_value ();
 
 private:
   /// List of base types.
@@ -135,7 +135,7 @@ private:
   /// Read the value from the input stream
   void from_inputCDR (TAO_InputCDR &);
 
-  /// These are not implimented!
+  /// These are not implemented!
   /// Use copy() or assign() instead of these.
   TAO_DynValue_i (const TAO_DynValue_i &src);
   TAO_DynValue_i &operator= (const TAO_DynValue_i &src);

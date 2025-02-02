@@ -8,8 +8,6 @@ xt             = 1
 tk             = 1
 fl             = 1
 fox            = 1
-qt4            = 0
-ace_qt4reactor = 0
 
 xerces3        = 1
 versioned_so   = 2

@@ -26,7 +26,7 @@ Locator_Repository::~Locator_Repository ()
 }
 
 void
-Locator_Repository::shutdown (void)
+Locator_Repository::shutdown ()
 {
   // default impl - no op
 }
@@ -127,7 +127,7 @@ Locator_Repository::report_ior (PortableServer::POA_ptr )
 }
 
 int
-Locator_Repository::recover_ior (void)
+Locator_Repository::recover_ior ()
 {
   if (this->registered_)
     {
@@ -331,7 +331,7 @@ Locator_Repository::unregister_if_address_reused (const ACE_CString& fqname,
                             ACE_TEXT ("(%P|%t) ImR: reuse address <%C> so remove server <%C>\n"),
                             info->partial_ior.c_str (), info->poa_name.c_str ()));
           }
-        imr_locator->pinger ().remove_server (info->key_name_.c_str());
+        imr_locator->pinger ().remove_server (info->key_name_.c_str(), info->pid);
         AsyncAccessManager_ptr aam = imr_locator->find_aam (info->key_name_.c_str ());
         if (!aam.is_nil())
           {
@@ -438,7 +438,6 @@ void
 Locator_Repository::notify_remote_access (const char *,
                                           ImplementationRepository::AAM_Status)
 {
-  // no-op default impl
 }
 
 Server_Info_Ptr
@@ -483,7 +482,7 @@ Locator_Repository::get_active_server (const ACE_CString& name, int pid)
           if (name.find ("JACORB:") == ACE_CString::npos)
             {
               ACE_CString jo_key ("JACORB:");
-              ACE_CString::size_type pos = name.find (':');
+              ACE_CString::size_type const pos = name.find (':');
               if (pos == ACE_CString::npos)
                 {
                   jo_key += name;
@@ -509,7 +508,7 @@ Locator_Repository::get_active_server (const ACE_CString& name, int pid)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("(%P|%t) ImR: get_active_server could not")
-                          ACE_TEXT (" find <%C>, pid <%d> != <%d>\n"),
+                          ACE_TEXT (" find <%C> pid <%d> != <%d>\n"),
                           name.c_str(), pid, si->pid));
         }
       si.reset ();
@@ -521,7 +520,7 @@ int
 Locator_Repository::remove_server (const ACE_CString& name,
                                    ImR_Locator_i* imr_locator)
 {
-  int err = sync_load ();
+  int const err = sync_load ();
   if (err != 0)
     {
       return err;
@@ -557,7 +556,7 @@ Locator_Repository::remove_server (const ACE_CString& name,
       for (CORBA::ULong i = 0; i < si->peers.length(); i++)
         {
           ACE_CString key;
-          ACE_CString peer (si->peers[i]);
+          ACE_CString const peer (si->peers[i]);
           Server_Info::gen_key (si->server_id, peer, key);
 
           Server_Info_Ptr si2;
@@ -593,7 +592,6 @@ Locator_Repository::link_peers (Server_Info_Ptr base,
   this->persistent_update (base, true);
 
   return 0;
-
 }
 
 // -------------------------------------------------------------------------------------
@@ -646,25 +644,25 @@ Locator_Repository::remove_activator (const ACE_CString& name)
 }
 
 Locator_Repository::SIMap&
-Locator_Repository::servers (void)
+Locator_Repository::servers ()
 {
   return server_infos_;
 }
 
 const Locator_Repository::SIMap&
-Locator_Repository::servers (void) const
+Locator_Repository::servers () const
 {
   return server_infos_;
 }
 
 Locator_Repository::AIMap&
-Locator_Repository::activators (void)
+Locator_Repository::activators ()
 {
   return activator_infos_;
 }
 
 const Locator_Repository::AIMap&
-Locator_Repository::activators (void) const
+Locator_Repository::activators () const
 {
   return activator_infos_;
 }

@@ -14,7 +14,7 @@ namespace TAO
     }
 
     ACE_INLINE ::TAO_Root_POA *
-    POA_Current_Impl::poa (void) const
+    POA_Current_Impl::poa () const
     {
       return this->poa_;
     }
@@ -41,7 +41,7 @@ namespace TAO
     }
 
     ACE_INLINE const PortableServer::ObjectId &
-    POA_Current_Impl::object_id (void) const
+    POA_Current_Impl::object_id () const
     {
       return this->object_id_;
     }
@@ -65,7 +65,7 @@ namespace TAO
     }
 
     ACE_INLINE const TAO::ObjectKey &
-    POA_Current_Impl::object_key (void) const
+    POA_Current_Impl::object_key () const
     {
       return *this->object_key_;
     }
@@ -77,7 +77,7 @@ namespace TAO
     }
 
     ACE_INLINE PortableServer::Servant
-    POA_Current_Impl::servant (void) const
+    POA_Current_Impl::servant () const
     {
       return this->servant_;
     }
@@ -89,7 +89,7 @@ namespace TAO
     }
 
     ACE_INLINE CORBA::Short
-    POA_Current_Impl::priority (void) const
+    POA_Current_Impl::priority () const
     {
       return this->priority_;
     }

@@ -47,7 +47,6 @@ namespace TAO
     class TAO_CSD_TP_Export TP_Cancel_Visitor : public TP_Queue_Visitor
     {
     public:
-
       /// Default Constructor - cancel *all* requests.
       TP_Cancel_Visitor();
 
@@ -65,12 +64,10 @@ namespace TAO
       virtual bool visit_request(TP_Request* request, bool& remove_flag);
 
     private:
-
       /// Left as nil if we are to cancel all requests, or set to a specific
       /// servant if only requests targeting that servant should be cancelled.
       PortableServer::ServantBase_var servant_;
     };
-
   }
 }
 

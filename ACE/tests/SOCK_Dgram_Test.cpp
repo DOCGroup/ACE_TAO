@@ -64,21 +64,91 @@ client (void *arg)
                  ACE_TEXT("(%P|%t) protocol %d, %p\n"),
                  server_addr.get_type (),
                  ACE_TEXT ("SOCK_Dgram open")));
+      return 0;
     }
-  else if (cli_dgram.send (TEST_DATA, sizeof (TEST_DATA), server_addr) == -1)
+
+  {
+    if (remote_addr->get_type () == AF_INET) {
+#if defined (ACE_RECVPKTINFO)
+      int sockopt = 1;
+      if (cli_dgram.set_option(IPPROTO_IP, ACE_RECVPKTINFO, &sockopt, sizeof sockopt) == -1) {
+        ACE_ERROR((LM_ERROR,
+                   ACE_TEXT("(%P|%t) setsockopt failed\n")));
+        return 0;
+      } else {
+        ACE_DEBUG((LM_DEBUG,
+                   ACE_TEXT("(%P|%t) setsockopt succeeded\n")));
+      }
+#endif
+    }
+#if defined (ACE_HAS_IPV6)
+    else {
+#if defined (ACE_RECVPKTINFO6)
+      int sockopt = 1;
+      if (cli_dgram.set_option(IPPROTO_IPV6, ACE_RECVPKTINFO6, &sockopt, sizeof sockopt) == -1) {
+        ACE_ERROR((LM_ERROR,
+                   ACE_TEXT("(%P|%t) setsockopt failed\n")));
+        return 0;
+      } else {
+        ACE_DEBUG((LM_DEBUG,
+                   ACE_TEXT("(%P|%t) setsockopt succeeded\n")));
+      }
+#endif
+    }
+#endif
+  }
+
+  if (cli_dgram.send (TEST_DATA, sizeof (TEST_DATA), server_addr) == -1)
     {
       ACE_ERROR((LM_ERROR,
                  ACE_TEXT("(%P|%t) UDP send to %s %p\n"),
                  hostname_string,
                  ACE_TEXT ("failed")));
+      return 0;
     }
-  else
+
     {
+      ACE_INET_Addr local_addr, to_addr;
+      cli_dgram.get_local_addr(local_addr);
+
+      if (local_addr.get_type () == AF_INET)
+        {
+          local_addr.set (local_addr.get_port_number (),
+                          ACE_LOCALHOST,
+                          1,
+                          local_addr.get_type ());
+          to_addr.set (9999, ACE_LOCALHOST, 1, AF_INET);
+        }
+#if defined (ACE_HAS_IPV6)
+      else
+        {
+          local_addr.set (local_addr.get_port_number(),
+                           ACE_IPV6_LOCALHOST,
+                           1,
+                           local_addr.get_type ());
+          to_addr.set (9999, ACE_IPV6_LOCALHOST, 1, AF_INET6);
+        }
+#endif /* ACE_HAS_IPV6 */
+
+#if defined(ACE_LACKS_RECVMSG)
       ssize_t rcv_cnt = cli_dgram.recv (buf,
                                         sizeof (buf),
                                         peer_addr,
                                         0,
                                         &timeout);
+#else
+      iovec iov[1];
+      // Some platforms define iov_base as char* instead of void*.
+      iov[0].iov_base = (char *)buf;
+      iov[0].iov_len = sizeof buf;
+
+      ssize_t rcv_cnt = cli_dgram.recv (iov,
+                                        1,
+                                        peer_addr,
+                                        0,
+                                        &to_addr);
+#endif
+
       if (rcv_cnt == -1)
         {
           if (errno == ETIME)
@@ -97,7 +167,7 @@ client (void *arg)
         }
       else
         {
-          // recv() ok, check data and 'from' address
+          // recv() ok, check data, 'from', and 'to' address
           size_t rcv_siz = static_cast<size_t> (rcv_cnt);
           if (rcv_siz != sizeof (TEST_DATA))
             {
@@ -125,6 +195,11 @@ client (void *arg)
                         ACE_TEXT ("(%P|%t) recv addr size %d; should be %d\n"),
                         peer_addr.get_size (),
                         server_addr.get_size ()));
+#if (defined ACE_RECVPKTINFO6 || defined ACE_RECVPKTINFO) && !defined ACE_FACE_SAFETY_EXTENDED
+          if (local_addr != to_addr)
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("(%P|%t) local addr is not equal to sent-to addr\n")));
+#endif
         }
     }
 

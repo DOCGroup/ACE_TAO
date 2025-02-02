@@ -43,12 +43,11 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ETCL_Parser_Export ETCL_Interpreter
 {
 protected:
-  // = Initialization and termination methods.
   /// Constructor.
-  ETCL_Interpreter (void);
+  ETCL_Interpreter ();
 
   /// Destructor.
-  virtual ~ETCL_Interpreter (void);
+  virtual ~ETCL_Interpreter ();
 
   /// Using the Yacc generated parser, construct an expression tree
   /// representing @a constraints from the tokens returned by it.
@@ -66,9 +65,9 @@ private:
 
 
 // Functions we need for parsing.
-extern int yyparse (void);
+extern int yyparse ();
 extern void yyrestart (FILE*);
-extern int yylex (void);
+extern int yylex ();
 
 // Have yylex read from the constraint string, not from stdin.
 #undef YY_INPUT
@@ -92,7 +91,6 @@ public:
   static int copy_into (char* buf, int max_size);
 
 private:
-
   /// Pointers to keep track of the input string.
   static char* string_;
   static char* current_;

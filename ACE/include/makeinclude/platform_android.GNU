@@ -1,248 +1,156 @@
 # -*- Makefile -*-
 
-# This file should allow ACE to be built for Android 2.3.1 (API Level 9)
-# or greater, by cross compiling on Linux.
+# This file allows ACE and applications using ACE GNU Makefiles to be built for
+# Android by cross compiling on Linux.
+#
+# See here for latest documentation on how to invoke the NDK:
+# https://android.googlesource.com/platform/ndk/+/master/docs/BuildSystemMaintainers.md
 
 # We always include config-android.h on Android platforms.
 ACE_PLATFORM_CONFIG ?= config-android.h
 
-# The standalone gcc compilers in NDK r6-r9 have issues with the visibility.
-no_hidden_visibility ?= 1
+# Common Linux Functionality
+include $(ACE_ROOT)/include/makeinclude/platform_linux_common.GNU
 
 # as of NDK r6 inlining is required
 inline ?= 1
 
-debug ?= 1
-optimize ?= 1
-threads ?= 1
-insure ?= 0
-
-LSB_RELEASE_ID := $(shell lsb_release -i 2> /dev/null || echo Distributor ID: Unknown)
-LSB_RELEASE_RELEASE := $(shell lsb_release -r 2> /dev/null || echo Release: Unknown)
-
-PLATFORM_XT_CPPFLAGS=
-PLATFORM_XT_LIBS=-lXt
-PLATFORM_XT_LDFLAGS=
-
-PLATFORM_FL_CPPFLAGS=
-PLATFORM_FL_LIBS=-lfltk -lfltk_forms -lfltk_gl
-PLATFORM_FL_LDFLAGS=
-
-PLATFORM_X11_CPPFLAGS=-I/usr/X11R6/include
-PLATFORM_X11_LIBS=-lX11
-PLATFORM_X11_LDFLAGS=-L/usr/X11R6/lib
-
-PLATFORM_GL_CPPFLAGS=-I/usr/X11R6/include
-PLATFORM_GL_LIBS    =-lGL
-PLATFORM_GL_LDFLAGS =-L/usr/X11R6/lib
-
-PLATFORM_GTK_CPPFLAGS=$(shell gtk-config --cflags)
-PLATFORM_GTK_LIBS    =$(shell gtk-config --libs)
-PLATFORM_GTK_LDFLAGS =
-
-PLATFORM_FOX_CPPFLAGS ?= -I/usr/include/fox
-PLATFORM_FOX_LIBS     ?= -lFOX
-PLATFORM_FOX_LDFLAGS  ?=
-
-# NOTE: we only support wxWindows over GTK
-PLATFORM_WX_CPPFLAGS= $(shell wx-config --cxxflags) $(PLATFORM_GTK_CPPFLAGS)
-PLATFORM_WX_LIBS    = $(shell wx-config --libs)     $(PLATFORM_GTK_LIBS)
-PLATFORM_WX_LDFLAGS = $(shell wx-config --ldflags)  $(PLATFORM_GTK_LDFLAGS)
-
-PLATFORM_BOOST_CPPFLAGS ?=
-PLATFORM_BOOST_LDLAGS ?=
-PLATFORM_BOOST_UTF_LIBS ?= -lboost_unit_test_framework
-
-ifeq ($(buildbits),64)
-PLATFORM_TK_CPPFLAGS=$(shell . /usr/lib64/tkConfig.sh && echo -n $$TK_INCLUDE_SPEC $$TK_DEFS)
-PLATFORM_TK_LIBS=$(shell . /usr/lib64/tkConfig.sh && echo -n $$TK_LIB_FLAG)
-else
-PLATFORM_TK_CPPFLAGS=$(shell . /usr/lib/tkConfig.sh && echo -n $$TK_INCLUDE_SPEC $$TK_DEFS)
-PLATFORM_TK_LIBS=$(shell . /usr/lib/tkConfig.sh && echo -n $$TK_LIB_FLAG)
-endif
-PLATFORM_TK_LDFLAGS=
-
-ifeq ($(buildbits),64)
-PLATFORM_TCL_CPPFLAGS=$(shell . /usr/lib64/tclConfig.sh && echo -n $$TCL_INCLUDE_SPEC $$TCL_DEFS)
-PLATFORM_TCL_LIBS=$(shell . /usr/lib64/tclConfig.sh && echo -n $$(eval echo $$TCL_LIB_FLAG))
-else
-PLATFORM_TCL_CPPFLAGS=$(shell . /usr/lib/tclConfig.sh && echo -n $$TCL_INCLUDE_SPEC $$TCL_DEFS)
-PLATFORM_TCL_LIBS=$(shell . /usr/lib/tclConfig.sh && echo -n $$(eval echo $$TCL_LIB_FLAG))
-endif
-PLATFORM_TCL_LDFLAGS=
-
-PLATFORM_QT_CPPFLAGS ?= -I$(QTDIR)/include
-PLATFORM_QT_LIBS ?= -lqt-mt
-PLATFORM_QT_LDFLAGS ?= -L$(QTDIR)/lib
-
-sctp ?=
-# support for OpenSS7 SCTP
-ifeq ($(sctp),openss7)
-  PLATFORM_SCTP_CPPFLAGS+= -DACE_HAS_OPENSS7_SCTP
-  PLATFORM_SCTP_LDFLAGS?=
-  PLATFORM_SCTP_LIBS?=
-endif
-
-# support for LKSCTP (Linux Kernel 2.5)
-ifeq ($(sctp),lksctp)
-  PLATFORM_SCTP_CPPFLAGS+= -DACE_HAS_LKSCTP
-  PLATFORM_SCTP_LDFLAGS?= -L/usr/local/lib
-  PLATFORM_SCTP_LIBS?= -lsctp
-endif
-
-GNU_LIBPTHREAD_VERSION := $(shell getconf GNU_LIBPTHREAD_VERSION 2> /dev/null || echo Unknown)
-ifeq (NPTL, $(word 1,$(GNU_LIBPTHREAD_VERSION)))
-  NPTL_VERS := $(subst ., ,$(word 2,$(GNU_LIBPTHREAD_VERSION)))
-  ifneq (0, $(word 1,$(NPTL_VERS)))
-    nptl ?= 1
-  endif
-endif
-nptl ?= 0
-ifeq ($(nptl),0)
-  CPPFLAGS += -DACE_LACKS_LINUX_NPTL
-endif
-
-ssl ?= 0
-ifeq ($(ssl),1)
-  # Some Linux OpenSSL installations compile in Kerberos support.  Add
-  # the Kerberos include path to preprocessor include path.
-  #
-  # We should probably also add the Kerberos libraries to
-  # PLATFORM_SSL_LIBS but we can't be sure if they are needed without
-  # a more sophisticated check.  This will only be a problem when
-  # statically linking the OpenSSL library.  The majority of
-  # installations use shared OpenSSL libraries so we should be okay,
-  # at least until we migrate to Autoconf.
-  PLATFORM_SSL_CPPFLAGS += -I/usr/kerberos/include
-endif # ssl
-
-SYSARCH := $(shell uname -m)
-
-# as of API level 16 executables can be linked as Position Independent Executables
-# as of API level 21 PIE is mandatory
-PIE		?= -pie
-PIC      = -fPIC
-AR      ?= ar
-ARFLAGS ?= rsuv
-RANLIB   = @true
-
-# end of: include most of platform_linux_common.GNU
-
 #No rwho on Android
 rwho = 0
 
-#Standalone toolchain required.
-#Required environment variables are
-#$NDK - install directory for android NDK, at least r5c
-#$SDK - install directory for android SDK
-#$SYSROOT - $NDK/platform/android-9
-#$TOOLCHAIN/bin in path, $TOOLCHAIN is root of standalone toolchain
-#
-#Optionally ANDROID_ABI can be set to select specific architecture ABIs like armeabi-v7a or neon
-#ANDROID_ABI ?= arm64-v8a
-#
-#Toolchain defaults to arm architecture
-ANDROID_ARCH ?= arm
+# Android Studio does not seem to recognize so files with versions, but if
+# trying to add gnuace-built libraries as imported libraries in CMake in a
+# Android Studio project, at runtime apparently the Android loader needs the
+# SONAME be set to the filename or else it was fail trying to load the so file
+# path from the host computer.
+versioned_so = 3
 
-#SYSROOT ?= $(NDK)/platforms/android-9/arch-$(ANDROID_ARCH)
+# This section deals with selecting the architecture/compiler
+# As of writing information on ABIs can be found at https://developer.android.com/ndk/guides/abis
 
-ifeq (,$(CROSS_COMPILE))
-  ifeq ($(ANDROID_ARCH),arm)
-    CROSS_COMPILE=arm-linux-androideabi-
+# Make sure android_abi or ANDROID_ABI are defined and they are the same.
+ifndef android_abi
+  ifdef ANDROID_ABI
+    android_abi := $(ANDROID_ABI)
   else
-    ifeq ($(ANDROID_ARCH),x86)
-      CROSS_COMPILE=i686-linux-android-
-    else
-      CROSS_COMPILE=unknown-android-arch-
+    $(error android_abi or ANDROID_ABI must be defined)
+  endif
+else
+  ANDROID_ABI := $(android_abi)
+endif
+
+# Alias neon
+ifeq ($(android_abi), neon)
+  android_abi := armeabi-v7a-with-neon
+endif
+
+android_neon ?= 1
+ifeq ($(android_abi),armeabi-v7a-with-neon)
+  android_abi := armeabi-v7a
+  android_neon := 1
+endif
+
+ifeq ($(android_abi),armeabi-v7a)
+  CROSS_COMPILE := armv7a-linux-androideabi
+  ifeq ($(android_neon),1)
+    FLAGS_C_CC += -mfpu=neon
+  else
+    FLAGS_C_CC += -mfpu=vfpv3-d16
+  endif
+
+else ifeq ($(android_abi),arm64-v8a)
+  CROSS_COMPILE := aarch64-linux-android
+
+else ifeq ($(android_abi),x86)
+  CROSS_COMPILE := i686-linux-android
+
+else ifeq ($(android_abi),x86_64)
+  CROSS_COMPILE := x86_64-linux-android
+endif
+
+ifndef CROSS_COMPILE
+  $(error android_abi $(android_abi) is not valid)
+endif
+
+ifdef android_ndk
+  ifndef android_api
+    $(error android_ndk also requires defining android_api)
+  endif
+
+  android_ndk_tools ?= $(wildcard $(android_ndk)/toolchains/llvm/prebuilt/*/bin)
+  ifndef android_ndk_tool_prefix
+    android_ndk_tool_prefix := $(CROSS_COMPILE)$(android_api)-
+  endif
+
+  # We don't want this being used again except to signal that this is a
+  # cross-compile build. If it is then the resulting command probably won't
+  # exist and cause an error.
+  CROSS_COMPILE := THIS_VALUE_SHOULD_NOT_BE_USED
+
+  # Ignore value of CROSS_COMPILE because ar doesn't match clang like in
+  # platform_clang_common.GNU.
+  override_cross_compile = 1
+  CC = $(android_ndk_tools)/$(android_ndk_tool_prefix)clang
+  CXX = $(android_ndk_tools)/$(android_ndk_tool_prefix)clang++
+  AR = $(android_ndk_tools)/llvm-ar
+
+else # Standalone Toolchain
+  CROSS_COMPILE := $(CROSS_COMPILE)-
+
+  ifeq ($(android_abi),armeabi-v7a)
+    # According to Google the armv7a-linux-androideabi- prefix should be
+    # preferred because it produces more efficient code. However if it doesn't
+    # exist since we're using an older NDK we have to fallback to
+    # arm-linux-androideabi-. This isn't a problem when directly using the NDK
+    # because the NDKs we support for that have armv7a-* clangs.
+    ifeq (,$(shell command -v $(CROSS_COMPILE)clang $(ACE_NUL_STDERR)))
+      CROSS_COMPILE := arm-linux-androideabi-
     endif
   endif
+
+  # Export so child processes can use tools from the same toolchain.
+  export CROSS_COMPILE
 endif
 
-# fix this
-pipes ?= 1
-
-# set architecture specific build flags
-ifeq (arm,$(findstring arm,$(ANDROID_ARCH)))
-  # NDK says -Wl,--fix-cortex-a8 is required for working around a CPU bug 
-  # in some Cortex-A8 implementations
-  
-  # Set ABI specific flags
-  ifeq ($(ANDROID_ABI),armeabi-v7a)
-    FLAGS_C_CC += -march=armv7-a -mfloat-abi=softfp -mfpu=vfpv3-d16
-    LDFLAGS    += -march=armv7-a -Wl,--fix-cortex-a8
-  endif
-
-  ifeq ($(ANDROID_ABI),arm64-v8a)
-    CROSS_COMPILE=aarch64-linux-android-
-    FLAGS_C_CC += -march=armv8-a 
-    LDFLAGS    += -march=armv8-a 
-  endif 
-
-  ifeq ($(ANDROID_ABI),neon)
-    FLAGS_C_CC += -march=armv7-a -mfloat-abi=softfp -mfpu=neon
-    LDFLAGS    += -march=armv7-a -Wl,--fix-cortex-a8
-  endif
-
-endif
-
-FLAGS_C_CC += -W -Wall -Wpointer-arith -Wno-psabi
 ifeq ($(threads),1)
-    CPPFLAGS  += -D_REENTRANT $(PLATFORM_AIO_SUPPORT)
+  CPPFLAGS += -D_REENTRANT
+  ifdef PLATFORM_AIO_SUPPORT
+    CPPFLAGS += $(PLATFORM_AIO_SUPPORT)
+  endif
 endif # threads
 
-ifeq ($(buildbits),32)
-  FLAGS_C_CC += -m32
-  LDFLAGS    += -m32
-endif
-ifeq ($(buildbits),64)
-  FLAGS_C_CC += -m64
-endif
+# Use -pipes by default
+pipes ?= 1
 
-# DT_RUNPATH is preferred over DT_RPATH, but the linker will only use it when
-# this extra flag option (enable-new-dtags) is present
-LD_RPATH_FLAGS += -Wl,--enable-new-dtags
-
-# Rely on _GNU_SOURCE to set these defaults defined in /usr/include/features.h
-# instead of setting them directly here (older versions of gcc don't set it
-# for you): _SVID_SOURCE _BSD_SOURCE _POSIX_SOURCE _POSIX_C_SOURCE=199506L, ...
-CPPFLAGS += -D_GNU_SOURCE
-
-DCFLAGS  += -ggdb
-DCCFLAGS += -ggdb
-DLD      = $(CXX)
-LD       = $(CXX) $(PIE)
-# make sure to add the required libs for RTTI and exceptions (libsupc++)
-# and a shared STL lib (libgnustl_shared by default)
-static_libs_only ?=
-ANDROID_STL_DLL ?= gnustl_shared
-LIBS     += -ldl -lsupc++
-ifneq ($(static_libs_only),1)
-  LIBS   += -l$(ANDROID_STL_DLL)
+# Use LLD, the LLVM linker as recommended by Google
+android_set_lld ?= 1
+ifeq ($(android_set_lld),1)
+  # The other two arguments are explained by
+  # https://android.googlesource.com/platform/ndk/+/master/docs/BuildSystemMaintainers.md#additional-required-arguments
+  LDFLAGS += -fuse-ld=lld -Wl,--build-id=sha1 -Wl,--no-rosegment
 endif
 
-ifeq ($(optimize),1)
-  SOFLAGS += -Wl,-O3
-endif
-
-SOFLAGS += $(CPPFLAGS) -shared
-SOBUILD = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<; \
-          $(SOLINK.cc) -o $@ $(LDFLAGS) $(VSHDIR)$*.o
-PRELIB  = @true
-
-# Test for template instantiation, add to SOFLAGS if SONAME set,
-# add -E to LDFLAGS if using GNU ld
-#
-include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
+include $(ACE_ROOT)/include/makeinclude/platform_clang_common.GNU
 
 OCFLAGS ?= -O3
 OCCFLAGS ?= -O3
 
-# Added line below to support "Executable Shared Object" files (as
-# needed by the service configurator).
-# Marius Kjeldahl <mariusk@sn.no, marius@funcom.com>
-ifeq ($(threads),1)
-    ESOBUILD = $(COMPILEESO.cc) $(PIC) -shared -o $(VSHDIR)$*.so $<
-    ifndef PRELIB
-       PRELIB = @true
-    endif # ! PRELIB
+# Android preloads the (almost certainly incompatible) system SSL library
+# (either OpenSSL or BoringSSL) for the Java Android API, so we must:
+#   1. Statically link OpenSSL to this library
+#   2. Keep our OpenSSL symbols internal
+# Number 1 is described in ACE-INSTALL.html.
+# We are doing number 2 here.
+ifeq ($(ssl),1)
+  PLATFORM_SSL_LDFLAGS += --exclude-libs libcrypto.a,libssl.a
+endif
+
+# link step to avoid 'command line too long' error on Windows
+ifeq ($(OS), Windows_NT)
+  SHOBJS_FILE = $(VSHDIR)$(MAKEFILE)_object_list.tmp
+  CLEANUP_OBJS += $(SHOBJS_FILE)
+  define SHLIBBUILD
+    $(file >$(SHOBJS_FILE), $^)
+    $(SHR_FILTER) $(SOLINK.cc) $(SO_OUTPUT_FLAG) $@ @$(SHOBJS_FILE) $(LDFLAGS) $(ACE_SHLIBS) $(LIBS)
+  endef
 endif

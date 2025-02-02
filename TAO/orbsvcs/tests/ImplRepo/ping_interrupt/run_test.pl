@@ -10,17 +10,19 @@ use PerlACE::TestTarget;
 
 $status = 0;
 $imr_debug = "";
+$act_debug = "";
 
 if ($#ARGV >= 0) {
     for (my $i = 0; $i <= $#ARGV; $i++) {
-	if ($ARGV[$i] eq '-debug') {
-            $imr_debug = "-d 5 -ORBDebugLevel 10 -ORBVerboseLogging 1 -ORBLogFile imr_loc.log";
-	    $i++;
-	}
-	else {
-	    usage();
-	    exit 1;
-	}
+        if ($ARGV[$i] eq '-debug') {
+            $imr_debug = "-d 10 -ORBDebugLevel 10 -ORBVerboseLogging 1 -ORBLogFile imr_loc.log";
+            $act_debug = "-d 10 -ORBDebugLevel 10 -ORBVerboseLogging 1 -ORBLogFile imr_act.log";
+            $i++;
+        }
+        else {
+            usage();
+            exit 1;
+        }
     }
 }
 
@@ -103,7 +105,7 @@ sub server_setup ()
 {
     print "initializing activator\n";
 
-    $ACT->Arguments ("-d 0 -l -o $act_actiorfile -ORBInitRef ImplRepoService=file://$act_imriorfile");
+    $ACT->Arguments ("-l -o $act_actiorfile -ORBInitRef ImplRepoService=file://$act_imriorfile $act_debug");
 
     $ACT_status = $ACT->Spawn ();
     if ($ACT_status != 0) {
@@ -138,7 +140,6 @@ sub server_setup ()
         return 1;
     }
 
-
     $TI->Arguments ("-ORBInitRef ImplRepoService=file://$ti_imriorfile ".
                     "start $objprefix");
 
@@ -151,7 +152,6 @@ sub server_setup ()
     }
     $TI_status = 0;
 }
-
 
 sub interrupt_ping_test
 {
@@ -206,8 +206,8 @@ sub interrupt_ping_test
 
     my $IMR_status = $IMR->TerminateWaitKill ($imr->ProcessStopWaitInterval());
     if ($IMR_status != 0) {
-	print STDERR "ERROR: IMR returned $IMR_status\n";
-	$status = 1;
+        print STDERR "ERROR: IMR returned $IMR_status\n";
+        $status = 1;
     }
 
     my $test_time = time() - $start_time;
@@ -218,8 +218,7 @@ sub interrupt_ping_test
 }
 
 sub usage() {
-    print "Usage: run_test.pl ".
-	"[-debug]\n";
+    print "Usage: run_test.pl [-debug]\n";
 }
 
 ###############################################################################

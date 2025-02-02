@@ -14,7 +14,7 @@
 #include "ace/Event_Handler.h"
 #include "ace/Reactor.h"
 #include "ace/Select_Reactor.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 int const nhandlers = 3;
 
@@ -44,8 +44,8 @@ public:
     void send_dummy_data();
 
     /// Reactor callback
-    virtual ACE_HANDLE get_handle() const;
-    virtual int handle_input(ACE_HANDLE);
+    ACE_HANDLE get_handle() const override;
+    int handle_input(ACE_HANDLE) override;
 
 private:
     size_t handle_input_count_;
@@ -74,7 +74,7 @@ public:
 
     bool check_expected_results() const;
 
-    virtual int handle_timeout(ACE_Time_Value const &, void const*);
+    int handle_timeout(ACE_Time_Value const &, void const*) override;
 
 private:
     void send_data_through_handlers();
@@ -101,7 +101,7 @@ run_main (int, ACE_TCHAR *[])
   // regardless of platform.
   ACE_Select_Reactor *impl_ptr = 0;
   ACE_NEW_RETURN (impl_ptr, ACE_Select_Reactor, -1);
-  auto_ptr<ACE_Select_Reactor> auto_impl (impl_ptr);
+  std::unique_ptr<ACE_Select_Reactor> auto_impl (impl_ptr);
 
   ACE_Reactor reactor (impl_ptr);
 

@@ -6,7 +6,7 @@
 
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 
-void do_nothing (void)
+void do_nothing ()
 {
 }
 
@@ -118,7 +118,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       Callback_var callback =
         Callback::_narrow (object_act.in ());
 
-      // Send the calback object to the server
+      // Send the callback object to the server
       server->callback_object (callback.in ());
 
       // Call the client that will make remote calls
@@ -136,8 +136,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // Shutdown the server
       server->shutdown ();
 
-      root_poa->destroy (1, 1);
-
+      root_poa->destroy (true, true);
     }
   catch (const CORBA::Exception& ex)
     {

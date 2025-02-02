@@ -43,19 +43,19 @@ namespace TAO
     public:
       IdAssignmentPolicy (::PortableServer::IdAssignmentPolicyValue value);
 
-      CORBA::Policy_ptr copy (void);
+      CORBA::Policy_ptr copy () override;
 
-      void destroy (void);
+      void destroy () override;
 
-      ::PortableServer::IdAssignmentPolicyValue value (void);
+      ::PortableServer::IdAssignmentPolicyValue value () override;
 
-      CORBA::PolicyType policy_type (void);
+      CORBA::PolicyType policy_type () override;
 
       /// Return the cached policy type for this policy.
-      virtual TAO_Cached_Policy_Type _tao_cached_type (void) const;
+      TAO_Cached_Policy_Type _tao_cached_type () const override;
 
       /// Returns the scope at which this policy can be applied. See orbconf.h.
-      virtual TAO_Policy_Scope _tao_scope (void) const;
+      TAO_Policy_Scope _tao_scope () const override;
 
     private:
       ::PortableServer::IdAssignmentPolicyValue value_;

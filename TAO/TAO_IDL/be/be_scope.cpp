@@ -15,7 +15,7 @@
 #include "be_visitor.h"
 
 // Default Constructor.
-be_scope::be_scope (void)
+be_scope::be_scope ()
   : UTL_Scope (),
     comma_ (0)
 {
@@ -28,7 +28,7 @@ be_scope::be_scope (AST_Decl::NodeType type)
 {
 }
 
-be_scope::~be_scope (void)
+be_scope::~be_scope ()
 {
 }
 
@@ -43,7 +43,7 @@ be_scope::be_add_field (AST_Field *f)
 AST_Argument *
 be_scope::be_add_argument (AST_Argument *)
 {
-  return 0;
+  return nullptr;
 }
 
 void
@@ -53,54 +53,54 @@ be_scope::comma (unsigned short comma)
 }
 
 int
-be_scope::comma (void) const
+be_scope::comma () const
 {
   return this->comma_;
 }
 
 // Return the scope created by this node (if one exists, else NULL).
 be_decl *
-be_scope::decl (void)
+be_scope::decl ()
 {
   switch (this->scope_node_type ())
     {
     case AST_Decl::NT_interface:
-      return be_interface::narrow_from_scope (this);
+      return dynamic_cast<be_interface*> (this);
     case AST_Decl::NT_valuetype:
-      return be_valuetype::narrow_from_scope (this);
+      return dynamic_cast<be_valuetype*> (this);
     case AST_Decl::NT_eventtype:
-      return be_eventtype::narrow_from_scope (this);
+      return dynamic_cast<be_eventtype*> (this);
     case AST_Decl::NT_component:
-      return be_component::narrow_from_scope (this);
+      return dynamic_cast<be_component*> (this);
     case AST_Decl::NT_connector:
-      return be_connector::narrow_from_scope (this);
+      return dynamic_cast<be_connector*> (this);
     case AST_Decl::NT_home:
-      return be_home::narrow_from_scope (this);
+      return dynamic_cast<be_home*> (this);
     case AST_Decl::NT_module:
-      return be_module::narrow_from_scope (this);
+      return dynamic_cast<be_module*> (this);
     case AST_Decl::NT_root:
-      return be_root::narrow_from_scope (this);
+      return dynamic_cast<be_root*> (this);
     case AST_Decl::NT_except:
-      return be_exception::narrow_from_scope (this);
+      return dynamic_cast<be_exception*> (this);
     case AST_Decl::NT_union:
-      return be_union::narrow_from_scope (this);
+      return dynamic_cast<be_union*> (this);
     case AST_Decl::NT_struct:
-      return be_structure::narrow_from_scope (this);
+      return dynamic_cast<be_structure*> (this);
     case AST_Decl::NT_enum:
-      return be_enum::narrow_from_scope (this);
+      return dynamic_cast<be_enum*> (this);
     case AST_Decl::NT_op:
-      return be_operation::narrow_from_scope (this);
+      return dynamic_cast<be_operation*> (this);
     case AST_Decl::NT_factory:
-      return be_factory::narrow_from_scope (this);
+      return dynamic_cast<be_factory*> (this);
     case AST_Decl::NT_finder:
-      return be_finder::narrow_from_scope (this);
+      return dynamic_cast<be_finder*> (this);
     default:
-      return (be_decl *)0;
+      return nullptr;
     }
 }
 
 void
-be_scope::destroy (void)
+be_scope::destroy ()
 {
 }
 
@@ -109,5 +109,3 @@ be_scope::accept (be_visitor *visitor)
 {
   return visitor->visit_scope (this);
 }
-
-IMPL_NARROW_FROM_SCOPE (be_scope)

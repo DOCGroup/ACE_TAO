@@ -6,7 +6,6 @@
 #include "Hello.h"
 
 
-
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 
 int
@@ -49,11 +48,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         return 1;
 
       CORBA::Object_var tmp =
-        orb->string_to_object(ior );
+        orb->string_to_object(ior);
 
 
       Test::Hello_var hello =
-        Test::Hello::_narrow(tmp.in () );
+        Test::Hello::_narrow(tmp.in ());
 
 
       if (CORBA::is_nil (hello.in ()))
@@ -86,7 +85,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
 
       orb->destroy ();
-
     }
   catch (const CORBA::Exception& ex)
     {

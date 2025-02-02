@@ -99,7 +99,7 @@ $srvb->DeleteFile ($srvbiorfile);
 $cli->DeleteFile ($srvaiorfile);
 $ti->DeleteFile ($imriorfile);
 
-$IMR = $imr->CreateProcess ("../../../ImplRepo_Service/tao_imr_locator",
+$IMR = $imr->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/ImplRepo_Service/tao_imr_locator",
                             "-ORBEndpoint "."$protocol"."://:".$port." ".
                             "-UnregisterIfAddressReused $imr_debug".
                             $ping_ext .
@@ -149,7 +149,7 @@ if ($do_link == 1) {
     my $poaC = "AAA:" if ($srv_a_id =~ /AAA/);
     $poaC .= "poaC";
 
-    $TI = $ti->CreateProcess ("../../../ImplRepo_Service/tao_imr",
+    $TI = $ti->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/ImplRepo_Service/tao_imr",
                               "-ORBInitRef ImplRepoService=file://$srva_imriorfile ".
                               "add $poaA -c serverA");
     if ($ti->PutFile ($imriorfile) == -1) {

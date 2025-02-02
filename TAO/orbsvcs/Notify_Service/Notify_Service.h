@@ -34,16 +34,16 @@ class TAO_Notify_Service_Driver;
 
 class LoggingWorker : public ACE_Task_Base
 {
-  public:
-    LoggingWorker (TAO_Notify_Service_Driver* ns);
-    virtual int svc (void);
-    void start ();
-    void end ();
-  private:
-    ACE_Reactor logging_reactor_;
-    TAO_Notify_Service_Driver* ns_;
-    bool started_;
-    long timer_id_;
+public:
+  LoggingWorker (TAO_Notify_Service_Driver* ns);
+  virtual int svc ();
+  void start ();
+  void end ();
+private:
+  ACE_Reactor logging_reactor_;
+  TAO_Notify_Service_Driver* ns_;
+  bool started_;
+  long timer_id_;
 };
 
 /**
@@ -57,12 +57,12 @@ class Worker : public ACE_Task_Base
 {
 public:
   /// ctor
-  Worker (void);
+  Worker ();
 
   void orb (CORBA::ORB_ptr orb);
 
   /// The thread entry point.
-  virtual int svc (void);
+  virtual int svc ();
 
 private:
   /// The orb
@@ -78,15 +78,14 @@ private:
  */
 class TAO_Notify_Service_Export TAO_Notify_Service_Driver : public ACE_Service_Object
 {
- friend class LoggingWorker;
+friend class LoggingWorker;
 
- public:
-  // = Initialization and termination methods.
+public:
   /// Constructor.
-  TAO_Notify_Service_Driver (void);
+  TAO_Notify_Service_Driver ();
 
   /// Destructor.
-  virtual ~TAO_Notify_Service_Driver (void);
+  virtual ~TAO_Notify_Service_Driver ();
 
   /// Initializes the Service.
   /// Returns 0 on success, -1 on error.
@@ -94,11 +93,11 @@ class TAO_Notify_Service_Export TAO_Notify_Service_Driver : public ACE_Service_O
 
   /// run the Service.
   /// Returns 0 on success, -1 on error.
-  int run (void);
+  int run ();
 
   /// Shutdown the Service.
   /// Returns 0 on success, -1 on error.
-  virtual int fini (void);
+  virtual int fini ();
 
 protected:
   /// initialize the ORB.
@@ -113,7 +112,7 @@ protected:
   TAO_Notify_Service* notify_service_;
 
   /// Resolve the naming service.
-  int resolve_naming_service (void);
+  int resolve_naming_service ();
 
   /// Parses the command line arguments.
   int parse_args (int argc, ACE_TCHAR *argv []);

@@ -4,7 +4,7 @@
 /**
  *  @file Unbounded_Set_Ex.h
  *
- *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
 //=============================================================================
 
@@ -52,7 +52,6 @@ public:
   typedef typename container_type::pointer         pointer;
   typedef typename container_type::difference_type difference_type;
 
-  // = Initialization method.
   ACE_Unbounded_Set_Ex_Iterator (ACE_Unbounded_Set_Ex<T, C> &s, bool end = false);
 
   // = Iteration methods.
@@ -63,17 +62,17 @@ public:
 
   /// Move forward by one element in the set.  Returns 0 when all the
   /// items in the set have been seen, else 1.
-  int advance (void);
+  int advance ();
 
   /// Move to the first element in the set.  Returns 0 if the
   /// set is empty, else 1.
-  int first (void);
+  int first ();
 
   /// Returns 1 when all items have been seen, else 0.
-  int done (void) const;
+  int done () const;
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   // = STL styled iteration, compare, and reference functions.
 
@@ -81,10 +80,10 @@ public:
   ACE_Unbounded_Set_Ex_Iterator<T, C> operator++ (int);
 
   /// Prefix advance.
-  ACE_Unbounded_Set_Ex_Iterator<T, C>& operator++ (void);
+  ACE_Unbounded_Set_Ex_Iterator<T, C>& operator++ ();
 
   /// Returns a reference to the internal element @c this is pointing to.
-  T& operator* (void);
+  T& operator* ();
 
   /// Check if two iterators point to the same position
   bool operator== (const ACE_Unbounded_Set_Ex_Iterator<T, C> &) const;
@@ -94,7 +93,6 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
-
   /// Pointer to the current node in the iteration.
   ACE_Node<T, C> *current_;
 
@@ -120,7 +118,6 @@ public:
   typedef typename container_type::const_pointer    pointer;
   typedef typename container_type::difference_type  difference_type;
 
-  // = Initialization method.
   ACE_Unbounded_Set_Ex_Const_Iterator (const ACE_Unbounded_Set_Ex<T, C> &s,
                                        bool end = false);
 
@@ -132,17 +129,17 @@ public:
 
   /// Move forward by one element in the set.  Returns 0 when all the
   /// items in the set have been seen, else 1.
-  int advance (void);
+  int advance ();
 
   /// Move to the first element in the set.  Returns 0 if the
   /// set is empty, else 1.
-  int first (void);
+  int first ();
 
   /// Returns 1 when all items have been seen, else 0.
-  int done (void) const;
+  int done () const;
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   // = STL styled iteration, compare, and reference functions.
 
@@ -150,10 +147,10 @@ public:
   ACE_Unbounded_Set_Ex_Const_Iterator<T, C> operator++ (int);
 
   /// Prefix advance.
-  ACE_Unbounded_Set_Ex_Const_Iterator<T, C>& operator++ (void);
+  ACE_Unbounded_Set_Ex_Const_Iterator<T, C>& operator++ ();
 
   /// Returns a reference to the internal element @c this is pointing to.
-  T& operator* (void);
+  T& operator* ();
 
   /// Check if two iterators point to the same position
   bool operator== (const ACE_Unbounded_Set_Ex_Const_Iterator<T, C> &) const;
@@ -163,7 +160,6 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
-
   /// Pointer to the current node in the iteration.
   ACE_Node<T, C> *current_;
 
@@ -232,20 +228,19 @@ public:
   typedef const_value_type *  const_pointer;
   typedef ptrdiff_t           difference_type;
 
-  // = Initialization and termination methods.
   /// Constructor.  Use user specified allocation strategy
   /// if specified.
   /**
    * Initialize an empty set using the allocation strategy of the user if
    * provided.
    */
-  ACE_Unbounded_Set_Ex (ACE_Allocator *alloc = 0);
+  ACE_Unbounded_Set_Ex (ACE_Allocator *alloc = nullptr);
 
   /**
    * Initialize an empty set using the allocation strategy of the user if
    * provided, and a given comparator functor.
    */
-  ACE_Unbounded_Set_Ex (const C &comparator, ACE_Allocator *alloc = 0);
+  ACE_Unbounded_Set_Ex (const C &comparator, ACE_Allocator *alloc = nullptr);
 
   /// Copy constructor.
   /**
@@ -263,7 +258,7 @@ public:
   /**
    * Destroy the nodes of the set.
    */
-  ~ACE_Unbounded_Set_Ex (void);
+  ~ACE_Unbounded_Set_Ex ();
 
   // = Check boundary conditions.
 
@@ -271,13 +266,13 @@ public:
   /**
    * Constant time is_empty check.
    */
-  bool is_empty (void) const;
+  bool is_empty () const;
 
   /// Returns @c false.
   /**
    * Always returns @c false since the set can never fill up.
    */
-  bool is_full (void) const;
+  bool is_full () const;
 
   // = Classic unordered set operations.
 
@@ -315,29 +310,29 @@ public:
   /**
    * Access the size of the set.
    */
-  size_t size (void) const;
+  size_t size () const;
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Reset the ACE_Unbounded_Set_Ex to be empty.
   /**
    * Delete the nodes of the set.
    */
-  void reset (void);
+  void reset ();
 
   // = STL-styled unidirectional iterator factory.
-  iterator begin (void);
-  iterator end (void);
-  const_iterator begin (void) const;
-  const_iterator end (void) const;
+  iterator begin ();
+  iterator end ();
+  const_iterator begin () const;
+  const_iterator end () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
   /// Delete all the nodes in the Set.
-  void delete_nodes (void);
+  void delete_nodes ();
 
   /// Copy nodes into this set.
   void copy_nodes (const ACE_Unbounded_Set_Ex<T, C> &);
@@ -361,13 +356,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #include "ace/Unbounded_Set_Ex.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Unbounded_Set_Ex.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Unbounded_Set_Ex.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_UNBOUNDED_SET_H */

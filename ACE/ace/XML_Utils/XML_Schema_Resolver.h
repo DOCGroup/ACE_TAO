@@ -39,16 +39,16 @@ namespace XML
     : public virtual EntityResolver
   {
   public:
-    XML_Schema_Resolver (void);
+    XML_Schema_Resolver ();
 
     XML_Schema_Resolver (Resolver &resolver);
 
     /// This function is called by the Xerces infrastructure to
     /// actually resolve the location of a schema.
     virtual InputSource * resolveEntity (const XMLCh *const publicId,
-                                          const XMLCh *const systemId);
+                                         const XMLCh *const systemId);
 
-    Resolver &get_resolver (void);
+    Resolver &get_resolver ();
 
   private:
     XML_Schema_Resolver (XML_Schema_Resolver<Resolver> &);
@@ -76,7 +76,7 @@ namespace XML
     Basic_Resolver (const ACE_TCHAR *path);
 
     XMLCh* operator() (const XMLCh *const publicId,
-                        const XMLCh *const systemId) const;
+                       const XMLCh *const systemId) const;
     XStr path_;
   };
 
@@ -86,16 +86,16 @@ namespace XML
     */
   struct XML_Utils_Export Environment_Resolver
   {
-    Environment_Resolver (void);
+    Environment_Resolver () = default;
 
     Environment_Resolver (const ACE_TCHAR *variable,
                           const ACE_TCHAR *path);
 
     void add_path (const ACE_TCHAR *variable,
-                    const ACE_TCHAR *path);
+                   const ACE_TCHAR *path);
 
     XMLCh* operator() (const XMLCh *const publicId,
-                        const XMLCh *const systemId) const;
+                       const XMLCh *const systemId) const;
 
     std::vector<XStr> paths_;
   };

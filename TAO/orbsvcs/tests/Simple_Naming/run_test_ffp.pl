@@ -25,7 +25,7 @@ my $test = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed
 # Variables for command-line arguments to client and server
 # executables.
 $multicast = '224.9.9.2';
-$ns_multicast_port = 10001 + $test->RandomPort(); # Can not be 10000 on Chorus 4.0
+$ns_multicast_port = 10001 + $test->RandomPort();
 $ns_orb_port = 12000 + $test->RandomPort();
 
 $iorfile = "ns.ior";
@@ -37,7 +37,7 @@ $persistent_ior_file = "pns.ior";
 
 my $test_iorfile = $test->LocalFile ($iorfile);
 my $test_persistent_ior_file = $test->LocalFile ($persistent_ior_file);
-my $prog = "../../Naming_Service/tao_cosnaming";
+my $prog = "$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_cosnaming";
 
 $test->DeleteFile($iorfile);
 $test->DeleteFile($persistent_ior_file);
@@ -153,8 +153,8 @@ sub run_test
     $test->DeleteFile($iorfile);
 }
 
-@server_exes = ("../../Naming_Service/tao_cosnaming",
-                "../../FT_Naming_Service/tao_ft_naming");
+@server_exes = ("$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_cosnaming",
+                "$ENV{TAO_ROOT}/orbsvcs/FT_Naming_Service/tao_ft_naming");
 
 foreach $e (@server_exes) {
     print STDERR "Testing Naming Service Executable: $e\n";

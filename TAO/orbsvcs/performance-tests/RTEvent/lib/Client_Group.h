@@ -30,7 +30,7 @@ public:
    * We need a default constructor because this class is often used in
    * arrays.
    */
-  Client_Group (void);
+  Client_Group ();
 
   /// Initialize the consumer/supplier pair(s)
   /**
@@ -72,18 +72,18 @@ public:
   void connect (RtecEventChannelAdmin::EventChannel_ptr ec);
 
   /// Disconnect from the event channel
-  void disconnect (void);
+  void disconnect ();
 
   //@{
   /** @name Accessors
    */
-  Supplier *supplier (void) const;
+  Supplier *supplier () const;
 
-  Consumer *consumer (void) const;
+  Consumer *consumer () const;
 
-  Loopback_Supplier *loopback_supplier (void) const;
+  Loopback_Supplier *loopback_supplier () const;
 
-  Loopback_Consumer *loopback_consumer (void) const;
+  Loopback_Consumer *loopback_consumer () const;
   //@}
 
 private:

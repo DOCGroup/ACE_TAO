@@ -4,7 +4,7 @@
 /**
  *  @file   Strategies_T.h
  *
- *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
 //=============================================================================
 
@@ -47,14 +47,13 @@ template<class SVC_HANDLER>
 class ACE_Recycling_Strategy
 {
 public:
-
   // Useful STL-style traits.
   typedef typename SVC_HANDLER::addr_type    addr_type;
   typedef SVC_HANDLER                        handler_type;
   typedef typename SVC_HANDLER::stream_type  stream_type;
 
   /// Virtual Destructor
-  virtual ~ACE_Recycling_Strategy (void);
+  virtual ~ACE_Recycling_Strategy ();
 
   /// Tell the Svc_Handler something about the recycler, so that it can
   /// reach the recycler when necessary.
@@ -82,13 +81,10 @@ template <class SVC_HANDLER>
 class ACE_Creation_Strategy
 {
 public:
-
   // Useful STL-style traits.
   typedef typename SVC_HANDLER::addr_type    addr_type;
   typedef SVC_HANDLER                        handler_type;
   typedef typename SVC_HANDLER::stream_type  stream_type;
-
-  // = Initialization and termination methods.
 
   /// Default constructor.
   ACE_Creation_Strategy (ACE_Thread_Manager * = 0,
@@ -99,7 +95,7 @@ public:
   int open (ACE_Thread_Manager * = 0,
             ACE_Reactor * = ACE_Reactor::instance ());
 
-  virtual ~ACE_Creation_Strategy (void);
+  virtual ~ACE_Creation_Strategy ();
 
   // = Factory method.
   /**
@@ -111,7 +107,7 @@ public:
   virtual int make_svc_handler (SVC_HANDLER *&sh);
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -139,16 +135,14 @@ template <class SVC_HANDLER>
 class ACE_Singleton_Strategy : public ACE_Creation_Strategy<SVC_HANDLER>
 {
 public:
-
   // Useful STL-style traits.
   typedef ACE_Creation_Strategy<SVC_HANDLER> base_type;
 
-  // = Initialization and termination methods.
   ACE_Singleton_Strategy (SVC_HANDLER * = 0,
                           ACE_Thread_Manager * = 0);
   int open (SVC_HANDLER *,
             ACE_Thread_Manager * = 0);
-  virtual ~ACE_Singleton_Strategy (void);
+  virtual ~ACE_Singleton_Strategy ();
 
   // = Factory method.
   /// Create a Singleton SVC_HANDLER by always returning the same
@@ -156,7 +150,7 @@ public:
   virtual int make_svc_handler (SVC_HANDLER *&);
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -179,14 +173,13 @@ template <class SVC_HANDLER>
 class ACE_DLL_Strategy : public ACE_Creation_Strategy<SVC_HANDLER>
 {
 public:
-
   // Useful STL-style traits.
   typedef ACE_Creation_Strategy<SVC_HANDLER> base_type;
 
   // = Intialization and termination methods.
 
   /// "Do-nothing" constructor.
-  ACE_DLL_Strategy (void);
+  ACE_DLL_Strategy ();
 
   /// Initialize the DLL strategy based upon the service's DLL
   /// information contained in the <svc_dll_info> string.
@@ -210,7 +203,7 @@ public:
   virtual int make_svc_handler (SVC_HANDLER *&);
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -249,7 +242,6 @@ template <class SVC_HANDLER>
 class ACE_Concurrency_Strategy
 {
 public:
-
   // Useful STL-style traits.
   typedef typename SVC_HANDLER::addr_type    addr_type;
   typedef SVC_HANDLER                        handler_type;
@@ -268,16 +260,15 @@ public:
   virtual int activate_svc_handler (SVC_HANDLER *svc_handler,
                                     void *arg = 0);
 
-  virtual ~ACE_Concurrency_Strategy (void);
+  virtual ~ACE_Concurrency_Strategy ();
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-
   /// Flags that are parsed to set options for the connected
   /// SVC_HANDLER.
   int flags_;
@@ -297,7 +288,6 @@ template <class SVC_HANDLER>
 class ACE_Reactive_Strategy : public ACE_Concurrency_Strategy <SVC_HANDLER>
 {
 public:
-
   // Useful STL-style traits.
   typedef ACE_Concurrency_Strategy<SVC_HANDLER> base_type;
 
@@ -316,7 +306,7 @@ public:
                     int flags = 0);
 
   /// Destructor.
-  virtual ~ACE_Reactive_Strategy (void);
+  virtual ~ACE_Reactive_Strategy ();
 
   // = Factory method.
   /// Activate the @a svc_handler by registering it with the <Reactor>
@@ -325,7 +315,7 @@ public:
                                     void *arg = 0);
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -357,7 +347,6 @@ template <class SVC_HANDLER>
 class ACE_Thread_Strategy : public ACE_Concurrency_Strategy<SVC_HANDLER>
 {
 public:
-
   // Useful STL-style traits.
   typedef ACE_Concurrency_Strategy<SVC_HANDLER> base_type;
 
@@ -377,7 +366,7 @@ public:
                     int n_threads = 1,
                     int flags = 0);
 
-  virtual ~ACE_Thread_Strategy (void);
+  virtual ~ACE_Thread_Strategy ();
 
   // = Factory method.
   /**
@@ -390,7 +379,7 @@ public:
                                     void *arg = 0);
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -424,7 +413,6 @@ template <class SVC_HANDLER>
 class ACE_Process_Strategy : public ACE_Concurrency_Strategy<SVC_HANDLER>
 {
 public:
-
   // Useful STL-style traits.
   typedef ACE_Concurrency_Strategy<SVC_HANDLER> base_type;
 
@@ -444,7 +432,7 @@ public:
                     ACE_Reactor * = 0,
                     int avoid_zombies = 0);
 
-  virtual ~ACE_Process_Strategy (void);
+  virtual ~ACE_Process_Strategy ();
 
   // = Factory method.
   /**
@@ -457,7 +445,7 @@ public:
                                     void *arg = 0);
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -496,14 +484,12 @@ template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1>
 class ACE_Accept_Strategy
 {
 public:
-
   // Useful STL-style traits.
   typedef ACE_PEER_ACCEPTOR_ADDR             addr_type;
   typedef ACE_PEER_ACCEPTOR                  acceptor_type;
   typedef SVC_HANDLER                        handler_type;
   typedef typename SVC_HANDLER::stream_type  stream_type;
 
-  // = Initialization and termination methods.
   /// Default constructor.
   ACE_Accept_Strategy (ACE_Reactor *reactor = ACE_Reactor::instance ());
 
@@ -518,12 +504,12 @@ public:
                     bool reuse_addr = false);
 
   /// Return the underlying ACE_HANDLE of the <peer_acceptor_>.
-  virtual ACE_HANDLE get_handle (void) const;
+  virtual ACE_HANDLE get_handle () const;
 
   /// Return a reference to the <peer_acceptor_>.
-  virtual ACE_PEER_ACCEPTOR &acceptor (void) const;
+  virtual ACE_PEER_ACCEPTOR &acceptor () const;
 
-  virtual ~ACE_Accept_Strategy (void);
+  virtual ~ACE_Accept_Strategy ();
 
   // = Factory method.
   /// The default behavior delegates to the <accept> method of the
@@ -531,7 +517,7 @@ public:
   virtual int accept_svc_handler (SVC_HANDLER *);
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -563,21 +549,19 @@ template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1>
 class ACE_Connect_Strategy
 {
 public:
-
   // Useful STL-style traits.
   typedef ACE_PEER_CONNECTOR_ADDR            addr_type;
   typedef ACE_PEER_CONNECTOR                 connector_type;
   typedef SVC_HANDLER                        handler_type;
   typedef typename SVC_HANDLER::stream_type  stream_type;
 
-  // = Initialization and termination methods.
   /// Default constructor.
-  ACE_Connect_Strategy (void);
+  ACE_Connect_Strategy ();
 
   /// Return a reference to the <peer_connector_>.
-  virtual ACE_PEER_CONNECTOR &connector (void) const;
+  virtual ACE_PEER_CONNECTOR &connector () const;
 
-  virtual ~ACE_Connect_Strategy (void);
+  virtual ~ACE_Connect_Strategy ();
 
   // = Factory method.
   /// The default behavior delegates to the <connect> method of the
@@ -605,7 +589,7 @@ public:
                                    int perms);
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -629,30 +613,27 @@ template <class SVC_HANDLER>
 class ACE_Scheduling_Strategy
 {
 public:
-
   // Useful STL-style traits.
   typedef typename SVC_HANDLER::addr_type    addr_type;
   typedef SVC_HANDLER                        handler_type;
   typedef typename SVC_HANDLER::stream_type  stream_type;
 
-  // = Initialization and termination methods.
-
   /// Constructor
   ACE_Scheduling_Strategy (SVC_HANDLER * = 0);
 
   /// Destructor
-  virtual ~ACE_Scheduling_Strategy (void);
+  virtual ~ACE_Scheduling_Strategy ();
 
   // = Scheduling methods
 
   /// Suspend hook.
-  virtual int suspend (void);
+  virtual int suspend ();
 
   /// Resume hook.
-  virtual int resume (void);
+  virtual int resume ();
 
   /// Dump the state of the object.
-  virtual void dump (void) const;
+  virtual void dump () const;
 };
 
 /**
@@ -669,27 +650,24 @@ class ACE_Schedule_All_Reactive_Strategy
   : public ACE_Scheduling_Strategy<SVC_HANDLER>
 {
 public:
-
   // Useful STL-style traits.
   typedef ACE_Scheduling_Strategy<SVC_HANDLER> base_type;
 
-  // = Initialization and termination methods.
   /// Constructor
   ACE_Schedule_All_Reactive_Strategy (SVC_HANDLER * = 0);
 
   // = Scheduling methods
 
   /// Suspend hook.
-  virtual int suspend (void);
+  virtual int suspend ();
 
   /// Resume hook.
-  virtual int resume (void);
+  virtual int resume ();
 
   /// Dump the state of the object.
-  virtual void dump (void) const;
+  virtual void dump () const;
 
 protected:
-
   /// Reactor
   ACE_Reactor *reactor_;
 };
@@ -708,27 +686,24 @@ class ACE_Schedule_All_Threaded_Strategy
   : public ACE_Scheduling_Strategy<SVC_HANDLER>
 {
 public:
-
   // Useful STL-style traits.
   typedef ACE_Scheduling_Strategy<SVC_HANDLER> base_type;
 
-  // = Initialization and termination methods.
   /// Constructor
   ACE_Schedule_All_Threaded_Strategy (SVC_HANDLER * = 0);
 
   // = Scheduling methods
 
   /// Suspend hook.
-  virtual int suspend (void);
+  virtual int suspend ();
 
   /// Resume hook.
-  virtual int resume (void);
+  virtual int resume ();
 
   /// Dump the state of the object.
-  virtual void dump (void) const;
+  virtual void dump () const;
 
 protected:
-
   /// Thread Manager
   ACE_Thread_Manager *thr_mgr_;
 };
@@ -748,7 +723,6 @@ template <class SVC_HANDLER>
 class ACE_NOOP_Creation_Strategy : public ACE_Creation_Strategy<SVC_HANDLER>
 {
 public:
-
   // Useful STL-style traits.
   typedef ACE_Creation_Strategy<SVC_HANDLER> base_type;
 
@@ -772,7 +746,6 @@ class ACE_NOOP_Concurrency_Strategy
   : public ACE_Concurrency_Strategy<SVC_HANDLER>
 {
 public:
-
   // Useful STL-style traits.
   typedef ACE_Concurrency_Strategy<SVC_HANDLER> base_type;
 
@@ -789,7 +762,7 @@ class ACE_Refcounted_Hash_Recyclable :  public ACE_Refcountable_T<ACE_Null_Mutex
 {
 public:
   /// Default constructor.
-  ACE_Refcounted_Hash_Recyclable (void);
+  ACE_Refcounted_Hash_Recyclable ();
 
   /// Constructor.
   ACE_Refcounted_Hash_Recyclable (const T &t,
@@ -797,7 +770,7 @@ public:
                                   ACE_Recyclable_State state = ACE_RECYCLABLE_UNKNOWN);
 
   /// Destructor
-  virtual ~ACE_Refcounted_Hash_Recyclable (void);
+  virtual ~ACE_Refcounted_Hash_Recyclable ();
 
   /// Compares two instances.
   bool operator== (const ACE_Refcounted_Hash_Recyclable<T> &rhs) const;
@@ -807,7 +780,7 @@ public:
 
 protected:
   /// Computes and returns hash value.
-  u_long hash_i (void) const;
+  u_long hash_i () const;
 
   T t_;
 };
@@ -829,7 +802,6 @@ class ACE_Cached_Connect_Strategy
     public ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2>
 {
 public:
-
   // Useful STL-style traits.
   typedef ACE_Creation_Strategy<SVC_HANDLER>
           creation_strategy_type;
@@ -862,7 +834,7 @@ public:
                                bool delete_lock = false);
 
   /// Destructor
-  virtual ~ACE_Cached_Connect_Strategy (void);
+  virtual ~ACE_Cached_Connect_Strategy ();
 
   /// This methods allow you to change the strategies used by the
   /// cached connector.
@@ -952,12 +924,11 @@ public:
   typedef ACE_Reverse_Lock<MUTEX> REVERSE_MUTEX;
 
   // = Strategy accessors
-  virtual ACE_Creation_Strategy<SVC_HANDLER> *creation_strategy (void) const;
-  virtual ACE_Recycling_Strategy<SVC_HANDLER> *recycling_strategy (void) const;
-  virtual ACE_Concurrency_Strategy<SVC_HANDLER> *concurrency_strategy (void) const;
+  virtual ACE_Creation_Strategy<SVC_HANDLER> *creation_strategy () const;
+  virtual ACE_Recycling_Strategy<SVC_HANDLER> *recycling_strategy () const;
+  virtual ACE_Concurrency_Strategy<SVC_HANDLER> *concurrency_strategy () const;
 
 protected:
-
   /// Creates a new connection.
   virtual int new_connection (SVC_HANDLER *&sh,
                               const ACE_PEER_CONNECTOR_ADDR &remote_addr,
@@ -1061,13 +1032,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #include "ace/Strategies_T.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Strategies_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Strategies_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 

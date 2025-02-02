@@ -15,7 +15,7 @@ my $server2 = PerlACE::TestTarget::create_target (2) || die "Create target 2 fai
 my $server3 = PerlACE::TestTarget::create_target (3) || die "Create target 3 failed\n";
 my $client = PerlACE::TestTarget::create_target (4) || die "Create target 4 failed\n";
 
-$port = $server1->RandomPort () + 10001; # This can't be 10000 on Chorus 4.0
+$port = $server1->RandomPort () + 10001;
 
 $naming_ior = "NameService.ior";
 
@@ -30,11 +30,11 @@ $server3->DeleteFile ($naming_ior);
 $client->DeleteFile ($naming_ior);
 
 
-$SV1 = $server1->CreateProcess ("../../Naming_Service/tao_cosnaming",
+$SV1 = $server1->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_cosnaming",
                                 "-ORBNameServicePort $port " .
                                 "-o $server1_naming_ior");
 
-$SV2 = $server2->CreateProcess ("../../Event_Service/tao_rtevent",
+$SV2 = $server2->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Event_Service/tao_rtevent",
                                 "-ORBInitRef NameService=file://$server2_naming_ior");
 
 $SV3 = $server3->CreateProcess ("ECM_Supplier",

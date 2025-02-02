@@ -20,7 +20,7 @@ TAO_Operation_Details::corba_exception (const char *id) const
 {
   for (CORBA::ULong i = 0; i != this->ex_count_; ++i)
     {
-      if (ACE_OS::strcmp (id, this->ex_data_[i].id) != 0)
+      if (this->ex_data_[i].id.compare (id) != 0)
         {
           continue;
         }
@@ -28,7 +28,7 @@ TAO_Operation_Details::corba_exception (const char *id) const
       // Create an exception object
       CORBA::Exception *exception = this->ex_data_[i].alloc ();
 
-      if (exception == 0)
+      if (!exception)
         {
           throw ::CORBA::NO_MEMORY (0, CORBA::COMPLETED_YES);
         }
@@ -46,7 +46,7 @@ TAO_Operation_Details::has_exception (::CORBA::Exception& ex) const
 {
   for (CORBA::ULong i = 0; i != this->ex_count_; ++i)
     {
-      if (ACE_OS::strcmp (ex._rep_id (), this->ex_data_[i].id) == 0)
+      if (this->ex_data_[i].id.compare(ex._rep_id ()) == 0)
         {
           return true;
         }

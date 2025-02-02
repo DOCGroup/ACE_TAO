@@ -340,7 +340,7 @@ const char * ReplicationManagerFaultConsumerAdapter::identity () const
 /**
  * Clean house for process shut down.
  */
-int ReplicationManagerFaultConsumerAdapter::fini (void)
+int ReplicationManagerFaultConsumerAdapter::fini ()
 {
   // Delegate to the FT_FaultConsumer.
   return this->p_fault_consumer_->fini ();

@@ -1,7 +1,6 @@
 #include "orbsvcs/IFRService/ArrayDef_i.h"
 #include "orbsvcs/IFRService/Repository_i.h"
 #include "orbsvcs/IFRService/IFR_Service_Utils.h"
-#include "ace/Auto_Ptr.h"
 #include "ace/SString.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -12,18 +11,18 @@ TAO_ArrayDef_i::TAO_ArrayDef_i (TAO_Repository_i *repo)
 {
 }
 
-TAO_ArrayDef_i::~TAO_ArrayDef_i (void)
+TAO_ArrayDef_i::~TAO_ArrayDef_i ()
 {
 }
 
 CORBA::DefinitionKind
-TAO_ArrayDef_i::def_kind (void)
+TAO_ArrayDef_i::def_kind ()
 {
   return CORBA::dk_Array;
 }
 
 void
-TAO_ArrayDef_i::destroy (void)
+TAO_ArrayDef_i::destroy ()
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -33,14 +32,14 @@ TAO_ArrayDef_i::destroy (void)
 }
 
 void
-TAO_ArrayDef_i::destroy_i (void)
+TAO_ArrayDef_i::destroy_i ()
 {
   // Only if it is (w)string, fixed, array or sequence.
   this->destroy_element_type ();
 
   ACE_TString name;
   this->repo_->config ()->get_string_value (this->section_key_,
-                                            "name",
+                                            ACE_TEXT("name"),
                                             name);
 
   this->repo_->config ()->remove_section (this->repo_->arrays_key (),
@@ -49,7 +48,7 @@ TAO_ArrayDef_i::destroy_i (void)
 }
 
 CORBA::TypeCode_ptr
-TAO_ArrayDef_i::type (void)
+TAO_ArrayDef_i::type ()
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::TypeCode::_nil ());
 
@@ -59,7 +58,7 @@ TAO_ArrayDef_i::type (void)
 }
 
 CORBA::TypeCode_ptr
-TAO_ArrayDef_i::type_i (void)
+TAO_ArrayDef_i::type_i ()
 {
   // Store the current array's section key.
   ACE_Configuration_Section_Key
@@ -83,7 +82,7 @@ TAO_ArrayDef_i::type_i (void)
 }
 
 CORBA::ULong
-TAO_ArrayDef_i::length (void)
+TAO_ArrayDef_i::length ()
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
@@ -93,11 +92,11 @@ TAO_ArrayDef_i::length (void)
 }
 
 CORBA::ULong
-TAO_ArrayDef_i::length_i (void)
+TAO_ArrayDef_i::length_i ()
 {
   u_int length = 0;
   this->repo_->config ()->get_integer_value (this->section_key_,
-                                             "length",
+                                             ACE_TEXT("length"),
                                              length);
 
   return static_cast<CORBA::ULong> (length);
@@ -117,12 +116,12 @@ void
 TAO_ArrayDef_i::length_i (CORBA::ULong length)
 {
   this->repo_->config ()->set_integer_value (this->section_key_,
-                                             "length",
+                                             ACE_TEXT("length"),
                                              length);
 }
 
 CORBA::TypeCode_ptr
-TAO_ArrayDef_i::element_type (void)
+TAO_ArrayDef_i::element_type ()
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::TypeCode::_nil ());
 
@@ -132,11 +131,11 @@ TAO_ArrayDef_i::element_type (void)
 }
 
 CORBA::TypeCode_ptr
-TAO_ArrayDef_i::element_type_i (void)
+TAO_ArrayDef_i::element_type_i ()
 {
   ACE_TString element_path;
   this->repo_->config ()->get_string_value (this->section_key_,
-                                            "element_path",
+                                            ACE_TEXT("element_path"),
                                             element_path);
   TAO_IDLType_i *impl =
     TAO_IFR_Service_Utils::path_to_idltype (element_path,
@@ -146,7 +145,7 @@ TAO_ArrayDef_i::element_type_i (void)
 }
 
 CORBA::IDLType_ptr
-TAO_ArrayDef_i::element_type_def (void)
+TAO_ArrayDef_i::element_type_def ()
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::IDLType::_nil ());
 
@@ -156,11 +155,11 @@ TAO_ArrayDef_i::element_type_def (void)
 }
 
 CORBA::IDLType_ptr
-TAO_ArrayDef_i::element_type_def_i (void)
+TAO_ArrayDef_i::element_type_def_i ()
 {
   ACE_TString element_path;
   this->repo_->config ()->get_string_value (this->section_key_,
-                                            "element_path",
+                                            ACE_TEXT("element_path"),
                                             element_path);
 
   CORBA::Object_var obj =
@@ -189,8 +188,8 @@ TAO_ArrayDef_i::element_type_def_i (CORBA::IDLType_ptr element_type_def)
     TAO_IFR_Service_Utils::reference_to_path (element_type_def);
 
   this->repo_->config ()->set_string_value (this->section_key_,
-                                            "element_path",
-                                            new_element_path);
+                                            ACE_TEXT("element_path"),
+                                            ACE_TEXT_CHAR_TO_TCHAR(new_element_path));
 }
 
 void
@@ -199,7 +198,7 @@ TAO_ArrayDef_i::destroy_element_type (
 {
   ACE_TString element_path;
   this->repo_->config ()->get_string_value (this->section_key_,
-                                            "element_path",
+                                            ACE_TEXT("element_path"),
                                             element_path);
 
   ACE_Configuration_Section_Key element_key;

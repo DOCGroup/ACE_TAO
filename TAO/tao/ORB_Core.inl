@@ -5,29 +5,25 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE ACE_Service_Gestalt*
-TAO_ORB_Core::configuration (void) const
+TAO_ORB_Core::configuration () const
 {
   return this->config_.get ();
 }
 
 ACE_INLINE unsigned long
-TAO_ORB_Core::_incr_refcnt (void)
+TAO_ORB_Core::_incr_refcnt ()
 {
   return this->refcount_++;
 }
 
 ACE_INLINE unsigned long
-TAO_ORB_Core::_refcnt (void) const
+TAO_ORB_Core::_refcnt () const
 {
-#if defined (ACE_HAS_CPP11)
   return this->refcount_;
-#else
-  return this->refcount_.value ();
-#endif /* ACE_HAS_CPP11 */
 }
 
 ACE_INLINE unsigned long
-TAO_ORB_Core::_decr_refcnt (void)
+TAO_ORB_Core::_decr_refcnt ()
 {
   unsigned long const count = --this->refcount_;
   if (count != 0)
@@ -38,7 +34,7 @@ TAO_ORB_Core::_decr_refcnt (void)
 }
 
 ACE_INLINE ACE_Lock *
-TAO_ORB_Core::locking_strategy (void)
+TAO_ORB_Core::locking_strategy ()
 {
   if (this->resource_factory ()->use_locked_data_blocks ())
     return &this->data_block_lock_;
@@ -47,7 +43,7 @@ TAO_ORB_Core::locking_strategy (void)
 }
 
 ACE_INLINE CORBA::Boolean
-TAO_ORB_Core::bidir_giop_policy (void)
+TAO_ORB_Core::bidir_giop_policy ()
 {
   return this->bidir_giop_policy_;
 }
@@ -59,31 +55,31 @@ TAO_ORB_Core::bidir_giop_policy (CORBA::Boolean val)
 }
 
 ACE_INLINE TAO_Object_Ref_Table &
-TAO_ORB_Core::object_ref_table (void)
+TAO_ORB_Core::object_ref_table ()
 {
   return this->object_ref_table_;
 }
 
 ACE_INLINE TAO::ObjectKey_Table &
-TAO_ORB_Core::object_key_table (void)
+TAO_ORB_Core::object_key_table ()
 {
   return this->object_key_table_;
 }
 
 ACE_INLINE TAO_Flushing_Strategy *
-TAO_ORB_Core::flushing_strategy (void)
+TAO_ORB_Core::flushing_strategy ()
 {
   return this->flushing_strategy_;
 }
 
 ACE_INLINE TAO_Protocols_Hooks *
-TAO_ORB_Core::get_protocols_hooks (void)
+TAO_ORB_Core::get_protocols_hooks ()
 {
   return this->protocols_hooks_;
 }
 
 ACE_INLINE TAO_Network_Priority_Protocols_Hooks *
-TAO_ORB_Core::get_network_priority_protocols_hooks (void)
+TAO_ORB_Core::get_network_priority_protocols_hooks ()
 {
   return this->network_priority_protocols_hooks_;
 }
@@ -146,43 +142,43 @@ TAO_ORB_Core::hash_service (TAO_Profile *p, CORBA::ULong m)
 }
 
 ACE_INLINE TAO_Fault_Tolerance_Service &
-TAO_ORB_Core::fault_tolerance_service (void)
+TAO_ORB_Core::fault_tolerance_service ()
 {
   return this->ft_service_;
 }
 
 ACE_INLINE CORBA::Boolean
-TAO_ORB_Core::ft_send_extended_sc (void)
+TAO_ORB_Core::ft_send_extended_sc ()
 {
   return this->ft_send_extended_sc_;
 }
 
 ACE_INLINE ACE_Thread_Manager *
-TAO_ORB_Core::thr_mgr (void)
+TAO_ORB_Core::thr_mgr ()
 {
   return &this->tm_;
 }
 
 ACE_INLINE CORBA::ORB_ptr
-TAO_ORB_Core::orb (void)
+TAO_ORB_Core::orb ()
 {
   return this->orb_;
 }
 
 ACE_INLINE TAO_Adapter_Registry &
-TAO_ORB_Core::adapter_registry (void)
+TAO_ORB_Core::adapter_registry ()
 {
   return this->adapter_registry_;
 }
 
 ACE_INLINE TAO_Request_Dispatcher *
-TAO_ORB_Core::request_dispatcher (void)
+TAO_ORB_Core::request_dispatcher ()
 {
   return this->request_dispatcher_;
 }
 
 ACE_INLINE TAO_ORB_Core::InitRefMap *
-TAO_ORB_Core::init_ref_map (void)
+TAO_ORB_Core::init_ref_map ()
 {
   return &this->init_ref_map_;
 }
@@ -208,7 +204,7 @@ TAO_ORB_Core::optimize_collocation_objects (CORBA::Boolean opt)
 }
 
 ACE_INLINE CORBA::Boolean
-TAO_ORB_Core::optimize_collocation_objects (void) const
+TAO_ORB_Core::optimize_collocation_objects () const
 {
   return this->opt_for_collocation_;
 }
@@ -220,19 +216,19 @@ TAO_ORB_Core::use_global_collocation (CORBA::Boolean opt)
 }
 
 ACE_INLINE CORBA::Boolean
-TAO_ORB_Core::use_global_collocation (void) const
+TAO_ORB_Core::use_global_collocation () const
 {
   return this->use_global_collocation_;
 }
 
 ACE_INLINE CORBA::ULong
-TAO_ORB_Core::get_collocation_strategy (void) const
+TAO_ORB_Core::get_collocation_strategy () const
 {
   return this->collocation_strategy_;
 }
 
 ACE_INLINE TAO_ORB_Parameters *
-TAO_ORB_Core::orb_params(void)
+TAO_ORB_Core::orb_params()
 {
   return &(this->orb_params_);
 }
@@ -243,13 +239,13 @@ TAO_ORB_Core::orb_params(void)
   : (this->member##_))
 
 ACE_INLINE TAO_ProtocolFactorySet *
-TAO_ORB_Core::protocol_factories (void)
+TAO_ORB_Core::protocol_factories ()
 {
   return TAO_OC_RETRIEVE (protocol_factories);
 }
 
 ACE_INLINE TAO_Parser_Registry *
-TAO_ORB_Core::parser_registry (void)
+TAO_ORB_Core::parser_registry ()
 {
   return &this->parser_registry_;
 }
@@ -259,7 +255,7 @@ TAO_ORB_Core::parser_registry (void)
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
 ACE_INLINE TAO_Policy_Manager *
-TAO_ORB_Core::policy_manager (void)
+TAO_ORB_Core::policy_manager ()
 {
   return this->policy_manager_;
 }
@@ -267,7 +263,7 @@ TAO_ORB_Core::policy_manager (void)
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
 ACE_INLINE TAO_ORB_Core_TSS_Resources*
-TAO_ORB_Core::get_tss_resources (void)
+TAO_ORB_Core::get_tss_resources ()
 {
   return ACE_TSS_GET (&this->tss_resources_,TAO_ORB_Core_TSS_Resources);
 }
@@ -332,7 +328,7 @@ TAO_ORB_Core::tss_cleanup (ACE_Array_Base<void *> &ts_objects)
 }
 
 ACE_INLINE bool
-TAO_ORB_Core::has_shutdown (void) const
+TAO_ORB_Core::has_shutdown () const
 {
   return this->has_shutdown_;
 }
@@ -345,7 +341,7 @@ TAO_ORB_Core::thread_per_connection_timeout (ACE_Time_Value &timeout) const
 }
 
 ACE_INLINE const char *
-TAO_ORB_Core::orbid (void) const
+TAO_ORB_Core::orbid () const
 {
   return this->orbid_;
 }
@@ -357,19 +353,19 @@ TAO_ORB_Core::implrepo_service (const CORBA::Object_ptr ir)
 }
 
 ACE_INLINE CORBA::Boolean
-TAO_ORB_Core::use_implrepo (void)
+TAO_ORB_Core::use_implrepo ()
 {
   return use_implrepo_;
 }
 
 ACE_INLINE CORBA::Boolean
-TAO_ORB_Core::imr_endpoints_in_ior (void)
+TAO_ORB_Core::imr_endpoints_in_ior ()
 {
   return imr_endpoints_in_ior_;
 }
 
 ACE_INLINE CORBA::Object_ptr
-TAO_ORB_Core::resolve_typecodefactory (void)
+TAO_ORB_Core::resolve_typecodefactory ()
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, mon, this->lock_,
                     CORBA::Object::_nil ());
@@ -383,7 +379,7 @@ TAO_ORB_Core::resolve_typecodefactory (void)
 #if TAO_HAS_INTERCEPTORS == 1
 
 ACE_INLINE CORBA::Object_ptr
-TAO_ORB_Core::resolve_picurrent (void)
+TAO_ORB_Core::resolve_picurrent ()
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, mon, this->lock_,
                     CORBA::Object::_nil ());
@@ -397,7 +393,7 @@ TAO_ORB_Core::resolve_picurrent (void)
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
 ACE_INLINE CORBA::Object_ptr
-TAO_ORB_Core::resolve_codecfactory (void)
+TAO_ORB_Core::resolve_codecfactory ()
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, mon, this->lock_,
                     CORBA::Object::_nil ());
@@ -409,7 +405,7 @@ TAO_ORB_Core::resolve_codecfactory (void)
 }
 
 ACE_INLINE CORBA::Object_ptr
-TAO_ORB_Core::resolve_compression_manager (void)
+TAO_ORB_Core::resolve_compression_manager ()
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, mon, this->lock_,
                     CORBA::Object::_nil ());
@@ -421,7 +417,7 @@ TAO_ORB_Core::resolve_compression_manager (void)
 }
 
 ACE_INLINE const char *
-TAO_ORB_Core::server_id (void) const
+TAO_ORB_Core::server_id () const
 {
   return this->server_id_.c_str();
 }
@@ -468,7 +464,7 @@ TAO_ORB_Core::orbinitializer_registry ()
 }
 
 ACE_INLINE TAO_Service_Context_Registry &
-TAO_ORB_Core::service_context_registry (void)
+TAO_ORB_Core::service_context_registry ()
 {
   return this->service_context_registry_;
 }
@@ -486,7 +482,7 @@ TAO_ORB_Core::policy_factory_registry ()
 }
 
 ACE_INLINE CORBA::Object_ptr
-TAO_ORB_Core::resolve_dynanyfactory (void)
+TAO_ORB_Core::resolve_dynanyfactory ()
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, mon, this->lock_,
                     CORBA::Object::_nil ());
@@ -498,7 +494,7 @@ TAO_ORB_Core::resolve_dynanyfactory (void)
 }
 
 ACE_INLINE CORBA::Object_ptr
-TAO_ORB_Core::resolve_ior_manipulation (void)
+TAO_ORB_Core::resolve_ior_manipulation ()
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, mon, this->lock_,
                     CORBA::Object::_nil ());
@@ -510,7 +506,7 @@ TAO_ORB_Core::resolve_ior_manipulation (void)
 }
 
 ACE_INLINE CORBA::Object_ptr
-TAO_ORB_Core::resolve_ior_table (void)
+TAO_ORB_Core::resolve_ior_table ()
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, mon, this->lock_,
                     CORBA::Object::_nil ());
@@ -522,7 +518,7 @@ TAO_ORB_Core::resolve_ior_table (void)
 }
 
 ACE_INLINE CORBA::Object_ptr
-TAO_ORB_Core::resolve_async_ior_table (void)
+TAO_ORB_Core::resolve_async_ior_table ()
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, mon, this->lock_,
                     CORBA::Object::_nil ());
@@ -534,7 +530,7 @@ TAO_ORB_Core::resolve_async_ior_table (void)
 }
 
 ACE_INLINE CORBA::Object_ptr
-TAO_ORB_Core::resolve_monitor (void)
+TAO_ORB_Core::resolve_monitor ()
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, mon, this->lock_,
                     CORBA::Object::_nil ());
@@ -550,7 +546,7 @@ TAO_ORB_Core::resolve_monitor (void)
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
 ACE_INLINE TAO_Policy_Current &
-TAO_ORB_Core::policy_current (void)
+TAO_ORB_Core::policy_current ()
 {
   return *this->policy_current_;
 }
@@ -558,7 +554,7 @@ TAO_ORB_Core::policy_current (void)
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
 ACE_INLINE CORBA::Object_ptr
-TAO_ORB_Core::resolve_poa_current (void)
+TAO_ORB_Core::resolve_poa_current ()
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, mon, this->lock_,
                     CORBA::Object::_nil ());
@@ -572,7 +568,7 @@ TAO_ORB_Core::resolve_poa_current (void)
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
 ACE_INLINE  TAO_Policy_Set *
-TAO_ORB_Core::get_default_policies (void)
+TAO_ORB_Core::get_default_policies ()
 {
   return this->default_policies_;
 }
@@ -581,7 +577,7 @@ TAO_ORB_Core::get_default_policies (void)
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 ACE_INLINE CORBA::Object_ptr
-TAO_ORB_Core::resolve_rt_orb (void)
+TAO_ORB_Core::resolve_rt_orb ()
 {
   if (CORBA::is_nil (this->rt_orb_.in ()))
     {
@@ -602,7 +598,7 @@ TAO_ORB_Core::resolve_rt_orb (void)
 
 #if (TAO_HAS_INTERCEPTORS == 1)
 ACE_INLINE CORBA::Object_ptr
-TAO_ORB_Core::pi_current (void)
+TAO_ORB_Core::pi_current ()
 {
   // A pointer/reference to PICurrent is cached in the ORB Core since
   // it is accessed in the critical path (i.e. the request invocation
@@ -620,13 +616,13 @@ TAO_ORB_Core::pi_current (CORBA::Object_ptr current)
 }
 
 ACE_INLINE TAO::ClientRequestInterceptor_Adapter *
-TAO_ORB_Core::clientrequestinterceptor_adapter (void)
+TAO_ORB_Core::clientrequestinterceptor_adapter ()
 {
   return this->client_request_interceptor_adapter_;
 }
 
 ACE_INLINE TAO::ServerRequestInterceptor_Adapter *
-TAO_ORB_Core::serverrequestinterceptor_adapter (void)
+TAO_ORB_Core::serverrequestinterceptor_adapter ()
 {
   return this->server_request_interceptor_adapter_;
 }
@@ -661,7 +657,7 @@ TAO_ORB_Core::set_sync_scope_hook (Sync_Scope_Hook hook)
 
 ACE_INLINE
 Messaging::SyncScope
-TAO_ORB_Core::default_sync_scope (void)
+TAO_ORB_Core::default_sync_scope ()
 {
   return this->default_sync_scope_;
 }

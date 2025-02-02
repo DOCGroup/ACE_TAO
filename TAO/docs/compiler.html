@@ -22,7 +22,7 @@ online CORBA specification</A> and the <A
 HREF="http://www.triodia.com/staff/michi-henning.html">Advanced CORBA
 Programming with C++</A> book.  More information on the design of
 TAO's IDL compiler is also available <A
-HREF="http://www.cs.wustl.edu/~schmidt/PDF/ami1.pdf">online</A>.
+HREF="http://www.dre.vanderbilt.edu/~schmidt/PDF/ami1.pdf">online</A>.
 Finally, comprehensive documentation on TAO's IDL compiler is
 available in the OCI <A HREF="http://www.theaceorb.com/product/index.html">TAO
 Developer's Guide</A>.<P>
@@ -69,7 +69,7 @@ these files:) <P>
        unlinked if not used.
   <LI> <B><EM>CIAO servant files</EM></B>, <EM>i.e.</EM>, <tt>*_svnt.h</tt>,
       and <tt>*_svnt.cpp</tt>. Optionally generated files, containing component
-      and home servant implementations, as well as factory fuctions to create
+      and home servant implementations, as well as factory functions to create
       components and homes.
   <LI> <B><EM>Executor IDL file</EM></B>, <EM>i.e.</EM>, <tt>*E.idl</tt>.
       IDL file containing local interfaces used for component and home
@@ -149,11 +149,11 @@ ACE_CC_PREPROCESSOR_ARGS macros.</P>
 
 <P>Case 1 is used by the Makefile on most machines to specify the preprocessor.
 Case 2 is used on Windows and platforms that need special arguments passed
-to the preprocessor (MVS, HPUX, etc.).  And case 3 isn't used at all,
+to the preprocessor (MVS, etc.).  And case 3 isn't used at all,
 but is included as a default case.</P>
 
 <P>Since the default preprocessor may not always work when TAO_IDL is moved to
-another machine or used in cross-compilation, it can be overriden at runtime
+another machine or used in cross-compilation, it can be overridden at runtime
 by setting the environment variables TAO_IDL_PREPROCESSOR and
 TAO_IDL_PREPROCESSOR_ARGS.</P>
 
@@ -177,10 +177,10 @@ incoming operation with the correct operation at the servant.  TAO's
 IDL compiler supports perfect hashing, binary search, and dynamic
 hashing demuxing strategies.  By default, TAO's IDL compiler tries to
 generate perfect hash functions, which is generally the most <A
-HREF="http://www.cs.wustl.edu/~schmidt/PDF/COOTS-99.pdf">efficient and
+HREF="http://www.dre.vanderbilt.edu/~schmidt/PDF/COOTS-99.pdf">efficient and
 predictable operation demuxing technique</A>.  To generate perfect
 hash functions, TAO's IDL compiler uses <a
-href="http://www.cs.wustl.edu/~schmidt/PDF/gperf.pdf">gperf </a>, which
+href="http://www.dre.vanderbilt.edu/~schmidt/PDF/gperf.pdf">gperf </a>, which
 is a general-purpose perfect hash function generator. <P>
 
 To configure TAO's IDL compiler to support perfect hashing please do
@@ -219,7 +219,7 @@ described in the CORBA 3.0.3 specification.
 <h3><a name="collocation-stubs">Collocation Strategies</a></h3>
 
 TAO_IDL can generate collocated stubs using two different collocation
-strategies.  It also allows you to supress/enable the generation of
+strategies.  It also allows you to suppress/enable the generation of
 the stubs of a particular strategy.  To gain great flexibility at
 run-time, you can generate stubs for both collocation strategies
 (using both '<a href="#Gp"><code>-Gp</code></a>' and '<a
@@ -231,7 +231,7 @@ generate the right collocated stubs (or not generating any at all using
 both  '<a href="#Sp"><code>-Sp</code></a>' and '<a
 href="#Sd"><code>-Sd</code></a>' flags at the same time if
 it's a pure client.)  See our <a
-href="http://www.cs.wustl.edu/~schmidt/PDF/C++-report-col18.pdf">collocation
+href="http://www.dre.vanderbilt.edu/~schmidt/PDF/C++-report-col18.pdf">collocation
 paper</a> for a detail discussion on the collocation support in
 TAO.<p>
 
@@ -251,17 +251,37 @@ also receives other options that are specific to it.<p>
     <th>Remark</th>
   </tr>
   <tr><a NAME="u">
-    <td><tt>-u</tt></td>
+    <td><tt>-h</br>--help</br>-u</tt></td>
 
-    <td>The compiler prints out the options that are given below and exits
-        clean </td>
+    <td>The compiler prints out the arguments it supports and exits</td>
     <td>&nbsp;</td>
   </tr>
 
   <tr> <a NAME="V">
-    <td><tt>-V</tt></td>
+    <td><tt>-V</br>--version</tt></td>
 
     <td>The compiler printouts its version and exits</td>
+    <td>&nbsp;</td>
+  </tr>
+
+  <tr>
+    <td><tt>--idl-version VERSION</tt></td>
+
+    <td>Set the IDL version to use</td>
+    <td>&nbsp;</td>
+  </tr>
+
+  <tr>
+    <td><tt>--default-idl-version</tt></td>
+
+    <td>Prints the default IDL version for the compiler and exits</td>
+    <td>&nbsp;</td>
+  </tr>
+
+  <tr>
+    <td><tt>--list-idl-versions</tt></td>
+
+    <td>Lists IDL versions the compiler supports and exits</td>
     <td>&nbsp;</td>
   </tr>
 
@@ -329,7 +349,7 @@ also receives other options that are specific to it.<p>
         or <tt>extern</tt> typecode declaration in the generated stub code,
         this is needed for Windows and newer versions of gcc, which require special directives to
         export symbols from DLLs, otherwise the definition is just a
-        space on unix platforms. This option works only in conjuction with
+        space on Unix platforms. This option works only in conjunction with
         the -GA option, which generates Any operators and typecodes into a
         separate set of files.&nbsp;</td>
   </tr>
@@ -341,7 +361,7 @@ also receives other options that are specific to it.<p>
 
     <td>The compiler will generate code to include <i>include_path</i> at the
         top of the anyop file header, this is usually a good place to define the export
-        macro. This option works in conjuction with the -GA option, which generates Any
+        macro. This option works in conjunction with the -GA option, which generates Any
         operators and typecodes into a separate set of files.</td>
   </tr>
 
@@ -377,7 +397,7 @@ also receives other options that are specific to it.<p>
     <td><tt>exec_export_macro=</tt><i>macro_name</i></td>
 
     <td>The compiler will emit <i>macro_name</i> right after each <tt>class</tt>
-        or <tt>extern</tt> keyword in the generated CIAO executor implmentation header
+        or <tt>extern</tt> keyword in the generated CIAO executor implementation header
         (*_exec.h) files, if such
         code is being generated (see <tt>-Gex</tt> option below). These macros
         are needed for Windows and newer versions of gcc, which require special directives to
@@ -401,7 +421,7 @@ also receives other options that are specific to it.<p>
     <td><tt>conn_export_macro=</tt><i>macro_name</i></td>
 
     <td>The compiler will emit <i>macro_name</i> right after each <tt>class</tt>
-        or <tt>extern</tt> keyword in the generated CIAO connector implmentation header
+        or <tt>extern</tt> keyword in the generated CIAO connector implementation header
         (*_conn.h) files, if such
         code is being generated (see <tt>-Gcn</tt> option below). These macros
         are needed for Windows and newer versions of gcc, which require special directives to
@@ -556,10 +576,33 @@ also receives other options that are specific to it.<p>
     <td>&nbsp;</td>
   </tr>
 
-  <tr><a name="d">
-    <td><tt>-d</tt></td>
+  <tr>
+    <td><tt>--syntax-only</tt></td>
 
-    <td>Causes output of a dump of the AST</td>
+    <td>Parse input files, but exit without generating any files.</td>
+    <td>&nbsp;</td>
+  </tr>
+
+  <tr><a name="d">
+    <td><tt>--dump </br> -d</tt></td>
+
+    <td>Causes output of a dump of the AST and exits before any files would be
+      created.</td>
+    <td>&nbsp;</td>
+  </tr>
+
+  <tr>
+    <td><tt>--dump-builtins</tt></td>
+
+    <td>Implies --dump, but also dumps IDL defined by the compiler.</td>
+    <td>&nbsp;</td>
+  </tr>
+
+  <tr>
+    <td><tt>--just-dump-builtins</tt></td>
+
+    <td>Dumps IDL defined by the compiler but ignores any files passed and
+      exits.</td>
     <td>&nbsp;</td>
   </tr>
 
@@ -603,7 +646,7 @@ also receives other options that are specific to it.<p>
 
     <td>To specify the IDL compiler to generate skeleton code that uses perfect
         hashed operation demuxing strategy, which is the default strategy. Perfect
-        hashing uses <a href="http://www.cs.wustl.edu/~schmidt/PDF/gperf.pdf">gperf
+        hashing uses <a href="http://www.dre.vanderbilt.edu/~schmidt/PDF/gperf.pdf">gperf
         </a>program,
         to generate demuxing methods.&nbsp;</td>
     <td>&nbsp;</td>
@@ -636,7 +679,7 @@ also receives other options that are specific to it.<p>
 
   <tr><a name="in">
     <TD><TT>-in</TT></TD>
-    <TD> To generate #include statements with <>'s for the standard
+    <TD> To generate #include statements with &lt;&gt;'s for the standard
         include files (e.g. tao/corba.h) indicating them as non-changing
         files</TD>
     <td>&nbsp;</td>
@@ -779,7 +822,7 @@ also receives other options that are specific to it.<p>
   <tr><a name="Ce">
     <td><tt>-Ce</tt></td>
 
-    <td>Output an error if two indentifiers in the same scope differ in
+    <td>Output an error if two identifiers in the same scope differ in
         spelling only by case (default).</td>
 
     <td>&nbsp;</td>
@@ -836,7 +879,7 @@ also receives other options that are specific to it.<p>
 
     <td>Generate AMI4CCM code</td>
     <td>*A.idl file (containing callback interface, "sendc_" methods
-        and CCM connector) plus addition to CCM servant and exectuor</td>
+        and CCM connector) plus addition to CCM servant and executor</td>
   </tr>
 
   <tr><a name="Gp">
@@ -1036,7 +1079,7 @@ also receives other options that are specific to it.<p>
 
     <td>Generate CIAO executor implementation code for component and home IDL declarations</td>
     <td>
-    These files have empty function bodies for all facet, suported and inherited operations,
+    These files have empty function bodies for all facet, supported and inherited operations,
     to be filled in by the developer.</td>
   </tr>
 
@@ -1294,6 +1337,21 @@ also receives other options that are specific to it.<p>
 
     <td>Set tab size for generated files</td>
     <td>Default is 2 spaces</td>
+  </tr>
+
+  <tr>
+    <td><tt>--unknown-annotations ARG</tt></td>
+
+    <td>
+      Controls the reaction when encountering undefined annotations. The valid
+      arguments to this option are "warn-once" (Default), "warn-all", "error",
+      and "ignore".
+    </td>
+    <td>
+      The difference between "warn-once" and "warn-all" is that with
+      "warn-once" using annotations the same local name will not be warned
+      about more than once, while "warn-all" will warn with every usage.
+    </td>
   </tr>
 
 </table> <P>

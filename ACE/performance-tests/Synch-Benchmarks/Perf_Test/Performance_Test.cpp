@@ -10,7 +10,7 @@
 #include "ace/Service_Repository.h"
 #include "ace/Reactor.h"
 
-Performance_Test::Performance_Test (void)
+Performance_Test::Performance_Test ()
   : n_lwps_ (0),
     orig_n_lwps_ (0)
 {
@@ -47,7 +47,7 @@ Performance_Test::pre_run_test (Benchmark_Base *bb)
 }
 
 int
-Performance_Test::run_test (void)
+Performance_Test::run_test ()
 {
   // Tell the threads that we are not finished.
   Benchmark_Performance::done (0);
@@ -70,7 +70,7 @@ Performance_Test::run_test (void)
 }
 
 int
-Performance_Test::post_run_test (void)
+Performance_Test::post_run_test ()
 {
   // Stop thread(s) from making any further progress.
   ACE_Thread_Manager::instance ()->suspend_all ();

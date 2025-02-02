@@ -3,7 +3,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Collocation_Resolver::~TAO_Collocation_Resolver (void)
+TAO_Collocation_Resolver::~TAO_Collocation_Resolver ()
 {
 }
 

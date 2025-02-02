@@ -24,7 +24,7 @@ my $client_iorfile = $client->LocalFile ($iorbase);
 $server->DeleteFile($iorbase);
 $client->DeleteFile($iorbase);
 
-$SV = $server->CreateProcess ("../../../../LoadBalancer/tao_loadmanager",
+$SV = $server->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/LoadBalancer/tao_loadmanager",
                               "-o $server_iorfile " .
                               ($^O eq 'MSWin32' ?
                                            " -ORBSvcConf $lm_conf" : ''));

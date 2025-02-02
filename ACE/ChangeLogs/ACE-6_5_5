@@ -1,0 +1,1030 @@
+commit b013c620a8ebd4c2fd63d454b165094d546d16db
+Author: Justin R. Wilson <wilsonj@objectcomputing.com>
+Date:   Wed Apr 3 11:12:24 2019 -0500
+
+    Update NEWS for SOCK_Dgram::recv receive address
+
+commit da69864a78d493356e86d282487b3da43b472230
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Apr 3 09:28:55 2019 +0200
+
+    List SLES15.0
+    
+        * ACE/NEWS:
+
+commit 8c195d9a185d1b2621472583f6f480667fabeca7
+Merge: 4ed4298e82c 00d297c6000
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Mar 29 14:19:50 2019 +0100
+
+    Merge pull request #845 from jwillemsen/jwi-vs2019
+    
+    Use Visual Studio 2019 draft azure devops image
+
+commit 00d297c6000912ff90c8e81b9ca775ca50c7b924
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Mar 29 08:47:27 2019 +0100
+
+    List Visual Studio 2019
+    
+        * ACE/ACE-INSTALL.html:
+        * TAO/TAO-INSTALL.html:
+
+commit e294dc5909d0c1547f53f5b84a28c9ba0471768f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Mar 29 08:42:38 2019 +0100
+
+    Add vs2019 projects
+    
+        * ACE/bin/make_release.py:
+
+commit 352786a67603eea1358fa1a7e400a612e6d24506
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Mar 29 08:42:28 2019 +0100
+
+    List vs2019 initial support
+    
+        * ACE/NEWS:
+
+commit 9f2734dd550d877c4ba517c323e03250245b9125
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Mar 19 13:57:30 2019 +0100
+
+    Fixed unused parameter warning when compiling for Android
+    
+        * ACE/ace/Log_Msg_Android_Logcat.cpp:
+
+commit 9c6786c1982d8cac0b0673e0d5cc8e7680f40af5
+Merge: 9e64956c36e 0e75ab76491
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Mon Mar 18 16:00:13 2019 -0500
+
+    Merge pull request #877 from iguessthislldo/igtd/android_config
+    
+    Fix Android Linking Errors
+
+commit 0e75ab764918717589af754db407afcef17955b9
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Mon Mar 18 12:51:06 2019 -0500
+
+    Fix Android Linking Errors
+
+commit 9e64956c36ebade5ff5ed24f4687775eed798b7a
+Merge: 9993181dedc eecabf923c0
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Mar 15 16:51:42 2019 -0500
+
+    Merge pull request #876 from mitza-oci/master
+    
+    SOCK_Dgram_Test: remove hardcoded buffer length
+
+commit 9993181dedcad8dc6744eaad53480391608e0c64
+Merge: 9aecdfe5080 fdfe9a9438a
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Mar 15 16:51:28 2019 -0500
+
+    Merge pull request #858 from iguessthislldo/igtd/android_config
+    
+    Try to Prevent Usage of System SSL on Android
+
+commit eecabf923c03c6848cf49945b0df1e3f89433139
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Mar 15 14:31:29 2019 -0500
+
+    SOCK_Dgram_Test: remove hardcoded buffer length
+    
+    Fixes wchar
+
+commit a7e73d77afffb0d6edaf5583340aa05a2ab91d77
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Mar 13 15:51:38 2019 +0100
+
+    Add remark about minizip
+
+commit edfb63eb92e95b67ff53e90c7b9ca0e382b280c8
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Mar 13 15:36:15 2019 +0100
+
+    Removed minizip, it is moved to DAnCE where it is only used
+
+commit a04c403dc45387c1b910f0af700ea3e6ca08ba05
+Merge: b8de920fd7a 00dca1ae00e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Mar 13 13:22:00 2019 +0000
+
+    Merge pull request #871 from jwillemsen/master
+    
+    Moved all old changelogs to the ChangeLogs directory
+
+commit fc2c8a33c2c6d931c3ff49754b8d618a71003f1a
+Author: Like Ma <likemartinma@gmail.com>
+Date:   Wed Mar 13 17:35:51 2019 +0800
+
+    Fix AIX ACE_DLL_Handle::open.
+
+commit 00dca1ae00e03eaa351634028048dc6e8b7eacbf
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Mar 13 09:53:41 2019 +0100
+
+    Moved all changelogs to the ChangeLogs directory
+
+commit 0fdf4448805f57fcaab4ac7171004ae4bf73ee3c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Mar 13 09:50:26 2019 +0100
+
+    Layout changes
+    
+        * ACE/ace/XML_Utils/XML_Error_Handler.h:
+        * ACE/ace/XML_Utils/XML_Schema_Resolver.h:
+
+commit f0272b7047cbeeb9ecc71853e0216d9df9653657
+Merge: d539fdc40ca a790e39f097
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Mar 12 09:47:49 2019 +0000
+
+    Merge pull request #868 from likema/unix-addr-size
+    
+    Fix ACE_UNIX_Addr size.
+
+commit 1296ad16330a43bfb23c02ce4b87d040a0177811
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Mar 12 08:48:47 2019 +0100
+
+    Add missing ACE_TEXT
+
+commit 836ce741dfea66222cd3a9768ecdfacf10e5f220
+Author: Like Ma <likemartinma@gmail.com>
+Date:   Fri Mar 8 15:54:16 2019 +0800
+
+    Remove ACE_HAS_DLSYM_SEGFAULT_ON_INVALID_HANDLE from config-linux.h
+    
+    In Linux, it is valid to dlsym with RTLD_DEFAULT that is equal to
+    ACE_SHLIB_INVALID_HANDLE.
+
+commit a790e39f097980bcfadf507d69100b1869b7aba3
+Author: Like Ma <likemartinma@gmail.com>
+Date:   Tue Mar 12 01:39:46 2019 +0800
+
+    Add ACE_UNIX_Addr test.
+
+commit 8d212501ec1031d271317055b9155d7fa9d50796
+Author: Like Ma <likemartinma@gmail.com>
+Date:   Sun Mar 10 03:22:02 2019 +0800
+
+    Fix ACE_UNIX_Addr size.
+
+commit 08328ad164066a7d80ee4e5ebec921cd91072fc8
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Mar 8 16:18:16 2019 +0100
+
+    Removed empty line
+    
+        * ACE/ace/Shared_Object.h:
+
+commit f93b2db055b99e227f5a63f45567f4c7a20b8d17
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Mar 6 16:38:37 2019 +0100
+
+    Removed some empty lines
+    
+        * ACE/ace/Sig_Handler.cpp:
+
+commit 080fb22d6a860e8ca868b0dc27443ecb425ae31d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Mar 6 08:54:11 2019 +0100
+
+    Removed empty lines
+    
+        * ACE/tests/Process_Manual_Event_Test.cpp:
+        * ACE/tests/Process_Mutex_Test.cpp:
+        * ACE/tests/Process_Semaphore_Test.cpp:
+        * ACE/tests/Process_Strategy_Test.cpp:
+        * ACE/tests/Process_Test.cpp:
+        * ACE/tests/RB_Tree_Test.cpp:
+        * ACE/tests/Reactor_Dispatch_Order_Test.cpp:
+        * ACE/tests/Reactor_Dispatch_Order_Test_Dev_Poll.cpp:
+        * ACE/tests/Reactor_Exceptions_Test.cpp:
+        * ACE/tests/Reactor_Fairness_Test.cpp:
+        * ACE/tests/Reactor_Notify_Test.cpp:
+        * ACE/tests/Reactor_Performance_Test.cpp:
+        * ACE/tests/Reactor_Registration_Test.cpp:
+        * ACE/tests/Reactor_Remove_Resume_Test.cpp:
+        * ACE/tests/Reactor_Timer_Test.cpp:
+        * ACE/tests/Reactors_Test.cpp:
+        * ACE/tests/Reader_Writer_Test.cpp:
+        * ACE/tests/Recursive_Condition_Bug_Test.cpp:
+        * ACE/tests/Recursive_Condition_Test.cpp:
+        * ACE/tests/Refcounted_Auto_Ptr_Test.cpp:
+        * ACE/tests/Reverse_Lock_Test.cpp:
+
+commit 8f2464a0b24466f850f36a7f7ad5898c883c67a0
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Mar 6 08:50:09 2019 +0100
+
+    Fix c++11 auto_ptr warning
+    
+        * ACE/tests/Task_Ex_Test.cpp:
+
+commit 9e2051900f578db47a7713890e97415841e2c094
+Merge: cec6878b302 4f53405880a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Mar 6 07:53:52 2019 +0100
+
+    Merge pull request #860 from jwillemsen/jwi-cpp11warnings
+    
+    Fixed c++11 given warnings
+
+commit cec6878b302e3219e608fb76784fdecc51833c27
+Merge: a7f0bb6da92 f1010341a56
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Tue Mar 5 12:30:25 2019 -0800
+
+    Merge pull request #853 from jrw972/sock-dgram-safety
+    
+    Fix SOCK_Dgram_Test on safety profile
+
+commit 4f53405880ab2d765d200d1944e93b29221d7bd6
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Mar 5 17:09:26 2019 +0100
+
+    Fixed c++11 given warnings
+    
+        * ACE/ace/Message_Queue_T.cpp:
+        * ACE/examples/APG/Active_Objects/AO.cpp:
+        * ACE/examples/APG/Active_Objects/AO2.cpp:
+        * ACE/examples/Threads/future1.cpp:
+        * ACE/examples/Threads/future2.cpp:
+        * ACE/performance-tests/TCP/tcp_test.cpp:
+        * ACE/performance-tests/UDP/udp_test.cpp:
+
+commit fdfe9a9438adcbf36b648c1a54e85686855b6d64
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Mon Mar 4 17:22:12 2019 -0600
+
+    Update ACE NEWS
+
+commit bb24884914844bb3ad431119d09095b7f6c9e58d
+Merge: 2a64b538ae2 9bdf615c7d9
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Mon Mar 4 17:12:17 2019 -0600
+
+    Merge branch 'master' of github.com:DOCGroup/ACE_TAO into igtd/android_config
+
+commit 2a64b538ae243fb7c0c9781167223e5481f76517
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Mon Mar 4 17:11:30 2019 -0600
+
+    ACE-INSTALL.html: Android OpenSSL and Logging
+
+commit 31c668435c2c1068c51cc794cb3da295f2d08980
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Mon Mar 4 17:09:07 2019 -0600
+
+    Hide OpenSSL Symbols on Android
+    
+    Also make small changes to config-android.h and platform_*.GNU files.
+
+commit 5864427456f7c02aa0de6fdf0cd7054620d9192c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Mar 4 15:30:06 2019 +0100
+
+    Fixed statement may fall through warning
+    
+        * ACE/ace/OS_NS_unistd.cpp:
+
+commit 530d4302413322c66c80798313d0af938791a1bb
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Mar 4 15:22:23 2019 +0100
+
+    Fix C++11 related warnings given by newer gcc versions
+    
+        * ACE/netsvcs/lib/Client_Logging_Handler.cpp:
+        * ACE/netsvcs/lib/Name_Handler.cpp:
+        * ACE/netsvcs/lib/Server_Logging_Handler_T.cpp:
+        * ACE/netsvcs/lib/TS_Clerk_Handler.cpp:
+        * ACE/netsvcs/lib/TS_Server_Handler.cpp:
+
+commit f1010341a56e6de6e712eedd4002c573356e6ca6
+Author: Justin R. Wilson <wilsonj@objectcomputing.com>
+Date:   Fri Mar 1 15:39:48 2019 -0600
+
+    Problem: SOCK_Dgram_Test fails on safety profile
+    
+    Solution: Fall back to normal receive when testing with safety profile.
+
+commit b2d46d73f76778b27ddd474a1320364b62257ba3
+Merge: 9f499a1fc09 ed5565b97df
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Thu Feb 28 11:56:12 2019 -0800
+
+    Merge pull request #834 from iguessthislldo/igtd/android
+    
+    Use Logcat on Android
+
+commit 5a3598d914f91a91b70723aa2219a168ec82cb2b
+Merge: 3555f022704 0d43e3625a6
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Feb 28 09:19:24 2019 +0100
+
+    Merge branch 'master' of https://github.com/DOCGroup/ACE_TAO
+
+commit 3555f02270446949a45136aca0908274e287b6cb
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Feb 28 09:19:16 2019 +0100
+
+    Documentation updates
+
+commit 0d43e3625a6cc25e6c66da9dae3da7e4afed53d0
+Merge: 6ff99c5db7e 4fe7e8e2c07
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Feb 27 15:15:45 2019 +0100
+
+    Merge pull request #849 from jwillemsen/jwi-azurewchar
+    
+    Add uses_wchar configuration to Azure Devops
+
+commit 16266e93609d552a3301accb920018f1da822623
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Feb 26 18:19:19 2019 +0100
+
+    Initialise pointer with zero
+
+commit 4ad23861a1b995ab6114d585eee016c1b1396f2d
+Author: Like Ma <likemartinma@gmail.com>
+Date:   Tue Feb 26 18:59:46 2019 +0800
+
+    Fix ACE_Sbrk_Memory_Pool compilation error when ACE_HAS_ALLOC_HOOKS is defined.
+
+commit 5c8c67c4e7d12d89da8e5f4fd925f2f01e201a76
+Author: Like Ma <likemartinma@gmail.com>
+Date:   Tue Feb 26 10:11:56 2019 +0800
+
+    Fix wchar_t strnew and strdup.
+
+commit d0fe5f78a1597c833ecfbe2f374651bb07b7479c
+Merge: 14737bc15cf 5da2bfea638
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Feb 26 09:19:59 2019 +0100
+
+    Merge branch 'master' of https://github.com/DOCGroup/ACE_TAO
+
+commit 74ee172e04a8ca83ac48fe6b48b6eadbf5754b3c
+Author: Justin R. Wilson <wilsonj@objectcomputing.com>
+Date:   Mon Feb 25 09:34:03 2019 -0600
+
+    Cast iovec.iov_base to char* to handle certain platforms
+
+commit 42bd1fcf1951530b8af007fb9084745fc38edd03
+Author: Justin R. Wilson <wilsonj@objectcomputing.com>
+Date:   Mon Feb 25 09:23:12 2019 -0600
+
+    Fix missing return value
+
+commit 584f74e4cdf8d9279fc800e46c9b8956a7c95fb7
+Author: Justin R. Wilson <wilsonj@objectcomputing.com>
+Date:   Mon Feb 25 09:20:33 2019 -0600
+
+    Address unused argument on MinGW
+
+commit 5135bd5016186624c5e77a95547f9b3765be36e2
+Author: Like Ma <likemartinma@gmail.com>
+Date:   Mon Feb 25 19:11:22 2019 +0800
+
+    Free log record buffer before allocating new buffer.
+
+commit 14737bc15cfb239a05dca22aa4c69368b3f85452
+Merge: d6a22b5e356 ed28a85ef67
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Feb 25 10:08:17 2019 +0100
+
+    Merge branch 'master' of https://github.com/DOCGroup/ACE_TAO
+
+commit 7e77f63fa1b0936a78e9994462e1a5ad72674744
+Author: Like Ma <likemartinma@gmail.com>
+Date:   Mon Feb 25 14:13:29 2019 +0800
+
+    Refine ACE_INET_Addr doc.
+
+commit 6f5b507199498f8c17d63317ba94b36fbb38714f
+Merge: ef632747533 fa2ecd983d5
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Feb 22 10:13:49 2019 -0800
+
+    Merge pull request #842 from jrw972/master
+    
+    Provide option for local address for SOCK_Dgram recvmsg
+
+commit fa2ecd983d5a4f844b9ee419bcd73edc23d1408c
+Author: Justin R. Wilson <wilsonj@objectcomputing.com>
+Date:   Thu Feb 21 09:22:09 2019 -0600
+
+    Provide option for local address for SOCK_Dgram recvmsg
+
+commit 2d7180fbf501ca2f901bf843520196e10c87fd1b
+Author: Like Ma <likemartinma@gmail.com>
+Date:   Tue Feb 5 00:01:09 2019 +0800
+
+    Refactor ACE_DLL_Handle::open
+
+commit c9fe03a6e37045bcdb189e54496e6bcddd9bcdaa
+Author: Like Ma <likemartinma@gmail.com>
+Date:   Wed Feb 20 02:30:48 2019 +0800
+
+    Fix AIX dlopen debug log.
+
+commit d6a22b5e3563cec85fa41ee764fbabb739821ff7
+Merge: 1eac87fc990 d0d94a2127d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Feb 19 18:39:54 2019 +0100
+
+    Merge branch 'master' of https://github.com/DOCGroup/ACE_TAO
+
+commit 1eac87fc99063fe554663740437855ba4d8f594f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Feb 19 11:07:10 2019 +0100
+
+    Removed some empty lines
+    
+        * ACE/ace/Condition_Recursive_Thread_Mutex.h:
+        * ACE/ace/Timer_Queue_T.h:
+        * ACE/ace/Timer_Wheel_T.h:
+
+commit c951f0a9a581139c0744f3ab1923cb90c6db636d
+Author: Martin Corino <mcorino@remedy.nl>
+Date:   Tue Feb 19 11:03:00 2019 +0100
+
+    Fix compile error for MacOS.
+    
+        * ACE/ace/Timer_Queue_Adapters.h:
+
+commit 1db52e74003c2395ee6d31a32925bcd8d2169e0f
+Author: Martin Corino <mcorino@remedy.nl>
+Date:   Tue Feb 19 10:37:48 2019 +0100
+
+    Fix spurious wakeups due to incomplete timepolicy handling.
+    
+        * ACE/ace/Timer_Queue_Adapters.cpp:
+        * ACE/ace/Timer_Queue_Adapters.h:
+        * ACE/ace/Timer_Queue_T.h:
+
+commit 3f6b29bb6a22e8515cf95503beda78c52948cf67
+Merge: 540ed9c6202 077e69f30b4
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Feb 18 09:03:33 2019 +0100
+
+    Merge pull request #820 from likema/feature/dll-manager-buffer-overflow
+    
+    Fix ACE_DLL_Manager potential buffer overflow.
+
+commit 312d94b43b36a0fbc7c99cc0e83fdf1aee79f006
+Author: Like Ma <likemartinma@gmail.com>
+Date:   Mon Feb 18 05:25:59 2019 +0800
+
+    Add ipv6_only to ACE_SSL_SOCK_Acceptor.
+
+commit a7255f41da266630886c26007ea41a95491f396c
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Wed Feb 13 17:11:37 2019 -0600
+
+    Support instantiating ACE_Arg_Shifter_T<char> in wchar builds.
+    
+    Cleaned up some comments and style guidelines violations.
+
+commit ed5565b97dfffe6178e27a1eaec1064b35721c01
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Wed Feb 13 16:42:32 2019 -0600
+
+    Log_Msg: Allow flag macros to be overriden
+
+commit 6ee5298e8932a29aa3bd312d73c3f03c99e2d4ed
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Wed Feb 13 13:53:16 2019 -0600
+
+    Log_Msg: Renable STDERR on Android
+
+commit 3f608aa06daa804968d3d0c080056ecd0f77f55b
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Tue Feb 12 14:22:03 2019 -0600
+
+    Update ACE/NEWS
+
+commit 395a6e469f497e533b6b1ed9f357c11014da2e84
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Tue Feb 12 14:04:04 2019 -0600
+
+    Log_Msg: Fix Enable By Default and Cleanup
+
+commit 4d7e8de04c5b1f76bf29c699d98647e9fd00d212
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Mon Feb 11 19:05:11 2019 -0600
+
+    Use Logcat on Android
+    
+    On Android stdout and stderr are discarded by default. It's possible to
+    workaround this but it's not pretty. The best solution is to use
+    Android's logging system, Logcat. I've added an ACE_Log_Msg_Backend,
+    ACE_Log_Msg_Android_Logcat, and set it to be the default output on
+    Android.
+
+commit dd665581f292d03830cbc93ab1daefe596fe989b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Feb 8 08:57:07 2019 +0100
+
+    Add missing include of crtdbg.h, isn't pulled in through Global_Macros anymore
+    
+        * ACE/ace/Object_Manager.cpp:
+
+commit eb3bf8c063b95429408487539f15fbee2f5b978c
+Merge: 1d97b5fe240 b9635c2089f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Feb 7 12:05:35 2019 +0100
+
+    Merge pull request #832 from jwillemsen/jwi-constimprovements
+    
+    Add missing const to several places
+
+commit b9635c2089f90a2295a9c6b0c55f34b5e84c54a2
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Feb 7 08:33:55 2019 +0000
+
+    Add missing const to several places
+
+commit 17f57f12ed8928d8f5c65551fcbba5bd85043af4
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Feb 7 08:24:06 2019 +0100
+
+    Reduced scope of tss_log_msg variable
+    
+        * ACE/ace/Log_Msg.cpp:
+
+commit 5d648d223c432ad29e689d036c77de7dca721c77
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Feb 7 08:23:48 2019 +0100
+
+    Add missing explicit
+    
+        * ACE/ace/OS_NS_Thread.cpp:
+
+commit d71017df63e2cb01a062d89bbd41d90584a755ff
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Feb 6 17:06:49 2019 +0100
+
+    Removed ACE_NO_HEAP_CHECK macro because it is broken, see issue #733
+    
+        * ACE/ace/Global_Macros.h:
+        * ACE/ace/Log_Msg.cpp:
+        * ACE/ace/OS_NS_Thread.cpp:
+        * ACE/ace/Service_Gestalt.cpp:
+
+commit 077e69f30b41e1239ac580db649f95725196b459
+Author: Like Ma <likemartinma@gmail.com>
+Date:   Wed Feb 6 12:14:15 2019 +0800
+
+    Check path length before copying.
+
+commit 69604f605abe4ae9aecd8920e983da143ba0fa18
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Feb 5 14:41:21 2019 +0100
+
+    Updated link to MPC on github
+    
+        * ACE/bin/MakeProjectCreator/README:
+
+commit 1459627bc753a528db7824da7e08eaa0b903b4cb
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Feb 5 14:40:08 2019 +0100
+
+    Configuration files for Visual Studio 2019
+    
+        * ACE/bin/MakeProjectCreator/config/vs2019.features:
+        * ACE/bin/MakeProjectCreator/config/vs2019nmake.mpb:
+          Added.
+
+commit bdceaf08378e97439b4d920931c81beff6ca7530
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Feb 5 13:00:44 2019 +0100
+
+    Starter configuration file for Visual C++ 14.2 as going to be shipped as part of Visual Studio 2019
+    
+        * ACE/ace/config-win32-msvc-142.h:
+          Added.
+    
+        * ACE/ace/config-win32-msvc.h:
+
+commit a420bff5fa5914c5eac8bc1befbb8af3459aeadc
+Author: Like Ma <likemartinma@gmail.com>
+Date:   Thu Jan 31 18:10:21 2019 +0800
+
+    Fix ACE_DLL_Handle potential buffer overflow.
+
+commit 3fceb27762f3d9386250c4b549a79579f095cbfc
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Feb 4 16:45:48 2019 +0100
+
+    Add item for broken lists
+    
+        * ACE/NEWS:
+
+commit 16fa74c5916578865eff46a6a937ba292a1034fc
+Merge: c55fc1e6107 085f06a313a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Feb 4 16:01:40 2019 +0100
+
+    Merge pull request #824 from jwillemsen/master
+    
+    Reduced scope of error variable
+
+commit 085f06a313ad46edb926e5b45ced2f2dc6ad30ea
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Feb 4 09:31:50 2019 +0100
+
+    Reduced scope of error variable
+    
+        * ACE/ace/SSL/SSL_Context.cpp:
+
+commit c55fc1e61078bd3607ed2ba5c612c6143eaabc59
+Merge: 946d6369b0d 16ad2b12a0f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Feb 2 18:03:46 2019 +0100
+
+    Merge pull request #823 from jwillemsen/master
+    
+    Fixed some Codacy reported issues
+
+commit 16ad2b12a0fc2c5cb5a763d2e2b6af4595bfb3bf
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Feb 2 14:59:37 2019 +0100
+
+    Fixed mismatched delete
+    
+        * ACE/ace/Process.cpp:
+        * ACE/contrib/FaCE/CE_ARGV.cpp:
+        * ACE/contrib/FaCE/CE_Screen_Output.cpp:
+        * ACE/contrib/FaCE/FaCE.cpp:
+        * ACE/examples/Reactor/Proactor/test_aiocb.cpp:
+        * ACE/tests/TkReactor_Test.cpp:
+
+commit fb5c68b8ad753f9a5124e1208d9d7f35db00c7da
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Feb 2 14:59:23 2019 +0100
+
+    Add missing explicit
+    
+        * ACE/ace/Proactor.cpp:
+
+commit 3554f6e355e777cbb598b91719f0c3b8cee2d872
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Feb 2 14:59:06 2019 +0100
+
+    Assignment should return non const reference
+    
+        * ACE/tests/STL_algorithm_Test_T.cpp:
+
+commit 5daaa27eda745ecc8a6e20bf03043c6049729a57
+Merge: 8f2c4e4e937 1527043b14f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jan 30 19:14:50 2019 +0100
+
+    Merge pull request #819 from likema/feature/create-process-as-user
+    
+    Support creating process as user in Windows.
+
+commit 1527043b14f0a14cc663b8f47b3fdb8bec86705a
+Author: Like Ma <likemartinma@gmail.com>
+Date:   Sun Apr 16 22:18:49 2017 +0800
+
+    Support specifying user token in ACE_Process_Options for ::CreateProcessAsUser.
+
+commit f445e77238e43314ffd71575020ea1724423c0de
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jan 30 11:28:20 2019 +0100
+
+    Point to github for the latest MPC documentation
+
+commit af6f1519ae72082aa161836ac37daaa3a28bad07
+Merge: 59fb63edb14 246ad1ffc27
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jan 30 10:07:13 2019 +0100
+
+    Merge pull request #817 from jwillemsen/master
+    
+    Fixed typos in comments
+
+commit 59fb63edb14fbd9c45a269d7f41ada12142e0afc
+Merge: a6baee1a133 f2884d4d337
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jan 30 09:42:06 2019 +0100
+
+    Merge pull request #816 from likema/feature/mem-conn-const
+    
+    Let ACE_MEM_Connector timeout parameters const.
+
+commit 246ad1ffc271061be869e21fd091bffa1c0e5400
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jan 30 09:21:33 2019 +0100
+
+    Fixed typos in comments
+    
+        * ACE/ace/Lib_Find.h:
+        * ACE/ace/SOCK_Connector.h:
+        * ACE/ace/SOCK_SEQPACK_Connector.h:
+
+commit 5d4e810d944dd7cbb13eeb98e37bb36c17848cc3
+Author: Xianda Wang <wxianda@gmail.com>
+Date:   Fri Jan 11 19:52:52 2019 +0800
+
+    Fix DLL_Manager error info
+
+commit f2884d4d33713e38a7bac47532aaf11471c19014
+Author: Like Ma <likemartinma@gmail.com>
+Date:   Tue Mar 7 18:00:20 2017 +0800
+
+    Let ACE_MEM_Connector timeout parameters const.
+
+commit e5387e5ce7c4a4f1b71c1e374d58618dc080082d
+Merge: 2da02176c86 00772bbfe47
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jan 29 18:31:46 2019 +0100
+
+    Merge pull request #814 from likema/feature/thread-safe-mem-addr-get-host-addr
+    
+    Add thread safe ACE_MEM_Addr::get_host_addr.
+
+commit 2da02176c860467631dd8bb3c91494e6f554dadc
+Merge: fa74870b8e6 8c3146a6f94
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jan 29 14:09:18 2019 +0100
+
+    Merge pull request #813 from jwillemsen/jwi-noopcleanup
+    
+    Removed noop comments, no need for that. Removed empty lines, some ol…
+
+commit 00772bbfe4756c5904b85b095538c5ea0167e382
+Author: Like Ma <likemartinma@gmail.com>
+Date:   Tue Jan 29 11:54:12 2019 +0800
+
+    Add thread safe ACE_MEM_Addr::get_host_addr.
+
+commit 8c3146a6f94d0aa074d8925b6f4a06f569ee5a6c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jan 29 11:11:49 2019 +0100
+
+    Removed noop comments, no need for that. Removed empty lines, some old commented out code and some unicode fixs
+    
+        * ACE/ACEXML/apps/svcconf/Svcconf_Handler.cpp:
+        * ACE/ACEXML/common/DefaultHandler.cpp:
+        * ACE/ACEXML/examples/SAXPrint/SAXPrint_Handler.cpp:
+        * TAO/TAO_IDL/be/be_visitor_sequence/sequence_base.cpp:
+        * TAO/examples/Callback_Quoter/Notifier_Input_Handler.cpp:
+        * TAO/examples/Event_Comm/Notifier_Server.cpp:
+        * TAO/examples/OBV/Simple_util.cpp:
+        * TAO/examples/Persistent_Grid/Grid_i.cpp:
+        * TAO/examples/Persistent_Grid/Simple_util.cpp:
+        * TAO/examples/PluggableUDP/tests/Performance/UDP_i.cpp:
+        * TAO/examples/Simple/bank/AccountManager_i.cpp:
+        * TAO/examples/Simple/bank/Account_i.cpp:
+        * TAO/examples/Simple/grid/Grid_i.cpp:
+        * TAO/examples/Simple/time-date/Time_Date_Client_i.cpp:
+        * TAO/examples/Simple/time/Time_i.cpp:
+        * TAO/orbsvcs/FT_ReplicationManager/FT_DefaultFaultAnalyzer.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/Locator_Repository.cpp:
+        * TAO/orbsvcs/Time_Service/Clerk_i.cpp:
+        * TAO/orbsvcs/Time_Service/Server_i.cpp:
+        * TAO/orbsvcs/orbsvcs/AV/FlowSpec_Entry.cpp:
+        * TAO/orbsvcs/orbsvcs/AV/Protocol_Factory.cpp:
+        * TAO/orbsvcs/tests/Bug_2247_Regression/test_i.cpp:
+        * TAO/orbsvcs/tests/Bug_2248_Regression/test_i.cpp:
+        * TAO/orbsvcs/tests/FaultTolerance/IOGR/test_i.cpp:
+        * TAO/tao/LF_Multi_Event.cpp:
+        * TAO/tao/Transport.cpp:
+        * TAO/tests/Big_Reply/Big_Reply_i.cpp:
+        * TAO/tests/Bug_2935_Regression/sink_i.cpp:
+        * TAO/tests/Bug_3276_Regression/test_i.cpp:
+        * TAO/tests/CSD_Collocation/Collocation_Tester.cpp:
+        * TAO/tests/CSD_Collocation/Diamond_i.cpp:
+        * TAO/tests/Collocation/Collocation_Tester.cpp:
+        * TAO/tests/Collocation/Diamond_i.cpp:
+        * TAO/tests/DIOP/UDP_i.cpp:
+        * TAO/tests/InterOp-Naming/INS_i.cpp:
+        * TAO/tests/InterOp-Naming/Server_i.cpp:
+        * TAO/tests/MProfile/test_i.cpp:
+        * TAO/tests/MProfile_Connection_Timeout/test_i.cpp:
+        * TAO/tests/MProfile_Forwarding/Servant_Locator.cpp:
+        * TAO/tests/MProfile_Forwarding/test_i.cpp:
+        * TAO/tests/OBV/Simple/Simple_util.cpp:
+        * TAO/tests/RTCORBA/MT_Client_Protocol_Priority/test.idl:
+        * TAO/tests/Smart_Proxies/Collocation/Coll_Tester.cpp:
+        * TAO/tests/Smart_Proxies/Collocation/Diamond_i.cpp:
+
+commit 3dfa7fe3351deaa21f56f99507fac0b3ce8211ba
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jan 29 10:38:32 2019 +0100
+
+    Removed some empty lines and converted documentation to doxygen style
+
+commit 02768040b00a4f5f475d46f689d3a5d1367fd9b1
+Author: Like Ma <likemartinma@gmail.com>
+Date:   Tue Jan 29 11:52:48 2019 +0800
+
+    Fix ACE_Mem_Addr::get_host_addr by getting external address.
+
+commit 961b2a7b155a23daa95467ae3b2ee6a7bc3cb884
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jan 25 18:30:56 2019 +0100
+
+    Fix broken links and some doxygen enhancements
+    
+        * ACE/ACE-INSTALL.html:
+        * ACE/ACEXML/common/URL_Addr.h:
+        * ACE/examples/Web_Crawler/URL_Addr.h:
+        * TAO/docs/releasenotes/index.html:
+
+commit 5269a3f118eea92b56087334e6282713aec9e473
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jan 25 10:17:04 2019 +0100
+
+    Make new CIAO and DAnCE release public available
+    
+        * ACE/docs/Download.html:
+
+commit 1ff33931b6ee2fada599620dc747c4af95684d0b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jan 24 13:58:02 2019 +0100
+
+    Fixed typo
+
+commit 5ce2976f0721099060d7afe6dd66ee5d8737f1ad
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jan 24 13:57:01 2019 +0100
+
+    https links to the remedy website
+
+commit d6c2132d85cadfc4318fbfe950ee7fd7e8869339
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jan 24 13:24:10 2019 +0100
+
+    Minor enhancements and fixes
+
+commit 66eaf237a23da01878840d97d33e115f8b3a2931
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jan 24 13:08:39 2019 +0100
+
+    Use TAO_ROOT instead of ACE_ROOT/TAO
+
+commit 8cfa9d0c4573c2d2de94f1cdbb12f1da409992d7
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jan 24 12:58:59 2019 +0100
+
+    Fixed broken links
+
+commit 7952d72522dccd2fdb135b9c729ca0b8c3e0baa5
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jan 24 12:51:54 2019 +0100
+
+    Fixed broken links
+
+commit c4a4e15b256663e74736a71d2ff4016289fc985f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jan 24 12:37:53 2019 +0100
+
+    Fixed broken links and updated email address D. Schmidt to the correct one
+
+commit 6f2f966de47619c67fa97c7cfdbb76476efe8f2d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jan 24 12:32:21 2019 +0100
+
+    Fixed broken links and updated email address D. Schmidt to the correct one
+
+commit 6021df96ef4e1eb231d442a3bc29ccf6bc1447c3
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jan 24 12:24:57 2019 +0100
+
+    Removed some obsolete instructions
+    
+        * ACE/docs/bczar/bczar.html:
+
+commit 2625a420c002ef62f65a614cb99549daf03efcd2
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jan 24 11:49:43 2019 +0100
+
+    Fixed various broken links
+
+commit 3aeea5faa75df05740d96fd25f576ca9b0d78840
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jan 24 11:16:45 2019 +0100
+
+    Fixed one version update
+    
+        * ACE/docs/Download.html:
+
+commit 3fa837a8d4ef676e1c6bf301056e59b0c786212a
+Merge: 0e2554b6cf8 028229bbed1
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jan 24 11:15:00 2019 +0100
+
+    Merge pull request #803 from jwillemsen/jwi-ciaogithublink
+    
+    http downloads for CIAO/DAnCE are now pointing to github
+
+commit 2b072ace999e019e903379787b8ae13efb2eca5c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jan 24 11:10:09 2019 +0100
+
+    Updated several broken links
+
+commit d255148732f20ba5f25040ccd2d7221a3445f04c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jan 24 11:01:05 2019 +0100
+
+    Fixed broken links
+    
+        * ACE/ACE-INSTALL.html:
+        * TAO/docs/Security/index.html:
+        * TAO/docs/pluggable_protocols/index.html:
+
+commit e6d011fcaf792bdac1ea2f8912ae7f7820d98f19
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jan 24 10:57:26 2019 +0100
+
+    Fixed several broken links
+    
+        * ACE/docs/ACE-categories.html:
+        * ACE/docs/ACE-porting.html:
+        * ACE/docs/exceptions.html:
+        * ACE/examples/Bounded_Packet_Relay/README:
+        * ACE/examples/Service_Configurator/IPC-tests/README:
+        * ACE/tests/Bound_Ptr_Test.cpp:
+
+commit dcfe399129e863c8dc46c6635e2266260befc265
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jan 24 10:54:07 2019 +0100
+
+    Fixed links to gperf pdf
+    
+        * ACE/apps/gperf/README:
+        * TAO/docs/compiler.html:
+
+commit fb4051352dfaffb481ddcc1fa50640a514496619
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jan 24 10:52:44 2019 +0100
+
+    Fixed link to scoreboard
+    
+        * ACE/docs/ACE-development-process.html:
+
+commit 028229bbed155699ca6a000458b746625b162d95
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jan 24 10:49:45 2019 +0100
+
+    http downloads for CIAO/DAnCE are now pointing to github
+    
+        * ACE/docs/Download.html:
+
+commit 1c9ed0316ecce8c751440832ba9ea1c9a769d770
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jan 24 10:42:43 2019 +0100
+
+    Removed some references to bugzilla
+    
+        * ACE/docs/ACE-development-process.html:
+        * ACE/docs/usage-bugzilla.html:
+        * README.md:
+
+commit a057027d628260ceffaa2ec8718d3981e1edab93
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jan 24 10:38:05 2019 +0100
+
+    Removed references to comp.soft-sys.ace as way to post issues, the mail forward is not working and github issues is the better place
+    
+        * ACE/ACE-INSTALL.html:
+        * ACE/README:
+        * ACE/contrib/FaCE/README:
+        * ACE/docs/ACE-bug-process.html:
+        * TAO/README:
+        * TAO/TAO-INSTALL.html:
+        * TAO/docs/rtcorba/status.html:
+        * TAO/orbsvcs/ImplRepo_Service/README:
+
+commit 40a9b6980a3d7add26956fecb20944b48cba7ac8
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jan 24 09:45:02 2019 +0100
+
+    Add step for OpenDDS configure script PR
+    
+        * ACE/docs/bczar/bczar.html:
+
+commit 08bb96f546c2bf9c6dd0767babc69d2377234f47
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jan 24 09:27:53 2019 +0100
+
+    Make x.5.4 public available
+    
+        * ACE/NEWS:
+        * ACE/bin/copy-local-script.sh:
+        * ACE/bin/copy-script.sh:
+        * ACE/bin/diff-builds-and-group-fixed-tests-only.sh:
+        * ACE/docs/Download.html:
+        * ACE/docs/bczar/bczar.html:
+        * ACE/etc/index.html:
+        * TAO/NEWS:

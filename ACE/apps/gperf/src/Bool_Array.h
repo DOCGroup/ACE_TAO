@@ -2,7 +2,7 @@
 
 /**
  * Copyright (C) 1989 Free Software Foundation, Inc.
- * written by Douglas C. Schmidt (schmidt@cs.wustl.edu)
+ * written by Douglas C. Schmidt (d.schmidt@vanderbilt.edu)
  *
  * This file is part of GNU GPERF.
  *
@@ -43,19 +43,19 @@ class Bool_Array
 {
 public:
   /// Constructor
-  Bool_Array (void);
+  Bool_Array ();
 
   /// Initialize the array (requires O(n) time).
   int open (u_long);
 
   /// Destructor.
-  ~Bool_Array (void);
+  ~Bool_Array ();
 
   /// Locate the @a value in the array (requires O(1) time).
   int find (u_long value);
 
   /// Reinitializes the array (requires O(1) time).
-  void reset (void);
+  void reset ();
 
 private:
   /// Initialization of the index space.

@@ -56,7 +56,7 @@ public:
   Worker (CORBA::ORB_ptr orb);
 
   /// The thread entry point.
-  virtual int svc (void);
+  virtual int svc ();
 
 private:
   /// The orb
@@ -76,7 +76,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   priority = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO,
                                               priority);
 
-  // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
+  // Enable FIFO scheduling
   if (ACE_OS::sched_params (ACE_Sched_Params (ACE_SCHED_FIFO,
                                               priority,
                                               ACE_SCOPE_PROCESS)) != 0)
@@ -157,7 +157,7 @@ Worker::Worker (CORBA::ORB_ptr orb)
 }
 
 int
-Worker::svc (void)
+Worker::svc ()
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) starting event loop\n"));
   this->orb_->run ();

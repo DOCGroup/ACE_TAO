@@ -29,12 +29,11 @@
 class Echo_i : public POA_Echo
 {
 public:
-  // = Initialization and termination methods.
   /// Constructor.
-  Echo_i (void);
+  Echo_i ();
 
   /// Destructor.
-  virtual ~Echo_i (void);
+  virtual ~Echo_i ();
 
   /// Return the mesg string back from the server.
   virtual Echo::List *echo_list (const char *mesg);
@@ -43,7 +42,7 @@ public:
   virtual char *echo_string (const char *mesg);
 
   /// Shutdown the server.
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
   /// Set the ORB pointer.
   void orb (CORBA::ORB_ptr o);

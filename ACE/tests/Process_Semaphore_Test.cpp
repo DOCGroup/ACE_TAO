@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/Mutex.h"
 #include "ace/Process.h"
@@ -30,8 +29,6 @@
 #include "ace/OS_NS_stdlib.h"
 #include "ace/SString.h"
 
-
-
 #if !defined (ACE_LACKS_FORK)
 static int iterations = 10;
 static int child_process = 0;
@@ -40,7 +37,7 @@ static const char *sema_pong_name = "ACE_Pong_Semaphore";
 
 // Explain usage and exit.
 static void
-print_usage_and_die (void)
+print_usage_and_die ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("usage: %n [-i #iterations] [-c (child process)]\n")));
@@ -71,7 +68,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 static void
-acquire_release (void)
+acquire_release ()
 {
 #if defined (ACE_WIN32) || \
       defined (ACE_USES_FIFO_SEM) || \

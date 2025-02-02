@@ -35,8 +35,6 @@ class TAO_Log_Serv_Export TAO_Hash_Persistence_Strategy
   : public TAO_Log_Persistence_Strategy
 {
 public:
-  // = Initialization and Termination Methods
-
   /// Constructor.
   TAO_Hash_Persistence_Strategy ();
 

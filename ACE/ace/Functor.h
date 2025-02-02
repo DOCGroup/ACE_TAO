@@ -17,7 +17,7 @@
  *  @author Chris Gill <cdgill@cs.wustl.edu>
  *  @author Based on Command Pattern implementations originally done by
  *  @author Carlos O'Ryan <coryan@cs.wustl.edu>
- *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  *  @author Sergio Flores-Gaitan <sergio@cs.wustl.edu>
  *  @author and on STL-style functor implementations originally done by
  *  @author Irfan Pyarali  <irfan@cs.wustl.edu>
@@ -57,12 +57,11 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Command_Base
 {
 public:
-  // = Initialization and termination methods.
   /// Default constructor.
-  ACE_Command_Base (void);
+  ACE_Command_Base ();
 
   /// Virtual destructor.
-  virtual ~ACE_Command_Base (void);
+  virtual ~ACE_Command_Base () = default;
 
   /**
    * Invokes the method encapsulated by the command, passing along the
@@ -85,7 +84,7 @@ class ACE_Export ACE_Noop_Command
 {
 public:
   /// Constructor
-  ACE_Noop_Command();
+  ACE_Noop_Command() = default;
 
   /// Implement the empty execute() member function
   virtual int execute(void*);
@@ -200,6 +199,32 @@ public:
   /// Simply returns t
   unsigned long operator () (unsigned long t) const;
 };
+
+#if (ACE_SIZEOF_LONG == 8)
+/**
+ * @brief Function object for hashing a long long number
+ */
+template<>
+class ACE_Export ACE_Hash<long long>
+{
+public:
+  /// Simply returns t
+  unsigned long operator () (long long t) const;
+};
+#endif /* ACE_SIZEOF_LONG == 8 */
+
+#if (ACE_SIZEOF_LONG == 8)
+/**
+ * @brief Function object for hashing an unsigned long long number
+ */
+template<>
+class ACE_Export ACE_Hash<unsigned long long>
+{
+public:
+  /// Simply returns t
+  unsigned long operator () (unsigned long long t) const;
+};
+#endif /* ACE_SIZEOF_LONG == 8 */
 
 #if (ACE_SIZEOF_LONG < 8)
 /**

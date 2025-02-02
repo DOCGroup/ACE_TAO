@@ -34,7 +34,7 @@ namespace TAO
                                       5,
                                       TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY);
 
-    tao_call.invoke (0, 0);
+    tao_call.invoke (nullptr, 0);
 
     return _tao_retval.retn ();
   }
@@ -58,7 +58,7 @@ namespace TAO
                                        13,
                                        TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY);
 
-    _tao_call.invoke (0, 0);
+    _tao_call.invoke (nullptr, 0);
 
     return _tao_retval.retn ();
   }
@@ -80,7 +80,7 @@ namespace TAO
                                        10,
                                        TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY);
 
-    _tao_call.invoke (0, 0);
+    _tao_call.invoke (nullptr, 0);
 
     return _tao_retval.retn ();
   }
@@ -90,10 +90,9 @@ namespace TAO
   {
     TAO_IFR_Client_Adapter *adapter =
       ACE_Dynamic_Service<TAO_IFR_Client_Adapter>::instance (
-        TAO_ORB_Core::ifr_client_adapter_name ()
-      );
+        TAO_ORB_Core::ifr_client_adapter_name ());
 
-  if (adapter == 0)
+  if (adapter == nullptr)
     {
       throw ::CORBA::INTF_REPOS ();
     }
@@ -118,7 +117,7 @@ namespace TAO
                                        14,
                                        TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY);
 
-    _tao_call.invoke (0, 0);
+    _tao_call.invoke (nullptr, 0);
 
     return _tao_retval.retn ();
   }
@@ -128,7 +127,7 @@ namespace TAO
 // -----------------------------------------------------
 
 TAO::Remote_Object_Proxy_Broker *
-the_tao_remote_object_proxy_broker (void)
+the_tao_remote_object_proxy_broker ()
 {
   static TAO::Remote_Object_Proxy_Broker the_broker;
   return &the_broker;

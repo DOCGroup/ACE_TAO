@@ -79,11 +79,12 @@ AST_EnumVal::AST_EnumVal (ACE_CDR::ULong v,
     AST_Constant (AST_Expression::EV_ulong,
                   AST_Decl::NT_enum_val,
                   new AST_Expression (v),
-                  n)
+                  n),
+    enum_parent_ (nullptr)
 {
 }
 
-AST_EnumVal::~AST_EnumVal (void)
+AST_EnumVal::~AST_EnumVal ()
 {
 }
 
@@ -102,6 +103,14 @@ AST_EnumVal::ast_accept (ast_visitor *visitor)
   return visitor->visit_enum_val (this);
 }
 
+AST_Enum *
+AST_EnumVal::enum_parent ()
+{
+  return enum_parent_;
+}
 
-
-IMPL_NARROW_FROM_DECL(AST_EnumVal)
+void
+AST_EnumVal::enum_parent (AST_Enum *node)
+{
+  enum_parent_ = node;
+}

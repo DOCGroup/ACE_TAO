@@ -50,13 +50,13 @@ class TAO_Notify_Tests_Consumer_T : public TAO_Notify_Tests_Peer_T <Consumer_Tra
 
 public:
   /// Constructor
-  TAO_Notify_Tests_Consumer_T (void);
+  TAO_Notify_Tests_Consumer_T ();
 
   /// Destructor
   ~TAO_Notify_Tests_Consumer_T ();
 
   /// For backward compatibility. use <get_proxy> instead.
-  Proxy_Traits_PTR get_proxy_supplier (void);
+  Proxy_Traits_PTR get_proxy_supplier ();
 
   /// Send subscription_change
   virtual void subscription_change (CosNotification::EventTypeSeq &added, CosNotification::EventTypeSeq& removed);
@@ -71,17 +71,10 @@ protected:
 
   // = NotifyPublish method
   virtual void offer_change (const CosNotification::EventTypeSeq & added,
-        const CosNotification::EventTypeSeq & removed
-      );
+        const CosNotification::EventTypeSeq & removed);
 };
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "Consumer_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Consumer_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 #endif /* TAO_Notify_Tests_CONSUMER_T_H */

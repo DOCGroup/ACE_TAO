@@ -19,7 +19,6 @@
 #include "ace/OS_NS_unistd.h"
 
 
-
 #if defined (ACE_HAS_THREADS)
 
 // This test exercises the setting and cancelling of timers from a
@@ -34,7 +33,7 @@
 // destructor for Time_Handler insures that everything happened
 // correctly.
 
-Time_Handler::Time_Handler (void)
+Time_Handler::Time_Handler ()
 {
   for (int i = 0;
        i < Time_Handler::TIMER_SLOTS;
@@ -49,7 +48,7 @@ Time_Handler::Time_Handler (void)
 // starts.
 
 void
-Time_Handler::setup (void)
+Time_Handler::setup ()
 {
   ACE_Reactor *r = ACE_Reactor::instance ();
 
@@ -66,7 +65,7 @@ Time_Handler::setup (void)
 }
 
 int
-Time_Handler::verify_results (void)
+Time_Handler::verify_results ()
 {
   ACE_TEST_ASSERT (this->timer_id_[0] == Time_Handler::TIMER_FIRED);
   ACE_TEST_ASSERT (this->timer_id_[1] == Time_Handler::TIMER_FIRED);
@@ -83,7 +82,7 @@ Time_Handler::verify_results (void)
 }
 
 int
-Time_Handler::svc (void)
+Time_Handler::svc ()
 {
   ACE_Reactor *r = ACE_Reactor::instance ();
 
@@ -145,9 +144,8 @@ Time_Handler::handle_timeout (const ACE_Time_Value &tv,
 
 #endif /* ACE_HAS_THREADS */
 
-Dispatch_Count_Handler::Dispatch_Count_Handler (void)
+Dispatch_Count_Handler::Dispatch_Count_Handler ()
 {
-
   ACE_Reactor *r = ACE_Reactor::instance ();
 
   this->input_seen_ = this->notify_seen_ = 0;
@@ -245,7 +243,7 @@ Dispatch_Count_Handler::handle_timeout (const ACE_Time_Value &tv,
 }
 
 int
-Dispatch_Count_Handler::verify_results (void)
+Dispatch_Count_Handler::verify_results ()
 {
   int result = 0;
 

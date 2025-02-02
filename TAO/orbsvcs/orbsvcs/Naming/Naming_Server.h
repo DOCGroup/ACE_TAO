@@ -4,16 +4,13 @@
 /**
  *  @file    Naming_Server.h
  *
- *
  *    Implement wrappers useful to Naming Service servers.
- *
  *
  *  @author Nagarajan Surendran (naga@cs.wustl.edu)
  *  @author Matt Braun <mjb2@cs.wustl.edu>
- *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>.
+ *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>.
  */
 //=============================================================================
-
 
 #ifndef TAO_NAMING_SERVER_H
 #define TAO_NAMING_SERVER_H
@@ -128,16 +125,16 @@ public:
   virtual int init_with_orb (int argc, ACE_TCHAR *argv [], CORBA::ORB_ptr orb);
 
   /// Destroy the child POA created in @c init_with_orb
-  virtual int fini (void);
+  virtual int fini ();
 
   /// Destructor.
-  virtual ~TAO_Naming_Server (void);
+  virtual ~TAO_Naming_Server ();
 
   /// Returns the IOR of the naming service.
-  char * naming_service_ior (void);
+  char * naming_service_ior ();
 
   /// Returns a <NamingContext_ptr> for the root Naming Context.
-  CosNaming::NamingContext_ptr operator-> (void) const;
+  CosNaming::NamingContext_ptr operator-> () const;
 
 protected:
   struct IOR_Bundle {
@@ -191,7 +188,7 @@ protected:
    * the -f option.
    */
   virtual TAO_Persistent_Naming_Context_Factory *
-    persistent_naming_context_factory (void);
+    persistent_naming_context_factory ();
 
   /// The ior_multicast event handler.
   TAO_IOR_Multicast *ior_multicast_;
@@ -266,7 +263,6 @@ protected:
   /// If not zero use round trip timeout policy set to value specified
   int round_trip_timeout_;
   int use_round_trip_timeout_;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

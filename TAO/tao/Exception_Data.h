@@ -19,6 +19,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/orbconf.h"
+#include <string_view>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -35,7 +36,7 @@ namespace TAO
   // Function pointer returning a pointer to CORBA::Exception. This is used to
   // describe the allocator for user-defined exceptions that are used internally
   // by the interpreter.
-  typedef CORBA::Exception* (*TAO_Exception_Alloc) (void);
+  typedef CORBA::Exception* (*TAO_Exception_Alloc) ();
 
   /**
    * @struct Exception_Data
@@ -50,7 +51,7 @@ namespace TAO
   struct Exception_Data
   {
     /// Repository id of the exception.
-    const char *id;
+    std::string_view id;
 
     /// The allocator for this exception.
     TAO_Exception_Alloc alloc;

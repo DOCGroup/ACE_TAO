@@ -56,9 +56,6 @@ class TAO_EventLog_i :
   public POA_DsEventLogAdmin::EventLog
 {
 public:
-
-  // = Initialization and Termination.
-
   /// Constructor.
   TAO_EventLog_i (CORBA::ORB_ptr orb,
                   PortableServer::POA_ptr poa,
@@ -76,21 +73,20 @@ public:
 
   /// Destroy the log object and all contained records.
   void
-  destroy (void);
+  destroy ();
 
   /// Activate the EventLog.
   void
-  activate (void);
+  activate ();
 
   // = The CosEventChannelAdmin::EventChannel interface methods.
   CosEventChannelAdmin::ConsumerAdmin_ptr
-  for_consumers (void);
+  for_consumers ();
 
   CosEventChannelAdmin::SupplierAdmin_ptr
-  for_suppliers (void);
+  for_suppliers ();
 
 protected:
-
   /// Destructor
   /**
    * Protected destructor to enforce proper memory management through
@@ -99,7 +95,6 @@ protected:
   ~TAO_EventLog_i ();
 
 private:
-
   /// The Event Channel that the log uses.
   TAO_CEC_EventChannel *event_channel_;
 

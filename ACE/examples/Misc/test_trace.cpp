@@ -24,7 +24,7 @@
  *  2. Add #define ACE_NTRACE 0 in config.h
  *  3. Build your app with tracing.
  *
- *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu> and Irfan Pyarali <irfan@cs.wustl.edu>
+ *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu> and Irfan Pyarali <irfan@cs.wustl.edu>
  */
 //=============================================================================
 
@@ -47,7 +47,7 @@ public:
 
   int recursive (size_t depth);
 
-  virtual int svc (void)
+  virtual int svc ()
   {
     return this->recursive (this->depth_);
   }
@@ -71,9 +71,9 @@ My_Task::recursive (size_t depth)
 
 extern "C"
 void
-exithook (void)
+exithook ()
 {
-  ACE_TRACE ("void exithook (void)");
+  ACE_TRACE ("void exithook ()");
 
   ACE_DEBUG ((LM_DEBUG,
               "we're outta here!\n"));

@@ -50,10 +50,10 @@ module TimeBase
     /// The actual time
     TimeT time;
 
-    /// The lowest bound for innacuracy
+    /// The lowest bound for inaccuracy
     unsigned long inacclo;
 
-    /// The upper bound for the innacuracy
+    /// The upper bound for the inaccuracy
     unsigned short inacchi;
 
     /// @todo please document

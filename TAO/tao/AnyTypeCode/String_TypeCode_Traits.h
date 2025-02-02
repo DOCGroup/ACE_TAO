@@ -69,7 +69,6 @@ namespace TAO
         return tc;
       }
     };
-
   }  // End namespace TypeCodeFactory
 }  // End namespace TAO
 

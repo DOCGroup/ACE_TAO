@@ -4,9 +4,8 @@
 #include "Supplier_T.h"
 
 
-
 template <class Supplier_Traits>
-TAO_Notify_Tests_Supplier_T<Supplier_Traits>::TAO_Notify_Tests_Supplier_T (void)
+TAO_Notify_Tests_Supplier_T<Supplier_Traits>::TAO_Notify_Tests_Supplier_T ()
 {
 }
 
@@ -16,7 +15,7 @@ TAO_Notify_Tests_Supplier_T<Supplier_Traits>::~TAO_Notify_Tests_Supplier_T ()
 }
 
 template <class Supplier_Traits> typename TAO_Notify_Tests_Supplier_T<Supplier_Traits>::Proxy_Traits_PTR
-TAO_Notify_Tests_Supplier_T<Supplier_Traits>::get_proxy_consumer (void)
+TAO_Notify_Tests_Supplier_T<Supplier_Traits>::get_proxy_consumer ()
 {
   return this->get_proxy ();
 }
@@ -28,8 +27,7 @@ TAO_Notify_Tests_Supplier_T<Supplier_Traits>::obtain_proxy (typename TAO_Notify_
 
   CosNotifyChannelAdmin::ProxyConsumer_var proxy_consumer =
     admin_ptr->obtain_notification_push_consumer (traits.type_
-                                                  , this->proxy_id_
-                                                  );
+                                                  , this->proxy_id_);
 
 
   ACE_ASSERT (!CORBA::is_nil (proxy_consumer.in ()));

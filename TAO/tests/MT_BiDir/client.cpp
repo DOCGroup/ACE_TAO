@@ -35,7 +35,6 @@ parse_args (int argc, ACE_TCHAR *argv[])
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-
   try
     {
       CORBA::ORB_var orb =
@@ -116,7 +115,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       Receiver_var receiver_obj =
         Receiver::_narrow (object_act.in ());
 
-      // Send the calback object to the server
+      // Send the callback object to the server
       sender->receiver_object (receiver_obj.in ());
 
       // Threads that will handle the call backs
@@ -137,8 +136,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                   "(%P|%t) Number of events received.. [%d]\n",
                   count));
 
-      root_poa->destroy (1,
-                         1);
+      root_poa->destroy (true, true);
     }
   catch (const CORBA::Exception& ex)
     {

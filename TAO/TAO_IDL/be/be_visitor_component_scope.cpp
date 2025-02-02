@@ -26,7 +26,7 @@
 be_visitor_component_scope::be_visitor_component_scope (
       be_visitor_context *ctx)
   : be_visitor_scope (ctx),
-    node_ (0),
+    node_ (nullptr),
     os_ (*ctx->stream ()),
     export_macro_ (be_global->svnt_export_macro ()),
     in_ext_port_ (false)
@@ -42,7 +42,7 @@ be_visitor_component_scope::be_visitor_component_scope (
 }
 
 be_visitor_component_scope::~be_visitor_component_scope (
-  void)
+  )
 {
 }
 
@@ -119,7 +119,7 @@ int
 be_visitor_component_scope::visit_component_scope (
   be_component *node)
 {
-  if (node == 0)
+  if (node == nullptr)
     {
       return 0;
     }
@@ -154,14 +154,14 @@ be_visitor_component_scope::visit_porttype_scope_mirror (
        !si.is_done ();
        si.next ())
     {
-      be_decl *d = be_decl::narrow_from_decl (si.item ());
+      be_decl *d = dynamic_cast<be_decl*> (si.item ());
 
       switch (d->node_type ())
         {
           case AST_Decl::NT_provides:
             {
               be_provides *p =
-                be_provides::narrow_from_decl (d);
+                dynamic_cast<be_provides*> (d);
 
               be_uses mirror_node (p->name (),
                                    p->provides_type (),
@@ -182,7 +182,7 @@ be_visitor_component_scope::visit_porttype_scope_mirror (
           case AST_Decl::NT_uses:
             {
               be_uses *u =
-                be_uses::narrow_from_decl (d);
+                dynamic_cast<be_uses*> (d);
 
               be_provides mirror_node (u->name (),
                                        u->uses_type ());
@@ -224,7 +224,7 @@ be_visitor_component_scope::node (be_component *c)
 }
 
 void
-be_visitor_component_scope::gen_svnt_entrypoint_decl (void)
+be_visitor_component_scope::gen_svnt_entrypoint_decl ()
 {
   os_ << be_nl_2
       << "extern \"C\" " << export_macro_.c_str ()
@@ -239,7 +239,7 @@ be_visitor_component_scope::gen_svnt_entrypoint_decl (void)
 }
 
 void
-be_visitor_component_scope::gen_svnt_entrypoint_defn (void)
+be_visitor_component_scope::gen_svnt_entrypoint_defn ()
 {
   ACE_CString sname_str (
     ScopeAsDecl (node_->defined_in ())->full_name ());
@@ -261,7 +261,7 @@ be_visitor_component_scope::gen_svnt_entrypoint_defn (void)
       << "_var x =" << be_idt_nl
       << global << sname << "::CCM_" << lname
       << "::_narrow (p);" << be_uidt_nl << be_nl
-      << "if ( ::CORBA::is_nil (x.in ()))" << be_idt_nl
+      << "if (::CORBA::is_nil (x.in ()))" << be_idt_nl
       << "{" << be_idt_nl
       << "return 0;" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl
@@ -279,7 +279,7 @@ be_visitor_component_scope::gen_svnt_entrypoint_defn (void)
 }
 
 void
-be_visitor_component_scope::gen_exec_entrypoint_decl (void)
+be_visitor_component_scope::gen_exec_entrypoint_decl ()
 {
   os_ << be_nl_2
       << "/// Factory method and library entry point used by the middleware" << be_nl
@@ -287,17 +287,17 @@ be_visitor_component_scope::gen_exec_entrypoint_decl (void)
       << "extern \"C\" " << export_macro_.c_str ()
       << " ::Components::EnterpriseComponent_ptr" << be_nl
       << "create_" << node_->flat_name ()
-      << "_Impl (void);";
+      << "_Impl ();";
 }
 
 void
-be_visitor_component_scope::gen_exec_entrypoint_defn (void)
+be_visitor_component_scope::gen_exec_entrypoint_defn ()
 {
   os_ << be_nl_2
       << "extern \"C\" " << export_macro_.c_str ()
       << " ::Components::EnterpriseComponent_ptr" << be_nl
       << "create_" << node_->flat_name ()
-      << "_Impl (void)" << be_nl
+      << "_Impl ()" << be_nl
       << "{" << be_idt_nl
       << "::Components::EnterpriseComponent_ptr retval ="
       << be_idt_nl

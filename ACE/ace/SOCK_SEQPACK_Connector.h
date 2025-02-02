@@ -48,9 +48,8 @@ class ACE_Time_Value;
 class ACE_Export ACE_SOCK_SEQPACK_Connector
 {
 public:
-  // = Initialization and termination methods.
   /// Default constructor.
-  ACE_SOCK_SEQPACK_Connector (void);
+  ACE_SOCK_SEQPACK_Connector ();
 
   /**
    * Actively connect to a peer, producing a connected @c ACE_SOCK_SEQPACK_Association
@@ -252,7 +251,7 @@ public:
                int protocol = 132);
 
   /// Default dtor.
-  ~ACE_SOCK_SEQPACK_Connector (void);
+  ~ACE_SOCK_SEQPACK_Connector ();
 
   // = Completion routine.
   /**
@@ -264,7 +263,7 @@ public:
    *                    to the peer.
    * @param remote_sap  If non-0, it points to the @c ACE_INET_Addr object
    *                    that will contain the address of the connected peer.
-   * @param timeout     Same values and return value possibilites as for
+   * @param timeout     Same values and return value possibilities as for
    *                    connect(). @see connect().
    */
   int complete (ACE_SOCK_SEQPACK_Association &new_association,
@@ -279,7 +278,7 @@ public:
   typedef ACE_SOCK_SEQPACK_Association PEER_STREAM;
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;

@@ -8,7 +8,7 @@
 #include "Time_Request_Reply.h"
 
 // Default "do nothing" constructor.
-ACE_Time_Request::ACE_Time_Request (void)
+ACE_Time_Request::ACE_Time_Request ()
 {
   ACE_TRACE ("ACE_Time_Request::ACE_Time_Request");
 }
@@ -42,7 +42,7 @@ ACE_Time_Request::ACE_Time_Request (ACE_INT32 t, // Type of request.
 
 // Get the fixed size of message
 ssize_t
-ACE_Time_Request::size (void) const
+ACE_Time_Request::size () const
 {
   ACE_TRACE ("ACE_Time_Request::size");
   return sizeof (this->transfer_);
@@ -50,7 +50,7 @@ ACE_Time_Request::size (void) const
 
 // = Set/get the type of the message.
 ACE_INT32
-ACE_Time_Request::msg_type (void) const
+ACE_Time_Request::msg_type () const
 {
   ACE_TRACE ("ACE_Time_Request::msg_type");
   return this->transfer_.msg_type_;
@@ -65,7 +65,7 @@ ACE_Time_Request::msg_type (ACE_INT32 t)
 
 // = Set/get the blocking semantics.
 ACE_UINT32
-ACE_Time_Request::block_forever (void) const
+ACE_Time_Request::block_forever () const
 {
   ACE_TRACE ("ACE_Time_Request::block_forever");
   return this->transfer_.block_forever_;
@@ -80,7 +80,7 @@ ACE_Time_Request::block_forever (ACE_UINT32 bs)
 
 // = Set/get the timeout.
 ACE_Time_Value
-ACE_Time_Request::timeout (void) const
+ACE_Time_Request::timeout () const
 {
   ACE_TRACE ("ACE_Time_Request::timeout");
   time_t sec = ACE_Utils::truncate_cast<time_t> (this->transfer_.sec_timeout_);
@@ -97,7 +97,7 @@ ACE_Time_Request::timeout (const ACE_Time_Value& timeout)
 
 // = Set/get the time
 time_t
-ACE_Time_Request::time (void) const
+ACE_Time_Request::time () const
 {
   ACE_TRACE ("ACE_Time_Request::time");
   return this->time_;
@@ -135,7 +135,7 @@ ACE_Time_Request::encode (void *&buf)
 // Decode the transfer buffer into host byte byte order
 // so that it can be used by the server.
 int
-ACE_Time_Request::decode (void)
+ACE_Time_Request::decode ()
 {
   ACE_TRACE ("ACE_Time_Request::decode");
   // Decode
@@ -156,7 +156,7 @@ ACE_Time_Request::decode (void)
 // Print out the current values of the ACE_Time_Request.
 
 void
-ACE_Time_Request::dump (void) const
+ACE_Time_Request::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Time_Request::dump");

@@ -64,8 +64,10 @@ struct ACE_DIR {
   /// The name of the directory we are looking into
   ACE_TCHAR *directory_name_;
 
+#if !defined (ACE_MQX)
   /// Remember the handle between calls.
   HANDLE current_handle_;
+#endif
 
   /// The struct for the results
   ACE_DIRENT *dirent_;
@@ -78,8 +80,13 @@ struct ACE_DIR {
 };
 #elif defined (ACE_WIN32) && (__BORLANDC__) && defined (ACE_USES_WCHAR)
 #define ACE_HAS_TCHAR_DIRENT
-#define ACE_DIRENT wdirent
+#if defined(__MINGW64__)
+# define ACE_DIRENT _wdirent
+typedef _WDIR ACE_DIR;
+#else
+# define ACE_DIRENT wdirent
 typedef wDIR ACE_DIR;
+#endif
 #else
 #define ACE_DIRENT dirent
 typedef DIR ACE_DIR;

@@ -20,7 +20,6 @@ namespace TAO
 {
   namespace Transport
   {
-
     // Forward decl
     class Stats;
 
@@ -38,7 +37,6 @@ namespace TAO
       , public virtual ::CORBA::LocalObject
       {
       public:
-
         /// Constructor.
         Current_Impl (TAO_ORB_Core* core, size_t tss_slot_id);
 
@@ -47,58 +45,50 @@ namespace TAO
          * PortableInterceptor::Current interface.
          */
         //@{
-        virtual CORBA::Long id (void);
+        virtual CORBA::Long id ();
 
-        virtual CounterT bytes_sent (void);
+        virtual CounterT bytes_sent ();
 
-        virtual CounterT bytes_received (void);
+        virtual CounterT bytes_received ();
 
-        virtual CounterT messages_sent (void);
+        virtual CounterT messages_sent ();
 
-        virtual CounterT messages_received (void);
+        virtual CounterT messages_received ();
 
-        virtual ::TimeBase::TimeT open_since (void);
+        virtual ::TimeBase::TimeT open_since ();
         //@}
 
       protected:
-
         /**
          * Some helper methods
          */
         //@{
         /// A (strategy) method used to obtain the transport ptr
-        const TAO_Transport* transport (void) const;
+        const TAO_Transport* transport () const;
 
         /// A Stats instance. If protocol is unavailable (0) or the
         /// TAO_HAS_TRANSPORT_CURRENT macro is defined as anything but
         /// 1, a single static instance will be used.
-        const TAO::Transport::Stats* transport_stats (void) const;
+        const TAO::Transport::Stats* transport_stats () const;
         //@}
 
         /// Destructor is protected to enforce the fact this class is
         /// reference counted, and should not be destroyed using
         /// delete() by anything other than the reference counting
         /// mechanism.
-        virtual ~Current_Impl (void);
+        virtual ~Current_Impl ();
 
       private:
-
-        /// Prevent copying through the copy constructor and the
-        /// assignment operator.
-        //@{
-        Current_Impl (const Current_Impl &);
-        void operator= (const Current_Impl &);
-        //@}
+        Current_Impl (const Current_Impl &) = delete;
+        void operator= (const Current_Impl &) = delete;
 
       private:
-
         // The ORB (core) that owes us.
         TAO_ORB_Core* core_;
 
         // The ORB's TSS slot id for the Transport ptr
         size_t tss_slot_id_;
       };
-
   }
 
 }

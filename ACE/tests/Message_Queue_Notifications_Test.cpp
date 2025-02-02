@@ -41,7 +41,6 @@
 #include "ace/OS_NS_unistd.h"
 
 
-
 static int iterations = 10;
 
 static const size_t worker_threads = 2;
@@ -58,18 +57,17 @@ static const int watermark_iterations = 2 * default_high_water_mark;
 class Message_Handler : public ACE_Task<ACE_NULL_SYNCH>
 {
 public:
-  // = Initialization and termination.
   /// Constructor.
   Message_Handler (ACE_Reactor &reactor);
 
   // = Demuxing hooks.
-  virtual int handle_input (ACE_HANDLE);
-  virtual int handle_output (ACE_HANDLE fd = ACE_INVALID_HANDLE);
-  virtual int handle_exception (ACE_HANDLE fd = ACE_INVALID_HANDLE);
+  int handle_input (ACE_HANDLE) override;
+  int handle_output (ACE_HANDLE fd = ACE_INVALID_HANDLE) override;
+  int handle_exception (ACE_HANDLE fd = ACE_INVALID_HANDLE) override;
 
 private:
-  int process_message (void);
-  void make_message (void);
+  int process_message ();
+  void make_message ();
 
   ACE_Reactor_Notification_Strategy notification_strategy_;
 };
@@ -83,15 +81,15 @@ private:
 class Watermark_Test : public ACE_Task<ACE_SYNCH>
 {
 public:
-  Watermark_Test (void);
+  Watermark_Test ();
 
-  virtual int svc (void);
+  int svc () override;
 
-  int consumer (void);
-  int producer (void);
+  int consumer ();
+  int producer ();
   int put_message (ACE_Time_Value* timeout = 0);
-  int get_message (void);
-  void print_producer_debug_message (void);
+  int get_message ();
+  void print_producer_debug_message ();
 
 private:
   const size_t len_;
@@ -153,7 +151,7 @@ Message_Handler::handle_exception (ACE_HANDLE fd)
 }
 
 int
-Message_Handler::process_message (void)
+Message_Handler::process_message ()
 {
   ACE_Message_Block *mb = 0;
 
@@ -176,7 +174,7 @@ Message_Handler::process_message (void)
 }
 
 void
-Message_Handler::make_message (void)
+Message_Handler::make_message ()
 {
   if (--iterations > 0)
     {
@@ -190,7 +188,7 @@ Message_Handler::make_message (void)
     }
 }
 
-Watermark_Test::Watermark_Test (void)
+Watermark_Test::Watermark_Test ()
   : len_ (ACE_OS::strlen (default_message) + 1),
     hwm_ (this->len_ * default_high_water_mark),
     lwm_ (this->len_ * default_low_water_mark),
@@ -207,7 +205,7 @@ Watermark_Test::Watermark_Test (void)
 }
 
 int
-Watermark_Test::producer (void)
+Watermark_Test::producer ()
 {
   int i = watermark_iterations;
 
@@ -220,7 +218,6 @@ Watermark_Test::producer (void)
       i--;
       if (this->msg_queue ()->is_full ())
         break;
-
     }
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P|%t) Producer: High water mark hit ----\n")));
@@ -245,7 +242,7 @@ Watermark_Test::producer (void)
 }
 
 int
-Watermark_Test::consumer (void)
+Watermark_Test::consumer ()
 {
   ACE_MT (this->mq_full_.wait ());
 
@@ -263,7 +260,7 @@ Watermark_Test::consumer (void)
 }
 
 int
-Watermark_Test::get_message (void)
+Watermark_Test::get_message ()
 {
   ACE_Message_Block *mb = 0;
 
@@ -299,7 +296,7 @@ Watermark_Test::put_message (ACE_Time_Value *timeout)
 }
 
 void
-Watermark_Test::print_producer_debug_message (void)
+Watermark_Test::print_producer_debug_message ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P|%t) Producer: message size = %3d, ")
@@ -309,7 +306,7 @@ Watermark_Test::print_producer_debug_message (void)
 }
 
 int
-Watermark_Test::svc (void)
+Watermark_Test::svc ()
 {
   // this->role_ is an Atomic_Op object.
   int role = this->role_++;

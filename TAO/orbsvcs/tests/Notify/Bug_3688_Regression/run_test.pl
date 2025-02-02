@@ -33,7 +33,7 @@ $server1->DeleteFile($ior1file);
 $hostname = $server1->HostName ();
 $port = $server1->RandomPort ();
 
-$SV1 = $server1->CreateProcess ("../../../Notify_Service/tao_cosnotification",
+$SV1 = $server1->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Notify_Service/tao_cosnotification",
                               "-ORBdebuglevel $debug_level " .
                               "-NoNameSvc -IORoutput $server1_ior1file $svcconf " .
                               "-ORBEndpoint iiop://$hostname:$port");

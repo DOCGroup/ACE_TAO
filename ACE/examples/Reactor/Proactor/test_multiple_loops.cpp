@@ -19,7 +19,6 @@
 #include "ace/OS_NS_unistd.h"
 
 
-
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO)
 
 /**
@@ -29,9 +28,8 @@
  */
 class Timeout_Handler : public ACE_Handler, public ACE_Event_Handler
 {
-
 public:
-  Timeout_Handler (void)
+  Timeout_Handler ()
     {
     }
 
@@ -68,9 +66,8 @@ private:
 class Worker : public ACE_Task <ACE_NULL_SYNCH>
 {
 public:
-
   // Thread fuction.
-  int svc (void)
+  int svc ()
     {
       ACE_DEBUG ((LM_DEBUG, "(%t) Worker started\n"));
 

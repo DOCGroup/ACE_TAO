@@ -16,7 +16,7 @@ be_visitor_module_sh::be_visitor_module_sh (be_visitor_context *ctx)
 {
 }
 
-be_visitor_module_sh::~be_visitor_module_sh (void)
+be_visitor_module_sh::~be_visitor_module_sh ()
 {
 }
 
@@ -31,8 +31,7 @@ be_visitor_module_sh::visit_module (be_module *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   // Generate the skeleton class name.
 
@@ -62,12 +61,11 @@ be_visitor_module_sh::visit_module (be_module *node)
                         -1);
     }
 
-  *os << be_uidt_nl << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  *os << be_uidt_nl << be_nl;
+  TAO_INSERT_COMMENT (os);
 
   *os << "} // module "
       << node->name ();
 
   return 0;
-
 }

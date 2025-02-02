@@ -5,25 +5,20 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Codeset_Manager_Factory_Base::~TAO_Codeset_Manager_Factory_Base (void)
-{
-}
-
 bool
-TAO_Codeset_Manager_Factory_Base::is_default (void) const
+TAO_Codeset_Manager_Factory_Base::is_default () const
 {
   return true;
 }
 
 TAO_Codeset_Manager *
-TAO_Codeset_Manager_Factory_Base::create (void)
+TAO_Codeset_Manager_Factory_Base::create ()
 {
-  return 0;
-
+  return nullptr;
 }
 
 int
-TAO_Codeset_Manager_Factory_Base::initialize (void)
+TAO_Codeset_Manager_Factory_Base::initialize ()
 {
   return ACE_Service_Config::process_directive
     (ace_svc_desc_TAO_Codeset_Manager_Factory_Base);

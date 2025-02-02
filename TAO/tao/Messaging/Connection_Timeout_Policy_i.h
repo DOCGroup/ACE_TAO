@@ -44,7 +44,6 @@ class TAO_ConnectionTimeoutPolicy
   : public TAO::ConnectionTimeoutPolicy,
     public ::CORBA::LocalObject
 {
-
 public:
   /// Constructor.
   TAO_ConnectionTimeoutPolicy (const TimeBase::TimeT& relative_expiry);
@@ -64,22 +63,22 @@ public:
   static CORBA::Policy_ptr create (const CORBA::Any& val);
 
   /// Returns a copy of <this>.
-  virtual TAO_ConnectionTimeoutPolicy *clone (void) const;
+  virtual TAO_ConnectionTimeoutPolicy *clone () const;
 
   // = The TAO::ConnectionTinoutPolicy methods
-  virtual TimeBase::TimeT relative_expiry (void);
+  virtual TimeBase::TimeT relative_expiry ();
 
-  virtual CORBA::PolicyType policy_type (void);
+  virtual CORBA::PolicyType policy_type ();
 
-  virtual CORBA::Policy_ptr copy (void);
+  virtual CORBA::Policy_ptr copy ();
 
-  virtual void destroy (void);
+  virtual void destroy ();
 
   /// Change the CORBA representation to the ACE representation.
   void set_time_value (ACE_Time_Value &time_value);
 
   /// Return the cached policy type for this policy.
-  virtual TAO_Cached_Policy_Type _tao_cached_type (void) const;
+  virtual TAO_Cached_Policy_Type _tao_cached_type () const;
 
 private:
   /// The attribute

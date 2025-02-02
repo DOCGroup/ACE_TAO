@@ -2,7 +2,7 @@
 #include "orbsvcs/Event/EC_Default_Factory.h"
 #include "ace/Get_Opt.h"
 
-RtEC_Based_CosEC::RtEC_Based_CosEC (void)
+RtEC_Based_CosEC::RtEC_Based_CosEC ()
   : service_name (ACE_TEXT("CosEventService")),
     rt_service_name (ACE_TEXT("EventService")),
     remote_rtec_ (0)
@@ -10,7 +10,7 @@ RtEC_Based_CosEC::RtEC_Based_CosEC (void)
   // No-Op.
 }
 
-RtEC_Based_CosEC::~RtEC_Based_CosEC (void)
+RtEC_Based_CosEC::~RtEC_Based_CosEC ()
 {
   // No-Op.
 }
@@ -132,7 +132,7 @@ RtEC_Based_CosEC::startup (int argc, ACE_TCHAR *argv[])
 }
 
 POA_RtecEventChannelAdmin::EventChannel_ptr
-RtEC_Based_CosEC::create_rtec (void)
+RtEC_Based_CosEC::create_rtec ()
 {
   // see if the user wants a local RtEC..
   if (this->remote_rtec_ == 0)
@@ -142,7 +142,7 @@ RtEC_Based_CosEC::create_rtec (void)
 }
 
 void
-RtEC_Based_CosEC::activate_rtec (void)
+RtEC_Based_CosEC::activate_rtec ()
 {
   // see if the user wants to use a local RtEC..
   if (this->remote_rtec_ == 0)
@@ -162,7 +162,7 @@ RtEC_Based_CosEC::activate_rtec (void)
 }
 
 void
-RtEC_Based_CosEC::deactivate_rtec (void)
+RtEC_Based_CosEC::deactivate_rtec ()
 {
   // Check if the local rtec is to be deactivated.
   if (this->remote_rtec_ == 0)
@@ -172,7 +172,7 @@ RtEC_Based_CosEC::deactivate_rtec (void)
 }
 
 void
-RtEC_Based_CosEC::locate_rtec (void)
+RtEC_Based_CosEC::locate_rtec ()
 {
   CosNaming::Name ref_name (1);
   ref_name.length (1);
@@ -187,7 +187,7 @@ RtEC_Based_CosEC::locate_rtec (void)
 }
 
 void
-RtEC_Based_CosEC::resolve_naming_service (void)
+RtEC_Based_CosEC::resolve_naming_service ()
 {
   CORBA::Object_var naming_obj =
     this->orb_->resolve_initial_references ("NameService");
@@ -201,7 +201,7 @@ RtEC_Based_CosEC::resolve_naming_service (void)
 }
 
 int
-RtEC_Based_CosEC::run (void)
+RtEC_Based_CosEC::run ()
 {
   ACE_DEBUG ((LM_DEBUG, "%s: Running the CosEventService\n", __FILE__));
   try
@@ -217,7 +217,7 @@ RtEC_Based_CosEC::run (void)
 }
 
 void
-RtEC_Based_CosEC::shutdown (void)
+RtEC_Based_CosEC::shutdown ()
 {
   // Deactivate.
   this->deactivate ();

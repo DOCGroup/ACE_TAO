@@ -18,7 +18,7 @@ TAO_IORInfo::TAO_IORInfo (TAO_Root_POA *poa)
 {
 }
 
-TAO_IORInfo::~TAO_IORInfo (void)
+TAO_IORInfo::~TAO_IORInfo ()
 {
 }
 
@@ -68,7 +68,7 @@ TAO_IORInfo::add_ior_component_to_profile (
 }
 
 char *
-TAO_IORInfo::manager_id (void)
+TAO_IORInfo::manager_id ()
 {
   this->check_validity ();
 
@@ -77,7 +77,7 @@ TAO_IORInfo::manager_id (void)
 }
 
 PortableInterceptor::AdapterState
-TAO_IORInfo::state (void)
+TAO_IORInfo::state ()
 {
   this->check_validity ();
 
@@ -85,7 +85,7 @@ TAO_IORInfo::state (void)
 }
 
 PortableInterceptor::ObjectReferenceTemplate *
-TAO_IORInfo::adapter_template (void)
+TAO_IORInfo::adapter_template ()
 {
   this->check_validity ();
 
@@ -106,7 +106,7 @@ TAO_IORInfo::adapter_template (void)
 }
 
 PortableInterceptor::ObjectReferenceFactory *
-TAO_IORInfo::current_factory (void)
+TAO_IORInfo::current_factory ()
 {
   this->check_validity ();
 
@@ -136,7 +136,7 @@ TAO_IORInfo::current_factory (
 }
 
 void
-TAO_IORInfo::check_validity (void)
+TAO_IORInfo::check_validity ()
 {
   if (this->poa_ == 0)
     {

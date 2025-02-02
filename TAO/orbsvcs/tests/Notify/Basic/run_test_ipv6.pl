@@ -22,8 +22,6 @@ my $test = PerlACE::TestTarget::create_target (3) || die "Create target 3 failed
 
 $test->AddLibPath ('../lib');
 
-PerlACE::check_privilege_group();
-
 $experiment_timeout = 60;
 $startup_timeout = 60;
 
@@ -87,7 +85,7 @@ else {
     @test_configs = @ARGV;
 }
 
-$NS = $ns->CreateProcess ("../../../Naming_Service/tao_cosnaming",
+$NS = $ns->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_cosnaming",
                               "-o $ns_nsiorfile");
 
 $NS_status = $NS->Spawn ();
@@ -129,7 +127,7 @@ for $config (@test_configs) {
 
     my $nfs_config = $nfs->LocalFile ($config);
 
-    $NFS = $nfs->CreateProcess ("../../../Notify_Service/tao_cosnotification",
+    $NFS = $nfs->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Notify_Service/tao_cosnotification",
                                 ' '.$dispatch_opt.' '.
                                 "-ORBInitRef NameService=file://$nfs_nsiorfile " .
                                 "-IORoutput $nfs_nfsiorfile " .

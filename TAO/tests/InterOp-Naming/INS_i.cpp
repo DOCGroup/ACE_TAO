@@ -2,19 +2,16 @@
 
 // Constructor
 
-INS_i::INS_i (void)
+INS_i::INS_i ()
 {
-  // no-op
 }
 
 // Destructor
-
-INS_i::~INS_i (void)
+INS_i::~INS_i ()
 {
 }
 
 // Set the ORB pointer.
-
 void
 INS_i::orb (CORBA::ORB_ptr o)
 {
@@ -22,7 +19,7 @@ INS_i::orb (CORBA::ORB_ptr o)
 }
 
 char *
-INS_i::test_ins (void)
+INS_i::test_ins ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "Inside Operation\n"));

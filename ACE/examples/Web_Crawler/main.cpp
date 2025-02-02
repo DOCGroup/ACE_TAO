@@ -6,7 +6,7 @@
  *   This program implements a Web crawler that can be configured to
  *   apply various strategies to URLs that it visits.
  *
- *  @author Doug Schmidt <schmidt@cs.wustl.edu>
+ *  @author Doug Schmidt <d.schmidt@vanderbilt.edu>
  */
 //=============================================================================
 
@@ -15,7 +15,6 @@
 #include "ace/Signal.h"
 #include "Web_Crawler.h"
 #include "Options.h"
-
 
 
 void sig_handler (int)
@@ -28,9 +27,7 @@ void sig_handler (int)
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-#if !defined (ACE_HAS_WINCE)
   ACE_Sig_Action sa ((ACE_SignalHandler) sig_handler, SIGFPE);
-#endif
   Web_Crawler crawler;
 
   if (crawler.open (argc, argv) == -1)
@@ -40,6 +37,5 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   else
     return 0;
 }
-
 
 

@@ -29,7 +29,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_PG
 {
-
   /**
    * @class Fragments_Cleanup_Strategy
    *
@@ -45,7 +44,7 @@ namespace TAO_PG
     Fragments_Cleanup_Strategy (int bound);
 
     /// The destructor
-    virtual ~Fragments_Cleanup_Strategy (void);
+    virtual ~Fragments_Cleanup_Strategy () = default;
 
     /// Sub-classes must implement these methods
     virtual void cleanup (TAO_UIPMC_Mcast_Transport::Packets_Map &) = 0;
@@ -99,7 +98,6 @@ namespace TAO_PG
 
     virtual void cleanup (TAO_UIPMC_Mcast_Transport::Packets_Map &packets);
   };
-
 } // namespace TAO_PG
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -52,8 +52,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   int priority =
     (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO)
      + ACE_Sched_Params::priority_max (ACE_SCHED_FIFO)) / 2;
-  // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
 
+  // Enable FIFO scheduling
   if (ACE_OS::sched_params (ACE_Sched_Params (ACE_SCHED_FIFO,
                                               priority,
                                               ACE_SCOPE_PROCESS)) != 0)
@@ -129,7 +129,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                                          ACE_OS::gethrtime ());
            if (orb->work_pending ())
               orb->perform_work ();
-
          }
 
        ACE_Time_Value tv (0, 2000);
@@ -154,7 +153,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       roundtrip->shutdown ();
 
-      root_poa->destroy (1, 1);
+      root_poa->destroy (true, true);
 
       orb->destroy ();
     }

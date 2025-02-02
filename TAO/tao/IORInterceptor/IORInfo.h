@@ -45,7 +45,6 @@ class TAO_IORInfo
     public virtual ::CORBA::LocalObject
 {
 public:
-
   /// Constructor.
   TAO_IORInfo (TAO_Root_POA *poa);
 
@@ -55,7 +54,6 @@ public:
    * Methods exposed by the PortableInterceptor::IORInfo interface.
    */
   //@{
-
   /// Return the policy matching the given policy type that is in
   /// effect for the object whose IOR is being created.
   virtual CORBA::Policy_ptr get_effective_policy (CORBA::PolicyType type);
@@ -69,13 +67,13 @@ public:
       const IOP::TaggedComponent & component,
       IOP::ProfileId profile_id);
 
-  virtual char * manager_id (void);
+  virtual char * manager_id ();
 
-  virtual PortableInterceptor::AdapterState state (void);
+  virtual PortableInterceptor::AdapterState state ();
 
-  virtual PortableInterceptor::ObjectReferenceTemplate *adapter_template (void);
+  virtual PortableInterceptor::ObjectReferenceTemplate *adapter_template ();
 
-  virtual PortableInterceptor::ObjectReferenceFactory *current_factory (void);
+  virtual PortableInterceptor::ObjectReferenceFactory *current_factory ();
 
   virtual void current_factory (
       PortableInterceptor::ObjectReferenceFactory * current_factory);
@@ -87,7 +85,7 @@ public:
    * Once the IOR interception points have been invoked, this IORInfo
    * instance is no longer valid.
    */
-  void invalidate (void);
+  void invalidate ();
 
   /// Inform the this IORInfo object that the
   /// IORInterceptor::components_established() interception point has
@@ -98,13 +96,12 @@ public:
    * are invalid.  They are only valid in the
    * IORInterceptor::establish_components() interception point.
    */
-  void components_established (void);
+  void components_established ();
 
 protected:
-
   /// Protected destructor to enforce proper memory management through
   /// the reference counting mechanism.
-  ~TAO_IORInfo (void);
+  ~TAO_IORInfo ();
 
   /// Check if this IORInfo instance is valid.
   /**
@@ -112,17 +109,13 @@ protected:
    * this IORInfo object is no longer valid.  Throw an exception in
    * that case.
    */
-  void check_validity (void);
+  void check_validity ();
 
 private:
-
-  /// Prevent copying through the copy constructor and the assignment
-  /// operator.
-  TAO_IORInfo (const TAO_IORInfo &);
-  void operator= (const TAO_IORInfo &);
+  TAO_IORInfo (const TAO_IORInfo &) = delete;
+  void operator= (const TAO_IORInfo &) = delete;
 
 private:
-
   /// Pointer to POA
   TAO_Root_POA * poa_;
 
@@ -135,7 +128,6 @@ private:
    * interception point has been called.
    */
   CORBA::Boolean components_established_;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

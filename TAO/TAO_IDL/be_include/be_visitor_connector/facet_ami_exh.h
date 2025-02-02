@@ -28,7 +28,7 @@ class be_visitor_facet_ami_exh
 public:
   be_visitor_facet_ami_exh (be_visitor_context *ctx);
 
-  ~be_visitor_facet_ami_exh (void);
+  ~be_visitor_facet_ami_exh ();
 
   virtual int visit_component (be_component *node);
   virtual int visit_provides (be_provides *node);
@@ -49,8 +49,8 @@ protected:
   bool sync_;
 
 private:
-  int gen_reply_handler_class (void);
-  int gen_facet_executor_class (void);
+  int gen_reply_handler_class ();
+  int gen_facet_executor_class ();
 };
   //==============================================================
 

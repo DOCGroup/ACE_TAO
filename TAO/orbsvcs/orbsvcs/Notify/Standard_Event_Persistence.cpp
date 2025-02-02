@@ -10,7 +10,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_Notify
 {
-
 Standard_Event_Persistence::Standard_Event_Persistence ()
   : filename_ (ACE_TEXT ("__PERSISTENT_EVENT__.DB"))
   , block_size_ (512)
@@ -31,8 +30,8 @@ Standard_Event_Persistence::get_factory ()
   {
     ACE_NEW_NORETURN (
       this->factory_,
-      Standard_Event_Persistence_Factory ()
-      );
+      Standard_Event_Persistence_Factory ());
+
     if (this->factory_ != 0)
     {
       if (!this->factory_->open (this->filename_.c_str ()))

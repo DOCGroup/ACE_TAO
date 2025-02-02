@@ -71,7 +71,7 @@ namespace TAO
     PG_FactoryRegistry (const char * name = "FactoryRegistry");
 
     /// virtual Destructor
-    virtual ~PG_FactoryRegistry (void);
+    virtual ~PG_FactoryRegistry ();
 
     /**
      * Parse command line arguments.
@@ -97,7 +97,7 @@ namespace TAO
      * Prepare to exit.
      * @return zero for success; nonzero is process return code for failure.
      */
-    int fini (void);
+    int fini ();
 
     /**
      * Processing to happen when the ORB's event loop is idle.
@@ -120,7 +120,7 @@ namespace TAO
 
     ////////////////////////////////
     // override servant base methods
-    virtual void _remove_ref (void);
+    virtual void _remove_ref ();
 
     //////////////////
     // CORBA interface
@@ -129,31 +129,24 @@ namespace TAO
     virtual void register_factory (
         const char * role,
         const char * type_id,
-        const PortableGroup::FactoryInfo & factory_info
-      );
+        const PortableGroup::FactoryInfo & factory_info);
 
     virtual void unregister_factory (
         const char * role,
-        const PortableGroup::Location & location
-    );
+        const PortableGroup::Location & location);
 
-    virtual void unregister_factory_by_role (
-        const char * role
-      );
+    virtual void unregister_factory_by_role (const char * role);
 
 
     virtual void unregister_factory_by_location (
-      const PortableGroup::Location & location
-    );
+      const PortableGroup::Location & location);
 
     virtual ::PortableGroup::FactoryInfos * list_factories_by_role (
         const char * role,
-        CORBA::String_out type_id
-      );
+        CORBA::String_out type_id);
 
     virtual ::PortableGroup::FactoryInfos * list_factories_by_location (
-      const PortableGroup::Location & location
-    );
+      const PortableGroup::Location & location);
 
     /////////////////////////
     // Implementation methods
@@ -166,7 +159,6 @@ namespace TAO
     ///////////////
     // Data Members
   private:
-
     /**
      * A human-readable string to distinguish this from other Notifiers.
      */
@@ -224,7 +216,6 @@ namespace TAO
     int linger_;
 
     RegistryType registry_;
-
   };
 } // namespace TAO
 

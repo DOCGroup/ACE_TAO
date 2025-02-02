@@ -40,7 +40,7 @@ public:
   TAO_ValueBoxDef_i (TAO_Repository_i *repo);
 
   /// Destructor
-  virtual ~TAO_ValueBoxDef_i (void);
+  virtual ~TAO_ValueBoxDef_i ();
 
   /// Return our definition kind.
   virtual CORBA::DefinitionKind def_kind ();
@@ -55,11 +55,9 @@ public:
 
   CORBA::IDLType_ptr original_type_def_i ();
 
-  virtual void original_type_def (
-      CORBA::IDLType_ptr original_type_def);
+  virtual void original_type_def (CORBA::IDLType_ptr original_type_def);
 
-  void original_type_def_i (
-      CORBA::IDLType_ptr original_type_def);
+  void original_type_def_i (CORBA::IDLType_ptr original_type_def);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

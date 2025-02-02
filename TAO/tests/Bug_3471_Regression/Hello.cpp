@@ -6,7 +6,7 @@ Hello::Hello (CORBA::ORB_ptr orb)
 }
 
 Test::ObjectSeq*
-Hello::get_objects (void)
+Hello::get_objects ()
 {
   Test::ObjectSeq_var my_seq = new Test::ObjectSeq (1);
   my_seq->length (1);
@@ -16,7 +16,7 @@ Hello::get_objects (void)
 }
 
 void
-Hello::shutdown (void)
+Hello::shutdown ()
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

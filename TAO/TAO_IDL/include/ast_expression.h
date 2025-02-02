@@ -1,4 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
 /*
 
 COPYRIGHT
@@ -74,6 +73,7 @@ class UTL_Scope;
 class ast_visitor;
 class AST_Decl;
 class AST_Param_Holder;
+class AST_Enum;
 
 // Representation of expression values.
 
@@ -120,12 +120,16 @@ public:
       , EK_octet
       , EK_floating_point
       , EK_fixed_point
+      , EK_int8
+      , EK_uint8
     };
 
   // Enum to define expression type.
   enum ExprType
     {
-        EV_short                  // Expression value is short.
+        EV_int8                   // Signed Byte Sized Integer
+      , EV_uint8                  // Unsigned Byte Sized Integer
+      , EV_short                  // Expression value is short.
       , EV_ushort                 // Expression value is unsigned short.
       , EV_long                   // Expression value is long.
       , EV_ulong                  // Expression value is unsigned long.
@@ -157,12 +161,14 @@ public:
       , EV_none                   // Expression value is missing.
     };
 
+  static ExprType eval_kind_to_expr_type (EvalKind eval_kind);
+
   // Structure to describe value of constant expression and its type.
   struct AST_ExprValue
     {
-      AST_ExprValue (void);
+      AST_ExprValue ();
 
-      union
+      union Value
         {
           ACE_CDR::Short      sval;     // Contains short expression value.
           ACE_CDR::UShort     usval;    // Contains unsigned short expr value.
@@ -180,9 +186,12 @@ public:
           char                *wstrval; // Contains wide string expr value.
           ACE_CDR::ULong      eval;     // Contains enumeration value.
           ACE_CDR::Fixed      fixedval; // Contains IDL fixed value.
-        } u;
+          ACE_CDR::Int8       int8val;  // Signed Byte Sized Integer
+          ACE_CDR::UInt8      uint8val; // Unsigned Byte Sized Integer
+        };
 
       ExprType et;
+      Value u;
     };
 
  // Operations.
@@ -231,30 +240,30 @@ public:
   AST_Expression (const ACE_CDR::Fixed &f);
 
   // Destructor.
-  virtual ~AST_Expression (void);
+  virtual ~AST_Expression ();
 
   // Data Accessors.
-  UTL_Scope *defined_in (void);
+  UTL_Scope *defined_in ();
   void set_defined_in (UTL_Scope *d);
 
-  long line (void);
+  long line ();
   void set_line (long l);
 
-  UTL_String *file_name (void);
+  UTL_String *file_name ();
   void set_file_name (UTL_String *f);
 
-  ExprComb ec (void);
+  ExprComb ec ();
 
-  AST_ExprValue *ev (void);
+  AST_ExprValue *ev ();
   void set_ev (AST_ExprValue *new_ev);
 
-  AST_Expression *v1 (void);
+  AST_Expression *v1 ();
   void set_v1 (AST_Expression *e);
 
-  AST_Expression *v2 (void);
+  AST_Expression *v2 ();
   void set_v2 (AST_Expression *e);
 
-  UTL_ScopedName *n (void);
+  UTL_ScopedName *n ();
   void set_n (UTL_ScopedName *new_n);
 
   // AST Dumping.
@@ -264,7 +273,7 @@ public:
   virtual int ast_accept (ast_visitor *visitor);
 
   // Cleanup.
-  virtual void destroy (void);
+  virtual void destroy ();
 
   // Other operations.
 
@@ -279,16 +288,25 @@ public:
   // Evaluate then store value inside this AST_Expression.
   void evaluate (EvalKind ek);
 
-  // Compare two AST_Expressions.
-
+  /// Compare two AST_Expressions.
+  ///{
   bool operator== (AST_Expression *vc);
-  long compare (AST_Expression *vc);
+  bool compare (AST_Expression *vc);
+  ///}
 
   // Accessor for the member.
-  AST_Decl *get_tdef (void) const;
+  AST_Decl *get_tdef () const;
 
   // Accessor for the member.
-  AST_Param_Holder *param_holder (void) const;
+  AST_Param_Holder *param_holder () const;
+
+  static const char *exprtype_to_string (ExprType t);
+
+  /// Pointer to enum of this value if applicable
+  ///{
+  AST_Enum *enum_parent ();
+  void enum_parent (AST_Enum *node);
+  ///}
 
 protected:
   // Evaluate different sets of operators.
@@ -335,12 +353,14 @@ private:
   AST_Param_Holder *param_holder_;
   // Non-zero if we were created from a reference template param.
 
-private:
   // Fill out the lineno, filename and definition scope details.
-  void fill_definition_details (void);
+  void fill_definition_details ();
 
   // Internal evaluation.
   virtual AST_ExprValue *eval_internal (EvalKind ek);
+
+  /// Pointer to enum of this value if applicable
+  AST_Enum *enum_parent_;
 };
 
 #endif           // _AST_EXPR_VAL_AST_EXPR_VAL_HH

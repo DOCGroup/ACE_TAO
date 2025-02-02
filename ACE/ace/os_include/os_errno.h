@@ -22,14 +22,16 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if !defined (ACE_LACKS_ERRNO_H)
-# include /**/ <errno.h>
-#endif /* !ACE_LACKS_ERRNO_H */
+#include /**/ <errno.h>
 
 #if defined (ACE_VXWORKS)
 // Needed for VxWorks to pickup errnoSet()
 #include /**/ <errnoLib.h>
 #endif /* ACE_VXWORKS */
+
+#ifndef ACE_CUSTOM_ERRNO_BASE
+#  define ACE_CUSTOM_ERRNO_BASE 1000
+#endif
 
 // Place all additions (especially function declarations) within extern "C" {}
 #ifdef __cplusplus
@@ -281,7 +283,7 @@ extern "C"
 void herror (const char *str);
 #endif /* ACE_HAS_H_ERRNO */
 
-#if defined (ACE_LACKS_ERRNO_H)
+#if defined (ACE_DEFINE_MISSING_ERRNOS)
 # if !defined (EPERM)
 #   define EPERM           1
 # endif /* EPERM */
@@ -378,7 +380,7 @@ void herror (const char *str);
 # if !defined (ERANGE)
 #   define ERANGE          34
 # endif /* ERANGE */
-# if !defined (EDEADLK)
+# if !defined (EDEADLK) && !defined (ACE_MQX) // Conflicts with EILSEQ
 #   define EDEADLK         36
 # endif /* EDEADLK */
 # if !defined (ENAMETOOLONG)
@@ -393,7 +395,38 @@ void herror (const char *str);
 # if !defined (ENOTEMPTY)
 #   define ENOTEMPTY       41
 # endif /* ENOTEMPTY */
-#endif /* ACE_LACKS_ERRNO_H */
+# ifndef ETIME
+#  define ETIME 62
+# endif
+# ifndef ECOMM
+#  define ECOMM 70
+# endif
+# ifndef EAFNOSUPPORT
+#  define EAFNOSUPPORT 97
+# endif
+# ifndef EADDRIUNSE
+#  define EADDRINUSE 98
+# endif
+# ifndef ENETUNREACH
+#  define ENETUNREACH 101
+# endif
+# ifndef ECONNRESET
+#  define ECONNRESET 104
+# endif
+# ifndef ENOBUFS
+#  define ENOBUFS 105
+# endif
+# ifndef EISCONN
+#  define EISCONN 106
+# endif
+# ifndef ECONNREFUSED
+#  define ECONNREFUSED 111
+# endif
+# ifndef EINPROGRESS
+#  define EINPROGRESS 115
+# endif
+
+#endif /* ACE_DEFINE_MISSING_ERRNOS */
 
 #if defined (ACE_LACKS_T_ERRNO)
 extern int t_errno;
@@ -425,7 +458,7 @@ extern int t_errno;
 #endif /* ECOMM */
 
 #if !defined (EDEADLK)
-#  define EDEADLK 1000 /* Some large number.... */
+#  define EDEADLK (ACE_CUSTOM_ERRNO_BASE) + 1
 #endif /* !EDEADLK */
 
 #if !defined (ENXIO)     /* Needed in SOCK_Dgram_Mcast */
@@ -450,6 +483,11 @@ extern int t_errno;
 
 #ifndef ESHUTDOWN
 #define ESHUTDOWN ECANCELED
+#endif
+
+#ifdef ACE_MQX
+#  define EWOULDBLOCK EAGAIN
+#  define ELOOP (ACE_CUSTOM_ERRNO_BASE) + 2
 #endif
 
 #ifdef __cplusplus

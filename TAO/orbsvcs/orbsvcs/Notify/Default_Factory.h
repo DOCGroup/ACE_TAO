@@ -28,7 +28,7 @@ class TAO_Notify_Serv_Export TAO_Notify_Default_Factory : public TAO_Notify_Fact
 {
 public:
   /// Constructor
-  TAO_Notify_Default_Factory (void);
+  TAO_Notify_Default_Factory ();
 
   /// Destructor
   virtual ~TAO_Notify_Default_Factory ();

@@ -50,14 +50,13 @@ class TAO_Offer_Database
 {
   friend class TAO_Service_Offer_Iterator<LOCK_TYPE>;
 public:
-
   // Traits
   typedef TAO_Service_Offer_Iterator<LOCK_TYPE> offer_iterator;
 
   /// No arg constructor.
-  TAO_Offer_Database (void);
+  TAO_Offer_Database ();
 
-  ~TAO_Offer_Database (void);
+  ~TAO_Offer_Database ();
 
   /// Add an offer of type @ type and generate a CosTrading::OfferId
   /// for it. Returns 0 on failure.
@@ -80,7 +79,7 @@ public:
 
   /// Return an iterator that will traverse and return all the offer
   /// ids in the service type map.
-  TAO_Offer_Id_Iterator* retrieve_all_offer_ids (void);
+  TAO_Offer_Id_Iterator* retrieve_all_offer_ids ();
 
   struct Offer_Map_Entry
   {
@@ -100,7 +99,6 @@ public:
     Offer_Database;
 
 private:
-
   // The internal id is a pointer here, not only to avoid copying,
   // since we would only copy on insertion, and we only insert once
   // --- with an empty Offer_Map_Entry --- but also since most locks
@@ -130,8 +128,8 @@ private:
                               CORBA::ULong& id);
 
   // = Disallow these operations.
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Offer_Database<LOCK_TYPE> &))
-  ACE_UNIMPLEMENTED_FUNC (TAO_Offer_Database (const TAO_Offer_Database<LOCK_TYPE> &))
+  void operator= (const TAO_Offer_Database<LOCK_TYPE> &) = delete;
+  TAO_Offer_Database (const TAO_Offer_Database<LOCK_TYPE> &) = delete;
 
   LOCK_TYPE db_lock_;
 
@@ -150,27 +148,26 @@ private:
 template <class LOCK_TYPE>
 class TAO_Service_Offer_Iterator
 {
- public:
-
+public:
   typedef TAO_Offer_Database<LOCK_TYPE> Offer_Database;
 
   TAO_Service_Offer_Iterator (const char* type,
                               TAO_Offer_Database<LOCK_TYPE>& offer_database);
 
   /// Release all the locks acquired.
-  ~TAO_Service_Offer_Iterator (void);
+  ~TAO_Service_Offer_Iterator ();
 
   /// Returns 1 if there are more offers, 0 otherwise.
-  int has_more_offers (void);
+  int has_more_offers ();
 
   /// Get the id for the current offer.
-  CosTrading::OfferId get_id (void);
+  CosTrading::OfferId get_id ();
 
   /// Returns the next offer in the series.
-  CosTrading::Offer* get_offer (void);
+  CosTrading::Offer* get_offer ();
 
   /// Advances the iterator 1.
-  void next_offer (void);
+  void next_offer ();
 
  private:
   /// Lock the top_level map.
@@ -188,9 +185,7 @@ class TAO_Service_Offer_Iterator
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "orbsvcs/Trader/Offer_Database.cpp"
-#endif  /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #include /**/ "ace/post.h"
 #endif /* TAO_SERVICE_TYPE_MAP_H */

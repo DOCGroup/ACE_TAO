@@ -23,7 +23,7 @@ TAO_Notify_AnyEvent_No_Copy::~TAO_Notify_AnyEvent_No_Copy ()
 }
 
 const TAO_Notify_EventType&
-TAO_Notify_AnyEvent_No_Copy::type (void) const
+TAO_Notify_AnyEvent_No_Copy::type () const
 {
   return this->event_type_;
 }
@@ -108,7 +108,7 @@ TAO_Notify_AnyEvent_No_Copy::unmarshal (TAO_InputCDR & cdr)
 }
 
 TAO_Notify_Event *
-TAO_Notify_AnyEvent_No_Copy::copy (void) const
+TAO_Notify_AnyEvent_No_Copy::copy () const
 {
   TAO_Notify_Event * new_event;
   ACE_NEW_THROW_EX (new_event,

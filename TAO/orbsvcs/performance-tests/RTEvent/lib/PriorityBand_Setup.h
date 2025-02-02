@@ -32,11 +32,7 @@ public:
   /**
    * It is a no-op, but it shuts up g++
    */
-  ~PriorityBand_Setup (void);
+  ~PriorityBand_Setup ();
 };
-
-#if defined(__ACE_INLINE__)
-#include "PriorityBand_Setup.inl"
-#endif /* __ACE_INLINE__ */
 
 #endif /* TAO_PERF_RTEC_PRIORITYBAND_SETUP_H */

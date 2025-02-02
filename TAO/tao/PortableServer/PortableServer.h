@@ -27,11 +27,10 @@ class TAO_PortableServer_Export TAO_POA_Initializer
 {
 public:
   /// Used to force the initialization of the ORB code.
-  static int init (void);
+  static int init ();
 };
 
-static int
-TAO_Requires_POA_Initializer = TAO_POA_Initializer::init ();
+static const int TAO_Requires_POA_Initializer = TAO_POA_Initializer::init ();
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

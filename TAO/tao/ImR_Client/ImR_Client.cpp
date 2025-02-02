@@ -10,6 +10,7 @@
 #include "tao/ImR_Client/ServerObject_i.h"
 #include "tao/ImR_Client/ImplRepoC.h"
 #include "tao/IORManipulation/IORManip_Loader.h"
+#include <cstring>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -21,9 +22,8 @@ namespace
     // should be protocol neutral.
     const char corbaloc[] = "corbaloc:";
     char *pos = ACE_OS::strstr (ior, corbaloc);
-    pos = ACE_OS::strchr (pos + sizeof (corbaloc), ':');
-
-    pos = ACE_OS::strchr (pos + 1, delimiter);
+    pos = std::strchr (pos + sizeof (corbaloc), ':');
+    pos = std::strchr (pos + 1, delimiter);
 
     return pos;
   }
@@ -128,8 +128,7 @@ namespace
         }
       catch (const ::CORBA::Exception& )
         {
-          return default_obj (
-            "could not ImRify object with all profiles");
+          return default_obj ("could not ImRify object with all profiles");
         }
     }
   private:
@@ -156,8 +155,7 @@ namespace
     CORBA::Object_ptr default_obj(const char* desc)
     {
       const CORBA::ULong pcount = base_profiles_.profile_count ();
-      const char* info =
-        "because couldn't find ImR profile_in_use in profiles";
+      const char* info = "because couldn't find ImR profile_in_use in profiles";
 
       // identify the profile in use to see if we can default to
       // that profiles partial ImR-ification
@@ -172,19 +170,26 @@ namespace
                   info = "because couldn't ImR-ify profile_in_use";
                   break;
                 }
-              TAOLIB_ERROR((LM_ERROR,
-                ACE_TEXT("TAO_ImR_Client (%P|%t) - ERROR: %C. ")
-                ACE_TEXT("Defaulting to ImR-ifying profile_in_use\n"),
-                desc));
+
+              if (TAO_debug_level > 0)
+                {
+                  TAOLIB_ERROR((LM_ERROR,
+                    ACE_TEXT("TAO_ImR_Client (%P|%t) - ERROR: %C. ")
+                    ACE_TEXT("Defaulting to ImR-ifying profile_in_use\n"),
+                    desc));
+                }
               return objs_[i]._retn ();
             }
         }
 
-      TAOLIB_ERROR((LM_ERROR,
-                 ACE_TEXT ("TAO_ImR_Client (%P|%t) - ERROR: %C, ")
-                 ACE_TEXT ("but cannot default to ImR-ifying profile_in_use %C\n"),
-                 desc,
-                 info));
+      if (TAO_debug_level > 0)
+        {
+          TAOLIB_ERROR((LM_ERROR,
+                    ACE_TEXT ("TAO_ImR_Client (%P|%t) - ERROR: %C, ")
+                    ACE_TEXT ("but cannot default to ImR-ifying profile_in_use %C\n"),
+                    desc,
+                    info));
+        }
       return CORBA::Object::_nil();
     }
 
@@ -203,7 +208,7 @@ namespace TAO
 {
   namespace ImR_Client
   {
-    ImR_Client_Adapter_Impl::ImR_Client_Adapter_Impl (void)
+    ImR_Client_Adapter_Impl::ImR_Client_Adapter_Impl ()
      : server_object_ (0)
     {
     }
@@ -215,9 +220,12 @@ namespace TAO
 
       if (CORBA::is_nil (imr.in ()))
         {
-          TAOLIB_ERROR ((LM_ERROR,
-                      ACE_TEXT ("TAO_ImR_Client (%P|%t) - ERROR: No usable IMR initial reference ")
-                      ACE_TEXT ("available but use IMR has been specified.\n")));
+          if (TAO_debug_level > 0)
+            {
+              TAOLIB_ERROR ((LM_ERROR,
+                          ACE_TEXT ("TAO_ImR_Client (%P|%t) - ERROR: No usable IMR initial reference ")
+                          ACE_TEXT ("available but use IMR has been specified.\n")));
+            }
           throw ::CORBA::TRANSIENT (
               CORBA::SystemException::_tao_minor_code (TAO_IMPLREPO_MINOR_CODE, 0),
               CORBA::COMPLETED_NO);
@@ -248,9 +256,12 @@ namespace TAO
 
       if (CORBA::is_nil (imr_locator.in ()))
         {
-          TAOLIB_ERROR ((LM_ERROR,
-                      ACE_TEXT ("TAO_ImR_Client (%P|%t) - ERROR: Narrowed IMR initial reference ")
-                      ACE_TEXT ("is nil but use IMR has been specified.\n")));
+          if (TAO_debug_level > 0)
+            {
+              TAOLIB_ERROR ((LM_ERROR,
+                          ACE_TEXT ("TAO_ImR_Client (%P|%t) - ERROR: Narrowed IMR initial reference ")
+                          ACE_TEXT ("is nil but use IMR has been specified.\n")));
+            }
 
           throw ::CORBA::TRANSIENT (
               CORBA::SystemException::_tao_minor_code (TAO_IMPLREPO_MINOR_CODE, 0),
@@ -440,7 +451,7 @@ namespace TAO
     // Initialization and registration of dynamic service object.
 
     int
-    ImR_Client_Adapter_Impl::Initializer (void)
+    ImR_Client_Adapter_Impl::Initializer ()
     {
       TAO_Root_POA::imr_client_adapter_name (
         "Concrete_ImR_Client_Adapter");

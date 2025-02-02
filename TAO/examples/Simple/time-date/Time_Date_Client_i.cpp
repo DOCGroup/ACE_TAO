@@ -5,15 +5,13 @@
 // This is the interface program that accesses the remote object
 
 // Constructor.
-Time_Date_Client_i::Time_Date_Client_i (void)
+Time_Date_Client_i::Time_Date_Client_i ()
 {
-  // no-op
 }
 
 //Destructor.
-Time_Date_Client_i::~Time_Date_Client_i (void)
+Time_Date_Client_i::~Time_Date_Client_i ()
 {
-  // no-op
 }
 
 int

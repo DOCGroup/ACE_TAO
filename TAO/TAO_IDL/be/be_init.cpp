@@ -3,10 +3,10 @@
 #include "../../tao/Version.h"
 
 TAO_IDL_BE_Export void
-BE_version (void)
+BE_version ()
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("TAO_IDL_BE, version ") ACE_TEXT (TAO_VERSION)
+              ACE_TEXT ("TAO_IDL_BE, version ") ACE_TEXT (TAO_VERSION) ACE_TEXT (TAO_PATCH)
               ACE_TEXT ("\n")));
 }
 
@@ -17,6 +17,8 @@ BE_init (int &, ACE_TCHAR *[])
   ACE_NEW_RETURN (be_global,
                   BE_GlobalData,
                   -1);
+
+  idl_global->default_idl_version_ = IDL_VERSION_3;
 
   return 0;
 }

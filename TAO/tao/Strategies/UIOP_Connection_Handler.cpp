@@ -44,7 +44,7 @@ TAO_UIOP_Connection_Handler::TAO_UIOP_Connection_Handler (TAO_ORB_Core *orb_core
 }
 
 
-TAO_UIOP_Connection_Handler::~TAO_UIOP_Connection_Handler (void)
+TAO_UIOP_Connection_Handler::~TAO_UIOP_Connection_Handler ()
 {
   delete this->transport ();
   int const result =
@@ -120,7 +120,7 @@ TAO_UIOP_Connection_Handler::open (void*)
 
   if (TAO_debug_level > 0)
     TAOLIB_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("TAO (%P|%t) UIOP connection to server ")
+                ACE_TEXT ("TAO (%P|%t) - UIOP_Connection_Handler::open, connection to server ")
                 ACE_TEXT ("<%C> on %d\n"),
                 addr.get_path_name (), this->peer ().get_handle ()));
 
@@ -137,13 +137,13 @@ TAO_UIOP_Connection_Handler::open (void*)
 }
 
 int
-TAO_UIOP_Connection_Handler::resume_handler (void)
+TAO_UIOP_Connection_Handler::resume_handler ()
 {
   return ACE_Event_Handler::ACE_APPLICATION_RESUMES_HANDLER;
 }
 
 int
-TAO_UIOP_Connection_Handler::close_connection (void)
+TAO_UIOP_Connection_Handler::close_connection ()
 {
   return this->close_connection_eh (this);
 }
@@ -205,13 +205,13 @@ TAO_UIOP_Connection_Handler::close (u_long flags)
 }
 
 int
-TAO_UIOP_Connection_Handler::release_os_resources (void)
+TAO_UIOP_Connection_Handler::release_os_resources ()
 {
   return this->peer().close ();
 }
 
 int
-TAO_UIOP_Connection_Handler::add_transport_to_cache (void)
+TAO_UIOP_Connection_Handler::add_transport_to_cache ()
 {
   ACE_UNIX_Addr addr;
 

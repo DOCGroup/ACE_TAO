@@ -7,7 +7,7 @@
 //
 // This code is original based on a test program written by Karlheinz
 // Dorn <Karlheinz.Dorn@med.siemens.de>.  It was modified to utilize
-// more ACE features by Doug Schmidt <schmidt@cs.wustl.edu>.
+// more ACE features by Doug Schmidt <d.schmidt@vanderbilt.edu>.
 
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
@@ -15,7 +15,6 @@
 #include "ace/OS_main.h"
 #include "ace/Task.h"
 #include "ace/Service_Config.h"
-
 
 
 #if defined (ACE_HAS_THREADS)
@@ -35,10 +34,10 @@ public:
                int n_threads);
   // Constructor activates <n_threads> in the thread pool.
 
-  ~Thread_Pool (void);
+  ~Thread_Pool ();
   // Destructor...
 
-  virtual int svc (void);
+  virtual int svc ();
   // Iterate <n_iterations> time printing off a message and "waiting"
   // for all other threads to complete this iteration.
 
@@ -73,7 +72,7 @@ Thread_Pool::Thread_Pool (ACE_Thread_Manager *thr_mgr,
                 "activate failed"));
 }
 
-Thread_Pool::~Thread_Pool (void)
+Thread_Pool::~Thread_Pool ()
 {
 }
 
@@ -90,7 +89,7 @@ Thread_Pool::put (ACE_Message_Block *mb,
 // for all other threads to complete this iteration.
 
 int
-Thread_Pool::svc (void)
+Thread_Pool::svc ()
 {
   // Note that the <ACE_Task::svc_run> method automatically adds us to
   // the Thread_Manager when the thread begins.

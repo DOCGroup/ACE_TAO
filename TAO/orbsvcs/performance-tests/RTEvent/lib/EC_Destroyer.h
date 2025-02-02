@@ -31,15 +31,11 @@ public:
    * @todo This method could benefit from the error logging described
    * in Servant_var.cpp
    */
-  ~EC_Destroyer (void);
+  ~EC_Destroyer ();
 
 private:
   /// The event channel
   RtecEventChannelAdmin::EventChannel_var ec_;
 };
-
-#if defined(__ACE_INLINE__)
-#include "EC_Destroyer.inl"
-#endif /* __ACE_INLINE__ */
 
 #endif /* TAO_PERF_RTEC_EC_DESTROYER_H */

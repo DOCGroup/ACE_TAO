@@ -31,7 +31,7 @@ MT_Client_Task::MT_Client_Task (int argc, ACE_TCHAR **argv,
 }
 
 int
-MT_Client_Task::svc (void)
+MT_Client_Task::svc ()
 {
   if (this->mT_Client_.init (this->argc_,
                              this->argv_,
@@ -79,7 +79,7 @@ MT_Client::read_ior (ACE_TCHAR *filename)
 // Parses the command line arguments and returns an error status.
 
 int
-MT_Client::parse_args (void)
+MT_Client::parse_args ()
 {
   ACE_Get_Opt get_opts (argc_, argv_, ACE_TEXT("df:g:h:i:n:s:"));
   int c;
@@ -141,7 +141,7 @@ MT_Client::parse_args (void)
 }
 
 int
-MT_Client::run (void)
+MT_Client::run ()
 {
   try
     {
@@ -169,7 +169,7 @@ MT_Client::run (void)
   return 0;
 }
 
-MT_Client::~MT_Client (void)
+MT_Client::~MT_Client ()
 {
   if (this->object_key_ != 0)
     ACE_Allocator::instance ()->free (this->object_key_);
@@ -182,7 +182,6 @@ int
 MT_Client::init (int argc, ACE_TCHAR **argv,
                  int client_number)
 {
-
   // Make a copy of argv since ORB_init will change it.
   this->argc_ = argc;
   this->argv_ = new ACE_TCHAR *[argc];

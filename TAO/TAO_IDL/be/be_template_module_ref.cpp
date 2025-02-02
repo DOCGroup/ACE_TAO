@@ -24,12 +24,12 @@ be_template_module_ref::be_template_module_ref (
 {
 }
 
-be_template_module_ref::~be_template_module_ref (void)
+be_template_module_ref::~be_template_module_ref ()
 {
 }
 
 void
-be_template_module_ref::destroy (void)
+be_template_module_ref::destroy ()
 {
   this->AST_Template_Module_Ref::destroy ();
   this->be_field::destroy ();
@@ -40,6 +40,3 @@ be_template_module_ref::accept (be_visitor *visitor)
 {
   return visitor->visit_template_module_ref (this);
 }
-
-IMPL_NARROW_FROM_DECL (be_template_module_ref)
-

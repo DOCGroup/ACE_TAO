@@ -34,7 +34,7 @@ $ti->DeleteFile ($imriorfile);
 $imr->DeleteFile ($imrpfile);
 
 
-$IMR = $imr->CreateProcess ("../../../ImplRepo_Service/tao_imr_locator");
+$IMR = $imr->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/ImplRepo_Service/tao_imr_locator");
 $TI = $ti->CreateProcess ("$ENV{ACE_ROOT}/bin/tao_imr");
 
 # We want the tao_imr executable to be found exactly in the path
@@ -91,7 +91,7 @@ if ($TI_status != 0) {
 print "===== Updating a server\n";
 
 $TI->Arguments("-ORBInitRef ImplRepoService=file://$ti_imriorfile"
-                    . " update Foo -w foodir" );
+                    . " update Foo -w foodir");
 
 $TI_status = $TI->SpawnWaitKill ($ti->ProcessStartWaitInterval());
 if ($TI_status != 0) {

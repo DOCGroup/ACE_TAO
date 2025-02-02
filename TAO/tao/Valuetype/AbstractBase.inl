@@ -17,9 +17,9 @@ CORBA::AbstractBase::_duplicate (CORBA::AbstractBase_ptr obj)
 
 ACE_INLINE
 CORBA::AbstractBase_ptr
-CORBA::AbstractBase::_nil (void)
+CORBA::AbstractBase::_nil ()
 {
-  return static_cast <CORBA::AbstractBase_ptr> (0);
+  return nullptr;
 }
 
 ACE_INLINE CORBA::AbstractBase_ptr
@@ -30,14 +30,14 @@ CORBA::AbstractBase::_narrow (CORBA::AbstractBase_ptr obj)
 
 ACE_INLINE
 CORBA::Boolean
-CORBA::AbstractBase::_is_objref (void) const
+CORBA::AbstractBase::_is_objref () const
 {
   return this->is_objref_;
 }
 
 ACE_INLINE
 TAO_Stub *
-CORBA::AbstractBase::_stubobj (void) const
+CORBA::AbstractBase::_stubobj () const
 {
   if (this->is_objref_)
     {
@@ -46,32 +46,32 @@ CORBA::AbstractBase::_stubobj (void) const
           return this->equivalent_obj_->_stubobj ();
         }
     }
-  return 0;
+  return nullptr;
 }
 
 ACE_INLINE
 CORBA::Boolean
-CORBA::AbstractBase::_is_collocated (void) const
+CORBA::AbstractBase::_is_collocated () const
 {
   return this->is_collocated_;
 }
 
 ACE_INLINE
 TAO_Abstract_ServantBase *
-CORBA::AbstractBase::_servant (void) const
+CORBA::AbstractBase::_servant () const
 {
   return this->servant_;
 }
 
 ACE_INLINE
 CORBA::Object_ptr
-CORBA::AbstractBase::equivalent_objref (void)
+CORBA::AbstractBase::equivalent_objref ()
 {
   return this->equivalent_obj_.in ();
 }
 
 ACE_INLINE void
-CORBA::AbstractBase::_decr_refcount (void)
+CORBA::AbstractBase::_decr_refcount ()
 {
   this->_remove_ref ();
 }

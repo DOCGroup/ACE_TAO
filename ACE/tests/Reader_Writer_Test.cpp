@@ -7,10 +7,9 @@
  *    implementation of readers/writer locks on Win32 and Posix
  *    pthreads.
  *
- *  @author Prashant Jain <pjain@cs.wustl.edu> and Doug C. Schmidt <schmidt@cs.wustl.edu>
+ *  @author Prashant Jain <pjain@cs.wustl.edu> and Doug C. Schmidt <d.schmidt@vanderbilt.edu>
  */
 //=============================================================================
-
 
 #include "test_config.h"
 #include "ace/Thread.h"
@@ -21,8 +20,6 @@
 #include "ace/Guard_T.h"
 #include "ace/RW_Thread_Mutex.h"
 #include "ace/Time_Value.h"
-
-
 
 #if defined (ACE_HAS_THREADS)
 
@@ -60,7 +57,7 @@ static ACE_Atomic_Op<ACE_Thread_Mutex, long> current_writers;
 
 // Explain usage and exit.
 static void
-print_usage_and_die (void)
+print_usage_and_die ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("usage: %n [-r n_readers] [-w n_writers] [-n iteration_count]\n")));
@@ -160,7 +157,6 @@ reader (void *)
 
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%t) could not upgrade to write lock!\n")));
-
         }
       else // result == -1
         {

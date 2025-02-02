@@ -35,20 +35,20 @@ class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_Command_Builder : public ACE_Servi
 {
 public:
   /// Constructor
-  TAO_Notify_Tests_Command_Builder (void);
+  TAO_Notify_Tests_Command_Builder ();
 
   /// Destructor
   ~TAO_Notify_Tests_Command_Builder ();
 
   /// = Service_Object virtual method overloads.
   virtual int init (int argc, ACE_TCHAR *argv[]);
-  virtual int fini (void);
+  virtual int fini ();
 
   /// Register the factory against the name of the factory.
   void _register (ACE_CString command_factory_name, TAO_Notify_Tests_Command_Factory* command_factory);
 
   /// Execute the <start_command_>.
-  void execute (void);
+  void execute ();
 
 protected:
   /// The starting command. each command executes the next one when done.

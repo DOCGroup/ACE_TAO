@@ -18,7 +18,7 @@
 
 TAO_IFR_BE_Export BE_GlobalData *be_global = 0;
 
-BE_GlobalData::BE_GlobalData (void)
+BE_GlobalData::BE_GlobalData ()
   : removing_ (false),
     filename_ (0),
     enable_locking_ (false),
@@ -30,12 +30,12 @@ BE_GlobalData::BE_GlobalData (void)
   idl_global->preserve_cpp_keywords (true);
 }
 
-BE_GlobalData::~BE_GlobalData (void)
+BE_GlobalData::~BE_GlobalData ()
 {
 }
 
 bool
-BE_GlobalData::removing (void) const
+BE_GlobalData::removing () const
 {
   return this->removing_;
 }
@@ -47,7 +47,7 @@ BE_GlobalData::removing (bool value)
 }
 
 CORBA::ORB_ptr
-BE_GlobalData::orb (void) const
+BE_GlobalData::orb () const
 {
   return this->orb_.in ();
 }
@@ -59,7 +59,7 @@ BE_GlobalData::orb (CORBA::ORB_ptr orb)
 }
 
 CORBA::Repository_ptr
-BE_GlobalData::repository (void) const
+BE_GlobalData::repository () const
 {
   return this->repository_.in ();
 }
@@ -71,18 +71,18 @@ BE_GlobalData::repository (CORBA::Repository_ptr repo)
 }
 
 ACE_Unbounded_Stack<CORBA::Container_ptr> &
-BE_GlobalData::ifr_scopes (void)
+BE_GlobalData::ifr_scopes ()
 {
   return this->ifr_scopes_;
 }
 
 void
-BE_GlobalData::destroy (void)
+BE_GlobalData::destroy ()
 {
 }
 
 const char *
-BE_GlobalData::filename (void) const
+BE_GlobalData::filename () const
 {
   return this->filename_;
 }
@@ -94,7 +94,7 @@ BE_GlobalData::filename (char *fname)
 }
 
 bool
-BE_GlobalData::enable_locking (void) const
+BE_GlobalData::enable_locking () const
 {
   return this->enable_locking_;
 }
@@ -106,7 +106,7 @@ BE_GlobalData::enable_locking (bool value)
 }
 
 bool
-BE_GlobalData::do_included_files (void) const
+BE_GlobalData::do_included_files () const
 {
   return this->do_included_files_;
 }
@@ -130,7 +130,7 @@ BE_GlobalData::allow_duplicate_typedefs (bool val)
 }
 
 ACE_CString
-BE_GlobalData::orb_args (void) const
+BE_GlobalData::orb_args () const
 {
   return this->orb_args_;
 }
@@ -142,10 +142,17 @@ BE_GlobalData::orb_args (const ACE_CString& args)
 }
 
 ACE_CString
-BE_GlobalData::spawn_options (void)
+BE_GlobalData::spawn_options ()
 {
   return this->orb_args_ + idl_global->idl_flags ();
 }
+
+#define UNKNOWN_OPTION \
+  ORBSVCS_ERROR (( \
+      LM_ERROR, \
+      ACE_TEXT ("IDL: I don't understand the '%s' option\n"), \
+      av[i])); \
+  idl_global->parse_args_exit (1);
 
 void
 BE_GlobalData::parse_args (long &i, char **av)
@@ -153,41 +160,53 @@ BE_GlobalData::parse_args (long &i, char **av)
   switch (av[i][1])
     {
       case 'L':
-        be_global->enable_locking (true);
+        if (av[i][2] == '\0')
+          {
+            be_global->enable_locking (true);
+          }
+        else
+          {
+            UNKNOWN_OPTION;
+          }
         break;
+
       case 'r':
-        be_global->removing (true);
+        if (av[i][2] == '\0')
+          {
+            be_global->removing (true);
+          }
+        else
+          {
+            UNKNOWN_OPTION;
+          }
         break;
+
       case 'S':
         // Suppress ...
-        if (av[i][2] == 'i')
+        if (av[i][2] == 'i' && av[i][3] == '\0')
           {
             // ... processing of included IDL files.
             be_global->do_included_files (0);
           }
         else
           {
-            ORBSVCS_ERROR ((
-                LM_ERROR,
-                ACE_TEXT ("IDL: I don't understand the '%s' option\n"),
-                av[i]));
-
-            ACE_OS::exit (99);
+            UNKNOWN_OPTION;
           }
         break;
-      case 'T':
-        be_global->allow_duplicate_typedefs (true);
-        break;
-      default:
-        ORBSVCS_ERROR ((
-            LM_ERROR,
-            ACE_TEXT ("IDL: I don't understand the '%s' option\n"),
-            av[i]
-          ));
 
-        idl_global->set_compile_flags (idl_global->compile_flags ()
-                                       | IDL_CF_ONLY_USAGE);
+      case 'T':
+        if (av[i][2] == '\0')
+          {
+            be_global->allow_duplicate_typedefs (true);
+          }
+        else
+          {
+            UNKNOWN_OPTION;
+          }
         break;
+
+      default:
+        UNKNOWN_OPTION;
     }
 }
 

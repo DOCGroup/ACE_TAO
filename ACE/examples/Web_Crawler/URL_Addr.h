@@ -5,7 +5,7 @@
 /**
  *  @file    URL_Addr.h
  *
- *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
 //=============================================================================
 
@@ -29,9 +29,8 @@
 class ACE_URL_Addr : public ACE_INET_Addr
 {
 public:
-  // = Initialization and termination methods.
   /// Constructor.
-  ACE_URL_Addr (void);
+  ACE_URL_Addr ();
 
   ACE_URL_Addr (const ACE_TCHAR *host_name,
                 const ACE_TCHAR *path_name,
@@ -44,23 +43,23 @@ public:
   int set (const ACE_URL_Addr &addr);
 
   /**
-   * Initializes an <ACE_URL_Addr> from the <address>, which can be
+   * Initializes an ACE_URL_Addr from the @a address, which can be
    * "ip-number:port-number/path-name" (e.g.,
    * "www.cs.wustl.edu:1234/~schmidt/" "ip-number:port-number/path-name"
    * (e.g., "128.252.166.57:1234/~schmidt").  If there is no ':' in
-   * the <address> it is assumed to be an ip-number or ip-address
-   * number, with the port number <ACE_DEFAULT_HTTP_PORT>.
+   * the @a address it is assumed to be an ip-number or ip-address
+   * number, with the port number ACE_DEFAULT_HTTP_PORT.
    */
   virtual int string_to_addr (const ACE_TCHAR *address,
                               int address_family = AF_UNSPEC);
 
   /**
-   * Transform the current <ACE_INET_Addr> address into string format.
-   * If <ipaddr_format> is non-0 this produces
+   * Transform the current ACE_INET_Addr address into string format.
+   * If @a ipaddr_format is non-0 this produces
    * "ip-number:port-number/path-name" (e.g.,
-   * "128.252.166.57:80/~schmidt/"), whereas if <ipaddr_format> is 0
+   * "128.252.166.57:80/~schmidt/"), whereas if @a ipaddr_format is 0
    * this produces "ip-name:port-number" (e.g.,
-   * "www.cs.wustl.edu:80/~schmidt/").  Returns -1 if the <size> of
+   * "www.cs.wustl.edu:80/~schmidt/").  Returns -1 if the @a size of
    * the <buffer> is too small, else 0.
    */
   virtual int addr_to_string (ACE_TCHAR *s,
@@ -83,7 +82,7 @@ public:
   void operator= (const ACE_URL_Addr &addr);
 
   /// Destructor.
-  ~ACE_URL_Addr (void);
+  ~ACE_URL_Addr ();
 
   /**
    * Compare two addresses for equality.  The addresses are considered
@@ -96,13 +95,13 @@ public:
   bool operator != (const ACE_URL_Addr &SAP) const;
 
   /// Computes and returns hash value.
-  virtual u_long hash (void) const;
+  virtual u_long hash () const;
 
   /// Return the path name.
-  const ACE_TCHAR *get_path_name (void) const;
+  const ACE_TCHAR *get_path_name () const;
 
   /// Commit suicide.
-  int destroy (void);
+  int destroy ();
 private:
   /// Our path name.
   ACE_TCHAR *path_name_;

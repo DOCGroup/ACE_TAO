@@ -10,7 +10,6 @@ use Cwd;
 
 #$ENV{ACE_TEST_VERBOSE} = "1";
 
-my $startdir = getcwd();
 my $debug_level = '0';
 my $redirection_enabled = 0;
 
@@ -293,8 +292,8 @@ sub failover_test()
     my $client_stderr_file     = $client->LocalFile ($stderr_file);
 
     print_msg("Failover Test");
-    init_naming_context_directory ($server, $name_dir );
-    init_naming_context_directory ($server, $group_dir );
+    init_naming_context_directory ($server, $name_dir);
+    init_naming_context_directory ($server, $group_dir);
 
     # Run two Naming Servers
     my $ns1_args = "--primary ".
@@ -322,7 +321,7 @@ sub failover_test()
                       "-b 4 " .
                       "-d 4 " ;
 
-    my $client_prog = "$startdir/client";
+    my $client_prog = "client";
 
     print STDERR "$tao_ft_naming $ns1_args\n";
     print STDERR "$tao_ft_naming $ns2_args\n";

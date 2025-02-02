@@ -33,8 +33,8 @@ $clerk->DeleteFile($srv_ior);
 $clerk->DeleteFile($clk_ior);
 $client->DeleteFile($clk_ior);
 
-$SV = $server->CreateProcess ("../../Time_Service/tao_costime_server", "-o $server_srv_ior");
-$CK = $server->CreateProcess ("../../Time_Service/tao_costime_clerk",
+$SV = $server->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Time_Service/tao_costime_server", "-o $server_srv_ior");
+$CK = $server->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Time_Service/tao_costime_clerk",
                               "-f $clerk_srv_ior -o $clerk_clk_ior -t 2");
 $CL = $client->CreateProcess ("client", "-f $client_clk_ior");
 

@@ -6,7 +6,7 @@
 #include "tao/CDR.h"
 #include "tao/SystemException.h"
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/OS_NS_string.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -66,7 +66,7 @@ namespace TAO
     }
   }
 
-  Any_Basic_Impl::~Any_Basic_Impl (void)
+  Any_Basic_Impl::~Any_Basic_Impl ()
   {
   }
 
@@ -116,11 +116,7 @@ namespace TAO
         TAO::Any_Basic_Impl *replacement =
           TAO::Any_Basic_Impl::create_empty (any_tc);
 
-#if defined (ACE_HAS_CPP11)
         std::unique_ptr<TAO::Any_Basic_Impl> replacement_safety (replacement);
-#else
-        auto_ptr<TAO::Any_Basic_Impl> replacement_safety (replacement);
-#endif /* ACE_HAS_CPP11 */
 
         // We know this will work since the unencoded case is covered above.
         TAO::Unknown_IDL_Type * const unk =
@@ -248,7 +244,7 @@ namespace TAO
   void
   Any_Basic_Impl::_tao_decode (TAO_InputCDR &cdr)
   {
-    if (! this->demarshal_value (cdr))
+    if (!this->demarshal_value (cdr))
       {
         throw ::CORBA::MARSHAL ();
       }
@@ -263,15 +259,6 @@ namespace TAO
 
     switch (kind)
     {
-      case CORBA::tk_longlong:
-        {
-          CORBA::LongLong tmp = ACE_CDR_LONGLONG_INITIALIZER;
-          ACE_NEW_RETURN (retval,
-                          TAO::Any_Basic_Impl (tc, &tmp),
-                          0);
-        }
-
-        break;
       case CORBA::tk_longdouble:
         {
           CORBA::LongDouble tmp = ACE_CDR_LONG_DOUBLE_INITIALIZER;

@@ -20,7 +20,7 @@ Alt_Mapping_i::Alt_Mapping_i (CORBA::ORB_ptr orb)
 {
 }
 
-Alt_Mapping_i::~Alt_Mapping_i (void)
+Alt_Mapping_i::~Alt_Mapping_i ()
 {
 }
 
@@ -54,7 +54,7 @@ Alt_Mapping_i::test_struct_sequence (
 }
 
 void
-Alt_Mapping_i::shutdown (void)
+Alt_Mapping_i::shutdown ()
 {
   this->orb_->shutdown ();
 }

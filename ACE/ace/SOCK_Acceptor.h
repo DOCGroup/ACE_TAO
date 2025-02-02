@@ -4,7 +4,7 @@
 /**
  *  @file    SOCK_Acceptor.h
  *
- *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
 //=============================================================================
 
@@ -37,9 +37,8 @@ class ACE_Accept_QoS_Params;
 class ACE_Export ACE_SOCK_Acceptor : public ACE_SOCK
 {
 public:
-  // = Initialization and termination methods.
   /// Default constructor.
-  ACE_SOCK_Acceptor (void);
+  ACE_SOCK_Acceptor ();
 
   /**
    * Initialize a passive-mode BSD-style acceptor socket (no QoS).
@@ -57,8 +56,7 @@ public:
                      int protocol = 0,
                      int ipv6_only = 0);
 
-  /// Initialize a passive-mode QoS-enabled acceptor socket.  Returns 0
-  /// on success and -1 on failure.
+  /// Initialize a passive-mode QoS-enabled acceptor socket.
   ACE_SOCK_Acceptor (const ACE_Addr &local_sap,
                      ACE_Protocol_Info *protocolinfo,
                      ACE_SOCK_GROUP g,
@@ -100,10 +98,10 @@ public:
             int ipv6_only = 0);
 
   /// Close the socket.  Returns 0 on success and -1 on failure.
-  int close (void);
+  int close ();
 
   /// Default dtor.
-  ~ACE_SOCK_Acceptor (void);
+  ~ACE_SOCK_Acceptor ();
 
   // = Passive connection <accept> methods.
   /**
@@ -121,7 +119,6 @@ public:
               bool restart = true,
               bool reset_new_handle = false) const;
 
-#if !defined (ACE_HAS_WINCE)
   /**
    * Accept a new ACE_SOCK_Stream connection using the QoS
    * information in @a qos_params.  A @a timeout of 0 means block
@@ -138,14 +135,13 @@ public:
               ACE_Time_Value *timeout = 0,
               bool restart = true,
               bool reset_new_handle = false) const;
-#endif  // ACE_HAS_WINCE
 
   // = Meta-type info
   typedef ACE_INET_Addr PEER_ADDR;
   typedef ACE_SOCK_Stream PEER_STREAM;
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;

@@ -6,7 +6,7 @@
  *
  *  Forward declarations and typedefs of ACE string types.
  *
- *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  *  @author Nanbor Wang <nanbor@cs.wustl.edu>
  *  @author Ossama Othman <ossama@uci.edu>
  */
@@ -22,12 +22,6 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#if (defined (__HP_aCC) && (36300 <= __HP_aCC) && (__HP_aCC <= 37300))
-// Due to a bug in the aCC 3.xx compiler need to define the ACE_String_Base
-// template before we can typedef ACE_CString
-# include "ace/String_Base.h"
-#endif /* __HP_aCC */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

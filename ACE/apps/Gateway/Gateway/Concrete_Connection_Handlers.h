@@ -7,7 +7,7 @@
  *  These are all the subclasses of Connection_Handler that define the
  *  appropriate threaded/reactive Consumer/Supplier behavior.
  *
- *  @author Doug Schmidt <schmidt@cs.wustl.edu>
+ *  @author Doug Schmidt <d.schmidt@vanderbilt.edu>
  */
 //=============================================================================
 
@@ -29,7 +29,6 @@
 class Supplier_Handler : public Connection_Handler
 {
 public:
-  // = Initialization method.
   Supplier_Handler (const Connection_Config_Info &);
 
 protected:
@@ -66,7 +65,6 @@ protected:
 class Consumer_Handler : public Connection_Handler
 {
 public:
-  // = Initialization method.
   Consumer_Handler (const Connection_Config_Info &);
 
   /// Send an event to a Consumer (may be queued if necessary).
@@ -109,7 +107,7 @@ protected:
   virtual int handle_input (ACE_HANDLE);
 
   /// Transmit peer messages.
-  virtual int svc (void);
+  virtual int svc ();
 
   /**
    * When thread started, connection become blocked, so no need to use
@@ -151,7 +149,7 @@ protected:
                             ACE_Reactor_Mask = ACE_Event_Handler::ALL_EVENTS_MASK);
 
   /// Transmit peer messages.
-  virtual int svc (void);
+  virtual int svc ();
 
 private:
   /// If the controlling is in thread's svc() or not.

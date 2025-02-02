@@ -38,7 +38,6 @@ Source_i::run ()
                   (int)tickCount, (int)tockCount));
 
       target_->shutdown ();
-
     }
   catch (const CORBA::Exception& ex)
   {

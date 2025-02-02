@@ -43,7 +43,7 @@ my $client_ior2file = $client->LocalFile ($ior2file);
 $client->DeleteFile($ior2file);
 
 
-$SV1 = $server1->CreateProcess ("../../../../LoadBalancer/tao_loadmanager",
+$SV1 = $server1->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/LoadBalancer/tao_loadmanager",
                               "-ORBdebuglevel $debug_level " .
                               "-o $server1_ior1file " .
                               ($^O eq 'MSWin32' ?

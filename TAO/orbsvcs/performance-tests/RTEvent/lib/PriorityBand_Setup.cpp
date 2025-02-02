@@ -9,10 +9,6 @@
 #include "RIR_Narrow.h"
 #include "tao/Policy_ManagerC.h"
 
-#if !defined(__ACE_INLINE__)
-#include "PriorityBand_Setup.inl"
-#endif /* __ACE_INLINE__ */
-
 PriorityBand_Setup::PriorityBand_Setup (CORBA::ORB_ptr orb,
                                         const RTCORBA_Setup &rtcorba_setup)
 {
@@ -41,6 +37,6 @@ PriorityBand_Setup::PriorityBand_Setup (CORBA::ORB_ptr orb,
   policy_list[0]->destroy ();
 }
 
-PriorityBand_Setup::~PriorityBand_Setup (void)
+PriorityBand_Setup::~PriorityBand_Setup ()
 {
 }

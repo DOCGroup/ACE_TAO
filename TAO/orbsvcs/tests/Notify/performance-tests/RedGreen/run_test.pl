@@ -6,11 +6,9 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::TestTarget;
-PerlACE::check_privilege_group();
-
 $status = 0;
 
-@test_configs = ( "reactive.conf", "lookup.conf", "listener.conf" );
+@test_configs = ( "reactive.conf", "lookup.conf", "listener.conf");
 
 my $nm_service = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
 my $test = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
@@ -31,9 +29,9 @@ $nt_service->DeleteFile ($notify_ior);
 $nt_service->DeleteFile ($naming_ior);
 $test->DeleteFile ($naming_ior);
 
-$NM_SV = $nm_service->CreateProcess ("../../../../Naming_Service/tao_cosnaming", "-o $nm_service_nmiorfile");
+$NM_SV = $nm_service->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_cosnaming", "-o $nm_service_nmiorfile");
 $T = $test->CreateProcess ("RedGreen_Test", "-ORBInitRef NameService=file://$test_nmiorfile");
-$NT_SV = $nt_service->CreateProcess ("../../../../Notify_Service/tao_cosnotification", "");
+$NT_SV = $nt_service->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Notify_Service/tao_cosnotification", "");
 
 $nm_service_status = $NM_SV->Spawn ();
 

@@ -58,15 +58,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
 
       // Try a few times until we run out of "trys" or we no longer get
-      // an exception.  Some times it takes a little while to begin
-      // accepting again on AIX.
+      // an exception.
       for(size_t i = 0; i < 10; i++)
         try
           {
             cout << "Client: calling simple, i = " << i << endl;
             // This first invocation will actually cause the connection to
             // the server.  Since the server has run out of file handles,
-            // it can not accept the new connection.  On AIX, this will
+            // it can not accept the new connection.  On some platforms, this will
             // receive a CORBA::COMM_FAILURE exception because it doesn't
             // complete in a timely manner.  It does not mean that the test
             // has failed, as long as the server performs the correct

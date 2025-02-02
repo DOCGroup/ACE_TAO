@@ -9,7 +9,7 @@
 #include "ace/OS_NS_sys_socket.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/CDR_Stream.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/SString.h"
 #include "ace/INET_Addr.h"
 #include "Client_Logging_Handler.h"
@@ -72,7 +72,7 @@ ACE_Client_Logging_Handler::open (void *)
 }
 
 /* VIRTUAL */ ACE_HANDLE
-ACE_Client_Logging_Handler::get_handle (void) const
+ACE_Client_Logging_Handler::get_handle () const
 {
   ACE_TRACE ("ACE_Client_Logging_Handler::get_handle");
 
@@ -109,7 +109,7 @@ ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
                   ACE_Message_Block (ACE_DEFAULT_CDR_BUFSIZE),
                   -1);
 
-  auto_ptr <ACE_Message_Block> header (header_p);
+  std::unique_ptr <ACE_Message_Block> header (header_p);
 
   // Align the Message Block for a CDR stream
   ACE_CDR::mb_align (header.get ());
@@ -217,7 +217,7 @@ ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
   ACE_NEW_RETURN (payload_p,
                   ACE_Message_Block (length),
                   -1);
-  auto_ptr <ACE_Message_Block> payload (payload_p);
+  std::unique_ptr <ACE_Message_Block> payload (payload_p);
 
   // Ensure there's sufficient room for log record payload.
   ACE_CDR::grow (payload.get (), 8 + ACE_CDR::MAX_ALIGNMENT + length);
@@ -428,8 +428,7 @@ class ACE_Client_Logging_Acceptor : public ACE_Acceptor<ACE_Client_Logging_Handl
   //     This class contains the service-specific methods that can't
   //     easily be factored into the <ACE_Acceptor>.
 public:
-  // = Initialization method.
-  ACE_Client_Logging_Acceptor (void);
+  ACE_Client_Logging_Acceptor ();
   // Default constructor.
 
 protected:
@@ -437,7 +436,7 @@ protected:
   virtual int init (int argc, ACE_TCHAR *argv[]);
   // Called when service is linked.
 
-  virtual int fini (void);
+  virtual int fini ();
   // Called when service is unlinked.
 
   virtual int info (ACE_TCHAR **strp, size_t length) const;
@@ -447,8 +446,8 @@ protected:
   // Factory that always returns the <handler_>.
 
   // = Scheduling hooks.
-  virtual int suspend (void);
-  virtual int resume (void);
+  virtual int suspend ();
+  virtual int resume ();
 
 private:
   int parse_args (int argc, ACE_TCHAR *argv[]);
@@ -478,7 +477,7 @@ private:
 };
 
 int
-ACE_Client_Logging_Acceptor::fini (void)
+ACE_Client_Logging_Acceptor::fini ()
 {
   this->close ();
 
@@ -521,7 +520,7 @@ ACE_Client_Logging_Acceptor::info (ACE_TCHAR **strp, size_t length) const
   return ACE_OS::strlen (buf);
 }
 
-ACE_Client_Logging_Acceptor::ACE_Client_Logging_Acceptor (void)
+ACE_Client_Logging_Acceptor::ACE_Client_Logging_Acceptor ()
   : server_host_ (ACE_OS::strdup (ACE_DEFAULT_SERVER_HOST)),
     server_port_ (ACE_DEFAULT_LOGGING_SERVER_PORT),
     logger_key_ (ACE_OS::strdup (ACE_DEFAULT_LOGGER_KEY)),
@@ -683,14 +682,14 @@ ACE_Client_Logging_Acceptor::parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-ACE_Client_Logging_Acceptor::suspend (void)
+ACE_Client_Logging_Acceptor::suspend ()
 {
   // To be done...
   return 0;
 }
 
 int
-ACE_Client_Logging_Acceptor::resume (void)
+ACE_Client_Logging_Acceptor::resume ()
 {
   // To be done...
   return 0;

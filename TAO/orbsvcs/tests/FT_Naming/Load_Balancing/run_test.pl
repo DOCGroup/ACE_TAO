@@ -13,7 +13,6 @@ use Cwd;
 
 $status = 0;
 $debug_level = '0';
-$startdir = getcwd();
 
 my $test = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
 my $server2 = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
@@ -92,7 +91,7 @@ my $args = "-ORBEndPoint $ns_endpoint1 " .
     "-r $naming_persistence_dir " .
     "-v $groups_persistence_dir " .
     "--primary";
-my $prog = "$startdir/../../../FT_Naming_Service/tao_ft_naming";
+my $prog = "$ENV{TAO_ROOT}/orbsvcs/FT_Naming_Service/tao_ft_naming";
 
 print STDERR "Starting Primary: $prog $args\n";
 
@@ -121,7 +120,7 @@ $args = "-ORBEndPoint $ns_endpoint2 " .
         "-v $groups_persistence_dir " .
         "--backup";
 
-$prog = "$startdir/../../../FT_Naming_Service/tao_ft_naming";
+$prog = "$ENV{TAO_ROOT}/orbsvcs/FT_Naming_Service/tao_ft_naming";
 
 print STDERR "Starting Backup: $prog $args\n";
 

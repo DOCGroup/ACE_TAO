@@ -8,16 +8,13 @@
  *    <ACE_Task> and the <ACE_Thread_Manager>.  This also illustrates
  *    how the <ACE_Thread_Hook> mechanism works.
  *
- *  @author Prashant Jain <pjain@cs.wustl.edu> and Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ *  @author Prashant Jain <pjain@cs.wustl.edu> and Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
 //=============================================================================
-
 
 #include "test_config.h"
 #include "ace/Task.h"
 #include "ace/Thread_Hook.h"
-
-
 
 #if defined (ACE_HAS_THREADS)
 #include "ace/Atomic_Op.h"
@@ -30,8 +27,8 @@ static ACE_Atomic_Op<ACE_Thread_Mutex, int> close_cleanups (0);
 class My_Thread_Hook : public ACE_Thread_Hook
 {
 public:
-  virtual ACE_THR_FUNC_RETURN start (ACE_THR_FUNC func,
-                                     void *arg);
+  ACE_THR_FUNC_RETURN start (ACE_THR_FUNC func,
+                                     void *arg) override;
 };
 
 class Barrier_Task : public ACE_Task<ACE_MT_SYNCH>
@@ -43,11 +40,11 @@ public:
 
   //FUZZ: disable check_for_lack_ACE_OS
   ///FUZZ: enable check_for_lack_ACE_OS
-  virtual int close (u_long flags = 0);
+  int close (u_long flags = 0) override;
 
   /// Iterate <n_iterations> time printing off a message and "waiting"
   /// for all other threads to complete this iteration.
-  virtual int svc (void);
+  int svc () override;
 
 private:
   /// Reference to the tester barrier.  This controls each iteration of
@@ -94,7 +91,7 @@ Barrier_Task::close (u_long)
 // Iterate <n_iterations> time printing off a message and "waiting"
 // for all other threads to complete this iteration.
 int
-Barrier_Task::svc (void)
+Barrier_Task::svc ()
 {
   for (int iterations = 1;
        iterations <= this->n_iterations_;

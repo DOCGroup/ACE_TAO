@@ -19,7 +19,7 @@ Foo_i::~Foo_i()
 
 
 void
-Foo_i::op1(void)
+Foo_i::op1()
 {
   ++this->count_op1_;
   // Sleep for 10 milliseconds (10,000 microseconds)
@@ -36,7 +36,7 @@ Foo_i::op2(CORBA::Long value)
 
 
 CORBA::Long
-Foo_i::op3(void)
+Foo_i::op3()
 {
   ++this->count_op3_;
   return this->value_;
@@ -62,13 +62,13 @@ Foo_i::op4(CORBA::Long value)
 
 
 void
-Foo_i::op5(void)
+Foo_i::op5()
 {
   ACE_DEBUG((LM_DEBUG, "(%P|%t) Foo_i::op5() - ENTER\n"));
   ACE_DEBUG((LM_DEBUG, "(%P|%t) Foo_i::op5() - Increment counter.\n"));
   unsigned newcount = ++this->count_op5_;
   ACE_DEBUG((LM_DEBUG, "(%P|%t) Foo_i::op5() - Counter is now %d.\n", newcount));
-  ACE_DEBUG((LM_DEBUG, "(%P|%t) Foo_i::op5() - EXIT - Raise a FooException.\n"));;
+  ACE_DEBUG((LM_DEBUG, "(%P|%t) Foo_i::op5() - EXIT - Raise a FooException.\n"));
 }
 
 
@@ -223,7 +223,7 @@ Foo_i::test_callback (
 
 
 void
-Foo_i::done(void)
+Foo_i::done()
 {
   static ACE_Atomic_Op <TAO_SYNCH_MUTEX, unsigned> num_clients = 2;
 

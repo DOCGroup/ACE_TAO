@@ -27,7 +27,7 @@ TAO_ComponentRepository_i::TAO_ComponentRepository_i (
 {
 }
 
-TAO_ComponentRepository_i::~TAO_ComponentRepository_i (void)
+TAO_ComponentRepository_i::~TAO_ComponentRepository_i ()
 {
 }
 
@@ -58,20 +58,17 @@ TAO_ComponentRepository_i::create_servants_and_poas (
   // Request Processing Policy.
   policies[2] =
     this->root_poa_->create_request_processing_policy (
-        PortableServer::USE_DEFAULT_SERVANT
-      );
+        PortableServer::USE_DEFAULT_SERVANT);
 
   // Servant Retention Policy.
   policies[3] =
     this->root_poa_->create_servant_retention_policy (
-        PortableServer::NON_RETAIN
-      );
+        PortableServer::NON_RETAIN);
 
   // Id Uniqueness Policy.
   policies[4] =
     this->root_poa_->create_id_uniqueness_policy (
-        PortableServer::MULTIPLE_ID
-      );
+        PortableServer::MULTIPLE_ID);
 
   PortableServer::POAManager_var poa_manager =
     this->root_poa_->the_POAManager ();
@@ -116,8 +113,7 @@ TAO_ComponentRepository_i::create_servants_and_poas (
 
 TAO_IDLType_i *
 TAO_ComponentRepository_i::select_idltype (
-    CORBA::DefinitionKind def_kind
-  ) const
+    CORBA::DefinitionKind def_kind) const
 {
   switch (def_kind)
   {
@@ -132,8 +128,7 @@ TAO_ComponentRepository_i::select_idltype (
 
 TAO_Container_i *
 TAO_ComponentRepository_i::select_container (
-    CORBA::DefinitionKind def_kind
-  ) const
+    CORBA::DefinitionKind def_kind) const
 {
   switch (def_kind)
   {
@@ -150,8 +145,7 @@ TAO_ComponentRepository_i::select_container (
 
 TAO_Contained_i *
 TAO_ComponentRepository_i::select_contained (
-    CORBA::DefinitionKind def_kind
-  ) const
+    CORBA::DefinitionKind def_kind) const
 {
   switch (def_kind)
   {
@@ -184,8 +178,7 @@ TAO_ComponentRepository_i::select_contained (
 
 PortableServer::POA_ptr
 TAO_ComponentRepository_i::select_poa (
-    CORBA::DefinitionKind def_kind
-  ) const
+    CORBA::DefinitionKind def_kind) const
 {
   switch (def_kind)
   {

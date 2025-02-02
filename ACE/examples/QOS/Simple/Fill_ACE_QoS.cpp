@@ -2,10 +2,9 @@
 #include "Fill_ACE_QoS.h"
 
 
-
 const iovec Fill_ACE_QoS::iov_ = {0,0};
 
-Fill_ACE_QoS::Fill_ACE_QoS (void)
+Fill_ACE_QoS::Fill_ACE_QoS ()
 {
   ACE_NEW (this->default_traffic_,
            ACE_Flow_Spec  (ACE_QOS_NOT_SPECIFIED,
@@ -21,7 +20,7 @@ Fill_ACE_QoS::Fill_ACE_QoS (void)
 }
 
 // destructor.
-Fill_ACE_QoS::~Fill_ACE_QoS (void)
+Fill_ACE_QoS::~Fill_ACE_QoS ()
 {}
 
 int
@@ -90,7 +89,7 @@ Fill_ACE_QoS::fill_duplex_qos (ACE_QoS &ace_qos,
 }
 
 Fill_ACE_QoS::FLOW_SPEC_HASH_MAP&
-Fill_ACE_QoS::map (void)
+Fill_ACE_QoS::map ()
 {
   return this->flow_spec_map_;
 }

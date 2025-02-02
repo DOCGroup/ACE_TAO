@@ -30,7 +30,6 @@ namespace TAO
 {
   namespace CSD
   {
-
     /**
      * @class TP_Servant_State_Map
      *
@@ -45,7 +44,6 @@ namespace TAO
     class TAO_CSD_TP_Export TP_Servant_State_Map
     {
     public:
-
       /// Default Constructor.
       TP_Servant_State_Map();
 
@@ -53,20 +51,15 @@ namespace TAO
       ~TP_Servant_State_Map();
 
       /// Accessor for the servant busy flag.
-      TP_Servant_State* find(PortableServer::Servant servant
-                            );
+      TP_Servant_State* find(PortableServer::Servant servant);
 
       /// Insert the servant to map.
-      void insert(PortableServer::Servant servant
-                 );
+      void insert(PortableServer::Servant servant);
 
       /// Remove the servant from map.
-      void remove(PortableServer::Servant servant
-                 );
-
+      void remove(PortableServer::Servant servant);
 
     private:
-
       /// Underlying Map Type - Hash-Based -
       /// Key Type: void*, Value Type: TP_Servant_State::HandleType
       typedef ACE_Hash_Map_Manager_Ex<void*,
@@ -78,7 +71,6 @@ namespace TAO
       /// The underlying map of servant state objects.
       MapType map_;
     };
-
   }
 }
 

@@ -2,7 +2,7 @@
 #include "ace/WFMO_Reactor.h"
 
 ACE_Reactor_Impl *
-My_Resource_Factory::allocate_reactor_impl (void) const
+My_Resource_Factory::allocate_reactor_impl () const
 {
   errno = 0;
   ACE_DEBUG ((LM_DEBUG,

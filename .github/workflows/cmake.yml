@@ -1,0 +1,82 @@
+name: cmake
+
+on:
+  push:
+  pull_request:
+  schedule:
+    - cron: '0 1 * * SUN'
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - CC: gcc-12
+            CXX: g++-12
+            PackageDeps: g++-12
+            os: ubuntu-22.04
+          - CC: vs2019
+            CXX: vs2019
+            os: windows-2019
+    runs-on: ${{ matrix.os }}
+    name: ${{ matrix.os }} ${{ matrix.CXX }}
+    env:
+      ACE_ROOT: ${{ github.workspace }}/ACE
+      MPC_ROOT: ${{ github.workspace }}/MPC
+      CC: ${{ matrix.CC }}
+      CXX: ${{ matrix.CXX }}
+    steps:
+    - name: checkout ACE/TAO
+      uses: actions/checkout@v4
+    - name: checkout MPC
+      uses: actions/checkout@v4
+      with:
+        repository: DOCGroup/MPC
+        path: ${{ env.MPC_ROOT }}
+    - name: Add Repo
+      run: |
+        wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key|sudo apt-key add -
+        sudo apt-add-repository "deb http://apt.llvm.org/$(lsb_release -cs)/ ${{ matrix.Repo }} main"
+      if: matrix.Repo != ''
+    - name: Add packages
+      run: |
+        sudo apt-get --yes update
+        sudo apt-get --yes install ${{ matrix.PackageDeps }}
+      if: matrix.PackageDeps != ''
+    - name: create $ACE_ROOT/ace/config.h
+      run: |
+        '#ifdef linux'                    > ${env:ACE_ROOT}/ace/config.h
+        '# include "ace/config-linux.h"' >> ${env:ACE_ROOT}/ace/config.h
+        '#else'                          >> ${env:ACE_ROOT}/ace/config.h
+        '# include "ace/config-win32.h"' >> ${env:ACE_ROOT}/ace/config.h
+        '#endif'                         >> ${env:ACE_ROOT}/ace/config.h
+      shell: pwsh
+    - name: Run mwc.pl on $(ACE_ROOT)/ace/ace.mwc
+      run: |
+        perl ${env:ACE_ROOT}/bin/mwc.pl -type cmake ${env:ACE_ROOT}/ace/ace.mwc -workers 6
+      shell: pwsh
+    - name: Run mwc.pl on $(ACE_ROOT)/apps/gperf/src
+      run: |
+        perl ${env:ACE_ROOT}/bin/mwc.pl -type cmake ${env:ACE_ROOT}/apps/gperf/src
+      shell: pwsh
+    - name: Build ace project
+      run: |
+        cd ${env:ACE_ROOT}/ace
+        cmake -S . -B build
+        cmake --build build -j6
+      shell: pwsh
+    - name: Build ACE/apps/gperf/src project
+      run: |
+        cd ${env:ACE_ROOT}/apps/gperf/src
+        cmake -S . -B build
+        cmake --build build -j6
+      shell: pwsh

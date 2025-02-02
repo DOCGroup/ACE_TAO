@@ -11,8 +11,6 @@ use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::TestTarget;
 use Cwd;
 
-$startdir = getcwd();
-
 $quiet = 0;
 
 # check for -q flag
@@ -77,7 +75,7 @@ else {
 # in files to find the individual copies of the Naming Servers.
 
 my $args = "-ORBEndPoint $ns_endpoint1 -o $iorfile1 -m 0 -r NameService";
-my $prog = "$startdir/../../Naming_Service/tao_cosnaming";
+my $prog = "$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_cosnaming";
 
 $NS1 = $test->CreateProcess ("$prog", "$args");
 
@@ -93,7 +91,7 @@ if ($test->WaitForFileTimed ($iorfile1,
 }
 
 $args = "-ORBEndPoint $ns_endpoint2 -o $test_iorfile2 -m 0 -r NameService";
-$prog = "$startdir/../../Naming_Service/tao_cosnaming";
+$prog = "$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_cosnaming";
 
 $NS2 = $test->CreateProcess ("$prog", "$args");
 
@@ -114,7 +112,7 @@ if ($test->WaitForFileTimed ($iorfile2,
 sleep(1);
 
 $args = "-p file://$test_iorfile1 -q file://$test_iorfile2";
-$prog = "$startdir/client";
+$prog = "client";
 
 $CL = $test->CreateProcess ("$prog", "$args");
 

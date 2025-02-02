@@ -44,9 +44,8 @@ namespace CORBA
     : public CORBA::UserException
   {
   public:
-
     /// Constructor.
-    UnknownUserException (void);
+    UnknownUserException ();
 
     /// Constructor.
     UnknownUserException (CORBA::Any& exception);
@@ -55,15 +54,15 @@ namespace CORBA
     UnknownUserException (const UnknownUserException& e);
 
     /// Destructor.
-    virtual ~UnknownUserException (void);
+    virtual ~UnknownUserException ();
 
     /// Return the any containing the user exception.
-    CORBA::Any& exception (void);
+    CORBA::Any& exception ();
 
     /// To throw an UnknownUserException of this type.
-    virtual void _raise (void) const;
+    virtual void _raise () const;
 
-    virtual CORBA::Exception *_tao_duplicate (void) const;
+    virtual CORBA::Exception *_tao_duplicate () const;
     virtual void _tao_encode (TAO_OutputCDR &cdr) const;
     virtual void _tao_decode (TAO_InputCDR &cdr);
 
@@ -72,12 +71,12 @@ namespace CORBA
     static UnknownUserException const * _downcast (CORBA::Exception const * ex);
 
     /// Return the repository ID of the Exception.
-    virtual const char * _rep_id (void) const;
+    virtual const char * _rep_id () const;
 
     // = TAO specific extension.
 
     /// This class has a specific typecode.
-    virtual CORBA::TypeCode_ptr _tao_type (void) const;
+    virtual CORBA::TypeCode_ptr _tao_type () const;
 
   private:
     /// Holder for the actual exception.
@@ -85,9 +84,7 @@ namespace CORBA
   };
 
   // The CORBA::UnknownUserException TypeCode.
-  extern TAO_DynamicInterface_Export TypeCode_ptr const
-    _tc_UnknownUserException;
-
+  extern TAO_DynamicInterface_Export TypeCode_ptr const _tc_UnknownUserException;
 } // End CORBA namespace.
 
 TAO_END_VERSIONED_NAMESPACE_DECL

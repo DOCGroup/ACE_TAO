@@ -84,6 +84,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_identifier.h"
 #include "utl_indenter.h"
 #include "global_extern.h"
+#include "ast_annotation_appl.h"
 
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
@@ -108,11 +109,11 @@ AST_Union::AST_Union (AST_ConcreteType *dt,
 {
   this->default_value_.computed_ = -2;
 
-  AST_PredefinedType *pdt = 0;
+  AST_PredefinedType *pdt = nullptr;
 
-  if (dt == 0)
+  if (dt == nullptr)
     {
-      this->pd_disc_type = 0;
+      this->pd_disc_type = nullptr;
       this->pd_udisc_type = AST_Expression::EV_none;
       return;
     }
@@ -122,11 +123,11 @@ AST_Union::AST_Union (AST_ConcreteType *dt,
   // the pd_udisc_type field.
   if (dt->node_type () == AST_Decl::NT_pre_defined)
     {
-      pdt = AST_PredefinedType::narrow_from_decl (dt);
+      pdt = dynamic_cast<AST_PredefinedType*> (dt);
 
-      if (pdt == 0)
+      if (pdt == nullptr)
         {
-          this->pd_disc_type = 0;
+          this->pd_disc_type = nullptr;
           this->pd_udisc_type = AST_Expression::EV_none;
           return;
         }
@@ -153,11 +154,17 @@ AST_Union::AST_Union (AST_ConcreteType *dt,
         case AST_PredefinedType::PT_ushort:
           this->pd_udisc_type = AST_Expression::EV_ushort;
           break;
+        case AST_PredefinedType::PT_int8:
+          this->pd_udisc_type = AST_Expression::EV_int8;
+          break;
         case AST_PredefinedType::PT_char:
           this->pd_udisc_type = AST_Expression::EV_char;
           break;
         case AST_PredefinedType::PT_wchar:
           this->pd_udisc_type = AST_Expression::EV_wchar;
+          break;
+        case AST_PredefinedType::PT_uint8:
+          this->pd_udisc_type = AST_Expression::EV_uint8;
           break;
         case AST_PredefinedType::PT_octet:
           this->pd_udisc_type = AST_Expression::EV_octet;
@@ -167,7 +174,7 @@ AST_Union::AST_Union (AST_ConcreteType *dt,
           break;
         default:
           this->pd_udisc_type = AST_Expression::EV_none;
-          this->pd_disc_type = 0;
+          this->pd_disc_type = nullptr;
           break;
         }
     }
@@ -179,10 +186,10 @@ AST_Union::AST_Union (AST_ConcreteType *dt,
   else
     {
       this->pd_udisc_type = AST_Expression::EV_none;
-      this->pd_disc_type = 0;
+      this->pd_disc_type = nullptr;
     }
 
-  if (this->pd_disc_type == 0)
+  if (this->pd_disc_type == nullptr)
     {
       idl_global->err ()->error2 (UTL_Error::EIDL_DISC_TYPE,
                                   this,
@@ -190,7 +197,7 @@ AST_Union::AST_Union (AST_ConcreteType *dt,
     }
 }
 
-AST_Union::~AST_Union (void)
+AST_Union::~AST_Union ()
 {
 }
 
@@ -199,9 +206,9 @@ AST_Union::~AST_Union (void)
 void
 AST_Union::redefine (AST_Structure *from)
 {
-  AST_Union *u = AST_Union::narrow_from_decl (from);
+  AST_Union *u = dynamic_cast<AST_Union*> (from);
 
-  if (u == 0)
+  if (u == nullptr)
     {
       idl_global->err ()->redef_error (from->local_name ()->get_string (),
                                        this->local_name ()->get_string ());
@@ -219,7 +226,7 @@ AST_Union::redefine (AST_Structure *from)
 
 // Return the default_index.
 int
-AST_Union::default_index (void)
+AST_Union::default_index ()
 {
   if (this->default_index_ == -2)
     {
@@ -264,10 +271,9 @@ AST_Union::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
            !si.is_done ();
            si.next ())
         {
-          AST_UnionBranch *field =
-            AST_UnionBranch::narrow_from_decl (si.item ());
+          AST_UnionBranch *field = dynamic_cast<AST_UnionBranch*> (si.item ());
 
-          if (field == 0)
+          if (field == nullptr)
             // This will be an enum value or other legitimate non-field
             // member - in any case, no recursion.
             {
@@ -278,11 +284,11 @@ AST_Union::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
 
           if (type->node_type () == AST_Decl::NT_typedef)
             {
-              AST_Typedef *td = AST_Typedef::narrow_from_decl (type);
+              AST_Typedef *td = dynamic_cast<AST_Typedef*> (type);
               type = td->primitive_base_type ();
             }
 
-          if (type == 0)
+          if (type == nullptr)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
                                  ACE_TEXT ("(%N:%l) AST_Union::")
@@ -304,15 +310,15 @@ AST_Union::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
   // Not in recursion.
   if (self_test)
     this->in_recursion_ = 0;
-  return 0;
+  return false;
 }
 
 // Look up the default branch in union.
 AST_UnionBranch *
-AST_Union::lookup_default (void)
+AST_Union::lookup_default ()
 {
-  AST_UnionBranch *b = 0;
-  AST_Decl *d = 0;
+  AST_UnionBranch *b = nullptr;
+  AST_Decl *d = nullptr;
 
   for (UTL_ScopeActiveIterator i (this, UTL_Scope::IK_both);
        !i.is_done();
@@ -322,14 +328,14 @@ AST_Union::lookup_default (void)
 
       if (d->node_type () == AST_Decl::NT_union_branch)
         {
-          b = AST_UnionBranch::narrow_from_decl (d);
+          b = dynamic_cast<AST_UnionBranch*> (d);
 
-          if (b == 0)
+          if (b == nullptr)
             {
               continue;
             }
 
-          if (b->label () != 0
+          if (b->label () != nullptr
               && b->label ()->label_kind () == AST_UnionLabel::UL_default)
             {
               idl_global->err ()->error2 (UTL_Error::EIDL_MULTIPLE_BRANCH,
@@ -340,7 +346,7 @@ AST_Union::lookup_default (void)
         }
     }
 
-  return 0;
+  return nullptr;
 }
 
 // Look up a branch by label.
@@ -350,17 +356,17 @@ AST_Union::lookup_label (AST_UnionBranch *b)
   AST_UnionLabel *label = b->label ();
   AST_Expression *lv = label->label_val ();
 
-  if (label->label_val () == 0)
+  if (label->label_val () == nullptr)
     {
       return b;
     }
 
-  AST_Decl *d = 0;
-  AST_UnionBranch *fb = 0;
+  AST_Decl *d = nullptr;
+  AST_UnionBranch *fb = nullptr;
 
   lv->set_ev (lv->coerce (this->pd_udisc_type));
 
-  if (lv->ev () == 0)
+  if (lv->ev () == nullptr)
     {
       idl_global->err ()->eval_error (lv);
       return b;
@@ -374,14 +380,14 @@ AST_Union::lookup_label (AST_UnionBranch *b)
 
       if (d->node_type () == AST_Decl::NT_union_branch)
         {
-          fb = AST_UnionBranch::narrow_from_decl (d);
+          fb = dynamic_cast<AST_UnionBranch*> (d);
 
-          if (fb == 0)
+          if (fb == nullptr)
             {
               continue;
             }
 
-          if (fb->label() != 0
+          if (fb->label() != nullptr
               && fb->label ()->label_kind () == AST_UnionLabel::UL_label
               && fb->label ()->label_val ()->compare (lv))
             {
@@ -393,7 +399,7 @@ AST_Union::lookup_label (AST_UnionBranch *b)
         }
     }
 
-  return 0;
+  return nullptr;
 }
 
 // Look up a branch in an enum which is the discriminator type for this
@@ -404,16 +410,16 @@ AST_Union::lookup_enum (AST_UnionBranch *b)
 {
   AST_UnionLabel *label = b->label();
   AST_Expression *lv = label->label_val ();
-  AST_Enum *e = AST_Enum::narrow_from_decl (this->pd_disc_type);
-  AST_Decl *d = 0;
-  AST_UnionBranch       *fb = 0;
+  AST_Enum *e = dynamic_cast<AST_Enum*> (this->pd_disc_type);
+  AST_Decl *d = nullptr;
+  AST_UnionBranch       *fb = nullptr;
 
-  if (e == 0)
+  if (e == nullptr)
     {
-      return 0;
+      return nullptr;
     }
 
-  if (lv == 0)
+  if (lv == nullptr)
     {
       return b;
     }
@@ -431,7 +437,7 @@ AST_Union::lookup_enum (AST_UnionBranch *b)
   d = e->lookup_by_name (sn,
                          true);
 
-  if (d == 0 || d->defined_in () != e)
+  if (d == nullptr || d->defined_in () != e)
     {
       idl_global->err ()->enum_val_lookup_failure (this,
                                                    e,
@@ -449,14 +455,14 @@ AST_Union::lookup_enum (AST_UnionBranch *b)
 
       if (d->node_type () == AST_Decl::NT_union_branch)
         {
-          fb = AST_UnionBranch::narrow_from_decl (d);
+          fb = dynamic_cast<AST_UnionBranch*> (d);
 
-          if (fb == 0)
+          if (fb == nullptr)
             {
               continue;
             }
 
-          if (fb->label() != 0
+          if (fb->label() != nullptr
               && fb->label ()->label_kind () == AST_UnionLabel::UL_label
               && fb->label ()->label_val ()->compare (lv))
             {
@@ -468,7 +474,7 @@ AST_Union::lookup_enum (AST_UnionBranch *b)
         }
     }
 
-  return 0;
+  return nullptr;
 }
 
 // Look up a branch by value. This is the top level branch label resolution
@@ -477,14 +483,14 @@ AST_Union::lookup_enum (AST_UnionBranch *b)
 AST_UnionBranch *
 AST_Union::lookup_branch (AST_UnionBranch *branch)
 {
-  AST_UnionLabel *label = 0;
+  AST_UnionLabel *label = nullptr;
 
-  if (branch != 0)
+  if (branch != nullptr)
     {
       label = branch->label ();
     }
 
-  if (label != 0)
+  if (label != nullptr)
     {
       if (label->label_kind () == AST_UnionLabel::UL_default)
         {
@@ -500,7 +506,7 @@ AST_Union::lookup_branch (AST_UnionBranch *branch)
       return this->lookup_label (branch);
     }
 
-  return 0;
+  return nullptr;
 }
 
 // Return the default value.
@@ -527,7 +533,7 @@ AST_Union::default_value (AST_Union::DefaultValue &dv)
 
 // Determine the default value (if any).
 int
-AST_Union::compute_default_value (void)
+AST_Union::compute_default_value ()
 {
   // Check if we really need a default value. This will be true if there is an
   // explicit default case OR if an implicit default exists because not all
@@ -547,10 +553,9 @@ AST_Union::compute_default_value (void)
        si.next ())
     {
       // Get the next AST decl node.
-      AST_UnionBranch *ub =
-        AST_UnionBranch::narrow_from_decl (si.item ());
+      AST_UnionBranch *ub = dynamic_cast<AST_UnionBranch*> (si.item ());
 
-      if (ub != 0)
+      if (ub != nullptr)
         {
           // If the label is a case label, increment by 1.
           for (unsigned long i = 0; i < ub->label_list_length (); ++i)
@@ -605,7 +610,16 @@ AST_Union::compute_default_value (void)
 
       break;
     case AST_Expression::EV_char:
-      if (total_case_members > ACE_OCTET_MAX)
+    case AST_Expression::EV_int8:
+      if (total_case_members > ACE_INT8_MAX)
+        {
+          this->default_value_.computed_ = 0;
+        }
+
+      break;
+    case AST_Expression::EV_uint8:
+    case AST_Expression::EV_octet:
+      if (total_case_members > ACE_UINT8_MAX)
         {
           this->default_value_.computed_ = 0;
         }
@@ -680,6 +694,9 @@ AST_Union::compute_default_value (void)
     case AST_Expression::EV_ulong:
       this->default_value_.u.ulong_val = 0;
       break;
+    case AST_Expression::EV_uint8:
+    case AST_Expression::EV_octet:
+    case AST_Expression::EV_int8:
     case AST_Expression::EV_char:
       this->default_value_.u.char_val = 0;
       break;
@@ -687,7 +704,7 @@ AST_Union::compute_default_value (void)
       this->default_value_.u.wchar_val = 0;
       break;
     case AST_Expression::EV_bool:
-      this->default_value_.u.bool_val = 0;
+      this->default_value_.u.bool_val = false;
       break;
     case AST_Expression::EV_enum:
       this->default_value_.u.enum_val = 0;
@@ -714,10 +731,9 @@ AST_Union::compute_default_value (void)
            si.next ())
         {
           // Get the next AST decl node
-          AST_UnionBranch *ub =
-            AST_UnionBranch::narrow_from_decl (si.item ());
+          AST_UnionBranch *ub = dynamic_cast<AST_UnionBranch*> (si.item ());
 
-          if (ub != 0)
+          if (ub != nullptr)
             {
               for (unsigned long i = 0;
                    i < ub->label_list_length () && !break_loop;
@@ -728,7 +744,7 @@ AST_Union::compute_default_value (void)
                       // Not a default.
                       AST_Expression *expr = ub->label (i)->label_val ();
 
-                      if (expr == 0)
+                      if (expr == nullptr)
                         {
                           // Error.
                           this->default_value_.computed_ = -1;
@@ -783,6 +799,9 @@ AST_Union::compute_default_value (void)
                             }
 
                           break;
+                        case AST_Expression::EV_uint8:
+                        case AST_Expression::EV_octet:
+                        case AST_Expression::EV_int8:
                         case AST_Expression::EV_char:
                           if (this->default_value_.u.char_val
                                 == expr->ev ()->u.cval)
@@ -864,10 +883,10 @@ AST_Union::compute_default_value (void)
 
 // Compute the default index.
 int
-AST_Union::compute_default_index (void)
+AST_Union::compute_default_index ()
 {
-  AST_Decl *d = 0;
-  AST_UnionBranch *ub = 0;
+  AST_Decl *d = nullptr;
+  AST_UnionBranch *ub = nullptr;
   int i = 0;
 
   // If default case does not exist, it will have a value of -1 according to
@@ -894,7 +913,7 @@ AST_Union::compute_default_index (void)
 
           if (!d->imported ())
             {
-              ub = AST_UnionBranch::narrow_from_decl (d);
+              ub = dynamic_cast<AST_UnionBranch*> (d);
 
               for (unsigned long j = 0; j < ub->label_list_length (); ++j)
                 {
@@ -923,17 +942,13 @@ AST_Union::compute_default_index (void)
 AST_UnionBranch *
 AST_Union::fe_add_union_branch (AST_UnionBranch *t)
 {
-  return
-    AST_UnionBranch::narrow_from_decl (
-      this->fe_add_ref_decl (t));
+  return dynamic_cast<AST_UnionBranch*> (this->fe_add_ref_decl (t));
 }
 
 AST_Union *
 AST_Union::fe_add_union (AST_Union *t)
 {
-  return
-    AST_Union::narrow_from_decl (
-      this->fe_add_full_struct_type (t));
+  return dynamic_cast<AST_Union*> (this->fe_add_full_struct_type (t));
 }
 
 AST_Structure *
@@ -945,9 +960,7 @@ AST_Union::fe_add_structure (AST_Structure *t)
 AST_Enum *
 AST_Union::fe_add_enum (AST_Enum *t)
 {
-  return
-    AST_Enum::narrow_from_decl (
-      this->fe_add_decl (t));
+  return dynamic_cast<AST_Enum*> (this->fe_add_decl (t));
 }
 
 // Add this AST_EnumVal node (enumerator declaration) to this scope.
@@ -957,9 +970,7 @@ AST_Union::fe_add_enum (AST_Enum *t)
 AST_EnumVal *
 AST_Union::fe_add_enum_val (AST_EnumVal *t)
 {
-  return
-    AST_EnumVal::narrow_from_decl (
-      this->fe_add_decl (t));
+  return dynamic_cast<AST_EnumVal*> (this->fe_add_decl (t));
 }
 
 // Dump this AST_Union node to the ostream o.
@@ -969,6 +980,14 @@ AST_Union::dump (ACE_OSTREAM_TYPE &o)
   o << "union ";
   this->local_name ()->dump (o);
   o << " switch (";
+  AST_Annotation_Appls::iterator i,
+    finished = disc_annotations ().end ();
+  for (i = disc_annotations ().begin (); i != finished; ++i)
+    {
+      AST_Annotation_Appl *a = i->get ();
+      a->dump (o);
+      dump_i (o, " ");
+    }
   this->pd_disc_type->local_name ()->dump (o);
   o << ") {\n";
   UTL_Scope::dump (o);
@@ -978,7 +997,7 @@ AST_Union::dump (ACE_OSTREAM_TYPE &o)
 
 // Compute the size type of the node in question.
 int
-AST_Union::compute_size_type (void)
+AST_Union::compute_size_type ()
 {
   for (UTL_ScopeActiveIterator si (this, UTL_Scope::IK_decls);
        !si.is_done ();
@@ -992,9 +1011,9 @@ AST_Union::compute_size_type (void)
           continue;
         }
 
-      AST_Field *f = AST_Field::narrow_from_decl (d);
+      AST_Field *f = dynamic_cast<AST_Field*> (d);
 
-      if (f != 0)
+      if (f != nullptr)
         {
           AST_Type *t = f->field_type ();
           // Our sizetype depends on the sizetype of our members. Although
@@ -1007,7 +1026,7 @@ AST_Union::compute_size_type (void)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "WARNING (%N:%l) be_union::compute_size_type - "
-                      "narrow_from_decl returned 0\n"));
+                      "dynamic_cast returned 0\n"));
         }
     }
 
@@ -1023,16 +1042,25 @@ AST_Union::ast_accept (ast_visitor *visitor)
 // Data accessors.
 
 AST_ConcreteType *
-AST_Union::disc_type (void)
+AST_Union::disc_type ()
 {
   return this->pd_disc_type;
 }
 
 AST_Expression::ExprType
-AST_Union::udisc_type (void)
+AST_Union::udisc_type ()
 {
   return this->pd_udisc_type;
 }
 
-IMPL_NARROW_FROM_DECL(AST_Union)
-IMPL_NARROW_FROM_SCOPE(AST_Union)
+AST_Annotation_Appls &
+AST_Union::disc_annotations ()
+{
+  return disc_annotations_;
+}
+
+void
+AST_Union::disc_annotations (const AST_Annotation_Appls &annotations)
+{
+  disc_annotations_ = annotations;
+}

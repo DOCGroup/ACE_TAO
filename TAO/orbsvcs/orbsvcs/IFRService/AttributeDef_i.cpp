@@ -3,7 +3,6 @@
 #include "orbsvcs/IFRService/IDLType_i.h"
 #include "orbsvcs/IFRService/ExceptionDef_i.h"
 #include "orbsvcs/IFRService/IFR_Service_Utils.h"
-#include "ace/Auto_Ptr.h"
 #include "ace/SString.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -14,18 +13,18 @@ TAO_AttributeDef_i::TAO_AttributeDef_i (TAO_Repository_i *repo)
 {
 }
 
-TAO_AttributeDef_i::~TAO_AttributeDef_i (void)
+TAO_AttributeDef_i::~TAO_AttributeDef_i ()
 {
 }
 
 CORBA::DefinitionKind
-TAO_AttributeDef_i::def_kind (void)
+TAO_AttributeDef_i::def_kind ()
 {
   return CORBA::dk_Attribute;
 }
 
 CORBA::Contained::Description *
-TAO_AttributeDef_i::describe (void)
+TAO_AttributeDef_i::describe ()
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
@@ -35,7 +34,7 @@ TAO_AttributeDef_i::describe (void)
 }
 
 CORBA::Contained::Description *
-TAO_AttributeDef_i::describe_i (void)
+TAO_AttributeDef_i::describe_i ()
 {
   CORBA::Contained::Description *desc_ptr = 0;
   ACE_NEW_THROW_EX (desc_ptr,
@@ -58,7 +57,7 @@ TAO_AttributeDef_i::describe_i (void)
 }
 
 CORBA::TypeCode_ptr
-TAO_AttributeDef_i::type (void)
+TAO_AttributeDef_i::type ()
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::TypeCode::_nil ());
 
@@ -68,11 +67,11 @@ TAO_AttributeDef_i::type (void)
 }
 
 CORBA::TypeCode_ptr
-TAO_AttributeDef_i::type_i (void)
+TAO_AttributeDef_i::type_i ()
 {
   ACE_TString type_path;
   this->repo_->config ()->get_string_value (this->section_key_,
-                                            "type_path",
+                                            ACE_TEXT("type_path"),
                                             type_path);
 
   TAO_IDLType_i *impl =
@@ -83,7 +82,7 @@ TAO_AttributeDef_i::type_i (void)
 }
 
 CORBA::IDLType_ptr
-TAO_AttributeDef_i::type_def (void)
+TAO_AttributeDef_i::type_def ()
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::IDLType::_nil ());
 
@@ -93,11 +92,11 @@ TAO_AttributeDef_i::type_def (void)
 }
 
 CORBA::IDLType_ptr
-TAO_AttributeDef_i::type_def_i (void)
+TAO_AttributeDef_i::type_def_i ()
 {
   ACE_TString type_path;
   this->repo_->config ()->get_string_value (this->section_key_,
-                                            "type_path",
+                                            ACE_TEXT("type_path"),
                                             type_path);
 
   CORBA::Object_var obj =
@@ -126,12 +125,12 @@ TAO_AttributeDef_i::type_def_i (CORBA::IDLType_ptr type_def)
     TAO_IFR_Service_Utils::reference_to_path (type_def);
 
   this->repo_->config ()->set_string_value (this->section_key_,
-                                            "type_path",
-                                            type_path);
+                                            ACE_TEXT("type_path"),
+                                            ACE_TEXT_CHAR_TO_TCHAR(type_path));
 }
 
 CORBA::AttributeMode
-TAO_AttributeDef_i::mode (void)
+TAO_AttributeDef_i::mode ()
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::ATTR_NORMAL);
 
@@ -141,11 +140,11 @@ TAO_AttributeDef_i::mode (void)
 }
 
 CORBA::AttributeMode
-TAO_AttributeDef_i::mode_i (void)
+TAO_AttributeDef_i::mode_i ()
 {
   u_int mode = 0;
   this->repo_->config ()->get_integer_value (this->section_key_,
-                                             "mode",
+                                             ACE_TEXT("mode"),
                                              mode);
 
   return static_cast<CORBA::AttributeMode> (mode);
@@ -165,14 +164,13 @@ void
 TAO_AttributeDef_i::mode_i (CORBA::AttributeMode mode)
 {
   this->repo_->config ()->set_integer_value (this->section_key_,
-                                             "mode",
+                                             ACE_TEXT("mode"),
                                              mode);
 }
 
 void
 TAO_AttributeDef_i::make_description (
-    CORBA::AttributeDescription &ad
-  )
+    CORBA::AttributeDescription &ad)
 {
   ad.name = this->name_i ();
 
@@ -180,10 +178,10 @@ TAO_AttributeDef_i::make_description (
 
   ACE_TString container_id;
   this->repo_->config ()->get_string_value (this->section_key_,
-                                            "container_id",
+                                            ACE_TEXT("container_id"),
                                             container_id);
 
-  ad.defined_in = container_id.c_str ();
+  ad.defined_in = ACE_TEXT_ALWAYS_CHAR(container_id.c_str ());
 
   ad.version = this->version_i ();
 
@@ -193,7 +191,7 @@ TAO_AttributeDef_i::make_description (
 }
 
 CORBA::ExceptionDefSeq *
-TAO_AttributeDef_i::get_exceptions (void)
+TAO_AttributeDef_i::get_exceptions ()
 {
   ACE_Unbounded_Queue<ACE_TString> path_queue;
   int index = 0;
@@ -203,7 +201,7 @@ TAO_AttributeDef_i::get_exceptions (void)
   ACE_Configuration_Section_Key get_excepts_key;
   int status =
     this->repo_->config ()->open_section (this->section_key_,
-                                          "get_excepts",
+                                          ACE_TEXT("get_excepts"),
                                           0,
                                           get_excepts_key);
 
@@ -254,7 +252,7 @@ TAO_AttributeDef_i::get_exceptions (void)
 
       CORBA::Object_var obj =
         TAO_IFR_Service_Utils::create_objref (CORBA::dk_Exception,
-                                              path.c_str (),
+                                              ACE_TEXT_ALWAYS_CHAR(path.c_str ()),
                                               this->repo_);
 
       retval[i] = CORBA::ExceptionDef::_narrow (obj.in ());
@@ -264,7 +262,7 @@ TAO_AttributeDef_i::get_exceptions (void)
 }
 
 CORBA::ExceptionDefSeq *
-TAO_AttributeDef_i::put_exceptions (void)
+TAO_AttributeDef_i::put_exceptions ()
 {
   ACE_Unbounded_Queue<ACE_TString> path_queue;
   int index = 0;
@@ -274,7 +272,7 @@ TAO_AttributeDef_i::put_exceptions (void)
   ACE_Configuration_Section_Key put_excepts_key;
   int status =
     this->repo_->config ()->open_section (this->section_key_,
-                                          "put_excepts",
+                                          ACE_TEXT("put_excepts"),
                                           0,
                                           put_excepts_key);
 
@@ -325,7 +323,7 @@ TAO_AttributeDef_i::put_exceptions (void)
 
       CORBA::Object_var obj =
         TAO_IFR_Service_Utils::create_objref (CORBA::dk_Exception,
-                                              path.c_str (),
+                                              ACE_TEXT_ALWAYS_CHAR(path.c_str ()),
                                               this->repo_);
 
       retval[i] = CORBA::ExceptionDef::_narrow (obj.in ());

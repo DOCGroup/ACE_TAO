@@ -46,21 +46,21 @@ class TAO_Export TAO_Transport_Descriptor_Interface
 {
 public:
   /// Destructor
-  virtual ~TAO_Transport_Descriptor_Interface (void);
+  virtual ~TAO_Transport_Descriptor_Interface ();
 
   /// This call allocates and copies the contents of this class and
   /// returns the pointer
-  virtual  TAO_Transport_Descriptor_Interface *duplicate (void) = 0;
+  virtual  TAO_Transport_Descriptor_Interface *duplicate () = 0;
 
   /// Try to determine if this object is same as the @a other_prop.
   virtual CORBA::Boolean is_equivalent (
       const TAO_Transport_Descriptor_Interface *other_prop) = 0;
 
   /// Generate hash value for our class
-  virtual u_long hash (void) const = 0;
+  virtual u_long hash () const = 0;
 
   /// Return the underlying endpoint object
-  TAO_Endpoint *endpoint (void);
+  TAO_Endpoint *endpoint ();
 
   /// Reset the endpoint pointer to point to another, if that one is
   /// part of the chain based by the current endpoint. Although this
@@ -74,7 +74,7 @@ public:
 
 protected:
   /// Default Constructor
-  TAO_Transport_Descriptor_Interface (void);
+  TAO_Transport_Descriptor_Interface ();
 
   /// Constructor
   TAO_Transport_Descriptor_Interface (TAO_Endpoint *endpoint,

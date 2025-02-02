@@ -4,12 +4,12 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Operation_Table::~TAO_Operation_Table (void)
+TAO_Operation_Table::~TAO_Operation_Table ()
 {
 }
 
 /**************************************************************/
-TAO::Operation_Skeletons::Operation_Skeletons (void)
+TAO::Operation_Skeletons::Operation_Skeletons ()
   : skel_ptr (0)
   , thruPOA_skel_ptr (0)
   , direct_skel_ptr (0)

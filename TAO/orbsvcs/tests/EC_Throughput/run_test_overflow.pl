@@ -40,10 +40,10 @@ $sup2->DeleteFile ($nsiorfile);
 
 print STDERR "================ Overflow test\n";
 
-$NS = $ns->CreateProcess ("../../Naming_Service/tao_cosnaming",
+$NS = $ns->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_cosnaming",
                           "-o $ns_nsiorfile");
 
-$ES = $es->CreateProcess ("../../Event_Service/tao_rtevent",
+$ES = $es->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Event_Service/tao_rtevent",
                           "-ORBInitRef NameService=file://$es_nsiorfile ".
                           " -ORBSvcConf $es_ecmtconffile ".
                           " -s local");

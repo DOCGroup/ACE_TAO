@@ -20,7 +20,9 @@
 #include "ace/OS_NS_sys_utsname.h"
 #include "ace/OS_NS_netdb.h"
 
-
+#if defined(ACE_LACKS_GETHOSTENT) || defined(ACE_LACKS_SETHOSTENT) || defined(ACE_LACKS_ENDHOSTENT)
+#  define MISSING_HOSTENT_FUNCTIONS
+#endif
 
 // Host candidate list
 struct Host_Candidate
@@ -31,7 +33,7 @@ struct Host_Candidate
 const int MAX_CANDIDATES = 50;
 Host_Candidate candidate[MAX_CANDIDATES];
 
-#if !defined (ACE_LACKS_GETHOSTENT)
+#ifndef MISSING_HOSTENT_FUNCTIONS
 // Determine if a host exists, is reachable, and is up.  Attempt a
 // blocking connection to it; if it succeeds, then the host exists, is
 // reachable, and is up.
@@ -60,7 +62,7 @@ host_is_up (ACE_TCHAR hostname[])
 // The original problem this program tested for was incorrectly saying
 // a non-blocking connect completed successfully when it didn't.  The
 // test doesn't always work when done to localhost
-// (platform-dependant) so we look around for another host - any other
+// (platform-dependent) so we look around for another host - any other
 // one will do.
 
 static void
@@ -70,11 +72,10 @@ find_another_host (ACE_TCHAR other_host[])
 
   if (cached_other_host[0] == '\0')
     {
-
       ACE_OS::strcpy (other_host,
                       ACE_DEFAULT_SERVER_HOST); // If all else fails
 
-#if !defined (ACE_LACKS_GETHOSTENT)
+#ifndef MISSING_HOSTENT_FUNCTIONS
       // These gethost-type things don't work everywhere.
       struct hostent *h = 0;
       ACE_utsname un;
@@ -102,10 +103,9 @@ find_another_host (ACE_TCHAR other_host[])
       // an infinite loop on Linux --mas 03-08-2001
       while ((h = gethostent ()) != 0)
         {
-          if (ACE_OS::strcmp (h->h_name,
-                              ACE_TEXT_ALWAYS_CHAR (ACE_DEFAULT_SERVER_HOST)) == 0)
+          if (ACE_OS::strcmp (h->h_name, ACE_TEXT_ALWAYS_CHAR (ACE_DEFAULT_SERVER_HOST)) == 0)
             continue;
-          // AIX just _has_ to be different
+
           if (ACE_OS::strcmp (h->h_name, "loopback") == 0)
             continue;
 
@@ -140,7 +140,7 @@ find_another_host (ACE_TCHAR other_host[])
 }
 
 static int
-fail_no_listener_nonblocking (void)
+fail_no_listener_nonblocking ()
 {
   ACE_TCHAR test_host[MAXHOSTNAMELEN], test_addr[MAXHOSTNAMELEN + 8];
   int status;
@@ -222,7 +222,7 @@ fail_no_listener_nonblocking (void)
 // <ACE::handle_timed_complete> does checks on some systems.
 
 static int
-succeed_nonblocking (void)
+succeed_nonblocking ()
 {
   ACE_TCHAR test_host[MAXHOSTNAMELEN], test_addr[MAXHOSTNAMELEN + 8];
   int status;
@@ -312,6 +312,5 @@ run_main (int, ACE_TCHAR *[])
   ACE_END_TEST;
   return status;
 }
-
 
 

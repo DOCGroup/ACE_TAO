@@ -1,7 +1,7 @@
 #include "ClientInitializer.h"
 #include "ClientInterceptor.h"
 
-ClientInitializer::ClientInitializer (void)
+ClientInitializer::ClientInitializer ()
 {
 }
 

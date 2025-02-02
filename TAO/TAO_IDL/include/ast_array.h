@@ -1,4 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
 /*
 
 COPYRIGHT
@@ -77,7 +76,6 @@ class ast_visitor;
 
 // Representation of array declaration:
 // An array is a combination of a list of dimensions and a base type.
-
 class TAO_IDL_FE_Export AST_Array : public virtual AST_ConcreteType
 {
 public:
@@ -87,30 +85,26 @@ public:
              bool local,
              bool abstract);
 
-  virtual ~AST_Array (void);
+  virtual ~AST_Array ();
 
   // Data Accessors.
 
-  ACE_CDR::ULong n_dims (void);
+  ACE_CDR::ULong n_dims ();
 
-  AST_Expression **dims (void);
+  AST_Expression **dims ();
   void set_dims (AST_Expression **,
                  ACE_CDR::ULong);
 
-  AST_Type *base_type (void) const;
+  AST_Type *base_type () const;
   void set_base_type (AST_Type *nbt);
 
   // Recursively called on valuetype to check for legal use as
   // a primary key. Overridden for valuetype, struct, sequence,
   // union, array, typedef, and interface.
-  virtual bool legal_for_primary_key (void) const;
+  virtual bool legal_for_primary_key () const;
 
   // Cleanup.
-  virtual void destroy (void);
-
-  // Narrowing.
-
-  DEF_NARROW_FROM_DECL(AST_Array);
+  virtual void destroy ();
 
   // AST Dumping.
   virtual void dump (ACE_OSTREAM_TYPE &o);
@@ -120,8 +114,16 @@ public:
 
   static AST_Decl::NodeType const NT;
 
+  /**
+   * Get and Set Annotations on the base type
+   */
+  ///{
+  AST_Annotation_Appls &base_type_annotations ();
+  void base_type_annotations (const AST_Annotation_Appls &annotations);
+  ///}
+
 protected:
-  virtual int compute_size_type (void);
+  virtual int compute_size_type ();
   // Compute the size type if it is unknown.
 
 private:
@@ -140,11 +142,14 @@ private:
   // If our base type is anonymous array or sequence, we're
   // responsible for destroying it.
 
-private:
-
   // Compute how many dimensions.
   AST_Expression **compute_dims (UTL_ExprList *dims,
                                  ACE_CDR::ULong ndims);
+
+  /**
+   * Annotations on the base type
+   */
+  AST_Annotation_Appls base_type_annotations_;
 };
 
 #endif           // _AST_ARRAY_AST_ARRAY_HH

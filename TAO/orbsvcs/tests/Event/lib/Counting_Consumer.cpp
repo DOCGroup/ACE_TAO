@@ -1,7 +1,6 @@
 #include "Counting_Consumer.h"
 
 
-
 EC_Counting_Consumer::EC_Counting_Consumer (const char* name)
   : event_count (0),
     disconnect_count (0),
@@ -29,7 +28,7 @@ EC_Counting_Consumer::connect (RtecEventChannelAdmin::ConsumerAdmin_ptr consumer
 }
 
 void
-EC_Counting_Consumer::disconnect (void)
+EC_Counting_Consumer::disconnect ()
 {
   if (!CORBA::is_nil (this->supplier_proxy_.in ()))
     {
@@ -41,14 +40,13 @@ EC_Counting_Consumer::disconnect (void)
 }
 
 void
-EC_Counting_Consumer::deactivate (void)
+EC_Counting_Consumer::deactivate ()
 {
   PortableServer::POA_var consumer_poa =
     this->_default_POA ();
   PortableServer::ObjectId_var consumer_id =
     consumer_poa->servant_to_id (this);
   consumer_poa->deactivate_object (consumer_id.in ());
-
 }
 
 void
@@ -96,7 +94,7 @@ EC_Counting_Consumer::push (const RtecEventComm::EventSet& events)
 }
 
 void
-EC_Counting_Consumer::disconnect_push_consumer (void)
+EC_Counting_Consumer::disconnect_push_consumer ()
 {
   this->disconnect_count++;
   this->supplier_proxy_ =

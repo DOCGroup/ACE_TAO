@@ -14,7 +14,7 @@ Simple::Simple (int server_id)
 
 /// Default _non_existent: always returns false.
 CORBA::Boolean
-Simple::_non_existent (void)
+Simple::_non_existent ()
 {
   if (pong_delay > 0)
     ACE_DEBUG ((LM_DEBUG, "(%P|%t)%T Simple::_non_existent server %d sleep %d seconds ... \n",
@@ -29,7 +29,7 @@ Simple::_non_existent (void)
 }
 
 char *
-Simple::get_string (void)
+Simple::get_string ()
 {
   switch (this->server_id_)
   {
@@ -49,7 +49,7 @@ Simple::get_string (void)
 }
 
 void
-Simple::exit (void)
+Simple::exit ()
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t)%T - Simple::exit  server %d exit \n",
                       this->server_id_));

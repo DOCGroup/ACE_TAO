@@ -19,6 +19,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Intrusive_Ref_Count_Handle_T.h"
+#include <atomic>
 #include "LiveCheck.h"
 
 class Locator_Repository;
@@ -42,9 +43,9 @@ class AsyncListManager
                     PortableServer::POA_ptr poa,
                     LiveCheck *pinger);
 
-  ~AsyncListManager (void);
+  ~AsyncListManager ();
 
-  PortableServer::POA_ptr poa (void);
+  PortableServer::POA_ptr poa ();
   void list (ImplementationRepository::AMH_AdministrationResponseHandler_ptr _tao_rh,
              CORBA::ULong count);
 
@@ -54,15 +55,15 @@ class AsyncListManager
   bool evaluate_status (CORBA::ULong index, LiveStatus status, int pid);
   void ping_replied (CORBA::ULong index, LiveStatus status, int pid);
 
-  AsyncListManager *_add_ref (void);
-  void _remove_ref (void);
+  AsyncListManager *_add_ref ();
+  void _remove_ref ();
 
  private:
-  void init_list (void);
+  void init_list ();
   void list_i (CORBA::ULong start, CORBA::ULong count);
   bool make_iterator (ImplementationRepository::ServerInformationIterator_out si,
                       CORBA::ULong start);
-  void final_state (void);
+  void final_state ();
 
   const Locator_Repository *repo_;
   PortableServer::POA_var poa_;
@@ -73,8 +74,7 @@ class AsyncListManager
   CORBA::ULong first_;
   CORBA::ULong how_many_;
   CORBA::ULong waiters_;
-  int refcount_;
-  TAO_SYNCH_MUTEX lock_;
+  std::atomic<int> refcount_;
 };
 
 typedef TAO_Intrusive_Ref_Count_Handle<AsyncListManager> AsyncListManager_ptr;
@@ -90,10 +90,10 @@ class ListLiveListener : public LiveListener
                     AsyncListManager *owner,
                     LiveCheck &pinger);
 
-  virtual ~ListLiveListener (void);
-  bool start (void);
-  void cancel (void);
-  LiveStatus status (void);
+  virtual ~ListLiveListener ();
+  bool start ();
+  void cancel ();
+  LiveStatus status ();
   bool status_changed (LiveStatus status);
 
  private:

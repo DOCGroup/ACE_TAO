@@ -18,7 +18,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-  FT_ClientRequest_Interceptor::FT_ClientRequest_Interceptor (void)
+  FT_ClientRequest_Interceptor::FT_ClientRequest_Interceptor ()
     : name_ ("TAO_FT_ClientRequest_Interceptor")
       , uuid_ (0)
       , lock_ (0)
@@ -33,23 +33,22 @@ namespace TAO
     // Would be nice to have runtime option.
     ACE_NEW (this->lock_,
              ACE_Lock_Adapter<TAO_SYNCH_MUTEX>);
-
   }
 
-  FT_ClientRequest_Interceptor::~FT_ClientRequest_Interceptor (void)
+  FT_ClientRequest_Interceptor::~FT_ClientRequest_Interceptor ()
   {
     delete this->uuid_;
     delete this->lock_;
   }
 
   char *
-  FT_ClientRequest_Interceptor::name (void)
+  FT_ClientRequest_Interceptor::name ()
   {
     return CORBA::string_dup (this->name_);
   }
 
   void
-  FT_ClientRequest_Interceptor::destroy (void)
+  FT_ClientRequest_Interceptor::destroy ()
   {
   }
 
@@ -194,17 +193,17 @@ namespace TAO
 
     // If it is COMPLETED_MAYBE, then we will throw a COMPLETED_NO,
     // which the ORB should understand
-    if (ACE_OS_String::strcmp (rep_id.in (),
+    if (ACE_OS::strcmp (rep_id.in (),
                                "IDL:omg.org/CORBA/TRANSIENT:1.0") == 0)
       throw CORBA::TRANSIENT (min, CORBA::COMPLETED_NO);
-    else if (ACE_OS_String::strcmp (rep_id.in (),
+    else if (ACE_OS::strcmp (rep_id.in (),
                                   "IDL:omg.org/CORBA/COMM_FAILURE:1.0") == 0)
       throw CORBA::COMM_FAILURE (min, CORBA::COMPLETED_NO);
-    else if (ACE_OS_String::strcmp (rep_id.in (),
+    else if (ACE_OS::strcmp (rep_id.in (),
                                     "IDL:omg.org/CORBA/NO_REPONSE:1.0") == 0)
       throw CORBA::NO_RESPONSE (min, CORBA::COMPLETED_NO);
 
-    else if (ACE_OS_String::strcmp (rep_id.in (),
+    else if (ACE_OS::strcmp (rep_id.in (),
                                     "IDL:omg.org/CORBA/OBJ_ADAPTER:1.0") == 0)
     throw CORBA::OBJ_ADAPTER (min, CORBA::COMPLETED_NO);
     cout << "Didnt throw exception " << endl;
@@ -269,7 +268,6 @@ namespace TAO
         }
       // Add this context to the service context list.
       ri->add_request_service_context (sc, 0);
-
     }
     catch (const CORBA::Exception&)
     {

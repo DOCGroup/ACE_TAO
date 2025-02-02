@@ -176,7 +176,7 @@ The files for this example are located in
 $ACE_ROOT/examples/Bounded_Packet_Relay in the latest release of ACE,
 which is located at
 
-http://www.cs.wustl.edu/~schmidt/ACE_wrappers/ACE.tar.gz
+https://github.com/DOCGroup/ACE_TAO
 
 Source Files: Thread_Bounded_Packet_Relay.h
               Thread_Bounded_Packet_Relay.cpp

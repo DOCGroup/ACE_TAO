@@ -43,8 +43,6 @@ struct TAO_Message_Semantics
       : type_ (type), mode_ (TAO_SYNCH_MODE) {}
     TAO_Message_Semantics (Type type, Mode mode)
       : type_ (type), mode_ (mode) {}
-    TAO_Message_Semantics (const TAO_Message_Semantics& ms)
-      : type_ (ms.type_), mode_ (ms.mode_) {}
 
     Type type_;
     Mode mode_;

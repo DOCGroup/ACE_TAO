@@ -33,11 +33,11 @@ class TPTEST_Export Custom_Time_Policy_Strategy
 public:
   virtual ~Custom_Time_Policy_Strategy ();
 
-  virtual ACE_Timer_Queue * create_timer_queue (void);
+  virtual ACE_Timer_Queue * create_timer_queue ();
 
   virtual void destroy_timer_queue (ACE_Timer_Queue *tmq);
 
-  virtual ACE_Dynamic_Time_Policy_Base * get_time_policy (void);
+  virtual ACE_Dynamic_Time_Policy_Base * get_time_policy ();
 };
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TPTEST, Custom_Time_Policy_Strategy)

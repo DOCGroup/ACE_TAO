@@ -2,7 +2,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
-TAO_EC_Object_Deactivator::TAO_EC_Object_Deactivator (void)
+TAO_EC_Object_Deactivator::TAO_EC_Object_Deactivator ()
   : poa_ ()
   , id_ ()
   , deactivate_ (0)
@@ -20,7 +20,7 @@ TAO_EC_Object_Deactivator::TAO_EC_Object_Deactivator (
 }
 
 ACE_INLINE void
-TAO_EC_Object_Deactivator::deactivate (void)
+TAO_EC_Object_Deactivator::deactivate ()
 {
   if (this->deactivate_ && !CORBA::is_nil (this->poa_.in ()))
   {
@@ -37,25 +37,25 @@ TAO_EC_Object_Deactivator::deactivate (void)
 }
 
 ACE_INLINE
-TAO_EC_Object_Deactivator::~TAO_EC_Object_Deactivator (void)
+TAO_EC_Object_Deactivator::~TAO_EC_Object_Deactivator ()
 {
   this->deactivate ();
 }
 
 ACE_INLINE PortableServer::POA_var
-TAO_EC_Object_Deactivator::poa (void) const
+TAO_EC_Object_Deactivator::poa () const
 {
   return this->poa_;
 }
 
 ACE_INLINE void
-TAO_EC_Object_Deactivator::allow_deactivation (void)
+TAO_EC_Object_Deactivator::allow_deactivation ()
 {
   this->deactivate_ = 1;
 }
 
 ACE_INLINE void
-TAO_EC_Object_Deactivator::disallow_deactivation (void)
+TAO_EC_Object_Deactivator::disallow_deactivation ()
 {
   this->deactivate_ = 0;
 }
@@ -84,13 +84,13 @@ TAO_EC_Object_Deactivator::set_values (TAO_EC_Object_Deactivator & deactivator)
 // ****************************************************************
 
 ACE_INLINE
-TAO_EC_Deactivated_Object::TAO_EC_Deactivated_Object (void)
+TAO_EC_Deactivated_Object::TAO_EC_Deactivated_Object ()
   : deactivator_ ()
 {
 }
 
 ACE_INLINE
-TAO_EC_Deactivated_Object::~TAO_EC_Deactivated_Object (void)
+TAO_EC_Deactivated_Object::~TAO_EC_Deactivated_Object ()
 {
   // Prevent automatic deactivation in deactivator's destructor.
   this->deactivator_.disallow_deactivation ();
@@ -106,13 +106,13 @@ TAO_EC_Deactivated_Object::set_deactivator (
 // ****************************************************************
 
 ACE_INLINE
-TAO_EC_ORB_Holder::TAO_EC_ORB_Holder (void)
+TAO_EC_ORB_Holder::TAO_EC_ORB_Holder ()
   : orb_ ()
 {
 }
 
 ACE_INLINE
-TAO_EC_ORB_Holder::~TAO_EC_ORB_Holder (void)
+TAO_EC_ORB_Holder::~TAO_EC_ORB_Holder ()
 {
   if (!CORBA::is_nil (this->orb_.in ()))
   {
@@ -136,13 +136,13 @@ TAO_EC_ORB_Holder::init (CORBA::ORB_var orb_var)
 // ****************************************************************
 
 ACE_INLINE
-TAO_EC_Event_Channel_Holder::TAO_EC_Event_Channel_Holder (void)
+TAO_EC_Event_Channel_Holder::TAO_EC_Event_Channel_Holder ()
   : ec_ ()
 {
 }
 
 ACE_INLINE
-TAO_EC_Event_Channel_Holder::~TAO_EC_Event_Channel_Holder (void)
+TAO_EC_Event_Channel_Holder::~TAO_EC_Event_Channel_Holder ()
 {
   if (!CORBA::is_nil (this->ec_.in ()))
   {

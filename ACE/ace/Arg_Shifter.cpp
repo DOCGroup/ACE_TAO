@@ -44,7 +44,7 @@ ACE_Arg_Shifter_T<CHAR_TYPE>::ACE_Arg_Shifter_T (int& argc,
 
 template <typename CHAR_TYPE>
 void
-ACE_Arg_Shifter_T<CHAR_TYPE>::init (void)
+ACE_Arg_Shifter_T<CHAR_TYPE>::init ()
 {
   // If not provided with one, allocate a temporary array.
   if (this->temp_ == 0)
@@ -74,7 +74,7 @@ ACE_Arg_Shifter_T<CHAR_TYPE>::init (void)
 }
 
 template <typename CHAR_TYPE>
-ACE_Arg_Shifter_T<CHAR_TYPE>::~ACE_Arg_Shifter_T (void)
+ACE_Arg_Shifter_T<CHAR_TYPE>::~ACE_Arg_Shifter_T ()
 {
   // Delete the temporary vector.
 #if defined (ACE_HAS_ALLOC_HOOKS)
@@ -87,7 +87,7 @@ ACE_Arg_Shifter_T<CHAR_TYPE>::~ACE_Arg_Shifter_T (void)
 
 template <typename CHAR_TYPE>
 const CHAR_TYPE *
-ACE_Arg_Shifter_T<CHAR_TYPE>::get_current (void) const
+ACE_Arg_Shifter_T<CHAR_TYPE>::get_current () const
 {
   const CHAR_TYPE * retval = 0;
 
@@ -130,33 +130,20 @@ template <typename CHAR_TYPE>
 int
 ACE_Arg_Shifter_T<CHAR_TYPE>::cur_arg_strncasecmp (const CHAR_TYPE *flag)
 {
-  // Check for a current argument
-  if (this->is_anything_left())
-    {
-      size_t const flag_length = ACE_OS::strlen (flag);
+  if (!this->is_anything_left ())
+    return -1;
 
-      // Check for presence of the flag
-      if (ACE_OS::strncasecmp(this->temp_[current_index_],
-                              flag,
-                              flag_length) == 0)
-        {
-          if (ACE_OS::strlen(temp_[current_index_]) == flag_length)
-            {
-              // match and lengths are equal
-              return 0;
-            }
-          else
-            {
-              // matches, with more info to boot!
-              size_t const remaining = ACE_OS::strspn
-                (this->temp_[current_index_] + flag_length,
-                ACE_TEXT (" ")) + flag_length;
-              return static_cast<int> (remaining);
-            }
-        }
-    }
-  // failure
-  return -1;
+  const size_t flag_length = ACE_OS::strlen (flag);
+  const CHAR_TYPE *arg = this->temp_[this->current_index_];
+
+  if (ACE_OS::strncasecmp (arg, flag, flag_length) != 0)
+    return -1;
+
+  const size_t arg_length = ACE_OS::strlen (arg);
+  size_t remaining = flag_length;
+  while (remaining < arg_length && arg[remaining] == CHAR_TYPE (' '))
+    ++remaining;
+  return (arg_length == flag_length) ? 0 : static_cast<int> (remaining);
 }
 
 template <typename CHAR_TYPE>
@@ -203,14 +190,14 @@ ACE_Arg_Shifter_T<CHAR_TYPE>::ignore_arg (int number)
 
 template <typename CHAR_TYPE>
 int
-ACE_Arg_Shifter_T<CHAR_TYPE>::is_anything_left (void) const
+ACE_Arg_Shifter_T<CHAR_TYPE>::is_anything_left () const
 {
   return this->total_size_ - this->current_index_;
 }
 
 template <typename CHAR_TYPE>
 int
-ACE_Arg_Shifter_T<CHAR_TYPE>::is_option_next (void) const
+ACE_Arg_Shifter_T<CHAR_TYPE>::is_option_next () const
 {
   return this->is_anything_left () &&
     this->temp_[this->current_index_][0] == '-';
@@ -218,7 +205,7 @@ ACE_Arg_Shifter_T<CHAR_TYPE>::is_option_next (void) const
 
 template <typename CHAR_TYPE>
 int
-ACE_Arg_Shifter_T<CHAR_TYPE>::is_parameter_next (void) const
+ACE_Arg_Shifter_T<CHAR_TYPE>::is_parameter_next () const
 {
   return this->is_anything_left ()
     && this->temp_[this->current_index_][0] != '-';
@@ -226,7 +213,7 @@ ACE_Arg_Shifter_T<CHAR_TYPE>::is_parameter_next (void) const
 
 template <typename CHAR_TYPE>
 int
-ACE_Arg_Shifter_T<CHAR_TYPE>::num_ignored_args (void) const
+ACE_Arg_Shifter_T<CHAR_TYPE>::num_ignored_args () const
 {
   return this->front_;
 }

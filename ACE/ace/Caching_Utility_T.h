@@ -43,7 +43,6 @@ template <class KEY, class VALUE, class CONTAINER, class ITERATOR, class ATTRIBU
 class ACE_Pair_Caching_Utility : private ACE_Copy_Disabled
 {
 public:
-
   typedef ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> CLEANUP_STRATEGY;
 
   /// Constructor.
@@ -51,7 +50,7 @@ public:
                             bool delete_cleanup_strategy = false);
 
   /// Destructor.
-  ~ACE_Pair_Caching_Utility (void);
+  ~ACE_Pair_Caching_Utility ();
 
   /**
    * Purge entries from the @a container. The Cleanup_Strategy will do the
@@ -60,7 +59,6 @@ public:
   int clear_cache (CONTAINER &container, double purge_percent);
 
 protected:
-
   /// Find the entry with minimum caching attributes.
   void minimum (CONTAINER &container,
                 KEY *&key_to_remove,
@@ -91,9 +89,7 @@ protected:
 template <class KEY, class VALUE, class CONTAINER, class ITERATOR, class ATTRIBUTES>
 class ACE_Recyclable_Handler_Caching_Utility : private ACE_Copy_Disabled
 {
-
 public:
-
   typedef ACE_Recyclable_Handler_Cleanup_Strategy<KEY, VALUE, CONTAINER> CLEANUP_STRATEGY;
   typedef ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> CLEANUP_STRATEGY_BASE;
 
@@ -102,7 +98,7 @@ public:
                                           bool delete_cleanup_strategy = false);
 
   /// Destructor.
-  ~ACE_Recyclable_Handler_Caching_Utility (void);
+  ~ACE_Recyclable_Handler_Caching_Utility ();
 
   /**
    * Purge entries from the @a container. The Cleanup_Strategy will do
@@ -113,7 +109,6 @@ public:
                    double purge_percent);
 
 protected:
-
   /// Find the entry with minimum caching attributes.
   void minimum (CONTAINER &container,
                 KEY *&key_to_remove,
@@ -153,7 +148,7 @@ public:
                                                      bool delete_cleanup_strategy = false);
 
   /// Destructor.
-  ~ACE_Refcounted_Recyclable_Handler_Caching_Utility (void);
+  ~ACE_Refcounted_Recyclable_Handler_Caching_Utility ();
 
   /**
    * Purge entries from the @a container. The Cleanup_Strategy will do
@@ -164,7 +159,6 @@ public:
                    double purge_percent);
 
 protected:
-
   /// Find the entry with minimum caching attributes.
   void minimum (CONTAINER &container,
                 KEY *&key_to_remove,
@@ -202,7 +196,6 @@ template <class KEY, class VALUE, class CONTAINER, class ITERATOR, class ATTRIBU
 class ACE_Handler_Caching_Utility : private ACE_Copy_Disabled
 {
 public:
-
   typedef ACE_Handler_Cleanup_Strategy<KEY, VALUE, CONTAINER> CLEANUP_STRATEGY;
   typedef ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> CLEANUP_STRATEGY_BASE;
 
@@ -211,7 +204,7 @@ public:
                                bool delete_cleanup_strategy = false);
 
   /// Destructor.
-  ~ACE_Handler_Caching_Utility (void);
+  ~ACE_Handler_Caching_Utility ();
 
   /**
    * Purge entries from the @a container. The Cleanup_Strategy will do
@@ -222,7 +215,6 @@ public:
                    double purge_percent);
 
 protected:
-
   /**
    * Find the entry with minimum caching attributes.  This is handler
    * specific since this utility is to be used very specifically for
@@ -257,7 +249,6 @@ template <class KEY, class VALUE, class CONTAINER, class ITERATOR, class ATTRIBU
 class ACE_Null_Caching_Utility : private ACE_Copy_Disabled
 {
 public:
-
   typedef ACE_Null_Cleanup_Strategy<KEY, VALUE, CONTAINER> CLEANUP_STRATEGY;
   typedef ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> CLEANUP_STRATEGY_BASE;
 
@@ -266,7 +257,7 @@ public:
                             bool delete_cleanup_strategy = false);
 
   /// Destructor.
-  ~ACE_Null_Caching_Utility (void);
+  ~ACE_Null_Caching_Utility ();
 
   /**
    * Purge entries from the @a container. The Cleanup_Strategy will do
@@ -277,7 +268,6 @@ public:
                    double purge_percent);
 
 protected:
-
   /**
    * Find the entry with minimum caching attributes.  This is handler
    * specific since this utility is to be used very specifically for
@@ -298,13 +288,7 @@ protected:
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Caching_Utility_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Caching_Utility_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 

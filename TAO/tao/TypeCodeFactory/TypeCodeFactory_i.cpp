@@ -52,7 +52,6 @@ namespace TCF
                                           CORBA::TypeCode_var,
                                           field_array_type>
       recursive_typecode_type;
-
   }  // End namespace Struct
 
   namespace Union
@@ -93,11 +92,11 @@ namespace TCF
 }
 
 
-TAO_TypeCodeFactory_i::TAO_TypeCodeFactory_i (void)
+TAO_TypeCodeFactory_i::TAO_TypeCodeFactory_i ()
 {
 }
 
-TAO_TypeCodeFactory_i::~TAO_TypeCodeFactory_i (void)
+TAO_TypeCodeFactory_i::~TAO_TypeCodeFactory_i ()
 {
 }
 
@@ -251,8 +250,7 @@ TAO_TypeCodeFactory_i::create_union_tc (
           CORBA::TypeCode_var const tmp = member.label.type ();
 
           CORBA::Boolean const equiv =
-            discriminator_type->equivalent (tmp.in ()
-                                           );
+            discriminator_type->equivalent (tmp.in ());
 
           if (!equiv)
             {
@@ -266,8 +264,7 @@ TAO_TypeCodeFactory_i::create_union_tc (
   CORBA::Boolean const unique_labels =
     this->unique_label_values (members,
                                discriminator_type,
-                               raw_default_index
-                              );
+                               raw_default_index);
 
   if (!unique_labels)
     {
@@ -569,7 +566,6 @@ TAO_TypeCodeFactory_i::create_union_tc (
 
   if (is_recursive)
     {
-
       recursive_typecode_type * const rtc =
         dynamic_cast<recursive_typecode_type *> (recursive_tc.in ());
 
@@ -746,8 +742,7 @@ TAO_TypeCodeFactory_i::create_value_tc (
                                       type_modifier,
                                       concrete_base,
                                       members,
-                                      CORBA::tk_value
-                                     );
+                                      CORBA::tk_value);
 }
 
 CORBA::TypeCode_ptr
@@ -799,27 +794,23 @@ TAO_TypeCodeFactory_i::create_abstract_interface_tc (
 {
   return this->create_tc_common (id,
                                  name,
-                                 CORBA::tk_abstract_interface
-                                );
+                                 CORBA::tk_abstract_interface);
 }
 
 CORBA::TypeCode_ptr
 TAO_TypeCodeFactory_i::create_local_interface_tc (
     const char *id,
-    const char *name
-  )
+    const char *name)
 {
   return this->create_tc_common (id,
                                  name,
-                                 CORBA::tk_local_interface
-                                );
+                                 CORBA::tk_local_interface);
 }
 
 CORBA::TypeCode_ptr
 TAO_TypeCodeFactory_i::create_component_tc (
     const char *id,
-    const char *name
-  )
+    const char *name)
 {
   return this->create_tc_common (id,
                                  name,
@@ -1216,8 +1207,7 @@ TAO_TypeCodeFactory_i::struct_except_tc_common (
       CORBA::TypeCode_ptr const member_tc = members[index].type.in ();
 
       CORBA::Boolean const valid_member =
-        this->valid_content_type (member_tc
-                                 );
+        this->valid_content_type (member_tc);
 
       if (!valid_member)
         {
@@ -1534,12 +1524,10 @@ CORBA::Boolean
 TAO_TypeCodeFactory_i::unique_label_values (
   const CORBA::UnionMemberSeq &members,
   CORBA::TypeCode_ptr disc_tc,
-  CORBA::ULong default_index_slot
-  )
+  CORBA::ULong default_index_slot)
 {
-  CORBA::TCKind disc_kind = disc_tc->kind ();
-
-  CORBA::ULong length = members.length ();
+  CORBA::TCKind const disc_kind = disc_tc->kind ();
+  CORBA::ULong const length = members.length ();
 
   // We have already checked for valid discriminator type
   // and valid label types, so we won't check for any of that here.
@@ -1555,7 +1543,7 @@ TAO_TypeCodeFactory_i::unique_label_values (
     CORBA::ULong enum_val;
     CORBA::ULongLong ulonglong_val;
     CORBA::LongLong longlong_val;
-  } s = {0, 0, 0, 0, 0, 0, 0, 0, ACE_CDR_LONGLONG_INITIALIZER };
+  } s = {0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
   // Two cases - one for signed and one for unsigned discriminator types.
   if (disc_kind == CORBA::tk_long
@@ -1689,8 +1677,7 @@ TAO_TypeCodeFactory_i::unique_label_values (
 }
 
 CORBA::Boolean
-TAO_TypeCodeFactory_i::valid_disc_type (CORBA::TypeCode_ptr tc
-                                        )
+TAO_TypeCodeFactory_i::valid_disc_type (CORBA::TypeCode_ptr tc)
 {
   CORBA::TCKind const kind = tc->kind ();
 

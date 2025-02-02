@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/Process.h"
 #include "ace/Manual_Event.h"
@@ -22,7 +21,6 @@
 #include "ace/OS_NS_sys_time.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/os_include/os_dirent.h"
-
 
 #if (!defined (ACE_LACKS_FORK) || defined (ACE_WIN32)) && \
   (defined (ACE_WIN32) || \
@@ -37,7 +35,7 @@ static const ACE_TCHAR *event_pong_name = ACE_TEXT ("ACE_Pong_Event");
 
 // Explain usage and exit.
 static void
-print_usage_and_die (void)
+print_usage_and_die ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("usage: %n [-i #iterations] [-c (child process)]\n")));
@@ -68,7 +66,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 static void
-acquire_release (void)
+acquire_release ()
 {
   ACE_Manual_Event event_ping (0, USYNC_PROCESS, event_ping_name);
   ACE_Manual_Event event_pong (0, USYNC_PROCESS, event_pong_name);
@@ -186,20 +184,6 @@ run_main (int argc, ACE_TCHAR *argv[])
 
       // The parent cleans up any remnant of past runs of this test.
       // See Bugzilla #2662 for further info.
-      // On AIX, this is done by removing the shared memory objects before
-      // trying to run.
-#  if defined (AIX)
-      // FUZZ: disable check_for_lack_ACE_OS
-      if (::shm_unlink (event_ping_name) != 0 && errno != ENOENT)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%P) event_ping %p\n"),
-                    ACE_TEXT ("shm_unlink")));
-      if (::shm_unlink (event_pong_name) != 0 && errno != ENOENT)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%P) event_pong %p\n"),
-                    ACE_TEXT ("shm_unlink")));
-      // FUZZ: enable check_for_lack_ACE_OS
-#  endif /* AIX */
 
       ACE_TCHAR const * argv_0 = argc > 0 ? argv[0] : ACE_TEXT ("Process_Manual_Event_Test");
 

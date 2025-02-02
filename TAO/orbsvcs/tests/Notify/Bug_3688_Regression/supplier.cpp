@@ -11,7 +11,6 @@ namespace CosNotifyCommImpl{
     void subscription_change( const CosNotification::EventTypeSeq&,
       const CosNotification::EventTypeSeq&)
     {};
-
   };
 }
 
@@ -59,7 +58,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     {
       proxyCon_obj = sa->obtain_notification_push_consumer(ctype, proxy_id);
     }
-    catch(CosNotifyChannelAdmin::AdminLimitExceeded& err)
+    catch(const CosNotifyChannelAdmin::AdminLimitExceeded&)
     {
       std::cerr << "CosNotifyChannelAdmin::AdminLimitExceeded Exception!" << std::endl;
       throw;
@@ -73,7 +72,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     {
       ppc->connect_structured_push_supplier(sps.in());
     }
-    catch (CosEventChannelAdmin::AlreadyConnected& ac)
+    catch (const CosEventChannelAdmin::AlreadyConnected&)
     {
       std::cerr << "CosEventChannelAdmin::AlreadyConnected" << std::endl;
       throw;

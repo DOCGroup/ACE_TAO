@@ -14,7 +14,7 @@
  *
  * Specific-pid and generic exit-handler functions are also tested.
  *
- *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu> and Dave Madden <dhm@mersenne.com>
+ *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu> and Dave Madden <dhm@mersenne.com>
  */
 //=============================================================================
 
@@ -32,7 +32,7 @@ public:
   ExitHandler (const char *name);
 
   /// Called when object is removed from the <ACE_Reactor>.
-  virtual ~ExitHandler (void);
+  virtual ~ExitHandler ();
   virtual int handle_exit (ACE_Process *proc);
   virtual int handle_timeout (const ACE_Time_Value &tv,
                               const void *arg = 0);
@@ -48,7 +48,7 @@ ExitHandler::ExitHandler (const char *name)
 {
 }
 
-ExitHandler::~ExitHandler (void)
+ExitHandler::~ExitHandler ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t@%T) ExitHandler \"%s\" destroyed\n",

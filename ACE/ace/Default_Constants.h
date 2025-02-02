@@ -4,7 +4,7 @@
 /**
  *  @file   Default_Constants.h
  *
- *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  *  @author Jesper S. M|ller<stophph@diku.dk>
  *  @author and a cast of thousands...
  *
@@ -364,7 +364,7 @@
 // elements.
 # define ACE_FREE_LIST_WITH_POOL 1
 
-// A simple free list which doen't allocate/deallocate elements.
+// A simple free list which doesn't allocate/deallocate elements.
 # define ACE_PURE_FREE_LIST 2
 
 # if defined (ACE_WIN32)
@@ -397,7 +397,6 @@
  * @name Default values to control CDR classes memory allocation strategies
  */
 //@{
-
 /// Control the initial size of all CDR buffers, application
 /// developers may want to optimize this value to fit their request
 /// size
@@ -583,6 +582,10 @@
 #   define ACE_DEV_NULL "/dev/null"
 #   define ACE_SYSCALL_FAILED -1
 # endif /* ACE_WIN32 */
+
+#if !defined (ACE_DEFAULT_ACCEPTOR_USE_SELECT)
+# define ACE_DEFAULT_ACCEPTOR_USE_SELECT 1
+#endif /* ACE_DEFAULT_ACCEPTOR_USE_SELECT */
 
 #include /**/ "ace/post.h"
 #endif /*ACE_DEFAULT_CONSTANTS_H*/

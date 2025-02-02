@@ -2,7 +2,7 @@
 
 /**
  * Copyright (C) 1989 Free Software Foundation, Inc.
- * written by Douglas C. Schmidt (schmidt@cs.wustl.edu)
+ * written by Douglas C. Schmidt (d.schmidt@vanderbilt.edu)
  *
  * This file is part of GNU GPERF.
  *
@@ -50,7 +50,7 @@ public:
   Hash_Table (size_t s);
 
   /// Destructor
-  ~Hash_Table (void);
+  ~Hash_Table ();
 
   List_Node *find (List_Node *item, int ignore_length);
 

@@ -40,9 +40,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Naming_Serv_Export TAO_Persistent_IntId
 {
 public:
-  // = Initialization and termination methods.
   /// Constructor.
-  TAO_Persistent_IntId (void);
+  TAO_Persistent_IntId ();
 
   /// Constructor.
   TAO_Persistent_IntId (char * obj_ref,
@@ -52,7 +51,7 @@ public:
   TAO_Persistent_IntId (const TAO_Persistent_IntId & rhs);
 
   /// Destructor.
-  ~TAO_Persistent_IntId (void);
+  ~TAO_Persistent_IntId ();
 
   /// Assignment operator.
   void operator= (const TAO_Persistent_IntId & rhs);
@@ -83,10 +82,8 @@ public:
 class TAO_Naming_Serv_Export TAO_Persistent_ExtId
 {
 public:
-  // = Initialization and termination methods.
-
   /// Constructor.
-  TAO_Persistent_ExtId (void);
+  TAO_Persistent_ExtId ();
 
   /// Constructor.
   TAO_Persistent_ExtId (const char *id,
@@ -96,7 +93,7 @@ public:
   TAO_Persistent_ExtId (const TAO_Persistent_ExtId & rhs);
 
   /// Destructor.
-  ~TAO_Persistent_ExtId (void);
+  ~TAO_Persistent_ExtId ();
 
   // = Assignment and comparison methods.
 
@@ -111,7 +108,7 @@ public:
 
   /// hash() function is required in order for this class to be usable by
   /// ACE_Hash_Map_Manager.
-  u_long hash (void) const;
+  u_long hash () const;
 
   // = Data members.
 
@@ -125,8 +122,8 @@ public:
 
   // Accessors.
 
-  const char * id (void);
-  const char * kind (void);
+  const char * id ();
+  const char * kind ();
 };
 
 /**
@@ -145,9 +142,8 @@ public:
 class TAO_Naming_Serv_Export TAO_Persistent_Index_IntId
 {
 public:
-  // = Initialization and termination methods.
   /// Constructor.
-  TAO_Persistent_Index_IntId (void);
+  TAO_Persistent_Index_IntId ();
 
   /// Constructor.
   TAO_Persistent_Index_IntId (ACE_UINT32 *counter,
@@ -158,7 +154,7 @@ public:
   TAO_Persistent_Index_IntId (const TAO_Persistent_Index_IntId & rhs);
 
   /// Destructor.
-  ~TAO_Persistent_Index_IntId (void);
+  ~TAO_Persistent_Index_IntId ();
 
   /// Assignment operator (does copy memory).
   void operator= (const TAO_Persistent_Index_IntId & rhs);
@@ -189,10 +185,8 @@ public:
 class TAO_Naming_Serv_Export TAO_Persistent_Index_ExtId
 {
 public:
-  // = Initialization and termination methods.
-
   /// Constructor.
-  TAO_Persistent_Index_ExtId (void);
+  TAO_Persistent_Index_ExtId ();
 
   /// Constructor.
   TAO_Persistent_Index_ExtId (const char *poa_id);
@@ -201,7 +195,7 @@ public:
   TAO_Persistent_Index_ExtId (const TAO_Persistent_Index_ExtId & rhs);
 
   /// Destructor.
-  ~TAO_Persistent_Index_ExtId (void);
+  ~TAO_Persistent_Index_ExtId ();
 
   // = Assignment and comparison methods.
 
@@ -216,7 +210,7 @@ public:
 
   /// <hash> function is required in order for this class to be usable by
   /// ACE_Hash_Map_Manager.
-  u_long hash (void) const;
+  u_long hash () const;
 
   // = Data member.
 

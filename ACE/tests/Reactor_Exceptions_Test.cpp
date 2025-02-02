@@ -1,4 +1,3 @@
-
 //=============================================================================
 /**
  *  @file    Reactor_Exceptions_Test.cpp
@@ -6,10 +5,9 @@
  *    This is a test that makes sure the <ACE_Reactor> works
  *    correctly in the face of C++ exceptions and threads.
  *
- *  @author Luca Priorelli <lucapri@mbox.vol.it> and Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ *  @author Luca Priorelli <lucapri@mbox.vol.it> and Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
 //=============================================================================
-
 
 #include "test_config.h"
 #include "ace/Reactor.h"
@@ -22,7 +20,7 @@
 class Except {};
 
 static void
-throw_exception (void)
+throw_exception ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P|%t) throw exception\n")));
@@ -34,8 +32,8 @@ class My_Handler : public ACE_Event_Handler, public ACE_SOCK_Dgram
 public:
   My_Handler (const ACE_INET_Addr &local_addr);
 
-  virtual ACE_HANDLE get_handle (void) const;
-  virtual int handle_input (ACE_HANDLE handle);
+  ACE_HANDLE get_handle () const override;
+  int handle_input (ACE_HANDLE handle) override;
 };
 
 My_Handler::My_Handler (const ACE_INET_Addr &local_addr)
@@ -44,7 +42,7 @@ My_Handler::My_Handler (const ACE_INET_Addr &local_addr)
 }
 
 ACE_HANDLE
-My_Handler::get_handle (void) const
+My_Handler::get_handle () const
 {
   return ACE_SOCK_Dgram::get_handle ();
 }
@@ -78,7 +76,7 @@ My_Handler::handle_input (ACE_HANDLE)
 class My_Reactor : public ACE_Select_Reactor
 {
 public:
-  virtual int handle_events (ACE_Time_Value *max_wait_time)
+  int handle_events (ACE_Time_Value *max_wait_time) override
   {
     int ret = 0;
 
@@ -96,15 +94,15 @@ public:
     return ret;
   }
 
-  virtual int handle_events (ACE_Time_Value &max_wait_time)
+  int handle_events (ACE_Time_Value &max_wait_time) override
   {
     return this->handle_events (&max_wait_time);
   }
 };
 
 #if defined (ACE_HAS_THREADS)
-static int
-worker (void)
+static void*
+worker (void*)
 {
   ACE_Reactor::instance ()->owner (ACE_OS::thr_self ());
 
@@ -140,7 +138,6 @@ run_main (int argc, ACE_TCHAR *argv[])
     // Make sure handler gets cleaned up before reactor by putting it in its
     // own scope
     My_Handler handler (local_addr);
-
 
     if (ACE_Reactor::instance ()->register_handler
         (&handler,

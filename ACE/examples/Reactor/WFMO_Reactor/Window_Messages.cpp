@@ -17,10 +17,8 @@
 
 #include "ace/Msg_WFMO_Reactor.h"
 #include "ace/Reactor.h"
-#include "ace/Auto_Ptr.h"
 #include "ace/Auto_Event.h"
-
-
+#include <memory>
 
 class Event_Handler : public ACE_Event_Handler
 {
@@ -60,7 +58,7 @@ ACE_TMAIN (int, ACE_TCHAR*[])
 {
   // Manage memory automagically.
   ACE_Reactor_Impl *impl = new ACE_Msg_WFMO_Reactor;
-  auto_ptr<ACE_Reactor> reactor (new ACE_Reactor (impl, 1));
+  std::unique_ptr<ACE_Reactor> reactor (new ACE_Reactor (impl, 1));
   ACE_Reactor::instance (reactor.get ());
 
   Event_Handler event_handler;

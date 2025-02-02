@@ -9,7 +9,7 @@
  *   ACE_TSS::operator->() are delegated to the appropriate method
  *   in the Errno class.
  *
- *  @author Prashant Jain <pjain@cs.wustl.edu> and Doug Schmidt <schmidt@cs.wustl.edu>
+ *  @author Prashant Jain <pjain@cs.wustl.edu> and Doug Schmidt <d.schmidt@vanderbilt.edu>
  */
 //=============================================================================
 
@@ -21,7 +21,6 @@
 #include "ace/Thread_Mutex.h"
 #include "ace/Signal.h"
 #include "TSS_Test_Errno.h"
-
 
 
 static u_int errors = 0;

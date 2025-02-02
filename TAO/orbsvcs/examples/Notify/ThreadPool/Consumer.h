@@ -34,42 +34,39 @@ public:
   void init (PortableServer::POA_var& poa, CosNotifyChannelAdmin::ConsumerAdmin_var& admin, int proxy_supplier_thread_count, int max_events, long delay);
 
   /// Run
-  void run (void);
+  void run ();
 
   /// Print the consumer throughput
-  void dump_throughput (void);
+  void dump_throughput ();
 
 protected:
   // = Methods
   /// Destructor
-  virtual ~TAO_Notify_ThreadPool_Consumer (void);
+  virtual ~TAO_Notify_ThreadPool_Consumer ();
 
   /// Connect the Consumer to the EventChannel.
   /// Creates a new proxy supplier and connects to it.
-  void connect (void);
+  void connect ();
 
   /// Disconnect the supplier.
-  void disconnect (void);
+  void disconnect ();
 
   /// Deactivate.
-  void deactivate (void);
+  void deactivate ();
 
   // = ServantBase operations
-  virtual PortableServer::POA_ptr _default_POA (void);
+  virtual PortableServer::POA_ptr _default_POA ();
 
   // = NotifyPublish method
   virtual void offer_change (
         const CosNotification::EventTypeSeq & added,
-        const CosNotification::EventTypeSeq & removed
-      );
+        const CosNotification::EventTypeSeq & removed);
 
   // = StructuredPushSupplier methods
   virtual void push_structured_event (
-        const CosNotification::StructuredEvent & notification
-      );
+        const CosNotification::StructuredEvent & notification);
 
-  virtual void disconnect_structured_push_consumer (
-        );
+  virtual void disconnect_structured_push_consumer ();
 
   // = Data members
 

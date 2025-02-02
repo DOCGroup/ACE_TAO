@@ -13,12 +13,12 @@ class  Test_i : public virtual POA_Test
 {
 public:
   //Constructor
-  Test_i (void);
+  Test_i ();
 
   //Destructor
-  virtual ~Test_i (void);
+  virtual ~Test_i ();
 
-  virtual void contact (void);
+  virtual void contact ();
 
 private:
 };

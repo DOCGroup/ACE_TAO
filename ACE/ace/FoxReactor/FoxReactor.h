@@ -8,7 +8,7 @@
  *  @author Based in part in the ACE_XtReactor implementation by
  *  @author Eric C. Newton's <ecn@clark.net>
  *  @author Kirill Rybaltchenko <Kirill.Rybaltchenko@cern.ch>
- *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
 //=============================================================================
 
@@ -39,12 +39,11 @@ class ACE_FoxReactor_Export ACE_FoxReactor : public FXObject, public ACE_Select_
 {
   FXDECLARE(ACE_FoxReactor)
 public:
-  // = Initialization and termination methods.
   ACE_FoxReactor (FXApp* a=0,
                  size_t size = DEFAULT_SIZE,
                  bool restart = false,
                  ACE_Sig_Handler * = 0);
-  virtual ~ACE_FoxReactor (void);
+  virtual ~ACE_FoxReactor ();
 
   void fxapplication(FXApp* a);
 
@@ -95,7 +94,7 @@ protected:
 private:
   /// This method ensures there's an Fox timeout for the first timeout
   /// in the Reactor's Timer_Queue.
-  void reset_timeout (void);
+  void reset_timeout ();
 
   FXApp *fxapp;
 

@@ -37,7 +37,7 @@ template<typename T>
 class TAO_IFR_Generic_Utils
 {
 public:
-  static void destroy_special (const char *section_name,
+  static void destroy_special (const ACE_TCHAR *section_name,
                                TAO_Repository_i *repo,
                                ACE_Configuration_Section_Key &key);
 
@@ -107,9 +107,7 @@ public:
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "orbsvcs/IFRService/IFR_Service_Utils_T.cpp"
-#endif /* defined REQUIRED SOURCE */
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

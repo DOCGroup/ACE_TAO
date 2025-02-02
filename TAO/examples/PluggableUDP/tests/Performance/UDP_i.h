@@ -26,12 +26,11 @@
 class UDP_i: public POA_UDP
 {
 public:
-  // = Initialization and termination methods.
   /// Constructor
-  UDP_i (void);
+  UDP_i ();
 
   /// Destructor
-  ~UDP_i (void);
+  ~UDP_i ();
 
   virtual void setResponseHandler (UDP_ptr udpHandler);
 
@@ -41,7 +40,7 @@ public:
   virtual void reset (const char * client_name);
 
   /// Shutdown the server.
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
   /// Set the ORB pointer.
   void orb (CORBA::ORB_ptr o);

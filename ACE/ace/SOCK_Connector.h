@@ -4,7 +4,7 @@
 /**
  *  @file    SOCK_Connector.h
  *
- *  @author Doug Schmidt <schmidt@cs.wustl.edu>
+ *  @author Doug Schmidt <d.schmidt@vanderbilt.edu>
  */
 //=============================================================================
 
@@ -42,7 +42,7 @@ class ACE_Export ACE_SOCK_Connector
 {
 public:
   /// Default constructor.
-  ACE_SOCK_Connector (void);
+  ACE_SOCK_Connector ();
 
   /**
    * Actively connect to a peer, producing a connected @c ACE_SOCK_Stream
@@ -90,7 +90,6 @@ public:
                       int perms = 0,
                       int protocol = 0);
 
-#if !defined (ACE_HAS_WINCE)
   /**
    * Actively connect to a peer, producing a connected @c ACE_SOCK_Stream
    * object if the connection succeeds.
@@ -139,7 +138,6 @@ public:
                       u_long flags = 0,
                       int reuse_addr = 0,
                       int perms = 0);
-#endif  // ACE_HAS_WINCE
 
   /**
    * Actively connect to a peer, producing a connected @c ACE_SOCK_Stream
@@ -191,7 +189,6 @@ public:
                int perms = 0,
                int protocol = 0);
 
-#if !defined (ACE_HAS_WINCE)
   /**
    * Actively connect to a peer, producing a connected @c ACE_SOCK_Stream
    * object if the connection succeeds.
@@ -244,10 +241,9 @@ public:
                u_long flags = 0,
                int reuse_addr = 0,
                int perms = 0);
-#endif  // ACE_HAS_WINCE
 
   /// Default destructor.
-  ~ACE_SOCK_Connector (void);
+  ~ACE_SOCK_Connector ();
 
   // = Completion routine.
   /**
@@ -259,7 +255,7 @@ public:
    *                    to the peer.
    * @param remote_sap  If non-0, it points to the @c ACE_INET_Addr object
    *                    that will contain the address of the connected peer.
-   * @param timeout     Same values and return value possibilites as for
+   * @param timeout     Same values and return value possibilities as for
    *                    connect(). @see connect().
    */
   int complete (ACE_SOCK_Stream &new_stream,
@@ -274,7 +270,7 @@ public:
   typedef ACE_SOCK_Stream PEER_STREAM;
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;

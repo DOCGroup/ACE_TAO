@@ -8,10 +8,9 @@
  *   writing to stderr and to a file.  It also tests writing to user
  *   defined callback objects.
  *
- *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
 //=============================================================================
-
 
 #include "test_config.h"
 
@@ -19,7 +18,7 @@
 #include "ace/streams.h"
 
 #include "ace/FILE_Connector.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/Log_Msg_Callback.h"
 #include "ace/Log_Record.h"
 #include "ace/OS_NS_fcntl.h"
@@ -32,14 +31,14 @@
 #include "ace/Thread.h"
 
 static void
-cleanup (void)
+cleanup ()
 {
   ACE_DEBUG ((LM_INFO,
               ACE_TEXT ("cleanup hook (%P)!\n")));
 }
 
 static void
-cause_error (void)
+cause_error ()
 {
   errno = EWOULDBLOCK;
   ACE_ERROR ((LM_DEBUG,
@@ -54,7 +53,7 @@ public:
   Logger (bool be_recursive = true);
 
   /// Logging callback
-  void log (ACE_Log_Record &log_record);
+  void log (ACE_Log_Record &log_record) override;
 
   void verbose (bool be_verbose);
 
@@ -138,7 +137,7 @@ Logger::log (ACE_Log_Record &log_record)
 }
 
 static void
-test_callbacks (void)
+test_callbacks ()
 {
   // This message should show up in stderr.
   ACE_DEBUG ((LM_DEBUG,
@@ -367,7 +366,7 @@ public:
   }
 
   /// Logging callback
-  void log (ACE_Log_Record &)
+  void log (ACE_Log_Record &) override
   {
     ++count_;
   }
@@ -459,7 +458,7 @@ test_acelib_category()
 }
 
 static int
-test_ostream (void)
+test_ostream ()
 {
   // This message should show up in the log file.
   ACE_DEBUG ((LM_DEBUG,
@@ -507,7 +506,7 @@ test_ostream (void)
                         1);
     }
 
-#if !defined (ACE_VXWORKS) && !defined (ACE_HAS_PHARLAP) || (defined(ACE_VXWORKS) && (ACE_VXWORKS > 0x690))
+#if !defined (ACE_VXWORKS) || (defined(ACE_VXWORKS) && (ACE_VXWORKS > 0x690))
 # define TEST_CAN_UNLINK_IN_ADVANCE
 #endif
 
@@ -533,7 +532,7 @@ test_ostream (void)
                   char[info.size_ + 1],
                   -1);
   // Make sure <buffer> is released automagically.
-  ACE_Auto_Basic_Array_Ptr<char> b (buffer);
+  std::unique_ptr<char[]> b (buffer);
 
   // Read the file into the buffer.
   ssize_t size = file.recv (buffer,
@@ -586,7 +585,7 @@ public:
   Log_Spec_Verify (bool be_recursive = true) : fail_ (0), tests_ (0), recursive_ (be_recursive) {};
 
   /// Logging callback
-  void log (ACE_Log_Record &log_record);
+  void log (ACE_Log_Record &log_record) override;
 
   int  result ();
 
@@ -704,7 +703,7 @@ Log_Spec_Verify::log (ACE_Log_Record &log_record)
 }
 
 int
-Log_Spec_Verify::result (void)
+Log_Spec_Verify::result ()
 {
   if (this->fail_ == 0)
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("All logging specifier tests passed.\n")));
@@ -722,7 +721,7 @@ Log_Spec_Verify::result (void)
 }
 
 static int
-test_format_specs (void)
+test_format_specs ()
 {
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("l1:%l\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("l2:%5l\n")));

@@ -15,6 +15,7 @@ project : htbp, orbsvcslib, orbsvcs_output, install, tao_versioning_idl_defaults
     idlflags += -Sci -Gp -Gd -Sa -Sorb \
                 -o HTIOP
     idlflags -= -St
+    gendir = HTIOP
     HTIOP/htiop_endpoints.pidl
   }
 

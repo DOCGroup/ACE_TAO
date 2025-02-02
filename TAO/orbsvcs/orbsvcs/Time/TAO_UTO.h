@@ -40,34 +40,33 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Time_Serv_Export TAO_UTO : public POA_CosTime::UTO
 {
 public:
-  // = Initialization and termination methods.
   /// Constructor.
   TAO_UTO (TimeBase::TimeT time,
            TimeBase::InaccuracyT inaccuracy,
            TimeBase::TdfT tdf);
 
   /// Destructor.
-  ~TAO_UTO (void);
+  ~TAO_UTO ();
 
   /// For the readonly attribute <time>.
   virtual TimeBase::TimeT time ();
 
   /// For the readonly attribute <inaccuracy>.
-  virtual TimeBase::InaccuracyT  inaccuracy (void);
+  virtual TimeBase::InaccuracyT  inaccuracy ();
 
   /// For the readonly attribute <tdf>, which is the "time displacement
   /// factor".
-  virtual TimeBase::TdfT tdf (void);
+  virtual TimeBase::TdfT tdf ();
 
   /// For the readonly attribute <utc_time>.
-  virtual TimeBase::UtcT utc_time (void);
+  virtual TimeBase::UtcT utc_time ();
 
   /**
    * Absolute time = Relative time + Base time.
    * ?? Find out more about the Base Time, UTC and
    *    Distributed Time Sync. Algos. [3
    */
-  CosTime::UTO_ptr absolute_time (void);
+  CosTime::UTO_ptr absolute_time ();
 
   /// Compares the time contained in the object with the time in the
   /// supplied uto according to the supplied comparison type.
@@ -85,7 +84,7 @@ public:
 
   /// Returns a TIO object representing the error interval around the
   /// time value in the UTO.
-  CosTime::TIO_ptr interval (void);
+  CosTime::TIO_ptr interval ();
 
 private:
   /**

@@ -36,7 +36,7 @@ public:
                                 CORBA::Boolean in_reopened_);
 
   /// Destructor.
-  virtual ~ifr_adding_visitor_exception (void);
+  virtual ~ifr_adding_visitor_exception ();
 
   /// Visit a struct.
   virtual int visit_scope (UTL_Scope *node);
@@ -54,7 +54,7 @@ public:
   virtual int visit_union (AST_Union *node);
 
   /// Lets the visitor one level above acess this value.
-  virtual CORBA::IDLType_ptr ir_current (void) const;
+  virtual CORBA::IDLType_ptr ir_current () const;
 
 private:
   /// Common code called whether we are creating a new exception
@@ -65,7 +65,6 @@ private:
   /// Holder for the member list passed to create_struct() or
   /// create_exception().
   CORBA::StructMemberSeq members_;
-
 };
 
 #endif /* TAO_IFR_ADDING_VISITOR_EXCEPTION_H */

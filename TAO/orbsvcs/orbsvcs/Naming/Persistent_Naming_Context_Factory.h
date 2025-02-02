@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_PERSISTENT_NAMING_CONTEXT_FACTORY_H
 #define TAO_PERSISTENT_NAMING_CONTEXT_FACTORY_H
 #include /**/ "ace/pre.h"
@@ -33,17 +32,15 @@ class TAO_Persistent_Naming_Context;
 class TAO_Naming_Serv_Export TAO_Persistent_Naming_Context_Factory
 {
 public:
-
-  // = Initialization and termination methods.
   /// Data structure used by TAO_Persistent_Context_Index - typedef for ease of use.
   typedef TAO_Persistent_Naming_Context::HASH_MAP HASH_MAP;
 
   /// Constructor.
-  TAO_Persistent_Naming_Context_Factory (void);
+  TAO_Persistent_Naming_Context_Factory ();
 
   /// Destructor.  Does not deallocate the hash map: if an instance of
   /// this class goes out of scope, its hash_map remains in persistent storage.
-  virtual ~TAO_Persistent_Naming_Context_Factory (void);
+  virtual ~TAO_Persistent_Naming_Context_Factory ();
 
   /// Factory method for creating an implementation object for naming contexts
   virtual TAO_Persistent_Naming_Context*

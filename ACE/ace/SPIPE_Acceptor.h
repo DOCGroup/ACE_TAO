@@ -4,7 +4,7 @@
 /**
  *  @file    SPIPE_Acceptor.h
  *
- *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  *  @author Prashant Jain <pjain@cs.wustl.edu>
  */
 //=============================================================================
@@ -45,9 +45,8 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_SPIPE_Acceptor : public ACE_SPIPE
 {
 public:
-  // = Initialization and termination methods.
   /// Default constructor.
-  ACE_SPIPE_Acceptor (void);
+  ACE_SPIPE_Acceptor ();
 
   /// Initiate a passive-mode STREAM pipe listener.
   /**
@@ -97,10 +96,10 @@ public:
             int pipe_mode = PIPE_TYPE_MESSAGE | PIPE_READMODE_MESSAGE);
 
   /// Close down the passive-mode STREAM pipe listener.
-  int close (void);
+  int close ();
 
   /// Remove the underlying mounted pipe from the file system.
-  int remove (void);
+  int remove ();
 
   // = Passive connection acceptance method.
   /**
@@ -126,7 +125,7 @@ public:
   typedef ACE_SPIPE_Stream PEER_STREAM;
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -156,7 +155,6 @@ private:
   ACE_HANDLE       pipe_handle_;
   int              already_connected_;
 #endif /* ACE_HAS_WIN32_NAMED_PIPES */
-
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
