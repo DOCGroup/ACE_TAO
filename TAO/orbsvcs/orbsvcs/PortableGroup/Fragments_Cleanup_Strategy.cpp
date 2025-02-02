@@ -1,8 +1,7 @@
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/PortableGroup/Fragments_Cleanup_Strategy.h"
 #include "orbsvcs/PortableGroup/UIPMC_Transport_Recv_Packet.h"
-
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 #if !defined (__ACE_INLINE__)
 # include "orbsvcs/PortableGroup/Fragments_Cleanup_Strategy.inl"
@@ -102,7 +101,7 @@ namespace TAO_PG
                         (*cur_iter).key ()));
           }
 
-        ACE_Auto_Ptr<TAO_PG::UIPMC_Recv_Packet> guard ((*cur_iter).item ());
+        std::unique_ptr<TAO_PG::UIPMC_Recv_Packet> guard ((*cur_iter).item ());
         packets.unbind (cur_iter);
       }
   }
@@ -119,7 +118,7 @@ namespace TAO_PG
 
     DESCRIPTOR_SET sorted_set;
     ACE_NEW (sorted_set, HASH_MAP_ENTRY*[current_size]);
-    ACE_Auto_Array_Ptr<HASH_MAP_ENTRY*> owner (sorted_set);
+    std::unique_ptr<HASH_MAP_ENTRY*[]> owner (sorted_set);
 
     HASH_MAP_ITER iter = packets.begin ();
 
@@ -152,7 +151,7 @@ namespace TAO_PG
                         sorted_set[i]->key ()));
           }
 
-        ACE_Auto_Ptr<TAO_PG::UIPMC_Recv_Packet> guard (sorted_set[i]->item ());
+        std::unique_ptr<TAO_PG::UIPMC_Recv_Packet> guard (sorted_set[i]->item ());
         packets.unbind (sorted_set[i]);
       }
   }
@@ -182,7 +181,7 @@ namespace TAO_PG
                           (*cur_iter).item ()->data_length (),
                           (*cur_iter).key ()));
 
-            ACE_Auto_Ptr<TAO_PG::UIPMC_Recv_Packet> guard ((*cur_iter).item ());
+            std::unique_ptr<TAO_PG::UIPMC_Recv_Packet> guard ((*cur_iter).item ());
             packets.unbind (cur_iter);
           }
         else
@@ -197,7 +196,7 @@ namespace TAO_PG
 
     DESCRIPTOR_SET sorted_set;
     ACE_NEW (sorted_set, HASH_MAP_ENTRY*[current_size]);
-    ACE_Auto_Array_Ptr<HASH_MAP_ENTRY*> owner (sorted_set);
+    std::unique_ptr<HASH_MAP_ENTRY*[]> owner (sorted_set);
 
     iter = packets.begin ();
 
@@ -223,7 +222,7 @@ namespace TAO_PG
                       sorted_set[i]->key ()));
 
         size -= sorted_set[i]->item ()->data_length ();
-        ACE_Auto_Ptr<TAO_PG::UIPMC_Recv_Packet> guard (sorted_set[i]->item ());
+        std::unique_ptr<TAO_PG::UIPMC_Recv_Packet> guard (sorted_set[i]->item ());
         packets.unbind (sorted_set[i]);
       }
   }

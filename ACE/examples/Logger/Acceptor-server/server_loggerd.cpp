@@ -260,7 +260,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-//typedef ACE_Test_and_Set<ACE_Null_Mutex, sig_atomic_t>
 ACE_SINGLETON_TEMPLATE_INSTANTIATE(ACE_Singleton, ACE_Reactor, ACE_Null_Mutex);
 ACE_SINGLETON_TEMPLATE_INSTANTIATE(ACE_Singleton, Options, ACE_Null_Mutex);
 #define ACE_Test_and_Set_type \

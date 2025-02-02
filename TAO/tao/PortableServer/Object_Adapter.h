@@ -92,7 +92,7 @@ public:
 
   int locate_servant (const TAO::ObjectKey &key);
 
-  TAO_SERVANT_LOCATION find_servant (const TAO::ObjectKey &key,
+  TAO_Servant_Location find_servant (const TAO::ObjectKey &key,
                                      PortableServer::Servant &servant);
 
   int find_poa (const poa_name &system_name,
@@ -165,7 +165,7 @@ public:
 protected:
   int locate_servant_i (const TAO::ObjectKey &key);
 
-  TAO_SERVANT_LOCATION find_servant_i (const TAO::ObjectKey &key,
+  TAO_Servant_Location find_servant_i (const TAO::ObjectKey &key,
                                        PortableServer::Servant &servant);
 
   void dispatch_servant_i (const TAO::ObjectKey &key,

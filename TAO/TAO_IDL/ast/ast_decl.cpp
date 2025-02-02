@@ -801,6 +801,9 @@ AST_Decl::node_type_to_string (NodeType nt)
     case NT_sequence:
       return "sequence";
 
+    case NT_map:
+      return "map";
+
     case NT_typedef:
       return "typedef";
 

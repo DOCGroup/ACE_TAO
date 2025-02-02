@@ -16,7 +16,7 @@
 #include "tao/RTCORBA/Priority_Mapping_Manager.h"
 #include "tao/LF_Follower.h"
 #include "tao/Leader_Follower.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -451,7 +451,7 @@ TAO_Thread_Lane::create_threads_i (TAO_Thread_Pool_Threads &thread_pool,
 
   // Make sure the dynamically created stack size array is properly
   // deleted.
-  ACE_Auto_Basic_Array_Ptr<size_t> auto_stack_size_array (stack_size_array);
+  std::unique_ptr<size_t[]> auto_stack_size_array (stack_size_array);
 
   TAO_ORB_Core &orb_core =
     this->pool ().manager ().orb_core ();

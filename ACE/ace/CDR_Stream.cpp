@@ -1,7 +1,7 @@
 #include "ace/CDR_Stream.h"
 #include "ace/SString.h"
-#include "ace/Auto_Ptr.h"
 #include "ace/Truncate.h"
+#include <memory>
 
 #if !defined (__ACE_INLINE__)
 # include "ace/CDR_Stream.inl"
@@ -1530,7 +1530,7 @@ ACE_InputCDR::read_string (ACE_CDR::Char *&x)
                       0);
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
-      ACE_Auto_Basic_Array_Ptr<ACE_CDR::Char> safe_data (x);
+      std::unique_ptr<ACE_CDR::Char[]> safe_data (x);
 
       if (this->read_char_array (x, len))
         {
@@ -1563,10 +1563,10 @@ ACE_InputCDR::read_string (ACE_CDR::Char *&x)
 ACE_CDR::Boolean
 ACE_InputCDR::read_string (ACE_CString &x)
 {
-  ACE_CDR::Char * data = 0;
+  ACE_CDR::Char * data = nullptr;
   if (this->read_string (data))
     {
-      ACE_Auto_Basic_Array_Ptr<ACE_CDR::Char> safe_data (data);
+      std::unique_ptr<ACE_CDR::Char[]> safe_data (data);
       x = data;
       return true;
     }
@@ -1604,7 +1604,7 @@ ACE_InputCDR::read_wstring (ACE_CDR::WChar*& x)
   // the memory is allocated.
   if (len > 0 && len <= this->length ())
     {
-      ACE_Auto_Basic_Array_Ptr<ACE_CDR::WChar> safe_data;
+      std::unique_ptr<ACE_CDR::WChar[]> safe_data;
 
       if (static_cast<ACE_CDR::Short> (this->major_version_) == 1
           && static_cast<ACE_CDR::Short> (this->minor_version_) == 2)

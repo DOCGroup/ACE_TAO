@@ -50,12 +50,12 @@ TAO_Object_Adapter::locate_servant (const TAO::ObjectKey &key)
   return this->locate_servant_i (key);
 }
 
-ACE_INLINE TAO_SERVANT_LOCATION
+ACE_INLINE TAO_Servant_Location
 TAO_Object_Adapter::find_servant (const TAO::ObjectKey &key,
                                   PortableServer::Servant &servant)
 {
   // Lock access for the duration of this transaction.
-  TAO_OBJECT_ADAPTER_GUARD_RETURN (TAO_SERVANT_NOT_FOUND);
+  TAO_OBJECT_ADAPTER_GUARD_RETURN (Not_Found);
 
   return this->find_servant_i (key, servant);
 }

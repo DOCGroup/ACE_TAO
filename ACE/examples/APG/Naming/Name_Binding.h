@@ -4,8 +4,8 @@
 
 #include "ace/OS_NS_stdlib.h"
 #include "ace/OS_NS_string.h"
-#include "ace/Auto_Ptr.h"
 #include "ace/Name_Space.h"
+#include <memory>
 
 // Listing 1 code/ch21
 class Name_Binding

@@ -2746,7 +2746,7 @@ TAO_CodeGen::gen_stub_src_includes ()
   if (be_global->gen_amh_classes ())
     {
       this->gen_standard_include (this->client_stubs_,
-                                  "ace/Auto_Ptr.h");
+                                  "memory");
     }
 }
 
@@ -3036,6 +3036,14 @@ TAO_CodeGen::gen_stub_arg_file_includes (TAO_OutStream * stream)
       "tao/BD_String_Argument_T.h",
       stream
     );
+
+  be_global->changing_standard_include_files (0);
+  this->gen_cond_file_include (
+    idl_global->map_seen_,
+    "map",
+    stream
+  );
+  be_global->changing_standard_include_files (1);
 
   // If we have a bound string and we have any generation enabled we must
   // include Any.h to get the <<= operator for BD_String

@@ -65,7 +65,7 @@ __fastcall TChatClientWindow::TChatClientWindow (TComponent* Owner)
 //---------------------------------------------------------------------------
 void __fastcall TChatClientWindow::ReadIOR (String filename)
 {
-  auto_ptr<TStringList> ior (new TStringList);
+  std::unique_ptr<TStringList> ior (new TStringList);
   ior->LoadFromFile (filename);
   ior_ = ior->Text;
 }

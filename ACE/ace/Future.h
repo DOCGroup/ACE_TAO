@@ -16,6 +16,7 @@
 
 #include /**/ "ace/pre.h"
 
+#include <atomic>
 #include "ace/Unbounded_Set.h"
 #include "ace/Strategies_T.h"
 
@@ -47,15 +48,13 @@ class ACE_Future_Holder
 {
 public:
   ACE_Future_Holder (const ACE_Future<T> &future);
-  ~ACE_Future_Holder ();
+  ~ACE_Future_Holder () = default;
+  ACE_Future_Holder () = delete;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
   ACE_Future<T> item_;
-
-protected:
-  ACE_Future_Holder ();
 };
 
 /**
@@ -73,7 +72,7 @@ class ACE_Future_Observer
 {
 public:
   /// Destructor
-  virtual ~ACE_Future_Observer ();
+  virtual ~ACE_Future_Observer () = default;
 
   /// Called by the ACE_Future in which we are subscribed to when
   /// its value is written to.
@@ -84,7 +83,7 @@ public:
 
 protected:
   /// Constructor
-  ACE_Future_Observer ();
+  ACE_Future_Observer () = default;
 };
 
 /**
@@ -197,10 +196,10 @@ private:
   int ready () const;
 
   /// Pointer to the result.
-  T *value_;
+  std::atomic<T*> value_ {};
 
   /// Reference count.
-  int ref_count_;
+  int ref_count_ {};
 
   typedef ACE_Future_Observer<T> OBSERVER;
 

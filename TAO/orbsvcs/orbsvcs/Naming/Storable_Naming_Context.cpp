@@ -8,7 +8,7 @@
 #include "tao/Storable_Base.h"
 #include "tao/Storable_Factory.h"
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_sys_time.h"
 
@@ -16,7 +16,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 const char * TAO_Storable_Naming_Context::root_name_;
 ACE_UINT32 TAO_Storable_Naming_Context::gcounter_;
-ACE_Auto_Ptr<TAO::Storable_Base> TAO_Storable_Naming_Context::gfl_;
+std::unique_ptr<TAO::Storable_Base> TAO_Storable_Naming_Context::gfl_;
 int TAO_Storable_Naming_Context::redundant_;
 
 TAO_Storable_IntId::TAO_Storable_IntId ()
@@ -414,7 +414,7 @@ TAO_Storable_Naming_Context::~TAO_Storable_Naming_Context ()
       ACE_CString file_name = this->context_name_;
 
       // Now delete the file
-      ACE_Auto_Ptr<TAO::Storable_Base>
+      std::unique_ptr<TAO::Storable_Base>
         fl (
           this->factory_->create_stream(file_name.c_str(), "r")
           );
@@ -493,9 +493,9 @@ TAO_Storable_Naming_Context::make_new_context (
   if (context_impl == 0)
     throw CORBA::NO_MEMORY ();
 
-  // Put <context_impl> into the auto pointer temporarily, in case next
+  // Put <context_impl> into the unique pointer temporarily, in case next
   // allocation fails.
-  ACE_Auto_Basic_Ptr<TAO_Storable_Naming_Context> temp (context_impl);
+  std::unique_ptr<TAO_Storable_Naming_Context> temp (context_impl);
 
   TAO_Naming_Context *context = 0;
   ACE_NEW_THROW_EX (context,
@@ -505,7 +505,7 @@ TAO_Storable_Naming_Context::make_new_context (
   // Let <implementation> know about it's <interface>.
   context_impl->interface (context);
 
-  // Release auto pointer, and start using reference counting to
+  // Release unique pointer, and start using reference counting to
   // control our servant.
   temp.release ();
   PortableServer::ServantBase_var s = context;
@@ -948,9 +948,9 @@ TAO_Storable_Naming_Context::list (CORBA::ULong how_many,
                     HASH_MAP::ITERATOR (storable_context_->map ()),
                     CORBA::NO_MEMORY ());
 
-  // Store <hash_iter temporarily in auto pointer, in case we'll have
+  // Store <hash_iter temporarily in unique pointer, in case we'll have
   // some failures and throw an exception.
-  ACE_Auto_Basic_Ptr<HASH_MAP::ITERATOR> temp (hash_iter);
+  std::unique_ptr<HASH_MAP::ITERATOR> temp (hash_iter);
 
   // Silliness below is required because of broken old g++!!!  E.g.,
   // without it, we could have just said HASH_MAP::ITERATOR everywhere we use ITER_DEF.
@@ -1008,7 +1008,7 @@ TAO_Storable_Naming_Context::list (CORBA::ULong how_many,
                         ITER_SERVANT (this, hash_iter, this->poa_.in ()),
                         CORBA::NO_MEMORY ());
 
-      // Release <hash_iter> from auto pointer, and start using
+      // Release <hash_iter> from unique pointer, and start using
       // reference counting to control our servant.
       temp.release ();
       PortableServer::ServantBase_var iter = bind_iter;
@@ -1074,7 +1074,7 @@ TAO_Storable_Naming_Context::recreate_all (
 
   // Now does this already exist on disk?
   ACE_CString file_name = poa_id;
-  ACE_Auto_Ptr<TAO::Storable_Base> fl (
+  std::unique_ptr<TAO::Storable_Base> fl (
     pers_factory->create_stream (file_name.c_str (), "r"));
   if (fl->exists ())
   {

@@ -28,3 +28,9 @@ feature(vc_avoid_hides_class_member) {
     DisableSpecificWarnings += 4458
   }
 }
+
+feature(ace_languagestandard2017) {
+  specific(nmake) {
+    compile_flags += /std:c++17
+  }
+}

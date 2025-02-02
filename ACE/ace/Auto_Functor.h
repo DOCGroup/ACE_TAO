@@ -59,7 +59,7 @@ public:
   typedef Functor functor_type;
 
   /// Constructor
-  explicit Auto_Functor (X * p = 0,
+  explicit Auto_Functor (X * p = nullptr,
       Functor functor = Functor()); // noexcept
 
   Auto_Functor (Auto_Functor & rhs); // noexcept
@@ -82,7 +82,7 @@ public:
 
   X * release(); // noexcept
 
-  void reset (X * p = 0); // noexcept
+  void reset (X * p = nullptr); // noexcept
 
   void reset (X * p, Functor f); // noexcept
 
@@ -98,7 +98,6 @@ public:
 
 private:
   X * p_;
-
   Functor f_;
 };
 } // namespace ACE_Utils

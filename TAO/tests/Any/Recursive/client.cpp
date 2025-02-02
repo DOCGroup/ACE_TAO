@@ -399,7 +399,7 @@ directly_recursive_valuetype_typecodefactory_test (CORBA::ORB_ptr /* orb */,
  * Test method invocation functor.
  */
 template <typename T>
-struct Caller : public std::unary_function<T, void>
+struct Caller : public std::function<void(T)>
 {
   /// Constructor.
   Caller (CORBA::ORB_ptr o, Test::Hello_ptr h)

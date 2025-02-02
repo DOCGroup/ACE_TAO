@@ -23,8 +23,6 @@ class User_Class
 {
 public:
   User_Class (const char inputMsg[])
-    : message_ (0),
-      next_(0)
   {
     ACE_NEW (this->message_, char[ACE_OS::strlen (inputMsg) + 1]);
     ACE_OS::strcpy (this->message_, inputMsg);
@@ -49,8 +47,8 @@ public:
   }
 
 private:
-  char *message_;
-  User_Class *next_;
+  char *message_ {};
+  User_Class *next_ {};
 };
 
 // The main tests for the ACE_Message_Queue_Ex_N

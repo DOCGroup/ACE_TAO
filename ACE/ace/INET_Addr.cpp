@@ -468,12 +468,11 @@ static int get_port_number_from_name (const char port_name[],
     }
 
   // We try to resolve port number from its name.
+  port_number = -1;
 #if defined (ACE_LACKS_GETSERVBYNAME)
-  port_number = 0;
   ACE_UNUSED_ARG (port_name);
   ACE_UNUSED_ARG (protocol);
 #else
-  port_number = -1;
   servent sentry;
   ACE_SERVENT_DATA buf;
   servent *sp = ACE_OS::getservbyname_r (port_name,

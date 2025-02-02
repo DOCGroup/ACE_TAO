@@ -1,6 +1,5 @@
 #include "ace/ACE.h"
 #include "ace/ace_wchar.h"
-#include "ace/Auto_Ptr.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 #include "ace/Truncate.h"
@@ -272,7 +271,7 @@ int
 ACEXML_HttpCharStream::send_request ()
 {
   char* path = ACE::strnew (ACE_TEXT_ALWAYS_CHAR (this->url_addr_->get_path_name()));
-  ACE_Auto_Basic_Array_Ptr<char> path_ptr (path);
+  std::unique_ptr<char[]> path_ptr (path);
   size_t commandsize = ACE_OS::strlen (path)
                        + ACE_OS::strlen (this->url_addr_->get_host_name ())
                        + 20     // Extra
@@ -283,7 +282,7 @@ ACEXML_HttpCharStream::send_request ()
   ACE_NEW_RETURN (command, char[commandsize], -1);
 
   // Ensure that the <command> memory is deallocated.
-  ACE_Auto_Basic_Array_Ptr<char> cmd_ptr (command);
+  std::unique_ptr<char[]> cmd_ptr (command);
 
   int bytes = ACE_OS::sprintf (command, "GET %s HTTP/1.0\r\n", path);
   bytes += ACE_OS::sprintf (&command[bytes], "Host: %s\r\n",

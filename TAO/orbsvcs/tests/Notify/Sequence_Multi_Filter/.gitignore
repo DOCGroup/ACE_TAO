@@ -1,2 +1,7 @@
 /Sequence_Consumer
 /Sequence_Supplier
+goC.cpp
+goC.h
+goC.inl
+goS.cpp
+goS.h

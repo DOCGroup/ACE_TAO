@@ -30,7 +30,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_sys_stat.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/Service_Config.h"
 #include "ace/Reactor.h"
 #include "ace/Thread_Manager.h"
@@ -40,7 +40,6 @@
 #include "ace/Logging_Strategy.h"
 #endif
 
-#include "ace/Auto_Ptr.cpp"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_time.h"
 
@@ -454,7 +453,7 @@ int run_main (int argc, ACE_TCHAR *argv [])
       // statically
   ACE_Logging_Strategy logging_strategy;
   unsigned char ls_argc = argc - 1;
-  ACE_Auto_Basic_Ptr<ACE_TCHAR *> ls_argv (new ACE_TCHAR *[ls_argc]);
+  std::unique_ptr<ACE_TCHAR *> ls_argv (new ACE_TCHAR *[ls_argc]);
 
   for (unsigned char c = 0; c < ls_argc; c++)
     (ls_argv.get ())[c] = argv[c+1];

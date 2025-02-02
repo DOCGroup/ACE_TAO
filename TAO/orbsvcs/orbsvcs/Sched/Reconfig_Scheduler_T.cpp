@@ -1591,7 +1591,7 @@ create_i (const char *entry_point,
   // Store the new entry in the scheduling entry pointer array.
   entry_ptr_array_ [handle - 1] = new_sched_entry;
 
-  // Release the auto pointers, so their destruction does not
+  // Release the unique pointers, so their destruction does not
   // remove the new rt_info that is now in the map and tree,
   // or the scheduling entry attached to the rt_info.
   new_rt_info_ptr.release ();

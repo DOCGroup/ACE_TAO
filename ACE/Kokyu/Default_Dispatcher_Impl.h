@@ -49,7 +49,7 @@ namespace Kokyu
 
   private:
     typedef std::unique_ptr<Dispatcher_Task> Dispatcher_Task_Auto_Ptr;
-    ACE_Auto_Array_Ptr<Dispatcher_Task_Auto_Ptr> tasks_;
+    std::unique_ptr<Dispatcher_Task_Auto_Ptr[]> tasks_;
     int ntasks_;
     ConfigInfoSet curr_config_info_;
     int activated_;

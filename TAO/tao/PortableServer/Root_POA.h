@@ -173,14 +173,15 @@ public:
   PortableServer::RequestProcessingPolicy_ptr
   create_request_processing_policy (
       PortableServer::RequestProcessingPolicyValue value);
-
 #endif /* TAO_HAS_MINIMUM_POA == 0 && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO) */
 
   char * the_name ();
 
   PortableServer::POA_ptr the_parent ();
 
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
   PortableServer::POAList *the_children ();
+#endif /* TAO_HAS_MINIMUM_POA == 0 && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO) */
 
   PortableServer::POAManager_ptr the_POAManager ();
 
@@ -274,10 +275,7 @@ public:
 
   static CORBA::ULong name_separator_length ();
 
-  enum
-  {
-    TAO_OBJECTKEY_PREFIX_SIZE = 4
-  };
+  static constexpr size_t TAO_OBJECTKEY_PREFIX_SIZE = 4;
 
   static CORBA::Octet const objectkey_prefix[TAO_OBJECTKEY_PREFIX_SIZE];
 
@@ -391,7 +389,7 @@ public:
 
   PortableServer::Servant find_servant (const PortableServer::ObjectId &system_id);
 
-  TAO_SERVANT_LOCATION servant_present (
+  TAO_Servant_Location servant_present (
     const PortableServer::ObjectId &system_id,
     PortableServer::Servant &servant);
 
@@ -620,7 +618,7 @@ protected:
     PortableInterceptor::ObjectReferenceFactory *current_factory);
 
 
-  TAO_SERVANT_LOCATION locate_servant_i (const PortableServer::ObjectId &id,
+  TAO_Servant_Location locate_servant_i (const PortableServer::ObjectId &id,
                                          PortableServer::Servant &servant);
 
   PortableServer::Servant locate_servant_i (

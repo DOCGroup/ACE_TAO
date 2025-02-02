@@ -14,7 +14,6 @@ GroupInfoPublisherBase::GroupInfoPublisherBase()
   info_->primary = false;
 }
 
-
 void
 GroupInfoPublisherBase::subscribe(TAO_FTEC_Become_Primary_Listener* listener)
 {
@@ -50,7 +49,6 @@ GroupInfoPublisherBase::backups() const
 {
   return info_->backups;
 }
-
 
 GroupInfoPublisherBase::Info*
 GroupInfoPublisherBase::setup_info(const FTRT::ManagerInfoList & info_list,
@@ -143,7 +141,9 @@ GroupInfoPublisherBase::update_info(GroupInfoPublisherBase::Info_ptr& info)
   }
   info_ = std::move(info);
 }
+
 TAO_END_VERSIONED_NAMESPACE_DECL
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_SINGLETON_TEMPLATE_INSTANTIATE(ACE_Singleton, GroupInfoPublisherBase,  TAO_SYNCH_MUTEX)
 ACE_END_VERSIONED_NAMESPACE_DECL
