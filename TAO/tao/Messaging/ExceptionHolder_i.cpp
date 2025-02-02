@@ -100,12 +100,12 @@ namespace TAO
       // This is important to decode the exception.
       for (CORBA::ULong i = 0; i != this->count_; ++i)
         {
-          if (ACE_OS::strcmp (type_id.in (), this->data_[i].id) != 0)
+          if (this->data_[i].id.compare(type_id.in ()) != 0)
             continue;
 
           CORBA::Exception * const exception = this->data_[i].alloc ();
 
-          if (exception == 0)
+          if (!exception)
             {
               throw ::CORBA::NO_MEMORY (TAO::VMCID, CORBA::COMPLETED_YES);
             }
