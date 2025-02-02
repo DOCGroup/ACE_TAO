@@ -39,7 +39,7 @@ public:
                         long type = 0,
                         int length = sizeof (T),
                         int max_size = sizeof (T));
-  ~ACE_Typed_SV_Message (void);
+  ~ACE_Typed_SV_Message ();
 
   /// Get the type of the message.
   long type () const;
@@ -60,7 +60,7 @@ public:
   void max_size (int m);
 
   /// Get a pointer to the data in the message.
-  T &data (void);
+  T &data ();
 
   /// Set a pointer to the data in the message.
   void data (const T &data);
@@ -91,13 +91,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #include "ace/Typed_SV_Message.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Typed_SV_Message.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Typed_SV_Message.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 

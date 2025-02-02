@@ -7,7 +7,7 @@
 unsigned int
 TAO_IDL_CPP_Keyword_Table::hash (const char *str, unsigned int len)
 {
-  static const unsigned char asso_values[] =
+  static constexpr unsigned char asso_values[] =
     {
      252, 252, 252, 252, 252, 252, 252, 252, 252, 252,
      252, 252, 252, 252, 252, 252, 252, 252, 252, 252,

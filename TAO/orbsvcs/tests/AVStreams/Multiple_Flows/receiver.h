@@ -28,9 +28,8 @@
 class Receiver_Callback : public TAO_AV_Callback
 {
 public:
-
   /// Constructor.
-  Receiver_Callback (void);
+  Receiver_Callback ();
 
   // Method that is called when there is data to be received from a
   // sender.
@@ -40,7 +39,7 @@ public:
 
   // Called when the sender is done sending data and wants to close
   // down the connection.
-  int handle_destroy (void);
+  int handle_destroy ();
 
   void flowname (const char*);
 
@@ -55,7 +54,6 @@ private:
 
   /// File handle of the file into which received data is written.
   FILE *output_file_;
-
 };
 
 /**
@@ -90,10 +88,10 @@ class Receiver
 {
 public:
   /// Constructor
-  Receiver (void);
+  Receiver ();
 
   /// Destructor.
-  ~Receiver (void);
+  ~Receiver ();
 
   /// Initialize data components.
   int init (int argc,
@@ -103,7 +101,7 @@ public:
   void protocol_object (TAO_AV_Protocol_Object *protocol_object);
 
   /// Set the protocol object corresponding to the transport protocol chosen.
-  TAO_AV_Protocol_Object * protocol_object (void);
+  TAO_AV_Protocol_Object * protocol_object ();
 
 protected:
   /// The Naming Service Client.
@@ -133,5 +131,4 @@ protected:
 
   /// Message block into which data is read from a file and then sent.
   ACE_Message_Block mb_;
-
 };

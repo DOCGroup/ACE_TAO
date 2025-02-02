@@ -5,7 +5,7 @@
 #include "ace/OS_NS_unistd.h"
 
 ACE_INLINE
-Handle_L_CODgram::Handle_L_CODgram (void)
+Handle_L_CODgram::Handle_L_CODgram ()
 {
 }
 
@@ -69,7 +69,7 @@ Handle_L_CODgram::init (int argc, ACE_TCHAR *argv[])
 }
 
 ACE_INLINE int
-Handle_L_CODgram::fini(void)
+Handle_L_CODgram::fini()
 {
   return ACE_Reactor::instance ()->remove_handler
     (this, ACE_Event_Handler::ACCEPT_MASK);

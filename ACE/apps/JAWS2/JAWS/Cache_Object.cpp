@@ -50,14 +50,14 @@ JAWS_Cache_Object::count () const
 }
 
 int
-JAWS_Cache_Object::acquire (void)
+JAWS_Cache_Object::acquire ()
 {
   this->new_last_access_ = ACE_OS::time ((time_t *)0);
   return this->acquire_i ();
 }
 
 int
-JAWS_Cache_Object::release (void)
+JAWS_Cache_Object::release ()
 {
   this->last_access_ = this->new_last_access_;
   return this->release_i ();
@@ -101,12 +101,12 @@ JAWS_Referenced_Cache_Object (const void *data, size_t size)
 {
 }
 
-JAWS_Referenced_Cache_Object::~JAWS_Referenced_Cache_Object (void)
+JAWS_Referenced_Cache_Object::~JAWS_Referenced_Cache_Object ()
 {
 }
 
 ACE_Lock &
-JAWS_Referenced_Cache_Object::lock (void)
+JAWS_Referenced_Cache_Object::lock ()
 {
   return this->lock_adapter_;
 }
@@ -121,13 +121,13 @@ JAWS_Referenced_Cache_Object::count_i () const
 }
 
 int
-JAWS_Referenced_Cache_Object::acquire_i (void)
+JAWS_Referenced_Cache_Object::acquire_i ()
 {
   return this->count_.acquire_read ();
 }
 
 int
-JAWS_Referenced_Cache_Object::release_i (void)
+JAWS_Referenced_Cache_Object::release_i ()
 {
   return this->count_.release ();
 }
@@ -146,7 +146,6 @@ JAWS_Referenced_Cache_Object::priority_i () const
 }
 
 
-
 JAWS_Counted_Cache_Object::
 JAWS_Counted_Cache_Object (const void *data, size_t size)
   : JAWS_Cache_Object (data, size),
@@ -156,12 +155,12 @@ JAWS_Counted_Cache_Object (const void *data, size_t size)
 {
 }
 
-JAWS_Counted_Cache_Object::~JAWS_Counted_Cache_Object (void)
+JAWS_Counted_Cache_Object::~JAWS_Counted_Cache_Object ()
 {
 }
 
 ACE_Lock &
-JAWS_Counted_Cache_Object::lock (void)
+JAWS_Counted_Cache_Object::lock ()
 {
   return this->lock_adapter_;
 }
@@ -175,7 +174,7 @@ JAWS_Counted_Cache_Object::count_i () const
 }
 
 int
-JAWS_Counted_Cache_Object::acquire_i (void)
+JAWS_Counted_Cache_Object::acquire_i ()
 {
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, g ,this->lock_, 0);
 
@@ -184,7 +183,7 @@ JAWS_Counted_Cache_Object::acquire_i (void)
 }
 
 int
-JAWS_Counted_Cache_Object::release_i (void)
+JAWS_Counted_Cache_Object::release_i ()
 {
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, g ,this->lock_, 0);
 
@@ -206,7 +205,7 @@ JAWS_Cache_Object_Factory::JAWS_Cache_Object_Factory (ACE_Allocator *alloc)
     this->allocator_ = ACE_Allocator::instance ();
 }
 
-JAWS_Cache_Object_Factory::~JAWS_Cache_Object_Factory (void)
+JAWS_Cache_Object_Factory::~JAWS_Cache_Object_Factory ()
 {
 }
 
@@ -228,7 +227,7 @@ JAWS_Referenced_Cache_Object_Factory
 }
 
 JAWS_Referenced_Cache_Object_Factory
-::~JAWS_Referenced_Cache_Object_Factory (void)
+::~JAWS_Referenced_Cache_Object_Factory ()
 {
 }
 
@@ -260,7 +259,7 @@ JAWS_Counted_Cache_Object_Factory
 }
 
 JAWS_Counted_Cache_Object_Factory
-::~JAWS_Counted_Cache_Object_Factory (void)
+::~JAWS_Counted_Cache_Object_Factory ()
 {
 }
 

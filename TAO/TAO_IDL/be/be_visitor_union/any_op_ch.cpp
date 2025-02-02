@@ -35,54 +35,7 @@ be_visitor_union_any_op_ch::visit_union (be_union *node)
 
   TAO_INSERT_COMMENT (os);
 
-  be_module *module = nullptr;
-
-  AST_Decl *decl = node;
-  if (decl->is_nested ())
-    {
-      if (node->defined_in ()->scope_node_type () == AST_Decl::NT_interface)
-        {
-          be_interface *intf = nullptr;
-          intf = dynamic_cast<be_interface*> (node->defined_in ());
-          decl = intf;
-        }
-
-      if (decl->defined_in ()->scope_node_type () == AST_Decl::NT_module)
-        {
-          module = dynamic_cast<be_module*> (decl->defined_in ());
-
-          if (!module)
-            {
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "be_visitor_union_any_op_ch::"
-                                 "visit_union - "
-                                 "Error parsing nested name\n"),
-                                -1);
-            }
-
-          // Some compilers handle "any" operators in a namespace
-          // corresponding to their module, others do not.
-          *os << "\n\n#if defined (ACE_ANY_OPS_USE_NAMESPACE)\n";
-
-          be_util::gen_nested_namespace_begin (os, module);
-
-
-          *os << macro << " void operator<<= (::CORBA::Any &, const ::" << node->name ()
-              << " &); // copying version" << be_nl;
-          *os << macro << " void operator<<= (::CORBA::Any &, ::" << node->name ()
-              << "*); // noncopying version" << be_nl;
-          *os << macro << " ::CORBA::Boolean operator>>= (const ::CORBA::Any &, const ::"
-              << node->name () << " *&);";
-
-          be_util::gen_nested_namespace_end (os, module);
-
-          // Emit #else.
-          *os << be_nl_2
-              << "#else\n\n";
-        }
-    }
-
-  *os << be_global->core_versioning_begin () << be_nl;
+  *os << be_global->anyops_versioning_begin () << be_nl;
 
   *os << macro << " void operator<<= (::CORBA::Any &, const " << node->name ()
       << " &); // copying version" << be_nl;
@@ -91,12 +44,7 @@ be_visitor_union_any_op_ch::visit_union (be_union *node)
   *os << macro << " ::CORBA::Boolean operator>>= (const ::CORBA::Any &, const "
       << node->name () << " *&);";
 
-  *os << be_global->core_versioning_end () << be_nl;
-
-  if (module != nullptr)
-    {
-      *os << "\n\n#endif";
-    }
+  *os << be_global->anyops_versioning_end () << be_nl;
 
   be_visitor_context ctx (*this->ctx_);
   for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_localtypes);
@@ -206,4 +154,3 @@ be_visitor_union_any_op_ch::visit_structure (be_structure *node)
 
   return 0;
 }
-

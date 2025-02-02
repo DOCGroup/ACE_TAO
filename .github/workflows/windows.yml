@@ -24,7 +24,7 @@ jobs:
             BuildConfiguration: Debug
             vcpkgarch: x64-windows
             vcpkglibdir: debug/lib
-            vcpkgpackages: 'openssl xerces-c[xmlch-wchar] zlib'
+            vcpkgpackages: '"openssl", {"name": "xerces-c", "features": ["xmlch-wchar"]}, "zlib"'
             OptionalFeatures: uses_wchar=1
           - name: VS2019Debug64
             vmimage: windows-2019
@@ -33,7 +33,7 @@ jobs:
             BuildConfiguration: Debug
             vcpkgarch: x64-windows
             vcpkglibdir: debug/lib
-            vcpkgpackages: openssl xerces-c zlib
+            vcpkgpackages: '"openssl", "xerces-c", "zlib"'
           - name: VS2019Release64
             vmimage: windows-2019
             mpctype: vs2019
@@ -41,7 +41,7 @@ jobs:
             BuildConfiguration: Release
             vcpkgarch: x64-windows
             vcpkglibdir: lib
-            vcpkgpackages: openssl xerces-c zlib
+            vcpkgpackages: '"openssl", "xerces-c", "zlib"'
           - name: VS2019Debug32
             vmimage: windows-2019
             mpctype: vs2019
@@ -49,7 +49,7 @@ jobs:
             BuildConfiguration: Debug
             vcpkgarch: x86-windows
             vcpkglibdir: debug/lib
-            vcpkgpackages: openssl xerces-c zlib
+            vcpkgpackages: '"openssl", "xerces-c", "zlib"'
           - name: VS2019Release32
             vmimage: windows-2019
             mpctype: vs2019
@@ -57,7 +57,7 @@ jobs:
             BuildConfiguration: Release
             vcpkgarch: x86-windows
             vcpkglibdir: lib
-            vcpkgpackages: openssl xerces-c zlib
+            vcpkgpackages: '"openssl", "xerces-c", "zlib"'
           - name: VS2019Debug64Cxx17
             vmimage: windows-2019
             mpctype: vs2019
@@ -65,7 +65,7 @@ jobs:
             BuildConfiguration: Debug
             vcpkgarch: x64-windows
             vcpkglibdir: debug/lib
-            vcpkgpackages: openssl xerces-c zlib
+            vcpkgpackages: '"openssl", "xerces-c", "zlib"'
             OptionalMpcArgs: -value_template LanguageStandard=stdcpp17
           - name: VS2019Debug64Cxx20
             vmimage: windows-2019
@@ -74,7 +74,7 @@ jobs:
             BuildConfiguration: Debug
             vcpkgarch: x64-windows
             vcpkglibdir: debug/lib
-            vcpkgpackages: openssl xerces-c zlib
+            vcpkgpackages: '"openssl", "xerces-c", "zlib"'
             OptionalMpcArgs: -value_template LanguageStandard=stdcpp20
           - name: VS2022WChar
             vmimage: windows-2022
@@ -83,7 +83,7 @@ jobs:
             BuildConfiguration: Debug
             vcpkgarch: x64-windows
             vcpkglibdir: debug/lib
-            vcpkgpackages: 'openssl xerces-c[xmlch-wchar] zlib'
+            vcpkgpackages: '"openssl", {"name": "xerces-c", "features": ["xmlch-wchar"]}, "zlib"'
             OptionalFeatures: uses_wchar=1
           - name: VS2022Debug64
             vmimage: windows-2022
@@ -92,7 +92,7 @@ jobs:
             BuildConfiguration: Debug
             vcpkgarch: x64-windows
             vcpkglibdir: debug/lib
-            vcpkgpackages: openssl xerces-c zlib
+            vcpkgpackages: '"openssl", "xerces-c", "zlib"'
           - name: VS2022Release64
             vmimage: windows-2022
             mpctype: vs2022
@@ -100,7 +100,7 @@ jobs:
             BuildConfiguration: Release
             vcpkgarch: x64-windows
             vcpkglibdir: lib
-            vcpkgpackages: openssl xerces-c zlib
+            vcpkgpackages: '"openssl", "xerces-c", "zlib"'
     runs-on: ${{ matrix.vmimage }}
     name: ${{ matrix.name }}
     env:
@@ -108,27 +108,31 @@ jobs:
       TAO_ROOT: ${{ github.workspace }}/TAO
       MPC_ROOT: ${{ github.workspace }}/MPC
       VCPKG_ROOT: ${{ github.workspace }}/vcpkg
-      XERCESC_INCDIR: ${{ github.workspace }}/vcpkg/installed/${{ matrix.vcpkgarch }}/include
-      XERCESC_LIBDIR: ${{ github.workspace }}/vcpkg/installed/${{ matrix.vcpkgarch }}/${{ matrix.vcpkglibdir }}
-      SSL_INCDIR: ${{ github.workspace }}/vcpkg/installed/${{ matrix.vcpkgarch }}/include
-      SSL_LIBDIR: ${{ github.workspace }}/vcpkg/installed/${{ matrix.vcpkgarch }}/${{ matrix.vcpkglibdir }}
-      ZLIB_INCDIR: ${{ github.workspace }}/vcpkg/installed/${{ matrix.vcpkgarch }}/include
-      ZLIB_LIBDIR: ${{ github.workspace }}/vcpkg/installed/${{ matrix.vcpkgarch }}/${{ matrix.vcpkglibdir }}
+      XERCESC_INCDIR: ${{ github.workspace }}/vcpkg_installed/${{ matrix.vcpkgarch }}/include
+      XERCESC_LIBDIR: ${{ github.workspace }}/vcpkg_installed/${{ matrix.vcpkgarch }}/${{ matrix.vcpkglibdir }}
+      SSL_INCDIR: ${{ github.workspace }}/vcpkg_installed/${{ matrix.vcpkgarch }}/include
+      SSL_LIBDIR: ${{ github.workspace }}/vcpkg_installed/${{ matrix.vcpkgarch }}/${{ matrix.vcpkglibdir }}
+      ZLIB_INCDIR: ${{ github.workspace }}/vcpkg_installed/${{ matrix.vcpkgarch }}/include
+      ZLIB_LIBDIR: ${{ github.workspace }}/vcpkg_installed/${{ matrix.vcpkgarch }}/${{ matrix.vcpkglibdir }}
+      VCPKG_DEFAULT_TRIPLET: ${{ matrix.vcpkgarch }}
+      VCPKG_INSTALLED_DIR: ${{ github.workspace }}/vcpkg_installed
     steps:
     - name: checkout ACE/TAO
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
     - name: checkout MPC
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         repository: DOCGroup/MPC
         path: ${{ env.MPC_ROOT }}
+    - name: create vcpkg.json
+      run: |
+        '{"name": "tao","version-string": "githubaction","dependencies": [ ${{ matrix.vcpkgpackages }} ]}' > vcpkg.json
+      shell: pwsh
     - name: Install vcpkg
-      uses: lukka/run-vcpkg@v7
+      uses: lukka/run-vcpkg@v11
       with:
-        vcpkgGitCommitId: b86c0c35b88e2bf3557ff49dc831689c2f085090
-        vcpkgArguments: --recurse ${{ matrix.vcpkgpackages }}
-        vcpkgTriplet: ${{ matrix.vcpkgarch }}
-        appendedCacheKey: ${{ matrix.name }}
+        vcpkgGitCommitId: c82f74667287d3dc386bce81e44964370c91a289
+        runVcpkgInstall: true
     - name: create $ACE_ROOT/ace/config.h
       run: |
         '#include "ace/config-win32.h"' > ${env:ACE_ROOT}/ace/config.h
@@ -160,7 +164,7 @@ jobs:
         perl ${env:ACE_ROOT}/bin/mwc.pl -type ${{ matrix.mpctype }} ${env:TAO_ROOT}/tests/IDL_Test -workers 4 ${{ matrix.OptionalMpcArgs }}
       shell: pwsh
     - name: Setup msbuild
-      uses: microsoft/setup-msbuild@v1
+      uses: microsoft/setup-msbuild@v2
     - name: Build solution TAO/TAO_ACE.sln
       run: msbuild -maxcpucount -p:Platform=${{ matrix.BuildPlatform }} -p:Configuration=${{ matrix.BuildConfiguration }} TAO/TAO_ACE.sln
     - name: Build solution ACE/tests/tests.sln
@@ -183,9 +187,9 @@ jobs:
       MPC_ROOT: ${{ github.workspace }}/MPC
     steps:
     - name: checkout ACE/TAO
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
     - name: checkout MPC
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         repository: DOCGroup/MPC
         path: ${{ env.MPC_ROOT }}

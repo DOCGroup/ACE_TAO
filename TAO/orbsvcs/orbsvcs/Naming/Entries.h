@@ -41,7 +41,7 @@ class TAO_Naming_Serv_Export TAO_IntId
 {
 public:
   /// Constructor.
-  TAO_IntId (void);
+  TAO_IntId ();
 
   /// Constructor.
   TAO_IntId (CORBA::Object_ptr obj,
@@ -51,7 +51,7 @@ public:
   TAO_IntId (const TAO_IntId & rhs);
 
   /// Destructor.
-  ~TAO_IntId (void);
+  ~TAO_IntId ();
 
   /// Assignment operator (does copy memory).
   void operator= (const TAO_IntId & rhs);
@@ -121,10 +121,10 @@ public:
   // = Accessors
 
   /// Return id_ in a const char * format.
-  const char * id (void);
+  const char * id ();
 
   /// Return kind_ in a const char * format.
-  const char * kind (void);
+  const char * kind ();
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

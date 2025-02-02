@@ -52,7 +52,6 @@ parse_args (int argc, ACE_TCHAR *argv[])
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-
   ACE_OS::socket_init (ACE_WSOCK_VERSION);
 
   if (parse_args(argc, argv) != 0)

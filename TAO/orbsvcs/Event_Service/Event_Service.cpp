@@ -2,7 +2,7 @@
 #include "Event_Service.h"
 
 #include "ace/Get_Opt.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/Argv_Type_Converter.h"
 #include "ace/OS_main.h"
 #include "ace/OS_NS_unistd.h"
@@ -42,7 +42,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 
 // ****************************************************************
 
-Event_Service::Event_Service (void)
+Event_Service::Event_Service ()
   : sched_impl_ (0),
     ec_impl_ (0),
     scheduler_type_ (ES_SCHED_NONE),
@@ -51,7 +51,7 @@ Event_Service::Event_Service (void)
 {
 }
 
-Event_Service::~Event_Service (void)
+Event_Service::~Event_Service ()
 {
   delete this->ec_impl_;
   this->ec_impl_ = 0;
@@ -402,19 +402,19 @@ Event_Service::parse_args (int argc, ACE_TCHAR* argv [])
 
 
 RtecEventChannelAdmin::ConsumerAdmin_ptr
-Event_Service::for_consumers (void)
+Event_Service::for_consumers ()
 {
   return this->ec_impl_->for_consumers ();
 }
 
 RtecEventChannelAdmin::SupplierAdmin_ptr
-Event_Service::for_suppliers (void)
+Event_Service::for_suppliers ()
 {
   return this->ec_impl_->for_suppliers ();
 }
 
 void
-Event_Service::destroy (void)
+Event_Service::destroy ()
 {
   this->ec_impl_->destroy ();
   this->orb_->shutdown ();

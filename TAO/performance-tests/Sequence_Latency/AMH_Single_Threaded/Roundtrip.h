@@ -47,7 +47,6 @@ public:
                            Test::Timestamp send_time);
 
 
-
   void shutdown (Test::AMH_RoundtripResponseHandler_ptr _tao_rh);
 
 private:

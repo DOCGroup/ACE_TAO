@@ -2,7 +2,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE void
-TAO::Refcounted_ObjectKey::incr_refcount (void)
+TAO::Refcounted_ObjectKey::incr_refcount ()
 {
   ++this->refcount_;
 }
@@ -14,7 +14,7 @@ TAO::Refcounted_ObjectKey::object_key () const
 }
 
 ACE_INLINE CORBA::ULong
-TAO::Refcounted_ObjectKey::decr_refcount (void)
+TAO::Refcounted_ObjectKey::decr_refcount ()
 {
   if (--this->refcount_ > 0)
     {

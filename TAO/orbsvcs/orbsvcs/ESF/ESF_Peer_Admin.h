@@ -39,17 +39,17 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * the PROXY interface must implement:
  *
  * @verbatim
- * void connected (PEER *peer) throw ();
- * void reconnected (PEER *peer) throw ();
- * void disconnected (PEER *peer) throw ();
+ * void connected (PEER *peer) noexcept;
+ * void reconnected (PEER *peer) noexcept;
+ * void disconnected (PEER *peer) noexcept;
  * @endverbatim
  *
  * Similarly, the PEER interface must implement:
  *
  * @verbatim
- * void connected (PROXY *proxy) throw ();
- * void reconnected (PROXY *proxy) throw ();
- * void disconnected (PROXY *proxy) throw ();
+ * void connected (PROXY *proxy) noexcept;
+ * void reconnected (PROXY *proxy) noexcept;
+ * void disconnected (PROXY *proxy) noexcept;
  * @endverbatim
  */
 template<class EVENT_CHANNEL, class PROXY, class INTERFACE, class PEER>
@@ -85,16 +85,8 @@ public:
   virtual void peer_disconnected (PEER *peer);
 };
 
-// ****************************************************************
-
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "orbsvcs/ESF/ESF_Peer_Admin.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("ESF_Peer_Admin.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #endif /* TAO_ESF_PEER_ADMIN_H */

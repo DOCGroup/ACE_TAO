@@ -14,7 +14,6 @@
 #include "ace/OS_NS_string.h"
 
 
-
 Criteria_Evaluator::Criteria_Evaluator (const CosLifeCycle::Criteria &criteria)
 : criteria_ (criteria)
 {
@@ -25,7 +24,7 @@ Criteria_Evaluator::~Criteria_Evaluator ()
 }
 
 const LifeCycleService::Criteria_Evaluator::SeqNamedValuePair *
-Criteria_Evaluator::getInitialization (void)
+Criteria_Evaluator::getInitialization ()
 {
   const LifeCycleService::Criteria_Evaluator::SeqNamedValuePair *sequence_ptr = 0;
 
@@ -42,7 +41,7 @@ Criteria_Evaluator::getInitialization (void)
 }
 
 char *
-Criteria_Evaluator::getFilter (void)
+Criteria_Evaluator::getFilter ()
 {
   const char* string;
   CORBA::Any value;

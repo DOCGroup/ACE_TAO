@@ -128,7 +128,7 @@ TAO_EC_ProxyPushSupplier::cleanup_i ()
 }
 
 void
-TAO_EC_ProxyPushSupplier::deactivate () throw ()
+TAO_EC_ProxyPushSupplier::deactivate () noexcept
 {
   try
     {

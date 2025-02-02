@@ -97,15 +97,15 @@ public:
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
   /// destructor...
-  virtual ~TAO_CEC_Reactive_SupplierControl (void);
+  virtual ~TAO_CEC_Reactive_SupplierControl () = default;
 
   /// Receive the timeout from the adapter
   void handle_timeout (const ACE_Time_Value &tv,
                        const void* arg);
 
   // = Documented in TAO_CEC_SupplierControl
-  virtual int activate (void);
-  virtual int shutdown (void);
+  virtual int activate ();
+  virtual int shutdown ();
   virtual void supplier_not_exist (TAO_CEC_ProxyPushConsumer *proxy);
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
   virtual void supplier_not_exist (TAO_CEC_TypedProxyPushConsumer *proxy);
@@ -126,7 +126,7 @@ public:
 private:
   /// Check if the suppliers still exists.  It is a helper method for
   /// handle_timeout() to isolate the exceptions.
-  void query_suppliers (void);
+  void query_suppliers ();
 
 private:
   /// The polling rate

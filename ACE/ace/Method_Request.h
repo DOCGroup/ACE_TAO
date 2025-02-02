@@ -76,7 +76,7 @@ public:
    *         decide the meaning of this return value and act on it
    *         if needed.
    */
-  virtual int call (void) = 0;
+  virtual int call () = 0;
 
 private:
   ACE_Method_Request (const ACE_Method_Request &) = delete;

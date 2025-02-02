@@ -1,8 +1,7 @@
 // -*- C++ -*-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// Return the name of file that is mapped (if any).
-
+/// Return the name of file that is mapped (if any).
 ACE_INLINE const ACE_TCHAR *
 ACE_Shared_Memory_MM::filename () const
 {

@@ -126,7 +126,6 @@ TAO_FT_Naming_Server::update_info_i ()
 void
 TAO_FT_Naming_Server::update_info (FT_Naming::UpdateInfoSeq &infos)
 {
-
   CORBA::ULong count = infos.length();
   FT_Naming::UpdateInfo* guts = infos.get_buffer(true);
   FT_Naming::UpdateInfoSeq_var block = 0;
@@ -322,7 +321,6 @@ TAO_FT_Naming_Server::init_naming_manager_with_orb (int, ACE_TCHAR *[], CORBA::O
 
       this->naming_manager_.initialize (this->orb_.in (),
                                         this->naming_manager_poa_.in ());
-
     }
   catch (const CORBA::Exception& ex)
     {
@@ -412,7 +410,6 @@ TAO_FT_Naming_Server::init_replication_pairing ()
 void
 TAO_FT_Naming_Server::no_replica ()
 {
-
   if (this->server_role_ == BACKUP)
     {
       this->recover_iors ();
@@ -931,7 +928,6 @@ TAO_FT_Naming_Server::combine_iors (FT_Naming::EntityKind kind, CORBA::Object_pt
         }
       else
         {
-
           this->assign (combo, false, iorm->add_profiles (peer,
                                                          this->iors_[local].ref_.in ()));
         }

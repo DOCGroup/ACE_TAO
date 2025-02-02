@@ -26,7 +26,7 @@ AutoFinalizer::~AutoFinalizer ()
 }
 
 
-TAO_NT_Naming_Service::TAO_NT_Naming_Service (void)
+TAO_NT_Naming_Service::TAO_NT_Naming_Service ()
   : argc_ (0),
     argc_save_ (0),
     argv_ (0),
@@ -34,7 +34,7 @@ TAO_NT_Naming_Service::TAO_NT_Naming_Service (void)
 {
 }
 
-TAO_NT_Naming_Service::~TAO_NT_Naming_Service (void)
+TAO_NT_Naming_Service::~TAO_NT_Naming_Service ()
 {
   if (argv_save_)
     {
@@ -181,7 +181,6 @@ TAO_NT_Naming_Service::arg_manip (char *args, DWORD arglen, bool query)
     }
 
   RegCloseKey (hkey);
-
 }
 
 int
@@ -243,7 +242,7 @@ TAO_NT_Naming_Service::init (int argc,
 }
 
 int
-TAO_NT_Naming_Service::svc (void)
+TAO_NT_Naming_Service::svc ()
 {
   TAO_Naming_Service naming_service;
 

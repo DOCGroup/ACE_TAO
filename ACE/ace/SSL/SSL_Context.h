@@ -57,7 +57,7 @@ private:
 
 // ****************************************************************
 
-// NOTE: Solaris studio compilers amongst others will issue warnings if the
+// NOTE: Some compilers will issue warnings if the
 // the correct type of function pointer (i.e. extern "C" ) is not stored/used
 // of the form:
 // Warning (Anachronism): Formal argument callback of type

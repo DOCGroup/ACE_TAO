@@ -8,10 +8,6 @@
 #include "ace/os_include/os_fcntl.h"
 #include "ace/os_include/os_string.h"
 
-#if defined (ACE_WIN32) && defined (ACE_HAS_PHARLAP)
-# include "ace/OS_NS_stdio.h"
-#endif
-
 #if defined (ACE_USES_ASM_SYMBOL_IN_DLSYM)
 #  include "ace/OS_Memory.h"
 #  include "ace/OS_NS_string.h"
@@ -40,22 +36,6 @@ ACE_OS::dlclose (ACE_SHLIB_HANDLE handle)
   return ::dlclose (handle);
 #elif defined (ACE_WIN32)
   ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::FreeLibrary (handle), ace_result_), int, -1);
-#elif defined (__hpux)
-  // HP-UX 10.x and 32-bit 11.00 do not pay attention to the ref count
-  // when unloading a dynamic lib.  So, if the ref count is more than
-  // 1, do not unload the lib.  This will cause a library loaded more
-  // than once to not be unloaded until the process runs down, but
-  // that's life.  It's better than unloading a library that's in use.
-  // So far as I know, there's no way to decrement the refcnt that the
-  // kernel is looking at - the shl_descriptor is a copy of what the
-  // kernel has, not the actual struct.  On 64-bit HP-UX using dlopen,
-  // this problem has been fixed.
-  struct shl_descriptor  desc;
-  if (shl_gethandle_r (handle, &desc) == -1)
-    return -1;
-  if (desc.ref_count > 1)
-    return 0;
-  return ::shl_unload (handle);
 #else
   ACE_UNUSED_ARG (handle);
   ACE_NOTSUP_RETURN (-1);
@@ -79,15 +59,12 @@ ACE_OS::dlerror ()
 #   else
   return const_cast <char *> (err);
 #   endif /* ACE_USES_WCHAR */
-# elif defined (__hpux) || defined (ACE_VXWORKS)
+# elif defined (ACE_VXWORKS)
   //FUZZ: disable check_for_lack_ACE_OS
   return ::strerror(errno);
   //FUZZ: enable check_for_lack_ACE_OS
 # elif defined (ACE_WIN32)
   static ACE_TCHAR buf[128];
-#   if defined (ACE_HAS_PHARLAP)
-  ACE_OS::sprintf (buf, "error code %d", GetLastError());
-#   else
   ACE_TEXT_FormatMessage (FORMAT_MESSAGE_FROM_SYSTEM,
                           0,
                           ::GetLastError (),
@@ -95,7 +72,6 @@ ACE_OS::dlerror ()
                           buf,
                           sizeof buf / sizeof buf[0],
                           0);
-#   endif /* ACE_HAS_PHARLAP */
   return buf;
 # else
   ACE_NOTSUP_RETURN (0);
@@ -133,8 +109,6 @@ ACE_OS::dlopen (const ACE_TCHAR *fname,
   ACE_UNUSED_ARG (mode);
 
   ACE_WIN32CALL_RETURN (ACE_TEXT_LoadLibrary (fname), ACE_SHLIB_HANDLE, 0);
-# elif defined (__hpux)
-  return ::shl_load(fname, mode, 0L);
 # elif defined (ACE_VXWORKS) && !defined (__RTP__)
   ACE_UNUSED_ARG (mode);
   MODULE* handle = 0;
@@ -182,25 +156,14 @@ ACE_OS::dlsym (ACE_SHLIB_HANDLE handle,
     return nullptr;
 
   // Get the correct OS type.
-#if defined (ACE_HAS_WINCE)
-  // CE (at least thru Pocket PC 2003) offers GetProcAddressW, not ...A, so
-  // we always need a wide-char string.
-  const wchar_t *symbolname = 0;
-#  if defined (ACE_USES_WCHAR)
-  symbolname = sname;
-#  else
-  ACE_Ascii_To_Wide sname_xlate (sname);
-  symbolname = sname_xlate.wchar_rep ();
-#  endif /* ACE_USES_WCHAR */
-#elif defined (ACE_USES_WCHAR)
-  // WinCE is WCHAR always; other platforms need a char * symbol name
+#if defined (ACE_USES_WCHAR)
   ACE_Wide_To_Ascii w_sname (sname);
   char *symbolname = w_sname.char_rep ();
 #elif defined (ACE_VXWORKS)
   char *symbolname = const_cast<char *> (sname);
 #else
   const char *symbolname = sname;
-#endif /* ACE_HAS_WINCE */
+#endif /* ACE_USES_WCHAR */
 
 # if defined (ACE_HAS_SVR4_DYNAMIC_LINKING)
 
@@ -217,21 +180,9 @@ ACE_OS::dlsym (ACE_SHLIB_HANDLE handle,
 #   else
   return ::dlsym (handle, symbolname);
 #   endif /* ACE_USES_ASM_SYMBOL_IN_DLSYM */
-
 # elif defined (ACE_WIN32)
-
   ACE_WIN32CALL_RETURN (::GetProcAddress (handle, symbolname), void *, 0);
-
-# elif defined (__hpux)
-
-  void *value {};
-  int status = 0;
-  shl_t _handle = handle;
-  ACE_OSCALL (::shl_findsym(&_handle, symbolname, TYPE_UNDEFINED, &value), int, status);
-  return status == 0 ? value : nullptr;
-
 # elif defined (ACE_VXWORKS) && !defined (__RTP__)
-
   // For now we use the VxWorks global symbol table
   // which resolves the most recently loaded symbols, which resolve
   // mostly what we want..

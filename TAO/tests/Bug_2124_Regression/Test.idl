@@ -9,8 +9,8 @@ module Test
 
    interface Foo
    {
-      void op1( in MyString s );
-      void op2( in OtherString s );
+      void op1( in MyString s);
+      void op2( in OtherString s);
    };
 };
 

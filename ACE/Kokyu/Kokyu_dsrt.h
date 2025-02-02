@@ -16,7 +16,6 @@
 
 namespace Kokyu
 {
-
   template <class DSRT_Scheduler_Traits> class DSRT_Dispatcher_Impl;
 
   /**
@@ -152,20 +151,13 @@ namespace Kokyu
                     const QoSDesc& qos2);
   };
 
-
 } //end of namespace
 
 #if defined (__ACE_INLINE__)
 #include "Kokyu_dsrt.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "Kokyu_dsrt.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Kokyu_dsrt.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 #endif /* KOKYU_DSRT_H */

@@ -39,7 +39,7 @@
 class ASNMP_Export snmpTrapsOid : public Oid
 {
 public:
-  snmpTrapsOid (void):Oid("1.3.6.1.6.3.1.1.5"){}
+  snmpTrapsOid ():Oid("1.3.6.1.6.3.1.1.5"){}
   SnmpSyntax& operator=( SnmpSyntax &val){ return Oid::operator=(val); }
 };
 
@@ -51,7 +51,7 @@ public:
 class ASNMP_Export snmpTrapEnterpriseOid : public Oid
 {
 public:
-  snmpTrapEnterpriseOid(void): Oid("1.3.6.1.6.3.1.1.4.3.0") { }
+  snmpTrapEnterpriseOid(): Oid("1.3.6.1.6.3.1.1.4.3.0") { }
   SnmpSyntax& operator=( SnmpSyntax &val){ return Oid::operator=(val); }
 };
 
@@ -63,7 +63,7 @@ public:
 class ASNMP_Export coldStartOid : public snmpTrapsOid
 {
 public:
-  coldStartOid( void){*this+=".1";}
+  coldStartOid(){*this+=".1";}
   SnmpSyntax& operator=( SnmpSyntax &val){ return snmpTrapsOid::operator=(val); }
 };
 
@@ -75,7 +75,7 @@ public:
 class ASNMP_Export warmStartOid : public snmpTrapsOid
 {
 public:
-  warmStartOid( void){*this+=".2";}
+  warmStartOid(){*this+=".2";}
   SnmpSyntax& operator=( SnmpSyntax &val){ return snmpTrapsOid::operator=(val); }
 };
 
@@ -87,7 +87,7 @@ public:
 class ASNMP_Export linkDownOid : public snmpTrapsOid
 {
 public:
-  linkDownOid( void){*this+=".3";}
+  linkDownOid(){*this+=".3";}
   SnmpSyntax& operator=( SnmpSyntax &val){ return snmpTrapsOid::operator=(val); }
 };
 
@@ -101,7 +101,7 @@ public:
 class ASNMP_Export linkUpOid : public snmpTrapsOid
 {
 public:
-  linkUpOid( void){*this+=".4";}
+  linkUpOid(){*this+=".4";}
   SnmpSyntax& operator=( SnmpSyntax &val){ return snmpTrapsOid::operator=(val); }
 };
 
@@ -113,7 +113,7 @@ public:
 class ASNMP_Export authenticationFailureOid : public snmpTrapsOid
 {
 public:
-  authenticationFailureOid( void){*this+=".5";}
+  authenticationFailureOid(){*this+=".5";}
   SnmpSyntax& operator=( SnmpSyntax &val){ return snmpTrapsOid::operator=(val); }
 };
 
@@ -125,7 +125,7 @@ public:
 class ASNMP_Export egpNeighborLossOid : public snmpTrapsOid
 {
 public:
-  egpNeighborLossOid( void){*this+=".6";}
+  egpNeighborLossOid(){*this+=".6";}
   SnmpSyntax& operator=( SnmpSyntax &val){ return snmpTrapsOid::operator=(val); }
 };
 

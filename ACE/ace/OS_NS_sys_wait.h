@@ -33,7 +33,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE_OS
 {
-
   /// Calls OS @c ::wait function, so it's only portable to UNIX/POSIX
   /// platforms.
   ACE_NAMESPACE_INLINE_FUNCTION
@@ -66,7 +65,6 @@ namespace ACE_OS
                  ACE_exitcode *status = 0,
                  int wait_options = 0,
                  ACE_HANDLE handle = 0);
-
 } /* namespace ACE_OS */
 
 ACE_END_VERSIONED_NAMESPACE_DECL

@@ -48,7 +48,7 @@ class ACE_Export ACE_Recyclable
 {
 public:
   /// Destructor.
-  virtual ~ACE_Recyclable ();
+  virtual ~ACE_Recyclable () = default;
 
   /// Get the recyclable bit
   ACE_Recyclable_State recycle_state () const;
@@ -57,7 +57,6 @@ public:
   void recycle_state (ACE_Recyclable_State new_state);
 
 protected:
-
   /// Constructor.
   ACE_Recyclable (ACE_Recyclable_State initial_state);
 

@@ -29,7 +29,7 @@ class TAO_LoadBalancing_Export TAO_LB_LoadAlert
 {
 public:
   /// Constructor.
-  TAO_LB_LoadAlert (void);
+  TAO_LB_LoadAlert ();
 
   /**
    * @name CosLoadBalancing::LoadAlert Methods
@@ -37,13 +37,12 @@ public:
    * Methods required by the CosLoadBalancing::LoadAlert interface.
    */
   //@{
-
   /// Forward requests back to the load manager via the object group
   /// reference.
-  virtual void enable_alert (void);
+  virtual void enable_alert ();
 
   /// Stop forwarding requests, and begin accepting them again.
-  virtual void disable_alert (void);
+  virtual void disable_alert ();
 
   //@}
 
@@ -52,13 +51,12 @@ public:
   CORBA::Boolean alerted () const;
 
 // protected:
-
   /// Destructor.
   /**
    * Protected destructor to enforce correct memory management via
    * reference counting.
    */
-  virtual ~TAO_LB_LoadAlert (void);
+  virtual ~TAO_LB_LoadAlert ();
 
 private:
   /// Has this LoadAlert servant been alerted of a high load condition

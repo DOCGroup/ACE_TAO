@@ -33,7 +33,7 @@ TAO::In_Var_Size_Argument_T<S,Insert_Policy>::interceptor_value (
 
 template<typename S,
          template <typename> class Insert_Policy>
-TAO::In_Var_Size_Clonable_Argument_T<S,Insert_Policy>::~In_Var_Size_Clonable_Argument_T (void)
+TAO::In_Var_Size_Clonable_Argument_T<S,Insert_Policy>::~In_Var_Size_Clonable_Argument_T ()
 {
   if (this->is_clone_)
     {
@@ -45,7 +45,7 @@ TAO::In_Var_Size_Clonable_Argument_T<S,Insert_Policy>::~In_Var_Size_Clonable_Arg
 template<typename S,
          template <typename> class Insert_Policy>
 TAO::Argument*
-TAO::In_Var_Size_Clonable_Argument_T<S,Insert_Policy>::clone (void)
+TAO::In_Var_Size_Clonable_Argument_T<S,Insert_Policy>::clone ()
 {
   S* clone_x = new S (*(this->x_));
   In_Var_Size_Clonable_Argument_T<S,Insert_Policy>* clone_arg

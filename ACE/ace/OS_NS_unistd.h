@@ -36,7 +36,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE_OS
 {
-
   ACE_NAMESPACE_INLINE_FUNCTION
   int access (const char *path, int amode);
 
@@ -120,8 +119,8 @@ namespace ACE_OS
               char *const argv[]);
 
   //@{
-  /// Forks and exec's a process in a manner that works on Solaris and
-  /// NT.  argv[0] must be the full path name to the executable.
+  /// Forks and exec's a process in a manner that works Windows.
+  /// argv[0] must be the full path name to the executable.
   ACE_NAMESPACE_INLINE_FUNCTION
   pid_t fork ();
 
@@ -354,7 +353,6 @@ namespace ACE_OS
                    const void *buf,
                    size_t len,
                    size_t *bytes_transferred = 0);
-
 } /* namespace ACE_OS */
 
 ACE_END_VERSIONED_NAMESPACE_DECL

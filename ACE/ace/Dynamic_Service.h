@@ -74,13 +74,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #include "ace/Dynamic_Service.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 # include "ace/Dynamic_Service.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-# pragma implementation ("Dynamic_Service.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 

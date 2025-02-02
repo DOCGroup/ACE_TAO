@@ -70,7 +70,6 @@ namespace CORBA
     /// Reference counter.
     std::atomic<uint32_t> refcount_;
   };
-
 }  // End CORBA namespace
 
 namespace TAO

@@ -46,17 +46,17 @@ class TAO_Export TAO_IIOP_Acceptor : public TAO_Acceptor
 {
 public:
   /// Constructor.
-  TAO_IIOP_Acceptor (void);
+  TAO_IIOP_Acceptor ();
 
   /// Destructor.
-  ~TAO_IIOP_Acceptor (void);
+  ~TAO_IIOP_Acceptor ();
 
   /// @@ Helper method for the implementation repository, should go
   ///    away
   const ACE_INET_Addr& address () const;
 
   /// Returns the array of endpoints in this acceptor
-  const ACE_INET_Addr *endpoints (void);
+  const ACE_INET_Addr *endpoints ();
 
   /// Returns address for default endpoint
   const ACE_INET_Addr& default_address () const;
@@ -84,12 +84,12 @@ public:
                             int version_major,
                             int version_minor,
                             const char *options = 0);
-  virtual int close (void);
+  virtual int close ();
   virtual int create_profile (const TAO::ObjectKey &object_key,
                               TAO_MProfile &mprofile,
                               CORBA::Short priority);
   virtual int is_collocated (const TAO_Endpoint *endpoint);
-  virtual CORBA::ULong endpoint_count (void);
+  virtual CORBA::ULong endpoint_count ();
 
   virtual int object_key (IOP::TaggedProfile &profile,
                           TAO::ObjectKey &key);

@@ -37,11 +37,7 @@ bool MyMain::init_server (const ACE_TCHAR* args)
   // main thread and extra thread for backdoor operations
   int thread_pool = 2;
 
-#ifdef ACE_HAS_CPP14
   server_task_ = std::make_unique<Server_Task> (my_args);
-#else
-  server_task_.reset (new Server_Task (my_args));
-#endif
 
   ACE_ASSERT (server_task_);
 
@@ -79,11 +75,7 @@ bool MyMain::init_client (const ACE_TCHAR* args)
   std::string my_args (ACE_TEXT_ALWAYS_CHAR (args));
   int thread_pool = 1;
 
-#ifdef ACE_HAS_CPP14
   client_task_ = std::make_unique<Client_Task> (my_args);
-#else
-  client_task_.reset (new Client_Task (my_args));
-#endif
 
   ACE_ASSERT (client_task_);
 

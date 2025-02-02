@@ -330,7 +330,6 @@ private:
 };
 
 
-
 /**
  * @class ACE_Unbounded_Stack
  *
@@ -987,18 +986,6 @@ template <class T> class ACE_DLList_Reverse_Iterator;
 
 typedef ACE_Double_Linked_List<ACE_DLList_Node> ACE_DLList_Base;
 
-//typedef ACE_Double_Linked_List_Iterator <ACE_DLList_Node>
-//        ACE_DLList_Iterator_Base;
-//typedef ACE_Double_Linked_List_Reverse_Iterator <ACE_DLList_Node>
-//        ACE_DLList_Reverse_Iterator_Base;
-//@@ These two typedefs (inherited from James Hu's original design)
-// have been removed because Sun CC 4.2 had problems with it. I guess
-// having the DLList_Iterators inheriting from a class which is
-// actually a typedef leads to problems. #define'ing rather than
-// typedef'ing worked, but as per Carlos's reccomendation, I'm just
-// replacing all references to the base classes with their actual
-// type.  Matt Braun (6/15/99)
-
 /**
  * @class ACE_DLList
  *
@@ -1031,7 +1018,6 @@ public:
    * @name Queue-like insert and delete methods
    */
   //@{
-
   /**
    * Insert pointer for a new item at the tail of the list.
    *
@@ -1086,9 +1072,9 @@ public:
    *
    * @param the_allocator  Allocator to use for allocating ACE_DLList_Node
    *                       objects that wrap T objects for inclusion in the
-   *                       list. If 0, ACE_Allocator::instance() is used.
+   *                       list. If nullptr, ACE_Allocator::instance() is used.
    */
-  ACE_DLList (ACE_Allocator *the_allocator = 0);
+  ACE_DLList (ACE_Allocator *the_allocator = nullptr);
 
   /// Delegates to ACE_Double_Linked_List.
   ACE_DLList (const ACE_DLList<T> &l);
@@ -1102,9 +1088,9 @@ public:
    * @code
         ACE_DLList<Item> list;
         ...   // insert dynamically allocated Items...
-        Item *p;
-        while ((p = list.delete_head()) != 0)
-          delete *p;
+        Item *p = nullptr;
+        while ((p = list.delete_head()) != nullptr)
+          delete p;
       @endcode
    */
   ~ACE_DLList ();
@@ -2021,13 +2007,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #include "ace/Containers_T.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Containers_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Containers_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 

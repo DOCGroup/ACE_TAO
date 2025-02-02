@@ -25,17 +25,17 @@ public:
   /// Initialize the barrier to synchronize <count> threads.
   ACE_Null_Barrier (unsigned int,
                     const char * = 0,
-                    void * = 0) {};
+                    void * = 0) {}
 
   /// Default dtor.
   ~ACE_Null_Barrier () = default;
 
   /// Block the caller until all <count> threads have called <wait> and
   /// then allow all the caller threads to continue in parallel.
-  int wait () { return 0; };
+  int wait () { return 0; }
 
   /// Dump the state of an object.
-  void dump () const {};
+  void dump () const {}
 
   /// Declare the dynamic allocation hooks.
   //ACE_ALLOC_HOOK_DECLARE;

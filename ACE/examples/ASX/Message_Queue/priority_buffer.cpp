@@ -11,7 +11,6 @@
 #include "ace/Truncate.h"
 
 
-
 #if defined (ACE_HAS_THREADS)
 
 // Global thread manager.

@@ -48,9 +48,8 @@ public:
     {
     }
 
-  int svc (void)
+  int svc ()
     {
-
       try
         {
           this->orb_->run ();

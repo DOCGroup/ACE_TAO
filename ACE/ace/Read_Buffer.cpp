@@ -41,7 +41,6 @@ ACE_Read_Buffer::ACE_Read_Buffer (FILE *fp,
     this->allocator_ = ACE_Allocator::instance ();
 }
 
-#if !defined (ACE_HAS_WINCE)
 ACE_Read_Buffer::ACE_Read_Buffer (ACE_HANDLE handle,
                                   bool close_on_delete,
                                   ACE_Allocator *alloc)
@@ -56,7 +55,6 @@ ACE_Read_Buffer::ACE_Read_Buffer (ACE_HANDLE handle,
   if (this->allocator_ == 0)
     this->allocator_ = ACE_Allocator::instance ();
 }
-#endif  // ACE_HAS_WINCE
 
 ACE_Read_Buffer::~ACE_Read_Buffer ()
 {

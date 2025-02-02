@@ -25,7 +25,7 @@ Life_Cycle_Service_i::Life_Cycle_Service_i (int debug_level)
 }
 
 // Destructor.
-Life_Cycle_Service_i::~Life_Cycle_Service_i (void)
+Life_Cycle_Service_i::~Life_Cycle_Service_i ()
 {
 }
 

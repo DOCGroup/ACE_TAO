@@ -1,7 +1,6 @@
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Notify/Structured/StructuredProxyPushConsumer.h"
 #include "ace/Bound_Ptr.h"
-#include "ace/Auto_Ptr.h"
 #include "tao/debug.h"
 #include "orbsvcs/Notify/Structured/StructuredPushSupplier.h"
 #include "orbsvcs/Notify/Structured/StructuredEvent.h"
@@ -130,7 +129,6 @@ TAO_Notify_StructuredProxyPushConsumer::configure(
   // Nothing to do.
   // This virtual method was added to support Notification MC
 }
-
 
 
 TAO_END_VERSIONED_NAMESPACE_DECL

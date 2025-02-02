@@ -16,11 +16,10 @@ Server_Task::Server_Task (const ACE_TCHAR *output,
 }
 
 int
-Server_Task::svc (void)
+Server_Task::svc ()
 {
  try
    {
-
       CORBA::Object_var poa_object =
         sorb_->resolve_initial_references ("RootPOA");
 

@@ -63,7 +63,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 */
 
 #include "ace/Env_Value_T.h"
-#include "ace/UUID.h"
 
 #include "utl_scoped_name.h"
 #include "utl_identifier.h"

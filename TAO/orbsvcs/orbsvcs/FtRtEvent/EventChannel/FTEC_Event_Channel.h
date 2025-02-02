@@ -26,8 +26,6 @@ class TAO_FTRTEC_Export TAO_FTEC_Event_Channel
   : public POA_FtRtecEventChannelAdmin::EventChannel
 {
 public:
-
-
   TAO_FTEC_Event_Channel(CORBA::ORB_var orb,
                          PortableServer::POA_var poa);
 
@@ -62,12 +60,12 @@ public:
   /// RtecEventChannelAdmin::EventChannel Interface
 
   virtual RtecEventChannelAdmin::ConsumerAdmin_ptr
-    for_consumers (void);
+    for_consumers ();
 
   virtual RtecEventChannelAdmin::SupplierAdmin_ptr
-    for_suppliers (void);
+    for_suppliers ();
 
-  virtual void destroy (void);
+  virtual void destroy ();
 
   virtual RtecEventChannelAdmin::Observer_Handle
     append_observer (RtecEventChannelAdmin::Observer_ptr observer);

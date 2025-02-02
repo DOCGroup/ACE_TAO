@@ -48,23 +48,23 @@ class TAO_Concurrency_Serv_Export CC_Lock
 {
 public:
   /// Creates the lock with mode = intention_read (weakest)
-  CC_Lock (void);
+  CC_Lock ();
 
   /// Creates the lock with the desired mode
   CC_Lock (CosConcurrencyControl::lock_mode mode);
 
   /// Deletes the lock
-  ~CC_Lock (void);
+  ~CC_Lock ();
 
   /// Acquires this lock. Blocks until lock is obtained
-  void lock (void);
+  void lock ();
 
   /// Tries to acquire this lock. If it is not possible to acquire the
   /// lock, false is returned
-  CORBA::Boolean try_lock (void);
+  CORBA::Boolean try_lock ();
 
   /// Releases this lock.
-  void unlock (void);
+  void unlock ();
 
   /// Changes the mode of this lock.
   void change_mode (CosConcurrencyControl::lock_mode new_mode);
@@ -79,16 +79,16 @@ public:
   CORBA::Boolean Compatible (CosConcurrencyControl::lock_mode mode);
 
   /// Returns the mode of the lock.
-  CosConcurrencyControl::lock_mode GetMode (void);
+  CosConcurrencyControl::lock_mode GetMode ();
 
   /// Returns the number of times this lock have been locked
-  int GetLocksHeld(void);
+  int GetLocksHeld();
 
   /// Decrements the number of locks held in this mode. Used by change_mode.
-  void DecLocksHeld(void);
+  void DecLocksHeld();
 
   /// Dumps the state of the object to stdout
-  void dump(void);
+  void dump();
 
 protected:
   /// Holds the lock's mode.
@@ -116,23 +116,23 @@ class TAO_Concurrency_Serv_Export CC_LockModeIterator
 {
 public:
   /// Default constructor
-  CC_LockModeIterator(void);
+  CC_LockModeIterator();
 
   /// Destructor
-  ~CC_LockModeIterator(void);
+  ~CC_LockModeIterator();
 
   /// Reset the iterator to the first element
-  void First(void);
+  void First();
 
   /// Advance the iterator to the next element
   /// Throws exception if out of range
-  void Next(void);
+  void Next();
 
   /// Returns true if the iterator has reached the last element
-  CORBA::Boolean IsDone(void);
+  CORBA::Boolean IsDone();
 
   /// Get the current element
-  CosConcurrencyControl::lock_mode GetLockMode(void);
+  CosConcurrencyControl::lock_mode GetLockMode();
 
 private:
   CosConcurrencyControl::lock_mode current_;

@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_SHARED_MALLOC_SV_H
 #define ACE_SHARED_MALLOC_SV_H
 #include /**/ "ace/pre.h"
@@ -41,7 +40,7 @@ public:
       ACE_OPEN = 0
     };
 
-  ACE_Shared_Memory_SV (void);
+  ACE_Shared_Memory_SV ();
   ACE_Shared_Memory_SV (key_t id,
                         size_t length,
                         int create = ACE_Shared_Memory_SV::ACE_OPEN,
@@ -57,10 +56,10 @@ public:
             int flags = 0);
 
   /// Close down the shared memory segment.
-  virtual int close (void);
+  virtual int close ();
 
   /// Remove the underlying shared memory segment.
-  virtual int remove (void);
+  virtual int remove ();
 
   // = Allocation and deallocation methods.
   /// Create a new chuck of memory containing @a size bytes.

@@ -73,7 +73,6 @@
 
 
 
-
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef int YYSTYPE;
 # define ace_yystype YYSTYPE /* obsolescent; will be withdrawn */

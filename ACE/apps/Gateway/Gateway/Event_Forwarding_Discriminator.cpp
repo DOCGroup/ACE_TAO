@@ -53,7 +53,7 @@ Event_Forwarding_Discriminator_Iterator::next (Consumer_Dispatch_Set *&cds)
 }
 
 int
-Event_Forwarding_Discriminator_Iterator::advance (void)
+Event_Forwarding_Discriminator_Iterator::advance ()
 {
   return this->map_iter_.advance ();
 }

@@ -16,7 +16,6 @@
 #include "ace/OS_Memory.h"
 
 
-
 class A
 {
 public:
@@ -24,8 +23,8 @@ public:
 
   void *operator new (size_t n);
 
-  void *operator new (size_t n, const std::nothrow_t&) throw();
-  void operator delete (void *p, const std::nothrow_t&) throw ();
+  void *operator new (size_t n, const std::nothrow_t&) noexcept;
+  void operator delete (void *p, const std::nothrow_t&) noexcept;
   void * operator new (size_t n, void *p);
 
   void operator delete (void *);
@@ -61,7 +60,7 @@ A::operator new (size_t n)
 }
 
 void*
-A::operator new (size_t n, const std::nothrow_t&) throw()
+A::operator new (size_t n, const std::nothrow_t&) noexcept
 {
   ACE_Dynamic *const dynamic_instance = ACE_Dynamic::instance ();
 
@@ -85,7 +84,7 @@ A::operator new (size_t n, const std::nothrow_t&) throw()
 }
 
 void
-A::operator delete (void *p, const std::nothrow_t&) throw()
+A::operator delete (void *p, const std::nothrow_t&) noexcept
 {
   ::delete [] static_cast <char *> (p);
 }

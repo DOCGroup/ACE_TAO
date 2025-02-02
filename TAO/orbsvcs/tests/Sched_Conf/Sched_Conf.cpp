@@ -399,8 +399,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                 add_dependency (config_infos[i].handle,
                                 config_infos[i - (operation_count / 2)].handle,
                                 2,                             // number of calls
-                                RtecBase::ONE_WAY_CALL    // type of dependency
-                                );
+                                RtecBase::ONE_WAY_CALL);    // type of dependency
             }
         }
 

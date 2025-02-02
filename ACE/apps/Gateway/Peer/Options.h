@@ -34,7 +34,7 @@ public:
   };
 
   /// Return Singleton.
-  static Options *instance (void);
+  static Options *instance ();
 
   /// Parse the arguments and set the options.
   void parse_args (int argc, ACE_TCHAR *argv[]);
@@ -76,7 +76,7 @@ public:
   long max_queue_size () const;
 
   /// Returns a reference to the connection id.
-  CONNECTION_ID &connection_id (void);
+  CONNECTION_ID &connection_id ();
 
 private:
   enum
@@ -91,10 +91,10 @@ private:
   };
 
   /// Ensure Singleton.
-  Options (void);
+  Options ();
 
   /// Explain usage and exit.
-  void print_usage_and_die (void);
+  void print_usage_and_die ();
 
   /// Singleton.
   static Options *instance_;

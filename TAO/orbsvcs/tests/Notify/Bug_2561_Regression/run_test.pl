@@ -26,8 +26,6 @@ $sup->AddLibPath ('../lib');
 $con1->AddLibPath ('../lib');
 $con2->AddLibPath ('../lib');
 
-PerlACE::check_privilege_group();
-
 $port = $ns->RandomPort ();
 $host = $ns->HostName ();
 

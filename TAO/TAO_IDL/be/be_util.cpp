@@ -519,10 +519,6 @@ be_util::usage ()
       ACE_TEXT (" -Wb,obv_opt_accessor\t\t\t\toptimizes access to base class ")
       ACE_TEXT ("data in valuetypes\n")
     ));
-#if (defined (ACE_HAS_VERSIONED_NAMESPACE)      \
-     && ACE_HAS_VERSIONED_NAMESPACE == 1)       \
-  || (defined (TAO_HAS_VERSIONED_NAMESPACE)      \
-     && TAO_HAS_VERSIONED_NAMESPACE == 1)
   ACE_DEBUG ((
       LM_DEBUG,
       ACE_TEXT (" -Wb,versioning_begin\t\t\tSet text that opens a ")
@@ -538,7 +534,6 @@ be_util::usage ()
       ACE_TEXT (" -Wb,versioning_include\t\t\tSet text that will be used as include for ")
       ACE_TEXT ("a \"versioned\" namespace\n")
     ));
-#endif  /* ACE_HAS_VERSIONED_NAMESPACE || TAO_HAS_VERSIONED_NAMESPACE */
   ACE_DEBUG ((
       LM_DEBUG,
       ACE_TEXT (" -Wb,no_fixed_err\t\t\tDon't generate an error when the fixed")

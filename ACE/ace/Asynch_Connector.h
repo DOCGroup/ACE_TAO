@@ -18,7 +18,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if (defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS)) && !defined(ACE_HAS_WINCE)
+#if defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS)
 // This only works on platforms that support async i/o.
 
 #include "ace/Asynch_IO.h"
@@ -45,10 +45,10 @@ class ACE_Asynch_Connector : public ACE_Handler
 {
 public:
   /// A do nothing constructor.
-  ACE_Asynch_Connector (void);
+  ACE_Asynch_Connector ();
 
   /// Virtual destruction
-  virtual ~ACE_Asynch_Connector (void);
+  virtual ~ACE_Asynch_Connector () = default;
 
   /**
    * This opens asynch connector
@@ -73,7 +73,7 @@ public:
    *
    * @note On POSIX, delegates cancelation to ACE_POSIX_Asynch_Connect.
    */
-  virtual int cancel (void);
+  virtual int cancel ();
 
 
   /**
@@ -122,7 +122,6 @@ public:
   virtual void validate_new_connection (bool new_value);
 
 protected:
-
   /// This is called when an outstanding accept completes.
   virtual void handle_connect (const ACE_Asynch_Connect::Result &result);
 
@@ -133,14 +132,14 @@ protected:
                       ACE_INET_Addr &local_address);
 
   /// Return the asynch Connect object.
-  ACE_Asynch_Connect & asynch_connect (void);
+  ACE_Asynch_Connect & asynch_connect ();
 
   /**
    * This is the template method used to create new handler.
    * Subclasses must overwrite this method if a new handler creation
    * strategy is required.
    */
-  virtual HANDLER *make_handler (void);
+  virtual HANDLER *make_handler ();
 
 private:
   /// Asynch_Connect used to make life easier :-)
@@ -155,13 +154,7 @@ private:
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Asynch_Connector.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Asynch_Connector.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #endif /* ACE_WIN32 || ACE_HAS_AIO_CALLS */
 #include /**/ "ace/post.h"

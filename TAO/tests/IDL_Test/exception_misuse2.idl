@@ -1,0 +1,17 @@
+/**
+ * @file exception_misuse2.idl
+ *
+ * https://github.com/DOCGroup/ACE_TAO/issues/2015
+ *
+ * tao_idl shall reject use of exception for struct member
+ *
+ */
+module exception_misuse2 {
+  exception exc_t {
+    string reason;
+  };
+  struct mystruct {
+    exc_t ex;
+  };
+};
+

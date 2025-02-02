@@ -54,7 +54,6 @@ class TAO_Pluggable_Reply_Params;
  */
 class TAO_Export TAO_Reply_Dispatcher
 {
-
 public:
   /// Constructor.
   TAO_Reply_Dispatcher (ACE_Allocator *allocator = 0);

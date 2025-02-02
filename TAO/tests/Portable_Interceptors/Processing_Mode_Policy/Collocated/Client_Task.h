@@ -15,14 +15,13 @@
 class Client_Task : public ACE_Task_Base
 {
 public:
-
   /// Constructor
   Client_Task (const ACE_TCHAR *input,
                CORBA::ORB_ptr corb,
                ACE_Thread_Manager *thr_mgr);
 
   /// Thread entry point
-  int svc (void);
+  int svc ();
 
   void run_test (Test_Interceptors::Visual_ptr server);
 

@@ -21,7 +21,6 @@
 #include "ace/Service_Config.h"
 
 
-
 #if defined (ACE_HAS_THREADS) && defined (ACE_HAS_THREADS_LIBRARY)
 
 static const char *server_host = ACE_DEFAULT_SERVER_HOST;

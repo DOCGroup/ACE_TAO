@@ -58,7 +58,6 @@
 extern int net_enabledns;
 
 
-
 /* ------------------------------ Data types ------------------------------ */
 
 
@@ -142,7 +141,7 @@ int net_write(SYS_NETFD sd, char *buf, int sz);
 #ifdef DAEMON_NEEDS_SEMAPHORE
 int net_semaccept_init(int port);
 int net_semaccept(int s, struct sockaddr *addr, int *addrlen);
-void net_semaccept_terminate(void);
+void net_semaccept_terminate();
 #endif
 
 

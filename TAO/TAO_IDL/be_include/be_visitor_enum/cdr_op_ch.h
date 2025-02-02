@@ -24,7 +24,6 @@
  */
 class be_visitor_enum_cdr_op_ch : public be_visitor_decl
 {
-
 public:
   /// constructor
   be_visitor_enum_cdr_op_ch (be_visitor_context *ctx);

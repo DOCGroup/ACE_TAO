@@ -39,7 +39,7 @@ public:
     ACE_OPEN   = 0
   };
 
-  ACE_SV_Shared_Memory (void);
+  ACE_SV_Shared_Memory ();
   ACE_SV_Shared_Memory (key_t external_id,
                         size_t size,
                         int create,
@@ -50,29 +50,29 @@ public:
   ACE_SV_Shared_Memory (ACE_HANDLE internal_id,
                         int flags = 0);
 
-  int  open (key_t external_id,
-             size_t size,
-             int create = ACE_SV_Shared_Memory::ACE_OPEN,
-             int perms = ACE_DEFAULT_FILE_PERMS);
+  int open (key_t external_id,
+            size_t size,
+            int create = ACE_SV_Shared_Memory::ACE_OPEN,
+            int perms = ACE_DEFAULT_FILE_PERMS);
 
-  int  open_and_attach (key_t external_id,
-                        size_t size,
-                        int create = ACE_SV_Shared_Memory::ACE_OPEN,
-                        int perms = ACE_DEFAULT_FILE_PERMS,
-                        void *virtual_addr = 0,
-                        int flags = 0);
+  int open_and_attach (key_t external_id,
+                       size_t size,
+                       int create = ACE_SV_Shared_Memory::ACE_OPEN,
+                       int perms = ACE_DEFAULT_FILE_PERMS,
+                       void *virtual_addr = 0,
+                       int flags = 0);
 
   /// Attach this shared memory segment.
-  int  attach (void *virtual_addr = 0, int flags = 0);
+  int attach (void *virtual_addr = 0, int flags = 0);
 
   /// Detach this shared memory segment.
-  int  detach (void);
+  int detach ();
 
   /// Remove this shared memory segment.
-  int  remove (void);
+  int remove ();
 
   /// Forward to underlying System V <shmctl>.
-  int  control (int cmd, void *buf);
+  int control (int cmd, void *buf);
 
   // = Segment-related info.
   void *get_segment_ptr () const;

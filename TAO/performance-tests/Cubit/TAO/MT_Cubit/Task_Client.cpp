@@ -17,7 +17,7 @@ ACE_round (ACE_timer_t t)
   return static_cast<ACE_UINT32> (t);
 }
 
-Task_State::Task_State (void)
+Task_State::Task_State ()
   : barrier_ (0),
     key_ ("Cubit"),
     loop_count_ (1000),
@@ -230,7 +230,7 @@ Task_State::parse_args (int argc,ACE_TCHAR *argv[])
   return 0;
 }
 
-Task_State::~Task_State (void)
+Task_State::~Task_State ()
 {
   int i;
 
@@ -274,7 +274,7 @@ Client::Client (ACE_Thread_Manager *thread_manager,
 {
 }
 
-Client::~Client (void)
+Client::~Client ()
 {
   delete this->my_jitter_array_;
   delete this->timer_;
@@ -305,14 +305,14 @@ Client::put_latency (JITTER_ARRAY *jitter,
 
 // Returns the latency in usecs.
 ACE_timer_t
-Client::get_high_priority_latency (void)
+Client::get_high_priority_latency ()
 {
   return (ACE_timer_t) this->ts_->latency_ [0];
 }
 
 // Returns the latency in usecs.
 ACE_timer_t
-Client::get_low_priority_latency (void)
+Client::get_low_priority_latency ()
 {
   if (this->ts_->thread_count_ == 1)
     return 0;
@@ -336,7 +336,7 @@ Client::get_latency (u_int thread_id)
 
 // Returns the jitter in usecs.
 ACE_timer_t
-Client::get_high_priority_jitter (void)
+Client::get_high_priority_jitter ()
 {
   ACE_timer_t jitter = 0.0;
   ACE_timer_t average = get_high_priority_latency ();
@@ -367,7 +367,6 @@ Client::get_high_priority_jitter (void)
 
       if (stats.sample (ACE_round (*latency)) == -1)
         ACE_DEBUG ((LM_DEBUG, "Error: stats.sample returned -1\n"));
-
     }
 
   // Return the square root of the sum of the differences computed
@@ -385,7 +384,7 @@ Client::get_high_priority_jitter (void)
 // Returns the jitter in usecs.
 
 ACE_timer_t
-Client::get_low_priority_jitter (void)
+Client::get_low_priority_jitter ()
 {
   if (this->ts_->thread_count_ == 1)
     return 0;
@@ -485,7 +484,7 @@ Client::get_jitter (u_int id)
 }
 
 void
-Client::find_frequency (void)
+Client::find_frequency ()
 {
     if (this->ts_->thread_per_rate_ == 0)
       {
@@ -547,7 +546,7 @@ Client::find_frequency (void)
 }
 
 CORBA::ORB_ptr
-Client::init_orb (void)
+Client::init_orb ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "I'm thread %t\n"));
@@ -654,7 +653,7 @@ Client::get_cubit (CORBA::ORB_ptr orb)
 }
 
 int
-Client::svc (void)
+Client::svc ()
 {
   try
     {
@@ -724,7 +723,7 @@ Client::svc (void)
 }
 
 int
-Client::cube_octet (void)
+Client::cube_octet ()
 {
   try
     {
@@ -765,7 +764,7 @@ Client::cube_octet (void)
 }
 
 int
-Client::cube_short (void)
+Client::cube_short ()
 {
   try
     {
@@ -798,7 +797,7 @@ Client::cube_short (void)
 }
 
 int
-Client::cube_long (void)
+Client::cube_long ()
 {
   try
     {
@@ -831,7 +830,7 @@ Client::cube_long (void)
 }
 
 int
-Client::cube_struct (void)
+Client::cube_struct ()
 {
   try
     {
@@ -870,7 +869,7 @@ Client::cube_struct (void)
 }
 
 int
-Client::make_request (void)
+Client::make_request ()
 {
   int result;
 
@@ -921,7 +920,7 @@ Client::make_request (void)
 }
 
 void
-Client::print_stats (void)
+Client::print_stats ()
 {
   // Perform latency stats only if we are not running the utilization
   // tests.
@@ -979,7 +978,7 @@ Client::calc_delta (ACE_timer_t real_time,
 }
 
 int
-Client::do_test (void)
+Client::do_test ()
 {
   ACE_timer_t delta = 0;
   u_int low_priority_client_count = this->ts_->thread_count_ - 1;
@@ -1066,7 +1065,7 @@ Client::do_test (void)
 }
 
 int
-Client::run_tests (void)
+Client::run_tests ()
 {
   int result;
   ACE_NEW_RETURN (this->my_jitter_array_,

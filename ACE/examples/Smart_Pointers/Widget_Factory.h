@@ -22,7 +22,7 @@ class Widget_Factory
 public:
   /// Create an instance of a widget. Ownership of the newly created object is
   /// transferred to the caller.
-  static Widget *create_widget (void);
+  static Widget *create_widget ();
 };
 
 #endif /* WIDGET_FACTORY_H */

@@ -21,7 +21,7 @@ class test_i :
 public:
   test_i (test_i *other);
 
-  ~test_i (void);
+  ~test_i ();
 
   test_i *other_;
 };
@@ -31,7 +31,7 @@ test_i::test_i (test_i *other)
 {
 }
 
-test_i::~test_i (void)
+test_i::~test_i ()
 {
   ACE_DEBUG ((LM_DEBUG, "(%t) test_i::~test_i\n"));
 

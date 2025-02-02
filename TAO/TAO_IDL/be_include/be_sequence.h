@@ -102,7 +102,6 @@ public:
   virtual char *gen_name ();
 
 protected:
-
   /// Computes the fully scoped typecode name.
   virtual void compute_tc_name ();
 

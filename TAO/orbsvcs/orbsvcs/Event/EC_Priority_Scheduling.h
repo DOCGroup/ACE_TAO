@@ -41,7 +41,7 @@ public:
   TAO_EC_Priority_Scheduling (RtecScheduler::Scheduler_ptr scheduler);
 
   /// Destructor
-  virtual ~TAO_EC_Priority_Scheduling (void);
+  virtual ~TAO_EC_Priority_Scheduling ();
 
   virtual void add_proxy_supplier_dependencies (
       TAO_EC_ProxyPushSupplier *supplier,
@@ -55,7 +55,7 @@ private:
   TAO_EC_Priority_Scheduling& operator= (const TAO_EC_Priority_Scheduling&);
 
   /// Initialize our RT_Info handle and dependencies
-  void init_rt_info (void);
+  void init_rt_info ();
 
 private:
   /// The scheduler we are going to use

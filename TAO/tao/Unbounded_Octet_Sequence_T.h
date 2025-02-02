@@ -22,7 +22,6 @@
 #include "tao/Basic_Types.h"
 #include "ace/Message_Block.h"
 #include "ace/OS_Memory.h"
-#include "ace/checked_iterator.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -140,7 +139,7 @@ public:
             element_traits::copy_range(
               buffer_,
               buffer_ + length,
-              ACE_make_checked_array_iterator (tmp.buffer_, tmp.length_));
+              tmp.buffer_);
             swap(tmp);
           }
         return;
@@ -151,7 +150,7 @@ public:
     element_traits::copy_range(
       buffer_,
       buffer_ + length_,
-      ACE_make_checked_array_iterator (tmp.buffer_, tmp.length_));
+      tmp.buffer_);
     swap(tmp);
   }
   inline value_type const & operator[](CORBA::ULong i) const {
@@ -223,7 +222,7 @@ public:
     return !this->operator==(rhs);
   }
 
-  inline void swap(unbounded_value_sequence & rhs) throw() {
+  inline void swap(unbounded_value_sequence & rhs) noexcept {
     std::swap (mb_, rhs.mb_);
     std::swap (maximum_, rhs.maximum_);
     std::swap (length_, rhs.length_);
@@ -311,7 +310,6 @@ private:
   mutable CORBA::Boolean release_;
   ACE_Message_Block* mb_;
 };
-
 } // namespace TAO
 
 TAO_END_VERSIONED_NAMESPACE_DECL

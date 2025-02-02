@@ -19,7 +19,6 @@
 #include "ace/OS_NS_stdio.h"
 
 
-
 /**
  * @class Logger
  Subclassing from ACE_Log_Msg_Callback means that an instance of

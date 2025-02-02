@@ -173,14 +173,15 @@ public:
   PortableServer::RequestProcessingPolicy_ptr
   create_request_processing_policy (
       PortableServer::RequestProcessingPolicyValue value);
-
 #endif /* TAO_HAS_MINIMUM_POA == 0 && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO) */
 
   char * the_name ();
 
   PortableServer::POA_ptr the_parent ();
 
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
   PortableServer::POAList *the_children ();
+#endif /* TAO_HAS_MINIMUM_POA == 0 && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO) */
 
   PortableServer::POAManager_ptr the_POAManager ();
 
@@ -274,10 +275,7 @@ public:
 
   static CORBA::ULong name_separator_length ();
 
-  enum
-  {
-    TAO_OBJECTKEY_PREFIX_SIZE = 4
-  };
+  static constexpr size_t TAO_OBJECTKEY_PREFIX_SIZE = 4;
 
   static CORBA::Octet const objectkey_prefix[TAO_OBJECTKEY_PREFIX_SIZE];
 
@@ -391,7 +389,7 @@ public:
 
   PortableServer::Servant find_servant (const PortableServer::ObjectId &system_id);
 
-  TAO_SERVANT_LOCATION servant_present (
+  TAO_Servant_Location servant_present (
     const PortableServer::ObjectId &system_id,
     PortableServer::Servant &servant);
 
@@ -467,7 +465,6 @@ public:
                                  const PortableServer::ObjectId& oid);
 
 protected:
-
 #if (TAO_HAS_MINIMUM_POA == 0)
   int enter ();
 
@@ -621,7 +618,7 @@ protected:
     PortableInterceptor::ObjectReferenceFactory *current_factory);
 
 
-  TAO_SERVANT_LOCATION locate_servant_i (const PortableServer::ObjectId &id,
+  TAO_Servant_Location locate_servant_i (const PortableServer::ObjectId &id,
                                          PortableServer::Servant &servant);
 
   PortableServer::Servant locate_servant_i (
@@ -637,7 +634,6 @@ public:
   invoke_key_to_object_helper_i (const char * repository_id,
                                  const PortableServer::ObjectId & id);
 protected:
-
   /// Get the ORT adapter, in case there is no adapter yet, this method will
   /// try to create one and hold the POA lock
   TAO::ORT_Adapter *ORT_adapter ();
@@ -795,7 +791,6 @@ public:
 class TAO_PortableServer_Export TAO_POA_Static_Resources
 {
 public:
-
   /// Return the singleton instance.
   static TAO_POA_Static_Resources* instance ();
 
@@ -803,7 +798,6 @@ public:
   static void fini () ACE_GCC_DESTRUCTOR_ATTRIBUTE;
 
 public:
-
   /**
    * Name of the factory object used to adapt function calls on the
    * PortableInterceptor interfaces ORT. The default value is

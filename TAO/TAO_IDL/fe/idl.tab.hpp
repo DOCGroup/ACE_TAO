@@ -1,4 +1,4 @@
-/* A Bison parser, made by GNU Bison 3.7.6.  */
+/* A Bison parser, made by GNU Bison 3.8.2.  */
 
 /* Bison interface for Yacc-like parsers in C
 
@@ -146,7 +146,11 @@ extern int tao_yydebug;
     IDL_WCHAR_LITERAL = 347,       /* IDL_WCHAR_LITERAL  */
     IDL_WSTRING_LITERAL = 348,     /* IDL_WSTRING_LITERAL  */
     IDL_ANNOTATION_DECL = 349,     /* IDL_ANNOTATION_DECL  */
-    IDL_ANNOTATION_SYMBOL = 350    /* IDL_ANNOTATION_SYMBOL  */
+    IDL_ANNOTATION_SYMBOL = 350,   /* IDL_ANNOTATION_SYMBOL  */
+    IDL_BITFIELD = 351,            /* IDL_BITFIELD  */
+    IDL_BITMASK = 352,             /* IDL_BITMASK  */
+    IDL_BITSET = 353,              /* IDL_BITSET  */
+    IDL_MAP = 354                  /* IDL_MAP  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -155,7 +159,7 @@ extern int tao_yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 163 "fe/idl.ypp"
+#line 164 "fe/idl.ypp"
 
   AST_Decl                      *dcval;         /* Decl value           */
   UTL_StrList                   *slval;         /* String list          */
@@ -199,8 +203,9 @@ union YYSTYPE
   AST_Annotation_Decl *annotation_decl_val;
   AST_Decls *decls_val;
   Decl_Annotations_Pair *decl_annotations_pair_val;
+  Decl_Annotations_Pair_Pair* decl_annotations_pair_val_pair;
 
-#line 204 "fe/idl.tab.hpp"
+#line 209 "fe/idl.tab.hpp"
 
 };
 typedef union YYSTYPE YYSTYPE;
@@ -211,6 +216,8 @@ typedef union YYSTYPE YYSTYPE;
 
 extern YYSTYPE tao_yylval;
 
+
 int tao_yyparse (void);
+
 
 #endif /* !YY_TAO_YY_FE_IDL_TAB_HPP_INCLUDED  */

@@ -48,11 +48,6 @@
 // Counting_Service and Options in here
 #include "Process_Strategy_Test.h"
 
-// This test does not function properly when fork() is used on HP-UX
-#if defined(__hpux)
-#define ACE_LACKS_FORK
-#endif /* __hpux */
-
 ACE_SINGLETON_TEMPLATE_INSTANTIATE(ACE_Singleton, Options, ACE_Null_Mutex);
 
 // Define a <Strategy_Acceptor> that's parameterized by the
@@ -361,13 +356,6 @@ Counting_Service::handle_input (ACE_HANDLE)
 {
   char buf[BUFSIZ];
   ACE_Time_Value* timeout = 0;
-#if defined (__hpux)
-  // Even though we're in handle_input, there seems to be a
-  // situation on HP-UX where there is nothing to recv just yet.
-  // So, we recv() with a timeout and everything works.
-  ACE_Time_Value hpux_timeout (3);
-  timeout = &hpux_timeout;
-#endif /* __hpux */
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P|%t) reading from peer on %d\n"),

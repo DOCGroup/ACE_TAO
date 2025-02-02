@@ -50,7 +50,7 @@ public:
   Hash_Table (size_t s);
 
   /// Destructor
-  ~Hash_Table (void);
+  ~Hash_Table ();
 
   List_Node *find (List_Node *item, int ignore_length);
 

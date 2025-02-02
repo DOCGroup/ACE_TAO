@@ -148,7 +148,6 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
      // flow_spec.length (0);
      // stream_control->stop (flow_spec);
-
     }
   catch (const CORBA::Exception& ex)
     {

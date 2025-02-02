@@ -103,7 +103,7 @@ ACE_WIN32_Asynch_Result::set_error (u_long errcode)
   this->error_ = errcode;
 }
 
-ACE_WIN32_Asynch_Result::~ACE_WIN32_Asynch_Result (void)
+ACE_WIN32_Asynch_Result::~ACE_WIN32_Asynch_Result ()
 {
 }
 
@@ -166,7 +166,7 @@ ACE_WIN32_Asynch_Operation::open (const ACE_Handler::Proxy_Ptr &handler_proxy,
 }
 
 int
-ACE_WIN32_Asynch_Operation::cancel (void)
+ACE_WIN32_Asynch_Operation::cancel ()
 {
 #if defined (ACE_HAS_CANCEL_IO)
   // All I/O operations that are canceled will complete with the error
@@ -203,7 +203,7 @@ ACE_WIN32_Asynch_Operation::ACE_WIN32_Asynch_Operation (ACE_WIN32_Proactor *win3
 {
 }
 
-ACE_WIN32_Asynch_Operation::~ACE_WIN32_Asynch_Operation (void)
+ACE_WIN32_Asynch_Operation::~ACE_WIN32_Asynch_Operation ()
 {
 }
 
@@ -294,7 +294,7 @@ ACE_WIN32_Asynch_Read_Stream_Result::complete (size_t bytes_transferred,
     handler->handle_read_stream (result);
 }
 
-ACE_WIN32_Asynch_Read_Stream_Result::~ACE_WIN32_Asynch_Read_Stream_Result (void)
+ACE_WIN32_Asynch_Read_Stream_Result::~ACE_WIN32_Asynch_Read_Stream_Result ()
 {
 }
 
@@ -562,7 +562,7 @@ ACE_WIN32_Asynch_Read_Stream::readv (ACE_Message_Block &message_block,
 #endif /* ACE_HAS_WINSOCK2 && ACE_HAS_WINSOCK2 != 0 */
 }
 
-ACE_WIN32_Asynch_Read_Stream::~ACE_WIN32_Asynch_Read_Stream (void)
+ACE_WIN32_Asynch_Read_Stream::~ACE_WIN32_Asynch_Read_Stream ()
 {
 }
 
@@ -632,7 +632,7 @@ ACE_WIN32_Asynch_Read_Stream::open (const ACE_Handler::Proxy_Ptr &handler_proxy,
 }
 
 int
-ACE_WIN32_Asynch_Read_Stream::cancel (void)
+ACE_WIN32_Asynch_Read_Stream::cancel ()
 {
   return ACE_WIN32_Asynch_Operation::cancel ();
 }
@@ -723,7 +723,7 @@ ACE_WIN32_Asynch_Write_Stream_Result::complete (size_t bytes_transferred,
     handler->handle_write_stream (result);
 }
 
-ACE_WIN32_Asynch_Write_Stream_Result::~ACE_WIN32_Asynch_Write_Stream_Result (void)
+ACE_WIN32_Asynch_Write_Stream_Result::~ACE_WIN32_Asynch_Write_Stream_Result ()
 {
 }
 
@@ -1039,7 +1039,7 @@ ACE_WIN32_Asynch_Write_Stream::writev (ACE_Message_Block &message_block,
 #endif /* ACE_HAS_WINSOCK2 && ACE_HAS_WINSOCK2 != 0 */
 }
 
-ACE_WIN32_Asynch_Write_Stream::~ACE_WIN32_Asynch_Write_Stream (void)
+ACE_WIN32_Asynch_Write_Stream::~ACE_WIN32_Asynch_Write_Stream ()
 {
 }
 
@@ -1060,7 +1060,7 @@ ACE_WIN32_Asynch_Write_Stream::open (const ACE_Handler::Proxy_Ptr &handler_proxy
 }
 
 int
-ACE_WIN32_Asynch_Write_Stream::cancel (void)
+ACE_WIN32_Asynch_Write_Stream::cancel ()
 {
   return ACE_WIN32_Asynch_Operation::cancel ();
 }
@@ -1147,7 +1147,7 @@ ACE_WIN32_Asynch_Read_File_Result::complete (size_t bytes_transferred,
     handler->handle_read_file (result);
 }
 
-ACE_WIN32_Asynch_Read_File_Result::~ACE_WIN32_Asynch_Read_File_Result (void)
+ACE_WIN32_Asynch_Read_File_Result::~ACE_WIN32_Asynch_Read_File_Result ()
 {
 }
 
@@ -1413,7 +1413,7 @@ ACE_WIN32_Asynch_Read_File::readv (ACE_Message_Block &message_block,
 }
 
 
-ACE_WIN32_Asynch_Read_File::~ACE_WIN32_Asynch_Read_File (void)
+ACE_WIN32_Asynch_Read_File::~ACE_WIN32_Asynch_Read_File ()
 {
 }
 
@@ -1462,7 +1462,7 @@ ACE_WIN32_Asynch_Read_File::open (const ACE_Handler::Proxy_Ptr &handler_proxy,
 }
 
 int
-ACE_WIN32_Asynch_Read_File::cancel (void)
+ACE_WIN32_Asynch_Read_File::cancel ()
 {
   return ACE_WIN32_Asynch_Operation::cancel ();
 }
@@ -1550,7 +1550,7 @@ ACE_WIN32_Asynch_Write_File_Result::complete (size_t bytes_transferred,
     handler->handle_write_file (result);
 }
 
-ACE_WIN32_Asynch_Write_File_Result::~ACE_WIN32_Asynch_Write_File_Result  (void)
+ACE_WIN32_Asynch_Write_File_Result::~ACE_WIN32_Asynch_Write_File_Result  ()
 {
 }
 
@@ -1858,7 +1858,7 @@ ACE_WIN32_Asynch_Write_File::writev (ACE_Message_Block &message_block,
 }
 
 
-ACE_WIN32_Asynch_Write_File::~ACE_WIN32_Asynch_Write_File (void)
+ACE_WIN32_Asynch_Write_File::~ACE_WIN32_Asynch_Write_File ()
 {
 }
 
@@ -1909,7 +1909,7 @@ ACE_WIN32_Asynch_Write_File::open (const ACE_Handler::Proxy_Ptr &handler_proxy,
 }
 
 int
-ACE_WIN32_Asynch_Write_File::cancel (void)
+ACE_WIN32_Asynch_Write_File::cancel ()
 {
   return ACE_WIN32_Asynch_Operation::cancel ();
 }
@@ -2000,7 +2000,7 @@ ACE_WIN32_Asynch_Accept_Result::complete (size_t bytes_transferred,
     handler->handle_accept (result);
 }
 
-ACE_WIN32_Asynch_Accept_Result::~ACE_WIN32_Asynch_Accept_Result (void)
+ACE_WIN32_Asynch_Accept_Result::~ACE_WIN32_Asynch_Accept_Result ()
 {
 }
 
@@ -2205,7 +2205,7 @@ ACE_WIN32_Asynch_Accept::accept (ACE_Message_Block &message_block,
 #endif /* defined (ACE_HAS_WIN32_OVERLAPPED_IO) || (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)) */
 }
 
-ACE_WIN32_Asynch_Accept::~ACE_WIN32_Asynch_Accept (void)
+ACE_WIN32_Asynch_Accept::~ACE_WIN32_Asynch_Accept ()
 {
 }
 
@@ -2226,7 +2226,7 @@ ACE_WIN32_Asynch_Accept::open (const ACE_Handler::Proxy_Ptr &handler_proxy,
 }
 
 int
-ACE_WIN32_Asynch_Accept::cancel (void)
+ACE_WIN32_Asynch_Accept::cancel ()
 {
   return ACE_WIN32_Asynch_Operation::cancel ();
 }
@@ -2288,7 +2288,7 @@ ACE_WIN32_Asynch_Connect_Result::complete (size_t bytes_transferred,
     handler->handle_connect (result);
 }
 
-ACE_WIN32_Asynch_Connect_Result::~ACE_WIN32_Asynch_Connect_Result (void)
+ACE_WIN32_Asynch_Connect_Result::~ACE_WIN32_Asynch_Connect_Result ()
 {
 }
 
@@ -2371,7 +2371,7 @@ ACE_WIN32_Asynch_Connect::ACE_WIN32_Asynch_Connect (ACE_WIN32_Proactor * win32_p
 {
 }
 
-ACE_WIN32_Asynch_Connect::~ACE_WIN32_Asynch_Connect (void)
+ACE_WIN32_Asynch_Connect::~ACE_WIN32_Asynch_Connect ()
 {
   this->close ();
   this->reactor (0); // to avoid purge_pending_notifications
@@ -2386,7 +2386,6 @@ ACE_WIN32_Asynch_Connect::proactor () const
 ACE_HANDLE
 ACE_WIN32_Asynch_Connect::get_handle () const
 {
-
   ACE_ASSERT (0);
   return ACE_INVALID_HANDLE;
 }
@@ -2678,7 +2677,7 @@ ACE_WIN32_Asynch_Connect::cancel_uncompleted (bool flg_notify,
 }
 
 int
-ACE_WIN32_Asynch_Connect::cancel (void)
+ACE_WIN32_Asynch_Connect::cancel ()
 {
   ACE_TRACE ("ACE_WIN32_Asynch_Connect::cancel");
 
@@ -2707,7 +2706,7 @@ ACE_WIN32_Asynch_Connect::cancel (void)
 }
 
 int
-ACE_WIN32_Asynch_Connect::close (void)
+ACE_WIN32_Asynch_Connect::close ()
 {
   ACE_TRACE ("ACE_WIN32_Asynch_Connect::close");
 
@@ -2912,7 +2911,7 @@ ACE_WIN32_Asynch_Transmit_File_Result::complete (size_t bytes_transferred,
     handler->handle_transmit_file (result);
 }
 
-ACE_WIN32_Asynch_Transmit_File_Result::~ACE_WIN32_Asynch_Transmit_File_Result (void)
+ACE_WIN32_Asynch_Transmit_File_Result::~ACE_WIN32_Asynch_Transmit_File_Result ()
 {
 }
 
@@ -3087,7 +3086,7 @@ ACE_WIN32_Asynch_Transmit_File::transmit_file (ACE_HANDLE file,
 #endif /* ACE_HAS_WIN32_OVERLAPPED_IO || ACE_HAS_WINSOCK2 */
 }
 
-ACE_WIN32_Asynch_Transmit_File::~ACE_WIN32_Asynch_Transmit_File (void)
+ACE_WIN32_Asynch_Transmit_File::~ACE_WIN32_Asynch_Transmit_File ()
 {
 }
 
@@ -3108,7 +3107,7 @@ ACE_WIN32_Asynch_Transmit_File::open (const ACE_Handler::Proxy_Ptr &handler_prox
 }
 
 int
-ACE_WIN32_Asynch_Transmit_File::cancel (void)
+ACE_WIN32_Asynch_Transmit_File::cancel ()
 {
   return ACE_WIN32_Asynch_Operation::cancel ();
 }
@@ -3301,14 +3300,14 @@ ACE_WIN32_Asynch_Read_Dgram_Result::complete (size_t bytes_transferred,
     handler->handle_read_dgram (result);
 }
 
-ACE_WIN32_Asynch_Read_Dgram_Result::~ACE_WIN32_Asynch_Read_Dgram_Result (void)
+ACE_WIN32_Asynch_Read_Dgram_Result::~ACE_WIN32_Asynch_Read_Dgram_Result ()
 {
   delete this->remote_address_;
 }
 
 //***************************************************************************
 
-ACE_WIN32_Asynch_Read_Dgram::~ACE_WIN32_Asynch_Read_Dgram (void)
+ACE_WIN32_Asynch_Read_Dgram::~ACE_WIN32_Asynch_Read_Dgram ()
 {
 }
 
@@ -3461,7 +3460,7 @@ ACE_WIN32_Asynch_Read_Dgram::open (const ACE_Handler::Proxy_Ptr &handler_proxy,
 }
 
 int
-ACE_WIN32_Asynch_Read_Dgram::cancel (void)
+ACE_WIN32_Asynch_Read_Dgram::cancel ()
 {
   return ACE_WIN32_Asynch_Operation::cancel ();
 }
@@ -3633,14 +3632,14 @@ ACE_WIN32_Asynch_Write_Dgram_Result::complete (size_t bytes_transferred,
     handler->handle_write_dgram (result);
 }
 
-ACE_WIN32_Asynch_Write_Dgram_Result::~ACE_WIN32_Asynch_Write_Dgram_Result (void)
+ACE_WIN32_Asynch_Write_Dgram_Result::~ACE_WIN32_Asynch_Write_Dgram_Result ()
 {
 }
 
 
 //***********************************************
 
-ACE_WIN32_Asynch_Write_Dgram::~ACE_WIN32_Asynch_Write_Dgram (void)
+ACE_WIN32_Asynch_Write_Dgram::~ACE_WIN32_Asynch_Write_Dgram ()
 {
 }
 
@@ -3786,7 +3785,7 @@ ACE_WIN32_Asynch_Write_Dgram::open (const ACE_Handler::Proxy_Ptr &handler_proxy,
 }
 
 int
-ACE_WIN32_Asynch_Write_Dgram::cancel (void)
+ACE_WIN32_Asynch_Write_Dgram::cancel ()
 {
   return ACE_WIN32_Asynch_Operation::cancel ();
 }

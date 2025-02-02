@@ -29,7 +29,6 @@ TAO_RTEventLog_i::TAO_RTEventLog_i (CORBA::ORB_ptr orb,
     poa_ (PortableServer::POA::_duplicate (poa)),
     log_poa_ (PortableServer::POA::_duplicate (log_poa))
 {
-
   TAO_EC_Event_Channel_Attributes attr (poa_.in(), poa_.in());
 
   ACE_NEW_THROW_EX (this->event_channel_,

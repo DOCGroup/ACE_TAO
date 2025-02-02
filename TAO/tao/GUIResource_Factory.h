@@ -54,7 +54,7 @@ namespace TAO
      * Please note that this call is NOT synchronized. Left to the
      * higher level versions to synchronize access.
      */
-    virtual ACE_Reactor *get_reactor (void) ;
+    virtual ACE_Reactor *get_reactor () ;
 
     /**
      * Reclaim the reactor if allocated by this factory.
@@ -69,7 +69,7 @@ namespace TAO
      * Please note that this call is NOT synchronized. Left to the
      * get_reactor() to synchronize access.
      */
-    virtual ACE_Reactor_Impl *reactor_impl (void) = 0;
+    virtual ACE_Reactor_Impl *reactor_impl () = 0;
 
   private:
     /**

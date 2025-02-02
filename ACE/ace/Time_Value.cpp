@@ -48,7 +48,7 @@ ACE_Time_Value::operator ++ (int)
 ACE_Time_Value &
 ACE_Time_Value::operator ++ ()
 {
-  // ACE_OS_TRACE ("ACE_Time_Value::operator ++ (void)");
+  // ACE_OS_TRACE ("ACE_Time_Value::operator ++ ()");
   this->usec (this->usec () + 1);
   this->normalize ();
   return *this;
@@ -68,7 +68,7 @@ ACE_Time_Value::operator -- (int)
 ACE_Time_Value &
 ACE_Time_Value::operator -- ()
 {
-  // ACE_OS_TRACE ("ACE_Time_Value::operator -- (void)");
+  // ACE_OS_TRACE ("ACE_Time_Value::operator -- ()");
   this->usec (this->usec () - 1);
   this->normalize ();
   return *this;

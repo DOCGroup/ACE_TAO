@@ -356,8 +356,7 @@ TAO_IIOP_Transport::get_listen_point (
   // been established. If this is wrong, please correct me.
 
   ACE_INET_Addr local_addr;
-  if (this->connection_handler_->peer ().get_local_addr (local_addr)
-      == -1)
+  if (this->connection_handler_->peer ().get_local_addr (local_addr) == -1)
     {
       TAOLIB_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("TAO (%P|%t) - IIOP_Transport::get_listen_point, ")

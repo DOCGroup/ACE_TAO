@@ -104,19 +104,12 @@ ACE_OS::socket_init (int version_high, int version_low)
       int error = WSAStartup (version_requested, &wsa_data);
 
       if (error != 0)
-#   if defined (ACE_HAS_WINCE)
         {
-          ACE_TCHAR fmt[] = ACE_TEXT ("%s failed, WSAGetLastError returned %d");
-          ACE_TCHAR buf[80];  // @@ Eliminate magic number.
-          ACE_OS::snprintf (buf, 80, fmt, ACE_TEXT ("WSAStartup %d"), error);
-          ::MessageBox (0, buf, ACE_TEXT ("WSAStartup failed!"), MB_OK);
+          ACE_OS::fprintf (stderr,
+                          "ACE_OS::socket_init; WSAStartup failed, "
+                            "WSAGetLastError returned %d\n",
+                          error);
         }
-#   else
-      ACE_OS::fprintf (stderr,
-                       "ACE_OS::socket_init; WSAStartup failed, "
-                         "WSAGetLastError returned %d\n",
-                       error);
-#   endif /* ACE_HAS_WINCE */
 
       ACE_OS::socket_initialized_ = 1;
     }
@@ -136,17 +129,10 @@ ACE_OS::socket_fini ()
       if (WSACleanup () != 0)
         {
           int error = ::WSAGetLastError ();
-#   if defined (ACE_HAS_WINCE)
-          ACE_TCHAR fmt[] = ACE_TEXT ("%s failed, WSAGetLastError returned %d");
-          ACE_TCHAR buf[80];  // @@ Eliminate magic number.
-          ACE_OS::snprintf (buf, 80, fmt, ACE_TEXT ("WSACleanup %d"), error);
-          ::MessageBox (0, buf , ACE_TEXT ("WSACleanup failed!"), MB_OK);
-#   else
           ACE_OS::fprintf (stderr,
                            "ACE_OS::socket_fini; WSACleanup failed, "
                              "WSAGetLastError returned %d\n",
                            error);
-#   endif /* ACE_HAS_WINCE */
         }
       ACE_OS::socket_initialized_ = 0;
     }

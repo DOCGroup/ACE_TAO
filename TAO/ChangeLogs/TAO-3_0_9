@@ -1,0 +1,588 @@
+commit a16ac15dd106967992baef21a91f73f002b2cb79
+Merge: 7b7e6532345 46bf3cb65ed
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 23 09:20:49 2022 +0200
+
+    Merge pull request #1942 from knutpett/knutpett/const_accessor
+    
+    Added const accessors for AST_Decl::local_name () and UTL_String::get_string ()
+
+commit 7b7e65323459375cda40274c9b5828b3f5aebda9
+Merge: 0b7e12778ae 2aab75d5fdd
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 23 09:20:32 2022 +0200
+
+    Merge pull request #1941 from knutpett/knutpett/remove_void_part2
+    
+    Part 2: Remove obsolescent (void) in functions with no parameters
+
+commit 46bf3cb65ed64842f6272fb9d571af3c8d4ead59
+Author: Knut Petter Svendsen <knut@altuma.no>
+Date:   Fri Sep 23 08:47:45 2022 +0200
+
+    Remove the non-const version
+    
+    This is safe since non-const functions can call const-functions.
+
+commit 0b7e12778ae92315cbd51c901cb8402d6bd646a7
+Merge: f980f161749 64b5a4fecb5
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Thu Sep 22 17:58:28 2022 -0500
+
+    Merge pull request #1907 from lukem/format-security
+    
+    Fix -Wformat-security issues
+
+commit 1aa4a63339a3990a68b5dd5f808bc3e5c33e193f
+Author: Knut Petter Svendsen <knut@altuma.no>
+Date:   Thu Sep 22 16:30:31 2022 +0200
+
+    Added const accessors for AST_Decl::local_name () and UTL_String::get_string ()
+
+commit 2aab75d5fddc126e8085c70fe8e1b875b75a30ef
+Author: Knut Petter Svendsen <knut@altuma.no>
+Date:   Mon Sep 19 14:37:02 2022 +0200
+
+    Part 2: Remove obsolescent (void) in functions with no parameters
+
+commit f980f161749eac82843c44943e6fec229920ba9f
+Merge: a3981dc07f3 90cfc149fdf
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Sep 21 08:38:51 2022 +0200
+
+    Merge pull request #1936 from jwillemsen/jwi-valuetypecdr
+    
+    Valuetype test extensions
+
+commit 90cfc149fdf58636ba5474b8ee5a3e60d24d7d90
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 20 16:39:55 2022 +0200
+
+    Correct project
+    
+        * TAO/tests/IDL_Test/Versioned_Namespace/Versioned_Namespace.mpc:
+
+commit e47c0ac2aa640d892e02ccb05a160a82d3490e6c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 20 16:35:24 2022 +0200
+
+    Move new test IDL to seperate project
+    
+        * TAO/tests/IDL_Test/Versioned_Namespace/TestVersionedNamespace2.idl:
+          Added.
+    
+        * TAO/tests/IDL_Test/Versioned_Namespace/TestVersionedNamespace.idl:
+        * TAO/tests/IDL_Test/Versioned_Namespace/Versioned_Namespace.mpc:
+
+commit 64b5a4fecb5806522f220d63b0744ffa40bb6bcc
+Merge: ccbb3639f96 9bb6d09a139
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Mon Sep 19 16:40:20 2022 -0500
+
+    Merge branch 'master' into format-security
+
+commit dcdc061a7e9e6446115374c404020c57577a2f62
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Sep 19 14:45:51 2022 +0200
+
+    Use override instead of virtual
+    
+        * TAO/tao/Wait_On_LF_No_Upcall.h:
+        * TAO/tao/Wait_On_Leader_Follower.h:
+        * TAO/tao/Wait_On_Reactor.h:
+        * TAO/tao/Wait_On_Read.h:
+
+commit c43546b7c54c422c3fc6c3c8cf56d51703c1a58f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Sep 19 14:44:02 2022 +0200
+
+    Add back virtual
+    
+        * TAO/tao/Wait_On_Leader_Follower.h:
+
+commit adf5bf4e71739a491b31ecec4fcfa8f82daded67
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Sep 19 13:46:37 2022 +0200
+
+    Use default destructors
+    
+        * TAO/tao/Wait_On_LF_No_Upcall.cpp:
+        * TAO/tao/Wait_On_LF_No_Upcall.h:
+        * TAO/tao/Wait_On_Leader_Follower.cpp:
+        * TAO/tao/Wait_On_Leader_Follower.h:
+        * TAO/tao/Wait_On_Reactor.cpp:
+        * TAO/tao/Wait_On_Reactor.h:
+        * TAO/tao/Wait_On_Read.cpp:
+        * TAO/tao/Wait_On_Read.h:
+        * TAO/tao/Wait_Strategy.cpp:
+        * TAO/tao/Wait_Strategy.h:
+
+commit 417e48232eb31084b2908abf8a522531e7647ca9
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Sep 19 12:41:08 2022 +0200
+
+    More test
+    
+        * TAO/tests/IDL_Test/Versioned_Namespace/TestVersionedNamespace.idl:
+
+commit c31931d437af978c72302bb66831f729e680f325
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Sep 19 12:38:40 2022 +0200
+
+    More test extensins
+    
+        * TAO/tests/IDL_Test/Versioned_Namespace/TestVersionedNamespace.idl:
+        * TAO/tests/IDL_Test/Versioned_Namespace/Versioned_Namespace.mpc:
+
+commit 55598ab199359c7daa3331520675f7a5c8e3cfe7
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Sep 19 11:27:26 2022 +0200
+
+    Extend test, enabled cdr
+    
+        * TAO/tests/IDL_Test/Versioned_Namespace/TestVersionedNamespace.idl:
+        * TAO/tests/IDL_Test/Versioned_Namespace/Versioned_Namespace.mpc:
+
+commit 5e96bb28fc7572f39b63ac2aca72800c45cdb1ee
+Merge: 96f0f9c1666 84f0894d8f0
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Sep 19 09:55:44 2022 +0200
+
+    Merge pull request #1933 from jwillemsen/jwi-versionednamespacetest
+    
+    Extend test IDL
+
+commit 96f0f9c16668c07531ea8c60c7b912f2e7b55806
+Merge: 14610fc4e13 d7c2081760f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Sep 19 09:55:26 2022 +0200
+
+    Merge pull request #1934 from jwillemsen/jwi-require_truncation_
+    
+    Use uniform initialisation for require_truncation_ so tha we can generate a default constructor
+
+commit d7c2081760f1fed0c7e5929c35b7cc0fe9429c2e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Sep 18 11:53:46 2022 +0200
+
+    Use uniform initialisation for require_truncation_ so tha we can generate a default constructor
+    
+        * TAO/TAO_IDL/be/be_visitor_valuebox/valuebox_cs.cpp:
+        * TAO/TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp:
+        * TAO/TAO_IDL/be/be_visitor_valuetype/valuetype_init_cs.cpp:
+        * TAO/TAO_IDL/be/be_visitor_valuetype/valuetype_obv_ch.cpp:
+        * TAO/TAO_IDL/be/be_visitor_valuetype/valuetype_obv_cs.cpp:
+
+commit 84f0894d8f00fcb6e865c4dace75115eac98ac42
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Sep 18 10:33:55 2022 +0200
+
+    Extend test IDL
+    
+        * TAO/tests/IDL_Test/Versioned_Namespace/TestVersionedNamespace.idl:
+
+commit 3f1236a89ac9381be2ece19ff833f6a6b5f4ae15
+Merge: da2ab4ef14f 062f194d4b3
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Sep 15 16:00:38 2022 +0200
+
+    Merge pull request #1930 from jwillemsen/jwi-sslcert
+    
+    Generated new certificates, old ones expired
+
+commit 062f194d4b339bc32dbd5705613800eb4db68960
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Sep 15 16:00:04 2022 +0200
+
+    Generated new certificates, old ones expired
+
+commit bc05ebcc29b4ec7f5c7af14dad9ef6bd18883891
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Sep 15 09:34:26 2022 +0200
+
+    Revert addressof changes, looks it broke something
+    
+        * TAO/TAO_IDL/be/be_visitor_typecode/typecode_defn.cpp:
+        * TAO/TAO_IDL/be/be_visitor_typecode/value_typecode.cpp:
+
+commit 0a03a4b940b9bb549587d3f22eab9e66d617551c
+Merge: a457e9d14d9 0615e6ef888
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Sep 14 09:16:25 2022 +0200
+
+    Merge pull request #1926 from jwillemsen/jwi-taoidlnullptr3
+    
+    Use nullptr, check pointers with 1, use std::addressof, reduced sloc
+
+commit 3da59eac098c1ef9d2c98f2079185ff35c3b6105
+Author: Knut Petter Svendsen <knut@altuma.no>
+Date:   Tue Sep 13 22:57:39 2022 +0200
+
+    Remove obsolescent (void) in functions with no parameters
+
+commit 0615e6ef888bdcbbae4324e1dcbd04a21516e0e3
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 13 13:39:29 2022 +0200
+
+    Removed empty line
+    
+        * TAO/TAO_IDL/be/be_visitor_valuebox/any_op_cs.cpp:
+        * TAO/TAO_IDL/be/be_visitor_valuetype/any_op_cs.cpp:
+
+commit 603ecf36e5a6142ced625b1579a3ea1d4e48bdd8
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 13 12:04:48 2022 +0200
+
+    Use nullptr, check pointers with 1, use std::addressof, reduced sloc
+    
+        * TAO/TAO_IDL/be/be_visitor_array/any_op_cs.cpp:
+        * TAO/TAO_IDL/be/be_visitor_component/executor_exs.cpp:
+        * TAO/TAO_IDL/be/be_visitor_component/servant_svs.cpp:
+        * TAO/TAO_IDL/be/be_visitor_exception/exception_cs.cpp:
+        * TAO/TAO_IDL/be/be_visitor_interface/any_op_cs.cpp:
+        * TAO/TAO_IDL/be/be_visitor_interface/smart_proxy_cs.cpp:
+        * TAO/TAO_IDL/be/be_visitor_typecode/struct_typecode.cpp:
+        * TAO/TAO_IDL/be/be_visitor_union/union_cs.cpp:
+        * TAO/TAO_IDL/be/be_visitor_union_branch/public_assign_cs.cpp:
+        * TAO/TAO_IDL/be/be_visitor_union_branch/public_reset_cs.cpp:
+        * TAO/TAO_IDL/be/be_visitor_valuebox/any_op_cs.cpp:
+        * TAO/TAO_IDL/be/be_visitor_valuetype/any_op_cs.cpp:
+
+commit ccbb3639f96d55c38f96914c6c7c4bc8c8998db9
+Merge: bdc29ef27a6 fe03724176d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Sep 12 09:36:12 2022 +0200
+
+    Merge branch 'master' into format-security
+
+commit fe03724176dcfd20e0f9a6e493198469242be6b6
+Merge: 41a1f3bc12f 00b403be7df
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Sep 12 08:32:34 2022 +0200
+
+    Merge pull request #1922 from knutpett/knutpett/whitespace
+    
+    Remove whitespace
+
+commit 00b403be7df0442405bd5e3dcc07beaa6730ddd2
+Author: Knut Petter Svendsen <knut@altuma.no>
+Date:   Sat Sep 10 12:26:57 2022 +0200
+
+    Fixed Redundant blank line at the end of a code block should be deleted
+
+commit 60987b4ba42ff6e4e6a4f4457d902a18c0c6b0a0
+Author: Knut Petter Svendsen <knut@altuma.no>
+Date:   Sat Sep 10 12:19:28 2022 +0200
+
+    Remove leading blank lines after opening {
+
+commit ab436d45dc956c1eaec31bff0c43ca3a0cb0cb66
+Author: Knut Petter Svendsen <knut@altuma.no>
+Date:   Sat Sep 10 12:14:24 2022 +0200
+
+    Remove trailing whitespace forgotten in previous commit
+
+commit c42abee7c0e81ed89bdfb47bf3a1bcb743cf256b
+Author: Knut Petter Svendsen <knut@altuma.no>
+Date:   Sat Sep 10 12:08:48 2022 +0200
+
+    Removed extra newline before closing }
+
+commit 2be659384defe6b235e020f03a7d683c80a16c7e
+Author: Luke Mewburn <Luke@Mewburn.net>
+Date:   Sat Sep 10 16:30:54 2022 +1000
+
+    Adapt to ACE_TEXT_PRIs
+    
+    Use ACE_TEXT_PRIs instead of conditional compilation
+    checking !defined(ACE_WIN32) && defined(ACE_USES_WCHAR).
+
+commit f5e5d7759a9314053509d294a4c10827d3946034
+Author: Luke Mewburn <Luke@Mewburn.net>
+Date:   Sat Sep 10 11:05:56 2022 +1000
+
+    Define ACE_TEXT_PRIs. Use to fix -Wformat-security
+    
+    Define ACE_TEXT_PRIs as "s" or "ls" depending upon the WCHAR mode.
+    (This is similar to the PRIxxx macros in <inttypes.h>)
+    
+    Use  ACE_TEXT("%") ACE_TEXT_PRIs  instead of "%s" or even
+    just the raw string without a format specifier.
+    
+    Fixes issue #1906.
+
+commit 8bc991b1de07cdb3a4c472d0932c71bda181db34
+Author: Knut Petter Svendsen <knut@altuma.no>
+Date:   Fri Sep 9 23:19:18 2022 +0200
+
+    resurrect two removed virtuals
+
+commit 5b9eb336d9f631d62f51d7725b4f9a1df7e4c240
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 9 18:00:29 2022 +0200
+
+    Removed redunant void
+    :
+        * TAO/TAO_IDL/be/be_visitor_array/array_ch.cpp:
+
+commit 9542877dc5440626262777674cc9481079d9ee0c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 9 17:51:09 2022 +0200
+
+    Make use of std::addressof and removed some redundant whitespacing
+
+commit 126e88aeb3f288c770f0dccde5c6314ccaa6212c
+Author: Knut Petter Svendsen <knut@altuma.no>
+Date:   Fri Sep 9 15:46:54 2022 +0200
+
+    Replace 3 blank lines with just 2 blank lines
+
+commit 430d023f1d97173cfd104498f92dc4ccaa1c4135
+Author: Knut Petter Svendsen <knut@altuma.no>
+Date:   Fri Sep 9 14:31:18 2022 +0200
+
+    Remove extra newline after public, protected and private
+
+commit d75c37b54441651922e5dcfd287cbc87b1833e23
+Author: Knut Petter Svendsen <knut@altuma.no>
+Date:   Fri Sep 9 09:23:14 2022 +0200
+
+    Fix CodeFactor issues: blank lines
+
+commit f74944300c9af39d3e099aec8dff263e6d7918df
+Author: Knut Petter Svendsen <knut@altuma.no>
+Date:   Fri Sep 9 11:59:29 2022 +0200
+
+    Fix whitespace issues found by fuzz
+    
+    Running trailing_whitespaces check
+    Error: ./TAO/orbsvcs/orbsvcs/Notify/EventChannelFactory.h:132: found trailing whitespace
+    Error: ./TAO/tao/CSD_Framework/CSD_POA.h:53: found trailing whitespace
+    Error: ./TAO/tao/PortableServer/LifespanStrategyTransient.h:48: found trailing whitespace
+    Error: ./TAO/tao/PortableServer/RequestProcessingStrategyAOMOnly.h:54: found trailing whitespace
+    Error: ./TAO/tao/PortableServer/RequestProcessingStrategyAOMOnly.h:59: found trailing whitespace
+    Error: ./TAO/tao/PortableServer/ServantRetentionStrategyRetain.h:46: found trailing whitespace
+    Error: ./TAO/tao/PortableServer/ServantRetentionStrategyRetain.h:52: found trailing whitespace
+    Error: ./TAO/tao/PortableServer/ServantRetentionStrategyRetain.h:67: found trailing whitespace
+    Error: ./TAO/tao/PortableServer/ServantRetentionStrategyRetain.h:74: found trailing whitespace
+    Error: ./TAO/tao/PortableServer/ServantRetentionStrategyRetain.h:93: found trailing whitespace
+    Error: ./TAO/tao/PortableServer/ServantRetentionStrategyRetain.h:96: found trailing whitespace
+    Error: ./TAO/tao/PortableServer/ServantRetentionStrategyRetain.h:102: found trailing whitespace
+    Error: ./TAO/tao/PortableServer/ServantRetentionStrategyRetain.h:125: found trailing whitespace
+    Error: ./TAO/tao/PortableServer/ServantRetentionStrategyRetain.h:132: found trailing whitespace
+    Error: ./TAO/tao/PortableServer/ServantRetentionStrategyNonRetain.h:44: found trailing whitespace
+    Error: ./TAO/tao/PortableServer/ServantRetentionStrategyNonRetain.h:50: found trailing whitespace
+    Error: ./TAO/tao/PortableServer/ServantRetentionStrategyNonRetain.h:68: found trailing whitespace
+
+commit 6f72892d61032d294fe1387a36ec6e04e9efa9c2
+Author: Knut Petter Svendsen <knut@altuma.no>
+Date:   Fri Sep 9 10:38:55 2022 +0200
+
+    Fix trailing newline in class declarations
+
+commit 6d7b6be10a2c2be4fc47bdd2e285657fcc4d60fd
+Author: Knut Petter Svendsen <knut@altuma.no>
+Date:   Fri Sep 9 10:31:07 2022 +0200
+
+    Fix more blank line issues
+
+commit 1bc30d9abfac4b990a8ca25f43c666f28a8d61d2
+Merge: 156da73ce08 56377d8db17
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Sep 5 08:22:58 2022 +0200
+
+    Merge pull request #1912 from knutpett/warning_extra_semi
+    
+    Remove warnings -Wextra-semi
+
+commit c320b8022b5fd32b9237f1211f3f6d29c2192b21
+Author: Luke Mewburn <Luke@Mewburn.net>
+Date:   Fri Sep 2 21:18:26 2022 +1000
+
+    Fix -Wformat-security issues for wchar_t
+    
+    Use %ls instead of %s when using wchar_t
+    
+    Fixes issue #1906.
+
+commit 56377d8db17268f480e3800b020cbd5df5c1afab
+Author: Knut Petter Svendsen <knut@altuma.no>
+Date:   Tue Aug 30 10:43:31 2022 +0200
+
+    Fix issues found by CodeFactor: blank line
+    
+    CodeFactor reported:
+    Redundant blank line at the start of a code block should be deleted
+
+commit 18bda4f07b8a8fde245f26afe8772a4c650d0773
+Author: Knut Petter Svendsen <knut@altuma.no>
+Date:   Tue Aug 30 10:41:19 2022 +0200
+
+    Use default constructor
+
+commit c2181241c7dc3be203d4b0f231f2ab11b4f243e4
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Mon Aug 29 17:39:16 2022 -0500
+
+    fuzz script comments
+
+commit a020ca7ad752fffd3b20b38e2f187cc8dcf5be10
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Mon Aug 29 16:00:04 2022 -0500
+
+    Use ACE's Sync(h) traits in AST_Annotation_Appls
+    
+    - interprocess mutexes are not needed
+    - support threads=0 builds of tao_idl
+
+commit 023da962da06c7c6ab4e801d7a5861ef21ca9577
+Author: Knut Petter Svendsen <knut@altuma.no>
+Date:   Mon Aug 29 16:20:38 2022 +0200
+
+    Remove warnings -Wextra-semi
+
+commit 1c9614d34d09d39486e579c6c21b0218997739c8
+Author: Luke Mewburn <Luke@Mewburn.net>
+Date:   Sat Aug 20 11:17:07 2022 +1000
+
+    Fix -Wformat-security issues
+    
+    Ensure that methods with a printf()-like format string
+    are invoked with a literal string instead of a string
+    built from possibly untrusted sources.
+    
+    Fixes issue #1906.
+
+commit 44c80da21fe3daed65ce0b19e47b09ba6aa3f438
+Merge: 05484cd6cd8 368e8175c5e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Aug 10 14:43:23 2022 +0200
+
+    Merge pull request #1898 from jwillemsen/jwi-ACE_NESTED_CLASS
+    
+    Removed old comments for ACE_NESTED_CLASS
+
+commit 368e8175c5eea00b008b9295a4b1146ab297c771
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Aug 10 09:55:22 2022 +0200
+
+    Removed old comments for ACE_NESTED_CLASS
+    
+        * TAO/TAO_IDL/ast/ast_type.cpp:
+        * TAO/TAO_IDL/be/be_interface.cpp:
+        * TAO/TAO_IDL/be/be_visitor_field/field_ch.cpp:
+        * TAO/tests/IDL_Test/params.idl:
+
+commit 4a6478c41ac4b1e17cea8e0e4f4bbb6afe91269b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Aug 10 08:32:51 2022 +0200
+
+    Use override, remove redundant whitespacing, fixed typo
+    
+        * ACE/tests/Enum_Interfaces_Test.cpp:
+        * TAO/orbsvcs/DevGuideExamples/Security/SecurityUnawareApp/README:
+        * TAO/orbsvcs/tests/Security/ssliop_corbaloc/client.cpp:
+        * TAO/orbsvcs/tests/Security/ssliop_corbaloc/test_object.idl:
+
+commit d799942f683eee8dafa8f81384f6a5d835ccc649
+Merge: bd92596bbc6 7ff6fc7440e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jul 20 08:13:11 2022 +0200
+
+    Merge pull request #1888 from jwillemsen/jwi-vcpkgv10
+    
+    Upgrade to vcpkg v10
+
+commit 4e2f7ae34d81f4ce82e6930b668785b886fb31fe
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jul 19 09:32:06 2022 +0200
+
+    Layout changes
+
+commit bd92596bbc63635a2ed2131322e6c659a5420586
+Merge: b9e4a9a92a6 8f9a9f304ba
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jul 18 16:27:20 2022 +0200
+
+    Merge pull request #1887 from jwillemsen/jwi-codesetregistry
+    
+    Minor change for codeset registry generation and removed old Id tags
+
+commit 8f9a9f304ba52f05f9a06c2afa16ea3f4ca0b097
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jul 18 13:22:23 2022 +0200
+
+    Add semicolon to generation
+    
+        * TAO/utils/catior/Catior_i.cpp:
+
+commit 061375f9119599cadddb96fcb1284c06e0fa4695
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jul 18 13:22:11 2022 +0200
+
+    Removed old Id tag
+    
+        * TAO/orbsvcs/orbsvcs/Scheduler_Factory.cpp:
+
+commit f94bdbc8fd6ae29e2f2b998f27fbacb03ca8f6d0
+Merge: 3ebafd71204 dae27692c88
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jul 15 13:57:34 2022 +0200
+
+    Merge pull request #1886 from jwillemsen/jwi-irixcleanup
+    
+    Removed some old Irix related code
+
+commit dae27692c8897e7f1de112b819c25fe7971ee895
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jul 15 08:04:34 2022 +0200
+
+    Removed some old Irix related code
+    
+        * TAO/bin/tao_orb_tests.lst:
+        * TAO/bin/tao_other_tests.lst:
+        * TAO/orbsvcs/tests/Security/ssliop_corbaloc/client.cpp:
+        * TAO/tao/IIOP_Connection_Handler.cpp:
+        * TAO/tao/IIOP_Transport.cpp:
+
+commit 3ebafd712042a344dc52677e1d190c9dfcbb3c65
+Merge: b619e577177 8096d513b52
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jul 14 11:57:11 2022 +0200
+
+    Merge pull request #1883 from jwillemsen/jwi-localhost
+    
+    Make use of ACE_LOCALHOST and removed Tru64/Irix remaining code
+
+commit 8096d513b52a30164b1820eab996dd26dbe2a4b8
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jul 14 09:25:40 2022 +0200
+
+    Removed old code for Tru64/Irix, not supported anymore for a long time
+
+commit 1edc75272eb9348504ce9932af88e8870d814c30
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jul 13 15:41:16 2022 +0200
+
+    Removed workaround for Tru64
+    
+        * TAO/orbsvcs/orbsvcs/CosNaming_Serv.mpc:
+
+commit 55e5793c7215c22c6ddf40fbcc0144a8862f76e2
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jul 13 09:25:12 2022 +0200
+
+    Layout changes
+    
+        * TAO/tao/Codeset/Codeset.cpp:
+        * TAO/tao/Codeset/Codeset_Manager_i.cpp:
+        * TAO/tao/Codeset/UTF8_Latin1_Factory.h:
+
+commit bff9af24d9cfd567a0f91d15dbab8bf729758e5a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jul 1 09:55:07 2022 +0200
+
+    Updated
+    
+        * ACE/docs/bczar/bczar.html:
+        * TAO/NEWS:

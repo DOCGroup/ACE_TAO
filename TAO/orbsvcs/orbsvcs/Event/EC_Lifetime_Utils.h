@@ -81,7 +81,6 @@ public:
   PortableServer::POA_var poa () const;
 
 private:
-
   /// Disallow.
   //@{
   TAO_EC_Object_Deactivator (const TAO_EC_Object_Deactivator &rhs);
@@ -119,13 +118,11 @@ private:
 class TAO_RTEvent_Serv_Export TAO_EC_Deactivated_Object
 {
 public:
-
   /// Set deactivation state to that specified by the @a deactivator
   /// argument.
   void set_deactivator (TAO_EC_Object_Deactivator & deactivator);
 
 protected:
-
   TAO_EC_Deactivated_Object ();
   ~TAO_EC_Deactivated_Object ();
 
@@ -158,7 +155,6 @@ public:
   void init (CORBA::ORB_var orb_var);
 
 private:
-
   /// Disallow.
   //@{
   TAO_EC_ORB_Holder & operator= (const TAO_EC_ORB_Holder &rhs);
@@ -194,7 +190,6 @@ public:
   void init (RtecEventChannelAdmin::EventChannel_var ec_var);
 
 private:
-
   /// Disallow.
   //@{
   TAO_EC_Event_Channel_Holder & operator= (const TAO_EC_Event_Channel_Holder &rhs);

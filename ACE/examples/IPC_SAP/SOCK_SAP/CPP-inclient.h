@@ -13,10 +13,10 @@ class Options
   //   Define the options for this test.
 {
 public:
-  Options (void);
+  Options ();
   // Constructor.
 
-  ~Options (void);
+  ~Options ();
   // Destructor.
 
   int parse_args (int argc, ACE_TCHAR *argv[]);
@@ -47,12 +47,12 @@ public:
   const void *message_buf () const;
   // Returns a pointer to the message.
 
-  ACE_THR_FUNC thr_func (void);
+  ACE_THR_FUNC thr_func ();
   // Returns a pointer to the entry point into the thread that runs
   // the client test function.
 
 private:
-  int init (void);
+  int init ();
   // Initialize the message we're sending to the user and set up the
   // barrier.
 

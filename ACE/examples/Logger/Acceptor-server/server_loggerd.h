@@ -13,7 +13,7 @@ class Options
   //     Keeps track of the options.
 public:
   void parse_args (int argc, ACE_TCHAR *argv[]);
-  u_short port (void);
+  u_short port ();
 
 private:
   u_short port_;
@@ -32,7 +32,7 @@ class Logging_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 //     utilize the <ACE_Reactor> timer mechanisms, as well.
 {
 public:
-  Logging_Handler (void);
+  Logging_Handler ();
 
   // = Hooks for opening and closing handlers.
   virtual int open (void *);

@@ -1084,7 +1084,6 @@ namespace TAO
                  const ACE_TCHAR* orb_opt,
                  ACE_TString& opt_arg)
   {
-
     if (opt_arg.length () > 0)
       return false;
 

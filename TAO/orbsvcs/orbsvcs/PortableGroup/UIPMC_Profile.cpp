@@ -65,30 +65,6 @@ TAO_UIPMC_Profile::TAO_UIPMC_Profile (const ACE_INET_Addr &addr,
   this->addressing_mode_ = default_addressing_mode_;
 }
 
-TAO_UIPMC_Profile::TAO_UIPMC_Profile (const CORBA::Octet class_d_address[4],
-                                      CORBA::UShort port,
-                                      TAO_ORB_Core *orb_core)
-  : TAO_Profile (IOP::TAG_UIPMC,
-                 orb_core,
-                 TAO_GIOP_Message_Version (TAO_DEF_GIOP_MAJOR,
-                                           TAO_DEF_GIOP_MINOR))
-  , endpoint_ (class_d_address, port)
-  , tagged_profile_ ()
-  , group_id_ (0)
-  , ref_version_ (0)
-  , has_ref_version_ (false)
-{
-  // The default for component version is 1.0.
-  this->component_version_.major = 1;
-  this->component_version_.minor = 0;
-
-  this->addressing_mode_ = default_addressing_mode_;
-}
-
-TAO_UIPMC_Profile::~TAO_UIPMC_Profile ()
-{
-}
-
 int
 TAO_UIPMC_Profile::decode (TAO_InputCDR& cdr)
 {

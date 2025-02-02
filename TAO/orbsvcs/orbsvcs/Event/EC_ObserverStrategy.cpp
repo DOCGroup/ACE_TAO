@@ -5,7 +5,7 @@
 #include "orbsvcs/Event/EC_ConsumerAdmin.h"
 #include "orbsvcs/Event/EC_SupplierAdmin.h"
 #include "orbsvcs/Event_Service_Constants.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 #if ! defined (__ACE_INLINE__)
 #include "orbsvcs/Event/EC_ObserverStrategy.inl"
@@ -113,7 +113,7 @@ TAO_EC_Basic_ObserverStrategy::create_observer_list (
   ACE_NEW_RETURN (tmp,
                   RtecEventChannelAdmin::Observer_var[size],
                   0);
-  ACE_Auto_Basic_Array_Ptr<RtecEventChannelAdmin::Observer_var> copy (tmp);
+  std::unique_ptr<RtecEventChannelAdmin::Observer_var[]> copy (tmp);
 
   Observer_Map_Iterator end = this->observers_.end ();
   int j = 0;
@@ -156,7 +156,7 @@ TAO_EC_Basic_ObserverStrategy::supplier_qos_update (
 
   RtecEventChannelAdmin::Observer_var *tmp = nullptr;
   int size = this->create_observer_list (tmp);
-  ACE_Auto_Basic_Array_Ptr<RtecEventChannelAdmin::Observer_var> copy (tmp);
+  std::unique_ptr<RtecEventChannelAdmin::Observer_var[]> copy (tmp);
 
   for (int i = 0; i != size; ++i)
     {
@@ -198,7 +198,7 @@ TAO_EC_Basic_ObserverStrategy::consumer_qos_update (
 
   RtecEventChannelAdmin::Observer_var *tmp = nullptr;
   int size = this->create_observer_list (tmp);
-  ACE_Auto_Basic_Array_Ptr<RtecEventChannelAdmin::Observer_var> copy (tmp);
+  std::unique_ptr<RtecEventChannelAdmin::Observer_var[]> copy (tmp);
 
   for (int i = 0; i != size; ++i)
     {

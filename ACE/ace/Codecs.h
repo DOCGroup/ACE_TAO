@@ -42,7 +42,6 @@ class ACE_Export ACE_Base64
 {
 public:
   //@{
-
   /**
    * Encodes a stream of bytes to Base64 data
    *
@@ -88,7 +87,7 @@ private:
   ACE_Base64 & operator= (ACE_Base64 const &) = delete;
 
   /// Initialize the tables for encoding/decoding.
-  static void init (void);
+  static void init ();
 
 private:
   /// Alphabet used for decoding i.e decoder_[alphabet_[i = 0..63]] = i

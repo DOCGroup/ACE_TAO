@@ -20,10 +20,8 @@
  */
 
 
-
 #ifndef CINFO_H
 #define CINFO_H
-
 
 
 /* ------------------------------ Constants ------------------------------- */
@@ -91,13 +89,13 @@ typedef struct {
  * cinfo_merge.
  */
 
-void cinfo_init(void);
+void cinfo_init();
 
 /*
  * cinfo_terminate frees the database for shutdown.
  */
 
-void cinfo_terminate(void);
+void cinfo_terminate();
 
 /*
  * cinfo_merge merges the contents of the given filename with the current

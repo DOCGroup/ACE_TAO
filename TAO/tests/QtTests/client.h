@@ -22,18 +22,17 @@ class Client : public QObject
 {
   Q_OBJECT
 public:
-
   /// ctor
   Client (CORBA::ORB_ptr orb,
           QApplication &app);
 
   ///Dtor..
-  ~Client (void);
+  ~Client ();
 
   /// Adds the callbacks to the GUI underneath.....
-  void create_widgets (void);
+  void create_widgets ();
 
-  void show (void);
+  void show ();
 
   void parse_args (int argc, ACE_TCHAR *argv[]);
 
@@ -44,10 +43,9 @@ public:
  public slots:
    /// Two slot handlers for the two widgets that we have
    void remote_call (int val);
-   void shutdown_call (void);
+   void shutdown_call ();
 
 private:
-
   /// A push button
   QPushButton *push_button_;
 

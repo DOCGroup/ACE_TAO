@@ -24,14 +24,6 @@
 # define ACE_LACKS_STD_WSTRING
 #endif
 
-#if !defined (__RTP__)
-  // Fix for wrong typedef of time_t in kernel mode
-  #ifndef _TIME_T
-  #define _TIME_T
-  typedef long time_t;
-  #endif
-#endif
-
 #if ! defined (__ACE_INLINE__)
 # define __ACE_INLINE__
 #endif /* ! __ACE_INLINE__ */
@@ -50,9 +42,6 @@
 #   define _C99
 #  endif
 # endif
-
-#elif defined (__DCC__)
-# define ACE_TEMPLATES_REQUIRE_SOURCE
 #else  /* ! __GNUG__ && !__DCC__ */
 #  ifdef __cplusplus  /* Let it slide for C compilers. */
 #    error unsupported compiler on VxWorks
@@ -132,8 +121,6 @@
 #define ACE_LACKS_GETIPNODEBYNAME_IPV6
 #define ACE_LACKS_LSTAT
 #define ACE_LACKS_MADVISE
-#define ACE_LACKS_MALLOC_H
-#define ACE_LACKS_MEMORY_H
 #define ACE_LACKS_MKFIFO
 #define ACE_LACKS_MKSTEMP
 #define ACE_LACKS_NETDB_REENTRANT_FUNCTIONS

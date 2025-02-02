@@ -15,10 +15,10 @@ class  Test_interfaceOne_i
 {
 public:
   // Constructor
-  Test_interfaceOne_i (void);
+  Test_interfaceOne_i ();
 
   // Destructor
-  virtual ~Test_interfaceOne_i (void);
+  virtual ~Test_interfaceOne_i ();
 
   virtual void getstruct (::Test::structOne_out tester);
 };

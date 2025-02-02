@@ -40,9 +40,8 @@ Client_Task::too_big_difference_calls () const
 }
 
 int
-Client_Task::svc (void)
+Client_Task::svc ()
 {
-
   int successful_calls = 0;
   int timed_out_calls = 0;
 
@@ -102,7 +101,7 @@ Client_Task::svc (void)
 }
 
 void
-Client_Task::validate_connection (void)
+Client_Task::validate_connection ()
 {
   try
     {
@@ -118,7 +117,7 @@ Client_Task::validate_connection (void)
 }
 
 int
-Client_Task::one_iteration (void)
+Client_Task::one_iteration ()
 {
   try
     {

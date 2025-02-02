@@ -138,7 +138,6 @@ public:
    * @name Member Accessors
    */
   //@{
-
   int get_parser_names (char **&names,
                         int &number_of_names);
   enum
@@ -147,7 +146,7 @@ public:
   };
 
   /// Modify and get the source for the CDR allocators
-  int cdr_allocator_source (void);
+  int cdr_allocator_source ();
 
   // = Resource Retrieval
   virtual int use_locked_data_blocks () const;
@@ -256,7 +255,7 @@ protected:
    */
   bool dynamically_allocated_reactor_;
 
-  virtual int load_default_protocols (void);
+  virtual int load_default_protocols ();
 
   /// This flag is used to determine whether options have been
   /// processed via the init() function.  It is necessary to

@@ -24,12 +24,6 @@
 #include "tao/ORB_Core_Auto_Ptr.h"
 #include <atomic>
 
-#if defined (HPUX) && defined (IOR)
-   /* HP-UX 11.11 defines IOR in /usr/include/pa/inline.h
-      and we don't want that definition.  See IOP_IORC.h. */
-# undef IOR
-#endif /* HPUX && IOR */
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward declarations.
@@ -194,6 +188,9 @@ public:
    * permanent_forward=true is only valid if currently used profile
    * set represents a GroupObject (IOGR), otherwise this flag will be
    * ignored.
+   *
+   * Updates the profile in use to be the first profile of
+   * the newly set forward target.
    */
   void add_forward_profiles (const TAO_MProfile &mprofiles,
                              const CORBA::Boolean permanent_forward = false);
@@ -271,15 +268,14 @@ public:
   bool forwarded_on_exception () const;
 
 protected:
-
   /// Destructor is to be called only through _decr_refcnt() to
   /// enforce proper reference counting.
   virtual ~TAO_Stub ();
 
-  /// NON-THREAD SAFE version of reset_profiles (void);
+  /// NON-THREAD SAFE version of reset_profiles ();
   void reset_profiles_i ();
 
-  /// NON-THREAD SAFE version of next_profile (void)
+  /// NON-THREAD SAFE version of next_profile ()
   TAO_Profile *next_profile_i ();
 
 private:
@@ -306,10 +302,10 @@ private:
   int get_profile_ior_info (TAO_MProfile &profile, IOP::IOR *&ior_info);
 
 private:
-
-  // = Disallow copy construction and assignment.
-  TAO_Stub (const TAO_Stub &);
-  TAO_Stub &operator = (const TAO_Stub &);
+  TAO_Stub (const TAO_Stub &) = delete;
+  TAO_Stub (TAO_Stub &&) = delete;
+  TAO_Stub &operator = (const TAO_Stub &) = delete;
+  TAO_Stub &operator = (TAO_Stub &&) = delete;
 
 protected:
   /// Automatically manage the ORB_Core reference count
@@ -321,7 +317,6 @@ protected:
    *
    * This <B>must</B> be the first field of the class, otherwise the
    * TAO_ORB_Core is destroyed too early!
-   *
    */
   TAO_ORB_Core_Auto_Ptr orb_core_;
 
@@ -413,31 +408,19 @@ protected:
   std::atomic<bool> forwarded_on_exception_;
 };
 
-// Define a TAO_Stub auto_ptr class.
 /**
- * @class TAO_Stub_Auto_Ptr
- *
- * @brief Implements the draft C++ standard auto_ptr abstraction.
- * This class allows one to work Stub Objects *Only*!
+ * Custom deleter to decrement the refcount when called
  */
-class TAO_Export TAO_Stub_Auto_Ptr
+struct TAO_Export TAO_Stub_Decr_Refcnt
 {
-public:
-  explicit TAO_Stub_Auto_Ptr (TAO_Stub *p = nullptr);
-  TAO_Stub_Auto_Ptr (TAO_Stub_Auto_Ptr &ap);
-  TAO_Stub_Auto_Ptr &operator= (TAO_Stub_Auto_Ptr &rhs);
-  ~TAO_Stub_Auto_Ptr ();
-
-  // = Accessor methods.
-  TAO_Stub &operator *() const;
-  TAO_Stub *get () const;
-  TAO_Stub *release ();
-  void reset (TAO_Stub *p = 0);
-  TAO_Stub *operator-> () const;
-
-protected:
-  TAO_Stub *p_;
+  void operator()(TAO_Stub* stub) const { if (stub) stub->_decr_refcnt(); }
 };
+
+/**
+ * TAO_Stub_Auto_Ptr will decrement the refcount when going our of scope
+ * using std::unique_ptr and a custom deleter
+ */
+using TAO_Stub_Auto_Ptr = std::unique_ptr<TAO_Stub, TAO_Stub_Decr_Refcnt>;
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

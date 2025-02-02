@@ -29,14 +29,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_CEC_DynamicImplementationServer : public TAO_DynamicImplementation
 {
 public:
-
   /// Constructor
   TAO_CEC_DynamicImplementationServer (PortableServer::POA_ptr poa,
                                        TAO_CEC_TypedProxyPushConsumer *typed_pp_consumer,
                                        TAO_CEC_TypedEventChannel *typed_event_channel);
 
   /// Destructor
-  virtual ~TAO_CEC_DynamicImplementationServer (void);
+  virtual ~TAO_CEC_DynamicImplementationServer () = default;
 
   // = The DynamicImplementation methods.
   virtual void invoke (CORBA::ServerRequest_ptr request);
@@ -45,7 +44,7 @@ public:
       const PortableServer::ObjectId &oid,
       PortableServer::POA_ptr poa);
 
-  virtual PortableServer::POA_ptr _default_POA (void);
+  virtual PortableServer::POA_ptr _default_POA ();
 
   /// Handles the _is_a call
   virtual void is_a (CORBA::ServerRequest_ptr request);

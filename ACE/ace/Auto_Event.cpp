@@ -1,9 +1,5 @@
 #include "ace/Auto_Event.h"
 
-#if !defined (__ACE_INLINE__)
-#include "ace/Auto_Event.inl"
-#endif /* __ACE_INLINE__ */
-
 #if defined (ACE_HAS_ALLOC_HOOKS)
 # include "ace/Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */

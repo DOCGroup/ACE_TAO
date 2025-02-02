@@ -24,14 +24,14 @@ Test_Wrapper<T>::Test_Wrapper (T* t)
 
 // Destructor
 template <class T>
-Test_Wrapper<T>::~Test_Wrapper (void)
+Test_Wrapper<T>::~Test_Wrapper ()
 {
   delete this->test_object_;
 }
 
 template <class T>
 int
-Test_Wrapper<T>::run_test (void)
+Test_Wrapper<T>::run_test ()
 {
   const char* test_name = this->test_object_->test_name ();
 

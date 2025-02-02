@@ -41,8 +41,8 @@ class ACE_Export ACE_Based_Pointer_Repository
 public:
   // = Use ACE_Null_Mutex to allow locking while iterating.
 
-  ACE_Based_Pointer_Repository (void);
-  ~ACE_Based_Pointer_Repository (void);
+  ACE_Based_Pointer_Repository ();
+  ~ACE_Based_Pointer_Repository ();
 
   // = Search structure methods.
   /**
@@ -75,13 +75,10 @@ private:
 // ----------------------------------
 
 /// Declare a process wide singleton
-ACE_SINGLETON_DECLARE (ACE_Singleton,
-                       ACE_Based_Pointer_Repository,
-                       ACE_SYNCH_RW_MUTEX)
+ACE_SINGLETON_DECLARE (ACE_Singleton, ACE_Based_Pointer_Repository, ACE_SYNCH_RW_MUTEX)
 
 /// Provide a Singleton access point to the based pointer repository.
-typedef ACE_Singleton<ACE_Based_Pointer_Repository, ACE_SYNCH_RW_MUTEX>
-        ACE_BASED_POINTER_REPOSITORY;
+typedef ACE_Singleton<ACE_Based_Pointer_Repository, ACE_SYNCH_RW_MUTEX> ACE_BASED_POINTER_REPOSITORY;
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 

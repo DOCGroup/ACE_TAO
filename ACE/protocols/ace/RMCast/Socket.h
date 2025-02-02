@@ -5,7 +5,7 @@
 
 #include "ace/config-lite.h" // ACE_HANDLE
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/INET_Addr.h"
 #include "ace/Time_Value.h"
 
@@ -89,7 +89,7 @@ namespace ACE_RMCast
     get_handle ();
 
   private:
-    ACE_Auto_Ptr<Socket_Impl> impl_;
+    std::unique_ptr<Socket_Impl> impl_;
   };
 }
 

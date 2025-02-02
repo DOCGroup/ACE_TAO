@@ -69,7 +69,7 @@ public:
     RtecEventChannelAdmin::ProxyPushSupplier_ptr &proxy) = 0;
 
   /// Deactivate from the POA
-  virtual void deactivate () throw ();
+  virtual void deactivate () noexcept;
 
   /// Disconnect this from
   virtual void disconnect_push_supplier () = 0;
@@ -186,7 +186,6 @@ protected:
   /// Validate the connection to consumer on connect
   int consumer_validate_connection_;
 private:
-
   /// Template method hooks.
   virtual void refcount_zero_hook ();
   virtual void pre_dispatch_hook (RtecEventComm::EventSet&);

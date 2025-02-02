@@ -9,7 +9,7 @@ UIPMC_Object_Impl::UIPMC_Object_Impl (CORBA::ORB_ptr orb,
 {
 }
 
-UIPMC_Object_Impl::~UIPMC_Object_Impl (void)
+UIPMC_Object_Impl::~UIPMC_Object_Impl ()
 {
 }
 

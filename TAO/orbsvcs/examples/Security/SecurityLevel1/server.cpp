@@ -49,7 +49,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       orb->run ();
 
       root_poa->destroy (true, true);
-
     }
   catch (const CORBA::SytemException& )
     {

@@ -157,7 +157,6 @@ reader (void *)
 
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%t) could not upgrade to write lock!\n")));
-
         }
       else // result == -1
         {

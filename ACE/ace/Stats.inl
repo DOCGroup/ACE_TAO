@@ -63,7 +63,7 @@ ACE_Stats_Value::dump () const
 }
 
 ACE_INLINE
-ACE_Stats::ACE_Stats (void)
+ACE_Stats::ACE_Stats ()
 {
   reset ();
 }

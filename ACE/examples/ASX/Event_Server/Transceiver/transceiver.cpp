@@ -74,7 +74,7 @@ Event_Transceiver::handle_signal (int, siginfo_t *, ucontext_t *)
   return 0;
 }
 
-Event_Transceiver::Event_Transceiver (void)
+Event_Transceiver::Event_Transceiver ()
 {
 }
 
@@ -159,7 +159,7 @@ Event_Transceiver::handle_input (ACE_HANDLE handle)
 }
 
 int
-Event_Transceiver::transmitter (void)
+Event_Transceiver::transmitter ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P|%t) entering %s transmitter\n"),
@@ -179,7 +179,7 @@ Event_Transceiver::transmitter (void)
 }
 
 int
-Event_Transceiver::receiver (void)
+Event_Transceiver::receiver ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P|%t) entering %s receiver\n"),

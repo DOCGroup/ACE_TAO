@@ -14,7 +14,6 @@
 class Client_Task : public ACE_Task_Base
 {
 public:
-
   /// Constructor
   Client_Task (const ACE_TCHAR *input,
                const ACE_TCHAR *simple_test_ior,
@@ -22,7 +21,7 @@ public:
                ACE_Thread_Manager *thr_mgr);
 
   /// Thread entry point
-  int svc (void);
+  int svc ();
 
   CORBA::ULong error_count () const;
 

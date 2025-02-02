@@ -83,10 +83,6 @@ TAO_CEC_Reactive_ConsumerControl::
 }
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
-TAO_CEC_Reactive_ConsumerControl::~TAO_CEC_Reactive_ConsumerControl ()
-{
-}
-
 void
 TAO_CEC_Reactive_ConsumerControl::query_consumers ()
 {
@@ -161,7 +157,6 @@ void
 TAO_CEC_Reactive_ConsumerControl::successful_transmission (
                                     PortableServer::ServantBase* proxy)
 {
-
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
   if (this->typed_event_channel_)
     {

@@ -21,8 +21,8 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// This fudge factor can be overriden for timers that need it, such as on
-// Solaris, by defining the ACE_TIMER_SKEW symbol in the appropriate config
+// This fudge factor can be overriden for timers that need it
+// by defining the ACE_TIMER_SKEW symbol in the appropriate config
 // header.
 #if !defined (ACE_TIMER_SKEW)
 #  define ACE_TIMER_SKEW 0
@@ -286,7 +286,6 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::expire (const ACE_Time_
       this->postinvoke (info, cur_time, upcall_act);
 
       ++number_of_timers_expired;
-
     }
 
   ACE_UNUSED_ARG (result);

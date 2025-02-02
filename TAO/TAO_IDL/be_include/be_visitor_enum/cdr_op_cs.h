@@ -23,7 +23,6 @@
  */
 class be_visitor_enum_cdr_op_cs : public be_visitor_decl
 {
-
 public:
   /// constructor
   be_visitor_enum_cdr_op_cs (be_visitor_context *ctx);

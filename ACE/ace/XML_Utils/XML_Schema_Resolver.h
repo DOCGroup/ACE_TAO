@@ -48,7 +48,7 @@ namespace XML
     virtual InputSource * resolveEntity (const XMLCh *const publicId,
                                          const XMLCh *const systemId);
 
-    Resolver &get_resolver (void);
+    Resolver &get_resolver ();
 
   private:
     XML_Schema_Resolver (XML_Schema_Resolver<Resolver> &);

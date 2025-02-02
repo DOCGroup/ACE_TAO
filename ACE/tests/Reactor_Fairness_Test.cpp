@@ -22,7 +22,7 @@
 #include "ace/WFMO_Reactor.h"
 #include "ace/Select_Reactor.h"
 #include "ace/TP_Reactor.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/Numeric_Limits.h"
 #include "ace/Signal.h"
 #include "ace/Atomic_Op.h"
@@ -31,7 +31,6 @@
 #if defined (ACE_HAS_THREADS)
 
 namespace {
-
   const char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
 
   // Number of connections to run
@@ -183,7 +182,7 @@ sender (void *arg)
   ACE_NEW_RETURN (temp_socks,
                   ACE_SOCK_Stream [opt_nconnections],
                   0);
-  ACE_Auto_Basic_Array_Ptr <ACE_SOCK_Stream> socks (temp_socks);
+  std::unique_ptr <ACE_SOCK_Stream[]> socks (temp_socks);
 
   // Connection all <opt_nconnections> connections before sending data.
   ACE_SOCK_Connector c;

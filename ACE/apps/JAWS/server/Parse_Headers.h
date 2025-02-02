@@ -24,8 +24,8 @@ friend class Headers_Map;
 friend class Headers;
 
 private:
-  Headers_Map_Item (void);
-  ~Headers_Map_Item (void);
+  Headers_Map_Item ();
+  ~Headers_Map_Item ();
 
   // operator const char * () const;
   Headers_Map_Item &operator= (char *);
@@ -50,8 +50,8 @@ private:
 class Headers_Map
 {
 public:
-  Headers_Map (void);
-  ~Headers_Map (void);
+  Headers_Map ();
+  ~Headers_Map ();
 
   Headers_Map_Item &operator[] (const char *const header);
   const Headers_Map_Item &operator[] (const char *const header) const;
@@ -87,8 +87,8 @@ private:
 class Headers
 {
 public:
-  Headers (void);
-  ~Headers (void);
+  Headers ();
+  ~Headers ();
 
   void recognize (const char *const header);
 

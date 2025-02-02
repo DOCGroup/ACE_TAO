@@ -77,5 +77,4 @@ My_DII_Reply_Handler::handle_excep (TAO_InputCDR &incoming,
 
   ACE_DEBUG((LM_DEBUG, "calling My_DII_Reply_Handler::handle_excep()\n"));
   this->response_handler_->gateway_exception_reply (reply_status, incoming);
-
 }

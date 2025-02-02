@@ -416,9 +416,9 @@ class ACE_Malloc_FIFO_Iterator_T;
  *   - constructor (const ACE_TCHAR *pool_name, const MEMORY_POOL_OPTIONS *options)
  *   - void dump () const (needed if ACE is built with ACE_HAS_DUMP defined)
  *   - void *init_acquire (size_t nbytes, size_t &rounded_bytes, int &first_time);
- *   - int release (void)
+ *   - int release ()
  *   - void *acquire (size_t nbytes, size_t &rounded_bytes)
- *   - void *base_addr (void)
+ *   - void *base_addr ()
  *   - seh_selector() (only needed on Windows)
  *
  * Note that the ACE_Allocator_Adapter class can be used to integrate allocator
@@ -486,6 +486,9 @@ public:
   int ref_counter ();
 
   /// Release ref counter.
+  /// @retval 0 Success
+  /// @retval -1 Failure due to missing control block
+  /// @retval >0 Memory not release because refcount is not zero
   int release (int close = 0);
 
   /// Releases resources allocated by this object.
@@ -881,13 +884,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #include "ace/Malloc_T.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Malloc_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Malloc_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_MALLOC_H */

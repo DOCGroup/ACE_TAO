@@ -76,7 +76,7 @@ ACE_Delegating_Time_Policy::set_gettimeofday (ACE_Time_Value (*)())
 ACE_INLINE void
 ACE_Delegating_Time_Policy::set_delegate (ACE_Dynamic_Time_Policy_Base const * delegate)
 {
-  if (delegate != 0)
+  if (delegate)
     {
       this->delegate_ = delegate;
     }

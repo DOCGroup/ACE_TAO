@@ -21,7 +21,7 @@ namespace TAO
   /**
    * @class First_Request_Guard
    *
-   * @brief Auto pointer like class for first_request flag in transport.
+   * @brief Unique pointer like class for first_request flag in transport.
    *
    * Since codeset service context is only sent in the first request it might
    * happen that after LocateRequest (which doesn't include service context)
@@ -71,9 +71,9 @@ namespace TAO
   {
     TAO::ORB_Countdown_Time countdown (max_wait_time);
 
-    TAO_Synch_Reply_Dispatcher *rd_p = nullptr;
-    ACE_NEW_NORETURN (rd_p, TAO_Synch_Reply_Dispatcher (this->resolver_.stub ()->orb_core (),
-                                          this->details_.reply_service_info ()));
+    TAO_Synch_Reply_Dispatcher *rd_p =
+      new (std::nothrow) TAO_Synch_Reply_Dispatcher (this->resolver_.stub ()->orb_core (),
+                                                     this->details_.reply_service_info ());
     if (!rd_p)
       {
         throw ::CORBA::NO_MEMORY ();

@@ -352,7 +352,6 @@ namespace TAO
                   this->poa_->cleanup_servant (
                     this->active_object_map_entry_->servant_,
                     this->active_object_map_entry_->user_id_);
-
                 }
               catch (...)
                 {
@@ -404,7 +403,7 @@ namespace TAO
                   ex._tao_print_exception ("TAO_POA::~complete_destruction_i");
                 }
 
-              this->poa_ = 0;
+              this->poa_ = nullptr;
             }
         }
     }

@@ -20,7 +20,7 @@
 // Factory function.
 
 static SM_Client *
-make_client (void)
+make_client ()
 {
   SM_Client *client = 0;
 

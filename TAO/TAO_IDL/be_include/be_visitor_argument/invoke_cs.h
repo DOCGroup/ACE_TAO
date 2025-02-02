@@ -91,7 +91,6 @@ public:
  private:
   int emit_common ();
   int emit_common2 (be_type *node);
-
 };
 
 #endif /* _BE_VISITOR_ARGUMENT_INVOKE_CS_H_ */

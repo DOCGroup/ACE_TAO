@@ -180,7 +180,6 @@ be_visitor_amh_operation_ss::visit_operation (be_operation *node)
     }
 
   return 0;
-
 }
 
 int

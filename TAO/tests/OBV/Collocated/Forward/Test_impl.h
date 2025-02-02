@@ -32,7 +32,7 @@ public:
   virtual TreeController * reflect (
       TreeController * tc);
 
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
 private:
   /// The ORB

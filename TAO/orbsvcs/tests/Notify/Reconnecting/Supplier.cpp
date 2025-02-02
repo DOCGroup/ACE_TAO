@@ -7,7 +7,6 @@
 #include "ace/OS_NS_strings.h"
 
 
-
 static const char NOTIFY_FACTORY_NAME[] = "NotifyEventChannelFactory";
 static const char NAMING_SERVICE_NAME[] = "NameService";
 
@@ -119,7 +118,7 @@ ReconnectionCallback_i::reconnect (CORBA::Object_ptr reconnection)
 }
 
 CORBA::Boolean
-ReconnectionCallback_i::is_alive (void)
+ReconnectionCallback_i::is_alive ()
 {
   return true;
 }
@@ -133,7 +132,7 @@ ReconnectionCallback_i::~ReconnectionCallback_i ()
 
 
 void
-ReconnectionCallback_i::fini (void)
+ReconnectionCallback_i::fini ()
 {
   if (this->id_is_valid_)
   {
@@ -166,7 +165,6 @@ ReconnectionCallback_i::init (
   this->callback_id_ = registry->register_callback (callback.in ());
   this->id_is_valid_ = true;
 }
-
 
 
 /////////////////
@@ -368,7 +366,6 @@ int Supplier_Main::init (int argc, ACE_TCHAR *argv[])
     }
     case MODE_ANY:
     {
-
       init_any_proxy_consumer ();
       break;
     }
@@ -405,7 +402,7 @@ Supplier_Main::save_ids()
       static_cast<int> (structured_proxy_id_),
       static_cast<int> (sequence_proxy_id_),
       static_cast<int> (any_proxy_id_),
-      static_cast<int> (endflag) );
+      static_cast<int> (endflag));
     ACE_OS::fclose (idf);
   }
 }
@@ -505,7 +502,7 @@ Supplier_Main::reconnect (
 
 
 int
-Supplier_Main::resolve_naming_service (void)
+Supplier_Main::resolve_naming_service ()
 {
   // ignore redundant calls
   if (CORBA::is_nil (this->naming_context_.in ()))
@@ -521,7 +518,7 @@ Supplier_Main::resolve_naming_service (void)
 }
 
 int
-Supplier_Main::find_notify_factory (void)
+Supplier_Main::find_notify_factory ()
 {
   int status = this->resolve_naming_service ();
   if (status)
@@ -540,7 +537,7 @@ Supplier_Main::find_notify_factory (void)
 }
 
 int
-Supplier_Main::resolve_notify_factory (void)
+Supplier_Main::resolve_notify_factory ()
 {
   CORBA::Object_var factory_obj =
     this->orb_->resolve_initial_references (NOTIFY_FACTORY_NAME);
@@ -552,7 +549,7 @@ Supplier_Main::resolve_notify_factory (void)
 }
 
 void
-Supplier_Main::init_event_channel (void)
+Supplier_Main::init_event_channel ()
 {
   bool ok = false;
   if (this->reconnecting_)
@@ -672,7 +669,7 @@ Supplier_Main::init_event_channel (void)
 CosNotifyChannelAdmin::AdminID default_admin_id = static_cast<CosNotifyChannelAdmin::AdminID>(-1);
 
 void
-Supplier_Main::init_supplier_admin (void)
+Supplier_Main::init_supplier_admin ()
 {
   bool ok = false;
   if (this->reconnecting_ && this->sa_id_ != default_admin_id)
@@ -737,7 +734,7 @@ Supplier_Main::init_supplier_admin (void)
 }
 
 void
-Supplier_Main::init_structured_proxy_consumer (void)
+Supplier_Main::init_structured_proxy_consumer ()
 {
   bool ok = false;
   CosNotifyChannelAdmin::ProxyConsumer_var proxy;
@@ -745,9 +742,7 @@ Supplier_Main::init_structured_proxy_consumer (void)
   {
     try
     {
-      proxy = this->sa_->get_proxy_consumer (
-                          this->structured_proxy_id_
-                        );
+      proxy = this->sa_->get_proxy_consumer (this->structured_proxy_id_);
       ok = ! CORBA::is_nil (proxy.in ());
       if (ok && this->verbose_)
       {
@@ -813,7 +808,7 @@ Supplier_Main::init_structured_proxy_consumer (void)
 }
 
 void
-Supplier_Main::init_sequence_proxy_consumer (void)
+Supplier_Main::init_sequence_proxy_consumer ()
 {
   bool ok = false;
   CosNotifyChannelAdmin::ProxyConsumer_var proxy;
@@ -889,7 +884,7 @@ Supplier_Main::init_sequence_proxy_consumer (void)
 }
 
 void
-Supplier_Main::init_any_proxy_consumer (void)
+Supplier_Main::init_any_proxy_consumer ()
 {
   bool ok = false;
   CosNotifyChannelAdmin::ProxyConsumer_var proxy;
@@ -964,7 +959,7 @@ Supplier_Main::init_any_proxy_consumer (void)
     any_push_supplier_ref_.in ());
 }
 
-int Supplier_Main::fini (void)
+int Supplier_Main::fini ()
 {
   if (this->disconnect_on_exit_)
   {
@@ -1015,7 +1010,7 @@ int Supplier_Main::fini (void)
   return 0;
 }
 
-void Supplier_Main::send_structured_event (void)
+void Supplier_Main::send_structured_event ()
 {
  CosNotification::StructuredEvent event;
 
@@ -1061,7 +1056,7 @@ void Supplier_Main::send_structured_event (void)
   this->structured_proxy_push_consumer_->push_structured_event (event);
 }
 
-void Supplier_Main::send_sequence_event (void)
+void Supplier_Main::send_sequence_event ()
 {
  CosNotification::EventBatch event_batch(1);
  event_batch.length (1);
@@ -1109,7 +1104,7 @@ void Supplier_Main::send_sequence_event (void)
   this->sequence_proxy_push_consumer_->push_structured_events (event_batch);
 }
 
-void Supplier_Main::send_any_event (void)
+void Supplier_Main::send_any_event ()
 {
   CORBA::Any event;
   event <<= CORBA::ULong (this->serial_number_);
@@ -1125,7 +1120,7 @@ void Supplier_Main::send_any_event (void)
   this->any_proxy_push_consumer_->push (event);
 }
 
-int Supplier_Main::run (void)
+int Supplier_Main::run ()
 {
   int result = 0;
   bool paused = false;

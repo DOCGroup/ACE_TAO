@@ -39,7 +39,7 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
   ACE_Bound_Ptr_Counter (long init_obj_ref_count = 0);
-  ~ACE_Bound_Ptr_Counter ();
+  ~ACE_Bound_Ptr_Counter () = default;
 
   /// Create a ACE_Bound_Ptr_Counter<ACE_LOCK> and initialize the
   /// reference count to indicate ownership by a strong pointer.
@@ -366,13 +366,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #include "ace/Bound_Ptr.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Bound_Ptr.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Bound_Ptr.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 

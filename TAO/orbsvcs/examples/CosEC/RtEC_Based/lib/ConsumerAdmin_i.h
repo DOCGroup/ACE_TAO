@@ -31,7 +31,7 @@ class TAO_RTEC_COSEC_Export TAO_CosEC_ConsumerAdmin_i :
   //   RtecEventChannelAdmin::ConsumerAdmin.
 public:
   /// Constructor.
-  TAO_CosEC_ConsumerAdmin_i (void);
+  TAO_CosEC_ConsumerAdmin_i ();
 
   /// Destructor.
   ~TAO_CosEC_ConsumerAdmin_i () = default;
@@ -41,11 +41,11 @@ public:
 
   /// Returns a new ProxyPushSupplier_ptr.
   virtual CosEventChannelAdmin::ProxyPushSupplier_ptr
-    obtain_push_supplier(void);
+    obtain_push_supplier();
 
   /// Returns a new ProxyPullSupplier_ptr.
   virtual CosEventChannelAdmin::ProxyPullSupplier_ptr
-    obtain_pull_supplier(void);
+    obtain_pull_supplier();
 
 private:
   /// The ConsumerQOS specified by the user of this class.

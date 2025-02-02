@@ -20,7 +20,7 @@
 # include "tao/PortableInterceptorC.h"
 #endif /*TAO_HAS_INTERCEPTORS */
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/OS_NS_string.h"
 #include "tao/ORB_Time_Policy.h"
 
@@ -90,9 +90,9 @@ namespace TAO
   {
     TAO::ORB_Countdown_Time countdown (max_wait_time);
 
-    TAO_Synch_Reply_Dispatcher *rd_p = nullptr;
-    ACE_NEW_NORETURN (rd_p, TAO_Synch_Reply_Dispatcher (this->resolver_.stub ()->orb_core (),
-                                          this->details_.reply_service_info ()));
+    TAO_Synch_Reply_Dispatcher *rd_p =
+      new (std::nothrow) TAO_Synch_Reply_Dispatcher (this->resolver_.stub ()->orb_core (),
+                                                     this->details_.reply_service_info ());
     if (!rd_p)
       {
         throw ::CORBA::NO_MEMORY ();
@@ -394,7 +394,6 @@ namespace TAO
                   this->stub()->orb_core ()->service_raise_comm_failure (
                     this->details_.request_service_context ().service_info (),
                     this->resolver_.profile ());
-
               }
             catch (const ::CORBA::Exception&)
               {

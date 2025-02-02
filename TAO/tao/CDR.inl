@@ -5,7 +5,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
-TAO_OutputCDR::~TAO_OutputCDR (void)
+TAO_OutputCDR::~TAO_OutputCDR ()
 {
 }
 
@@ -262,7 +262,7 @@ TAO_InputCDR::TAO_InputCDR (ACE_InputCDR::Transfer_Contents rhs,
 
 
 ACE_INLINE
-TAO_InputCDR::~TAO_InputCDR (void)
+TAO_InputCDR::~TAO_InputCDR ()
 {
 }
 
@@ -453,6 +453,15 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
 
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
                                       const std::string &x)
+{
+  return
+    os.fragment_stream (ACE_CDR::OCTET_ALIGN,
+                        sizeof (char))
+    && static_cast<ACE_OutputCDR &> (os) << x;
+}
+
+ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
+                                      const std::string_view &x)
 {
   return
     os.fragment_stream (ACE_CDR::OCTET_ALIGN,

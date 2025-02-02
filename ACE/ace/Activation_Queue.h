@@ -77,7 +77,7 @@ public:
                         ACE_Allocator *db_alloc = 0);
 
   /// Destructor.
-  virtual ~ACE_Activation_Queue (void);
+  virtual ~ACE_Activation_Queue ();
 
   // = Activate Queue operations.
 

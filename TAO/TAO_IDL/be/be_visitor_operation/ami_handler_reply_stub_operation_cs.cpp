@@ -177,7 +177,7 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::visit_operation (
             }
           else
             {
-              *os << ", 0";
+              *os << ", nullptr";
             }
 
           *os << "\n#endif /* TAO_HAS_INTERCEPTORS */" << be_uidt_nl

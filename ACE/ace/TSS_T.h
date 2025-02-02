@@ -235,11 +235,11 @@ public:
 
   /// TYPE conversion.  Inlined here so that it should _always_ be
   /// inlined.
-  operator TYPE () const { return value_; };
+  operator TYPE () const { return value_; }
 
   /// TYPE & conversion.  Inlined here so that it should _always_ be
   /// inlined.
-  operator TYPE &() { return value_; };
+  operator TYPE &() { return value_; }
 
 private:
   /// The wrapped value.
@@ -252,13 +252,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #include "ace/TSS_T.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/TSS_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("TSS_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_TSS_T_H */

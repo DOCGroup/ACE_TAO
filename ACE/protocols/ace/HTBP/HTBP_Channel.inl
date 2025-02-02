@@ -39,21 +39,21 @@ ACE::HTBP::Channel::filter (ACE::HTBP::Filter *f)
 
 ACE_INLINE
 int
-ACE::HTBP::Channel::close_reader (void)
+ACE::HTBP::Channel::close_reader ()
 {
   return this->ace_stream_.close_reader();
 }
 
 ACE_INLINE
 int
-ACE::HTBP::Channel::close_writer (void)
+ACE::HTBP::Channel::close_writer ()
 {
   return this->ace_stream_.close_writer();
 }
 
 ACE_INLINE
 int
-ACE::HTBP::Channel::close (void)
+ACE::HTBP::Channel::close ()
 {
   return this->ace_stream_.close();
 }
@@ -67,7 +67,7 @@ ACE::HTBP::Channel::state () const
 
 ACE_INLINE
 ACE_Message_Block &
-ACE::HTBP::Channel::leftovers (void)
+ACE::HTBP::Channel::leftovers ()
 {
   return this->leftovers_;
 }
@@ -103,7 +103,7 @@ ACE::HTBP::Channel::ace_stream () const
 
 ACE_INLINE
 ACE_SOCK_Stream&
-ACE::HTBP::Channel::ace_stream (void)
+ACE::HTBP::Channel::ace_stream ()
 {
   return this->ace_stream_;
 }

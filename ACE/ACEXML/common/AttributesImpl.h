@@ -41,7 +41,7 @@ public:
   friend class ACEXML_AttributesImpl;
 
   /// Default constructor.
-  ACEXML_Attribute (void);
+  ACEXML_Attribute ();
 
   /// Copy constructor.
   ACEXML_Attribute (const ACEXML_Attribute &attr);
@@ -54,7 +54,7 @@ public:
                     const ACEXML_Char *value);
 
   /// Destructor.
-  ~ACEXML_Attribute (void);
+  ~ACEXML_Attribute ();
 
   /// Set all members.
   void setAttribute (const ACEXML_Char *uri,
@@ -147,7 +147,7 @@ public:
    */
   ACEXML_AttributesImpl (int size = ACEXML_AttributesImpl_Default_Size);
   ACEXML_AttributesImpl (const ACEXML_AttributesImpl &attrs);
-  virtual ~ACEXML_AttributesImpl (void);
+  virtual ~ACEXML_AttributesImpl ();
 
   /**
    * Add a new attribute using the argument(s) supplied.
@@ -190,7 +190,7 @@ public:
   /**
    * Return the number of attributes in the list.
    */
-  virtual size_t getLength (void);
+  virtual size_t getLength ();
 
   /**
    * Look up an attribute's local name by index.

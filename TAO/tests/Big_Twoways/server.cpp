@@ -192,7 +192,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       for (j = 0; j != peer_count; ++j)
         {
           session_list[j]->destroy ();
-
         }
 
       ACE_DEBUG ((LM_DEBUG, "Shutdown all peers . . .\n"));

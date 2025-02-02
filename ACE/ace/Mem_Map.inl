@@ -93,7 +93,7 @@ ACE_Mem_Map::size () const
 }
 
 ACE_INLINE int
-ACE_Mem_Map::close_filemapping_handle (void)
+ACE_Mem_Map::close_filemapping_handle ()
 {
   int result = 0;
 
@@ -218,7 +218,7 @@ ACE_Mem_Map::advise (int behavior, int len)
 }
 
 ACE_INLINE int
-ACE_Mem_Map::close_handle (void)
+ACE_Mem_Map::close_handle ()
 {
   int result = 0;
 

@@ -41,9 +41,7 @@ typedef int ACE_Protocol_ID;
  */
 class ACE_QoS_Export ACE_QoS_Session
 {
-
 public:
-
   enum RSVP_Event_Type
   {
     RSVP_PATH_EVENT,
@@ -64,14 +62,14 @@ public:
 
 
   /// to shutup g++.
-  virtual ~ACE_QoS_Session (void) {};
+  virtual ~ACE_QoS_Session () {};
 
   /// Open a QoS session [dest IP, dest port, Protocol ID].
   virtual int open (ACE_INET_Addr dest_addr,
                     ACE_Protocol_ID protocol_id) = 0;
 
   /// Close the QoS Session.
-  virtual int close (void) = 0;
+  virtual int close () = 0;
 
   /// Returns the QoS in the current session.
   virtual ACE_QoS qos () const = 0;
@@ -99,7 +97,7 @@ public:
    * underlying session. This method updates the QoS object associated
    * with this session.
    */
-  virtual int update_qos (void) = 0;
+  virtual int update_qos () = 0;
 
   /// Get/Set methods for the flags_.
   virtual ACE_End_Point_Type flags () const = 0;
@@ -112,12 +110,12 @@ public:
   virtual void session_id (const int session_id) = 0;
 
   /// Get the file descriptor on which RSVP events will occur.
-  virtual ACE_HANDLE rsvp_events_handle (void) = 0;
+  virtual ACE_HANDLE rsvp_events_handle () = 0;
 
   virtual void  rsvp_event_type (RSVP_Event_Type event_type) = 0;
   ///Set the RAPI event that last occurred
 
-  virtual RSVP_Event_Type rsvp_event_type (void) = 0;
+  virtual RSVP_Event_Type rsvp_event_type () = 0;
   ///Get the RAPI event that last occurred
 
 
@@ -145,10 +143,9 @@ public:
    * meaningful only when the underlying implementation has
    * versioning.
    */
-  virtual int version (void) = 0;
+  virtual int version () = 0;
 
 protected:
-
   /// Source port if this is a Sender session. Used for rapi_sender ().
   u_short source_port_;
 
@@ -172,7 +169,6 @@ protected:
 
   RSVP_Event_Type rsvp_event_type_;
   //Has the last rsvp event that occurred
-
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

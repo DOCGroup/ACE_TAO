@@ -63,7 +63,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       root_poa->destroy (true, true);
 
       orb->destroy ();
-
     }
   catch (const CORBA::Exception& ex)
     {

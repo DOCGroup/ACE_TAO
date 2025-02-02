@@ -586,6 +586,11 @@ sub print_stacktrace_linux
     chomp ($line);
     close ($pattern_fh);
 
+    if ($line =~ /\|/) {
+        print STDERR "WARNING: print_stacktrace_linux: Core files are handled by a separate service. Core pattern: $line\n";
+        return;
+    }
+
     # Find the core file from the pattern
     my $path = ".";
     my $pattern;
@@ -789,7 +794,9 @@ sub WaitKill ($;$)
 
             my $commands = ($debugger eq 'gdb') ?
               "-ex 'set pagination off' -ex 'thread apply all backtrace'" : "-o 'bt all'";
+            print STDERR "\n======= Begin stuck stacks =======\n";
             system "$debugger --batch -p $self->{PROCESS} $commands";
+            print STDERR "======= End stuck stacks =======\n";
         }
 
         if ($ENV{ACE_TEST_GENERATE_CORE_FILE}) {

@@ -167,7 +167,7 @@ public:
   // = Not currently implemented...
   int peek_dequeue_head (ACE_Message_Block *&first_item,
                          ACE_Time_Value *timeout = 0);
-  ACE_Notification_Strategy *notification_strategy (void);
+  ACE_Notification_Strategy *notification_strategy ();
   void notification_strategy (ACE_Notification_Strategy *s);
 
   // = Notification hook.
@@ -214,7 +214,6 @@ private:
 
   /// Underlying NT IoCompletionPort.
   ACE_HANDLE completion_port_;
-
 };
 #endif /* ACE_HAS_WIN32_OVERLAPPED_IO */
 

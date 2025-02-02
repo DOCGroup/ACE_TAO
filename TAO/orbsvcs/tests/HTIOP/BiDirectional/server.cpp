@@ -5,7 +5,6 @@
 #include "tao/AnyTypeCode/Any.h"
 
 
-
 const ACE_TCHAR *ior_output_file = 0;
 int no_iterations = 10;
 

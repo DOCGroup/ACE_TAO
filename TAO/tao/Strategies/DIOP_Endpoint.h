@@ -46,7 +46,7 @@ public:
   friend class TAO_SSLIOP_Profile;
 
   /// Default constructor.
-  TAO_DIOP_Endpoint (void);
+  TAO_DIOP_Endpoint ();
 
   /// Constructor.  This is the most efficient constructor since it
   /// does not require any address resolution processing.
@@ -65,7 +65,7 @@ public:
                      CORBA::Short priority);
 
   /// Destructor.
-  ~TAO_DIOP_Endpoint (void) = default;
+  ~TAO_DIOP_Endpoint () = default;
 
   /**
    * @name TAO_Endpoint Methods
@@ -73,16 +73,16 @@ public:
    * Please check the documentation in Endpoint.h for details.
    */
   //@{
-  virtual TAO_Endpoint *next (void);
+  virtual TAO_Endpoint *next ();
   virtual int addr_to_string (char *buffer, size_t length);
-  virtual TAO_Endpoint *duplicate (void);
+  virtual TAO_Endpoint *duplicate ();
 
   /// Return true if this endpoint is equivalent to @a other_endpoint.  Two
   /// endpoints are equivalent if their port and host are the same.
   CORBA::Boolean is_equivalent (const TAO_Endpoint *other_endpoint);
 
   /// Return a hash value for this object.
-  CORBA::ULong hash (void);
+  CORBA::ULong hash ();
   //@}
 
   // Allocates memory and returns a copy of <this>
@@ -107,7 +107,6 @@ public:
   CORBA::UShort port (CORBA::UShort p);
 
 private:
-
   /// Helper method for setting INET_Addr.
   int set (const ACE_INET_Addr &addr,
            int use_dotted_decimal_addresses);

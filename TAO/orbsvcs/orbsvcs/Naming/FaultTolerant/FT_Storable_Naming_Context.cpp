@@ -11,7 +11,7 @@
 #include "orbsvcs/Naming/Persistent_Context_Index.h"
 #include "ace/OS_NS_stdio.h"
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -54,7 +54,6 @@ TAO_FT_Storable_Naming_Context::resolve (const CosNaming::Name& n)
   CORBA::Object_var resolved_ref = TAO_Storable_Naming_Context::resolve(n);
 
   try {
-
     // Make sure object is an object group.
     // We will return the object reference as is all the way back
     // out to the client if not

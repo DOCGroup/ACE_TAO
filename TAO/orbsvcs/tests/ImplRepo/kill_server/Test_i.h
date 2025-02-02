@@ -23,7 +23,7 @@ public:
   //Destructor
   virtual ~Test_i ();
 
-  virtual CORBA::Short get_server_num (void);
+  virtual CORBA::Short get_server_num ();
 
 private:
   void reset (PortableServer::POAManager_var &mgr, bool pause);

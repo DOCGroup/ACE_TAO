@@ -13,8 +13,6 @@
 # if defined (ACE_HAS_DEV_POLL)
 #    if defined (ACE_LINUX)
 #      include /**/ <linux/devpoll.h>
-#    elif defined (HPUX_VERS) && HPUX_VERS < 1123
-#      include /**/ <devpoll.h>
 #    else
 #      include /**/ <sys/devpoll.h>
 #    endif  /* ACE_LINUX */
@@ -1115,15 +1113,14 @@ ACE_Dev_Poll_Reactor::dispatch_notification_handlers (
 int
 ACE_Dev_Poll_Reactor::dispatch_io_event (Token_Guard &guard)
 {
-
   // Dispatch a ready event.
 
   // Define bits to check for while dispatching.
 #if defined (ACE_HAS_EVENT_POLL)
-  const __uint32_t out_event = EPOLLOUT;
-  const __uint32_t exc_event = EPOLLPRI;
-  const __uint32_t in_event  = EPOLLIN;
-  const __uint32_t err_event = EPOLLHUP | EPOLLERR;
+  const ACE_UINT32 out_event = EPOLLOUT;
+  const ACE_UINT32 exc_event = EPOLLPRI;
+  const ACE_UINT32 in_event  = EPOLLIN;
+  const ACE_UINT32 err_event = EPOLLHUP | EPOLLERR;
 #else
   const short out_event = POLLOUT;
   const short exc_event = POLLPRI;
@@ -1136,7 +1133,7 @@ ACE_Dev_Poll_Reactor::dispatch_io_event (Token_Guard &guard)
   // is invalid, there's no event there. Else process it. In any event, we
   // have the event, so clear event_ for the next thread.
   const ACE_HANDLE handle = this->event_.data.fd;
-  __uint32_t revents      = this->event_.events;
+  ACE_UINT32 revents      = this->event_.events;
   this->event_.data.fd = ACE_INVALID_HANDLE;
   this->event_.events = 0;
   if (handle != ACE_INVALID_HANDLE)
@@ -2336,27 +2333,9 @@ ACE_Dev_Poll_Reactor::mask_ops_i (ACE_HANDLE handle,
   // cleared, we can un-control the fd now.
   if (!info->suspended || (info->controlled && new_mask == 0))
     {
-
       short const events = this->reactor_mask_to_poll_event (new_mask);
 
-#if defined (sun)
-      // Apparently events cannot be updated on-the-fly on Solaris so
-      // remove the existing events, and then add the new ones.
-      struct pollfd pfd[2];
-
-      pfd[0].fd      = handle;
-      pfd[0].events  = POLLREMOVE;
-      pfd[0].revents = 0;
-      pfd[1].fd      = (events == POLLREMOVE ? ACE_INVALID_HANDLE : handle);
-      pfd[1].events  = events;
-      pfd[1].revents = 0;
-
-      // Change the events associated with the given file descriptor.
-      if (ACE_OS::write (this->poll_fd_,
-                         pfd,
-                         sizeof (pfd)) != sizeof (pfd))
-        return -1;
-#elif defined (ACE_HAS_EVENT_POLL)
+#if defined (ACE_HAS_EVENT_POLL)
 
       struct epoll_event epev;
       ACE_OS::memset (&epev, 0, sizeof (epev));

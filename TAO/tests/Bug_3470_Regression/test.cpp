@@ -18,8 +18,8 @@ int ACE_TMAIN( int argc, ACE_TCHAR * argv[] )
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
       CORBA::ORB_ObjectIdList_var listsrv = orb->list_initial_services();
-      for (CORBA::ULong index = 0 ; index < listsrv->length() ; index++ )
-        if ( ACE_OS::strcmp(listsrv[index],"MyObjectId") == 0)
+      for (CORBA::ULong index = 0 ; index < listsrv->length(); index++ )
+        if (ACE_OS::strcmp(listsrv[index],"MyObjectId") == 0)
           retcode = 0;
 
       orb->destroy();

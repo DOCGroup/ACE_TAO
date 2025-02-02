@@ -140,7 +140,6 @@ public:
    * @name Helper methods used by the Invocation classes.
    */
   //@{
-
   /// Marshals the list of @c this->arg_ into the \a cdr.
   bool marshal_args (TAO_OutputCDR &cdr);
 
@@ -149,7 +148,7 @@ public:
 
   /// Accessors for the argument list
   TAO::Argument ** args () const;
-  CORBA::ULong args_num () const ;
+  CORBA::ULong args_num () const;
 
   /// Exception count
   CORBA::ULong ex_count () const;

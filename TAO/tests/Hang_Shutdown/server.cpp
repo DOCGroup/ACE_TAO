@@ -36,7 +36,6 @@ namespace Test
   try_main (int argc,
             ACE_TCHAR *argv[])
   {
-
     try
       {
         CORBA::ORB_var orb =

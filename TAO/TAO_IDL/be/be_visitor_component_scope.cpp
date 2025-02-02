@@ -261,7 +261,7 @@ be_visitor_component_scope::gen_svnt_entrypoint_defn ()
       << "_var x =" << be_idt_nl
       << global << sname << "::CCM_" << lname
       << "::_narrow (p);" << be_uidt_nl << be_nl
-      << "if ( ::CORBA::is_nil (x.in ()))" << be_idt_nl
+      << "if (::CORBA::is_nil (x.in ()))" << be_idt_nl
       << "{" << be_idt_nl
       << "return 0;" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl

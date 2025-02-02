@@ -208,7 +208,7 @@ namespace TAO
 {
   namespace ImR_Client
   {
-    ImR_Client_Adapter_Impl::ImR_Client_Adapter_Impl (void)
+    ImR_Client_Adapter_Impl::ImR_Client_Adapter_Impl ()
      : server_object_ (0)
     {
     }
@@ -451,7 +451,7 @@ namespace TAO
     // Initialization and registration of dynamic service object.
 
     int
-    ImR_Client_Adapter_Impl::Initializer (void)
+    ImR_Client_Adapter_Impl::Initializer ()
     {
       TAO_Root_POA::imr_client_adapter_name (
         "Concrete_ImR_Client_Adapter");

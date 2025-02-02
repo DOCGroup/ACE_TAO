@@ -42,7 +42,6 @@
 #include "ace/TP_Reactor.h"
 
 
-
 #if defined (ACE_HAS_THREADS) && !defined ACE_LACKS_ACCEPT
 
 #include "Thread_Pool_Reactor_Test.h"
@@ -59,7 +58,7 @@ static size_t svr_thrno = ACE_MAX_THREADS;
 // Default network parameters (MAX_BINDS and system buffers) are too small
 // for full test on some platforms; add platforms that can't handle too many
 // connection simultaneously here.
-#if defined (ACE_VXWORKS) || defined (ACE_HAS_PHARLAP)
+#if defined (ACE_VXWORKS)
 #define ACE_LOAD_FACTOR /2
 #else
 #define ACE_LOAD_FACTOR

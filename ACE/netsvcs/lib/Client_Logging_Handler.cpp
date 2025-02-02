@@ -9,7 +9,7 @@
 #include "ace/OS_NS_sys_socket.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/CDR_Stream.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/SString.h"
 #include "ace/INET_Addr.h"
 #include "Client_Logging_Handler.h"
@@ -428,7 +428,7 @@ class ACE_Client_Logging_Acceptor : public ACE_Acceptor<ACE_Client_Logging_Handl
   //     This class contains the service-specific methods that can't
   //     easily be factored into the <ACE_Acceptor>.
 public:
-  ACE_Client_Logging_Acceptor (void);
+  ACE_Client_Logging_Acceptor ();
   // Default constructor.
 
 protected:
@@ -446,8 +446,8 @@ protected:
   // Factory that always returns the <handler_>.
 
   // = Scheduling hooks.
-  virtual int suspend (void);
-  virtual int resume (void);
+  virtual int suspend ();
+  virtual int resume ();
 
 private:
   int parse_args (int argc, ACE_TCHAR *argv[]);
@@ -477,7 +477,7 @@ private:
 };
 
 int
-ACE_Client_Logging_Acceptor::fini (void)
+ACE_Client_Logging_Acceptor::fini ()
 {
   this->close ();
 
@@ -520,7 +520,7 @@ ACE_Client_Logging_Acceptor::info (ACE_TCHAR **strp, size_t length) const
   return ACE_OS::strlen (buf);
 }
 
-ACE_Client_Logging_Acceptor::ACE_Client_Logging_Acceptor (void)
+ACE_Client_Logging_Acceptor::ACE_Client_Logging_Acceptor ()
   : server_host_ (ACE_OS::strdup (ACE_DEFAULT_SERVER_HOST)),
     server_port_ (ACE_DEFAULT_LOGGING_SERVER_PORT),
     logger_key_ (ACE_OS::strdup (ACE_DEFAULT_LOGGER_KEY)),
@@ -682,14 +682,14 @@ ACE_Client_Logging_Acceptor::parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-ACE_Client_Logging_Acceptor::suspend (void)
+ACE_Client_Logging_Acceptor::suspend ()
 {
   // To be done...
   return 0;
 }
 
 int
-ACE_Client_Logging_Acceptor::resume (void)
+ACE_Client_Logging_Acceptor::resume ()
 {
   // To be done...
   return 0;

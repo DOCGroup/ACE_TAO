@@ -36,7 +36,7 @@ HTTP_Request::static_method_strings_[HTTP_Request::NUM_METHOD_STRINGS] =
 // For reasons of efficiency, this class expects buffer to be
 // null-terminated, and buflen does NOT include the \0.
 
-HTTP_Request::HTTP_Request (void)
+HTTP_Request::HTTP_Request ()
   : got_request_line_ (0),
     method_ (0),
     uri_ (0),
@@ -50,14 +50,13 @@ HTTP_Request::HTTP_Request (void)
     header_strings_ (HTTP_Request::static_header_strings_),
     method_strings_ (HTTP_Request::static_method_strings_)
 {
-
   for (size_t i = 0;
        i < HTTP_Request::NUM_HEADER_STRINGS;
        i++)
     this->headers_.recognize (this->header_strings_[i]);
 }
 
-HTTP_Request::~HTTP_Request (void)
+HTTP_Request::~HTTP_Request ()
 {
   ACE_OS::free (this->method_);
   ACE_OS::free (this->uri_);
@@ -275,19 +274,19 @@ HTTP_Request::header_values (int index) const
 }
 
 char *
-HTTP_Request::data (void)
+HTTP_Request::data ()
 {
   return data_;
 }
 
 int
-HTTP_Request::data_length (void)
+HTTP_Request::data_length ()
 {
   return datalen_;
 }
 
 int
-HTTP_Request::content_length (void)
+HTTP_Request::content_length ()
 {
   if (this->content_length_ == -1)
     {
@@ -299,19 +298,19 @@ HTTP_Request::content_length (void)
 }
 
 int
-HTTP_Request::status (void)
+HTTP_Request::status ()
 {
   return this->status_;
 }
 
 const char *
-HTTP_Request::status_string (void)
+HTTP_Request::status_string ()
 {
   return HTTP_Status_Code::instance ()[this->status_];
 }
 
 void
-HTTP_Request::dump (void)
+HTTP_Request::dump ()
 {
   ACE_DEBUG ((LM_DEBUG, "%s command.\n"
               "filename is %s,"

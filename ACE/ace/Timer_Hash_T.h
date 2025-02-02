@@ -276,7 +276,6 @@ protected:
   virtual void free_node (ACE_Timer_Node_T<TYPE> *);
 
 private:
-
   /**
    * Schedule @a type that will expire at @a future_time,
    * which is specified in absolute time.  If it expires then @a act is
@@ -338,13 +337,7 @@ private:
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Timer_Hash_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE  */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Timer_Hash_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_TIMER_HASH_T_H */

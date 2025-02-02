@@ -38,23 +38,17 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    class TAO_PortableServer_Export ThreadStrategySingle :
-       public ThreadStrategy
+    class ThreadStrategySingle : public ThreadStrategy
     {
     public:
-      virtual int enter ();
+      int enter () override;
 
-      virtual int exit ();
-
-      virtual ::PortableServer::ThreadPolicyValue type() const;
+      int exit () override;
     private:
       TAO_SYNCH_RECURSIVE_MUTEX lock_;
     };
   }
 }
-
-ACE_STATIC_SVC_DECLARE_EXPORT (TAO_PortableServer, ThreadStrategySingle)
-ACE_FACTORY_DECLARE (TAO_PortableServer, ThreadStrategySingle)
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

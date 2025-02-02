@@ -24,7 +24,6 @@ private:
 int
 HA_Status::init (int argc, ACE_TCHAR *argv[])
 {
-
   // Do ACE_Get_Opt and get conf file name, read out the sections
   // and print the names.
 

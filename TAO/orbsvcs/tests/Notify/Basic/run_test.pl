@@ -22,8 +22,6 @@ my $test = PerlACE::TestTarget::create_target (3) || die "Create target 3 failed
 
 $test->AddLibPath ('../lib');
 
-PerlACE::check_privilege_group();
-
 $experiment_timeout = 60;
 $startup_timeout = 60;
 

@@ -8,7 +8,7 @@ Coordinator::Coordinator (CORBA::ULong peer_count)
   ACE_NEW (this->peers_, Test::Peer_var[this->peer_max_]);
 }
 
-Coordinator::~Coordinator (void)
+Coordinator::~Coordinator ()
 {
   delete[] this->peers_;
 }
@@ -42,7 +42,7 @@ Coordinator::create_session_list (Test::Session_Control_ptr session_control,
 }
 
 void
-Coordinator::shutdown_all_peers (void)
+Coordinator::shutdown_all_peers ()
 {
   for (Test::Peer_var *i = this->peers_;
        i != this->peers_ + this->peer_count_;

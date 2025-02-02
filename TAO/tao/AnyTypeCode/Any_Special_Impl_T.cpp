@@ -28,7 +28,7 @@ TAO::Any_Special_Impl_T<T, from_T, to_T>::Any_Special_Impl_T (
 }
 
 template<typename T, typename from_T, typename to_T>
-TAO::Any_Special_Impl_T<T, from_T, to_T>::~Any_Special_Impl_T (void)
+TAO::Any_Special_Impl_T<T, from_T, to_T>::~Any_Special_Impl_T ()
 {
 }
 

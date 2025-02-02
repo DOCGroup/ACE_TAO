@@ -2,8 +2,7 @@
 #include "ace/OS_NS_unistd.h"
 
 
-
-CEC_Counting_Supplier::CEC_Counting_Supplier (void)
+CEC_Counting_Supplier::CEC_Counting_Supplier ()
   :  event_count (0),
      disconnect_count (0)
 {
@@ -26,7 +25,7 @@ CEC_Counting_Supplier::connect (
 }
 
 void
-CEC_Counting_Supplier::disconnect (void)
+CEC_Counting_Supplier::disconnect ()
 {
   if (!CORBA::is_nil (this->consumer_proxy_.in ()))
     {
@@ -57,7 +56,7 @@ CEC_Counting_Supplier::push (const CORBA::Any&)
 }
 
 void
-CEC_Counting_Supplier::disconnect_push_supplier (void)
+CEC_Counting_Supplier::disconnect_push_supplier ()
 {
   this->disconnect_count++;
   this->consumer_proxy_ =
@@ -91,20 +90,20 @@ CEC_Counting_Supplier_Task::svc ()
 }
 
 void
-CEC_Counting_Supplier_Task::stop (void)
+CEC_Counting_Supplier_Task::stop ()
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
   this->stop_flag_ = 1;
 }
 
 CORBA::ULong
-CEC_Counting_Supplier_Task::push_count (void)
+CEC_Counting_Supplier_Task::push_count ()
 {
   return this->push_count_;
 }
 
 void
-CEC_Counting_Supplier_Task::run (void)
+CEC_Counting_Supplier_Task::run ()
 {
   CORBA::Any event;
   event <<= CORBA::Long(0);
@@ -134,7 +133,7 @@ CEC_Counting_Supplier_Task::run (void)
 
 // ****************************************************************
 
-CEC_Pull_Counting_Supplier::CEC_Pull_Counting_Supplier (void)
+CEC_Pull_Counting_Supplier::CEC_Pull_Counting_Supplier ()
   :  event_count (0),
      disconnect_count (0)
 {
@@ -157,7 +156,7 @@ CEC_Pull_Counting_Supplier::connect (
 }
 
 void
-CEC_Pull_Counting_Supplier::disconnect (void)
+CEC_Pull_Counting_Supplier::disconnect ()
 {
   if (!CORBA::is_nil (this->consumer_proxy_.in ()))
     {
@@ -175,7 +174,7 @@ CEC_Pull_Counting_Supplier::disconnect (void)
 }
 
 CORBA::Any*
-CEC_Pull_Counting_Supplier::pull (void)
+CEC_Pull_Counting_Supplier::pull ()
 {
   if (CORBA::is_nil (this->consumer_proxy_.in ()))
     throw CosEventComm::Disconnected ();
@@ -218,7 +217,7 @@ CEC_Pull_Counting_Supplier::try_pull (CORBA::Boolean_out has_event)
 }
 
 void
-CEC_Pull_Counting_Supplier::disconnect_pull_supplier (void)
+CEC_Pull_Counting_Supplier::disconnect_pull_supplier ()
 {
   this->disconnect_count++;
   this->consumer_proxy_ =

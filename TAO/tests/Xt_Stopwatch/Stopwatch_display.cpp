@@ -17,13 +17,13 @@ Stopwatch_display::Stopwatch_display (Widget &parent)
                                  0);
 }
 
-Stopwatch_display::~Stopwatch_display (void)
+Stopwatch_display::~Stopwatch_display ()
 {
   //No-op
 }
 
 void
-Stopwatch_display::manage (void)
+Stopwatch_display::manage ()
 {
   XtManageChild (this->frame_);
   XtManageChild (this->label_);

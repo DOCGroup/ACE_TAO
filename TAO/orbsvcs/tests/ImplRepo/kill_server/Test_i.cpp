@@ -26,10 +26,9 @@ Test_i::~Test_i ()
 }
 
 CORBA::Short
-Test_i::get_server_num (void)
+Test_i::get_server_num ()
 {
   return this->server_num_;
 }
-
 
 

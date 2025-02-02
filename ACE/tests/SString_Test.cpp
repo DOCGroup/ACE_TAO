@@ -1,4 +1,3 @@
-
 //=============================================================================
 /**
  *  @file    SString_Test.cpp
@@ -11,13 +10,10 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/OS_NS_string.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/SString.h"
-
-
 
 static int testConcatenation() {
 #ifdef ACE_HAS_WCHAR
@@ -114,7 +110,7 @@ int testConstIterator()
   // Use the advance () method to count number of characters.
   size_t count = 0;
   for (ACE_CString::CONST_ITERATOR iter (s1); !iter.done (); iter.advance ())
-    ++ count;
+    ++count;
 
   if (count != s1.length ())
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -154,6 +150,41 @@ int testConstIterator()
   return 0;
 }
 
+int testAutoStringFree()
+{
+  char* s = ACE_OS::strdup("Hello, World");
+  ACE_Auto_String_Free const s1(s);
+  if (s1)
+  {
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("ACE_Auto_String_Free::operator bool for s1 correct\n")));
+  }
+  else
+  {
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("ACE_Auto_String_Free::operator bool for s1 return false")),
+                       1);
+  }
+
+  if (!s1)
+  {
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("!ACE_Auto_String_Free::operator bool s1 return true")),
+                       1);
+  }
+
+  ACE_Auto_String_Free const s2;
+
+  if (s2)
+  {
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("ACE_Auto_String_Free s2 is not empty")),
+                       1);
+  }
+
+  return 0;
+}
+
 
 int
 run_main (int, ACE_TCHAR *[])
@@ -161,7 +192,6 @@ run_main (int, ACE_TCHAR *[])
   ACE_START_TEST (ACE_TEXT ("SString_Test"));
 
   {
-
     /* Set #1 */
     ACE_CString s0 ("hello");
     ACE_CString s1 ("hello");
@@ -283,7 +313,7 @@ run_main (int, ACE_TCHAR *[])
     if (s0.length() != 0){ACE_ERROR((LM_ERROR,"Set #2:\n"));return 1;}
 
     // Rep. Error if they are not equal
-    ACE_Auto_Basic_Array_Ptr<char> s (s1.rep ());
+    std::unique_ptr<char[]> s (s1.rep ());
     if (ACE_OS::strlen (s.get ()) != s1.length ())
       {
         ACE_ERROR((LM_ERROR,"Auto_ptr s:\n"));
@@ -430,6 +460,7 @@ run_main (int, ACE_TCHAR *[])
   int err = testConcatenation ();
   err += testIterator ();
   err += testConstIterator ();
+  err += testAutoStringFree ();
 
   ACE_END_TEST;
   return err;

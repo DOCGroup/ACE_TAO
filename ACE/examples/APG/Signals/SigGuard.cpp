@@ -16,7 +16,6 @@ class MySignalHandler : public ACE_Event_Handler
 
 int ACE_TMAIN (int, ACE_TCHAR *[])
 {
-
   MySignalHandler sighandler;
   ACE_Sig_Handler sh;
   sh.register_handler (SIGUSR1, &sighandler);

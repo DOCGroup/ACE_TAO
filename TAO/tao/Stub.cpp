@@ -22,7 +22,7 @@
 # include "tao/Stub.inl"
 #endif /* ! __ACE_INLINE__ */
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/CORBA_macros.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -155,6 +155,16 @@ TAO_Stub::add_forward_profiles (const TAO_MProfile &mprofiles,
   // Since we have been forwarded, we must set profile_success_ to false
   // since we are starting a new with a new set of profiles!
   this->profile_success_ = false;
+
+  // Set the new forward profile.
+  if (this->next_profile_i () == nullptr)
+    {
+      throw ::CORBA::TRANSIENT (
+              CORBA::SystemException::_tao_minor_code (
+                  TAO_INVOCATION_LOCATION_FORWARD_MINOR_CODE,
+                  0),
+              CORBA::COMPLETED_NO);
+    }
 }
 
 int
@@ -569,7 +579,7 @@ TAO_Stub::marshal (TAO_OutputCDR &cdr)
       // release ACE_Lock
     }
 
-  return (CORBA::Boolean) cdr.good_bit ();
+  return cdr.good_bit ();
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

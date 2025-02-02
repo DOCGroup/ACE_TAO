@@ -17,7 +17,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-
 template<typename object_t, typename object_t_var, CORBA::ULong MAX>
 class bounded_valuetype_sequence
 {
@@ -80,7 +79,7 @@ public:
   inline value_type * get_buffer(CORBA::Boolean orphan = false) {
     return impl_.get_buffer(orphan);
   }
-  inline void swap(bounded_valuetype_sequence & rhs) throw() {
+  inline void swap(bounded_valuetype_sequence & rhs) noexcept {
     impl_.swap(rhs.impl_);
   }
 
@@ -104,7 +103,6 @@ private:
 
   template <typename stream, typename object_t, typename object_t_var, CORBA::ULong MAX>
   bool marshal_sequence(stream & strm, const TAO::bounded_valuetype_sequence<object_t, object_t_var, MAX> & source) {
-
     const ::CORBA::ULong length = source.length ();
     if (length > source.maximum () || !(strm << length)) {
       return false;

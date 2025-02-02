@@ -73,11 +73,11 @@ public:
   /// FILE if the corresponding type is enabled.
   int print (const ACE_TCHAR host_name[],
              u_long verbose_flag,
-#if !defined (ACE_HAS_WINCE) && !defined (ACE_LACKS_STDERR)
+#if !defined (ACE_LACKS_STDERR)
              FILE *fp = stderr);
 #else
              FILE *fp);
-#endif /* ACE_HAS_WINCE */
+#endif /* ACE_LACKS_STDERR */
 
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
   /// Write the contents of the logging record to the appropriate

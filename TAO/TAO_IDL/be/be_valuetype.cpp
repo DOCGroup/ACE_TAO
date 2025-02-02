@@ -218,7 +218,6 @@ be_valuetype::determine_factory_style ()
                                  ACE_TEXT ("determine_factory_style")
                                  ACE_TEXT ("bad node in this scope\n")),
                                 factory_style);
-
             }
 
           AST_Decl::NodeType node_type = d->node_type ();
@@ -279,7 +278,6 @@ be_valuetype::have_operation ()
                                  ACE_TEXT ("has_operation")
                                  ACE_TEXT ("bad node in this scope\n")),
                                 0);
-
             }
 
           AST_Decl::NodeType nt = d->node_type();
@@ -507,6 +505,9 @@ be_valuetype::gen_helper_stubs (char *, char *)
 
   TAO_INSERT_COMMENT (os);
 
+  *os << be_nl
+      << be_global->core_versioning_begin ();
+
   *os << "void" << be_nl
       << "CORBA::add_ref (" << this->full_name () << " * vt)" << be_nl
       << "{" << be_idt_nl
@@ -524,6 +525,9 @@ be_valuetype::gen_helper_stubs (char *, char *)
       << "vt->_remove_ref ();" << be_uidt_nl
       << "}" << be_uidt << be_uidt_nl
       << "}";
+
+  *os << be_nl
+      << be_global->core_versioning_end () << be_nl;
 
   return 0;
 }

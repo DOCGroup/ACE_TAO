@@ -37,7 +37,7 @@ public:
                   ACE_Bcast_Node *);
 
   /// Destructor.
-  ~ACE_Bcast_Node (void);
+  ~ACE_Bcast_Node () = default;
 
   /// Broadcast address for the interface.
   ACE_INET_Addr bcast_addr_;
@@ -58,7 +58,7 @@ class ACE_Export ACE_SOCK_Dgram_Bcast : public ACE_SOCK_Dgram
 {
 public:
   /// Default constructor.
-  ACE_SOCK_Dgram_Bcast (void);
+  ACE_SOCK_Dgram_Bcast ();
 
   ACE_SOCK_Dgram_Bcast (const ACE_Addr &local,
                         int protocol_family = PF_INET,
@@ -67,7 +67,7 @@ public:
                         const ACE_TCHAR *host_name = 0);
 
   /// Default dtor.
-  ~ACE_SOCK_Dgram_Bcast (void);
+  ~ACE_SOCK_Dgram_Bcast ();
 
   // Initiate a connectionless datagram broadcast endpoint.
 
@@ -79,7 +79,7 @@ public:
             const ACE_TCHAR *host_name = 0);
 
   /// Close up and release dynamically allocated resources.
-  int close (void);
+  int close ();
 
   /// Broadcast the datagram to every interface.  Returns the average
   /// number of bytes sent.

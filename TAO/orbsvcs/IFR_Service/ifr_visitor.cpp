@@ -8,7 +8,7 @@
 #include "ace/Synch_Traits.h"
 #include "ace/Null_Mutex.h"
 
-ifr_visitor::ifr_visitor (void)
+ifr_visitor::ifr_visitor ()
   : lock_ (0)
 {
   // Create the appropriate lock.
@@ -24,7 +24,7 @@ ifr_visitor::ifr_visitor (void)
     }
 }
 
-ifr_visitor::~ifr_visitor (void)
+ifr_visitor::~ifr_visitor ()
 {
   delete this->lock_;
 }
@@ -310,6 +310,12 @@ ifr_visitor::visit_array (AST_Array *)
 
 int
 ifr_visitor::visit_sequence (AST_Sequence *)
+{
+  return 0;
+}
+
+int
+ifr_visitor::visit_map (AST_Map *)
 {
   return 0;
 }

@@ -23,12 +23,11 @@ class TAO249_ServerRequest_Interceptor2
   public virtual ::CORBA::LocalObject
 {
 public:
-
   /// Constructor.
-  TAO249_ServerRequest_Interceptor2 (void);
+  TAO249_ServerRequest_Interceptor2 ();
 
   /// Destructor.
-  ~TAO249_ServerRequest_Interceptor2 (void);
+  ~TAO249_ServerRequest_Interceptor2 ();
 
   /**
    * @name Methods Required by the Server Request Interceptor
@@ -45,33 +44,27 @@ public:
   virtual void destroy ();
 
   virtual void receive_request_service_contexts (
-    PortableInterceptor::ServerRequestInfo_ptr ri
-    );
+    PortableInterceptor::ServerRequestInfo_ptr ri);
 
   virtual void receive_request (
-      PortableInterceptor::ServerRequestInfo_ptr ri
-      );
+      PortableInterceptor::ServerRequestInfo_ptr ri);
 
   virtual void send_reply (
-      PortableInterceptor::ServerRequestInfo_ptr ri
-      );
+      PortableInterceptor::ServerRequestInfo_ptr ri);
 
   virtual void send_exception (
-      PortableInterceptor::ServerRequestInfo_ptr ri
-      );
+      PortableInterceptor::ServerRequestInfo_ptr ri);
 
   virtual void send_other (
-      PortableInterceptor::ServerRequestInfo_ptr ri
-      );
+      PortableInterceptor::ServerRequestInfo_ptr ri);
   //@}
 
   CORBA::Object_var server_iogr_;
 
 protected:
-  TimeBase::TimeT get_now (void);
+  TimeBase::TimeT get_now ();
 
 private:
-
   CORBA::ORB_var orb_;
 
   CORBA::Boolean expired_;

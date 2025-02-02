@@ -40,19 +40,19 @@ public:
   ACE_Timer_List_Iterator_T (List& lst);
 
   /// Destructor.
-  virtual ~ACE_Timer_List_Iterator_T (void);
+  virtual ~ACE_Timer_List_Iterator_T ();
 
   /// Positions the iterator at the earliest node in the Timer Queue
-  virtual void first (void);
+  virtual void first ();
 
   /// Positions the iterator at the next node in the Timer Queue
-  virtual void next (void);
+  virtual void next ();
 
   /// Returns true when there are no more nodes in the sequence
   virtual bool isdone () const;
 
   /// Returns the node at the current position in the sequence
-  virtual ACE_Timer_Node_T<TYPE> *item (void);
+  virtual ACE_Timer_Node_T<TYPE> *item ();
 
 protected:
   /// Pointer to the ACE_Timer_List that we are iterating over.
@@ -104,7 +104,7 @@ public:
                     TIME_POLICY const & time_policy = TIME_POLICY());
 
   /// Destructor
-  virtual ~ACE_Timer_List_T (void);
+  virtual ~ACE_Timer_List_T ();
 
   /// True if queue is empty, else false.
   virtual bool is_empty () const;
@@ -147,13 +147,13 @@ public:
   /**
    * Destroy timer queue. Cancels all timers.
    */
-  virtual int close (void);
+  virtual int close ();
 
   /// Returns a pointer to this ACE_Timer_Queue's iterator.
-  virtual ACE_Timer_Queue_Iterator_T<TYPE>& iter (void);
+  virtual ACE_Timer_Queue_Iterator_T<TYPE>& iter ();
 
   /// Removes the earliest node from the queue and returns it
-  virtual ACE_Timer_Node_T<TYPE>* remove_first (void);
+  virtual ACE_Timer_Node_T<TYPE>* remove_first ();
 
   /// Dump the state of an object.
   virtual void dump () const;
@@ -163,7 +163,7 @@ public:
   virtual void reschedule (ACE_Timer_Node_T<TYPE> *);
 
   /// Reads the earliest node from the queue and returns it.
-  virtual ACE_Timer_Node_T<TYPE>* get_first (void);
+  virtual ACE_Timer_Node_T<TYPE>* get_first ();
 
 private:
   /**
@@ -215,13 +215,7 @@ private:
   void operator= (const ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK> &) = delete;
 };
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Timer_List_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Timer_List_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_TIMER_LIST_T_H */

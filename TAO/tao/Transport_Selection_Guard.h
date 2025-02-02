@@ -70,26 +70,26 @@ namespace TAO
     TAO_Transport* operator-> () const
     {
       return this->get ();
-    };
+    }
 
     /// getter
     TAO_Transport& operator* () const
     {
       return *this->get ();
-    };
+    }
 
     /// Getter
     TAO_Transport* get () const
     {
       return this->curr_;
-    };
+    }
 
     /// Setter
     Transport_Selection_Guard& set (TAO_Transport* t)
     {
       this->curr_ = t;
       return *this;
-    };
+    }
 
   Transport_Selection_Guard& operator=(const Transport_Selection_Guard& rhs) {
     if (this != &rhs)

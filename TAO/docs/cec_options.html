@@ -343,6 +343,19 @@ static CEC_Factory "-CECDispatching reactive ....."
             </P>
          </TD>
         </TR>
+
+        <!-- <TR NAME="CECProxyDisconnectRetries"> -->
+        <TR>
+          <TD><CODE>-CECShutdownWaitCompletion</CODE>
+            <EM>true|false</EM>
+          </TD>
+          <TD><P>Default <CODE>true</CODE> which means we wait on all events in the queue
+          to be processed on shutdown, in case of <CODE>false</CODE> all pending events in the queue are flushed
+          on shutdown.
+            </P>
+         </TD>
+        </TR>
+
       </TABLE>
     </P>
 

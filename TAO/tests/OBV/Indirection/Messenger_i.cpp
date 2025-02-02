@@ -64,7 +64,7 @@ char * Messenger_i::receive_list (::demo::value::idl::Node * node)
   {
     size_t const len = l.size ();
     size_t i = 0;
-    for ( i = 0; i < len; ++i)
+    for (i = 0; i < len; ++i)
     {
       if (l[i] == x)
         break;

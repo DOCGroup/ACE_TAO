@@ -38,12 +38,12 @@ public:
   {
   }
 
-  void go (void)
+  void go ()
   {
     started_ = true;
   }
 
-  void done (void)
+  void done ()
   {
     started_ = false;
   }
@@ -178,7 +178,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::ORB_ptr orb = client.orb ();
 
       // Activate the signaler with the POA
-      sig_impl.reset( new sig_i( orb ) );
+      sig_impl.reset( new sig_i(orb));
       sig_var sig = sig_impl->_this ();
 
       CORBA::String_var ior =

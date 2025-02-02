@@ -132,9 +132,8 @@ namespace TAO
   class TAO_Export ARDB_Refcount_Functor
   {
   public:
-    void operator() (TAO_Asynch_Reply_Dispatcher_Base *ardb) throw ();
+    void operator() (TAO_Asynch_Reply_Dispatcher_Base *ardb) noexcept;
   };
-
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

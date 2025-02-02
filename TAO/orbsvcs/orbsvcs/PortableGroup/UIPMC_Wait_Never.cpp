@@ -10,10 +10,6 @@ TAO_UIPMC_Wait_Never::TAO_UIPMC_Wait_Never (TAO_Transport *transport)
 {
 }
 
-TAO_UIPMC_Wait_Never::~TAO_UIPMC_Wait_Never ()
-{
-}
-
 int
 TAO_UIPMC_Wait_Never::register_handler ()
 {
