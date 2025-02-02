@@ -1,7 +1,7 @@
-This is a test that exercises the birectional GIOP connection
+This is a test that exercises the bidirectional GIOP connection
 implementation in TAO over SSLIOP connection.
 
-Basicaly, the test is a copy of the $TAO_ROOT/tests/BiDirectional with
+Basically, the test is a copy of the $TAO_ROOT/tests/BiDirectional with
 added support for SSLIOP
 
 Start the server like this

@@ -12,16 +12,12 @@ static const char the_prefix[] = "uipmc";
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_UIPMC_Protocol_Factory::TAO_UIPMC_Protocol_Factory (void)
+TAO_UIPMC_Protocol_Factory::TAO_UIPMC_Protocol_Factory ()
   :  TAO_Protocol_Factory (IOP::TAG_UIPMC),
      // major_ (TAO_DEF_GIOP_MAJOR),
      // minor_ (TAO_DEF_GIOP_MINOR),
      listen_on_all_ (false),
      listener_interfaces_ ()
-{
-}
-
-TAO_UIPMC_Protocol_Factory::~TAO_UIPMC_Protocol_Factory (void)
 {
 }
 
@@ -33,19 +29,19 @@ TAO_UIPMC_Protocol_Factory::match_prefix (const ACE_CString &prefix)
 }
 
 const char *
-TAO_UIPMC_Protocol_Factory::prefix (void) const
+TAO_UIPMC_Protocol_Factory::prefix () const
 {
   return ::the_prefix;
 }
 
 char
-TAO_UIPMC_Protocol_Factory::options_delimiter (void) const
+TAO_UIPMC_Protocol_Factory::options_delimiter () const
 {
   return '/';
 }
 
 TAO_Acceptor *
-TAO_UIPMC_Protocol_Factory::make_acceptor (void)
+TAO_UIPMC_Protocol_Factory::make_acceptor ()
 {
   TAO_Acceptor *acceptor = 0;
   ACE_NEW_RETURN (acceptor,
@@ -127,7 +123,7 @@ TAO_UIPMC_Protocol_Factory::init (int argc,
 }
 
 TAO_Connector *
-TAO_UIPMC_Protocol_Factory::make_connector (void)
+TAO_UIPMC_Protocol_Factory::make_connector ()
 {
   // This is done only once when the library is loaded and
   // only on the client side.
@@ -141,7 +137,7 @@ TAO_UIPMC_Protocol_Factory::make_connector (void)
 }
 
 int
-TAO_UIPMC_Protocol_Factory::requires_explicit_endpoint (void) const
+TAO_UIPMC_Protocol_Factory::requires_explicit_endpoint () const
 {
   // A multicast endpoint can't be picked automatically in the
   // pluggable protocol framework.  It must be determined from

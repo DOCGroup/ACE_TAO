@@ -6,7 +6,7 @@
 #include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
 #include "tao/CDR.h"
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/SString.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -20,18 +20,18 @@ TAO_UnionDef_i::TAO_UnionDef_i (TAO_Repository_i *repo)
 {
 }
 
-TAO_UnionDef_i::~TAO_UnionDef_i (void)
+TAO_UnionDef_i::~TAO_UnionDef_i ()
 {
 }
 
 CORBA::DefinitionKind
-TAO_UnionDef_i::def_kind (void)
+TAO_UnionDef_i::def_kind ()
 {
   return CORBA::dk_Union;
 }
 
 void
-TAO_UnionDef_i::destroy (void)
+TAO_UnionDef_i::destroy ()
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -41,7 +41,7 @@ TAO_UnionDef_i::destroy (void)
 }
 
 void
-TAO_UnionDef_i::destroy_i (void)
+TAO_UnionDef_i::destroy_i ()
 {
   // Destroy our members.
   TAO_Container_i::destroy_i ();
@@ -51,7 +51,7 @@ TAO_UnionDef_i::destroy_i (void)
 }
 
 CORBA::TypeCode_ptr
-TAO_UnionDef_i::type (void)
+TAO_UnionDef_i::type ()
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::TypeCode::_nil ());
 
@@ -61,7 +61,7 @@ TAO_UnionDef_i::type (void)
 }
 
 CORBA::TypeCode_ptr
-TAO_UnionDef_i::type_i (void)
+TAO_UnionDef_i::type_i ()
 {
   ACE_TString id;
   this->repo_->config ()->get_string_value (this->section_key_,
@@ -103,7 +103,7 @@ TAO_UnionDef_i::type_i (void)
 }
 
 CORBA::TypeCode_ptr
-TAO_UnionDef_i::discriminator_type (void)
+TAO_UnionDef_i::discriminator_type ()
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::TypeCode::_nil ());
 
@@ -113,7 +113,7 @@ TAO_UnionDef_i::discriminator_type (void)
 }
 
 CORBA::TypeCode_ptr
-TAO_UnionDef_i::discriminator_type_i (void)
+TAO_UnionDef_i::discriminator_type_i ()
 {
   ACE_TString disc_path;
   this->repo_->config ()->get_string_value (this->section_key_,
@@ -132,7 +132,7 @@ TAO_UnionDef_i::discriminator_type_i (void)
 }
 
 CORBA::IDLType_ptr
-TAO_UnionDef_i::discriminator_type_def (void)
+TAO_UnionDef_i::discriminator_type_def ()
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::IDLType::_nil ());
 
@@ -142,7 +142,7 @@ TAO_UnionDef_i::discriminator_type_def (void)
 }
 
 CORBA::IDLType_ptr
-TAO_UnionDef_i::discriminator_type_def_i (void)
+TAO_UnionDef_i::discriminator_type_def_i ()
 {
   ACE_TString disc_path;
   this->repo_->config ()->get_string_value (this->section_key_,
@@ -182,7 +182,7 @@ TAO_UnionDef_i::discriminator_type_def_i (
 }
 
 CORBA::UnionMemberSeq *
-TAO_UnionDef_i::members (void)
+TAO_UnionDef_i::members ()
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
@@ -192,7 +192,7 @@ TAO_UnionDef_i::members (void)
 }
 
 CORBA::UnionMemberSeq *
-TAO_UnionDef_i::members_i (void)
+TAO_UnionDef_i::members_i ()
 {
   ACE_Unbounded_Queue<ACE_Configuration_Section_Key> key_queue;
 

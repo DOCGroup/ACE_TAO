@@ -31,10 +31,10 @@ AMI_Test_i::foo (CORBA::Long_out out_l)
 }
 
 void
-AMI_Test_i::shutdown (void)
+AMI_Test_i::shutdown ()
 {
   ACE_OS::sleep (5);
 
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }
 

@@ -13,7 +13,7 @@
 
 #include "ace/ACE.h"
 #include "ace/OS_NS_string.h"
-
+#include <cstring>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -55,7 +55,7 @@ ACE_Cached_Allocator<T, ACE_LOCK>::ACE_Cached_Allocator (size_t n_chunks)
 }
 
 template <class T, class ACE_LOCK>
-ACE_Cached_Allocator<T, ACE_LOCK>::~ACE_Cached_Allocator (void)
+ACE_Cached_Allocator<T, ACE_LOCK>::~ACE_Cached_Allocator ()
 {
 #if defined (ACE_HAS_ALLOC_HOOKS)
   ACE_Allocator::instance()->free (this->pool_);
@@ -73,9 +73,8 @@ ACE_Cached_Allocator<T, ACE_LOCK>::malloc (size_t nbytes)
   if (nbytes > sizeof (T))
     return 0;
 
-  // addr() call is really not absolutely necessary because of the way
-  // ACE_Cached_Mem_Pool_Node's internal structure arranged.
-  return this->free_list_.remove ()->addr ();
+  ACE_Cached_Mem_Pool_Node<T> *allocated = this->free_list_.remove ();
+  return allocated == 0 ? 0 : allocated->addr();
 }
 
 template <class T, class ACE_LOCK> void *
@@ -86,9 +85,8 @@ ACE_Cached_Allocator<T, ACE_LOCK>::calloc (size_t nbytes,
   if (nbytes > sizeof (T))
     return 0;
 
-  // addr() call is really not absolutely necessary because of the way
-  // ACE_Cached_Mem_Pool_Node's internal structure arranged.
-  void *ptr = this->free_list_.remove ()->addr ();
+  ACE_Cached_Mem_Pool_Node<T> *allocated = this->free_list_.remove ();
+  void *ptr = allocated == 0 ? 0 : allocated->addr();
   if (ptr != 0)
     ACE_OS::memset (ptr, initial_value, sizeof (T));
   return ptr;
@@ -133,7 +131,7 @@ ACE_Dynamic_Cached_Allocator<ACE_LOCK>::ACE_Dynamic_Cached_Allocator
 }
 
 template <class ACE_LOCK>
-ACE_Dynamic_Cached_Allocator<ACE_LOCK>::~ACE_Dynamic_Cached_Allocator (void)
+ACE_Dynamic_Cached_Allocator<ACE_LOCK>::~ACE_Dynamic_Cached_Allocator ()
 {
   delete [] this->pool_;
   this->pool_ = 0;
@@ -147,9 +145,8 @@ ACE_Dynamic_Cached_Allocator<ACE_LOCK>::malloc (size_t nbytes)
   if (nbytes > chunk_size_)
     return 0;
 
-  // addr() call is really not absolutely necessary because of the way
-  // ACE_Cached_Mem_Pool_Node's internal structure arranged.
-  return this->free_list_.remove ()->addr ();
+  ACE_Cached_Mem_Pool_Node<char> *allocated = this->free_list_.remove ();
+  return allocated == 0 ? 0 : allocated->addr();
 }
 
 template <class ACE_LOCK> void *
@@ -160,9 +157,8 @@ ACE_Dynamic_Cached_Allocator<ACE_LOCK>::calloc (size_t nbytes,
   if (nbytes > chunk_size_)
     return 0;
 
-  // addr() call is really not absolutely necessary because of the way
-  // ACE_Cached_Mem_Pool_Node's internal structure arranged.
-  void *ptr = this->free_list_.remove ()->addr ();
+  ACE_Cached_Mem_Pool_Node<char> *allocated = this->free_list_.remove ();
+  void *ptr = allocated == 0 ? 0 : allocated->addr();
   if (ptr != 0)
     ACE_OS::memset (ptr, initial_value, chunk_size_);
   return ptr;
@@ -208,7 +204,7 @@ ACE_Allocator_Adapter<MALLOC>::calloc (size_t n_elem,
 }
 
 template <class MALLOC> MALLOC &
-ACE_Allocator_Adapter<MALLOC>::alloc (void)
+ACE_Allocator_Adapter<MALLOC>::alloc ()
 {
   ACE_TRACE ("ACE_Allocator_Adapter<MALLOC>::allocator");
   return this->allocator_;
@@ -222,7 +218,7 @@ ACE_Allocator_Adapter<MALLOC>::free (void *ptr)
 }
 
 template <class MALLOC> int
-ACE_Allocator_Adapter<MALLOC>::remove (void)
+ACE_Allocator_Adapter<MALLOC>::remove ()
 {
   ACE_TRACE ("ACE_Allocator_Adapter<MALLOC>::remove");
   return this->allocator_.remove ();
@@ -343,14 +339,14 @@ ACE_Allocator_Adapter<MALLOC>::ACE_Allocator_Adapter (
 #endif /* ACE_HAS_WCHAR */
 
 template <class MALLOC>
-ACE_Allocator_Adapter<MALLOC>::~ACE_Allocator_Adapter (void)
+ACE_Allocator_Adapter<MALLOC>::~ACE_Allocator_Adapter ()
 {
   ACE_TRACE ("ACE_Allocator_Adapter<MALLOC>::~ACE_Allocator_Adapter");
 }
 
 #if defined (ACE_HAS_MALLOC_STATS)
 template <class MALLOC> void
-ACE_Allocator_Adapter<MALLOC>::print_stats (void) const
+ACE_Allocator_Adapter<MALLOC>::print_stats () const
 {
   ACE_TRACE ("ACE_Allocator_Adapter<MALLOC>::print_stats");
   this->allocator_.print_stats ();
@@ -358,7 +354,7 @@ ACE_Allocator_Adapter<MALLOC>::print_stats (void) const
 #endif /* ACE_HAS_MALLOC_STATS */
 
 template <class MALLOC> void
-ACE_Allocator_Adapter<MALLOC>::dump (void) const
+ACE_Allocator_Adapter<MALLOC>::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Allocator_Adapter<MALLOC>::dump");
@@ -369,7 +365,7 @@ ACE_Allocator_Adapter<MALLOC>::dump (void) const
 ACE_ALLOC_HOOK_DEFINE_Tt(ACE_Allocator_Adapter)
 
 template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB> void
-ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::dump (void) const
+ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::dump");
@@ -389,7 +385,7 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::dump (void) const
 #if defined (ACE_HAS_MALLOC_STATS)
 
 template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB> void
-ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::print_stats (void) const
+ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::print_stats () const
 {
   ACE_TRACE ("ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::print_stats");
   ACE_GUARD (ACE_LOCK, ace_mon, *this->lock_);
@@ -432,9 +428,8 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::free (void *ptr)
 // rounding...).  Depending on the type of <MEM_POOL> (i.e., shared
 // vs. local) subsequent calls from other processes will only
 // initialize the control block pointer.
-
 template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB> int
-ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::open (void)
+ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::open ()
 {
   ACE_TRACE ("ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::open");
   ACE_GUARD_RETURN (ACE_LOCK, ace_mon, *this->lock_, -1);
@@ -481,17 +476,7 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::open (void)
                                    0,
                                    this->cb_ptr_);
 
-          // Why aC++ in 64-bit mode can't grok this, I have no
-          // idea... but it ends up with an extra bit set which makes
-          // size_ really big without this hack.
-#if defined (__hpux) && defined (__LP64__)
-          size_t hpux11_hack = (rounded_bytes - sizeof *this->cb_ptr_)
-                               / sizeof (MALLOC_HEADER);
-          p->size_ = hpux11_hack;
-#else
-          p->size_ = (rounded_bytes - sizeof *this->cb_ptr_)
-            / sizeof (MALLOC_HEADER);
-#endif /* (__hpux) && defined (__LP64__) */
+          p->size_ = (rounded_bytes - sizeof *this->cb_ptr_) / sizeof (MALLOC_HEADER);
 
           ACE_MALLOC_STATS (++this->cb_ptr_->malloc_stats_.nchunks_);
           ACE_MALLOC_STATS (++this->cb_ptr_->malloc_stats_.nblocks_);
@@ -581,7 +566,7 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_T (const ACE_TCHAR *p
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB>
-ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::~ACE_Malloc_T (void)
+ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::~ACE_Malloc_T ()
 {
   ACE_TRACE ("ACE_Malloc_T<MEM_POOL>::~ACE_Malloc_T<MEM_POOL>");
   if (this->delete_lock_)
@@ -592,9 +577,8 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::~ACE_Malloc_T (void)
 }
 
 // Clean up the resources allocated by ACE_Malloc_T.
-
 template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB> int
-ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::remove (void)
+ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::remove ()
 {
   ACE_TRACE ("ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::remove");
   // ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) destroying ACE_Malloc_T\n")));
@@ -616,7 +600,7 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::remove (void)
   // Also notice that we are leaving the decision of removing
   // the pool to users so they can map to the same mmap file
   // again.
-  this->cb_ptr_ = 0;
+  this->cb_ptr_ = nullptr;
 
   return result;
 }
@@ -626,9 +610,9 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::remove (void)
 template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB> void *
 ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::shared_malloc (size_t nbytes)
 {
-#if !defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
+#if !defined (ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS)
   ACE_TRACE ("ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::shared_malloc");
-#endif /* !ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
+#endif /* !ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS */
 
   if (this->cb_ptr_ == 0)
     return 0;
@@ -648,12 +632,12 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::shared_malloc (size_t nbytes)
       prevp = this->cb_ptr_->freep_;
       currp = prevp->next_block_;
     }
-#if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
+#if defined (ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS)
   ACE_SEH_EXCEPT (this->memory_pool_.seh_selector (GetExceptionInformation ()))
     {
       currp = prevp->next_block_;
     }
-#endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
+#endif /* ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS */
 
   // Search the freelist to locate a block of the appropriate size.
 
@@ -687,7 +671,7 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::shared_malloc (size_t nbytes)
               // Skip over the MALLOC_HEADER when returning pointer.
               return currp + 1;
             }
-          else if (currp == this->cb_ptr_->freep_)
+          else if (currp == static_cast<MALLOC_HEADER *> (this->cb_ptr_->freep_))
             {
               // We've wrapped around freelist without finding a
               // block.  Therefore, we need to ask the memory pool for
@@ -784,9 +768,9 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::calloc (size_t n_elem,
 template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB> void
 ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::shared_free (void *ap)
 {
-#if !defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
+#if !defined (ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS)
   ACE_TRACE ("ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::shared_free");
-#endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
+#endif /* ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS */
 
   if (ap == 0 || this->cb_ptr_ == 0)
     return;
@@ -797,7 +781,6 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::shared_free (void *ap)
 
   // Search until we find the location where the blocks belongs.  Note
   // that addresses are kept in sorted order.
-
   ACE_SEH_TRY
     {
       for (;
@@ -813,7 +796,7 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::shared_free (void *ap)
         }
 
       // Join to upper neighbor.
-      if ((blockp + blockp->size_) == currp->next_block_)
+      if (blockp + blockp->size_ == static_cast<MALLOC_HEADER *> (currp->next_block_))
         {
           ACE_MALLOC_STATS (--this->cb_ptr_->malloc_stats_.nblocks_);
           blockp->size_ += currp->next_block_->size_;
@@ -845,20 +828,19 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::shared_free (void *ap)
 template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB> void*
 ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::shared_find (const char *name)
 {
-#if !defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
+#if !defined (ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS)
   ACE_TRACE ("ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::shared_find");
-#endif /* !ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
+#endif /* !ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS */
 
-  if (this->cb_ptr_ == 0)
-    return 0;
+  if (!this->cb_ptr_)
+    return nullptr;
 
   ACE_SEH_TRY
     {
       for (NAME_NODE *node = this->cb_ptr_->name_head_;
            node != 0;
            node = node->next_)
-        if (ACE_OS::strcmp (node->name (),
-                            name) == 0)
+        if (std::strcmp (node->name (), name) == 0)
           return node;
     }
   ACE_SEH_EXCEPT (this->memory_pool_.seh_selector (GetExceptionInformation ()))
@@ -871,11 +853,11 @@ template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB> int
 ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::shared_bind (const char *name,
                                                              void *pointer)
 {
-  if (this->cb_ptr_ == 0)
+  if (!this->cb_ptr_)
     return -1;
 
   // Combine the two allocations into one to avoid overhead...
-  NAME_NODE *new_node = 0;
+  NAME_NODE *new_node = nullptr;
 
   ACE_ALLOCATOR_RETURN (new_node,
                         (NAME_NODE *)
@@ -1007,7 +989,7 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::unbind (const char *name, void *
        curr != 0;
        curr = curr->next_)
     {
-      if (ACE_OS::strcmp (curr->name (), name) == 0)
+      if (std::strcmp (curr->name (), name) == 0)
         {
           pointer = (char *) curr->pointer_;
 
@@ -1057,7 +1039,7 @@ ACE_Malloc_Lock_Adapter_T<ACE_LOCK>::operator () (const ACE_TCHAR *name)
 /*****************************************************************************/
 
 template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB> void
-ACE_Malloc_LIFO_Iterator_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::dump (void) const
+ACE_Malloc_LIFO_Iterator_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Malloc_LIFO_Iterator_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::dump");
@@ -1089,7 +1071,7 @@ ACE_Malloc_LIFO_Iterator_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_LIFO_It
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB>
-ACE_Malloc_LIFO_Iterator_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::~ACE_Malloc_LIFO_Iterator_T (void)
+ACE_Malloc_LIFO_Iterator_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::~ACE_Malloc_LIFO_Iterator_T ()
 {
   ACE_OS::free ((void *) this->name_);
 }
@@ -1125,7 +1107,7 @@ ACE_Malloc_LIFO_Iterator_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::next (void *&next_
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB> int
-ACE_Malloc_LIFO_Iterator_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::done (void) const
+ACE_Malloc_LIFO_Iterator_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::done () const
 {
   ACE_TRACE ("ACE_Malloc_LIFO_Iterator_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::done");
 
@@ -1133,7 +1115,7 @@ ACE_Malloc_LIFO_Iterator_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::done (void) const
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB> int
-ACE_Malloc_LIFO_Iterator_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::advance (void)
+ACE_Malloc_LIFO_Iterator_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::advance ()
 {
   ACE_TRACE ("ACE_Malloc_LIFO_Iterator_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::advance");
 
@@ -1143,15 +1125,14 @@ ACE_Malloc_LIFO_Iterator_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::advance (void)
     return this->curr_ != 0;
 
   while (this->curr_ != 0
-         && ACE_OS::strcmp (this->name_,
-                            this->curr_->name ()) != 0)
+         && std::strcmp (this->name_, this->curr_->name ()) != 0)
     this->curr_ = this->curr_->next_;
 
   return this->curr_ != 0;
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB> void
-ACE_Malloc_FIFO_Iterator_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::dump (void) const
+ACE_Malloc_FIFO_Iterator_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Malloc_FIFO_Iterator_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::dump");
@@ -1185,7 +1166,7 @@ ACE_Malloc_FIFO_Iterator_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_FIFO_It
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB>
-ACE_Malloc_FIFO_Iterator_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::~ACE_Malloc_FIFO_Iterator_T (void)
+ACE_Malloc_FIFO_Iterator_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::~ACE_Malloc_FIFO_Iterator_T ()
 {
   ACE_OS::free ((void *) this->name_);
 }
@@ -1221,7 +1202,7 @@ ACE_Malloc_FIFO_Iterator_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::next (void *&next_
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB> int
-ACE_Malloc_FIFO_Iterator_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::done (void) const
+ACE_Malloc_FIFO_Iterator_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::done () const
 {
   ACE_TRACE ("ACE_Malloc_FIFO_Iterator_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::done");
 
@@ -1229,7 +1210,7 @@ ACE_Malloc_FIFO_Iterator_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::done (void) const
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB> int
-ACE_Malloc_FIFO_Iterator_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::advance (void)
+ACE_Malloc_FIFO_Iterator_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::advance ()
 {
   ACE_TRACE ("ACE_Malloc_FIFO_Iterator_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::advance");
 
@@ -1239,15 +1220,14 @@ ACE_Malloc_FIFO_Iterator_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::advance (void)
     return this->curr_ != 0;
 
   while (this->curr_ != 0
-         && ACE_OS::strcmp (this->name_,
-                            this->curr_->name ()) != 0)
+         && std::strcmp (this->name_, this->curr_->name ()) != 0)
     this->curr_ = this->curr_->prev_;
 
   return this->curr_ != 0;
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB> int
-ACE_Malloc_FIFO_Iterator_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::start (void)
+ACE_Malloc_FIFO_Iterator_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::start ()
 {
   this->curr_ = this->curr_->next_;
   NAME_NODE *prev = 0;

@@ -26,7 +26,6 @@ namespace ACE
   {
     namespace FTP
       {
-
         /**
         * @class ACE_FTP_StreamBuffer
         *
@@ -111,7 +110,6 @@ namespace ACE
 
               void set_interceptor (StreamBuffer::interceptor_type& interceptor);
           };
-
       }
   }
 

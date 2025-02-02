@@ -20,7 +20,7 @@ public:
   // = The skeleton methods
   virtual void send_objref (const Test::PayLoad &p);
 
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
 private:
   /// Use an ORB reference to convert strings to objects and shutdown

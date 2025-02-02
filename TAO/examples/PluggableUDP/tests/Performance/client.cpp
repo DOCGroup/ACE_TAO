@@ -10,7 +10,6 @@
 //=============================================================================
 
 
-
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
 
@@ -22,7 +21,6 @@
 // The following include file forces DIOP to be linked into the
 // executable and initialized for static builds.
 #include "tao/Strategies/advanced_resource.h"
-
 
 
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
@@ -126,8 +124,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       client->wait ();
 
-      root_poa->destroy (1,  // ethernalize objects
-                         0); // wait for completion
+      root_poa->destroy (true,  // ethernalize objects
+                         false); // wait for completion
 
       orb->destroy ();
 
@@ -135,7 +133,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // the one calling orb->shutdown () triggering the end of the ORB
       // event loop.
       delete client;
-
     }
   catch (const CORBA::Exception& ex)
     {

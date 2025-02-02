@@ -1,4 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
 /*
 
 COPYRIGHT
@@ -77,26 +76,35 @@ public:
   AST_InterfaceFwd (AST_Interface *dummy,
                     UTL_ScopedName *n);
 
-  virtual ~AST_InterfaceFwd (void);
+  virtual ~AST_InterfaceFwd ();
 
-  AST_Interface *full_definition (void);
+  AST_Interface *full_definition ();
+
+  /**
+   * Sets the full definition. If there is an existing dummy definition, it
+   * deletes that first. Ownership of the new definition is NOT assumed.
+   */
   void set_full_definition (AST_Interface *nfd);
 
-  virtual bool is_defined (void);
-  void set_as_defined (void);
+  virtual bool is_defined ();
+  void set_as_defined ();
 
-  virtual bool is_local (void);
-  virtual bool is_valuetype (void);
-  virtual bool is_abstract_valuetype (void);
+  /**
+   * Do not assume memory ownership of the full definition anymore.
+   *
+   * For example, this should be used if the dummy definition was made real and
+   * added to a scope, which always assumes ownership of nodes.
+   */
+  void disown_full_definition ();
 
-  bool full_def_seen (void);
+  virtual bool is_local ();
+  virtual bool is_valuetype ();
+  virtual bool is_abstract_valuetype ();
+
+  bool full_def_seen ();
 
   // Cleanup function.
-  virtual void destroy (void);
-
-  // Narrowing.
-
-  DEF_NARROW_FROM_DECL(AST_InterfaceFwd);
+  virtual void destroy ();
 
   // AST Dumping.
   virtual void dump (ACE_OSTREAM_TYPE &);
@@ -105,7 +113,7 @@ public:
   virtual int ast_accept (ast_visitor *visitor);
 
   // Is this decl a forward declared type (Yes)
-  virtual bool is_fwd (void);
+  virtual bool is_fwd ();
 
   // We don't actually want the forward declaration,
   // but want to return the full definition member,
@@ -120,6 +128,9 @@ private:
 
   bool is_defined_;
   // Checking the member above isn't good enough.
+
+  /// True if we own pd_full_definition, which would be true if it's a dummy.
+  bool has_ownership_;
 };
 
 #endif           // _AST_INTERFACE_FWD_AST_INTERFACE_FWD_HH

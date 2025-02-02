@@ -13,12 +13,12 @@ TAO_LF_Follower::TAO_LF_Follower (TAO_Leader_Follower &leader_follower)
 {
 }
 
-TAO_LF_Follower::~TAO_LF_Follower (void)
+TAO_LF_Follower::~TAO_LF_Follower ()
 {
 }
 
 int
-TAO_LF_Follower::signal (void)
+TAO_LF_Follower::signal ()
 {
   // We *must* remove ourselves from the list of followers, otherwise
   // we could get signaled twice: to wake up as a follower and as the

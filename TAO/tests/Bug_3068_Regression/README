@@ -1,5 +1,3 @@
-
-
 This test is for validating the fix for a race condition exposed in the
 Transport_Cache_Manager. The problem is that an internal pointer used
 to test intermediate return values to the cache may be deleted by one

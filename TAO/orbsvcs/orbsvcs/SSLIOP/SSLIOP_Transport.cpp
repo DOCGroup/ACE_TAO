@@ -27,18 +27,18 @@ TAO::SSLIOP::Transport::Transport (
 {
 }
 
-TAO::SSLIOP::Transport::~Transport (void)
+TAO::SSLIOP::Transport::~Transport ()
 {
 }
 
 ACE_Event_Handler *
-TAO::SSLIOP::Transport::event_handler_i (void)
+TAO::SSLIOP::Transport::event_handler_i ()
 {
   return this->connection_handler_;
 }
 
 TAO_Connection_Handler *
-TAO::SSLIOP::Transport::connection_handler_i (void)
+TAO::SSLIOP::Transport::connection_handler_i ()
 {
   return this->connection_handler_;
 }
@@ -186,7 +186,6 @@ TAO::SSLIOP::Transport::tear_listen_point_list (TAO_InputCDR &cdr)
 
   return this->connection_handler_->process_listen_point_list (listen_list);
 }
-
 
 
 void

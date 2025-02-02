@@ -8,13 +8,13 @@
 class ACE_DLL_TAO_Service : public ACE_DLL_Service
 {
 public:
-  ACE_DLL_TAO_Service (void);
+  ACE_DLL_TAO_Service ();
 
-  virtual ~ACE_DLL_TAO_Service (void);
+  virtual ~ACE_DLL_TAO_Service ();
 
   virtual int init (int argc, ACE_TCHAR * argv []);
 
-  virtual int fini (void);
+  virtual int fini ();
 
 private:
   CORBA::ORB_var orb_;

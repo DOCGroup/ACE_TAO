@@ -15,7 +15,7 @@ public:
   MessengerServer (CORBA::ORB_ptr orb);
 
   //Destructor
-  virtual ~MessengerServer (void);
+  virtual ~MessengerServer ();
 
   // parse arguments
   int parse_args (int argc, ACE_TCHAR* argv[]);
@@ -65,10 +65,8 @@ public:
   };
 
 private:
-
   CORBA::ORB_var orb_;
   ConsoleMonitor * monitor_;
-
 };
 
 #endif /* MESSENGERSERVER_H_  */

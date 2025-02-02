@@ -31,7 +31,7 @@ ACEXML_Element_Tree_Name_Node::set (const ACEXML_Char *name,
 }
 
 ACEXML_INLINE
-ACEXML_Element_Tree_List_Node::ACEXML_Element_Tree_List_Node (void)
+ACEXML_Element_Tree_List_Node::ACEXML_Element_Tree_List_Node ()
   : type_ (SEQUENCE),
     head_ (0),
     tail_ (0),
@@ -40,7 +40,7 @@ ACEXML_Element_Tree_List_Node::ACEXML_Element_Tree_List_Node (void)
 }
 
 ACEXML_INLINE ACEXML_Element_Tree_List_Node::LIST_TYPE
-ACEXML_Element_Tree_List_Node::get (void)
+ACEXML_Element_Tree_List_Node::get ()
 {
   return this->type_;
 }
@@ -53,7 +53,7 @@ ACEXML_Element_Tree_List_Node::set (ACEXML_Element_Tree_List_Node::LIST_TYPE typ
 }
 
 ACEXML_INLINE
-ACEXML_Element_Tree_List_Stack::ACEXML_Element_Tree_List_Stack (void)
+ACEXML_Element_Tree_List_Stack::ACEXML_Element_Tree_List_Stack ()
   : top_ (0)
 {
 }

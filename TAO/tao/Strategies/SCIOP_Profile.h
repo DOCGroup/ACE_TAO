@@ -43,10 +43,10 @@ class TAO_Strategies_Export TAO_SCIOP_Profile : public TAO_Profile
 public:
   /// The object key delimiter that SCIOP uses or expects.
   static const char object_key_delimiter_;
-  virtual char object_key_delimiter (void) const;
+  virtual char object_key_delimiter () const;
 
   /// Return the char string prefix.
-  static const char *prefix (void);
+  static const char *prefix ();
 
   /// Profile constructor, same as above except the object_key has
   /// already been marshaled.
@@ -68,15 +68,14 @@ public:
   TAO_SCIOP_Profile (TAO_ORB_Core *orb_core);
 
   /// Destructor is to be called only through <_decr_refcnt>.
-  ~TAO_SCIOP_Profile (void);
+  ~TAO_SCIOP_Profile ();
 
   /// Template methods. Please see Profile.h for documentation.
-  virtual char * to_string (void) const;
-  virtual int encode_endpoints (void);
-  virtual TAO_Endpoint *endpoint (void);
-  virtual CORBA::ULong endpoint_count (void) const;
-  virtual CORBA::ULong hash (CORBA::ULong max
-                            );
+  virtual char * to_string () const;
+  virtual int encode_endpoints ();
+  virtual TAO_Endpoint *endpoint ();
+  virtual CORBA::ULong endpoint_count () const;
+  virtual CORBA::ULong hash (CORBA::ULong max);
   /**
    * Add <endp> to this profile's list of endpoints (it is inserted
    * next to the head of the list).  This profiles takes ownership of
@@ -85,17 +84,14 @@ public:
   void add_endpoint (TAO_SCIOP_Endpoint *endp);
 
 protected:
-
   /// Template methods. Please see Profile.h for the documentation.
   virtual int decode_profile (TAO_InputCDR &cdr);
-  virtual int decode_endpoints (void);
-  virtual void parse_string_i (const char *string
-                              );
+  virtual int decode_endpoints ();
+  virtual void parse_string_i (const char *string);
   virtual void create_profile_body (TAO_OutputCDR &cdr) const;
   virtual CORBA::Boolean do_is_equivalent (const TAO_Profile *other_profile);
 
 protected:
-
   /**
    * Head of this profile's list of endpoints.  This endpoint is not
    * dynamically allocated because a profile always contains at least

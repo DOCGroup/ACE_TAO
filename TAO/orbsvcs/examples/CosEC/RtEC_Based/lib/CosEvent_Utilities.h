@@ -34,10 +34,10 @@ class TAO_RTEC_COSEC_Export CosEC_ServantBase :
   //   Clients can derive from this class and create servants.
  public:
   /// Constructor.
-  CosEC_ServantBase (void);
+  CosEC_ServantBase ();
 
   /// Destructor.
-  virtual ~CosEC_ServantBase (void);
+  virtual ~CosEC_ServantBase () = default;
 
   /**
    * This method creates a local scheduler, rtec and cosec.
@@ -52,45 +52,45 @@ class TAO_RTEC_COSEC_Export CosEC_ServantBase :
                      ACE_TCHAR *source_type_pairs);
 
   /// Activates the CosEC with <thispoa_> and friends with the <poa_>
-  int activate (void);
+  int activate ();
 
   /// If the servant_id is not nil then it is used to supply the object id
   /// for <this> servant.
   int activate (const char* servant_id);
 
   /// Deactivates the CosEC and friends with the POA.
-  void deactivate (void);
+  void deactivate ();
 
   // =  POA_CosEventChannelAdmin::EventChannel methods.
-  virtual CosEventChannelAdmin::ConsumerAdmin_ptr for_consumers (void);
+  virtual CosEventChannelAdmin::ConsumerAdmin_ptr for_consumers ();
 
-  virtual CosEventChannelAdmin::SupplierAdmin_ptr for_suppliers (void);
+  virtual CosEventChannelAdmin::SupplierAdmin_ptr for_suppliers ();
 
   /// Destroys this Event Channel object.
-  virtual void destroy (void);
+  virtual void destroy ();
 
  protected:
   // = RtEC creation, activation and deactivation methods.
   /// Create a local rtec.
   virtual POA_RtecEventChannelAdmin::EventChannel_ptr
-  create_rtec (void);
+  create_rtec ();
 
   /// Activates the rtec.
-  virtual void activate_rtec (void);
+  virtual void activate_rtec ();
 
   /// Deactivates the rtec.
-  virtual void deactivate_rtec (void);
+  virtual void deactivate_rtec ();
 
   // = CosEC creation, activation and deactivation methods.
   /// Create a local cosec.
   TAO_CosEC_EventChannel_i*
-  create_cosec (void);
+  create_cosec ();
 
   /// Activates the cosec.
-  int activate_cosec (void);
+  int activate_cosec ();
 
   /// Deactivates the cosec.
-  void deactivate_cosec (void);
+  void deactivate_cosec ();
 
   /// Initialize the SupplierQOS Factory.
   void init_SupplierQOS (RtecBase::handle_t supp_handle,

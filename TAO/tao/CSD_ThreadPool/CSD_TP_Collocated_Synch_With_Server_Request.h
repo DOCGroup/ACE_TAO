@@ -28,7 +28,6 @@ namespace TAO
 {
   namespace CSD
   {
-
     class TP_Collocated_Synch_With_Server_Request;
     typedef TAO_Intrusive_Ref_Count_Handle
             <TP_Collocated_Synch_With_Server_Request>
@@ -50,7 +49,6 @@ namespace TAO
                                                   : public TP_Corba_Request
     {
     public:
-
       /// Constructor.
       TP_Collocated_Synch_With_Server_Request
                            (TAO_ServerRequest&              server_request,
@@ -70,11 +68,9 @@ namespace TAO
       /// just *after* the request is dispatched by a worker thread.
       /// Returns true if the request has been dispatched, and returns
       /// false if the request has been cancelled.
-      bool wait(void);
-
+      bool wait();
 
     protected:
-
       /// Prepare this TP_Collocated_Synch_With_Server_Request object to be
       /// placed into the request queue.  This will cause the underlying
       /// TAO_ServerRequest object to be cloned.
@@ -86,14 +82,11 @@ namespace TAO
       /// Cancel the request.
       virtual void cancel_i();
 
-
     private:
-
       /// Helper used to block and unblock the thread that invokes our
       /// wait() method.
       TP_Synch_Helper synch_helper_;
     };
-
   }
 }
 

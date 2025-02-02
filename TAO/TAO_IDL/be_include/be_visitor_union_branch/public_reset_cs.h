@@ -27,7 +27,7 @@ class be_visitor_union_branch_public_reset_cs : public be_visitor_decl
 {
 public:
   be_visitor_union_branch_public_reset_cs (be_visitor_context *ctx);
-  ~be_visitor_union_branch_public_reset_cs (void);
+  ~be_visitor_union_branch_public_reset_cs ();
 
   virtual int visit_union_branch (be_union_branch *node);
 

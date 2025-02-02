@@ -69,7 +69,6 @@ void
 Client_Request_Interceptor::send_poll (
     PortableInterceptor::ClientRequestInfo_ptr ri)
 {
-
   CORBA::Boolean client_side =
     this->client_side_test (ri);
 
@@ -87,7 +86,6 @@ void
 Client_Request_Interceptor::receive_reply (
     PortableInterceptor::ClientRequestInfo_ptr ri)
 {
-
   CORBA::Boolean client_side =
     this->client_side_test (ri);
 
@@ -142,7 +140,6 @@ void
 Client_Request_Interceptor::receive_exception (
     PortableInterceptor::ClientRequestInfo_ptr ri)
 {
-
   CORBA::Boolean client_side =
     this->client_side_test (ri);
 
@@ -219,7 +216,6 @@ void
 Client_Request_Interceptor::receive_other (
     PortableInterceptor::ClientRequestInfo_ptr ri)
 {
-
   CORBA::Boolean client_side =
     this->client_side_test (ri);
 

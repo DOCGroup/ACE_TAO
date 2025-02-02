@@ -37,7 +37,7 @@ public:
   ACE_Test_and_Set (TYPE initial_value = 0);
 
   /// Returns true if we are set, else false.
-  TYPE is_set (void) const;
+  TYPE is_set () const;
 
   /// Sets the <is_set_> status, returning the original value of
   /// <is_set_>.
@@ -45,9 +45,7 @@ public:
 
   /// Called when object is signaled by OS (either via UNIX signals or
   /// when a Win32 object becomes signaled).
-  virtual int handle_signal (int signum,
-                             siginfo_t * = 0,
-                             ucontext_t * = 0);
+  virtual int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0);
 
 private:
   /// Keeps track of our state.
@@ -59,13 +57,7 @@ private:
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Test_and_Set.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Test_and_Set.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_TEST_AND_SET_H */

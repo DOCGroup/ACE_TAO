@@ -30,32 +30,29 @@
 class LB_server
 {
 public:
-
   /// Constructor
   LB_server (int argc, ACE_TCHAR **argv);
 
   /// destroys LoadManager, ORB and POA.
-  int destroy (void);
+  int destroy ();
 
   /// start the ORB.
-  int start_orb_and_poa (void);
+  int start_orb_and_poa ();
 
   /// Create the Object Group using the Load Manager Reference.
   int create_object_group (const char *loc_1, const char *loc_2);
 
   /// Run the ORB.
-  int run (void);
+  int run ();
 
   /// for servants to register to the initialised ORB.
-  CORBA::ORB_ptr orb (void);
+  CORBA::ORB_ptr orb ();
 
 private:
-
   int write_ior_to_file (const char *);
   int parse_args (int, ACE_TCHAR **);
 
 private:
-
   /// Load Manager
   CosLoadBalancing::LoadManager_var lm_;
 

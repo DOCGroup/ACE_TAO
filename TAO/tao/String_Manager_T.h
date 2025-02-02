@@ -39,7 +39,7 @@ public:
   typedef TAO::details::string_traits_base <charT> s_traits;
 
   /// Default CTOR will initialize the underlying ptr_ to empty string.
-  inline String_Manager_T (void) : ptr_ (s_traits::default_initializer())
+  inline String_Manager_T () : ptr_ (s_traits::default_initializer())
   {
   }
 
@@ -56,7 +56,7 @@ public:
   }
 
   /// Destructor
-  inline ~String_Manager_T (void) {
+  inline ~String_Manager_T () {
     s_traits::release (this->ptr_);
   }
 
@@ -101,24 +101,24 @@ public:
   }
 
   /// For in parameter.
-  inline const character_type *in (void) const {
+  inline const character_type *in () const {
     return this->ptr_;
   }
 
   /// For inout parameter.
-  inline character_type *&inout (void) {
+  inline character_type *&inout () {
     return this->ptr_;
   }
 
   /// for out parameter.
-  inline character_type *&out (void) {
+  inline character_type *&out () {
     s_traits::release (this->ptr_);
     this->ptr_ = 0;
     return this->ptr_;
   }
 
   /// For string of return type.
-  inline character_type *_retn (void) {
+  inline character_type *_retn () {
     character_type *temp = this->ptr_;
     this->ptr_ = 0;
     return temp;
@@ -133,12 +133,10 @@ private:
   typedef TAO::String_Manager_T<CORBA::WChar> WString_Manager;
 }
 
-
 inline bool operator< (const TAO::String_Manager &lhs, const TAO::String_Manager &rhs)
 {
   return ACE_OS::strcmp (lhs.in(), rhs.in ()) < 0;
 }
-
 
 inline bool operator< (const TAO::WString_Manager &lhs, const TAO::WString_Manager &rhs)
 {

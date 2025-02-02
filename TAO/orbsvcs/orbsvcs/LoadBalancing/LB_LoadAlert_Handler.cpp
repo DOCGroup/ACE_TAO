@@ -4,12 +4,12 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_LB_LoadAlert_Handler::~TAO_LB_LoadAlert_Handler (void)
+TAO_LB_LoadAlert_Handler::~TAO_LB_LoadAlert_Handler ()
 {
 }
 
 void
-TAO_LB_LoadAlert_Handler::enable_alert (void)
+TAO_LB_LoadAlert_Handler::enable_alert ()
 {
 }
 
@@ -24,7 +24,7 @@ TAO_LB_LoadAlert_Handler::enable_alert_excep (
 }
 
 void
-TAO_LB_LoadAlert_Handler::disable_alert (void)
+TAO_LB_LoadAlert_Handler::disable_alert ()
 {
 }
 

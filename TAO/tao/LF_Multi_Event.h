@@ -38,10 +38,10 @@ class TAO_Export TAO_LF_Multi_Event: public TAO_LF_Event
 {
 public:
   /// Constructor
-  TAO_LF_Multi_Event (void);
+  TAO_LF_Multi_Event ();
 
   /// Destructor
-  virtual ~TAO_LF_Multi_Event (void);
+  virtual ~TAO_LF_Multi_Event ();
 
   /// Propagate the follower to all the events in the collection.
   virtual int bind (TAO_LF_Follower *follower);
@@ -54,35 +54,33 @@ public:
 
   /// Returns the connection handler that caused the successful status
   /// to be returned.
-  TAO_Connection_Handler *winner(void);
+  TAO_Connection_Handler *winner();
 
   /// Returns the transport associated with the first entry in the collection.
-  TAO_Transport *base_transport(void);
+  TAO_Transport *base_transport();
 
 private:
   void operator= (const TAO_LF_Multi_Event &);
   TAO_LF_Multi_Event (const TAO_LF_Multi_Event &);
 
 protected:
-
   /// Validate the state change
   virtual void state_changed_i (LFS_STATE new_state);
 
   /// Check whether we have reached the final state..
-  virtual bool is_state_final (void) const;
+  virtual bool is_state_final () const;
 
   /// Return true if the condition was satisfied successfully, false if it
   /// has not - This iterates over the list of attached events and
   /// returns true if any of them return true from successful.
-  virtual bool successful_i (void) const;
+  virtual bool successful_i () const;
 
   /// Return true if an error was detected while waiting for the
   /// event - This iterates over the list of events and returns
   /// true only if all of them return true from error_detected().
-  virtual bool error_detected_i (void) const;
+  virtual bool error_detected_i () const;
 
 private:
-
   struct Event_Node {
     TAO_Connection_Handler * ptr_;
     Event_Node *next_;

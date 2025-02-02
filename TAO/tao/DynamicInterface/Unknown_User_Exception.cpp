@@ -12,7 +12,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-CORBA::UnknownUserException::UnknownUserException (void)
+CORBA::UnknownUserException::UnknownUserException ()
   : CORBA::UserException ("IDL:omg.org/CORBA/UnknownUserException:1.0",
                           "UnknownUserException"),
     exception_ (0)
@@ -37,13 +37,13 @@ CORBA::UnknownUserException::UnknownUserException (
            CORBA::Any (*e.exception_));
 }
 
-CORBA::UnknownUserException::~UnknownUserException (void)
+CORBA::UnknownUserException::~UnknownUserException ()
 {
   delete this->exception_;
 }
 
 CORBA::Any &
-CORBA::UnknownUserException::exception (void)
+CORBA::UnknownUserException::exception ()
 {
   return *this->exception_;
 }
@@ -61,20 +61,19 @@ CORBA::UnknownUserException::_downcast (CORBA::Exception const * ex)
 }
 
 void
-CORBA::UnknownUserException::_raise (void) const
+CORBA::UnknownUserException::_raise () const
 {
   throw *this;
 }
 
 CORBA::Exception *
-CORBA::UnknownUserException::_tao_duplicate (void) const
+CORBA::UnknownUserException::_tao_duplicate () const
 {
-  CORBA::Exception *result;
+  CORBA::Exception *result = nullptr;
   ACE_NEW_RETURN (
       result,
       CORBA::UnknownUserException (*this),
-      0
-    );
+      nullptr);
   return result;
 }
 
@@ -91,13 +90,13 @@ CORBA::UnknownUserException::_tao_decode (TAO_InputCDR &)
 }
 
 const char *
-CORBA::UnknownUserException::_rep_id (void) const
+CORBA::UnknownUserException::_rep_id () const
 {
   return this->exception_->_tao_get_typecode ()->id ();
 }
 
 CORBA::TypeCode_ptr
-CORBA::UnknownUserException::_tao_type (void) const
+CORBA::UnknownUserException::_tao_type () const
 {
   //return CORBA::_tc_UnknownUserException;
   return this->exception_->_tao_get_typecode ();

@@ -15,20 +15,20 @@
 #include "tao/Stub.h"
 #include "tao/Profile.h"
 #include "tao/AnyTypeCode/ValueModifierC.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/OS_NS_fcntl.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Repository_i *TAO_IFR_Service_Utils::repo_ = 0;
 
-TAO_IFR_Server::TAO_IFR_Server (void)
+TAO_IFR_Server::TAO_IFR_Server ()
   : ior_multicast_ (0),
     config_ (0)
 {
 }
 
-TAO_IFR_Server::~TAO_IFR_Server (void)
+TAO_IFR_Server::~TAO_IFR_Server ()
 {
   // Get reactor instance from TAO.
   ACE_Reactor *reactor = this->orb_->orb_core ()->reactor ();
@@ -148,7 +148,7 @@ TAO_IFR_Server::init_with_poa (int argc,
 }
 
 int
-TAO_IFR_Server::fini (void)
+TAO_IFR_Server::fini ()
 {
   try
     {
@@ -164,7 +164,7 @@ TAO_IFR_Server::fini (void)
 }
 
 int
-TAO_IFR_Server::create_poa (void)
+TAO_IFR_Server::create_poa ()
 {
   PortableServer::POAManager_var poa_manager =
     this->root_poa_->the_POAManager ();
@@ -211,7 +211,7 @@ TAO_IFR_Server::create_poa (void)
 }
 
 int
-TAO_IFR_Server::open_config (void)
+TAO_IFR_Server::open_config ()
 {
   if (OPTIONS::instance ()->using_registry ())
     {
@@ -266,7 +266,7 @@ TAO_IFR_Server::open_config (void)
 }
 
 int
-TAO_IFR_Server::create_repository (void)
+TAO_IFR_Server::create_repository ()
 {
   TAO_ComponentRepository_i *impl = 0;
   ACE_NEW_THROW_EX (
@@ -279,11 +279,10 @@ TAO_IFR_Server::create_repository (void)
       CORBA::NO_MEMORY ()
     );
 
-  auto_ptr<TAO_ComponentRepository_i> safety (impl);
+  std::unique_ptr<TAO_ComponentRepository_i> safety (impl);
   TAO_IFR_Service_Utils::repo_ = impl;
 
-  POA_CORBA::ComponentIR::Repository_tie<TAO_ComponentRepository_i> *impl_tie
-    = 0;
+  POA_CORBA::ComponentIR::Repository_tie<TAO_ComponentRepository_i> *impl_tie = 0;
 
   ACE_NEW_THROW_EX (
       impl_tie,
@@ -372,7 +371,7 @@ TAO_IFR_Server::create_repository (void)
 
 // Install ior multicast handler.
 int
-TAO_IFR_Server::init_multicast_server (void)
+TAO_IFR_Server::init_multicast_server ()
 {
 #if defined (ACE_HAS_IP_MULTICAST)
   // Get reactor instance from TAO.
@@ -464,11 +463,11 @@ TAO_IFR_Server::init_multicast_server (void)
   return 0;
 }
 
-TAO_IFR_Service_Utils::TAO_IFR_Service_Utils (void)
+TAO_IFR_Service_Utils::TAO_IFR_Service_Utils ()
 {
 }
 
-TAO_IFR_Service_Utils::~TAO_IFR_Service_Utils (void)
+TAO_IFR_Service_Utils::~TAO_IFR_Service_Utils ()
 {
 }
 

@@ -15,7 +15,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/OS_NS_string.h"
 #include "ace/ACE.h"
@@ -25,15 +24,13 @@
 #include "ace/Future_Set.h"
 #include "ace/Method_Request.h"
 #include "ace/Activation_Queue.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/Atomic_Op.h"
 #include "ace/Null_Mutex.h"
 
-
-
 #if defined (ACE_HAS_THREADS)
 
-typedef ACE_Atomic_Op<ACE_Thread_Mutex, int> ATOMIC_INT;
+using ATOMIC_INT = ACE_Atomic_Op<ACE_Thread_Mutex, int>;
 
 // A counter for the tasks..
 static ATOMIC_INT task_count (0);
@@ -59,28 +56,28 @@ public:
 
   //FUZZ: disable check_for_lack_ACE_OS
   /// Initializer.
-  virtual int open (void *args = 0);
+  int open (void *args = 0) override;
 
   /// Terminator.
   //FUZZ: enable check_for_lack_ACE_OS
-  virtual int shutdown (void);
+  virtual int shutdown ();
 
   /// Destructor.
-  virtual ~Prime_Scheduler (void);
+  ~Prime_Scheduler () override;
 
   // = These methods are part of the Active Object Proxy interface.
   ACE_Future<u_long> work (u_long param, int count = 1);
-  ACE_Future<const ACE_TCHAR*> name (void);
-  void end (void);
+  ACE_Future<const ACE_TCHAR*> name ();
+  void end ();
 
 protected:
   /// Runs the Prime_Scheduler's event loop, which dequeues
   /// <Method_Requests> and dispatches them.
-  virtual int svc (void);
+  int svc () override;
 
   // = These are the Servant methods that do the actual work.
   u_long work_i (u_long, int);
-  const ACE_TCHAR *name_i (void);
+  const ACE_TCHAR *name_i ();
 
 private:
   // = These are the <Prime_Scheduler> implementation details.
@@ -101,10 +98,10 @@ public:
                        u_long,
                        int,
                        ACE_Future<u_long> &);
-  virtual ~Method_Request_work (void);
+  ~Method_Request_work () override;
 
   /// This is the entry point into the Active Object method.
-  virtual int call (void);
+  int call () override;
 
 private:
   Prime_Scheduler *scheduler_;
@@ -133,14 +130,14 @@ Method_Request_work::Method_Request_work (Prime_Scheduler *new_Prime_Scheduler,
               ACE_TEXT ("(%t) Method_Request_work created\n")));
 }
 
-Method_Request_work::~Method_Request_work (void)
+Method_Request_work::~Method_Request_work ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) Method_Request_work will be deleted.\n")));
 }
 
 int
-Method_Request_work::call (void)
+Method_Request_work::call ()
 {
   // Dispatch the Servant's operation and store the result into the
   // Future.
@@ -159,10 +156,10 @@ class Method_Request_name : public ACE_Method_Request
 public:
   Method_Request_name (Prime_Scheduler *,
                        ACE_Future<const ACE_TCHAR*> &);
-  virtual ~Method_Request_name (void);
+  ~Method_Request_name () override;
 
   /// This is the entry point into the Active Object method.
-  virtual int call (void);
+  int call () override;
 
 private:
   Prime_Scheduler *scheduler_;
@@ -178,14 +175,14 @@ Method_Request_name::Method_Request_name (Prime_Scheduler *new_scheduler,
               ACE_TEXT ("(%t) Method_Request_name created\n")));
 }
 
-Method_Request_name::~Method_Request_name (void)
+Method_Request_name::~Method_Request_name ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) Method_Request_name will be deleted.\n")));
 }
 
 int
-Method_Request_name::call (void)
+Method_Request_name::call ()
 {
   // Dispatch the Servant's operation and store the result into the
   // Future.
@@ -201,8 +198,8 @@ class Method_Request_end : public ACE_Method_Request
 {
 public:
   Method_Request_end (Prime_Scheduler *new_Prime_Scheduler);
-  virtual ~Method_Request_end (void);
-  virtual int call (void);
+  ~Method_Request_end () override;
+  int call () override;
 
 private:
   Prime_Scheduler *scheduler_;
@@ -213,12 +210,12 @@ Method_Request_end::Method_Request_end (Prime_Scheduler *scheduler)
 {
 }
 
-Method_Request_end::~Method_Request_end (void)
+Method_Request_end::~Method_Request_end ()
 {
 }
 
 int
-Method_Request_end::call (void)
+Method_Request_end::call ()
 {
   // Shut down the scheduler.
   this->scheduler_->shutdown ();
@@ -241,7 +238,7 @@ Prime_Scheduler::Prime_Scheduler (const ACE_TCHAR *newname,
 
 // Destructor
 
-Prime_Scheduler::~Prime_Scheduler (void)
+Prime_Scheduler::~Prime_Scheduler ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) Prime_Scheduler %s will be destroyed\n"),
@@ -265,7 +262,7 @@ Prime_Scheduler::open (void *)
 // close
 
 int
-Prime_Scheduler::shutdown (void)
+Prime_Scheduler::shutdown ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) Prime_Scheduler %s shutdown\n"),
@@ -277,13 +274,13 @@ Prime_Scheduler::shutdown (void)
 // Service..
 
 int
-Prime_Scheduler::svc (void)
+Prime_Scheduler::svc ()
 {
   for (;;)
     {
-      // Dequeue the next method request (we use an auto pointer in
+      // Dequeue the next method request (we use an unique pointer in
       // case an exception is thrown in the <call>).
-      auto_ptr<ACE_Method_Request> mo (this->activation_queue_.dequeue ());
+      std::unique_ptr<ACE_Method_Request> mo (this->activation_queue_.dequeue ());
 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%t) calling method request\n")));
@@ -298,7 +295,7 @@ Prime_Scheduler::svc (void)
 }
 
 void
-Prime_Scheduler::end (void)
+Prime_Scheduler::end ()
 {
   this->activation_queue_.enqueue (new Method_Request_end (this));
 }
@@ -316,13 +313,13 @@ Prime_Scheduler::work_i (u_long param,
 }
 
 const ACE_TCHAR *
-Prime_Scheduler::name_i (void)
+Prime_Scheduler::name_i ()
 {
   return this->name_;
 }
 
 ACE_Future<const ACE_TCHAR *>
-Prime_Scheduler::name (void)
+Prime_Scheduler::name ()
 {
   if (this->scheduler_)
     // Delegate to the Prime_Scheduler.
@@ -363,11 +360,11 @@ Prime_Scheduler::work (u_long newparam,
 // Total number of loops.
 static int n_loops = 100;
 
-typedef ACE_Future_Rep<u_long> *u_long_key;
-typedef ACE_Future_Holder<u_long> *u_long_value;
+using u_long_key = ACE_Future_Rep<u_long> *;
+using u_long_value = ACE_Future_Holder<u_long> *;
 
-typedef ACE_Future_Rep<const ACE_TCHAR *> *char_star_key;
-typedef ACE_Future_Holder<const ACE_TCHAR *> *char_star_value;
+using char_star_key = ACE_Future_Rep<const ACE_TCHAR *> *;
+using char_star_value = ACE_Future_Holder<const ACE_TCHAR *> *;
 
 #endif /* ACE_HAS_THREADS */
 

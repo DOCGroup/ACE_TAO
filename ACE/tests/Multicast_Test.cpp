@@ -47,8 +47,6 @@
 #include "ace/Signal.h"
 #include "ace/Min_Max.h"
 
-
-
 #if defined (ACE_HAS_IP_MULTICAST) && defined (ACE_HAS_THREADS)
 
 /*
@@ -82,7 +80,6 @@ static sig_atomic_t error = 0;
 class MCT_Config
 {
 public:
-
   enum
     {
       PRODUCER = 1,
@@ -90,7 +87,7 @@ public:
       BOTH = PRODUCER | CONSUMER
     };
 
-  MCT_Config (void)
+  MCT_Config ()
     : group_start_ (MCT_START_PORT, MCT_START_GROUP),
       groups_ (0),
       debug_ (0),
@@ -105,26 +102,26 @@ public:
       else
         this->groups_ = ACE_MIN (IP_MAX_MEMBERSHIPS, MCT_GROUPS);
     }
-  ~MCT_Config (void)
+  ~MCT_Config ()
     {}
 
   //FUZZ: disable check_for_lack_ACE_OS
   int open (int argc, ACE_TCHAR *argv[]);
   //FUZZ: enable check_for_lack_ACE_OS
 
-  int debug (void) const { return this->debug_;}
-  void dump (void) const;
-  int groups (void) const { return this->groups_;}
-  const ACE_INET_Addr group_start (void) const { return this->group_start_;}
-  u_long role (void) const { return this->role_;}
-  int iterations (void) const { return this->iterations_;}
-  int ttl (void) const { return this->ttl_;}
+  int debug () const { return this->debug_;}
+  void dump () const;
+  int groups () const { return this->groups_;}
+  const ACE_INET_Addr group_start () const { return this->group_start_;}
+  u_long role () const { return this->role_;}
+  int iterations () const { return this->iterations_;}
+  int ttl () const { return this->ttl_;}
 
   //FUZZ: disable check_for_lack_ACE_OS
-  int wait (void) const { return this->wait_;}
+  int wait () const { return this->wait_;}
   //FUZZ: enable check_for_lack_ACE_OS
 
-  ACE_SOCK_Dgram_Mcast::options options (void) const
+  ACE_SOCK_Dgram_Mcast::options options () const
   {
     return static_cast<ACE_SOCK_Dgram_Mcast::options> (this->sdm_opts_);
   }
@@ -258,7 +255,7 @@ MCT_Config::open (int argc, ACE_TCHAR *argv[])
           {
             int n = ACE_OS::atoi (getopt.opt_arg ());
             // I'm assuming 0 means unlimited, so just use whatever the
-            // user provides.  Seems to work okay on Solaris 5.8.
+            // user provides.
             if (IP_MAX_MEMBERSHIPS == 0)
               this->groups_ = n;
             else
@@ -397,7 +394,7 @@ MCT_Config::open (int argc, ACE_TCHAR *argv[])
 }
 
 void
-MCT_Config::dump (void) const
+MCT_Config::dump () const
 {
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" Dumping MCT_Config\n")));
@@ -444,7 +441,7 @@ class MCT_Event_Handler : public ACE_Event_Handler
 public:
   MCT_Event_Handler (ACE_SOCK_Dgram_Mcast::options options
                       = ACE_SOCK_Dgram_Mcast::DEFOPTS);
-  virtual ~MCT_Event_Handler (void);
+  ~MCT_Event_Handler () override;
 
   int join (const ACE_INET_Addr &mcast_addr,
             int reuse_addr = 1,
@@ -453,16 +450,16 @@ public:
              const ACE_TCHAR *net_if = 0);
 
   // = Event Handler hooks.
-  virtual int handle_input (ACE_HANDLE handle);
-  virtual int handle_close (ACE_HANDLE fd, ACE_Reactor_Mask close_mask);
+  int handle_input (ACE_HANDLE handle) override;
+  int handle_close (ACE_HANDLE fd, ACE_Reactor_Mask close_mask) override;
 
-  virtual ACE_HANDLE get_handle (void) const;
+  ACE_HANDLE get_handle () const override;
 
   // Turn loopback on/off. Must be called after at least 1 join() is performed.
   int loopback (bool on_off);
 
 protected:
-  ACE_SOCK_Dgram_Mcast *mcast (void);
+  ACE_SOCK_Dgram_Mcast *mcast ();
   int find (const char *buf);
 
 private:
@@ -486,7 +483,7 @@ MCT_Event_Handler::MCT_Event_Handler (ACE_SOCK_Dgram_Mcast::options options)
   ++MCT_Event_Handler::active_handlers_;
 }
 
-MCT_Event_Handler::~MCT_Event_Handler (void)
+MCT_Event_Handler::~MCT_Event_Handler ()
 {
   size_t size = this->address_vec_.size ();
   for (size_t i = 0; i < size; ++i)
@@ -499,7 +496,7 @@ MCT_Event_Handler::~MCT_Event_Handler (void)
 
 
 ACE_SOCK_Dgram_Mcast *
-MCT_Event_Handler::mcast (void)
+MCT_Event_Handler::mcast ()
 {
   return &this->mcast_;
 }
@@ -629,7 +626,7 @@ MCT_Event_Handler::handle_close (ACE_HANDLE /*fd*/,
 }
 
 ACE_HANDLE
-MCT_Event_Handler::get_handle (void) const
+MCT_Event_Handler::get_handle () const
 {
   return this->mcast_.get_handle ();
 }
@@ -654,18 +651,17 @@ class MCT_Task : public ACE_Task<ACE_NULL_SYNCH>
 public:
   MCT_Task (const MCT_Config &config,
             ACE_Reactor *reactor = ACE_Reactor::instance ());
-  ~MCT_Task (void);
+  ~MCT_Task () override;
 
   //FUZZ: disable check_for_lack_ACE_OS
   // = Task hooks.
-  virtual int open (void *args = 0);
+  int open (void *args = 0) override;
   //FUZZ: enable check_for_lack_ACE_OS
 
-  virtual int svc (void);
+  int svc () override;
 
 private:
   const MCT_Config &config_;
-  int iterations_;
 };
 
 MCT_Task::MCT_Task (const MCT_Config &config,
@@ -675,7 +671,7 @@ MCT_Task::MCT_Task (const MCT_Config &config,
   this->reactor (reactor);
 }
 
-MCT_Task::~MCT_Task (void)
+MCT_Task::~MCT_Task ()
 {}
 
 int
@@ -745,7 +741,7 @@ MCT_Task::open (void *)
 }
 
 int
-MCT_Task::svc (void)
+MCT_Task::svc ()
 {
   // make sure this thread owns the reactor or handle_events () won't do
   // anything.
@@ -762,7 +758,6 @@ MCT_Task::svc (void)
 
 int send_dgram (ACE_SOCK_Dgram &socket, ACE_INET_Addr addr, int done = 0)
 {
-
   // Send each message twice, once to the right port, and once to the "wrong"
   // port.  This helps generate noise and lets us see if port filtering is
   // working properly.

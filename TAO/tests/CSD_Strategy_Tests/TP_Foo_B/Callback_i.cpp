@@ -12,7 +12,7 @@ Callback_i::~Callback_i ()
 
 
 void
-Callback_i::test_method(void)
+Callback_i::test_method()
 {
   this->num_callbacks_ ++;
 }

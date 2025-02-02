@@ -13,20 +13,20 @@ Abstract_Worker::Abstract_Worker (const ACE_TCHAR *s)
 }
 
 //
-Abstract_Worker::~Abstract_Worker (void)
+Abstract_Worker::~Abstract_Worker ()
 {
 }
 
 //
-Service_Config_ORB_DLL::Service_Config_ORB_DLL (void)
+Service_Config_ORB_DLL::Service_Config_ORB_DLL ()
   : is_server_ (-1)
-  , worker_ (0)
-  , argv_ (0)
+  , worker_ (nullptr)
+  , argv_ (nullptr)
 {
 }
 
 //
-Service_Config_ORB_DLL::~Service_Config_ORB_DLL (void)
+Service_Config_ORB_DLL::~Service_Config_ORB_DLL ()
 {
 }
 
@@ -98,7 +98,7 @@ Service_Config_ORB_DLL::init (int argc, ACE_TCHAR *argv[])
 }
 
 int
-Service_Config_ORB_DLL::svc (void)
+Service_Config_ORB_DLL::svc ()
 {
   ACE_ASSERT (this->worker_.get () != 0);
   ACE_ASSERT (this->argv_.get () != 0);

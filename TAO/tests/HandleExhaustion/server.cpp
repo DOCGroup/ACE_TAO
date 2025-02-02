@@ -17,11 +17,11 @@ public:
   {
   }
 
-  void simple (void)
+  void simple ()
   {
   }
 
-  void shutdown (void)
+  void shutdown ()
   {
     this->orb_->shutdown ();
   }
@@ -33,7 +33,7 @@ private:
 class Descriptors
 {
 public:
-  Descriptors (void)
+  Descriptors ()
     : min_close_ (0),
       max_close_ (0),
       ok_ (false)
@@ -44,7 +44,7 @@ public:
       }
   }
 
-  int allow_accepts (void)
+  int allow_accepts ()
   {
     cout << "Server: closing " << (this->max_close_ - this->min_close_) + 1
          << " fds" << endl;
@@ -60,7 +60,7 @@ public:
     for (size_t i = 0; i < 0xffff; i++)
       {
         this->openfds_[i] = ACE_OS::open (file, O_RDONLY);
-        if ( i == 0)
+        if (i == 0)
           {
 #if defined (ACE_WIN32)
             // the test is not valid on windows so just wing this value
@@ -84,7 +84,7 @@ public:
     cout << "Server: Descriptors::leak did not saturate fdset" << endl;
   }
 
-  bool ok (void) const
+  bool ok () const
   {
     return this->ok_;
   }

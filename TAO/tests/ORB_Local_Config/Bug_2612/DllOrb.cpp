@@ -24,8 +24,7 @@ DllOrb::DllOrb (int nthreads)
 {
 }
 
-DllOrb::~DllOrb ( )
-  throw ()
+DllOrb::~DllOrb () noexcept
 {
 #if defined (ACE_HAS_THREADS)
   delete mp_barrier;
@@ -111,15 +110,14 @@ int DllOrb::init (int argc, ACE_TCHAR *argv[])
 
   this->activate(
                  THR_NEW_LWP|THR_JOINABLE|THR_INHERIT_SCHED,
-                 threadCnt
-                 );
+                 threadCnt);
   mp_barrier->wait ();
 #endif
 
   return 0;
 }
 
-int DllOrb::fini (void)
+int DllOrb::fini ()
 {
   int result;
 
@@ -133,7 +131,7 @@ int DllOrb::fini (void)
       // attempt to protect against sporadic BAD_INV_ORDER exceptions
       ACE_OS::sleep(ACE_Time_Value(0, 500));
 
-      mv_orb->shutdown(1);
+      mv_orb->shutdown(true);
     }
   catch(CORBA::Exception& ex)
   {
@@ -190,7 +188,7 @@ int DllOrb::fini (void)
   return 0;
 }
 
-int DllOrb::svc (void)
+int DllOrb::svc ()
 {
 #if defined (ACE_HAS_THREADS)
   mp_barrier->wait();

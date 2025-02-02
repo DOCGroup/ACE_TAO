@@ -52,27 +52,24 @@ class TAO_Export TAO_Default_Endpoint_Selector_Factory
 {
 public:
   /// Constructor.
-  TAO_Default_Endpoint_Selector_Factory (void);
+  TAO_Default_Endpoint_Selector_Factory ();
 
   /// Destructor.
-  virtual ~TAO_Default_Endpoint_Selector_Factory (void);
+  virtual ~TAO_Default_Endpoint_Selector_Factory ();
 
   /// Get an Invocation's endpoint selection strategy and
   /// initialize the endpoint selection state instance.
-  virtual TAO_Invocation_Endpoint_Selector *get_selector (void);
+  virtual TAO_Invocation_Endpoint_Selector *get_selector ();
 
 private:
-
   // Prevent copying/assignment.
   TAO_Default_Endpoint_Selector_Factory (TAO_Default_Endpoint_Selector_Factory const &);
   void operator= (TAO_Default_Endpoint_Selector_Factory const &);
 
 protected:
-
   /// The possible endpoint selector strategies that can be
   /// returned by this factory
   TAO_Default_Endpoint_Selector * const default_endpoint_selector_;
-
 };
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO, TAO_Default_Endpoint_Selector_Factory)

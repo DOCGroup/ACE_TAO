@@ -16,17 +16,10 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_Memory.h"
 #include "ace/CORBA_macros.h"
-
-
-
-#if (!defined (__SUNPRO_CC) && !defined (__GNUG__)) || \
-  defined (ACE_HAS_EXCEPTIONS)
-
 #include "ace/Numeric_Limits.h"
 
 // This test allocates all of the heap memory, forcing 'new' to fail
@@ -43,7 +36,7 @@
 static const size_t BIG_BLOCK = ACE_Numeric_Limits<size_t>::max () / 2;
 
 // Shouldn't take many "as much as possible" tries to get a failure.
-static const int MAX_ALLOCS_IN_TEST = 4;
+static const int MAX_ALLOCS_IN_TEST = 2;
 
 static void
 try_ace_new (char **p)
@@ -53,48 +46,32 @@ try_ace_new (char **p)
 }
 
 static char *
-try_ace_new_return (void)
+try_ace_new_return ()
 {
-  char *p = 0;
-  ACE_NEW_RETURN (p, char[BIG_BLOCK], 0);
+  char *p {};
+  ACE_NEW_RETURN (p, char[BIG_BLOCK], nullptr);
   return p;
 }
 
 static char *
-try_ace_new_noreturn (void)
+try_ace_new_noreturn ()
 {
-  char *p = 0;
+  char *p {};
   ACE_NEW_NORETURN (p, char[BIG_BLOCK]);
   return p;
 }
-#endif /* (!__SUNPRO_CC && !__GNUG__) || ACE_HAS_EXCEPTIONS */
 
 int
 run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("New_Fail_Test"));
-  int status = 0;
-
-  // Some platforms are known to throw an exception on a failed 'new',
-  // but are customarily built without exception support to improve
-  // performance.  These platforms are noted, and the test passes.
-  // For new ports, it is wise to let this test run.  Depending on
-  // intended conditions, exceptions can be disabled when the port is
-  // complete.
-#if (defined (__SUNPRO_CC) || defined (__GNUG__)) && \
-  !defined (ACE_HAS_EXCEPTIONS)
-    ACE_DEBUG ((LM_NOTICE, ACE_TEXT ("Out-of-memory will throw an unhandled exception\n")));
-  ACE_DEBUG ((LM_NOTICE, ACE_TEXT ("Rebuild with exceptions=1 to prevent this, but it may impair performance.\n")));
-
-#else
+  int status {};
 
   char *blocks[MAX_ALLOCS_IN_TEST];
-  int i;
+  int i {};
 
-#  if defined (ACE_HAS_EXCEPTIONS)
   try
     {
-#  endif /* ACE_HAS_EXCEPTIONS */
       // First part: test ACE_NEW
       for (i = 0; i < MAX_ALLOCS_IN_TEST; i++)
         {
@@ -194,23 +171,15 @@ run_main (int, ACE_TCHAR *[])
         }
       while (i >= 0)
         delete [] blocks[i--];
-
-#  if defined (ACE_HAS_EXCEPTIONS)
     }
-
   catch (...)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("Caught exception during test; ")
-                  ACE_TEXT ("ACE_bad_alloc not defined correctly, or\n")));
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("ACE_NEW_THROWS_EXCEPTIONS is not #defined ")
-                  ACE_TEXT ("(and should be).\n")));
+                  ACE_TEXT ("ACE_bad_alloc not defined correctly\n")));
       // Mark test failure
       status = 1;
     }
-#  endif /* ACE_HAS_EXCEPTIONS */
-#endif /* __SUNPRO_CC && !ACE_HAS_EXCEPTIONS */
 
   ACE_END_TEST;
   return status;

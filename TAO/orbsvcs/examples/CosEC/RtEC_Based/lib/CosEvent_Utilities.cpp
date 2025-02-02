@@ -3,10 +3,10 @@
 #include "orbsvcs/Event/EC_Event_Channel.h"
 #include "orbsvcs/Event_Service_Constants.h"
 #include "EventChannel_i.h"
-#include "ace/Auto_Ptr.h"
-#include "ace/OS_NS_string.h"
+#include <memory>
+#include <memory>
 
-CosEC_ServantBase::CosEC_ServantBase (void)
+CosEC_ServantBase::CosEC_ServantBase ()
   :poa_ (PortableServer::POA::_nil ()),
    rtec_servant_ (0),
    cosec_servant_ (0),
@@ -16,15 +16,6 @@ CosEC_ServantBase::CosEC_ServantBase (void)
    eventSourceIds_ (0),
    source_type_pairs_ (0)
 {
-  // No-Op.
-}
-
-CosEC_ServantBase::~CosEC_ServantBase (void)
-{
-  // No-Op.
-#if 0
-  ACE_DEBUG ((LM_DEBUG, "in cosec servant base %d\n", this));
-#endif
 }
 
 void
@@ -41,10 +32,10 @@ CosEC_ServantBase::init (PortableServer::POA_ptr thispoa,
   this->thispoa_ = PortableServer::POA::_duplicate (thispoa);
   this->poa_ = PortableServer::POA::_duplicate (poa);
 
-  auto_ptr<POA_RtecEventChannelAdmin::EventChannel>
+  std::unique_ptr<POA_RtecEventChannelAdmin::EventChannel>
     auto_rtec_servant_ (this->create_rtec ());
 
-  auto_ptr<TAO_CosEC_EventChannel_i>
+  std::unique_ptr<TAO_CosEC_EventChannel_i>
     auto_cosec_servant_ (this->create_cosec ());
 
   // if all the servants were allocated then set the class pointers.
@@ -53,7 +44,7 @@ CosEC_ServantBase::init (PortableServer::POA_ptr thispoa,
 }
 
 int
-CosEC_ServantBase::activate (void)
+CosEC_ServantBase::activate ()
 {
   ACE_ASSERT (!CORBA::is_nil (this->poa_.in ()));
   ACE_ASSERT (!CORBA::is_nil (this->thispoa_.in ()));
@@ -111,7 +102,7 @@ CosEC_ServantBase::activate (const char* servant_id)
 }
 
 void
-CosEC_ServantBase::activate_rtec (void)
+CosEC_ServantBase::activate_rtec ()
 {
   // Activate the Rtec
   PortableServer::ObjectId_var oid =
@@ -127,7 +118,7 @@ CosEC_ServantBase::activate_rtec (void)
 }
 
 int
-CosEC_ServantBase::activate_cosec (void)
+CosEC_ServantBase::activate_cosec ()
 {
  // Initialize the CosEC servant.
   RtecBase::handle_t supp_handle = 0;
@@ -169,7 +160,7 @@ CosEC_ServantBase::activate_cosec (void)
 }
 
 void
-CosEC_ServantBase::deactivate (void)
+CosEC_ServantBase::deactivate ()
 {
   // Deactivate all those we control...
   this->deactivate_rtec ();
@@ -185,7 +176,7 @@ CosEC_ServantBase::deactivate (void)
 }
 
 void
-CosEC_ServantBase::deactivate_rtec (void)
+CosEC_ServantBase::deactivate_rtec ()
 {
   // Deactivate the rtec.
   PortableServer::ObjectId_var oid =
@@ -196,7 +187,7 @@ CosEC_ServantBase::deactivate_rtec (void)
 }
 
 void
-CosEC_ServantBase::deactivate_cosec (void)
+CosEC_ServantBase::deactivate_cosec ()
 {
   // Deactivate the cosec.
   PortableServer::ObjectId_var oid =
@@ -207,19 +198,19 @@ CosEC_ServantBase::deactivate_cosec (void)
 }
 
 CosEventChannelAdmin::ConsumerAdmin_ptr
-CosEC_ServantBase::for_consumers (void)
+CosEC_ServantBase::for_consumers ()
 {
   return this->cosec_->for_consumers ();
 }
 
 CosEventChannelAdmin::SupplierAdmin_ptr
-CosEC_ServantBase::for_suppliers (void)
+CosEC_ServantBase::for_suppliers ()
 {
   return this->cosec_->for_suppliers ();
 }
 
 void
-CosEC_ServantBase::destroy (void)
+CosEC_ServantBase::destroy ()
 {
   // Deactivate all the contained servants and ourselves.
   // The poa will "destroy" the ref counted servants.
@@ -228,7 +219,7 @@ CosEC_ServantBase::destroy (void)
 }
 
 POA_RtecEventChannelAdmin::EventChannel_ptr
-CosEC_ServantBase::create_rtec (void)
+CosEC_ServantBase::create_rtec ()
 {
   // Create the RtEC servant.
   TAO_EC_Event_Channel_Attributes attr (this->poa_.in (),
@@ -242,7 +233,7 @@ CosEC_ServantBase::create_rtec (void)
 }
 
 TAO_CosEC_EventChannel_i*
-CosEC_ServantBase::create_cosec (void)
+CosEC_ServantBase::create_cosec ()
 {
   // Create the CosEC servant.
   TAO_CosEC_EventChannel_i* _cosec_servant;

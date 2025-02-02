@@ -38,7 +38,6 @@ class Content_Iterator_i;
 class Iterator_Factory_i : virtual public POA_Web_Server::Iterator_Factory
 {
 public:
-
   /**
    * This factory method returns a <Content_Iterator> that can be used
    * to read the <contents> associated with <pathname> one ``chunk''

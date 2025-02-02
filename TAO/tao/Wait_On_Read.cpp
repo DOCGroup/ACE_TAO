@@ -15,19 +15,6 @@ TAO_Wait_On_Read::TAO_Wait_On_Read (TAO_Transport *transport)
 {
 }
 
-// Destructor.
-TAO_Wait_On_Read::~TAO_Wait_On_Read (void)
-{
-}
-
-/*
- * Hook to specialize the wait strategy when the concrete strategy is
- * a simple "rw" strategy. Add all public/protected/private methods
- * within the *COPY* hooks.
- */
-
-//@@ WAIT_STRATEGY_SPL_COPY_HOOK_START
-
 int
 TAO_Wait_On_Read::sending_request (TAO_ORB_Core *orb_core,
                                    TAO_Message_Semantics msg_semantics)
@@ -49,7 +36,6 @@ TAO_Wait_On_Read::sending_request (TAO_ORB_Core *orb_core,
     }
 
   // Send the request.
-//@@ LF_WAIT_STRATEGY_SPL_SENDING_REQUEST_HOOK
   return this->TAO_Wait_Strategy::sending_request (orb_core, msg_semantics);
 }
 
@@ -68,7 +54,6 @@ TAO_Wait_On_Read::finished_request ()
       }
     }
 
-  //@@ LF_WAIT_STRATEGY_SPL_SENDING_REQUEST_HOOK
     this->TAO_Wait_Strategy::finished_request ();
 }
 
@@ -157,26 +142,21 @@ TAO_Wait_On_Read::wait (ACE_Time_Value * max_wait_time,
 
 // No-op.
 int
-TAO_Wait_On_Read::register_handler (void)
+TAO_Wait_On_Read::register_handler ()
 {
   return 0;
 }
 
 bool
-TAO_Wait_On_Read::non_blocking (void) const
+TAO_Wait_On_Read::non_blocking () const
 {
   return false;
 }
 
 bool
-TAO_Wait_On_Read::can_process_upcalls (void) const
+TAO_Wait_On_Read::can_process_upcalls () const
 {
   return true;
 }
-
-//@@ WAIT_STRATEGY_SPL_COPY_HOOK_END
-/*
- * End copy hook.
- */
 
 TAO_END_VERSIONED_NAMESPACE_DECL

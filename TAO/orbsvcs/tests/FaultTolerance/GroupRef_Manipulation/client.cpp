@@ -81,9 +81,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           ACE_DEBUG ((LM_INFO,
                       "CLIENT: Number %d .\n",
                       number));
-
-
-
         }
 
       if (number < 250)

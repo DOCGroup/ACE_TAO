@@ -45,21 +45,20 @@ class TAO_CORBALOC_Parser : public TAO_IOR_Parser
 {
 public:
   /// Constructor
-  TAO_CORBALOC_Parser (void);
+  TAO_CORBALOC_Parser () = default;
 
   /// The destructor
-  virtual ~TAO_CORBALOC_Parser (void);
+  ~TAO_CORBALOC_Parser () override = default;
 
   /// = The IOR_Parser methods, please read the documentation in
   ///   IOR_Parser.h
-  virtual bool match_prefix (const char *ior_string) const;
+  bool match_prefix (const char *ior_string) const override;
 
   /// Parse the ior-string that is passed.
-  virtual CORBA::Object_ptr parse_string (const char *ior,
-                                          CORBA::ORB_ptr orb);
+  CORBA::Object_ptr parse_string (const char *ior,
+                                  CORBA::ORB_ptr orb) override;
 
 private:
-
   /**
    * Make a stub from the MProfile that is created in
    * parse_string_mprofile_helper. Using this stub, create an object
@@ -77,9 +76,9 @@ private:
                        ACE_CString &canonical_endpoint);
 
   struct parsed_endpoint {
-    parsed_endpoint ();
+    parsed_endpoint () = default;
     ~parsed_endpoint ();
-    TAO_Profile *profile_;
+    TAO_Profile *profile_ {};
     char obj_key_sep_;
     ACE_CString prot_addr_;
   };

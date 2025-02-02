@@ -27,15 +27,14 @@
 #include "ace/Process_Semaphore.h"
 #include "ace/Process_Mutex.h"
 
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class ACE_Export ACE_Reactive_MEM_IO : public ACE_MEM_SAP
 {
 public:
-  ACE_Reactive_MEM_IO (void);
+  ACE_Reactive_MEM_IO ();
 
-  virtual ~ACE_Reactive_MEM_IO (void);
+  virtual ~ACE_Reactive_MEM_IO ();
 
   /**
    * Initialize the MEM_SAP object.
@@ -65,7 +64,7 @@ public:
                             const ACE_Time_Value *timeout);
 
   /**
-   * Convert the buffer offset <off> to absolute address to @a buf.
+   * Convert the buffer offset @a off to absolute address to @a buf.
    * Return the size of valid information containing in the @a buf,
    * -1 if <shm_malloc_> is not initialized.
    */
@@ -76,23 +75,24 @@ public:
 class ACE_Export ACE_MT_MEM_IO : public ACE_MEM_SAP
 {
 public:
+  /// Structure for a simple queue
   typedef struct
   {
     ACE_MEM_SAP_Node::ACE_MEM_SAP_NODE_PTR head_;
     ACE_MEM_SAP_Node::ACE_MEM_SAP_NODE_PTR tail_;
-  } MQ_Struct;                  // Structure for a simple queue
+  } MQ_Struct;
 
   class Simple_Queue
   {
   public:
-    Simple_Queue (void);
+    Simple_Queue ();
     Simple_Queue (MQ_Struct *mq);
 
     int init (MQ_Struct *mq, ACE_MEM_SAP::MALLOC_TYPE *malloc);
 
     int write (ACE_MEM_SAP_Node *new_msg);
 
-    ACE_MEM_SAP_Node *read (void);
+    ACE_MEM_SAP_Node *read ();
   private:
     MQ_Struct *mq_;
     ACE_MEM_SAP::MALLOC_TYPE *malloc_;
@@ -105,9 +105,9 @@ public:
     Simple_Queue queue_;
   } Channel;
 
-  ACE_MT_MEM_IO (void);
+  ACE_MT_MEM_IO ();
 
-  virtual ~ACE_MT_MEM_IO (void);
+  virtual ~ACE_MT_MEM_IO ();
 
   /**
    * Initialize the MEM_SAP object.
@@ -144,7 +144,7 @@ private:
 /**
  * @class ACE_MEM_IO
  *
- * @brief Defines the methods for the ACE shared memeory wrapper I/O
+ * @brief Defines the methods for the ACE shared memory wrapper I/O
  * routines (e.g., send/recv).
  * The shared memory transport uses ACE_SOCK_* class to
  * implement the signaling mechanism so we can easily use the
@@ -171,10 +171,10 @@ class ACE_Export ACE_MEM_IO : public ACE_SOCK
 {
 public:
   /// Constructor.
-  ACE_MEM_IO (void);
+  ACE_MEM_IO ();
 
   /// Destructor.
-  ~ACE_MEM_IO (void);
+  ~ACE_MEM_IO ();
 
   typedef enum
   {
@@ -193,7 +193,7 @@ public:
    * Finalizing the MEM_IO object.  This method doesn't invoke
    * the <remove> method.
    */
-  int fini (void);
+  int fini ();
 
   /// Send an @a n byte buffer to the other process using shm_malloc_
   /// connected thru the socket.
@@ -267,7 +267,7 @@ public:
 
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;

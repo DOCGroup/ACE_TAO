@@ -17,20 +17,20 @@ public:
   // = The skeleton methods
   virtual void receive_data (const Test::Payload &the_payload);
 
-  virtual void flush (void);
+  virtual void flush ();
 
-  virtual void sync (void);
+  virtual void sync ();
 
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
   /// internal implementation of shutdown. This
-  void try_shutdown (void);
+  void try_shutdown ();
 
   class Nest_Guard
     {
     public:
       Nest_Guard (AMI_Buffering &);
-      ~Nest_Guard (void);
+      ~Nest_Guard ();
     private:
       AMI_Buffering &target_;
     };

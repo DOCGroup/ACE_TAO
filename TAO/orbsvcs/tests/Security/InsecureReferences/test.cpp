@@ -99,7 +99,6 @@ gen_objref (int argc, ACE_TCHAR *argv[])
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Panic: nil RootPOA\n"),
                           1);
-
     }
   catch (const CORBA::Exception &ex)
     {
@@ -164,6 +163,5 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   if (as_server)
     return gen_objref(argc, argv);
   return parse_objref(argc, argv);
-
 
 }

@@ -40,7 +40,7 @@ class TAO_ETCL_Export TAO_ETCL_Literal_Constraint
   : public ETCL_Literal_Constraint
 {
 public:
-  TAO_ETCL_Literal_Constraint (void);
+  TAO_ETCL_Literal_Constraint ();
 
   // = Constructors for each of the various types of literals.
 
@@ -56,18 +56,18 @@ public:
   TAO_ETCL_Literal_Constraint (const ETCL_Literal_Constraint *lit);
 
   /// Destructor.
-  virtual ~TAO_ETCL_Literal_Constraint(void);
+  virtual ~TAO_ETCL_Literal_Constraint();
 
   /// Assignment operator.
   void operator= (const TAO_ETCL_Literal_Constraint& co);
 
   // Conversion routines.
-  operator ACE_CDR::Boolean (void) const;
-  operator ACE_CDR::ULong (void) const;
-  operator ACE_CDR::Long (void) const;
-  operator ACE_CDR::Double (void) const;
-  operator const char* (void) const;
-  operator TAO::Any_Impl* (void) const;
+  operator ACE_CDR::Boolean () const;
+  operator ACE_CDR::ULong () const;
+  operator ACE_CDR::Long () const;
+  operator ACE_CDR::Double () const;
+  operator const char* () const;
+  operator TAO::Any_Impl* () const;
 
   // Return the type represented by this MysteryOperand.
 
@@ -87,7 +87,7 @@ public:
 
   // Unary minus.
   TAO_ETCL_Literal_Constraint
-  operator- (void);
+  operator- ();
 
   /// Ensure both operands are of the same simple numeric type.
   virtual Literal_Type

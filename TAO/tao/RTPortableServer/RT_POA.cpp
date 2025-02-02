@@ -22,7 +22,7 @@
 #include "tao/PortableServer/Default_Acceptor_Filter.h"
 #include "tao/RTPortableServer/RT_Policy_Validator.h"
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 #if !defined (__ACE_INLINE__)
 # include "tao/RTPortableServer/RT_POA.inl"
@@ -45,15 +45,10 @@ TAO_RT_POA::TAO_RT_POA (const TAO_Root_POA::String &name,
                      lock,
                      thread_lock,
                      orb_core,
-                     object_adapter),
-  thread_pool_ (0)
+                     object_adapter)
 {
   // Parse the RT policies and update our policy cache.
   this->parse_rt_policies (this->policies ());
-}
-
-TAO_RT_POA::~TAO_RT_POA (void)
-{
 }
 
 TAO_Root_POA *
@@ -181,7 +176,7 @@ TAO_RT_POA::validate_priority (RTCORBA::Priority priority)
 }
 
 void
-TAO_RT_POA::validate_policies (void)
+TAO_RT_POA::validate_policies ()
 {
   // For each of the above operations, if the POA supports the
   // IMPLICIT_ACTIVATION option for the ImplicitActivationPolicy then
@@ -285,8 +280,7 @@ TAO_RT_POA::key_to_stub_i (const TAO::ObjectKey &object_key,
                                                       type_id,
                                                       client_exposed_policies._retn (),
                                                       &filter,
-                                                      lanes[i]->resources ().acceptor_registry ()
-                                                     );
+                                                      lanes[i]->resources ().acceptor_registry ());
         }
 
       ACE_ASSERT (0);
@@ -390,7 +384,7 @@ TAO_RT_POA::create_stub_object (const TAO::ObjectKey &object_key,
 }
 
 size_t
-TAO_RT_POA::endpoint_count (void)
+TAO_RT_POA::endpoint_count ()
 {
   size_t profile_count = 0;
 
@@ -564,36 +558,36 @@ TAO_RT_POA::create_request_processing_policy (
 #endif /* TAO_HAS_MINIMUM_POA == 0 && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO) */
 
 char *
-TAO_RT_POA::the_name (void)
+TAO_RT_POA::the_name ()
 {
   return this->TAO_Regular_POA::the_name ();
 }
 
 PortableServer::POA_ptr
-TAO_RT_POA::the_parent (void)
+TAO_RT_POA::the_parent ()
 {
   return this->TAO_Regular_POA::the_parent ();
 }
 
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
 PortableServer::POAList *
-TAO_RT_POA::the_children (void)
+TAO_RT_POA::the_children ()
 {
   return this->TAO_Regular_POA::the_children ();
 }
+#endif /* TAO_HAS_MINIMUM_POA == 0 */
 
 PortableServer::POAManager_ptr
-TAO_RT_POA::the_POAManager (void)
+TAO_RT_POA::the_POAManager ()
 {
   return this->TAO_Regular_POA::the_POAManager ();
 }
 
-
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
-
 PortableServer::AdapterActivator_ptr
-TAO_RT_POA::the_activator (void)
+TAO_RT_POA::the_activator ()
 {
-  return this->TAO_Regular_POA::the_activator ();;
+  return this->TAO_Regular_POA::the_activator ();
 }
 
 void
@@ -603,7 +597,7 @@ TAO_RT_POA::the_activator (PortableServer::AdapterActivator_ptr adapter_activato
 }
 
 PortableServer::ServantManager_ptr
-TAO_RT_POA::get_servant_manager (void)
+TAO_RT_POA::get_servant_manager ()
 {
   return this->TAO_Regular_POA::get_servant_manager ();
 }
@@ -615,7 +609,7 @@ TAO_RT_POA::set_servant_manager (PortableServer::ServantManager_ptr imgr)
 }
 
 PortableServer::Servant
-TAO_RT_POA::get_servant (void)
+TAO_RT_POA::get_servant ()
 {
   return this->TAO_Regular_POA::get_servant ();
 }
@@ -701,7 +695,7 @@ TAO_RT_POA::id_to_reference (const PortableServer::ObjectId &oid)
 }
 
 CORBA::OctetSeq *
-TAO_RT_POA::id (void)
+TAO_RT_POA::id ()
 {
   return this->TAO_Regular_POA::id ();
 }

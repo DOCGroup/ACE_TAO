@@ -79,16 +79,16 @@ class ACE_Export ACE_Logging_Strategy : public ACE_Service_Object
 {
 public:
   /// Constructor.
-  ACE_Logging_Strategy (void);
+  ACE_Logging_Strategy ();
 
   /// Destructor.
-  ~ACE_Logging_Strategy (void);
+  ~ACE_Logging_Strategy ();
 
   /// Dynamic linking initialization hook.
   virtual int init (int argc, ACE_TCHAR *argv[]);
 
   /// Dynamic linking termination hook.
-  virtual int fini (void);
+  virtual int fini ();
 
   /**
    * Timeout handler which tests logfile size.  If the current logfile
@@ -112,7 +112,7 @@ public:
    */
   virtual void reactor (ACE_Reactor *r);
 
-  virtual ACE_Reactor * reactor (void) const;
+  virtual ACE_Reactor * reactor () const;
 
   /**
    * Parse arguments provided in svc.conf file.

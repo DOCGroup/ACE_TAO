@@ -8,7 +8,7 @@
 #include "tao/Storable_Base.h"
 #include "tao/Storable_Factory.h"
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_sys_time.h"
 
@@ -16,10 +16,10 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 const char * TAO_Storable_Naming_Context::root_name_;
 ACE_UINT32 TAO_Storable_Naming_Context::gcounter_;
-ACE_Auto_Ptr<TAO::Storable_Base> TAO_Storable_Naming_Context::gfl_;
+std::unique_ptr<TAO::Storable_Base> TAO_Storable_Naming_Context::gfl_;
 int TAO_Storable_Naming_Context::redundant_;
 
-TAO_Storable_IntId::TAO_Storable_IntId (void)
+TAO_Storable_IntId::TAO_Storable_IntId ()
   : ref_ (CORBA::string_dup ("")),
     type_ (CosNaming::nobject)
 {
@@ -38,7 +38,7 @@ TAO_Storable_IntId::TAO_Storable_IntId (const TAO_Storable_IntId &rhs)
   type_ = rhs.type_;
 }
 
-TAO_Storable_IntId::~TAO_Storable_IntId (void)
+TAO_Storable_IntId::~TAO_Storable_IntId ()
 {
 }
 
@@ -53,7 +53,7 @@ TAO_Storable_IntId::operator= (const TAO_Storable_IntId &rhs)
   ref_ = rhs.ref_;
 }
 
-TAO_Storable_ExtId::TAO_Storable_ExtId (void)
+TAO_Storable_ExtId::TAO_Storable_ExtId ()
   : id_ (CORBA::string_dup ("")),
     kind_ (CORBA::string_dup (""))
 {
@@ -71,7 +71,7 @@ TAO_Storable_ExtId::TAO_Storable_ExtId (const TAO_Storable_ExtId &rhs)
   kind_ = rhs.kind_;
 }
 
-TAO_Storable_ExtId::~TAO_Storable_ExtId (void)
+TAO_Storable_ExtId::~TAO_Storable_ExtId ()
 {
 }
 
@@ -101,7 +101,7 @@ TAO_Storable_ExtId::operator!= (const TAO_Storable_ExtId &rhs) const
 }
 
 u_long
-TAO_Storable_ExtId::hash (void) const
+TAO_Storable_ExtId::hash () const
 {
   // @CJC I wager this could be optimized a bit better, but I'm not
   // sure how much it's called.  At the very least, we could allocate
@@ -114,13 +114,13 @@ TAO_Storable_ExtId::hash (void) const
 }
 
 const char *
-TAO_Storable_ExtId::id (void)
+TAO_Storable_ExtId::id ()
 {
   return id_.in();
 }
 
 const char *
-TAO_Storable_ExtId::kind (void)
+TAO_Storable_ExtId::kind ()
 {
   return kind_.in();
 }
@@ -184,27 +184,27 @@ TAO_Storable_Bindings_Map::TAO_Storable_Bindings_Map (size_t hash_table_size,
   ACE_TRACE("TAO_Storable_Bindings_Map");
 }
 
-TAO_Storable_Bindings_Map::~TAO_Storable_Bindings_Map (void)
+TAO_Storable_Bindings_Map::~TAO_Storable_Bindings_Map ()
 {
   ACE_TRACE("~TAO_Storable_Bindings_Map");
 }
 
 TAO_Storable_Bindings_Map::HASH_MAP &
-TAO_Storable_Bindings_Map::map (void)
+TAO_Storable_Bindings_Map::map ()
 {
   ACE_TRACE("map");
   return map_;
 }
 
 size_t
-TAO_Storable_Bindings_Map::current_size (void)
+TAO_Storable_Bindings_Map::current_size ()
 {
   ACE_TRACE("current_size");
   return map_.current_size ();
 }
 
 size_t
-TAO_Storable_Bindings_Map::total_size (void)
+TAO_Storable_Bindings_Map::total_size ()
 {
   ACE_TRACE("total_size");
   return map_.total_size ();
@@ -305,9 +305,8 @@ File_Open_Lock_and_Check::~File_Open_Lock_and_Check ()
 
 bool
 TAO_Storable_Naming_Context::
-File_Open_Lock_and_Check::object_obsolete (void)
+File_Open_Lock_and_Check::object_obsolete ()
 {
-
   // Query the underlying context if it is obsolete with respect
   // to the provided file last-changed time
   return (context_->is_obsolete (fl_->last_changed ()));
@@ -315,7 +314,7 @@ File_Open_Lock_and_Check::object_obsolete (void)
 
 void
 TAO_Storable_Naming_Context::
-File_Open_Lock_and_Check::mark_object_current (void)
+File_Open_Lock_and_Check::mark_object_current ()
 {
   // Reset the stale flag
   context_->stale (false);
@@ -402,7 +401,7 @@ TAO_Storable_Naming_Context::TAO_Storable_Naming_Context (
   ACE_TRACE("TAO_Storable_Naming_Context");
 }
 
-TAO_Storable_Naming_Context::~TAO_Storable_Naming_Context (void)
+TAO_Storable_Naming_Context::~TAO_Storable_Naming_Context ()
 {
   ACE_TRACE("~TAO_Storable_Naming_Context");
 
@@ -415,7 +414,7 @@ TAO_Storable_Naming_Context::~TAO_Storable_Naming_Context (void)
       ACE_CString file_name = this->context_name_;
 
       // Now delete the file
-      ACE_Auto_Ptr<TAO::Storable_Base>
+      std::unique_ptr<TAO::Storable_Base>
         fl (
           this->factory_->create_stream(file_name.c_str(), "r")
           );
@@ -430,7 +429,7 @@ TAO_Storable_Naming_Context::~TAO_Storable_Naming_Context (void)
 }
 
 void
-TAO_Storable_Naming_Context::context_written (void)
+TAO_Storable_Naming_Context::context_written ()
 {
   // No-op. Overridden by derived class.
 }
@@ -445,7 +444,7 @@ TAO_Storable_Naming_Context::is_obsolete (time_t stored_time)
 }
 
 void
-TAO_Storable_Naming_Context::verify_not_destroyed (void)
+TAO_Storable_Naming_Context::verify_not_destroyed ()
 {
   File_Open_Lock_and_Check flck (this, SFG::ACCESSOR, false);
   if (this->destroyed_)
@@ -494,9 +493,9 @@ TAO_Storable_Naming_Context::make_new_context (
   if (context_impl == 0)
     throw CORBA::NO_MEMORY ();
 
-  // Put <context_impl> into the auto pointer temporarily, in case next
+  // Put <context_impl> into the unique pointer temporarily, in case next
   // allocation fails.
-  ACE_Auto_Basic_Ptr<TAO_Storable_Naming_Context> temp (context_impl);
+  std::unique_ptr<TAO_Storable_Naming_Context> temp (context_impl);
 
   TAO_Naming_Context *context = 0;
   ACE_NEW_THROW_EX (context,
@@ -506,7 +505,7 @@ TAO_Storable_Naming_Context::make_new_context (
   // Let <implementation> know about it's <interface>.
   context_impl->interface (context);
 
-  // Release auto pointer, and start using reference counting to
+  // Release unique pointer, and start using reference counting to
   // control our servant.
   temp.release ();
   PortableServer::ServantBase_var s = context;
@@ -539,7 +538,7 @@ TAO_Storable_Naming_Context::make_new_context (
 }
 
 CosNaming::NamingContext_ptr
-TAO_Storable_Naming_Context::new_context (void)
+TAO_Storable_Naming_Context::new_context ()
 {
   ACE_TRACE ("new_context");
 
@@ -836,7 +835,7 @@ TAO_Storable_Naming_Context::bind (const CosNaming::Name& n,
 }
 
 void
-TAO_Storable_Naming_Context::destroy (void)
+TAO_Storable_Naming_Context::destroy ()
 {
   ACE_TRACE("TAO_Storable_Naming_Context::destroy");
   ACE_WRITE_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
@@ -949,9 +948,9 @@ TAO_Storable_Naming_Context::list (CORBA::ULong how_many,
                     HASH_MAP::ITERATOR (storable_context_->map ()),
                     CORBA::NO_MEMORY ());
 
-  // Store <hash_iter temporarily in auto pointer, in case we'll have
+  // Store <hash_iter temporarily in unique pointer, in case we'll have
   // some failures and throw an exception.
-  ACE_Auto_Basic_Ptr<HASH_MAP::ITERATOR> temp (hash_iter);
+  std::unique_ptr<HASH_MAP::ITERATOR> temp (hash_iter);
 
   // Silliness below is required because of broken old g++!!!  E.g.,
   // without it, we could have just said HASH_MAP::ITERATOR everywhere we use ITER_DEF.
@@ -1009,7 +1008,7 @@ TAO_Storable_Naming_Context::list (CORBA::ULong how_many,
                         ITER_SERVANT (this, hash_iter, this->poa_.in ()),
                         CORBA::NO_MEMORY ());
 
-      // Release <hash_iter> from auto pointer, and start using
+      // Release <hash_iter> from unique pointer, and start using
       // reference counting to control our servant.
       temp.release ();
       PortableServer::ServantBase_var iter = bind_iter;
@@ -1075,7 +1074,7 @@ TAO_Storable_Naming_Context::recreate_all (
 
   // Now does this already exist on disk?
   ACE_CString file_name = poa_id;
-  ACE_Auto_Ptr<TAO::Storable_Base> fl (
+  std::unique_ptr<TAO::Storable_Base> fl (
     pers_factory->create_stream (file_name.c_str (), "r"));
   if (fl->exists ())
   {

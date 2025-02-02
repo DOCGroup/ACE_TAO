@@ -13,7 +13,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_Allocator *
-ACE_Allocator::instance (void)
+ACE_Allocator::instance ()
 {
   //  ACE_TRACE ("ACE_Allocator::instance");
 
@@ -68,37 +68,23 @@ ACE_Allocator::instance (ACE_Allocator *r)
                             *ACE_Static_Object_Lock::instance (), 0));
   ACE_Allocator *t = ACE_Allocator::allocator_;
 
-  // We can't safely delete it since we don't know who created it!
-  ACE_Allocator::delete_allocator_ = 0;
-
   ACE_Allocator::allocator_ = r;
+
   return t;
 }
 
 void
-ACE_Allocator::close_singleton (void)
+ACE_Allocator::close_singleton ()
 {
   ACE_TRACE ("ACE_Allocator::close_singleton");
-
-  ACE_MT (ACE_GUARD (ACE_Recursive_Thread_Mutex, ace_mon,
-                     *ACE_Static_Object_Lock::instance ()));
-
-  if (ACE_Allocator::delete_allocator_)
-    {
-      // This should never be executed....  See the
-      // ACE_Allocator::instance (void) method for an explanation.
-      delete ACE_Allocator::allocator_;
-      ACE_Allocator::allocator_ = 0;
-      ACE_Allocator::delete_allocator_ = 0;
-    }
 }
 
-ACE_Allocator::~ACE_Allocator (void)
+ACE_Allocator::~ACE_Allocator ()
 {
   ACE_TRACE ("ACE_Allocator::~ACE_Allocator");
 }
 
-ACE_Allocator::ACE_Allocator (void)
+ACE_Allocator::ACE_Allocator ()
 {
   ACE_TRACE ("ACE_Allocator::ACE_Allocator");
 }
@@ -143,7 +129,7 @@ ACE_New_Allocator::free (void *ptr)
 }
 
 int
-ACE_New_Allocator::remove (void)
+ACE_New_Allocator::remove ()
 {
   ACE_NOTSUP_RETURN (-1);
 }
@@ -210,13 +196,13 @@ ACE_New_Allocator::protect (void *, size_t, int)
 
 #if defined (ACE_HAS_MALLOC_STATS)
 void
-ACE_New_Allocator::print_stats (void) const
+ACE_New_Allocator::print_stats () const
 {
 }
 #endif /* ACE_HAS_MALLOC_STATS */
 
 void
-ACE_New_Allocator::dump (void) const
+ACE_New_Allocator::dump () const
 {
 #if defined (ACE_HAS_DUMP)
 #endif /* ACE_HAS_DUMP */
@@ -269,7 +255,7 @@ ACE_Static_Allocator_Base::free (void *ptr)
 }
 
 int
-ACE_Static_Allocator_Base::remove (void)
+ACE_Static_Allocator_Base::remove ()
 {
   return -1;
 }
@@ -336,13 +322,13 @@ ACE_Static_Allocator_Base::protect (void *, size_t, int)
 
 #if defined (ACE_HAS_MALLOC_STATS)
 void
-ACE_Static_Allocator_Base::print_stats (void) const
+ACE_Static_Allocator_Base::print_stats () const
 {
 }
 #endif /* ACE_HAS_MALLOC_STATS */
 
 void
-ACE_Static_Allocator_Base::dump (void) const
+ACE_Static_Allocator_Base::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Static_Allocator_Base::dump");

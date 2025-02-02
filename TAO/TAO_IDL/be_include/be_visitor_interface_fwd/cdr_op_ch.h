@@ -26,13 +26,12 @@
  */
 class be_visitor_interface_fwd_cdr_op_ch : public be_visitor_decl
 {
-
 public:
   /// constructor
   be_visitor_interface_fwd_cdr_op_ch (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_interface_fwd_cdr_op_ch (void);
+  ~be_visitor_interface_fwd_cdr_op_ch ();
 
   /// visit forward declared interface
   virtual int visit_interface_fwd (be_interface_fwd *node);

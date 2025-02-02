@@ -34,7 +34,7 @@ class ACE_WEBSVCS_Export ACE_URL_Addr : public ACE_Addr
 {
 public:
   /// Constructor.
-  ACE_URL_Addr (void);
+  ACE_URL_Addr ();
 
   /// The copy constructor.
   ACE_URL_Addr (const ACE_URL_Addr& address);
@@ -43,10 +43,10 @@ public:
   ACE_URL_Addr& operator= (const ACE_URL_Addr& address);
 
   /// destructor
-  virtual ~ACE_URL_Addr (void);
+  virtual ~ACE_URL_Addr ();
 
   /// Get the original URL
-  const ACE_TCHAR *get_url (void) const;
+  const ACE_TCHAR *get_url () const;
 
   /// Essentially the copy constructor.
   int set (const ACE_URL_Addr& address);
@@ -79,7 +79,7 @@ public:
   static int known_scheme (const ACE_TCHAR *url);
 
   /// Hash function
-  u_long hash (void) const;
+  u_long hash () const;
 
 protected:
   /// Allows the derived classes to store the compact representation of
@@ -124,7 +124,7 @@ class ACE_WEBSVCS_Export ACE_URL_Addr_Visitor
 {
 public:
   /// Destructor
-  virtual ~ACE_URL_Addr_Visitor (void);
+  virtual ~ACE_URL_Addr_Visitor ();
 
   /**
    * The visit methods for all the hierarchy.
@@ -159,7 +159,7 @@ class ACE_WEBSVCS_Export ACE_HTTP_Addr : public ACE_URL_Addr
 {
 public:
   /// Constructor
-  ACE_HTTP_Addr (void);
+  ACE_HTTP_Addr ();
 
   /// Construct an HTTP URL from the host, path, query and port.
   ACE_HTTP_Addr (const ACE_TCHAR *host_name,
@@ -183,7 +183,7 @@ public:
   int set (const ACE_HTTP_Addr &addr);
 
   /// Destructor
-  virtual ~ACE_HTTP_Addr (void);
+  virtual ~ACE_HTTP_Addr ();
 
   /**
    * Build the INET_Address implicit in the URL, notice that we
@@ -191,19 +191,19 @@ public:
    * URL can be can be refering to an hostname that cannot be
    * validated at this point.
    */
-  ACE_INET_Addr get_inet_address (void) const;
+  ACE_INET_Addr get_inet_address () const;
 
   /// Get the name of the host.
-  const ACE_TCHAR *get_hostname (void) const;
+  const ACE_TCHAR *get_hostname () const;
 
   /// Get the port number.
-  u_short get_port_number (void) const;
+  u_short get_port_number () const;
 
   /// Get the path component in the URL
-  const ACE_TCHAR *get_path (void) const;
+  const ACE_TCHAR *get_path () const;
 
   /// Get the query component in the URL
-  const ACE_TCHAR *get_query (void) const;
+  const ACE_TCHAR *get_query () const;
 
   /**
    * Create an address from a (possibly) relative URL, such as
@@ -231,7 +231,7 @@ private:
   size_t url_size (int flags = 0) const;
 
   /// Helper method to cleanup resources
-  void clear (void);
+  void clear ();
 
 private:
   /// The host:port component in the URL
@@ -262,7 +262,7 @@ class ACE_WEBSVCS_Export ACE_FTP_Addr : public ACE_URL_Addr
 {
 public:
   /// Constructor
-  ACE_FTP_Addr (void);
+  ACE_FTP_Addr ();
 
   /// Construct an FTP URL from the host_name, the path, the username
   /// and the password.
@@ -287,23 +287,23 @@ public:
   int set (const ACE_FTP_Addr &addr);
 
   /// Destructor
-  virtual ~ACE_FTP_Addr (void);
+  virtual ~ACE_FTP_Addr ();
 
   /// Get the host name component in the URL
-  const ACE_TCHAR *get_hostname (void) const;
+  const ACE_TCHAR *get_hostname () const;
 
   /// Get the username component in the URL
-  const ACE_TCHAR *get_user (void) const;
+  const ACE_TCHAR *get_user () const;
 
   /// Get the password component in the URL
-  const ACE_TCHAR *get_passwd (void) const;
+  const ACE_TCHAR *get_passwd () const;
 
   /// Get the path component in the URL
-  const ACE_TCHAR *get_path (void) const;
+  const ACE_TCHAR *get_path () const;
 
   /// Obtain the INET_Address implicit in the URL, can be used to
   /// obtain the host and the port.
-  ACE_INET_Addr get_inet_address (void) const;
+  ACE_INET_Addr get_inet_address () const;
 
   // = The ACE_Addr methods, see the documentation above.
   virtual int string_to_addr (const ACE_TCHAR *address);
@@ -318,7 +318,7 @@ private:
   size_t url_size (int flags = 0) const;
 
   /// Helper method to release the internal resources
-  void clear (void);
+  void clear ();
 
 private:
   /// The login name
@@ -345,7 +345,7 @@ class ACE_WEBSVCS_Export ACE_Mailto_Addr : public ACE_URL_Addr
 {
 public:
   /// Constructor
-  ACE_Mailto_Addr (void);
+  ACE_Mailto_Addr ();
 
   /// Construct an FTP URL from the host, path and headers.
   ACE_Mailto_Addr (const ACE_TCHAR *user,
@@ -367,16 +367,16 @@ public:
   int set (const ACE_Mailto_Addr &addr);
 
   /// Destructor
-  virtual ~ACE_Mailto_Addr (void);
+  virtual ~ACE_Mailto_Addr ();
 
   /// Get the username component in the URL
-  const ACE_TCHAR *get_user (void) const;
+  const ACE_TCHAR *get_user () const;
 
   /// Get the hostname component in the URL
-  const ACE_TCHAR *get_hostname (void) const;
+  const ACE_TCHAR *get_hostname () const;
 
   /// Get the headers as a single string
-  const ACE_TCHAR *get_headers (void) const;
+  const ACE_TCHAR *get_headers () const;
 
   // @@ TODO A mailto: URL can contain multiple headers, an iterator
   // over them would be a good idea. Similarly a method to *add*
@@ -395,7 +395,7 @@ private:
   size_t url_size (int flags = 0) const;
 
   /// Helper method to cleanup resources
-  void clear (void);
+  void clear ();
 
 private:
   ACE_TCHAR *user_;

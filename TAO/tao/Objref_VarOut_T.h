@@ -47,14 +47,14 @@ template <typename T>
 class TAO_Objref_Var_T : private TAO_Base_var
 {
 public:
-  TAO_Objref_Var_T (void);
+  TAO_Objref_Var_T ();
   TAO_Objref_Var_T (T * p) : ptr_ (p) {}
   TAO_Objref_Var_T (const TAO_Objref_Var_T<T> &);
-  ~TAO_Objref_Var_T (void);
+  ~TAO_Objref_Var_T ();
 
   TAO_Objref_Var_T<T> & operator= (T *);
   TAO_Objref_Var_T<T> & operator= (const TAO_Objref_Var_T<T> &);
-  T * operator-> (void) const;
+  T * operator-> () const;
 
   /// Cast operators.
   operator T * const & () const;
@@ -66,17 +66,17 @@ public:
   typedef T *&  _out_type;
   typedef T *   _retn_type;
 
-  _in_type      in (void) const;
-  _inout_type   inout (void);
-  _out_type     out (void);
-  _retn_type    _retn (void);
+  _in_type      in () const;
+  _inout_type   inout ();
+  _out_type     out ();
+  _retn_type    _retn ();
 
   /// TAO extension.
-  _retn_type    ptr (void) const;
+  _retn_type    ptr () const;
 
 protected:
   T * ptr_;
-  void free (void);
+  void free ();
   void reset (T *);
 
 private:
@@ -105,12 +105,11 @@ public:
   /// Cast operator.
   operator T *& ();
 
-  T *& ptr (void);
-  T * operator-> (void);
+  T *& ptr ();
+  T * operator-> ();
 
 private:
   T *& ptr_;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
@@ -119,13 +118,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #include "tao/Objref_VarOut_T.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "tao/Objref_VarOut_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Objref_VarOut_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 

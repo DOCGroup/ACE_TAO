@@ -72,15 +72,15 @@ public:
     {}
   ~Test ();
 
-  HANDLE handle (void) { return this->thr_handle_; }
-  int run (void);
+  HANDLE handle () { return this->thr_handle_; }
+  int run ();
   const char *start (const char *name);
   bool status (int *exit_status);
-  int wait (void);
-  void kill (void);
+  int wait ();
+  void kill ();
 
   // Clean up remnants of a test run.
-  void cleanup (void);
+  void cleanup ();
 
 private:
   HMODULE dll_handle_;
@@ -102,13 +102,13 @@ public:
 
   // Run the Peer's session; intended to be called from a new thread devoted
   // to this peer's session.
-  int svc (void);
+  int svc ();
 
 private:
   Peer () {};
 
   // Process command input from socket.
-  int command (void);
+  int command ();
 
   // Send a reply string to the peer.
   int reply (const char *msg);
@@ -124,7 +124,7 @@ private:
 // socket handle over which this object receives control commands from the
 // host test driver.
 int
-Peer::svc (void)
+Peer::svc ()
 {
   // Read commands until EOF (peer closed) or protocol error
   while (0 == this->command ())
@@ -135,7 +135,7 @@ Peer::svc (void)
 }
 
 int
-Peer::command (void)
+Peer::command ()
 {
   // The protocol exchanges with the peer are execpted to be lock-step
   // request-reply command lines, so we can make assumptions about a complete
@@ -328,7 +328,7 @@ Test::~Test ()
 }
 
 int
-Test::run (void)
+Test::run ()
 {
   this->running_ = true;
   try
@@ -431,7 +431,7 @@ Test::status (int *exit_status)
 }
 
 int
-Test::wait (void)
+Test::wait ()
 {
   WaitForSingleObject (this->thr_handle_, INFINITE);
   if (!this->running_)
@@ -440,7 +440,7 @@ Test::wait (void)
 }
 
 void
-Test::kill (void)
+Test::kill ()
 {
   TerminateThread (this->thr_handle_, -1);
   this->cleanup ();
@@ -450,7 +450,7 @@ Test::kill (void)
 
 // Clean up remnants of a test run.
 void
-Test::cleanup (void)
+Test::cleanup ()
 {
   if (this->dll_handle_ != NULL)
     {
@@ -607,7 +607,7 @@ format_errmsg (unsigned int errcode, const char *prefix)
 #define TEST_RUNNER_API __declspec(dllimport)
 #endif
 
-__declspec(dllexport) int test_entry(void)
+__declspec(dllexport) int test_entry()
 {
   return 0;
 }

@@ -10,17 +10,16 @@
 #include "SPIPE-acceptor.h"
 
 
-
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)
 
-Svc_Handler::Svc_Handler (void)
+Svc_Handler::Svc_Handler ()
   : mb_ (BUFSIZ + 1)
 {
   // An extra byte for null termination.
   this->mb_.size (BUFSIZ);
 }
 
-Svc_Handler::~Svc_Handler (void)
+Svc_Handler::~Svc_Handler ()
 {
 }
 
@@ -61,21 +60,19 @@ Svc_Handler::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
     ACE_Proactor::end_event_loop ();
 }
 
-IPC_Server::IPC_Server (void)
+IPC_Server::IPC_Server ()
   : n_threads_ (1),
     shutdown_ (0)
 {
   ACE_OS::strcpy (rendezvous_, ACE_TEXT ("acepipe"));
 }
 
-IPC_Server::~IPC_Server (void)
+IPC_Server::~IPC_Server ()
 {
 }
 
 int
-IPC_Server::handle_signal (int,
-                           siginfo_t *,
-                           ucontext_t *)
+IPC_Server::handle_signal (int, siginfo_t *, ucontext_t *)
 {
   ACE_LOG_MSG->log (LM_INFO, ACE_TEXT ("IPC_Server::handle_signal().\n"));
 
@@ -111,7 +108,7 @@ IPC_Server::init (int argc, ACE_TCHAR *argv[])
 }
 
 int
-IPC_Server::fini (void)
+IPC_Server::fini ()
 {
   return 0;
 }
@@ -162,7 +159,7 @@ run_reactor_event_loop (void *)
 }
 
 int
-IPC_Server::svc (void)
+IPC_Server::svc ()
 {
   // Performs the iterative server activities.
   while (this->shutdown_ == 0)

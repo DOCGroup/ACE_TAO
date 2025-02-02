@@ -5,16 +5,16 @@ bug_689_regression_i::bug_689_regression_i (CORBA::ORB_ptr orb)
 {
 }
 
-bug_689_regression_i::~bug_689_regression_i (void)
+bug_689_regression_i::~bug_689_regression_i ()
 {
 }
 
 void
-bug_689_regression_i::shutdown (void)
+bug_689_regression_i::shutdown ()
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }
 
-void bug_689_regression_i::noop (void)
+void bug_689_regression_i::noop ()
 {
 }

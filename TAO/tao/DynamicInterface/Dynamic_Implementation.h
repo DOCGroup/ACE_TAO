@@ -65,21 +65,20 @@ public:
   virtual CORBA::Boolean _is_a (const char *logical_type_id);
 
   /// Returns a CORBA::Object_ptr for the target object.
-  CORBA::Object_ptr _this (void);
+  CORBA::Object_ptr _this ();
 
   /// Query the Interface Repository for the interface definition.
-  virtual CORBA::InterfaceDef_ptr _get_interface (void);
+  virtual CORBA::InterfaceDef_ptr _get_interface ();
 
 protected:
-
   /// Return 0.  Should never be used.
-  virtual const char *_interface_repository_id (void) const;
+  virtual const char *_interface_repository_id () const;
 
   /// Simply returns "this"
   virtual void *_downcast (const char *repository_id);
 
   /// This is an auxiliary method for _this() and _narrow().
-  virtual TAO_Stub *_create_stub (void);
+  virtual TAO_Stub *_create_stub ();
 
   /// Turns around and calls invoke.
   virtual void _dispatch (
@@ -88,7 +87,7 @@ protected:
 
 private:
   /// Encapsulates code common to _is_a(), _get_interface() and _create_stub().
-  CORBA::RepositoryId get_id_from_primary_interface (void);
+  CORBA::RepositoryId get_id_from_primary_interface ();
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

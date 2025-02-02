@@ -7,7 +7,7 @@
 class ACE_Svc_Export Cond_Signal_Test : public Benchmark_Performance
 {
 public:
-  virtual int svc (void);
+  virtual int svc ();
 
 private:
   static ACE_Thread_Mutex mutex;
@@ -23,7 +23,7 @@ ACE_Condition_Thread_Mutex Cond_Signal_Test::notfull (Cond_Signal_Test::mutex);
 ACE_Condition_Thread_Mutex Cond_Signal_Test::notempty (Cond_Signal_Test::mutex);
 
 int
-Cond_Signal_Test::svc (void)
+Cond_Signal_Test::svc ()
 {
   int ni = this->thr_id ();
   synch_count = 2;

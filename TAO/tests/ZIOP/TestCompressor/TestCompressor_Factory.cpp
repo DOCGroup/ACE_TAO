@@ -5,8 +5,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-
-Test_CompressorFactory::Test_CompressorFactory (void) :
+Test_CompressorFactory::Test_CompressorFactory () :
   ::TAO::CompressorFactory (COMPRESSORID_FOR_TESTING),
   compressor_ (::Compression::Compressor::_nil ())
 {

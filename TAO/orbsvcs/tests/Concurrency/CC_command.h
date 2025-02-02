@@ -32,7 +32,7 @@ class CC_Command
 {
  public:
   /// Destructor
-  virtual ~CC_Command(void);
+  virtual ~CC_Command();
 
   /// Abstract execute method
   virtual int execute() = 0;
@@ -44,7 +44,7 @@ class CC_Command
     GetLockSet (const char *lock_set_name);
 
   /// Default constructor. We do not want instances of this class
-  CC_Command(void);
+  CC_Command();
 
   /**
    * The last exception raised in one of the test commands. This variable
@@ -83,7 +83,7 @@ class CC_Start_Cmd : public CC_Command
 
   /// Start the child process. The current version does not wait for the
   /// process to terminate.
-  virtual int execute(void);
+  virtual int execute();
 
 private:
   /// The name of the script file
@@ -110,7 +110,7 @@ class CC_CreateLockSet_Cmd : public CC_Command
 
   /// Executes the command, i.e. creates the lock set and binds the name
   /// in the naming service.
-  virtual int execute(void);
+  virtual int execute();
 
 private:
   /// The name used to bind in the naming service.
@@ -137,7 +137,7 @@ class CC_Lock_Cmd:public CC_Command
 
   /// Executes the command, i.e. looks up the lock set with the requested
   /// name in the naming server and executes the lock command on that lock set.
-  virtual int execute(void);
+  virtual int execute();
 
 private:
   /// The name to look up in the naming service.
@@ -170,7 +170,7 @@ class CC_UnLock_Cmd:public CC_Command
    * name in the naming server and executes the unlock command on that
    * lock set.
    */
-  virtual int execute(void);
+  virtual int execute();
 
 private:
   /// The name to look up in the naming service.
@@ -203,7 +203,7 @@ class CC_TryLock_Cmd:public CC_Command
    * name in the naming server and executes the try_lock command on that
    * lock set.
    */
-  virtual int execute(void);
+  virtual int execute();
 
 private:
   /// The name to look up in the naming service.
@@ -237,7 +237,7 @@ class CC_ChangeMode_Cmd:public CC_Command
    * name in the naming server and executes the change_mode command on that
    * lock set.
    */
-  virtual int execute(void);
+  virtual int execute();
 
 private:
   /// The name to look up in the naming service.
@@ -269,7 +269,7 @@ class CC_Sleep_Cmd:public CC_Command
   virtual ~CC_Sleep_Cmd();
 
   /// Executes the command.
-  virtual int execute(void);
+  virtual int execute();
 
  private:
   /// The number of seconds to sleep
@@ -295,7 +295,7 @@ class CC_Repeat_Cmd:public CC_Command
   virtual ~CC_Repeat_Cmd();
 
   /// Executes the command.
-  virtual int execute(void);
+  virtual int execute();
  private:
   /// The number of times the commands should be repeated
   int times_;
@@ -320,7 +320,7 @@ class CC_Wait_Cmd:public CC_Command
   virtual ~CC_Wait_Cmd();
 
   /// Executes the command.
-  virtual int execute(void);
+  virtual int execute();
 
 private:
   /// The prompt to print on the screen
@@ -343,14 +343,14 @@ class CC_Excep_Cmd : public CC_Command
   CC_Excep_Cmd (const char *excep);
 
   /// Destructor.
-  virtual ~CC_Excep_Cmd(void);
+  virtual ~CC_Excep_Cmd();
 
   /**
    * Executes the command. Checks to see if the excep_ class variable is set,
    * and if that's the case check that it is of the expected type. If not the
    * test fails.
    */
-  virtual int execute(void);
+  virtual int execute();
 
 private:
   /// The string representation of the expected exception
@@ -369,13 +369,13 @@ class CC_Dummy_Cmd: public CC_Command
 {
  public:
   /// Constructor.
-  CC_Dummy_Cmd(void);
+  CC_Dummy_Cmd();
 
   /// Destructor.
-  virtual ~CC_Dummy_Cmd(void);
+  virtual ~CC_Dummy_Cmd();
 
   /// Executes the command, i.e. does nothing.
-  virtual int execute(void);
+  virtual int execute();
 
  private:
 };
@@ -395,10 +395,10 @@ public:
   CC_Print_Cmd (const char *message);
 
   /// Destructor.
-  virtual ~CC_Print_Cmd(void);
+  virtual ~CC_Print_Cmd();
 
   /// Executes the command.
-  virtual int execute(void);
+  virtual int execute();
 
 private:
   /// Holds the message to print
@@ -425,12 +425,11 @@ public:
 
   /// Executes the command, i.e. looks up the lock set with the requested
   /// name in the naming server and sets the cc_lockset_ variable.
-  virtual int execute(void);
+  virtual int execute();
 
 private:
   /// The name to look up in the naming service.
   char *name_;
-
 };
 
 /**
@@ -449,13 +448,13 @@ class CC_CommandElem
   CC_CommandElem (CC_Command *cmd, CC_CommandElem *next);
 
   /// Destructor.
-  ~CC_CommandElem(void);
+  ~CC_CommandElem();
 
   /// Returns a pointer to the command in this element
-  CC_Command *GetCommand(void);
+  CC_Command *GetCommand();
 
   /// Returns the pointer to the next element
-  CC_CommandElem *GetNext(void);
+  CC_CommandElem *GetNext();
 
   /// Sets the next pointer
   void SetNext(CC_CommandElem *next);
@@ -481,16 +480,16 @@ class CC_CommandList
 {
  public:
   /// Constructor.
-  CC_CommandList(void);
+  CC_CommandList();
 
   /// Destructor.
-  ~CC_CommandList(void);
+  ~CC_CommandList();
 
   /// Adds the command to the list
   int add(CC_Command *cmd);
 
   /// Executes all the commands in the list from head to tail
-  int execute(void);
+  int execute();
 
   /// Sets the number of times to repeat the script
   void setrepeat(int times);

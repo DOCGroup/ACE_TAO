@@ -53,10 +53,6 @@ module Necessary
 };
 
 // Union with negative cases
-// At the moment, the SunCC preprocessor separates the negative
-// sign from the number.  This causes problems for the scanner/lexer
-// used by tao_idl.
-#if !defined (__SUNPRO_CC) || (__SUNPRO_CC > 0x5140)
 union foo switch (short)
 {
   case -3:
@@ -65,7 +61,6 @@ union foo switch (short)
   default: long   foo_iface_member;
   case  0: long   foo_iface_member2;
 };
-#endif // !__SUNPRO_CC || __SUNPRO_CC > 0x5120
 
 // Make sure that CORBA_Any::to_* is used everywhere.
 module UnionDiscTest
@@ -225,21 +220,6 @@ struct Field
   FieldValue value;
 };
 
-// Tricky case of lookup for a recursive union. When defined
-// inside another datatype like this, the union is referenced
-// inside itself before the closing brace is seen, but not
-// declared yet.
-struct Element
-{
-  union ValueUnion switch (short)
-  {
-    case 0:
-      long lvalue;
-    case 1:
-      sequence<ValueUnion> VUValue;
-  } Value;
-};
-
 // A fix to the IDL compiler's typecode generation created
 // a problem with unions that have more than one member,
 // where any member except the last is itself a scoped type.
@@ -263,44 +243,65 @@ union TestUnion switch (short)
   case 2: TestTwoEnum twoEnum;
 };
 
-// Test for various kinds of declarations inside a union,
-// similar to the example in enum_in_struct.idl.
+typedef long U41[2][3];
+typedef long U42[2];
 
-typedef long NamedLongArray[10];
-
-union decl_heavy_union switch (short)
-{
-  case 1:
-    enum which
-    {
-      ZERO,
-      ONE,
-      TWO
-    } m_which;
-  case 2:
-    enum en
-    {
-      a,
-      b,
-      c
-    } m_en_arr[10];
-  case 3:
-    struct st
-    {
-      long a;
-      char b;
-    } m_st_arr[10];
-  case 4:
-    union un switch (long)
-    {
-      case 1: long a;
-      case 2: char b;
-    } m_un_arr[10];
-  // The following caused compile problems once
-  // when generating ostream ops
-  case 5:
-    NamedLongArray m_named_long_array;
-  case 6:
-    long m_anon_long_array[10];
+union U85 switch (long) {
+  case 1: U41 b_85_1;
+  case 2: U42 b_85_2;
 };
 
+typedef string UString[2];
+union U86 switch (long) {
+  case 1: string b_86_1;
+  case 2: long b_86_2;
+};
+union U88 switch (long) {
+  case 1: UString b_86_1;
+  case 2: long b_86_2;
+};
+
+struct UBar {
+  long foo;
+};
+typedef UBar UBarArray[2];
+
+union U87 switch (long) {
+  case 1: UBar b_87_1;
+  case 2: long b_87_2;
+};
+union U89 switch (long) {
+  case 1: UBarArray b_87_1;
+  case 2: long b_87_2;
+};
+
+enum U90
+{
+  U90_1,
+  U90_2
+};
+
+typedef U90 U90Array[2];
+
+union U91 switch (long) {
+  case 1: U90Array b_91_1;
+  case 2: long b_92_2;
+};
+
+union U92 switch (long) {
+  case 1: UBar b_92_1;
+  case 2: long b_92_2;
+  default: UBar b_92_3;
+};
+
+union U93 switch (long) {
+  case 1: UBarArray b_93_1;
+  case 2: long b_93_2;
+  default: UBarArray b_93_3;
+};
+
+union U94 switch (long) {
+  case 1: U90Array b_94_1;
+  case 2: long b_94_2;
+  default: U90Array b_94_3;
+};

@@ -1,0 +1,579 @@
+commit 7cf3f1283ef8a4901d8962e7f951ada8252288ce
+Merge: ae6be536342 869843c1dcf
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Tue Jun 16 12:53:07 2020 -0500
+
+    Merge pull request #1141 from mitza-oci/master
+    
+    tao_idl: only write "processing <filename>" to stderr in verbose mode
+
+commit 0bbb85f28b5f78a978767cc115e4f94cebd90e2a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jun 15 16:26:29 2020 +0200
+
+    With C++11 define a default assignment operator to get rid of C++11 warnings lacking it
+    
+        * TAO/tao/CDR.h:
+
+commit 869843c1dcf946e383968d7d33b3451410918582
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Sun Jun 14 18:16:10 2020 -0500
+
+    tao_idl: only write "processing <filename>" to stderr in verbose mode
+
+commit 6903c62313a4160d09d91999f6f424f3925dfa11
+Merge: c3907f7aa62 a3d5544c8fa
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Fri Jun 12 14:42:53 2020 -0500
+
+    Merge pull request #1135 from iguessthislldo/igtd/anon_types
+    
+    Anonymous Types in IDL4
+
+commit a3d5544c8fa6734e8cb57f48a15d39a57488f4aa
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Thu Jun 11 16:31:16 2020 -0500
+
+    Change Anonymous Type Messages
+
+commit 5dd2f8932d5ad7180790ff54e439fcaa3ba8109c
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Thu Jun 11 16:27:37 2020 -0500
+
+    Simplify Calls to anonymous_type_diagnostic
+
+commit bbe0215c83303c5001587e9736e592df5354ab0f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jun 11 13:17:54 2020 +0200
+
+    Tab/newline cleanup
+    
+        * TAO/examples/CSD_Strategy/ThreadPool5/README:
+        * TAO/tests/Big_Twoways/README:
+
+commit 27e4f2f6b65a17333a930c844c80409b072b821d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jun 10 17:32:28 2020 +0200
+
+    Use ACE_OS instead of ACE_OS_String
+    
+        * ACE/ace/OS_NS_time.inl:
+        * ACE/examples/APG/Config/ARGV_Example.cpp:
+        * ACE/examples/APG/Config/Get_Opt.cpp:
+        * ACE/examples/APG/Config/Get_Opt_Long.cpp:
+        * ACE/tests/ARGV_Test.cpp:
+        * TAO/orbsvcs/DevGuideExamples/Security/ParticipatingApp/Messenger_i.cpp:
+        * TAO/orbsvcs/orbsvcs/Event/EC_Thread_Flags.cpp:
+        * TAO/orbsvcs/tests/AVStreams/Pluggable_Flow_Protocol/TimeStamp.cpp:
+        * TAO/orbsvcs/tests/AVStreams/Pluggable_Flow_Protocol/receiver.cpp:
+        * TAO/orbsvcs/tests/Event/ThreadFlags/testflags.cpp:
+        * TAO/orbsvcs/tests/HTIOP/AMI/Test_Output.cpp:
+        * TAO/orbsvcs/tests/HTIOP/BiDirectional/Test_Output.cpp:
+        * TAO/orbsvcs/tests/HTIOP/Hello/Test_Output.cpp:
+        * TAO/tests/Bug_3941_Regression/test.cpp:
+
+commit 02af73cfc64c1dcf73dd907b25fcd67b80b88203
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jun 10 16:59:49 2020 +0200
+
+    Use ACE_OS::strcmp instead of ACE_OS_String::strcmp
+    
+        * ACE/tests/Message_Queue_Test.cpp:
+        * TAO/docs/ec_options.html:
+        * TAO/orbsvcs/orbsvcs/FaultTolerance/FT_ClientRequest_Interceptor.cpp:
+        * TAO/orbsvcs/orbsvcs/HTIOP/HTIOP_Completion_Handler.h:
+        * TAO/orbsvcs/orbsvcs/HTIOP/HTIOP_Factory.h:
+        * TAO/orbsvcs/orbsvcs/HTIOP/README.txt:
+        * TAO/orbsvcs/orbsvcs/Security/SL2_SecurityManager.cpp:
+        * TAO/tao/Connection_Purging_Strategy.h:
+        * TAO/tao/GIOP_Message_Base.cpp:
+        * TAO/tao/Invocation_Retry_Params.cpp:
+        * TAO/tao/Invocation_Retry_State.cpp:
+        * TAO/tao/Invocation_Retry_State.h:
+        * TAO/tao/Strategies/FIFO_Connection_Purging_Strategy.h:
+        * TAO/tao/Strategies/LFU_Connection_Purging_Strategy.h:
+        * TAO/tao/Synch_Invocation.cpp:
+        * TAO/tao/Transport_Cache_Manager_T.cpp:
+        * TAO/tao/Transport_Cache_Manager_T.h:
+        * TAO/tests/Bug_1495_Regression/server_interceptor.cpp:
+        * TAO/tests/DII_AMI_Forward/server_interceptor.cpp:
+        * TAO/tests/ForwardOnceUponException/README:
+        * TAO/tests/Portable_Interceptors/Benchmark/Interceptor_Type.cpp:
+        * TAO/tests/Portable_Interceptors/Bug_1559/server_interceptor.cpp:
+        * TAO/tests/Portable_Interceptors/Bug_2510_Regression/server_interceptor.cpp:
+        * TAO/tests/Portable_Interceptors/Bug_3079/Client_Request_Interceptor.cpp:
+
+commit ff725437a997295f0372195cacd04997030381c1
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Wed Jun 10 02:02:11 2020 -0500
+
+    TAO IDL FE: override for IDL4 anon_type_diagnostic
+    
+    To allow incompatible backends to avoid having to deal with anonymous
+    types when using IDL4.
+
+commit ebe174f375fb53c4584f3e7e7b212d28771afb78
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jun 9 16:56:09 2020 +0200
+
+    Simplify matrix
+    
+        * .github/workflows/linux.yml:
+        * TAO/tao/Invocation_Retry_State.cpp:
+        * TAO/tao/Invocation_Retry_State.h:
+
+commit 328c87c87e1e4f29561cfcd182c328377ef81a16
+Merge: 5650c5ce9e2 a4dc39467c6
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jun 9 16:03:19 2020 +0200
+
+    Merge pull request #1136 from jwillemsen/jwi-azureubuntu
+    
+    Move some jobs to ubuntu 20.04
+
+commit a4dc39467c66fdae4e3b6698558108b36492526b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jun 9 13:19:10 2020 +0200
+
+    Zap empty lines
+    
+        * TAO/tao/params.h:
+
+commit 757eb4f5a158b60c233062fa0a8543ffaaced513
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Fri Jun 5 12:02:36 2020 -0500
+
+    Respond to Review in #1135
+
+commit 4e92865d520dac46061275197f150ea75f99219f
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Fri Jun 5 11:27:25 2020 -0500
+
+    Update TAO/NEWS
+
+commit bc148a36212a9067ade114a89a5c75eae503823e
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Fri Jun 5 11:24:37 2020 -0500
+
+    IDL4 Anonymous Types Test
+
+commit b8840569730c83f4d229b4c285c95a206af98746
+Merge: 6778610a144 79af351e070
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Fri Jun 5 10:37:07 2020 -0500
+
+    Merge remote-tracking branch 'upstream/master' into igtd/anon_types
+
+commit 79af351e070d97d0637c85a22cded9a0b3db256f
+Merge: 051f13e0387 a77543d720d
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Thu Jun 4 14:34:52 2020 -0500
+
+    Merge pull request #1134 from iguessthislldo/igtd/valuetype_annotations
+    
+    More Fixes for #1125
+
+commit 051f13e038731cf3188194ca75c8b315e820a7f5
+Merge: 154c43538b1 52d35023a4f
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Thu Jun 4 14:34:31 2020 -0500
+
+    Merge pull request #1133 from iguessthislldo/igtd/gitignores
+    
+    Update .gitignore Files for TAO Tests
+
+commit a77543d720d7c48dc113859af741b05b950e5839
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Wed Jun 3 15:52:47 2020 -0500
+
+    More Fixes for #1125
+    
+    More Fixes for https://github.com/DOCGroup/ACE_TAO/pull/1125
+    
+    Fixed using wrong prointer for add to scope in
+    https://github.com/DOCGroup/ACE_TAO/pull/1132 for interfaces, now doing
+    that for eventtype and component. See:
+    https://github.com/DOCGroup/ACE_TAO/pull/1125#discussion_r434675138
+
+commit 154c43538b1f9993afdf4cfae39e81c9b1b990ad
+Merge: 65f122d51c2 69b8c2c0323
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Mon Jun 1 22:35:54 2020 -0500
+
+    Merge pull request #1132 from iguessthislldo/igtd/valuetype_annotations
+    
+    Fixes for #1125
+
+commit 52d35023a4f6c76abab966de1dfa683d8d7fdb3b
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Mon Jun 1 20:33:20 2020 -0500
+
+    Update .gitignore files
+    
+    After building TAO tests for
+    https://github.com/DOCGroup/ACE_TAO/pull/1132 I was left with a lot of
+    untracked files. I used
+    https://github.com/objectcomputing/OpenDDS/blob/e1b3c99f74e73a537083e790f3bf9fb9ee6ed8b9/tools/scripts/update_gitignore.pl
+    to create and update `.gitignore` files. I made sure I wasn't creating
+    any directories just containing a `.gitignore` file, except for
+    `ACE/apps/gperf/tests/iout2_gen`. It had a placeholder file called
+    `.empty` which I deleted because the `.gitignore` can serve the same
+    purpose.
+
+commit 69b8c2c03238fb4f3ad2ff354216b0f525d50b34
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Mon Jun 1 19:55:52 2020 -0500
+
+    Fixes for #1125
+    
+    Fixes for https://github.com/DOCGroup/ACE_TAO/pull/1125
+    
+    - `TAO_IDL/fe.ypp`
+      - Fixed using wrong pointer in grammar.
+      - Other minor tweaks.
+    - `tests/IDLv4/annotations`
+      - Fixed preprocessor usage that some compilers don't like.
+      - Fixed passing `std::string` as a `const char*`.
+      - Rewrote IDL output function to try to be more flexible.
+
+commit d9c3c14887d38f7d23391ff1dcc0c3b2eb4ae8a5
+Author: Oliver Kellogg <okellogg@users.sourceforge.net>
+Date:   Sun May 31 21:30:35 2020 +0200
+
+    Change TAO/tests/IDLv4/TestIDLv4.idl into valid IDLv4:
+    
+    - Hoist constant `dub` from struct Annotated1.
+    - At Annotated1 member `k` fix annotation parameter.
+
+commit 57a75e554972de820ab00faae93e08150b22a743
+Merge: 66d6dee67bf 3021f30998f
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Sat May 30 08:30:28 2020 -0500
+
+    Merge pull request #1125 from iguessthislldo/igtd/valuetype_annotations
+    
+    Extend Annotation Support
+
+commit 3021f30998f4db0721536083343cf2e46c41242c
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Fri May 29 20:40:02 2020 -0500
+
+    Tweak TAO_IDL/docs/annotations.md
+
+commit 564ef3667aa188404f050d77f0841e36da42cedf
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Fri May 29 18:20:06 2020 -0500
+
+    Update TAO/NEWS
+
+commit 8a7521d685021bb160ba2ebb57e77f598bcd678c
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Fri May 29 18:16:28 2020 -0500
+
+    TAO IDL FE: Respond to Review in #1125
+
+commit 8d4781b498d1ad34c77370a5b87eb94ce3a8c591
+Merge: e442b9ed709 30fc9304b56
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri May 29 19:43:08 2020 +0200
+
+    Merge pull request #1127 from jwillemsen/jwi-costradingregen
+    
+    Regenerated with latest byacc
+
+commit e442b9ed709cea1e445b7d42b742791a113dbe48
+Merge: adced9754c8 81d3fc44021
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri May 29 19:42:45 2020 +0200
+
+    Merge pull request #1121 from jwillemsen/jwi-emb-104-sydney
+    
+    Add support for Embarcadero C++ Builder 10.4 Sydney
+
+commit 6778610a1441288247e5575346cce16f5daead60
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Fri May 29 12:19:43 2020 -0500
+
+    TAO IDL FE: Use Existing Anon Type Feature in IDL4
+    
+    This just uses the existing IDL2 support to enable using them in IDL4,
+    but it's not know how good that support is. At the very least a new test
+    will have to be made in tests/IDLv4.
+
+commit 30fc9304b5660c907e333a18d7e2a5d2b8b59151
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri May 29 14:05:37 2020 +0200
+
+    Regenerated with latest byacc
+    
+        * TAO/orbsvcs/orbsvcs/Trader/Constraint_Tokens.h:
+        * TAO/orbsvcs/orbsvcs/Trader/Constraint_y.cpp:
+
+commit 6d9405d60949f8761f11f3f83ef4eded2e3f74d1
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Fri May 29 01:37:59 2020 -0500
+
+    Update TAO/NEWS
+
+commit ce1f7689e0dce79c15c1fd848424e88a923ff1a5
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Fri May 29 01:14:40 2020 -0500
+
+    TAO IDL FE: Extended Annotation Support
+    
+    Annotation support extended to on the following types and their
+    contents:
+     - Interfaces
+     - Porttypes
+     - Eventtypes
+     - Components
+    
+    Annotations on Valuetypes and most of their possible contents are also
+    supported. The exceptions to this are these types of valuetype
+    statements:
+      - import: not supported by TAO
+      - typeid: not supported by TAO on valuetypes
+      - typeprefix: No corresponding AST Node to attach annotations to
+
+commit 69e8ba266bf52262e5b17cf9bfb65fd207307c01
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Thu May 28 20:03:05 2020 -0500
+
+    tao_idl: Record lineno of errors and warnings
+
+commit 81d3fc440215bcffd262440b0a057982b80caf14
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed May 27 16:51:26 2020 +0200
+
+    Removed usage of register, not allowed anymore with C++17
+    
+        * TAO/orbsvcs/tests/Concurrency/CC_command.tab.cpp:
+
+commit 265095a9d78259589cfcbf5160b686f55f48c761
+Author: Knut Petter Svendsen <knut@altuma.no>
+Date:   Wed May 27 09:26:32 2020 +0200
+
+    Fixed warning for maybe-uninitialized
+
+commit 70220ed436a20dad8d2cdcc4d39d4faa4e5819aa
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed May 27 08:21:55 2020 +0200
+
+    Add support for Embarcadero C++ Builder 10.4 Sydney
+    
+        * ACE/NEWS:
+        * ACE/ace/Compression/rle/RLECompressor.cpp:
+        * ACE/ace/OS_NS_Thread.cpp:
+        * ACE/ace/config-win32-borland.h:
+        * ACE/ace/os_include/net/os_if.h:
+        * TAO/orbsvcs/orbsvcs/IFRService/IFR_Service_Utils_T.cpp:
+        * TAO/orbsvcs/orbsvcs/Notify/MonitorControlExt/MC_Default_Factory.h:
+        * TAO/orbsvcs/orbsvcs/Notify/RT_Factory.h:
+        * TAO/orbsvcs/tests/Notify/Bug_3252_Regression/server.cpp:
+        * TAO/tests/Bug_3574_Regression/test.cpp:
+
+commit 50380b349dfe3d840ca3e07ce635745a93ee3250
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon May 25 17:24:06 2020 +0200
+
+    Regenerated with bison 3.6.2
+    
+        * TAO/TAO_IDL/fe/idl.tab.cpp:
+        * TAO/TAO_IDL/fe/idl.tab.hpp:
+
+commit b1c483ba83f0af216ee9fb7aea7b109a60a3f68a
+Merge: 134f0d30fde 4e9b0a57acf
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Mon May 18 15:45:14 2020 -0500
+
+    Merge pull request #1005 from knutpett/thread_safe_eval
+    
+    Improve exception safety for IDL_GlobalData::eval()
+
+commit 2d366e54e7a507b6b3dfa4c3c8bc29f55e62785e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu May 14 10:01:29 2020 +0200
+
+    Layout, const, logging, doxygen changes
+    
+        * ACE/ace/SSL/SSL_Asynch_Stream.cpp:
+        * ACE/ace/SSL/SSL_Context.cpp:
+        * ACE/examples/IPC_SAP/SSL_SAP/README:
+        * ACE/examples/IPC_SAP/SSL_SAP/SSL-client-simple.h:
+        * ACE/examples/IPC_SAP/SSL_SAP/SSL-client.h:
+        * ACE/examples/IPC_SAP/SSL_SAP/SSL-server-simple.cpp:
+        * ACE/examples/IPC_SAP/SSL_SAP/SSL-server.cpp:
+        * ACE/tests/SSL/Bug_2912_Regression_Test.cpp:
+        * ACE/tests/SSL/Thread_Pool_Reactor_SSL_Test.cpp:
+        * ACE/tests/SSL/Thread_Pool_Reactor_SSL_Test.h:
+        * TAO/orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.cpp:
+
+commit ba17567d4b6f5795afeba54929eed66b6b77dbfb
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon May 11 10:52:01 2020 +0200
+
+    Remove register keyword, illegal with C++17.
+    
+        * TAO/orbsvcs/tests/Concurrency/CC_command.tab.cpp:
+        * TAO/orbsvcs/tests/Concurrency/lex.CC_command.cpp:
+
+commit 289a4a8e0006f7a20e8de568334f74ba74f7a4bf
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu May 7 14:19:46 2020 +0200
+
+    Update various links, point to github issues
+    
+        * ACE/COPYING:
+        * ACE/PROBLEM-REPORT-FORM:
+        * ACE/README:
+        * TAO/PROBLEM-REPORT-FORM:
+
+commit 5564c9667dc17bc7826e54efe7dae79334218a03
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu May 7 14:14:22 2020 +0200
+
+    Update various hyperlinks
+    
+        * ACE/ACE-INSTALL.html:
+        * ACE/COPYING:
+        * ACE/ace/Object_Manager.cpp:
+        * TAO/TAO-INSTALL.html:
+
+commit dc92e73096bfd073dad31e2cf5d60ae3dbdf66ee
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri May 1 10:28:14 2020 +0200
+
+    Make x.5.9 public and prepare for next release
+    
+        * ACE/NEWS:
+        * ACE/bin/copy-local-script.sh:
+        * ACE/bin/copy-script.sh:
+        * ACE/bin/diff-builds-and-group-fixed-tests-only.sh:
+        * ACE/docs/Download.html:
+        * ACE/docs/bczar/bczar.html:
+        * ACE/etc/index.html:
+        * TAO/NEWS:
+
+commit 4e9b0a57acf3a313af273143650ca0871ec9866d
+Merge: 91785b820ae 9985d758f81
+Author: Knut Petter Svendsen <knut@altuma.no>
+Date:   Fri Mar 6 10:08:19 2020 +0100
+
+    Merge branch 'master' of github.com:DOCGroup/ACE_TAO into thread_safe_eval
+
+commit 91785b820aeefe3642db06833e17ca936382a2f7
+Author: Knut P <knut@altuma.no>
+Date:   Tue Mar 3 19:59:20 2020 +0100
+
+    Update TAO/TAO_IDL/util/utl_global.cpp
+    
+    Co-Authored-By: Fred Hornsey <fred@hornsey.us>
+
+commit 3e8b6e03c4693a62730d1115be3705542df32fb9
+Author: Knut P <knut@altuma.no>
+Date:   Fri Feb 28 13:07:40 2020 +0100
+
+    Update TAO/TAO_IDL/util/utl_global.cpp
+    
+    Co-Authored-By: Fred Hornsey <fred@hornsey.us>
+
+commit d1931582ffe4607fd832748c377f02385fdfd7a1
+Author: Knut P <knut@altuma.no>
+Date:   Fri Feb 28 13:07:31 2020 +0100
+
+    Update TAO/TAO_IDL/util/utl_global.cpp
+    
+    Co-Authored-By: Fred Hornsey <fred@hornsey.us>
+
+commit 689c64bcdaeffefaccc8c3cd6b886578995a9ecb
+Author: Knut P <knut@altuma.no>
+Date:   Fri Feb 28 13:03:39 2020 +0100
+
+    Update TAO/TAO_IDL/util/utl_global.cpp
+    
+    Co-Authored-By: Fred Hornsey <fred@hornsey.us>
+
+commit 502c8866973364f8fc78e4b9d39d8cc8f1521700
+Author: Knut P <knut@altuma.no>
+Date:   Fri Feb 28 13:03:21 2020 +0100
+
+    Update TAO/TAO_IDL/util/utl_global.cpp
+    
+    Co-Authored-By: Fred Hornsey <fred@hornsey.us>
+
+commit 2aa32210712c300ffd903ef31f0941340751cc72
+Author: Knut P <knut@altuma.no>
+Date:   Tue Feb 25 09:15:57 2020 +0100
+
+    Update TAO/TAO_IDL/util/utl_global.cpp
+    
+    Co-Authored-By: Adam Mitz <mitza@objectcomputing.com>
+
+commit 0ce29d3e3dd46551863dd260e38f03ebb7d0e1f7
+Author: Knut P <knut@altuma.no>
+Date:   Tue Feb 25 09:15:47 2020 +0100
+
+    Update TAO/TAO_IDL/util/utl_global.cpp
+    
+    Co-Authored-By: Adam Mitz <mitza@objectcomputing.com>
+
+commit 9b0f5a79033cd502bc03a570f40d9ce0d6e13dab
+Author: Knut P <knut@altuma.no>
+Date:   Tue Feb 25 09:15:32 2020 +0100
+
+    Update TAO/TAO_IDL/util/utl_global.cpp
+    
+    Co-Authored-By: Adam Mitz <mitza@objectcomputing.com>
+
+commit bb40ff0d33aa106872cba0d027d833e3de6d1738
+Author: Knut P <knut@altuma.no>
+Date:   Tue Feb 25 09:14:56 2020 +0100
+
+    Update TAO/TAO_IDL/util/utl_global.cpp
+    
+    Co-Authored-By: Adam Mitz <mitza@objectcomputing.com>
+
+commit b99d0f133665d598b6bd17ef47f0d78f1a367f41
+Author: Knut Petter Svendsen <knut@altuma.no>
+Date:   Fri Jan 31 12:47:09 2020 +0100
+
+    Fix whitespace and remove comments
+
+commit 8c2a34853c53f86c971999f5847f816ad081b459
+Author: Knut Petter Svendsen <knut@altuma.no>
+Date:   Mon Jan 27 14:18:04 2020 +0100
+
+    Fixes from review 2
+
+commit 41b654b2e0c6d9b6159c02971558363432c24d74
+Merge: 0af017fd1ff 468b6db323a
+Author: Knut Petter Svendsen <knut@altuma.no>
+Date:   Fri Jan 24 16:03:14 2020 +0100
+
+    Merge branch 'master' of github.com:DOCGroup/ACE_TAO into thread_safe_eval
+
+commit 0af017fd1ff2e70f47308d9e321a8a7ffcc41057
+Author: Knut Petter Svendsen <knut@altuma.no>
+Date:   Fri Jan 24 16:03:01 2020 +0100
+
+    Fixes after review
+
+commit 6166895e4fab04b76525a5a1401ec294a73ed52b
+Author: Knut Petter Svendsen <knut@altuma.no>
+Date:   Wed Dec 11 11:30:31 2019 +0100
+
+    Improve exception safety for IDL_GlobalData::eval()
+    
+    If eval() parses code which causes an exception, then
+    the output won't be re-enabled. Fixed by using a helper
+    class that re-enables in the dtor.
+
+commit 8e2a713e66eb6f7bfb76e78db5ae20dda6294acd
+Author: Knut Petter Svendsen <knut@altuma.no>
+Date:   Mon Dec 9 13:04:03 2019 +0100
+
+    WIP: Improve thread safety for IDL_GlobalData::eval()
+    
+    If eval() parses code which causes an exception, then
+    the output won't be re-enabled. Fixed by using a helper
+    class that re-enables in the dtor.

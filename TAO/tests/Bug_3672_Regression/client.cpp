@@ -77,7 +77,7 @@ public:
   Client (A::AMI_Test_ptr server, int niterations, A::AMI_AMI_TestHandler_ptr handler);
 
   /// The thread entry point.
-  virtual int svc (void);
+  virtual int svc ();
 
   /// Set all members to nil
   void clear ();
@@ -96,7 +96,7 @@ private:
 class Handler : public POA_A::AMI_AMI_TestHandler
 {
 public:
-  Handler (void)
+  Handler ()
   {
   };
 
@@ -122,7 +122,6 @@ public:
 
    void foo_excep (::Messaging::ExceptionHolder * excep_holder)
     {
-
       ACE_DEBUG ((LM_DEBUG,
                   "Callback method <foo_excep> called:\n"));
       try
@@ -135,7 +134,7 @@ public:
         }
     };
 
-  ~Handler (void)
+  ~Handler ()
   {
   };
 };
@@ -235,8 +234,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       orb->run (tv);
 
       root_poa->deactivate_object (id.in ());
-      root_poa->destroy (1,  // ethernalize objects
-                         0);  // wait for completion
+      root_poa->destroy (true,  // ethernalize objects
+                         false);  // wait for completion
 
       hello = A::AMI_AMI_TestHandler::_nil ();
       root_poa = PortableServer::POA::_nil ();
@@ -271,7 +270,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     {
       ex._tao_print_exception ("Caught exception:");
       return 1;
-
     }
 
   return parameter_corruption;
@@ -295,7 +293,7 @@ Client::Client (A::AMI_Test_ptr server,
 }
 
 int
-Client::svc (void)
+Client::svc ()
 {
   try
     {

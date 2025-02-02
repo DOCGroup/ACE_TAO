@@ -16,7 +16,7 @@ public:
   // Disconnect from the event channel.
 
   void push (const CORBA::Any& data);
-  void disconnect_push_consumer (void);
+  void disconnect_push_consumer ();
 
 private:
   CosEventChannelAdmin::ProxyPushSupplier_var supplier_proxy_;

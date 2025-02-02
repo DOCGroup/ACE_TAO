@@ -22,17 +22,17 @@ class Handler_Factory
   // = TITLE
   //   Creates the oneway or twoway handlers.
 public:
-  Handler_Factory (void);
+  Handler_Factory ();
   // Constructor.
 
-  ~Handler_Factory (void);
+  ~Handler_Factory ();
   // Destructor.
 
-  int handle_events (void);
+  int handle_events ();
   // Run the main event loop.
 
 private:
-  int init_acceptors (void);
+  int init_acceptors ();
   // Initialize the acceptors.
 
   int create_handler (ACE_SSL_SOCK_Acceptor &acceptor,
@@ -73,7 +73,6 @@ public:
   //FUZZ: enable check_for_lack_ACE_OS
 
 protected:
-
   Handler (ACE_SSL_SOCK_Stream *ssl_stream);
   // Constructor.
 
@@ -83,14 +82,14 @@ protected:
   // <run> methods to get the header and the buffer to read the data.
   // This method factors out common code.
 
-  virtual int run (void) = 0;
+  virtual int run () = 0;
   // Hook method called by the <svc> template method to do the actual
   // protocol.  Must be overridden by the subclass.
 
-  virtual int svc (void);
+  virtual int svc ();
   // Template method entry point into the handler task.
 
-  virtual void print_results (void);
+  virtual void print_results ();
   // Print the results.
 
   size_t total_bytes_;
@@ -111,15 +110,12 @@ class Twoway_Handler : public Handler
   // = TITLE
   //   Performs the twoway protocol.
 public:
-
   Twoway_Handler (ACE_SSL_SOCK_Stream *ssl_stream);
   // Constructor.
 
 private:
-
-  virtual int run (void);
+  virtual int run ();
   // Template Method hook called by <svc>.
-
 };
 
 class Oneway_Handler : public Handler
@@ -130,36 +126,36 @@ public:
   // Constructor.
 
 private:
-  virtual int run (void);
+  virtual int run ();
   // Template Method hook called by <svc>.
 
-  virtual void print_results (void);
+  virtual void print_results ();
   // Print the results.
 };
 
 u_short
-Options::port (void) const
+Options::port () const
 {
   return this->port_;
 }
 
 int
-Options::verbose (void) const
+Options::verbose () const
 {
   return this->verbose_;
 }
 
 int
-Options::reply_message_len (void) const
+Options::reply_message_len () const
 {
   return ACE_Utils::truncate_cast<int> (this->reply_message_len_);
 }
 
-Options::~Options (void)
+Options::~Options ()
 {
 }
 
-Options::Options (void)
+Options::Options ()
   : verbose_ (0),
     port_ (ACE_DEFAULT_SERVER_PORT),
     reply_message_len_ (24) // Default to the approximate size of an
@@ -240,7 +236,7 @@ Handler::close (u_long)
 }
 
 int
-Handler::svc (void)
+Handler::svc ()
 {
   // Timer logic.
   this->timer_.start ();
@@ -284,7 +280,7 @@ Handler::parse_header_and_allocate_buffer (char *&request,
 }
 
 void
-Handler::print_results (void)
+Handler::print_results ()
 {
 }
 
@@ -296,7 +292,7 @@ Twoway_Handler::Twoway_Handler (ACE_SSL_SOCK_Stream* ssl_stream)
 // Function entry point into the twoway server task.
 
 int
-Twoway_Handler::run (void)
+Twoway_Handler::run ()
 {
   // Read data from client (terminate on error).
 
@@ -368,7 +364,7 @@ Oneway_Handler::Oneway_Handler (ACE_SSL_SOCK_Stream *ssl_stream)
 }
 
 void
-Oneway_Handler::print_results (void)
+Oneway_Handler::print_results ()
 {
   ACE_Profile_Timer::ACE_Elapsed_Time et;
   this->timer_.elapsed_time (et);
@@ -390,7 +386,7 @@ Oneway_Handler::print_results (void)
 // Function entry point into the oneway server task.
 
 int
-Oneway_Handler::run (void)
+Oneway_Handler::run ()
 {
   // Read data from client (terminate on error).
 
@@ -459,7 +455,7 @@ Handler_Factory::make_oneway_handler (ACE_SSL_SOCK_Stream *ssl_stream)
 }
 
 int
-Handler_Factory::init_acceptors (void)
+Handler_Factory::init_acceptors ()
 {
   // Create the oneway and twoway server addresses.
   ACE_INET_Addr twoway_server_addr (OPTIONS::instance ()->port ());
@@ -525,11 +521,11 @@ Handler_Factory::create_handler (
 #endif /* ACE_HAS_THREADS */
 }
 
-Handler_Factory::Handler_Factory (void)
+Handler_Factory::Handler_Factory ()
 {
 }
 
-Handler_Factory::~Handler_Factory (void)
+Handler_Factory::~Handler_Factory ()
 {
   this->twoway_acceptor_.close ();
   this->oneway_acceptor_.close ();
@@ -538,7 +534,7 @@ Handler_Factory::~Handler_Factory (void)
 // Run the main event loop.
 
 int
-Handler_Factory::handle_events (void)
+Handler_Factory::handle_events ()
 {
   if (this->init_acceptors () == -1)
     return -1;
@@ -590,7 +586,6 @@ Handler_Factory::handle_events (void)
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-
   ACE_SSL_Context *context = ACE_SSL_Context::instance ();
 
   context->certificate ("./dummy.pem", SSL_FILETYPE_PEM);

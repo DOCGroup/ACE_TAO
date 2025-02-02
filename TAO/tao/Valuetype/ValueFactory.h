@@ -26,11 +26,7 @@
 #include "ace/Synch_Traits.h"
 #include "ace/Thread_Mutex.h"
 #include "ace/Null_Mutex.h"
-#if defined (ACE_HAS_CPP11)
-# include <atomic>
-#else
-# include "ace/Atomic_Op.h"
-#endif /* ACE_HAS_CPP11 */
+#include <atomic>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -54,31 +50,26 @@ namespace CORBA
   class TAO_Valuetype_Export ValueFactoryBase
   {
   public:
-    ValueFactoryBase (void);
-    virtual ~ValueFactoryBase (void);
+    ValueFactoryBase ();
+    virtual ~ValueFactoryBase ();
 
     // non-virtual is non-standard
-    void _add_ref (void);
-    void _remove_ref (void);
+    void _add_ref ();
+    void _remove_ref ();
 
     // private: %!
     /// In a derived class T use return type TAO_OBV_CREATE_RETURN_TYPE (T)
     /// (see at definition below)
-    virtual CORBA::ValueBase * create_for_unmarshal (void) = 0;
+    virtual CORBA::ValueBase * create_for_unmarshal () = 0;
 
     /// Not pure virtual because this will be overridden only by valuetypes
     /// that support an abstract interface.
-    virtual CORBA::AbstractBase_ptr create_for_unmarshal_abstract (void);
+    virtual CORBA::AbstractBase_ptr create_for_unmarshal_abstract ();
 
   private:
     /// Reference counter.
-#if defined (ACE_HAS_CPP11)
     std::atomic<uint32_t> refcount_;
-#else
-    ACE_Atomic_Op<TAO_SYNCH_MUTEX, unsigned long> refcount_;
-#endif /* ACE_HAS_CPP11 */
   };
-
 }  // End CORBA namespace
 
 namespace TAO

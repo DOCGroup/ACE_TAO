@@ -77,15 +77,14 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_DLL_Parser : public TAO_IOR_Parser
 {
 public:
-
-  /// The destructor
-  virtual ~TAO_DLL_Parser (void);
+  TAO_DLL_Parser () = default;
+  ~TAO_DLL_Parser () override = default;
 
   // = The IOR_Parser methods, please read the documentation in
   //   IOR_Parser.h
-  virtual bool match_prefix (const char *ior_string) const;
-  virtual CORBA::Object_ptr parse_string (const char *ior,
-                                          CORBA::ORB_ptr orb);
+  bool match_prefix (const char *ior_string) const override;
+  CORBA::Object_ptr parse_string (const char *ior,
+                                  CORBA::ORB_ptr orb) override;
 };
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO, TAO_DLL_Parser)

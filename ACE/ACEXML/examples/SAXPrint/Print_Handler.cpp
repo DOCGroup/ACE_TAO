@@ -10,7 +10,7 @@ ACEXML_Print_Handler::ACEXML_Print_Handler (ACEXML_Char* fileName)
 {
 }
 
-ACEXML_Print_Handler::~ACEXML_Print_Handler (void)
+ACEXML_Print_Handler::~ACEXML_Print_Handler ()
 {
   delete[] this->fileName_;
 }
@@ -26,7 +26,7 @@ ACEXML_Print_Handler::characters (const ACEXML_Char *cdata,
 }
 
 void
-ACEXML_Print_Handler::endDocument (void)
+ACEXML_Print_Handler::endDocument ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("* Event endDocument () ***************\n")));
@@ -84,7 +84,7 @@ ACEXML_Print_Handler::skippedEntity (const ACEXML_Char *name)
 }
 
 void
-ACEXML_Print_Handler::startDocument (void)
+ACEXML_Print_Handler::startDocument ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("* Event startDocument () ***************\n")));

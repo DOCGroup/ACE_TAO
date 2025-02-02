@@ -76,7 +76,7 @@ public:
                     PortableServer::POA_ptr poa,
                     ACE_Configuration *config);
 
-  virtual ~TAO_Repository_i (void);
+  virtual ~TAO_Repository_i ();
 
   /// Accessor for the readonly attribute.
   virtual CORBA::DefinitionKind def_kind ();
@@ -134,10 +134,10 @@ public:
 
   /// We create a default servant servant for each IR Object
   /// type and its corresponding POA.
-  virtual int create_servants_and_poas (void);
+  virtual int create_servants_and_poas ();
 
   /// Create the top-level ACE_Configuration sections.
-  int create_sections (void);
+  int create_sections ();
 
   /// Return one of our servants for internal use.
   virtual TAO_IDLType_i *select_idltype (
@@ -152,47 +152,47 @@ public:
       CORBA::DefinitionKind def_kind) const;
 
   /// Accessor for the POA that is dispatching the current call.
-  PortableServer::Current_ptr poa_current (void) const;
+  PortableServer::Current_ptr poa_current () const;
 
   /// Accessor for the ACE_Configuration database.
-  ACE_Configuration *config (void) const;
+  ACE_Configuration *config () const;
 
   /// Accessor for the Typecode factory.
-  CORBA::TypeCodeFactory_ptr tc_factory (void) const;
+  CORBA::TypeCodeFactory_ptr tc_factory () const;
 
   /// Accessor/mutator for our object reference.
-  CORBA::Repository_ptr repo_objref (void) const;
+  CORBA::Repository_ptr repo_objref () const;
   void repo_objref (CORBA::Repository_ptr objref);
 
   /// Accessor for the root key for all IR objects.
-  ACE_Configuration_Section_Key root_key (void) const;
+  ACE_Configuration_Section_Key root_key () const;
 
   /// Accessor for the repository ids root key.
-  ACE_Configuration_Section_Key repo_ids_key (void) const;
+  ACE_Configuration_Section_Key repo_ids_key () const;
 
   /// Accessor for the primitive kinds section.
-  ACE_Configuration_Section_Key pkinds_key (void) const;
+  ACE_Configuration_Section_Key pkinds_key () const;
 
   /// Accessor for the bounded strings section.
-  ACE_Configuration_Section_Key strings_key (void) const;
+  ACE_Configuration_Section_Key strings_key () const;
 
   /// Accessor for the bounded wstrings section.
-  ACE_Configuration_Section_Key wstrings_key (void) const;
+  ACE_Configuration_Section_Key wstrings_key () const;
 
   /// Accessor for the fixed types section.
-  ACE_Configuration_Section_Key fixeds_key (void) const;
+  ACE_Configuration_Section_Key fixeds_key () const;
 
   /// Accessor for the anonymous arrays section.
-  ACE_Configuration_Section_Key arrays_key (void) const;
+  ACE_Configuration_Section_Key arrays_key () const;
 
   /// Accessor for the anonymous sequences section.
-  ACE_Configuration_Section_Key sequences_key (void) const;
+  ACE_Configuration_Section_Key sequences_key () const;
 
   /// Accessor for the name extension string.
-  const char *extension (void) const;
+  const char *extension () const;
 
   /// Repo lock.
-  ACE_Lock &lock (void) const;
+  ACE_Lock &lock () const;
 
   /**
    * Used ONLY with Purify, for memory leak checking.
@@ -200,7 +200,7 @@ public:
    * destroy() method of the last thing to be destroyed
    * by the test code.
    */
-  void shutdown (void);
+  void shutdown ();
 
 protected:
   /// Reference to our ORB.
@@ -305,8 +305,7 @@ private:
   const char *pkind_to_string (CORBA::PrimitiveKind pkind) const;
 
   /// Return the number of entries in the CORBA::PrimitiveKind enum.
-  u_int num_pkinds (void) const;
-
+  u_int num_pkinds () const;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -16,12 +16,12 @@ AST_Provides::AST_Provides (UTL_ScopedName *n,
 {
 }
 
-AST_Provides::~AST_Provides (void)
+AST_Provides::~AST_Provides ()
 {
 }
 
 AST_Type *
-AST_Provides::provides_type (void) const
+AST_Provides::provides_type () const
 {
   return this->field_type ();
 }
@@ -40,9 +40,7 @@ AST_Provides::ast_accept (ast_visitor *visitor)
 }
 
 void
-AST_Provides::destroy (void)
+AST_Provides::destroy ()
 {
   this->AST_Field::destroy ();
 }
-
-IMPL_NARROW_FROM_DECL(AST_Provides)

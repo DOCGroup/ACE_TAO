@@ -3,7 +3,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE void
-ACE_ATM_Connector::dump (void) const
+ACE_ATM_Connector::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_ATM_Connector::dump");
@@ -72,7 +72,7 @@ ACE_ATM_Connector::add_leaf (ACE_ATM_Stream &current_stream,
 #elif defined (ACE_HAS_FORE_ATM_WS2)
   struct sockaddr_atm *saddr = (struct sockaddr_atm *)remote_sap.get_addr();
   ACE_QoS cqos = qos.get_qos();
-  int addr_len = sizeof( struct sockaddr_atm );
+  int addr_len = sizeof( struct sockaddr_atm);
 
   ACE_QoS_Params qos_params(0,
                             0,
@@ -80,7 +80,7 @@ ACE_ATM_Connector::add_leaf (ACE_ATM_Stream &current_stream,
                             0,
                             (JL_SENDER_ONLY));
 
-  ACE_OS::printf( "ATM_Connector::add_leaf: connecting...\n" );
+  ACE_OS::printf( "ATM_Connector::add_leaf: connecting...\n");
 
   ACE_HANDLE result = ACE_OS::join_leaf(current_stream.get_handle(),
                                         (struct sockaddr *)saddr,

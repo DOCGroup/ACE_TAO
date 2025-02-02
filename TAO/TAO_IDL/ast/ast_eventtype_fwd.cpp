@@ -21,7 +21,7 @@ AST_EventTypeFwd::AST_EventTypeFwd (AST_Interface *dummy,
 {
 }
 
-AST_EventTypeFwd::~AST_EventTypeFwd (void)
+AST_EventTypeFwd::~AST_EventTypeFwd ()
 {
 }
 
@@ -48,10 +48,6 @@ AST_EventTypeFwd::ast_accept (ast_visitor *visitor)
 }
 
 void
-AST_EventTypeFwd::destroy (void)
+AST_EventTypeFwd::destroy ()
 {
 }
-
-
-
-IMPL_NARROW_FROM_DECL (AST_EventTypeFwd)

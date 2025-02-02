@@ -20,7 +20,7 @@ TAO_DynAny_i::TAO_DynAny_i (CORBA::Boolean allow_truncation)
 {
 }
 
-TAO_DynAny_i::~TAO_DynAny_i (void)
+TAO_DynAny_i::~TAO_DynAny_i ()
 {
 }
 
@@ -71,7 +71,7 @@ TAO_DynAny_i::check_typecode (CORBA::TypeCode_ptr tc)
           // Otherwise fall through.
           break;
         }
-      // fallthrough
+      ACE_FALLTHROUGH;
     default:
       throw DynamicAny::DynAnyFactory::InconsistentTypeCode ();
   }
@@ -165,7 +165,7 @@ TAO_DynAny_i::set_to_default_value (CORBA::TypeCode_ptr tc)
 }
 
 void
-TAO_DynAny_i::init_common (void)
+TAO_DynAny_i::init_common ()
 {
   this->ref_to_component_ = false;
   this->container_is_destroying_ = false;
@@ -236,7 +236,7 @@ TAO_DynAny_i::from_any (const CORBA::Any &any)
 }
 
 CORBA::Any_ptr
-TAO_DynAny_i::to_any (void)
+TAO_DynAny_i::to_any ()
 {
   if (this->destroyed_)
     {
@@ -794,7 +794,7 @@ TAO_DynAny_i::equal (DynamicAny::DynAny_ptr rhs)
 }
 
 void
-TAO_DynAny_i::destroy (void)
+TAO_DynAny_i::destroy ()
 {
   if (this->destroyed_)
     {
@@ -809,7 +809,7 @@ TAO_DynAny_i::destroy (void)
 
 
 DynamicAny::DynAny_ptr
-TAO_DynAny_i::current_component (void)
+TAO_DynAny_i::current_component ()
 {
   if (this->destroyed_)
     {

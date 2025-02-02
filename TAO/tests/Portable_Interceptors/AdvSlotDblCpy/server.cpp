@@ -68,7 +68,7 @@ namespace
       CORBA::Any_var data;
 
       ACE_DEBUG ((LM_DEBUG, "SERVER %C -> get_slot(TSC) -> is ", location));
-      data= pi_current->get_slot( slot_id );
+      data= pi_current->get_slot(slot_id);
       CORBA::TypeCode_var
         tc= data->type();
       if (tc->kind() == CORBA::tk_null)
@@ -98,7 +98,7 @@ namespace
       }
 
       ACE_DEBUG ((LM_DEBUG, "SERVER %C -> get_slot(RSC) -> is ", location));
-      data= ri->get_slot( slot_id );
+      data= ri->get_slot(slot_id);
 
       tc= data->type();
       if (tc->kind() == CORBA::tk_null)
@@ -150,7 +150,7 @@ namespace
         pi_current,
         location,
         correctTSCvalue,
-        correctRSCvalue );
+        correctRSCvalue);
 
     if (number && (0 != ACE_OS::strcmp( location, "receive_request" )))
     {
@@ -159,7 +159,7 @@ namespace
       data <<= number;
 
       ACE_DEBUG ((LM_DEBUG, "SERVER %C -> set_slot(RSC)", location));
-      ri->set_slot( slot_id, data );
+      ri->set_slot( slot_id, data);
 
       ACE_DEBUG ((LM_DEBUG, " -> long (%d)\n", number));
 
@@ -168,7 +168,7 @@ namespace
           pi_current,
           location,
           correctTSCvalue,
-          number );
+          number);
     }
   }
 }
@@ -192,7 +192,7 @@ public:
   shutdown ()
   {
     ACE_DEBUG ((LM_DEBUG, "\nServer is shutting down.\n"));
-    this->orb_->shutdown (0);
+    this->orb_->shutdown (false);
   }
   //FUZZ: enable check_for_lack_ACE_OS
 
@@ -207,7 +207,7 @@ class ReplicaController: public virtual ServerRequestInterceptor,
 {
   PortableInterceptor::Current_ptr pi_current_;
 public:
-  ReplicaController ( PortableInterceptor::Current_ptr pi_current )
+  ReplicaController (PortableInterceptor::Current_ptr pi_current )
     : pi_current_( pi_current )
   {
   }
@@ -227,7 +227,7 @@ public:
   virtual void
   tao_ft_interception_point (ServerRequestInfo_ptr ri, OctetSeq_out)
   {
-    getAndSetMySlot( ri, this->pi_current_, "tao_ft_interception_point", 0, 0 );
+    getAndSetMySlot( ri, this->pi_current_, "tao_ft_interception_point", 0, 0);
   }
 #endif /*TAO_HAS_EXTENDED_FT_INTERCEPTORS*/
 
@@ -235,39 +235,37 @@ public:
   receive_request_service_contexts (ServerRequestInfo_ptr ri)
   {
 #if TAO_HAS_EXTENDED_FT_INTERCEPTORS == 1
-    getAndSetMySlot( ri, this->pi_current_, "receive_request_service_contexts", 0, 61 );
+    getAndSetMySlot( ri, this->pi_current_, "receive_request_service_contexts", 0, 61);
 #else
-    getAndSetMySlot( ri, this->pi_current_, "receive_request_service_contexts", 0, 0 );
+    getAndSetMySlot( ri, this->pi_current_, "receive_request_service_contexts", 0, 0);
 #endif /* TAO_HAS_EXTENDED_FT_INTERCEPTORS == 1 */
   }
 
   virtual void
   receive_request (ServerRequestInfo_ptr ri)
   {
-    getAndSetMySlot( ri, this->pi_current_, "receive_request", 62, 62 );
+    getAndSetMySlot( ri, this->pi_current_, "receive_request", 62, 62);
   }
 
   virtual void
   send_reply (ServerRequestInfo_ptr ri)
   {
-    getAndSetMySlot( ri, this->pi_current_, "send_reply", 62, 62 );
+    getAndSetMySlot( ri, this->pi_current_, "send_reply", 62, 62);
   }
 
   virtual void
   send_exception (ServerRequestInfo_ptr ri)
   {
-    getAndSetMySlot( ri, this->pi_current_, "send_exception", 62, 62 );
+    getAndSetMySlot( ri, this->pi_current_, "send_exception", 62, 62);
   }
 
   virtual void
   send_other (ServerRequestInfo_ptr ri)
   {
-    getAndSetMySlot( ri, this->pi_current_, "send_other", 62, 62 );
+    getAndSetMySlot( ri, this->pi_current_, "send_other", 62, 62);
   }
 };
 
-
-//
 class ORB_Initializer : public virtual ORBInitializer,
                         public virtual ::CORBA::LocalObject
 {
@@ -346,7 +344,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   //
   orb->run ();
 
-  root_poa->destroy (1, 1);
+  root_poa->destroy (true, true);
   orb->destroy ();
 
   ACE_DEBUG ((LM_DEBUG, "Event loop finished.\n"));

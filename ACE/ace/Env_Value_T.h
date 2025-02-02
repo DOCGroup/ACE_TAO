@@ -44,26 +44,26 @@ public:
    * variable name or a default value.  Before being useful it must
    * open()'d.
    */
-  ACE_Env_Value (void);
+  ACE_Env_Value ();
 
   /// Constructor that calls open().
   ACE_Env_Value (const ACE_TCHAR *varname, const T &vardefault);
 
   /// Destroy the value.
-  ~ACE_Env_Value (void);
+  ~ACE_Env_Value ();
 
   /// Returns the value as type T.
-  operator T (void);
+  operator T ();
 
   /// The constructor, read @a varname from the environment, using
   /// @a defval as its value if it is not defined.
   void open (const ACE_TCHAR *varname, const T &defval);
 
   /// Returns the name of the variable being tracked.
-  const ACE_TCHAR *varname (void) const;
+  const ACE_TCHAR *varname () const;
 
 private:
-  void fetch_value (void);
+  void fetch_value ();
 
   const ACE_TCHAR *varname_;
   T value_;
@@ -78,9 +78,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #include "ace/Env_Value_T.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Env_Value_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -150,10 +148,6 @@ ACE_Convert (const ACE_TCHAR *s, T &t)
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Env_Value_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_ENV_VALUE_T_H */

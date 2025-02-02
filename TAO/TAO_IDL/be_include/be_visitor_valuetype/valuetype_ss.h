@@ -29,13 +29,12 @@ public:
   be_visitor_valuetype_ss (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_valuetype_ss (void);
+  ~be_visitor_valuetype_ss ();
 
   virtual int visit_valuetype (be_valuetype *node);
   virtual int visit_eventtype (be_eventtype *node);
 
 protected:
-  ACE_CString generate_flat_name (be_valuetype *node);
   ACE_CString generate_local_name (be_valuetype *node);
   ACE_CString generate_full_skel_name (be_valuetype *node);
 };

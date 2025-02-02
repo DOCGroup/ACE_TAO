@@ -14,11 +14,6 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    LifespanStrategy::LifespanStrategy () :
-      poa_ (0)
-    {
-    }
-
     void
     LifespanStrategy::strategy_init (TAO_Root_POA *poa)
     {
@@ -26,13 +21,13 @@ namespace TAO
     }
 
     void
-    LifespanStrategy::strategy_cleanup (void)
+    LifespanStrategy::strategy_cleanup ()
     {
-      poa_ = 0;
+      poa_ = nullptr;
     }
 
     CORBA::ULong
-    LifespanStrategy::key_type_length (void) const
+    LifespanStrategy::key_type_length () const
     {
       return sizeof (char);
     }

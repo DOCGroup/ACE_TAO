@@ -38,10 +38,10 @@ class TAO_Export TAO_GIOP_Fragmentation_Strategy
 {
 public:
   /// Constructor
-  TAO_GIOP_Fragmentation_Strategy (void) {}
+  TAO_GIOP_Fragmentation_Strategy () {}
 
   /// Destructor.
-  virtual ~TAO_GIOP_Fragmentation_Strategy (void);
+  virtual ~TAO_GIOP_Fragmentation_Strategy ();
 
   /// Fragment the (potentially partially) encoded GIOP message.
   /**
@@ -68,9 +68,10 @@ public:
                         ACE_CDR::ULong pending_length) = 0;
 
 private:
-  // Disallow copying and assignment.
-  TAO_GIOP_Fragmentation_Strategy (TAO_GIOP_Fragmentation_Strategy const &);
-  void operator= (TAO_GIOP_Fragmentation_Strategy const &);
+  TAO_GIOP_Fragmentation_Strategy (TAO_GIOP_Fragmentation_Strategy const &) = delete;
+  void operator= (TAO_GIOP_Fragmentation_Strategy const &) = delete;
+  TAO_GIOP_Fragmentation_Strategy (TAO_GIOP_Fragmentation_Strategy&&) = delete;
+  void operator= (TAO_GIOP_Fragmentation_Strategy &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

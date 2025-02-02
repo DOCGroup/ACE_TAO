@@ -13,7 +13,7 @@ namespace TAO
     }
 
     void
-    IdUniquenessStrategyMultiple::strategy_cleanup (void)
+    IdUniquenessStrategyMultiple::strategy_cleanup ()
     {
     }
 
@@ -28,31 +28,11 @@ namespace TAO
     }
 
     bool
-    IdUniquenessStrategyMultiple::allow_multiple_activations (void) const
+    IdUniquenessStrategyMultiple::allow_multiple_activations () const
     {
       return true;
     }
-
-    ::PortableServer::IdUniquenessPolicyValue
-    IdUniquenessStrategyMultiple::type () const
-    {
-      return ::PortableServer::MULTIPLE_ID;
-    }
-
   }
 }
 
-ACE_FACTORY_NAMESPACE_DEFINE (
-  ACE_Local_Service,
-  IdUniquenessStrategyMultiple,
-  TAO::Portable_Server::IdUniquenessStrategyMultiple)
-
-ACE_STATIC_SVC_DEFINE (
-  IdUniquenessStrategyMultiple,
-  ACE_TEXT ("IdUniquenessStrategyMultiple"),
-  ACE_SVC_OBJ_T,
-  &ACE_SVC_NAME (IdUniquenessStrategyMultiple),
-  ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
-  0)
 TAO_END_VERSIONED_NAMESPACE_DECL
-

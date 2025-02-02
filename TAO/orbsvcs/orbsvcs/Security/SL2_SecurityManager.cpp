@@ -27,7 +27,7 @@ TAO::Security::SecurityManager::SecurityManager (/* unknown */)
   this->access_decision_ = ad;
 }
 
-TAO::Security::SecurityManager::~SecurityManager (void)
+TAO::Security::SecurityManager::~SecurityManager ()
 {
 }
 
@@ -105,7 +105,7 @@ TAO::Security::AccessDecision::ReferenceKeyType::operator==
                             other.oid_->get_buffer(),olen) == 0 &&
             ACE_OS::memcmp (this->adapter_id_->get_buffer(),
                             other.adapter_id_->get_buffer(),alen) == 0 &&
-            ACE_OS_String::strcmp (this->orbid_.in(), other.orbid_.in()) == 0);
+            ACE_OS::strcmp (this->orbid_.in(), other.orbid_.in()) == 0);
   return false;
 }
 
@@ -136,11 +136,6 @@ TAO::Security::AccessDecision::map_key_from_objref (CORBA::Object_ptr /*obj */)
   ORBSVCS_ERROR ((LM_ERROR, "map_key_from_objref is currently not implemented\n"));
 
   throw CORBA::NO_IMPLEMENT();
-
-#if defined (__HP_aCC)
-  OBJECT_KEY key;
-  return key;
-#endif /* __HP_aCC */
 }
 
 CORBA::Boolean
@@ -182,7 +177,6 @@ TAO::Security::AccessDecision::access_allowed_i (OBJECT_KEY &key,
 
   // For now we just return the default.
   return access_decision;
-
 }
 
 CORBA::Boolean
@@ -315,7 +309,7 @@ TAO::Security::AccessDecision::remove_object
 }
 
 CORBA::Boolean
-TAO::Security::AccessDecision::default_decision (void)
+TAO::Security::AccessDecision::default_decision ()
 {
   return this->default_allowance_decision_;
 }
@@ -327,7 +321,7 @@ TAO::Security::AccessDecision::default_decision (CORBA::Boolean d)
 }
 
 CORBA::Boolean
-TAO::Security::AccessDecision::default_collocated_decision (void)
+TAO::Security::AccessDecision::default_collocated_decision ()
 {
   return this->default_collocated_decision_;
 }

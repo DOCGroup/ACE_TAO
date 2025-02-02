@@ -20,7 +20,7 @@ Receiver_StreamEndPoint::get_callback (const char *,
   return 0;
 }
 
-Receiver_Callback::Receiver_Callback (void)
+Receiver_Callback::Receiver_Callback ()
   : frame_count_ (1)
 {
 }
@@ -54,7 +54,7 @@ Receiver_Callback::receive_frame (ACE_Message_Block *frame,
   frame->rd_ptr (frame_size);
 
   ACE_hrtime_t stamp;
-  ACE_OS_String::memcpy (&stamp, frame->rd_ptr (), sizeof (stamp));
+  ACE_OS::memcpy (&stamp, frame->rd_ptr (), sizeof (stamp));
 
   ACE_UINT64 usec = stamp;
   ACE_UINT32 val_1 = ACE_CU64_TO_CU32 (usec);
@@ -68,7 +68,7 @@ Receiver_Callback::receive_frame (ACE_Message_Block *frame,
 }
 
 int
-Receiver_Callback::handle_destroy (void)
+Receiver_Callback::handle_destroy ()
 {
   // Called when the distributer requests the stream to be shutdown.
   ACE_DEBUG ((LM_DEBUG,
@@ -78,12 +78,12 @@ Receiver_Callback::handle_destroy (void)
   return 0;
 }
 
-Receiver::Receiver (void)
+Receiver::Receiver ()
   : mmdevice_ (0)
 {
 }
 
-Receiver::~Receiver (void)
+Receiver::~Receiver ()
 {
 }
 

@@ -1,4 +1,3 @@
-
 //=============================================================================
 /**
  *  @file    Priority_Reactor_Test.cpp
@@ -17,7 +16,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/Get_Opt.h"
 #include "ace/SOCK_Connector.h"
@@ -25,12 +23,13 @@
 #include "ace/Acceptor.h"
 #include "ace/Handle_Set.h"
 #include "ace/Connector.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/Priority_Reactor.h"
 #include "Priority_Reactor_Test.h"
+
 #include "ace/OS_NS_sys_wait.h"
 #include "ace/OS_NS_unistd.h"
-
+#include <utility>
 
 
 static const char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
@@ -54,10 +53,8 @@ static int opt_max_duration = 60;
 // -m option.
 static int max_retries = 5;
 
-typedef ACE_Connector<Write_Handler, ACE_SOCK_CONNECTOR>
-        CONNECTOR;
-typedef ACE_Acceptor<Read_Handler, ACE_SOCK_ACCEPTOR>
-        ACCEPTOR;
+using CONNECTOR = ACE_Connector<Write_Handler, ACE_SOCK_Connector>;
+using ACCEPTOR = ACE_Acceptor<Read_Handler, ACE_SOCK_Acceptor>;
 
 int Read_Handler::waiting_ = 0;
 int Read_Handler::started_ = 0;
@@ -69,7 +66,7 @@ Read_Handler::set_countdown (int nchildren)
 }
 
 int
-Read_Handler::get_countdown (void)
+Read_Handler::get_countdown ()
 {
   return Read_Handler::waiting_;
 }
@@ -150,7 +147,7 @@ Write_Handler::open (void *)
 }
 
 int
-Write_Handler::svc (void)
+Write_Handler::svc ()
 {
   // Send several short messages, doing pauses between each message.
   // The number of messages can be controlled from the command line.
@@ -271,19 +268,19 @@ run_main (int argc, ACE_TCHAR *argv[])
   // Note:  If opt_priority_reactor is false, the default ACE_Reactor is used
   // and we don't need to set one up.
   ACE_Reactor *orig_reactor = 0;
-  auto_ptr<ACE_Reactor> reactor;
+  std::unique_ptr<ACE_Reactor> reactor;
 
   if (opt_priority_reactor)
     {
       ACE_Select_Reactor *impl_ptr;
       ACE_NEW_RETURN (impl_ptr, ACE_Priority_Reactor, -1);
-      auto_ptr<ACE_Select_Reactor> auto_impl (impl_ptr);
+      std::unique_ptr<ACE_Select_Reactor> auto_impl (impl_ptr);
 
       ACE_Reactor *reactor_ptr;
       ACE_NEW_RETURN (reactor_ptr, ACE_Reactor (impl_ptr, 1), -1);
       auto_impl.release ();   // ACE_Reactor dtor will take it from here
-      auto_ptr<ACE_Reactor> auto_reactor (reactor_ptr);
-      reactor = auto_reactor;
+      std::unique_ptr<ACE_Reactor> auto_reactor (reactor_ptr);
+      reactor = std::move(auto_reactor);
       orig_reactor = ACE_Reactor::instance (reactor_ptr);
     }
 

@@ -27,7 +27,7 @@ StockDistributor_i::StockDistributor_i (RTPortableServer::POA_ptr poa)
 }
 
 // Implementation skeleton destructor
-StockDistributor_i::~StockDistributor_i (void)
+StockDistributor_i::~StockDistributor_i ()
 {
   this->active_ = false;
 }
@@ -241,12 +241,12 @@ StockDistributor_i::operator () (std::vector <std::string> &stocks)
 }
 
 // Implementation skeleton constructor
-StockQuoter_i::StockQuoter_i (void)
+StockQuoter_i::StockQuoter_i ()
 {
 }
 
 // Implementation skeleton destructor
-StockQuoter_i::~StockQuoter_i (void)
+StockQuoter_i::~StockQuoter_i ()
 {
 }
 
@@ -268,7 +268,6 @@ StockQuoter_i::get_stock_info (const char * stock_name)
       stock_info->last = si.last_;
 
       return stock_info._retn ();
-
     }
   catch (Stock_Database<StockDistributor_i>::Invalid_Stock &ex)
     {
@@ -351,7 +350,7 @@ StockDistributorHome_i::StockDistributorHome_i (CORBA::ORB_ptr orb)
 }
 
 // Implementation skeleton destructor
-StockDistributorHome_i::~StockDistributorHome_i (void)
+StockDistributorHome_i::~StockDistributorHome_i ()
 {
 }
 
@@ -408,7 +407,7 @@ StockDistributorHome_i::handle_signal (int,
 }
 
 void
-StockDistributorHome_i::create_distributor (void)
+StockDistributorHome_i::create_distributor ()
 {
   // Create a new instance of the <StockDistributor_i>. Then
   // activate the <distributor> under the located POA. This will cause

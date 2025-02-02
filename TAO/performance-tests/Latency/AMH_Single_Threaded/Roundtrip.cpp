@@ -20,5 +20,5 @@ Roundtrip::shutdown (
        Test::AMH_RoundtripResponseHandler_ptr _tao_rh)
 {
   _tao_rh->shutdown ();
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

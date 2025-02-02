@@ -41,7 +41,6 @@ template <class MUTEX>
 class TAO_Condition
 {
 public:
-
   /// Useful typedef
   typedef MUTEX LOCK;
 
@@ -51,10 +50,10 @@ public:
 
   /// A default constructor. Since no lock is provided by the user,
   /// one will be created internally.
-  TAO_Condition (void);
+  TAO_Condition ();
 
   /// Implicitly destroy the condition variable.
-  ~TAO_Condition (void);
+  ~TAO_Condition ();
 
   // = Lock accessors.
   /**
@@ -66,7 +65,7 @@ public:
   int wait (const ACE_Time_Value *abstime);
 
   /// Block on condition.
-  int wait (void);
+  int wait ();
 
   /**
    * Block on condition or until absolute time-of-day has passed.  If
@@ -79,21 +78,21 @@ public:
   int wait (MUTEX &mutex, const ACE_Time_Value *abstime = 0);
 
   /// Signal one waiting thread.
-  int signal (void);
+  int signal ();
 
   /// Signal *all* waiting threads.
-  int broadcast (void);
+  int broadcast ();
 
   // = Utility methods.
   /// Explicitly destroy the condition variable.
-  int remove (void);
+  int remove ();
 
   /// Returns a reference to the underlying mutex_;
-  MUTEX *mutex (void);
+  MUTEX *mutex ();
 
 private:
-  ACE_UNIMPLEMENTED_FUNC (TAO_Condition (const TAO_Condition<MUTEX> &))
-  ACE_UNIMPLEMENTED_FUNC (TAO_Condition &operator= (const TAO_Condition<MUTEX> &))
+  TAO_Condition (const TAO_Condition<MUTEX> &) = delete;
+  TAO_Condition &operator= (const TAO_Condition<MUTEX> &) = delete;
 
   /// Reference to mutex lock.
   MUTEX *mutex_;
@@ -111,13 +110,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #include "tao/Condition.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "tao/Condition.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Condition.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 #endif /*TAO_CONDITION_H*/

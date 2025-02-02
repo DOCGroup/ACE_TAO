@@ -12,9 +12,9 @@ class my_map
 public:
   my_map () : capacity_ (0), nodes_(0) {}
   ~my_map ();
-  typedef key key_type;
-  typedef value data_type;
-  typedef std::pair<key, value> value_type;
+  using key_type = key;
+  using data_type = value;
+  using value_type = std::pair<key, value>;
   size_t capacity_;
   value_type* nodes_;
 };

@@ -43,12 +43,12 @@ class TAO_Notify_Serv_Export TAO_Notify_CosEC_ProxyPushSupplier
   friend class TAO_Notify_Builder;
 public:
   /// Constructor
-  TAO_Notify_CosEC_ProxyPushSupplier (void);
+  TAO_Notify_CosEC_ProxyPushSupplier ();
 
   /// Destructor
   virtual ~TAO_Notify_CosEC_ProxyPushSupplier ();
 
-  virtual const char * get_proxy_type_name (void) const;
+  virtual const char * get_proxy_type_name () const;
 
   // = Interface methods
   virtual void connect_push_consumer (
@@ -61,7 +61,7 @@ public:
 
 private:
   /// Release
-  virtual void release (void);
+  virtual void release ();
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -20,16 +20,14 @@
 class ECMcastTests_Export Gateway_EC
 {
 public:
-
   /// Constructor.
-  Gateway_EC (void);
+  Gateway_EC ();
 
   /// Run the server.
   /// Valid arguments: [-i ior_filename].
   int run (int argc, ACE_TCHAR ** argv);
 
 private:
-
   /// Helpers.
   //@{
   int parse_args (int argc, ACE_TCHAR *argv[]);

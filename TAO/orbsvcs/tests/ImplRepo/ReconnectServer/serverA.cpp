@@ -58,15 +58,15 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
     // Servant Retention Policy
     policies[1] =
-      rootPOA->create_servant_retention_policy (PortableServer::RETAIN );
+      rootPOA->create_servant_retention_policy (PortableServer::RETAIN);
 
     // ID Assignment Policy
     policies[2] =
-      rootPOA->create_id_assignment_policy (PortableServer::USER_ID );
+      rootPOA->create_id_assignment_policy (PortableServer::USER_ID);
 
     // Request Processing Policy
     policies[3] =
-      rootPOA->create_request_processing_policy (PortableServer::USE_ACTIVE_OBJECT_MAP_ONLY );
+      rootPOA->create_request_processing_policy (PortableServer::USE_ACTIVE_OBJECT_MAP_ONLY);
 
     // Threading policy
     policies[4] =
@@ -74,12 +74,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
     PortableServer::POA_var poa_a = rootPOA->create_POA ("poaA",
         poa_manager.in (),
-        policies
-        );
+        policies);
     PortableServer::POA_var poa_c = rootPOA->create_POA ("poaC",
         poa_manager.in (),
-        policies
-        );
+        policies);
 
     for (CORBA::ULong i = 0;
       i < policies.length ();

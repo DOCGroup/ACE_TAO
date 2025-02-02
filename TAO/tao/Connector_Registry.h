@@ -51,10 +51,10 @@ class TAO_Export TAO_Connector_Registry
 {
 public:
   ///  Default constructor.
-  TAO_Connector_Registry (void);
+  TAO_Connector_Registry ();
 
   ///  Default destructor.
-  ~TAO_Connector_Registry (void);
+  ~TAO_Connector_Registry ();
 
   /// Return the connector bridges
   TAO_Connector *get_connector (CORBA::ULong tag) const;
@@ -63,7 +63,7 @@ public:
   int open (TAO_ORB_Core *orb_core);
 
   /// Close all open connectors.
-  int close_all (void);
+  int close_all ();
 
   /// Parse a string containing a URL style IOR and return an
   /// MProfile.
@@ -77,13 +77,14 @@ public:
   char object_key_delimiter (const char *ior);
 
   // = Iterator.
-  TAO_ConnectorSetIterator begin (void) const;
-  TAO_ConnectorSetIterator end (void) const;
+  TAO_ConnectorSetIterator begin () const;
+  TAO_ConnectorSetIterator end () const;
 
 private:
-  // Disallow copying and assignment.
-  TAO_Connector_Registry (const TAO_Connector_Registry&);
-  void operator= (const TAO_Connector_Registry&);
+  TAO_Connector_Registry (const TAO_Connector_Registry&) = delete;
+  void operator= (const TAO_Connector_Registry&) = delete;
+  TAO_Connector_Registry (TAO_Connector_Registry&&) = delete;
+  void operator= (TAO_Connector_Registry&&) = delete;
 
 private:
   /// List of connectors that are currently open.

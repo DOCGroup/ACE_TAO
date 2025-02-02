@@ -8,8 +8,7 @@
 
 #include "testS.h"
 
-class test_i :
-  public POA_test
+class test_i : public POA_test
 {
 public:
   /// Constructor.
@@ -23,10 +22,10 @@ public:
                       CORBA::Long_out thread_count);
 
   /// Shutdown the server.
-  void shutdown (void);
+  void shutdown ();
 
   /// Our POA.
-  PortableServer::POA_ptr _default_POA (void);
+  PortableServer::POA_ptr _default_POA ();
 
 private:
   /// ORB.

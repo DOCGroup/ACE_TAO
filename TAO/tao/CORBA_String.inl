@@ -1,5 +1,6 @@
 // -*- C++ -*-
 #include "ace/OS_NS_string.h"
+#include <cstring>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -7,7 +8,7 @@ ACE_INLINE bool
 TAO::String_Var_Equal_To::operator() (CORBA::String_var const & lhs,
                                       CORBA::String_var const & rhs) const
 {
-  return (ACE_OS::strcmp (lhs.in (), rhs.in ()) == 0);
+  return (std::strcmp (lhs.in (), rhs.in ()) == 0);
 }
 
 ACE_INLINE bool

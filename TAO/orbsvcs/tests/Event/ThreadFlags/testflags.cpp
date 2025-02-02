@@ -8,7 +8,6 @@
 #include "ace/OS_NS_strings.h"
 
 
-
 /*
   Here are the scenarios we need to test:
 
@@ -55,7 +54,6 @@ struct ThreadFlagsTest
   How assign_;
   ExpectedValues expected_values_;
   ExpectedValues which_results_to_check_;
-
 };
 
 ThreadFlagsTest::ThreadFlagsTest (const char* sym,
@@ -164,7 +162,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_TCHAR* which_test = 0;
       while (0 != (which_test = *++argv))
         {
-          size_t testnum = ACE_OS_String::strtol (which_test, 0, 0);
+          size_t testnum = ACE_OS::strtol (which_test, 0, 0);
           if (testnum < numtests)
             {
               ExpectedValues results;

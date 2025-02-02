@@ -22,13 +22,13 @@ public:
     ACE_OS::strncpy (this->mtext_, text, MSGSZ);
   }
 
-  long pid (void) { return this->pid_; }
+  long pid () { return this->pid_; }
   void pid (long p) { this->pid_ = p; }
-  char *user (void) { return this->username_; }
+  char *user () { return this->username_; }
   void user (char user[]) { ACE_OS::strncpy (this->username_, user, 9); }
-  char *text (void) { return this->mtext_; }
+  char *text () { return this->mtext_; }
   void text (char text[]) { ACE_OS::strncpy (this->mtext_, text, MSGSZ); }
-  int length (void) { return sizeof *this - sizeof this->mtext_ + ACE_OS::strlen (this->mtext_) + 1; }
+  int length () { return sizeof *this - sizeof this->mtext_ + ACE_OS::strlen (this->mtext_) + 1; }
 
 protected:
   long  pid_;

@@ -7,21 +7,21 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 char *
-TAO::ORT_Adapter_Impl::tao_server_id (void)
+TAO::ORT_Adapter_Impl::tao_server_id ()
 {
   // No need to duplicate, the ort_template_ method has to do the duplicate
   return this->ort_template_->server_id ();
 }
 
 char *
-TAO::ORT_Adapter_Impl::tao_orb_id (void)
+TAO::ORT_Adapter_Impl::tao_orb_id ()
 {
   // No need to duplicate, the ort_template_ method has to do the duplicate
   return this->ort_template_->orb_id ();
 }
 
 PortableInterceptor::AdapterName *
-TAO::ORT_Adapter_Impl::tao_adapter_name (void)
+TAO::ORT_Adapter_Impl::tao_adapter_name ()
 {
   // No need to duplicate, the ort_template_ method has to do the duplicate
   return this->ort_template_->adapter_name ();
@@ -35,7 +35,7 @@ TAO::ORT_Adapter_Impl::make_object (const char *repo_id,
 }
 
 PortableInterceptor::ObjectReferenceTemplate *
-TAO::ORT_Adapter_Impl::get_adapter_template (void)
+TAO::ORT_Adapter_Impl::get_adapter_template ()
 {
   CORBA::add_ref (this->ort_template_.in ());
 
@@ -43,7 +43,7 @@ TAO::ORT_Adapter_Impl::get_adapter_template (void)
 }
 
 PortableInterceptor::ObjectReferenceFactory *
-TAO::ORT_Adapter_Impl::get_obj_ref_factory (void)
+TAO::ORT_Adapter_Impl::get_obj_ref_factory ()
 {
   CORBA::add_ref (this->ort_factory_.in ());
 

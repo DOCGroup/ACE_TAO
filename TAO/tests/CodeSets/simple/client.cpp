@@ -110,7 +110,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       outarg >>= any_reply;
 
       ACE_DEBUG ((LM_DEBUG,
-                 "Client sent %C, got %C\n", bare_string, reply.in ()) );
+                 "Client sent %C, got %C\n", bare_string, reply.in ()));
 
       if (ACE_OS::strcmp (bare_string, reply.in ()) != 0)
         {
@@ -118,7 +118,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
 
       ACE_DEBUG ((LM_DEBUG,
-                 "Client sent %C, got %C\n", any_string, any_reply) );
+                 "Client sent %C, got %C\n", any_string, any_reply));
 
       if (ACE_OS::strcmp (any_string, any_reply) != 0)
         {

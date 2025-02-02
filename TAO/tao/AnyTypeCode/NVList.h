@@ -26,11 +26,7 @@
 
 #include "ace/Unbounded_Queue.h"
 #include "ace/Thread_Mutex.h"
-#if defined (ACE_HAS_CPP11)
-# include <atomic>
-#else
-# include "ace/Atomic_Op.h"
-#endif /* ACE_HAS_CPP11 */
+#include <atomic>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -84,21 +80,21 @@ namespace CORBA
 
   public:
     /// optional name
-    const char * name (void) const;
+    const char * name () const;
 
     /// return the value
-    Any_ptr value (void) const;
+    Any_ptr value () const;
 
     /// return the parameter mode flag
-    Flags flags (void) const;
+    Flags flags () const;
 
     // The pseudo object static methods..
     static NamedValue * _duplicate (NamedValue *);
-    static NamedValue * _nil (void);
+    static NamedValue * _nil ();
 
     // = Reference counting.
-    ULong _incr_refcount (void);
-    ULong _decr_refcount (void);
+    ULong _incr_refcount ();
+    ULong _decr_refcount ();
 
     // Useful for template programming.
     typedef NamedValue_ptr _ptr_type;
@@ -106,28 +102,21 @@ namespace CORBA
     typedef NamedValue_out _out_type;
 
   protected:
-
     /// Destructor
     /**
      * Protected destructor to enforce proper memory management
      * through the reference counting mechanism.
      */
-    ~NamedValue (void);
+    ~NamedValue ();
 
   private:
-
     /// private constructor. Cannot be directly instantiated other than
     /// by its friends.
-    NamedValue (void);
+    NamedValue ();
 
   private:
-
     /// Reference counter.
-#if defined (ACE_HAS_CPP11)
     std::atomic<uint32_t> refcount_;
-#else
-    ACE_Atomic_Op<TAO_SYNCH_MUTEX, unsigned long> refcount_;
-#endif /* ACE_HAS_CPP11 */
 
     /// holds the value
     Any any_;
@@ -166,9 +155,8 @@ namespace CORBA
     friend class Request;
 
   public:
-
     /// return the current number of elements in the list
-    ULong count (void) const;
+    ULong count () const;
 
     /// add an element and just initialize the flags
     NamedValue_ptr add (Flags);
@@ -196,11 +184,11 @@ namespace CORBA
 
     // The pseudo object static methods..
     static NVList * _duplicate (NVList *);
-    static NVList * _nil (void);
+    static NVList * _nil ();
 
     // = Reference counting.
-    ULong _incr_refcount (void);
-    ULong _decr_refcount (void);
+    ULong _incr_refcount ();
+    ULong _decr_refcount ();
 
     // = TAO Extensions:
 
@@ -226,14 +214,14 @@ namespace CORBA
      * re-alignment.
      * It returns ACE_CDR::MAX_ALIGNMENT to indicate errors.
      */
-    ptrdiff_t _tao_target_alignment (void);
+    ptrdiff_t _tao_target_alignment ();
 
     /**
      * If this list is used by a DII request, this will tell us if
      * our CDR stream contains any marshaled arguments (needed for
      * GIOP 1.2).
      */
-    Boolean _lazy_has_arguments (void) const;
+    Boolean _lazy_has_arguments () const;
 
     // Useful for template programming.
     typedef NVList_ptr _ptr_type;
@@ -241,18 +229,17 @@ namespace CORBA
     typedef NVList_out _out_type;
 
   protected:
-
     /// Destructor
     /**
      * Protected destructor to enforce proper memory management
      * through the reference counting mechanism.
      */
-    ~NVList (void);
+    ~NVList ();
 
   private:
     /// Constructor - cannot be instantiated directly other than
     /// through the CORBA::ORB::create_list method
-    NVList (void);
+    NVList ();
 
     /// Helper to increase the list size. This is used by all the add_
     /// methods of the NVList class
@@ -260,7 +247,7 @@ namespace CORBA
 
     /// Lazy evaluation routine to fill up the Anys in the NVList from
     /// the CDR stream.
-    void evaluate (void);
+    void evaluate ();
 
   private:
     /// Internal list of parameters stored as NamedValues
@@ -270,11 +257,7 @@ namespace CORBA
     ULong max_;
 
     /// Reference counter.
-#if defined (ACE_HAS_CPP11)
     std::atomic<uint32_t> refcount_;
-#else
-    ACE_Atomic_Op<TAO_SYNCH_MUTEX, unsigned long> refcount_;
-#endif /* ACE_HAS_CPP11 */
 
     /// Protects the incoming pointer.
     TAO_SYNCH_MUTEX lock_;

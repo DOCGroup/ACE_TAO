@@ -56,7 +56,6 @@ protected:
     logging_handler_.close (); // Close the socket handle.
     return 0;
   }
-
 };
 
 #endif /* _ITERATIVE_LOGGING_SERVER_H */

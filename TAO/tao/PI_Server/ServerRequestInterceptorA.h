@@ -44,7 +44,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace PortableInterceptor
 {
-
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:49
 

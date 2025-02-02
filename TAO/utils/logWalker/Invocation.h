@@ -45,27 +45,27 @@ public:
   // initialize a new instance, with the initial request text line and offeset
   Invocation (PeerProcess *peer, Thread *thr, size_t req_id = 0);
   bool init ( const char * text, size_t offset, Thread *thr);
-  ~Invocation (void);
+  ~Invocation ();
 
   // return true if the invocation was a oneway
-  bool is_oneway(void) const;
+  bool is_oneway() const;
 
   // return true if the request is a oneway and has all its octets, or
   // if it also has all its reply octets. The side-effect of this call
   // is to obtain the target reference from the request buffer and associate
   // it with the peer process.
-  bool message_complete (void);
+  bool message_complete ();
 
-  size_t request_id (void) const;
+  size_t request_id () const;
 
   // returns true if this request was sent by the host process.
-  bool sent_request (void) const;
+  bool sent_request () const;
 
   // returns the size parsed from either the request or reply preamble
   // which can be used to match a HEXDUMP b
-  size_t expected_size (void) const;
+  size_t expected_size () const;
 
-  size_t request_bytes (void) const;
+  size_t request_bytes () const;
 
   void set_target (const char *oid, size_t oid_len);
 
@@ -74,12 +74,12 @@ public:
   GIOP_Buffer *give_octets (bool request);
 
   bool contains (size_t line);
-  size_t req_line (void);
-  size_t repl_line (void);
+  size_t req_line ();
+  size_t repl_line ();
 
   void add_notify_incident (const ACE_CString &text, size_t offset);
-  Thread *waiter (void) const;
-  long handle (void) const;
+  Thread *waiter () const;
+  long handle () const;
 
   void new_line (ostream &strm, size_t indent, int offset,  bool add_nl, bool show_indent);
   void dump_detail (ostream &strm, size_t indent, Dump_Mode mode, bool show_handle);

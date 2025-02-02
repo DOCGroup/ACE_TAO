@@ -35,10 +35,10 @@ class Broadcaster_i : public POA_Broadcaster
 {
 public:
   /// Constructor.
-  Broadcaster_i (void);
+  Broadcaster_i () = default;
 
   /// Destructor.
-  virtual ~Broadcaster_i (void);
+  virtual ~Broadcaster_i () = default;
 
   /// Saves receiver references in a list.
   virtual void add (Receiver_ptr receiver,

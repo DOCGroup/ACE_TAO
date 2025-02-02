@@ -23,7 +23,7 @@ class OLT_Export Loader : public TAO_Object_Loader
 {
 public:
   /// ctor
-  Loader (void);
+  Loader ();
 
   /// Create a new instance
   virtual CORBA::Object_ptr create_object (CORBA::ORB_ptr orb,

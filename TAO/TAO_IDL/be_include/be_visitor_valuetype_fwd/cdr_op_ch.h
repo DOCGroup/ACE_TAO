@@ -27,13 +27,12 @@
  */
 class be_visitor_valuetype_fwd_cdr_op_ch : public be_visitor_decl
 {
-
 public:
   /// constructor
   be_visitor_valuetype_fwd_cdr_op_ch (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_valuetype_fwd_cdr_op_ch (void);
+  ~be_visitor_valuetype_fwd_cdr_op_ch ();
 
   virtual int visit_valuetype_fwd (be_valuetype_fwd *node);
   virtual int visit_eventtype_fwd (be_eventtype_fwd *node);

@@ -39,13 +39,11 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 
-
 // TAO_IDL - Generated from
 // be\be_visitor_module/module_ch.cpp:59
 
 namespace RTCORBA
 {
-
   // TAO_IDL - Generated from
   // be\be_visitor_typecode/typecode_decl.cpp:49
 
@@ -61,40 +59,12 @@ namespace RTCORBA
 // be\be_visitor_interface/any_op_ch.cpp:54
 
 
-
-#if defined (ACE_ANY_OPS_USE_NAMESPACE)
-
-namespace RTCORBA
-{
-  TAO_RTCORBA_Export void operator<<= ( ::CORBA::Any &, ProtocolProperties_ptr); // copying
-  TAO_RTCORBA_Export void operator<<= ( ::CORBA::Any &, ProtocolProperties_ptr *); // non-copying
-  TAO_RTCORBA_Export ::CORBA::Boolean operator>>= (const ::CORBA::Any &, ProtocolProperties_ptr &);
-}
-
-#else
-
-
-
-TAO_END_VERSIONED_NAMESPACE_DECL
-
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
+namespace CORBA {
 TAO_RTCORBA_Export void operator<<= (::CORBA::Any &, RTCORBA::ProtocolProperties_ptr); // copying
 TAO_RTCORBA_Export void operator<<= (::CORBA::Any &, RTCORBA::ProtocolProperties_ptr *); // non-copying
 TAO_RTCORBA_Export ::CORBA::Boolean operator>>= (const ::CORBA::Any &, RTCORBA::ProtocolProperties_ptr &);
+}
 TAO_END_VERSIONED_NAMESPACE_DECL
-
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-
-
-
-#endif
-
-TAO_END_VERSIONED_NAMESPACE_DECL
-
 
 
 #include /**/ "ace/post.h"

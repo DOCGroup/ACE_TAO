@@ -24,7 +24,7 @@ static const ACE_TCHAR *rendezvous_dgram = ACE_TEXT ("/tmp/foo_dgram");
 static const ACE_TCHAR *file_name = ACE_TEXT ("local_data");
 
 static void
-print_usage_and_die (void)
+print_usage_and_die ()
 {
   ACE_ERROR ((LM_ERROR,
               ACE_TEXT ("usage: %s [-r rendezvous_dgram] ")

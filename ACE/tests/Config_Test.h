@@ -21,8 +21,8 @@ const int TEST_MAX_STRING = 256;
 class Config_Test
 {
 public:
-  Config_Test (void): equality_tested_ (0) { }
-  ~Config_Test (void) { }
+  Config_Test () : equality_tested_ (0) { }
+  ~Config_Test () { }
 
   // Used to test the equality and inequality operations.
   int testEquality ();

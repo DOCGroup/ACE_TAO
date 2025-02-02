@@ -34,7 +34,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 struct TAO_LB_LoadAlertInfo
 {
   /// Constructor.
-  TAO_LB_LoadAlertInfo (void);
+  TAO_LB_LoadAlertInfo ();
 
   /// Reference to the LoadAlert object.
   CosLoadBalancing::LoadAlert_var load_alert;
@@ -42,7 +42,6 @@ struct TAO_LB_LoadAlertInfo
   /// True if the LoadAlert object has been alerted about a given load
   /// condition.  False otherwise.
   CORBA::Boolean alerted;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

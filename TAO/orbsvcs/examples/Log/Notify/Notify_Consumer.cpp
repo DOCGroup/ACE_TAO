@@ -23,7 +23,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
 // ****************************************************************
 
-Consumer::Consumer (void)
+Consumer::Consumer ()
   : event_count_ (0)
 {
 }
@@ -121,7 +121,7 @@ Consumer::push (const CORBA::Any &event)
 
 void
 Consumer::disconnect_push_consumer
-   (void)
+   ()
 {
   this->proxy_supplier_->
     disconnect_push_supplier();

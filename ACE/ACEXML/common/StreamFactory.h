@@ -36,9 +36,8 @@ class ACEXML_CharStream;
 class ACEXML_Export ACEXML_StreamFactory
 {
 public:
-
   // Destructor
-  virtual ~ACEXML_StreamFactory (void);
+  virtual ~ACEXML_StreamFactory ();
 
   /**
    *  Create the appropriate stream from the @a uri passed and return the

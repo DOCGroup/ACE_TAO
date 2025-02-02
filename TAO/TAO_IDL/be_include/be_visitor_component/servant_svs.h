@@ -24,7 +24,7 @@ class be_visitor_servant_svs
 public:
   be_visitor_servant_svs (be_visitor_context *ctx);
 
-  ~be_visitor_servant_svs (void);
+  ~be_visitor_servant_svs () = default;
 
   virtual int visit_component (be_component *node);
   virtual int visit_connector (be_connector *node);
@@ -37,15 +37,15 @@ public:
   virtual int visit_consumes (be_consumes *node);
 
 private:
-  void gen_provides_top (void);
-  void gen_uses_top (void);
-  void gen_publishes_top (void);
-  void gen_emits_top (void);
+  void gen_provides_top ();
+  void gen_uses_top ();
+  void gen_publishes_top ();
+  void gen_emits_top ();
 
   /// This method gets generated (unless we are
   /// generating the LwCCM profile) whether the
   /// comonent has any emitters or not.
-  void gen_get_all_emitters (void);
+  void gen_get_all_emitters ();
 
 private:
   be_interface *op_scope_;
@@ -59,7 +59,7 @@ class be_visitor_obv_factory_reg
 public:
   be_visitor_obv_factory_reg (be_visitor_context *ctx);
 
-  ~be_visitor_obv_factory_reg (void);
+  ~be_visitor_obv_factory_reg ();
 
   virtual int visit_publishes (be_publishes *node);
   virtual int visit_emits (be_emits *node);
@@ -76,7 +76,7 @@ class be_visitor_attr_set : public be_visitor_component_scope
 public:
   be_visitor_attr_set (be_visitor_context *ctx);
 
-  ~be_visitor_attr_set (void);
+  ~be_visitor_attr_set ();
 
   virtual int visit_attribute (be_attribute *node);
 
@@ -94,7 +94,7 @@ class be_visitor_facet_executor_block
 public:
   be_visitor_facet_executor_block (be_visitor_context *ctx);
 
-  ~be_visitor_facet_executor_block (void);
+  ~be_visitor_facet_executor_block ();
 
   virtual int visit_provides (be_provides *node);
 };
@@ -107,7 +107,7 @@ class be_visitor_connect_block
 public:
   be_visitor_connect_block (be_visitor_context *ctx);
 
-  ~be_visitor_connect_block (void);
+  ~be_visitor_connect_block ();
 
   virtual int visit_uses (be_uses *node);
 };
@@ -120,7 +120,7 @@ class be_visitor_disconnect_block
 public:
   be_visitor_disconnect_block (be_visitor_context *ctx);
 
-  ~be_visitor_disconnect_block (void);
+  ~be_visitor_disconnect_block ();
 
   virtual int visit_uses (be_uses *node);
 };
@@ -134,7 +134,7 @@ public:
   be_visitor_receptacle_desc (be_visitor_context *ctx,
                               be_component *node);
 
-  ~be_visitor_receptacle_desc (void);
+  ~be_visitor_receptacle_desc ();
 
   virtual int visit_uses (be_uses *node);
 
@@ -151,7 +151,7 @@ class be_visitor_subscribe_block
 public:
   be_visitor_subscribe_block (be_visitor_context *ctx);
 
-  ~be_visitor_subscribe_block (void);
+  ~be_visitor_subscribe_block ();
 
   virtual int visit_publishes (be_publishes *node);
 };
@@ -164,7 +164,7 @@ class be_visitor_unsubscribe_block
 public:
   be_visitor_unsubscribe_block (be_visitor_context *ctx);
 
-  ~be_visitor_unsubscribe_block (void);
+  ~be_visitor_unsubscribe_block ();
 
   virtual int visit_publishes (be_publishes *node);
 };
@@ -177,7 +177,7 @@ class be_visitor_event_source_desc
 public:
   be_visitor_event_source_desc (be_visitor_context *ctx);
 
-  ~be_visitor_event_source_desc (void);
+  ~be_visitor_event_source_desc ();
 
   virtual int visit_publishes (be_publishes *node);
 
@@ -193,7 +193,7 @@ class be_visitor_connect_consumer_block
 public:
   be_visitor_connect_consumer_block (be_visitor_context *ctx);
 
-  ~be_visitor_connect_consumer_block (void);
+  ~be_visitor_connect_consumer_block ();
 
   virtual int visit_emits (be_emits *node);
 };
@@ -206,7 +206,7 @@ class be_visitor_disconnect_consumer_block
 public:
   be_visitor_disconnect_consumer_block (be_visitor_context *ctx);
 
-  ~be_visitor_disconnect_consumer_block (void);
+  ~be_visitor_disconnect_consumer_block ();
 
   virtual int visit_emits (be_emits *node);
 };
@@ -219,7 +219,7 @@ class be_visitor_emitter_desc
 public:
   be_visitor_emitter_desc (be_visitor_context *ctx);
 
-  ~be_visitor_emitter_desc (void);
+  ~be_visitor_emitter_desc ();
 
   virtual int visit_emits (be_emits *node);
 
@@ -235,7 +235,7 @@ class be_visitor_populate_port_tables
 public:
   be_visitor_populate_port_tables (be_visitor_context *ctx);
 
-  ~be_visitor_populate_port_tables (void);
+  ~be_visitor_populate_port_tables ();
 
   virtual int visit_provides (be_provides *node);
 

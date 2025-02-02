@@ -24,7 +24,7 @@ be_visitor_sequence_cdr_op_cs::be_visitor_sequence_cdr_op_cs (
 {
 }
 
-be_visitor_sequence_cdr_op_cs::~be_visitor_sequence_cdr_op_cs (void)
+be_visitor_sequence_cdr_op_cs::~be_visitor_sequence_cdr_op_cs ()
 {
 }
 
@@ -55,7 +55,7 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   be_type *bt =
-    be_type::narrow_from_decl (node->base_type ());
+    dynamic_cast<be_type*> (node->base_type ());
 
   if (!bt)
     {
@@ -89,8 +89,7 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
         }
     }
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-    << "// " << __FILE__ << ":" << __LINE__ << be_nl;
+  TAO_INSERT_COMMENT (os);
 
   *os << "#if !defined _TAO_CDR_OP_"
       << node->flat_name () << "_CPP_" << be_nl
@@ -115,7 +114,7 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
           << "::CORBA::ULong length = _tao_vector.size ();"
           << be_nl
           << "strm << length;" << be_nl_2
-          << "for ( ::CORBA::ULong i = 0UL; i < length; ++i)"
+          << "for (::CORBA::ULong i = 0UL; i < length; ++i)"
           << be_idt_nl
           << "{" << be_idt_nl
           << "if (! (strm << _tao_vector[i]))" << be_idt_nl
@@ -164,7 +163,7 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
           << "return false;" << be_uidt_nl
           << "}" << be_uidt_nl << be_nl
           << "_tao_vector.resize (length);" << be_nl_2
-          << "for ( ::CORBA::ULong i = 0UL; i < length; ++i)"
+          << "for (::CORBA::ULong i = 0UL; i < length; ++i)"
           << be_idt_nl
           << "{" << be_idt_nl
           << "if (! (strm >> tmp))" << be_idt_nl
@@ -203,7 +202,7 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
       << "#endif /* _TAO_CDR_OP_"
       << node->flat_name () << "_CPP_ */";
 
-  node->cli_stub_cdr_op_gen (1);
+  node->cli_stub_cdr_op_gen (true);
   return 0;
 }
 

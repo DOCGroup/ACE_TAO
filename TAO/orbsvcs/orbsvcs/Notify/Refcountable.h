@@ -58,33 +58,33 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Notify_Serv_Export TAO_Notify_Refcountable
 {
 public:
-  typedef TAO_Notify_Refcountable_Guard_T< TAO_Notify_Refcountable > Ptr;
+  typedef TAO_Notify_Refcountable_Guard_T<TAO_Notify_Refcountable> Ptr;
 
   /// Constructor
-  TAO_Notify_Refcountable (void);
+  TAO_Notify_Refcountable ();
 
   /// Destructor
   /// public for stack allocated instances
   virtual ~TAO_Notify_Refcountable ();
 
-  /// This method sigantures deliberately match the RefCounting methods required for ESF Proxy
+  /// This method signatures deliberately match the RefCounting methods required for ESF Proxy
   /// Public for bridge implementations and various guard classes
-  CORBA::ULong _incr_refcnt (void);
-  CORBA::ULong _decr_refcnt (void);
+  CORBA::ULong _incr_refcnt ();
+  CORBA::ULong _decr_refcnt ();
 
-#if ( TAO_NOTIFY_REFCOUNT_DIAGNOSTICS != 0 )
+#if (TAO_NOTIFY_REFCOUNT_DIAGNOSTICS != 0)
   static void diagnostic_dump( const char* title = 0 );
 #endif
 
 private:
   /// The release method is called when the refcount reaches 0.
-  virtual void release (void) = 0;
+  virtual void release () = 0;
 
   /// Use a signed counter so that we can more easily detect
   /// boundary conditions such as too many _decr_refcnt() calls.
   ACE_Atomic_Op<TAO_SYNCH_MUTEX, CORBA::Long> refcount_;
 
-#if ( TAO_NOTIFY_REFCOUNT_DIAGNOSTICS != 0 )
+#if (TAO_NOTIFY_REFCOUNT_DIAGNOSTICS != 0)
   friend class TAO_Notify_Tracker;
   int ref_id_;
 #endif

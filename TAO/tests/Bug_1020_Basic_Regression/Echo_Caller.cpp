@@ -9,8 +9,7 @@ Echo_Caller::Echo_Caller(CORBA::ORB_ptr orb)
 void
 Echo_Caller::start_task(Test::Echo_ptr client)
 {
-  Server_Task task (client,
-                    32768);
+  Server_Task task (client);
 
   if (task.activate (THR_NEW_LWP | THR_JOINABLE,
                      4,
@@ -21,12 +20,10 @@ Echo_Caller::start_task(Test::Echo_ptr client)
     }
 
   ACE_Thread_Manager::instance ()->wait ();
-
-  return;
 }
 
 void
-Echo_Caller::shutdown(void)
+Echo_Caller::shutdown()
 {
   ACE_DEBUG ((LM_DEBUG, "Server received shutdown message\n"));
   orb_->shutdown(0);

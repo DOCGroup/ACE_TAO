@@ -28,7 +28,7 @@ typedef TAO_EC_Shutdown_Command<PortableServer::Servant_var<TAO_ECG_UDP_Receiver
 UDP_Receiver_Shutdown;
 
 int
-TAO_ECG_Mcast_Gateway::init_svcs (void)
+TAO_ECG_Mcast_Gateway::init_svcs ()
 {
   return ACE_Service_Config::static_svcs ()->
     insert (&ace_svc_desc_TAO_ECG_Mcast_Gateway);
@@ -36,7 +36,7 @@ TAO_ECG_Mcast_Gateway::init_svcs (void)
 
 
 int
-TAO_ECG_Mcast_Gateway::fini (void)
+TAO_ECG_Mcast_Gateway::fini ()
 {
   return 0;
 }
@@ -149,7 +149,7 @@ TAO_ECG_Mcast_Gateway::init (int argc, ACE_TCHAR* argv[])
           if (arg_shifter.is_parameter_next ())
             {
               const ACE_TCHAR* opt = arg_shifter.get_current ();
-              unsigned long tmp = ACE_OS::strtoul (opt, 0, 0) & 0xff;
+              unsigned long tmp = ACE_OS::strtoul (opt, nullptr, 0) & 0xff;
               this->ttl_value_ = static_cast<u_char> (tmp);
               arg_shifter.consume_arg ();
             }
@@ -236,7 +236,7 @@ TAO_ECG_Mcast_Gateway::init (
 }
 
 int
-TAO_ECG_Mcast_Gateway::validate_configuration (void)
+TAO_ECG_Mcast_Gateway::validate_configuration ()
 {
   if ((this->handler_type_ == ECG_HANDLER_BASIC
        || this->handler_type_ == ECG_HANDLER_UDP)
@@ -280,16 +280,16 @@ TAO_ECG_Mcast_Gateway::validate_configuration (void)
 }
 
 TAO_ECG_Refcounted_Endpoint
-TAO_ECG_Mcast_Gateway::init_endpoint (void)
+TAO_ECG_Mcast_Gateway::init_endpoint ()
 {
-  TAO_ECG_UDP_Out_Endpoint* endpoint = 0;
+  TAO_ECG_UDP_Out_Endpoint* endpoint = nullptr;
   TAO_ECG_Refcounted_Endpoint refendpoint;
 
   // Try to allocate a new endpoint from the heap
   ACE_NEW_NORETURN (endpoint,
                     TAO_ECG_UDP_Out_Endpoint);
 
-  if (endpoint != 0)
+  if (endpoint != nullptr)
   {
     refendpoint.reset (endpoint);
   }
@@ -351,22 +351,22 @@ TAO_ECG_Mcast_Gateway::init_endpoint (void)
 }
 
 PortableServer::ServantBase *
-TAO_ECG_Mcast_Gateway::init_address_server (void)
+TAO_ECG_Mcast_Gateway::init_address_server ()
 {
   const char * address_server_arg =
     (this->address_server_arg_.length ())
-    ? this->address_server_arg_.c_str () : 0;
+    ? this->address_server_arg_.c_str () : nullptr;
 
   if (this->address_server_type_ == ECG_ADDRESS_SERVER_BASIC)
     {
       PortableServer::Servant_var<TAO_ECG_Simple_Address_Server> impl =
         TAO_ECG_Simple_Address_Server::create ();
       if (!impl.in ())
-        return 0;
+        return nullptr;
 
       if (impl->init (address_server_arg) == -1)
         {
-          return 0;
+          return nullptr;
         }
       return impl._retn ();
     }
@@ -376,11 +376,11 @@ TAO_ECG_Mcast_Gateway::init_address_server (void)
       PortableServer::Servant_var<TAO_ECG_Complex_Address_Server> impl =
         TAO_ECG_Complex_Address_Server::create (1);
       if (!impl.in ())
-        return 0;
+        return nullptr;
 
       if (impl->init (address_server_arg) == -1)
         {
-          return 0;
+          return nullptr;
         }
       return impl._retn ();
     }
@@ -390,11 +390,11 @@ TAO_ECG_Mcast_Gateway::init_address_server (void)
       PortableServer::Servant_var<TAO_ECG_Complex_Address_Server> impl =
         TAO_ECG_Complex_Address_Server::create (0);
       if (!impl.in ())
-        return 0;
+        return nullptr;
 
       if (impl->init (address_server_arg) == -1)
         {
-          return 0;
+          return nullptr;
         }
       return impl._retn ();
     }
@@ -404,7 +404,7 @@ TAO_ECG_Mcast_Gateway::init_address_server (void)
       ORBSVCS_ERROR ((LM_ERROR,
                   "Cannot create address server: "
                   "unknown address server type specified.\n"));
-      return 0;
+      return nullptr;
     }
 }
 
@@ -416,14 +416,14 @@ TAO_ECG_Mcast_Gateway::init_handler (TAO_ECG_Dgram_Handler *receiver,
   TAO_ECG_Refcounted_Handler handler;
 
   const ACE_TCHAR * nic =
-    (this->nic_.length ()) ? this->nic_.c_str () : 0;
+    (this->nic_.length ()) ? this->nic_.c_str () : nullptr;
   const char * address_server_arg =
     (this->address_server_arg_.length ())
-    ? this->address_server_arg_.c_str () : 0;
+    ? this->address_server_arg_.c_str () : nullptr;
 
   if (this->handler_type_ == ECG_HANDLER_BASIC)
     {
-      TAO_ECG_Simple_Mcast_EH * h = 0;
+      TAO_ECG_Simple_Mcast_EH * h = nullptr;
       ACE_NEW_RETURN (h,
                       TAO_ECG_Simple_Mcast_EH (receiver),
                       handler);
@@ -436,7 +436,7 @@ TAO_ECG_Mcast_Gateway::init_handler (TAO_ECG_Dgram_Handler *receiver,
 
   else if (this->handler_type_ == ECG_HANDLER_COMPLEX)
     {
-      TAO_ECG_Mcast_EH * h = 0;
+      TAO_ECG_Mcast_EH * h = nullptr;
       ACE_NEW_RETURN (h,
                       TAO_ECG_Mcast_EH (receiver, nic),
                       handler);
@@ -449,7 +449,7 @@ TAO_ECG_Mcast_Gateway::init_handler (TAO_ECG_Dgram_Handler *receiver,
 
   else if (this->handler_type_ == ECG_HANDLER_UDP)
     {
-      TAO_ECG_UDP_EH * h = 0;
+      TAO_ECG_UDP_EH * h = nullptr;
       ACE_NEW_RETURN (h,
                       TAO_ECG_UDP_EH (receiver),
                       handler);
@@ -614,7 +614,7 @@ TAO_ECG_Mcast_Gateway::run (CORBA::ORB_ptr orb,
       || this->service_type_ == ECG_MCAST_TWO_WAY)
     {
       endpoint_rptr = this->init_endpoint ();
-      if (endpoint_rptr.get () == 0)
+      if (endpoint_rptr.get () == nullptr)
         {
           throw CORBA::INTERNAL ();
         }
@@ -651,7 +651,7 @@ TAO_ECG_Mcast_Gateway::run (CORBA::ORB_ptr orb,
         handler_rptr (this->init_handler (receiver.in (),
                                           ec,
                                           reactor));
-      if (handler_rptr.get () == 0)
+      if (handler_rptr.get () == nullptr)
         {
           throw CORBA::INTERNAL ();
         }

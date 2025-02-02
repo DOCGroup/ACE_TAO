@@ -4,7 +4,6 @@
 #include "ace/OS_NS_string.h"
 
 
-
 const char* TT_Info::INTERFACE_NAMES[] =
 {
   "TAO_Trader_Test::Remote_IO",

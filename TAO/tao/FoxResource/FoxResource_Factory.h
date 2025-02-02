@@ -23,7 +23,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-
   /**
    * @class FoxResource_Factory
    *
@@ -38,16 +37,13 @@ namespace TAO
   class TAO_FoxResource_Export FoxResource_Factory : public GUIResource_Factory
   {
   public:
-
     FoxResource_Factory (FXApp *app);
 
   protected:
-
     /// Create or obtain current reactor implementation
-    virtual ACE_Reactor_Impl *reactor_impl (void);
+    virtual ACE_Reactor_Impl *reactor_impl ();
 
   private:
-
     /// Reactor created by this factory.
     ACE_FoxReactor *reactor_impl_;
 

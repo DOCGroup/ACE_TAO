@@ -49,17 +49,13 @@ public:
                    bool close_on_delete = false,
                    ACE_Allocator * = 0);
 
-#if !defined (ACE_HAS_WINCE)
-  // Note that ACE_HANDLE = FILE under CE.
-
   /// Read from an open HANDLE.
   ACE_Read_Buffer (ACE_HANDLE handle,
                    bool close_on_delete = false,
                    ACE_Allocator * = 0);
-#endif  // ACE_HAS_WINCE
 
   /// Closes the FILE *.
-  ~ACE_Read_Buffer (void);
+  ~ACE_Read_Buffer ();
 
   /**
    * Returns a pointer dynamically allocated with
@@ -76,23 +72,23 @@ public:
               int replace = '\0');
 
   /// Returns the number of characters replaced during a @c read.
-  size_t replaced (void) const;
+  size_t replaced () const;
 
   /// Returns the size of the allocated buffer obtained during a
   /// @c read, not including the null terminator.
-  size_t size (void) const;
+  size_t size () const;
 
   /// Returns a pointer to its allocator.
-  ACE_Allocator *alloc (void) const;
+  ACE_Allocator *alloc () const;
 
   /// Dump the state of the object.
-  void dump (void) const;
+  void dump () const;
 
 private:
-
-  // Disallow copying and assignment...
-  void operator= (const ACE_Read_Buffer &);
-  ACE_Read_Buffer (const ACE_Read_Buffer &);
+  void operator= (const ACE_Read_Buffer &) = delete;
+  ACE_Read_Buffer (const ACE_Read_Buffer &) = delete;
+  void operator= (ACE_Read_Buffer &&) = delete;
+  ACE_Read_Buffer (ACE_Read_Buffer &&) = delete;
 
 private:
   /// Recursive helper method that does the work...

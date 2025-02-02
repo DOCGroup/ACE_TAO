@@ -61,10 +61,10 @@ class Test_i : public POA_Test
 public:
   Test_i (CORBA::ORB_ptr orb);
 
-  void test_method (void);
+  void test_method ();
 
   //FUZZ: disable check_for_lack_ACE_OS
-  void shutdown (void);
+  void shutdown ();
   //FUZZ: enable check_for_lack_ACE_OS
 
 private:
@@ -77,16 +77,16 @@ Test_i::Test_i (CORBA::ORB_ptr orb)
 }
 
 void
-Test_i::test_method (void)
+Test_i::test_method ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "Test_i::test_method\n"));
 }
 
 void
-Test_i::shutdown (void)
+Test_i::shutdown ()
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }
 
 static const ACE_TCHAR *simple_servant_ior_file = ACE_TEXT("simple_servant.ior");
@@ -204,7 +204,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "Server ORB event loop finished\n\n"));
 
-      root_poa->destroy (1, 1);
+      root_poa->destroy (true, true);
 
       orb->destroy ();
     }

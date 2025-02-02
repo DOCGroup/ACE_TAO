@@ -2,8 +2,7 @@
 #include "JAWS/Policy.h"
 
 
-
-JAWS_Data_Block::JAWS_Data_Block (void)
+JAWS_Data_Block::JAWS_Data_Block ()
   : ACE_Message_Block (JAWS_DATA_BLOCK_SIZE),
     io_handler_ (0),
     policy_ (0),
@@ -21,30 +20,30 @@ JAWS_Data_Block::JAWS_Data_Block (JAWS_Data_Block &db)
 {
 }
 
-JAWS_Data_Block::~JAWS_Data_Block (void)
+JAWS_Data_Block::~JAWS_Data_Block ()
 {
 }
 
 JAWS_Pipeline_Handler *
-JAWS_Data_Block::task (void)
+JAWS_Data_Block::task ()
 {
   return this->task_;
 }
 
 JAWS_IO_Handler *
-JAWS_Data_Block::io_handler (void)
+JAWS_Data_Block::io_handler ()
 {
   return this->io_handler_;
 }
 
 JAWS_Dispatch_Policy *
-JAWS_Data_Block::policy (void)
+JAWS_Data_Block::policy ()
 {
   return this->policy_;
 }
 
 void *
-JAWS_Data_Block::payload (void)
+JAWS_Data_Block::payload ()
 {
   return this->payload_;
 }

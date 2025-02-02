@@ -30,7 +30,7 @@ run_main (int, ACE_TCHAR *[])
   int status = 0;
 
   // Create a simple list ...
-  typedef std::set<int,std::greater<int> > collection;
+  using collection = std::set<int, std::greater<int>>;
   collection c;
 
   // ... insert some elements ...

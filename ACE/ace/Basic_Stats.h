@@ -40,10 +40,10 @@ public:
    * The number of samples is pre-allocated, and cannot changes once
    * the class is initialized.
    */
-  ACE_Basic_Stats (void);
+  ACE_Basic_Stats ();
 
   /// The number of samples received so far
-  ACE_UINT32 samples_count (void) const;
+  ACE_UINT32 samples_count () const;
 
   /// Record one sample.
   void sample (ACE_UINT64 value);

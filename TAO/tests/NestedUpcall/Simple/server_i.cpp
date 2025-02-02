@@ -13,8 +13,6 @@ server_i::start (client_ptr c,
 {
   this->client_ = client::_duplicate (c);
   this->ping (time_to_live);
-
-  return;
 }
 
 void
@@ -34,7 +32,7 @@ server_i::ping (CORBA::UShort time_to_live)
 }
 
 void
-server_i::shutdown (void)
+server_i::shutdown ()
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

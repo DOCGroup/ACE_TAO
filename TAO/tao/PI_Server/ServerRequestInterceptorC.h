@@ -56,7 +56,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace PortableInterceptor
 {
-
   // TAO_IDL - Generated from
   // be\be_interface.cpp:646
 
@@ -131,11 +130,10 @@ namespace PortableInterceptor
 
       );
 
-    static ServerRequestInterceptor_ptr _nil (void)
+    static ServerRequestInterceptor_ptr _nil ()
     {
       return static_cast<ServerRequestInterceptor_ptr> (0);
     }
-
 
 
     // TAO_IDL - Generated from
@@ -203,14 +201,14 @@ namespace PortableInterceptor
 
       );
 
-    virtual const char* _interface_repository_id (void) const;
+    virtual const char* _interface_repository_id () const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
 
   protected:
     // Abstract or local interface only.
-    ServerRequestInterceptor (void);
+    ServerRequestInterceptor ();
 
-    virtual ~ServerRequestInterceptor (void);
+    virtual ~ServerRequestInterceptor ();
 
   private:
     // Private and unimplemented for concrete interfaces.
@@ -232,7 +230,6 @@ namespace PortableInterceptor
 // Traits specializations.
 namespace TAO
 {
-
 #if !defined (_PORTABLEINTERCEPTOR_SERVERREQUESTINFO__TRAITS_)
 #define _PORTABLEINTERCEPTOR_SERVERREQUESTINFO__TRAITS_
 
@@ -245,7 +242,7 @@ namespace TAO
     static void release (
         ::PortableInterceptor::ServerRequestInfo_ptr
       );
-    static ::PortableInterceptor::ServerRequestInfo_ptr nil (void);
+    static ::PortableInterceptor::ServerRequestInfo_ptr nil ();
     static ::CORBA::Boolean marshal (
         ::PortableInterceptor::ServerRequestInfo_ptr p,
         TAO_OutputCDR & cdr
@@ -266,7 +263,7 @@ namespace TAO
     static void release (
         ::PortableInterceptor::ServerRequestInterceptor_ptr
       );
-    static ::PortableInterceptor::ServerRequestInterceptor_ptr nil (void);
+    static ::PortableInterceptor::ServerRequestInterceptor_ptr nil ();
     static ::CORBA::Boolean marshal (
         ::PortableInterceptor::ServerRequestInterceptor_ptr p,
         TAO_OutputCDR & cdr

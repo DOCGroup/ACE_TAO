@@ -13,65 +13,41 @@ namespace XSCRT
 {
   namespace Traversal
   {
-    //
-    //
-    //
     template<typename B>
     class TraverserBase
     {
     protected:
-      virtual
-      ~TraverserBase ();
+      virtual ~TraverserBase () = default;
 
       //@@ VC6
     public:
-      virtual void
-      trampoline (B& n) = 0;
+      virtual void trampoline (B& n) = 0;
 
-      virtual void
-      trampoline (B const& n) = 0;
+      virtual void trampoline (B const& n) = 0;
     };
 
-
-    //
-    //
-    //
     template <typename B>
     class DispatcherBase
     {
     public:
-      virtual
-      ~DispatcherBase ();
+      virtual ~DispatcherBase () = default;
 
-      virtual void
-      dispatch (B& n);
+      virtual void dispatch (B& n);
 
-      virtual void
-      dispatch (B const& n);
+      virtual void dispatch (B const& n);
 
       void
       map (TypeId id, TraverserBase<B>& t)
       {
-        //wcerr << "map for " << id.name () << " to " << &t
-    //      << " in " << &traversal_map_ << endl;
-
         //@@ VC6
         Traversers& traversers = traversal_map_[id];
         traversers.push_back (&t);
       }
 
     public:
-      typedef
-      std::vector<TraverserBase<B>*>
-      Traversers;
-
-      typedef
-      std::map<TypeId, Traversers>
-      TraversalMap;
-
-      typedef
-      typename TraversalMap::const_iterator
-      Iterator;
+      typedef std::vector<TraverserBase<B>*> Traversers;
+      typedef std::map<TypeId, Traversers> TraversalMap;
+      typedef typename TraversalMap::const_iterator Iterator;
 
       Iterator
       begin () const
@@ -96,13 +72,8 @@ namespace XSCRT
         }
       };
 
-      typedef
-      std::map<ExtendedTypeInfo, unsigned long, TypeInfoComparator>
-      LevelMap;
-
-      typedef
-      std::set<ExtendedTypeInfo, TypeInfoComparator>
-      TypeInfoSet;
+      typedef std::map<ExtendedTypeInfo, unsigned long, TypeInfoComparator> LevelMap;
+      typedef std::set<ExtendedTypeInfo, TypeInfoComparator> TypeInfoSet;
 
       static unsigned long
       compute_levels (ExtendedTypeInfo const& ti,
@@ -116,10 +87,6 @@ namespace XSCRT
       TraversalMap traversal_map_;
     };
 
-
-    //
-    //
-    //
     template <typename B>
     class Dispatcher : public virtual DispatcherBase<B>
     {
@@ -184,12 +151,6 @@ namespace XSCRT
       }
 
     protected:
-      // DispatcherBase<B>&
-      // traverser ()
-      // {
-      //   return dispatcher_;
-      // }
-
       template <typename X, typename A, typename I>
       void
       iterate_and_dispatch (I begin, I end, X& x, void (X::*next)(A&), A& a)
@@ -207,17 +168,10 @@ namespace XSCRT
       DispatcherBase<B> dispatcher_;
     };
 
-
-
-    //
-    //
-    //
     template <typename T, typename B>
     struct Traverser : TraverserBase<B>, virtual Dispatcher<B>
     {
-      typedef
-      T
-      Type;
+      typedef T Type;
 
       Traverser ()
       {
@@ -240,18 +194,12 @@ namespace XSCRT
       virtual void
       trampoline (B& n)
       {
-        //wcerr << "trampoline for " << &n << " to type "
-        //      << typeid (Type).name () << endl;
-
         traverse (dynamic_cast<Type&> (n));
       }
 
       virtual void
       trampoline (B const& n)
       {
-        //wcerr << "trampoline for " << &n << " to type "
-        //      << typeid (Type).name () << endl;
-
         traverse (dynamic_cast<Type const&> (n));
       }
     };

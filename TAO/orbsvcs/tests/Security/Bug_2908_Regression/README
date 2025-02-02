@@ -1,7 +1,4 @@
-
-
 This is a regression test to demonstrate a problem in collocated invocation with SSLIOP in a separate thread.
-
 
 How to Run:
 
@@ -14,11 +11,9 @@ To start the server:
 ------------------
 ./MessengerServer -ORBSvcConf server.conf
 
-
 To start the client:
 ------------------
 ./MessengerClient -ORBSvcConf client.conf
-
 
 Output:
 NO_PERMISSION exception is thrown.

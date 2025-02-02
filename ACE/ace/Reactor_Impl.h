@@ -24,6 +24,7 @@
 // Event_Handler.h contains the definition of ACE_Reactor_Mask
 #include "ace/Event_Handler.h"
 #include "ace/Countdown_Time.h"
+#include "ace/Synch_Traits.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -48,7 +49,7 @@ public:
   virtual int open (ACE_Reactor_Impl *,
                     ACE_Timer_Queue *timer_queue = 0,
                     int disable_notify = 0) = 0;
-  virtual int close (void) = 0;
+  virtual int close () = 0;
 
   /**
    * Called by a thread when it wants to unblock the Reactor_Impl.
@@ -72,7 +73,7 @@ public:
   /// Returns the ACE_HANDLE of the notify pipe on which the reactor
   /// is listening for notifications so that other threads can unblock
   /// the Reactor_Impl
-  virtual ACE_HANDLE notify_handle (void) = 0;
+  virtual ACE_HANDLE notify_handle () = 0;
 
   /// Verify whether the buffer has dispatchable info  or not.
   virtual int is_dispatchable (ACE_Notification_Buffer &buffer)= 0;
@@ -103,7 +104,7 @@ public:
    * passed in via the notify queue before breaking out of its event
    * loop.
    */
-  virtual int max_notify_iterations (void) = 0;
+  virtual int max_notify_iterations () = 0;
 
   /**
    * Purge any notifications pending in this reactor for the specified
@@ -114,7 +115,7 @@ public:
                                            ACE_Reactor_Mask    = ACE_Event_Handler::ALL_EVENTS_MASK) = 0;
 
   /// Dump the state of an object.
-  virtual void dump (void) const = 0;
+  virtual void dump () const = 0;
 };
 
 /**
@@ -126,7 +127,7 @@ class ACE_Export ACE_Reactor_Impl
 {
 public:
   /// Close down and release all resources.
-  virtual ~ACE_Reactor_Impl (void);
+  virtual ~ACE_Reactor_Impl ();
 
   /// Initialization.
   virtual int open (size_t size,
@@ -150,10 +151,10 @@ public:
   virtual int timer_queue (ACE_Timer_Queue *tq) = 0;
 
   /// Return the current ACE_Timer_Queue.
-  virtual ACE_Timer_Queue *timer_queue (void) const = 0;
+  virtual ACE_Timer_Queue *timer_queue () const = 0;
 
   /// Close down and release all resources.
-  virtual int close (void) = 0;
+  virtual int close () = 0;
 
   // = Event loop drivers.
   /**
@@ -208,7 +209,7 @@ public:
    * actively handling events.  If it returns non-zero, handling_events() and
    * handle_alertable_events() return -1 immediately.
    */
-  virtual int deactivated (void) = 0;
+  virtual int deactivated () = 0;
 
   /**
    * Control whether the Reactor will handle any more incoming events or not.
@@ -334,7 +335,7 @@ public:
   virtual int suspend_handler (const ACE_Handle_Set &handles) = 0;
 
   /// Suspend all <handles> temporarily.
-  virtual int suspend_handlers (void) = 0;
+  virtual int suspend_handlers () = 0;
 
   /// Resume @a event_handler. Uses ACE_Event_Handler::get_handle() to
   /// get the handle.
@@ -347,16 +348,16 @@ public:
   virtual int resume_handler (const ACE_Handle_Set &handles) = 0;
 
   /// Resume all handles.
-  virtual int resume_handlers (void) = 0;
+  virtual int resume_handlers () = 0;
 
   /// Does the reactor allow the application to resume the handle on
   /// its own ie. can it pass on the control of handle resumption to
   /// the application
-  virtual int resumable_handler (void) = 0;
+  virtual int resumable_handler () = 0;
 
   /// Return true if we any event associations were made by the reactor
   /// for the handles that it waits on, false otherwise.
-  virtual bool uses_event_associations (void) = 0;
+  virtual bool uses_event_associations () = 0;
 
   // If we need to reset handles returned from accept/connect.
 
@@ -462,7 +463,7 @@ public:
    * via the notify queue before breaking out of its
    * ACE_Message_Queue::dequeue() loop.
    */
-  virtual int max_notify_iterations (void) = 0;
+  virtual int max_notify_iterations () = 0;
 
   /**
    * Purge any notifications pending in this reactor for the specified
@@ -497,17 +498,17 @@ public:
 
   /// Returns true if Reactor has been successfully initialized, else
   /// false.
-  virtual bool initialized (void) = 0;
+  virtual bool initialized () = 0;
 
   /// Returns the current size of the Reactor's internal descriptor
   /// table.
-  virtual size_t size (void) const = 0;
+  virtual size_t size () const = 0;
 
   /// Returns a reference to the Reactor's internal lock.
-  virtual ACE_Lock &lock (void) = 0;
+  virtual ACE_Lock &lock () = 0;
 
   /// Wake up all threads in waiting in the event loop
-  virtual void wakeup_all_threads (void) = 0;
+  virtual void wakeup_all_threads () = 0;
 
   /// Transfers ownership of Reactor_Impl to the @a new_owner.
   virtual int owner (ACE_thread_t new_owner, ACE_thread_t *old_owner = 0) = 0;
@@ -516,7 +517,7 @@ public:
   virtual int owner (ACE_thread_t *owner) = 0;
 
   /// Get the existing restart value.
-  virtual bool restart (void) = 0;
+  virtual bool restart () = 0;
 
   /// Set a new value for restart and return the original value.
   virtual bool restart (bool r) = 0;
@@ -525,7 +526,7 @@ public:
   virtual void requeue_position (int) = 0;
 
   /// Get position of the owner thread.
-  virtual int requeue_position (void) = 0;
+  virtual int requeue_position () = 0;
 
   // = Low-level wait_set mask manipulation methods.
 
@@ -554,7 +555,7 @@ public:
                          int ops) = 0;
 
   /// Dump the state of an object.
-  virtual void dump (void) const = 0;
+  virtual void dump () const = 0;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;

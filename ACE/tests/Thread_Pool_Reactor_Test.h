@@ -3,9 +3,7 @@
 /**
  *  @file    Thread_Pool_Reactor_Test.h
  *
- *  This class gets its own header file to work around AIX C++
- *  compiler "features" related to template instantiation...  It is
- *  only used by Thread_Pool_Reactor_Test.cpp.
+ *  It is only used by Thread_Pool_Reactor_Test.cpp.
  *
  *  @author   Irfan Pyarali <irfan@cs.wustl.edu>   Nanbor Wang <nanbor@cs.wustl.edu>
  */

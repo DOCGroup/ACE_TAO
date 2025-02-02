@@ -22,19 +22,19 @@ class Generator
 {
 public:
   /// constructor
-  Generator (void);
+  Generator ();
 
   /// destructor
-  ~Generator (void);
+  ~Generator ();
 
-  CORBA::Short gen_short (void);
-  CORBA::Long gen_long (void);
-  char* gen_string (void);
+  CORBA::Short gen_short ();
+  CORBA::Long gen_long ();
+  char* gen_string ();
   char* gen_string (int maxlength);
-  CORBA::WChar* gen_wstring (void);
+  CORBA::WChar* gen_wstring ();
   CORBA::WChar* gen_wstring (int maxlength);
-  const Param_Test::Fixed_Struct gen_fixed_struct (void);
-  const Param_Test::Step gen_step (void);
+  const Param_Test::Fixed_Struct gen_fixed_struct ();
+  const Param_Test::Step gen_step ();
  private:
   Param_Test::Fixed_Struct fixed_struct_;
   Param_Test::Step step_;

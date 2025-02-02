@@ -22,11 +22,11 @@
 #include "ace/streams.h"
 
 // Constructor
-NContextExt_Client_i::NContextExt_Client_i (void)
+NContextExt_Client_i::NContextExt_Client_i ()
 {
 }
 
-NContextExt_Client_i::~NContextExt_Client_i (void)
+NContextExt_Client_i::~NContextExt_Client_i ()
 {
 }
 
@@ -34,9 +34,8 @@ NContextExt_Client_i::~NContextExt_Client_i (void)
 // Parses the command line arguments and returns an
 // error status
 int
-NContextExt_Client_i::parse_args (void)
+NContextExt_Client_i::parse_args ()
 {
-
   ACE_Get_Opt get_opts (argc_, argv_, ACE_TEXT("dvs"));
   int c;
 
@@ -71,7 +70,6 @@ NContextExt_Client_i::parse_args (void)
 char *
 NContextExt_Client_i::get_name ()
 {
-
   // USe time (NULL) to produce the seed:
   ACE_OS::srand (static_cast<u_int> (ACE_OS::time (0)));
 
@@ -82,7 +80,6 @@ NContextExt_Client_i::get_name ()
 
   for (int i = 0; i < len; ++i)
     {
-
       int rand_value = ACE_OS::rand () % 10;
 
       switch (rand_value)
@@ -125,7 +122,7 @@ NContextExt_Client_i::get_name ()
         case 7:
         case 8:
         case 9:
-          *name_componentPtr = 'A' + ( ACE_OS::rand () % 26 );
+          *name_componentPtr = 'A' + ( ACE_OS::rand () % 26);
           ++name_componentPtr;
           break;
 
@@ -138,13 +135,11 @@ NContextExt_Client_i::get_name ()
   *name_componentPtr = '\0';
 
   return name_component;
-
 }
 
 int
-NContextExt_Client_i::run (void)
+NContextExt_Client_i::run ()
 {
-
   try
     {
       CosNaming::Name name;
@@ -291,7 +286,6 @@ NContextExt_Client_i::print_values (CosNaming::Name name,
                                     CORBA::String_var obj_name,
                                     CORBA::String_var url_string)
 {
-
   ACE_DEBUG((LM_DEBUG, ACE_TEXT ("The first component id is %C,")
              ACE_TEXT ("The first component kind is %C,")
              ACE_TEXT ("The second component id is %C,")
@@ -321,5 +315,4 @@ NContextExt_Client_i::print_values (CosNaming::Name name,
 
  ACE_DEBUG ((LM_DEBUG,ACE_TEXT ("The URL form of the string is \n %C\n"),
              url_string.in ()));
-
 }

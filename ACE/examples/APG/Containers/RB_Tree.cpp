@@ -14,24 +14,24 @@ class Tree_Example
 {
 public:
   // Illustrate the tree.
-  int run (void);
+  int run ();
 
 private:
   // Use the forward iterator.
-  void iterate_forward (void);
+  void iterate_forward ();
 
   // Use the reverse iterator.
-  void iterate_reverse (void);
+  void iterate_reverse ();
 
   // Remove all elements from the tree.
-  int remove_all (void);
+  int remove_all ();
 
 private:
   Tree<int, DataElement*> tree_;
 };
 
 // Listing 1 code/ch05
-int Tree_Example::run (void)
+int Tree_Example::run ()
 {
   ACE_TRACE ("Tree_Example::run");
 
@@ -71,7 +71,7 @@ int Tree_Example::run (void)
   return 0;
 }
 
-void Tree_Example::iterate_forward (void)
+void Tree_Example::iterate_forward ()
 {
   ACE_TRACE ("Tree_Example::iterate_forward");
 
@@ -85,7 +85,7 @@ void Tree_Example::iterate_forward (void)
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
 }
 
-void Tree_Example::iterate_reverse (void)
+void Tree_Example::iterate_reverse ()
 {
   ACE_TRACE ("Tree_Example::iterate_reverse");
 
@@ -100,7 +100,7 @@ void Tree_Example::iterate_reverse (void)
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
 }
 
-int Tree_Example::remove_all (void)
+int Tree_Example::remove_all ()
 {
   ACE_TRACE ("Tree_Example::remove_all");
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Removing elements\n")));

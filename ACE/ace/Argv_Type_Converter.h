@@ -37,26 +37,24 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Argv_Type_Converter
 {
 public:
-
   ACE_Argv_Type_Converter (int &argc, char** argv);
 
 #if defined (ACE_USES_WCHAR)
   ACE_Argv_Type_Converter (int &argc, wchar_t** argv);
 #endif  // ACE_USES_WCHAR
 
-  ~ACE_Argv_Type_Converter (void);
+  ~ACE_Argv_Type_Converter ();
 
   /// Returns the pointer of converted command line.
-  ACE_TCHAR** get_TCHAR_argv (void);
+  ACE_TCHAR** get_TCHAR_argv ();
 
   /// Returns the pointer of ASCII (char) command line.
-  char** get_ASCII_argv (void);
+  char** get_ASCII_argv ();
 
   /// Returns the number of sub parameters (argc).
-  int& get_argc (void);
+  int& get_argc ();
 
 private:
-
   /// Copy Constructor should not be used.
   ACE_Argv_Type_Converter (const ACE_Argv_Type_Converter&);
 
@@ -66,18 +64,18 @@ private:
 #if defined (ACE_USES_WCHAR)
 
   /// Perform common initialization for two Ctor's.
-  void initialize (void);
+  void initialize ();
 
   /// Align all entries in the char type argv list with wchar_t type
   /// argv list.
-  void align_char_with_wchar (void);
+  void align_char_with_wchar ();
 
   /// Align all entries in the wchar_t type argv list with char type
   /// argv list.
-  void align_wchar_with_char (void);
+  void align_wchar_with_char ();
 
   /// Clean up removed (consumed) argv entries and reset the pass flags.
-  void cleanup (void);
+  void cleanup ();
 #endif  // ACE_USES_WCHAR
 
 private:

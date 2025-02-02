@@ -38,12 +38,11 @@ class Content_Iterator_i :
 
   friend class Iterator_Factory_i;
 public:
-
   /// Constructor
   Content_Iterator_i (const char *filename, CORBA::ULongLong file_size);
 
   /// Destructor
-  ~Content_Iterator_i (void);
+  ~Content_Iterator_i ();
 
   /// This operation returns the next <chunk> of the file starting at
   /// <offset>.  If there are no more bindings, false is returned.
@@ -51,15 +50,13 @@ public:
                                      Web_Server::Chunk_Type_out chunk);
 
   /// Destroy the iterator.
-  virtual void destroy (void);
+  virtual void destroy ();
 
 private:
-
   /// Initialize the Content_Iterator.
-  int init (void);
+  int init ();
 
 private:
-
   /// The Addr representing the requested file.
   ACE_FILE_Addr file_;
 

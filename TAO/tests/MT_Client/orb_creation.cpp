@@ -53,7 +53,7 @@ public:
           const char* ior);
   // ctor
 
-  virtual int svc (void);
+  virtual int svc ();
   // The thread entry point.
 
 private:
@@ -121,7 +121,7 @@ Client::Client (int niterations,
 }
 
 int
-Client::svc (void)
+Client::svc ()
 {
   try
     {

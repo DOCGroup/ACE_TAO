@@ -72,7 +72,6 @@ namespace TAO_Notify
     size_t backup_count_;
     bool timestamp_;
   };
-
 } // namespace TAO_Notify
 
 TAO_END_VERSIONED_NAMESPACE_DECL

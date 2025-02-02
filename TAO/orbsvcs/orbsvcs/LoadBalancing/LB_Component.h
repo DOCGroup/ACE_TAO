@@ -40,20 +40,17 @@ class TAO_LoadBalancing_Export TAO_LB_Component
   : public ACE_Service_Object
 {
 public:
-
   /// Initializes object when dynamic linking occurs.
   virtual int init (int argc, ACE_TCHAR *argv[]);
 
   /// Terminates object when dynamic unlinking occurs.
-  virtual int fini (void);
+  virtual int fini ();
 
 protected:
-
   /// Register the LB_Component's ORBInitializer.
   int register_orb_initializer (const CORBA::StringSeq & object_groups,
                                 const CORBA::StringSeq & repository_ids,
                                 const char * location);
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

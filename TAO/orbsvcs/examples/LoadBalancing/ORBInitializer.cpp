@@ -6,7 +6,7 @@
 #include "orbsvcs/CosLoadBalancingC.h"
 #include "tao/ORB_Constants.h"
 
-ORBInitializer::ORBInitializer (void)
+ORBInitializer::ORBInitializer ()
   : load_alert_ (),
     interceptor_ (0)
 {
@@ -22,7 +22,6 @@ void
 ORBInitializer::post_init (
     PortableInterceptor::ORBInitInfo_ptr info)
 {
-
   ACE_NEW_THROW_EX (this->interceptor_,
                     ServerRequestInterceptor,
                     CORBA::NO_MEMORY (
@@ -53,13 +52,13 @@ ORBInitializer::post_init (
 
 
 TAO_LB_LoadAlert &
-ORBInitializer::load_alert (void)
+ORBInitializer::load_alert ()
 {
   return this->load_alert_;
 }
 
 ServerRequestInterceptor *
-ORBInitializer::interceptor (void) const
+ORBInitializer::interceptor () const
 {
   return this->interceptor_;
 }

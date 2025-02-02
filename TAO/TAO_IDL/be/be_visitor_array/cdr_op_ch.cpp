@@ -19,7 +19,7 @@ be_visitor_array_cdr_op_ch::be_visitor_array_cdr_op_ch (
 {
 }
 
-be_visitor_array_cdr_op_ch::~be_visitor_array_cdr_op_ch (void)
+be_visitor_array_cdr_op_ch::~be_visitor_array_cdr_op_ch ()
 {
 }
 
@@ -33,7 +33,7 @@ be_visitor_array_cdr_op_ch::visit_array (be_array *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  be_type *bt = be_type::narrow_from_decl (node->base_type ());
+  be_type *bt = dynamic_cast<be_type*> (node->base_type ());
   AST_Decl::NodeType nt = bt->node_type ();
 
   // If the node is an array of anonymous sequence, we need to
@@ -55,7 +55,7 @@ be_visitor_array_cdr_op_ch::visit_array (be_array *node)
   // If the array is an anonymous member and if its element type
   // is a declaration (not a reference), we must generate code for
   // the declaration.
-  if (this->ctx_->alias () == 0 && // Not a typedef.
+  if (this->ctx_->alias () == nullptr && // Not a typedef.
       bt->is_child (this->ctx_->scope ()->decl ()))
     {
       int status = 0;
@@ -95,17 +95,16 @@ be_visitor_array_cdr_op_ch::visit_array (be_array *node)
         }
     }
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   *os << be_global->core_versioning_begin () << be_nl;
 
-  be_scope* scope = be_scope::narrow_from_scope (node->defined_in ());
+  be_scope* scope = dynamic_cast<be_scope*> (node->defined_in ());
   be_decl* parent = scope->decl ();
   be_typedef *td = this->ctx_->tdef ();
   ACE_CString arg_name (ACE_CString (parent->full_name ())
                         + "::"
-                        + (td == 0 ? "_" : "")
+                        + (td == nullptr ? "_" : "")
                         + node->local_name ()->get_string ()
                         + "_forany &_tao_array");
 
@@ -129,6 +128,6 @@ be_visitor_array_cdr_op_ch::visit_array (be_array *node)
 
   *os << be_global->core_versioning_end ();
 
-  node->cli_hdr_cdr_op_gen (1);
+  node->cli_hdr_cdr_op_gen (true);
   return 0;
 }

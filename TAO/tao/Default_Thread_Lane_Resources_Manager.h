@@ -35,47 +35,42 @@ class TAO_Export TAO_Default_Thread_Lane_Resources_Manager
   : public TAO_Thread_Lane_Resources_Manager
 {
 public:
-
   /// Constructor.
   TAO_Default_Thread_Lane_Resources_Manager (TAO_ORB_Core &orb_core);
 
   /// Destructor.
-  ~TAO_Default_Thread_Lane_Resources_Manager (void);
+  ~TAO_Default_Thread_Lane_Resources_Manager ();
 
   /// Finalize resources.
-  void finalize (void);
+  void finalize ();
 
   /// Open default resources.
-  int open_default_resources (void);
+  int open_default_resources ();
 
   /// Shutdown reactor.
-  void shutdown_reactor (void);
+  void shutdown_reactor ();
 
   /// Cleanup transports.
-  virtual void close_all_transports (void);
+  virtual void close_all_transports ();
 
   /// Does @a mprofile belong to us?
   int is_collocated (const TAO_MProfile &mprofile);
 
   /// @name Accessors
   // @{
+  TAO_Thread_Lane_Resources &lane_resources ();
 
-  TAO_Thread_Lane_Resources &lane_resources (void);
-
-  TAO_Thread_Lane_Resources &default_lane_resources (void);
+  TAO_Thread_Lane_Resources &default_lane_resources ();
 
   // @}
 
 private:
-
   TAO_Default_Thread_Lane_Resources_Manager (TAO_Default_Thread_Lane_Resources_Manager const &);
   void operator= (TAO_Default_Thread_Lane_Resources_Manager const &);
 
 protected:
-
   /// Default lane resources.
   TAO_Thread_Lane_Resources * const lane_resources_;
-
 };
 
 /**
@@ -90,13 +85,11 @@ class TAO_Export TAO_Default_Thread_Lane_Resources_Manager_Factory
   : public TAO_Thread_Lane_Resources_Manager_Factory
 {
 public:
-
   /// Destructor.
-  virtual ~TAO_Default_Thread_Lane_Resources_Manager_Factory (void);
+  virtual ~TAO_Default_Thread_Lane_Resources_Manager_Factory ();
 
   /// Factory method.
   TAO_Thread_Lane_Resources_Manager *create_thread_lane_resources_manager (TAO_ORB_Core &core);
-
 };
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO, TAO_Default_Thread_Lane_Resources_Manager_Factory)

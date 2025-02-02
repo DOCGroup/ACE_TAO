@@ -2,7 +2,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE PortableServer::POA_ptr
-TAO_Notify_POA_Helper::poa (void)
+TAO_Notify_POA_Helper::poa ()
 {
   return this->poa_.in ();
 }

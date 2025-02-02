@@ -7,7 +7,7 @@ ACE_INLINE
 TAO_Seq_Out_T<T>::TAO_Seq_Out_T (T *& p)
   : ptr_ (p)
 {
-  this->ptr_ = 0;
+  this->ptr_ = nullptr;
 }
 
 template<typename T>
@@ -16,23 +16,19 @@ TAO_Seq_Out_T<T>::TAO_Seq_Out_T (T_var & p)
   : ptr_ (p.out ())
 {
   delete this->ptr_;
-  this->ptr_ = 0;
+  this->ptr_ = nullptr;
 }
 
 template<typename T>
 ACE_INLINE
-TAO_Seq_Out_T<T>::TAO_Seq_Out_T (
-    const TAO_Seq_Out_T<T> & p
-  )
+TAO_Seq_Out_T<T>::TAO_Seq_Out_T (const TAO_Seq_Out_T<T> & p)
   : ptr_ (p.ptr_)
 {}
 
 template<typename T>
 ACE_INLINE
 TAO_Seq_Out_T<T> &
-TAO_Seq_Out_T<T>::operator= (
-    const TAO_Seq_Out_T<T> & p
-  )
+TAO_Seq_Out_T<T>::operator= (const TAO_Seq_Out_T<T> & p)
 {
   this->ptr_ = p.ptr_;
   return *this;
@@ -57,7 +53,7 @@ TAO_Seq_Out_T<T>::operator T *& ()
 template<typename T>
 ACE_INLINE
 T *&
-TAO_Seq_Out_T<T>::ptr (void)
+TAO_Seq_Out_T<T>::ptr ()
 {
   return this->ptr_;
 }
@@ -65,7 +61,7 @@ TAO_Seq_Out_T<T>::ptr (void)
 template<typename T>
 ACE_INLINE
 T *
-TAO_Seq_Out_T<T>::operator-> (void)
+TAO_Seq_Out_T<T>::operator-> ()
 {
   return this->ptr_;
 }

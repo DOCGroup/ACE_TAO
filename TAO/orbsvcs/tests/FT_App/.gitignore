@@ -6,3 +6,8 @@
 /ft_registry
 /ft_replica
 /replmgr_controller
+FT_TestReplicaC.cpp
+FT_TestReplicaC.h
+FT_TestReplicaC.inl
+FT_TestReplicaS.cpp
+FT_TestReplicaS.h

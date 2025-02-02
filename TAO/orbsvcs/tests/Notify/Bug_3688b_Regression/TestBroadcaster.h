@@ -12,30 +12,26 @@ class bug3688_Export TestBroadcaster
   // public types and methods
   public:
     /// Default constructor.
-    TestBroadcaster ( );
+    TestBroadcaster ();
 
     /// Destructor.
-    ~TestBroadcaster ( )
-      throw ();
+    ~TestBroadcaster () noexcept;
 
     bool connect(
       CORBA::ORB_ptr p_orb,
-      std::string const & rc_channelIor
-    );
+      std::string const & rc_channelIor);
 
-    bool disconnect( );
+    bool disconnect();
 
-    bool isConnected( ) const;
+    bool isConnected() const;
 
-    bool sendData( );
+    bool sendData();
 
   // protected types and methods
   protected:
-
   // private methods and instance variables
   private:
     CosNotifyChannelAdmin::SequenceProxyPushConsumer_var mv_sequenceProxyPushConsumer;
-
 }; /* end of TestBroadcaster */
 
 

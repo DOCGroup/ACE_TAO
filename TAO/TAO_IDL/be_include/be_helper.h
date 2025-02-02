@@ -17,6 +17,9 @@
 #include "ace/CDR_Base.h"
 #include "ace/SString.h"
 
+#include "ace/OS_NS_stdio.h"
+#include <type_traits>
+
 class Identifier;
 class UTL_IdList;
 class AST_Expression;
@@ -25,12 +28,12 @@ class AST_Expression;
 // and use the current indentation for the succeeding line
 struct TAO_NL
 {
-  TAO_NL (void);
+  TAO_NL ();
 };
 
 struct TAO_NL_2
 {
-  TAO_NL_2 (void);
+  TAO_NL_2 ();
 };
 
 /**
@@ -89,7 +92,6 @@ struct TAO_ACE_CHECK
 class TAO_OutStream
 {
 public:
-
   /// Enumerated type to indicate the stream type
   enum STREAM_TYPE
     {
@@ -120,9 +122,9 @@ public:
       CIAO_AMI_RH_IMPL_SRC
     };
 
-  TAO_OutStream (void);
+  TAO_OutStream ();
 
-  virtual ~TAO_OutStream (void);
+  virtual ~TAO_OutStream ();
 
   /// Open the underlying low-level handle for output.
   int open (const char *fname,
@@ -132,10 +134,10 @@ public:
   void stream_type (TAO_OutStream::STREAM_TYPE);
 
   /// Return the stream type
-  TAO_OutStream::STREAM_TYPE stream_type (void);
+  TAO_OutStream::STREAM_TYPE stream_type ();
 
   /// Return the underlying lowlevel file pointer.
-  FILE *&file (void);
+  FILE *&file ();
 
   /// Increment the indentation level and by default actually indent the output
   /// accordingly
@@ -146,13 +148,13 @@ public:
   int decr_indent (unsigned short flag = 1);
 
   /// Reset indentation level to 0
-  int reset (void);
+  int reset ();
 
   /// Indent starting next line
-  int indent (void);
+  int indent ();
 
   /// Put a newline and indent on the next line
-  int nl (void);
+  int nl ();
 
   /// "printf" style variable argument print
   int print (const char *format, ...)
@@ -164,11 +166,26 @@ public:
                        bool add_stream_type_suffix = true);
 
   /// Generate an endif statement
-  int gen_endif (void);
+  int gen_endif ();
 
   // =overloaded operators
+  // Avoid duplication for the underlying type of size_t
+  template <typename Dummy = TAO_OutStream &>
+  typename std::enable_if<std::is_same<Dummy, TAO_OutStream &>::value &&
+                          !std::is_same<ACE_CDR::ULongLong, size_t>::value &&
+                          !std::is_same<ACE_CDR::ULong, size_t>::value,
+                          TAO_OutStream &>::type
+  operator << (const size_t num)
+  {
+    ACE_OS::fprintf (this->fp_,
+                     ACE_SIZE_T_FORMAT_SPECIFIER_ASCII,
+                     num);
+
+    return *this;
+  }
 
   TAO_OutStream &operator<< (const char *str);
+  TAO_OutStream &operator<< (char ch);
   TAO_OutStream &operator<< (const ACE_CString &str);
   TAO_OutStream &operator<< (const ACE_CDR::UShort num);
   TAO_OutStream &operator<< (const ACE_CDR::Short num);
@@ -200,6 +217,9 @@ public:
   TAO_OutStream &print (UTL_IdList *idl);
 
   TAO_OutStream &print (AST_Expression *idl);
+
+  void insert_comment (const char *file, int line);
+#define TAO_INSERT_COMMENT(STRM) (STRM)->insert_comment (__FILE__, __LINE__)
 
 protected:
   /// The underlying low-level I/O handle

@@ -17,7 +17,7 @@ class Test_Thread_Action:
 public RTScheduling::ThreadAction
 {
  public:
-  Test_Thread_Action (void);
+  Test_Thread_Action ();
 
   virtual void _cxx_do (CORBA::VoidData data);
 };
@@ -25,14 +25,13 @@ public RTScheduling::ThreadAction
 #endif /*Thread_Action_H*/
 
 
-Test_Thread_Action::Test_Thread_Action (void)
+Test_Thread_Action::Test_Thread_Action ()
 {
 }
 
 void
 Test_Thread_Action::_cxx_do (CORBA::VoidData data)
 {
-
   Data* tmp = (Data*) data;
   ACE_DEBUG ((LM_DEBUG,
               "Test_Thread_Action::do %C\n",

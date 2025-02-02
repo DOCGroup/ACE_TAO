@@ -42,7 +42,7 @@ class ACE_Export ACE_OS_Log_Msg_Attributes
 {
 public:
   /// Constructor
-  ACE_OS_Log_Msg_Attributes (void);
+  ACE_OS_Log_Msg_Attributes ();
 
 protected:
   friend class ACE_Log_Msg;
@@ -64,15 +64,15 @@ protected:
   /// Depth of the nesting for printing traces.
   int trace_depth_;
 
-#if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
+#if defined (ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS)
   /// Structured exception handling Callbacks, only used under Win32
   ACE_SEH_EXCEPT_HANDLER seh_except_selector_;
   ACE_SEH_EXCEPT_HANDLER seh_except_handler_;
-#endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
+#endif /* ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS */
 
 private:
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_OS_Log_Msg_Attributes &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_OS_Log_Msg_Attributes (const ACE_OS_Log_Msg_Attributes &))
+  void operator= (const ACE_OS_Log_Msg_Attributes &) = delete;
+  ACE_OS_Log_Msg_Attributes (const ACE_OS_Log_Msg_Attributes &) = delete;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

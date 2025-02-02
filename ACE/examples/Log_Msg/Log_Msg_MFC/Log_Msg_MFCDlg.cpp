@@ -103,7 +103,6 @@ BOOL CLog_Msg_MFCDlg::OnInitDialog()
     ASSERT((IDM_ABOUTBOX & 0xFFF0) == IDM_ABOUTBOX);
     ASSERT(IDM_ABOUTBOX < 0xF000);
 
-#if !defined (_WIN32_WCE)
     CMenu* pSysMenu = GetSystemMenu(FALSE);
     if (pSysMenu != 0)
     {
@@ -115,7 +114,6 @@ BOOL CLog_Msg_MFCDlg::OnInitDialog()
             pSysMenu->AppendMenu(MF_STRING, IDM_ABOUTBOX, strAboutMenu);
         }
     }
-#endif /* !_WIN32_WCE */
 
     // Set the icon for this dialog.  The framework does this automatically
     //  when the application's main window is not a dialog
@@ -177,7 +175,6 @@ HCURSOR CLog_Msg_MFCDlg::OnQueryDragIcon()
 void CLog_Msg_MFCDlg::OnDebugButtonClicked()
 {
     ACE_DEBUG(( LM_DEBUG, "Debug message sent!\n" ));
-
 }
 
 #endif /* ACE_WIN32 */

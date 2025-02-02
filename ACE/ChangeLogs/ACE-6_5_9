@@ -1,0 +1,689 @@
+commit ab9ecbe2287908ca2d403dd6bdde8511295b7784
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Apr 29 09:37:33 2020 +0200
+
+    List changes
+    
+        * ACE/NEWS:
+
+commit 6542591505d81e79e2d3abd9bd4f497f1adafb9a
+Merge: 6bab61a7d0a 57e38a7b4a4
+Author: Son Dinh <dinhs@objectcomputing.com>
+Date:   Tue Apr 28 09:39:00 2020 -0500
+
+    Merge branch 'master' of https://github.com/DOCGroup/ACE_TAO into basic_types_macos
+
+commit 57e38a7b4a4fa927a4947ffb790373b67dd09c2a
+Merge: ad17ff63aff 31492dcfc3c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Apr 28 15:52:38 2020 +0200
+
+    Merge pull request #1088 from DOCGroup/mitza-oci-clang-common
+    
+    platform_clang_common.GNU: redirect stderr for version checks
+
+commit ad17ff63affd12aa82869308875e2630972132c9
+Merge: 2e234782449 57bc0064bdf
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Apr 28 15:51:51 2020 +0200
+
+    Merge pull request #1093 from jwillemsen/jwi-ace-cpp20
+    
+     When __cplusplus is equal or bigger as 202002L we define ACE_HAS_CPP20
+
+commit 2e234782449d31eff4a88aaaf90ff7085558d99a
+Merge: aedcae37cbf f38497c7057
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Apr 28 15:51:24 2020 +0200
+
+    Merge pull request #1090 from jwillemsen/jwi-cdrbaselonglong-cleanup
+    
+    Map ACE_CDR LongLong to ACE_INT64, all platforms for which we needed …
+
+commit 57bc0064bdf8458b5a4b3dda8ff899fbcfb919c4
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Apr 28 14:06:56 2020 +0200
+
+    Compare cplusplus >= to make it easier to determine what is done, no need to check for g++/clang specific releases
+    
+        * ACE/ace/config-g++-common.h:
+
+commit c16e81913032c5584794bae9c075541a2fffbb48
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Apr 28 13:57:42 2020 +0200
+
+    When __cplusplus is bigger as 201703L we ste ACE_HAS_CPP20
+    
+        * ACE/ace/config-g++-common.h:
+
+commit 4987d578ff1fd00b729ade914bb096ac1e33f62c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Apr 28 10:18:58 2020 +0200
+
+    Fixed typo
+    
+        * ACE/ace/CDR_Base.h:
+
+commit f38497c70571c75675ef35ba8b48af5b5ba81d1c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Apr 28 09:45:17 2020 +0200
+
+    Mention that ACE_HAS_*_T take preference
+    
+        * ACE/ace/README:
+
+commit b2b745cda8c72ba4b323aa4831cfe7c0c493e400
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Apr 26 10:12:58 2020 +0200
+
+    Make use of cstdint types when they are available
+    
+        * ACE/ace/Basic_Types.h:
+
+commit c4f4af8bff18366ed85cdb080ea801e2999d9f7c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Apr 25 10:52:11 2020 +0200
+
+    Cleanup some last leftovers from old and deprecated tandem support
+    
+        * ACE/ace/ACE_export.h:
+        * ACE/ace/Basic_Types.h:
+        * ACE/ace/config-macros.h:
+        * ACE/ace/os_include/sys/os_types.h:
+        * TAO/orbsvcs/orbsvcs/Shutdown_Utilities.cpp:
+
+commit 17a3a7e2eaf969480c4c26d30b74c95ce90d842e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Apr 25 10:50:22 2020 +0200
+
+    Map ACE_CDR LongLong to ACE_INT64, all platforms for which we needed an emulation have been deprecated in the past.
+    
+        * ACE/ace/CDR_Base.cpp:
+        * ACE/ace/CDR_Base.h:
+        * ACE/ace/CDR_Size.h:
+        * ACE/ace/README:
+        * ACE/ace/config-kfreebsd.h:
+        * ACE/ace/config-qnx.h:
+        * TAO/TAO_IDL/be/be_visitor_any_extracted_type_decl.cpp:
+        * TAO/TAO_IDL/be/be_visitor_argument/vardecl_ss.cpp:
+        * TAO/TAO_IDL/be/be_visitor_attr_init.cpp:
+        * TAO/TAO_IDL/be/be_visitor_null_return_value.cpp:
+        * TAO/TAO_IDL/fe/idl.yy.cpp:
+        * TAO/orbsvcs/orbsvcs/Time/TAO_UTO.cpp:
+        * TAO/tao/AnyTypeCode/Any_Basic_Impl.cpp:
+        * TAO/tao/TypeCodeFactory/TypeCodeFactory_i.cpp:
+
+commit 31492dcfc3c8a7effcb605175ceb99e8ba74a8b4
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Apr 24 10:26:34 2020 -0500
+
+    platform_clang_common.GNU: redirect stderr for version checks
+    
+    This part was changed in PR #1022 caused a lot of extra output using clang on macOS.
+    This commit redirects stderr from make's $(shell).
+
+commit d0893fa9be9c5082fce02e396df1d31523e3d87a
+Merge: b08f0537851 0fef7507641
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Apr 24 14:19:09 2020 +0200
+
+    Merge pull request #1087 from jwillemsen/jwi-windows-arm
+    
+     Don't define _AMD64_ when we are cross compiling for ARM
+
+commit 0fef75076417267265e701ea2442ae30de3573db
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Apr 24 12:23:14 2020 +0200
+
+    Don't define _AMD64_ when we are cross compiling for ARM
+    
+        * ACE/ace/config-win32-common.h:
+
+commit 1e13908ba3493cbf71b16a5497394ee7e4e62dcc
+Author: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
+Date:   Thu Apr 23 18:01:15 2020 +0100
+
+    modify make_release.py to update debian/control only
+    
+    Signed-off-by: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
+
+commit 50769cdc322a7bfbd610faadc6919dc3e69b9758
+Author: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
+Date:   Wed Apr 22 20:40:16 2020 +0100
+
+    modify debian/rules to read version and rename files accordingly
+    
+    Signed-off-by: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
+
+commit 8b6a7935302fedbfce29af2c8d1104a56287f559
+Author: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
+Date:   Fri Apr 17 12:45:18 2020 +0100
+
+    Rename the debian files to a generalized name
+    
+    Signed-off-by: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
+
+commit aa415ef763d6df60e33831c9f1d628457b25d107
+Author: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
+Date:   Thu Apr 23 14:43:05 2020 +0100
+
+    Update copyright year
+    
+    Signed-off-by: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
+
+commit 9609100ac7f226ea056b60abcbc262015275eb5b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Apr 23 13:16:40 2020 +0200
+
+    Layout changes
+    
+        * ACE/ace/Malloc_Base.h:
+        * ACE/ace/SString.h:
+        * TAO/orbsvcs/orbsvcs/PortableGroup/PG_Group_List_Store.cpp:
+        * TAO/orbsvcs/orbsvcs/PortableGroup/PG_Group_List_Store.h:
+
+commit aaf3877d5e0a2e3ad32579b7486c42c6c8506df0
+Author: Son Dinh <dinhs@objectcomputing.com>
+Date:   Wed Apr 22 16:02:49 2020 -0500
+
+    Add other C++11 types
+
+commit 1fe5ba46a105bd724581a0b399d1c087161831c2
+Merge: 5690875ec8a 685825a3ad4
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Apr 22 17:37:00 2020 +0200
+
+    Merge pull request #1084 from egleston/master
+    
+    Additions related to rpmbuild
+
+commit 0b555fda14d907a17a5f52ff509c2d7e14ad9bcf
+Author: Brian Egleston <github@kamash.com>
+Date:   Wed Apr 22 08:44:45 2020 -0600
+
+    Update ace-tao.spec
+
+commit 9154b57c1621b7fe8925a11859d8821b263cbdb0
+Author: Brian Egleston <github@kamash.com>
+Date:   Tue Apr 21 15:45:14 2020 -0600
+
+    Update ace-tao.spec
+    
+    Install and add tao_ifr_service to catalog
+
+commit e42218837fea18d740b8d7d6659ef990fab27897
+Author: Brian Egleston <github@kamash.com>
+Date:   Tue Apr 21 15:42:43 2020 -0600
+
+    Remove build dependency on sendmail
+
+commit 340c506c5a2204289384102a0658c6e194c3194d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Apr 21 19:50:00 2020 +0200
+
+    Doxygen changes
+    
+        * ACE/ace/WFMO_Reactor.h:
+
+commit a10857b29949cc2dd3b19936762b6c42bc076b7c
+Merge: c4abde15b61 9724ca583c8
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Apr 21 19:47:50 2020 +0200
+
+    Merge branch 'master' of https://github.com/DOCGroup/ACE_TAO
+
+commit c4abde15b611512b15a76cc9a48648ae0111a41f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Apr 21 19:47:24 2020 +0200
+
+    Doxygen changes
+    
+        * ACE/ace/WFMO_Reactor.h:
+
+commit 9724ca583c8523f6095b1319ab4449f0cc110fc9
+Merge: 74c7286648e 37bb69d7db0
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Apr 21 19:46:54 2020 +0200
+
+    Merge pull request #1075 from likema/remove-unimplemented-func
+    
+    Remove unimplemented ACE_WFMO_Reactor_Handler_Repository::bind declare.
+
+commit 74c7286648e164ff597b601a2a6eefd6f9b54b44
+Merge: c9a9c59cc45 9a020fae9c5
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Apr 20 08:36:17 2020 +0200
+
+    Merge pull request #1080 from jwillemsen/master
+    
+    Removed ACE_Allocator::delete_allocator_, it is not used at all
+
+commit ac3abf49acfe2fad2da6dfc11e4a13a268c3ff32
+Author: Son Dinh <dinhs@objectcomputing.com>
+Date:   Sun Apr 19 21:54:22 2020 -0500
+
+    Add hash functors conditionally and related overloaded operators
+
+commit 9a020fae9c55b322a4e1048a2531ce6e0bbe401a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Apr 18 16:25:03 2020 +0200
+
+    Removed ACE_Allocator::delete_allocator_, it is not used at all and according to the old comments it shouldn't be used.
+    
+        * ACE/ace/Malloc.cpp:
+        * ACE/ace/Malloc_Allocator.cpp:
+        * ACE/ace/Malloc_Base.h:
+
+commit 601491ce979d21147c9e8449825084e252c17579
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Apr 18 16:17:14 2020 +0200
+
+    Changed ACE_Allocator::delete_allocator_ to be a bool
+    
+        * ACE/ace/Malloc.cpp:
+        * ACE/ace/Malloc_Allocator.cpp:
+        * ACE/ace/Malloc_Base.h:
+
+commit 1193c157cd2019d9736aab979fdc0989a28c8ee2
+Author: Son Dinh <dinhs@objectcomputing.com>
+Date:   Fri Apr 17 16:00:09 2020 -0500
+
+    map ULongLong to unsigned long to resolve TAO_OutStream overloaded operator error
+
+commit f0eeddf26c5a9571d9ebac269bbe5ca9b473740b
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Apr 17 09:11:57 2020 -0500
+
+    Windows API usage updates from #1069
+
+commit e8b8245004ddf3874ab2079c4feddf70fe7a5be8
+Merge: 0031eb38fb7 509b105b343
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Thu Apr 16 16:21:28 2020 -0500
+
+    Merge pull request #1069 from jrw972/ipv6-recvinfo-macos
+    
+    IPv6 and RECVINFO on macOS; Windows if_nametoindex
+
+commit f206fe4e74e77bd09dee33e7c80e794883b49308
+Author: Son Dinh <dinhs@objectcomputing.com>
+Date:   Thu Apr 16 13:00:52 2020 -0500
+
+    added hash for long long and unsigned long long
+
+commit 509b105b343eeffe57504562e4cdd96c23414cf8
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Thu Apr 16 09:05:10 2020 -0500
+
+    Update for FACE Safety configuration on Linux
+
+commit 85e95c04396e011b71eb7efe509e68f4be65e4dc
+Author: Sudip Mukherjee <sudip.mukherjee@codethink.co.uk>
+Date:   Wed Apr 15 23:07:58 2020 +0100
+
+    Update Vcs link to salsa
+    
+    Signed-off-by: Sudip Mukherjee <sudip.mukherjee@codethink.co.uk>
+
+commit 4384e141fb48ce4cd9dfa837420036cd8a78fc21
+Author: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
+Date:   Wed Apr 15 20:18:52 2020 +0100
+
+    Update maintainer to valid team email
+    
+    Signed-off-by: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
+
+commit 2d1d074a5c2e6fc4f6a7670b551d6cc0e75c1440
+Author: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
+Date:   Wed Apr 15 20:02:29 2020 +0100
+
+    remove lintian override for debhelper
+    
+    Signed-off-by: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
+
+commit e157641f3c72af6e2c34d86b2fb31302832bf320
+Author: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
+Date:   Wed Apr 15 18:38:35 2020 +0100
+
+    Update doc-base location
+    
+    Signed-off-by: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
+
+commit 12691da3e9248d1bfd56164ed5a982d61f9de497
+Author: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
+Date:   Wed Apr 15 16:40:34 2020 +0100
+
+    no need to use LD_LIBRARY_PATH, dpkg-shlibdeps will take care
+    
+    Signed-off-by: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
+
+commit 5ed55fd6a3a2d8a60b7c1d75bc3864e532ed58cf
+Author: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
+Date:   Wed Apr 15 15:30:48 2020 +0100
+
+    install shared library in multiarch location
+    
+    Signed-off-by: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
+
+commit 8039e5058d85b8f62b506fb3eec5ffe0201a99b7
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Wed Apr 15 17:02:09 2020 -0500
+
+    Continued changes from peer review
+
+commit b817dea988a108910cca55c2dff335ffb36b79b0
+Author: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
+Date:   Wed Apr 15 13:35:58 2020 +0100
+
+    Add -g for debug symbols and stop modifying flags directly
+    
+    Signed-off-by: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
+
+commit 25492973a651b952094897aa3488a8f96442cc3d
+Author: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
+Date:   Wed Apr 15 13:19:58 2020 +0100
+
+    Remove --list-missing, dh_missing will be used by debhelper
+    
+    Signed-off-by: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
+
+commit 597ac0878bed3b50abb075e4164813c1a4dcf3d8
+Author: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
+Date:   Wed Apr 15 13:00:23 2020 +0100
+
+    Use debhelper-compat and update compat level to 12
+    
+    Signed-off-by: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
+
+commit 9d534df24ad691429c607777549be31b45c5ec4b
+Author: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
+Date:   Wed Apr 15 12:59:35 2020 +0100
+
+    Update Standards-Version to 4.5.0
+    
+    Signed-off-by: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
+
+commit 94c1ac1426059c78a6173e2c6c907bf1f232138f
+Author: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
+Date:   Wed Apr 15 11:55:06 2020 +0100
+
+    Remove symbols lintian override
+    
+    Signed-off-by: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
+
+commit 0121bf7af483a5b92a0d34842757999f2daba4cf
+Author: Sudip Mukherjee <sudip.mukherjee@codethink.co.uk>
+Date:   Wed Apr 15 22:40:55 2020 +0100
+
+    Remove patches which has been applied upstream
+    
+    Signed-off-by: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
+
+commit 6bba4e6ab236c0357b76ed8f7e5e7792b608de22
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Wed Apr 15 16:41:46 2020 -0500
+
+    Support if_nametoindex on Windows - responded to review comments.
+
+commit 0bfda90753c38250d4e52513d099087f28d155a9
+Merge: 2d7ae202186 54554146263
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Apr 14 10:20:11 2020 +0200
+
+    Merge pull request #1076 from jwillemsen/master
+    
+    Make use of https download.dre link
+
+commit 54554146263fa81226ba54061170036fc329b595
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Apr 14 09:11:16 2020 +0200
+
+    Use https links
+    
+        * ACE/docs/Download.html:
+
+commit a1b647e4348ddff1242655c05f9b7d214bc11643
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Apr 14 08:22:09 2020 +0200
+
+    Make use of https download.dre
+    
+        * ACE/Kokyu/docs/Kokyu.html:
+        * ACE/README:
+        * ACE/ace/DLL_Manager.h:
+        * ACE/ace/FIFO_Send.h:
+        * ACE/ace/Managed_Object.h:
+        * ACE/ace/config-win32-common.h:
+        * ACE/debian/README.source:
+        * ACE/docs/Download.html:
+        * TAO/TAO-INSTALL.html:
+        * TAO/docs/Security/Download.html:
+        * TAO/docs/tutorials/Quoter/index.html:
+
+commit 336b5d7ddb8a0d306e62e80b31f7838a4e359b36
+Author: Justin R. Wilson <wilsonj@objectcomputing.com>
+Date:   Mon Apr 13 12:03:14 2020 -0500
+
+    Check but don't define _WIN32_WINNT
+
+commit 37bb69d7db0a49d61676d68df8c2136c6b20b348
+Author: Like Ma <likemartinma@gmail.com>
+Date:   Sun Apr 12 03:00:40 2020 +0800
+
+    Remove unimplemented ACE_WFMO_Reactor_Handler_Repository::bind declare.
+
+commit abf9f445c4d0c9189ca5cc6c2495f8953ca3f3a6
+Author: Like Ma <likemartinma@gmail.com>
+Date:   Sat Apr 11 18:14:36 2020 +0800
+
+    Fix Dev_Poll_Reactor comment.
+
+commit ae87fba1b2b23893e3273bd4f70e3ae93b9d105b
+Author: Justin R. Wilson <wilsonj@objectcomputing.com>
+Date:   Thu Apr 9 14:11:46 2020 -0500
+
+    Fix scoping issue
+
+commit ceb4c6b8853ecf9d94e82c744faaaf19fbe5da4c
+Author: Justin R. Wilson <wilsonj@objectcomputing.com>
+Date:   Thu Apr 9 13:18:13 2020 -0500
+
+    Handle Windows
+
+commit 71a255781a2dd7349037bda4686120b13c531f12
+Author: Justin R. Wilson <wilsonj@objectcomputing.com>
+Date:   Wed Apr 8 11:20:57 2020 -0500
+
+    From review
+
+commit e16a8b3a407037e4c8aeb1ee36fd7654d74434d4
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Apr 8 14:38:30 2020 +0200
+
+    use https link
+    
+        * ACE/debian/control:
+
+commit 1ac8bb0998f40b2c3bf9265a2c979971f0d921ef
+Author: Justin R. Wilson <wilsonj@objectcomputing.com>
+Date:   Tue Apr 7 13:23:28 2020 -0500
+
+    IPV6 and RECVINFO on MacOS
+
+commit 2d2a72910bfe8bb47da969ebf1188bddfea8d1c4
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Mar 31 17:18:30 2020 +0200
+
+    Layout and doxygen changes
+    
+        * ACE/ace/Filecache.h:
+        * ACE/ace/Framework_Component.h:
+        * ACE/ace/Future.h:
+        * ACE/ace/Handle_Gobbler.h:
+        * ACE/ace/MEM_IO.h:
+
+commit 05a9d1d62c79904ec6184963d09d542415377e22
+Merge: 8e31d326bb7 c8bd212bddc
+Author: Justin Wilson <wilsonj@objectcomputing.com>
+Date:   Fri Mar 27 10:53:37 2020 -0500
+
+    Merge pull request #1061 from jrw972/site-local-addr
+    
+    Add is_sitelocal predicate to INET_Addr
+
+commit 8e31d326bb7543206982bcc53b6d8a0c7a103aa5
+Merge: c2bb0005cf6 78a473da451
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Mar 25 15:52:08 2020 +0100
+
+    Merge pull request #1062 from jwillemsen/jwi-clang10
+    
+    Add clang10 configuration
+
+commit 78a473da451683f676b20ead9a5a135b63d1b7a9
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Mar 25 12:10:54 2020 +0100
+
+    Update workaround for clang10
+    
+        * ACE/tests/Compiler_Features_32_Test.cpp:
+
+commit c8bd212bddc177f4d740961171f4ff3a275d34c4
+Author: Justin R. Wilson <wilsonj@objectcomputing.com>
+Date:   Tue Mar 24 13:54:23 2020 -0500
+
+    Add is_sitelocal predicate to INET_Addr
+
+commit 86f85665e7ba12262722613dc55900fba3880c8f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Mar 24 08:34:25 2020 +0100
+
+    Remove redundant new line
+
+commit c2bb0005cf63ab06f9e991418fdee5b22a3c8db8
+Merge: 6a3c9dec68c afb9f6bac90
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Mar 17 18:44:03 2020 +0100
+
+    Merge pull request #1058 from jwillemsen/jwi-dlopenerrorlogging
+    
+    Log all dlopen errors into the error stack coming from ACE_OS::dlopen
+
+commit afb9f6bac9051b77180178d541b9ae1555717e1f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Mar 17 08:58:24 2020 +0100
+
+    Guard logging block with a check whether we have debug logging enabled or not
+    
+        * ACE/ace/DLL_Manager.cpp:
+
+commit 0fbb87631ca509aa1bc0c69688efaec94c5ad8a1
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Mar 17 08:56:32 2020 +0100
+
+    Put back error logging on failure
+    
+        * ACE/ace/DLL_Manager.cpp:
+
+commit 3adffd0604f5b41d3864d8804ebd740fb5efb230
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Mar 16 16:51:05 2020 +0100
+
+    Moved the error logging to the open_i call where the error is detected, this simplifies the calling code a lot.
+    
+    We don't check for ENOENT anymore as error, an unresolved symbol causes also ENOENT and we want to get that error back to the caller. As side effect any loading of the implied dll names (different prefix/extensions) also trigger an error log but at the moment one succeeds the caller shouldn't check the error stack
+    
+        * ACE/ace/DLL.cpp:
+        * ACE/ace/DLL_Manager.cpp:
+        * ACE/ace/DLL_Manager.h:
+
+commit f569652bf8f860eb33195c6cc9968c5ff3ac87e8
+Merge: d87ae65d2cf ca7a968b62d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Mar 13 18:34:52 2020 +0100
+
+    Merge pull request #1056 from jwillemsen/jwi-logcatconst
+    
+    Const enhancements
+
+commit ca7a968b62d081e3f392cfee5c415924276d95bf
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Mar 13 16:48:23 2020 +0100
+
+    Const enhancements
+    
+        * ACE/ace/Log_Category.h:
+        * ACE/ace/Log_Category.inl:
+
+commit 66e3a86dd4f094a23a29401e8012b0d423aa6b94
+Author: Like Ma <likemartinma@gmail.com>
+Date:   Thu Mar 12 11:54:45 2020 +0800
+
+    Fix build warnings.
+    
+    Value stored to 'n' is never read
+
+commit 2191325ddf5d639abc7268bc2436e7be37270033
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Mar 2 15:39:56 2020 +0100
+
+    Documentation and layout changes
+    
+        * ACE/ace/Msg_WFMO_Reactor.h:
+        * ACE/ace/QtReactor/QtReactor.cpp:
+        * ACE/ace/Sig_Handler.cpp:
+
+commit 146ff59c1108278f52d0664ebd4dcdd64df132d2
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Mar 2 14:59:16 2020 +0100
+
+    Documentation changes
+    
+        * ACE/ace/Dev_Poll_Reactor.h:
+        * ACE/ace/MMAP_Memory_Pool.h:
+        * ACE/ace/Sig_Handler.cpp:
+        * ACE/ace/Sig_Handler.h:
+
+commit 7dac17d8fc89cad5d5561f395f21e21027bd9994
+Merge: 6eb551083bc 21f2ca12640
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Feb 27 13:56:00 2020 +0100
+
+    Merge branch 'master' of https://github.com/DOCGroup/ACE_TAO
+
+commit 77e933bf6819c7e55b4c172d03cba9d63337b0ac
+Author: Brian Egleston <github@kamash.com>
+Date:   Fri Feb 21 11:51:59 2020 -0700
+
+    Update ace-tao.spec
+    
+    pre-define inline so it is available during skip_make processing
+
+commit 0f9a4b69d7c383968da3b4a1151356d4b74bb97a
+Author: Mouse <mouse07410@users.noreply.github.com>
+Date:   Wed Feb 19 16:06:45 2020 -0500
+
+    Update Compiler_Features_32_Test.cpp
+    
+    Make it work with Apple Xcode-11.3.1 Clang compiler
+
+commit 6eb551083bc1f7d6527f6a810c9438ee3ef04551
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Feb 10 10:06:46 2020 +0100
+
+    Update for next release
+    
+        * ACE/bin/copy-local-script.sh:
+
+commit 97364bb7c541e2709321272443949cd22d0f9686
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Feb 10 09:44:35 2020 +0100
+
+    Make ACE/TAO 6.5.8/2.5.8 public and prepare for next release
+    
+        * ACE/NEWS:
+        * ACE/bin/diff-builds-and-group-fixed-tests-only.sh:
+        * ACE/docs/Download.html:
+        * ACE/docs/bczar/bczar.html:
+        * ACE/etc/index.html:
+        * TAO/NEWS:

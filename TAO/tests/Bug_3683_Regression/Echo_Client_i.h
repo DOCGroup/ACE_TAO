@@ -29,10 +29,10 @@ class Echo_Client_i
 {
 public:
   /// Constructor
-  Echo_Client_i (void);
+  Echo_Client_i ();
 
   /// Destructor
-  ~Echo_Client_i (void);
+  ~Echo_Client_i ();
 
   /// Execute the methods
   int run (const char *, int, ACE_TCHAR **);

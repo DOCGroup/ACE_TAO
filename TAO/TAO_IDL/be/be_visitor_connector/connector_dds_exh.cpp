@@ -33,7 +33,7 @@ be_visitor_connector_dds_exh::be_visitor_connector_dds_exh (
   export_macro_ = be_global->conn_export_macro ();
 }
 
-be_visitor_connector_dds_exh::~be_visitor_connector_dds_exh (void)
+be_visitor_connector_dds_exh::~be_visitor_connector_dds_exh ()
 {
 }
 
@@ -58,7 +58,7 @@ be_visitor_connector_dds_exh::visit_connector (be_connector *node)
           !i.done ();
           i.advance ())
         {
-          AST_Decl **item = 0;
+          AST_Decl **item = nullptr;
           i.next (item);
           AST_Decl *d = *item;
 
@@ -87,7 +87,7 @@ be_visitor_connector_dds_exh::visit_connector (be_connector *node)
           !i.done ();
           i.advance (), ++slot)
         {
-          AST_Decl **item = 0;
+          AST_Decl **item = nullptr;
           i.next (item);
           AST_Decl *d = *item;
 
@@ -103,7 +103,7 @@ be_visitor_connector_dds_exh::visit_connector (be_connector *node)
 
           bool needs_bool = false;
           bool is_fixed = false;
-          FE_Utils::T_Param_Info *param = 0;
+          FE_Utils::T_Param_Info *param = nullptr;
 
           if (this->t_params_->get (param, slot - 1) != 0)
             {
@@ -117,13 +117,13 @@ be_visitor_connector_dds_exh::visit_connector (be_connector *node)
           if (d->node_type () == AST_Decl::NT_typedef)
             {
               /// Strip away all layers of typedef before narrowing.
-              AST_Typedef *td = AST_Typedef::narrow_from_decl (d);
+              AST_Typedef *td = dynamic_cast<AST_Typedef*> (d);
               d = td->primitive_base_type ();
             }
 
           /// No need to check if this is 0, but must narrow
           /// to call virtual function size_type() below.
-          AST_Type *t = AST_Type::narrow_from_decl (d);
+          AST_Type *t = dynamic_cast<AST_Type*> (d);
 
           switch (param->type_)
             {
@@ -154,13 +154,12 @@ be_visitor_connector_dds_exh::visit_connector (be_connector *node)
       os_ << be_uidt << be_uidt << be_uidt_nl
           << "{" << be_nl
           << "public:" << be_idt_nl
-          << this->node_->local_name () << "_exec_i (void);" << be_nl
+          << this->node_->local_name () << "_exec_i ();" << be_nl
           << "virtual ~" << this->node_->local_name ()
-          << "_exec_i (void);" << be_uidt_nl
+          << "_exec_i ();" << be_uidt_nl
           << "};";
 
       this->gen_exec_entrypoint_decl ();
-
     }
 
   os_ << be_uidt_nl
@@ -175,7 +174,7 @@ be_visitor_connector_dds_exh::visit_connector (be_connector *node)
       !iter.done ();
       iter.advance ())
     {
-      be_interface **item = 0;
+      be_interface **item = nullptr;
       iter.next (item);
 
       (*item)->dds_connector_traits_done (false);
@@ -218,7 +217,7 @@ be_visitor_connector_dds_exh::visit_mirror_port (
        !iter.done ();
        iter.advance ())
     {
-      be_interface **item = 0;
+      be_interface **item = nullptr;
       iter.next (item);
 
       (*item)->dds_connector_traits_done (false);
@@ -231,7 +230,7 @@ int
 be_visitor_connector_dds_exh::visit_provides (be_provides *node)
 {
   be_interface *iface =
-    be_interface::narrow_from_decl (node->provides_type ());
+    dynamic_cast<be_interface*> (node->provides_type ());
 
   this->gen_interface_connector_trait (iface, node, true);
 
@@ -242,7 +241,7 @@ int
 be_visitor_connector_dds_exh::visit_uses (be_uses *node)
 {
   be_interface *iface =
-    be_interface::narrow_from_decl (node->uses_type ());
+    dynamic_cast<be_interface*> (node->uses_type ());
 
   this->gen_interface_connector_trait (iface, node, false);
 
@@ -288,6 +287,7 @@ be_visitor_connector_dds_exh::gen_dds_traits (AST_Decl *datatype)
       os_ << be_nl
           << "struct " << datatype->flat_name () << "_DDS_Traits" << be_nl
           << "{" << be_idt_nl
+          << "static const char* get_type_name () { return \"" << dt_name << "\"; };" << be_nl
           << "typedef ::" << dt_name << " value_type;" << be_nl
           << "typedef ::" << dt_name;
 
@@ -355,7 +355,7 @@ be_visitor_connector_dds_exh::gen_dds_traits (AST_Decl *datatype)
 }
 
 void
-be_visitor_connector_dds_exh::gen_connector_traits (void)
+be_visitor_connector_dds_exh::gen_connector_traits ()
 {
   AST_Decl *comp_scope =
     ScopeAsDecl (this->node_->defined_in ());

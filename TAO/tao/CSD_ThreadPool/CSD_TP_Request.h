@@ -30,7 +30,6 @@ namespace TAO
 {
   namespace CSD
   {
-
     class TP_Request;
     typedef TAO_Intrusive_Ref_Count_Handle<TP_Request> TP_Request_Handle;
 
@@ -50,7 +49,6 @@ namespace TAO
       : public TAO_Intrusive_Ref_Count_Base<TAO_SYNCH_MUTEX>
     {
     public:
-
       /// Virtual Destructor.
       virtual ~TP_Request();
 
@@ -78,7 +76,6 @@ namespace TAO
 
 
     protected:
-
       /// Constructor.
       TP_Request(PortableServer::Servant servant,
                  TP_Servant_State*       servant_state);
@@ -100,9 +97,7 @@ namespace TAO
       /// Ask the subclass to perform its duties to carry out the cancellation.
       virtual void cancel_i() = 0;
 
-
     private:
-
       /// The TP_Queue class is our friend since it needs access to
       /// the prev_ and next_ (private) data members.
       friend class TP_Queue;
@@ -119,7 +114,6 @@ namespace TAO
       /// Reference to the servant "state" object (contains the busy flag).
       TP_Servant_State::HandleType servant_state_;
     };
-
   }
 }
 

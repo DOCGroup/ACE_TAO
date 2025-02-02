@@ -33,7 +33,7 @@ class Test_Supplier : public ACE_Task<ACE_SYNCH>
 public:
   Test_Supplier (ECT_Driver *driver);
 
-  int svc (void);
+  int svc ();
   // Run the test, just forwards to the driver
 
   void connect (RtecScheduler::Scheduler_ptr scheduler,
@@ -47,16 +47,16 @@ public:
                 RtecEventChannelAdmin::EventChannel_ptr ec);
   // This method connects the supplier to the EC.
 
-  void disconnect (void);
+  void disconnect ();
   // Disconnect from the EC.
 
-  virtual void disconnect_push_supplier (void);
+  virtual void disconnect_push_supplier ();
   // The methods in the skeleton.
 
-  RtecEventComm::EventSourceID supplier_id (void) const;
+  RtecEventComm::EventSourceID supplier_id () const;
   // The supplier ID.
 
-  RtecEventChannelAdmin::ProxyPushConsumer_ptr consumer_proxy (void);
+  RtecEventChannelAdmin::ProxyPushConsumer_ptr consumer_proxy ();
   // We talk to the EC (as a supplier) using this proxy, no duplicates
   // are done here...
 

@@ -17,7 +17,7 @@
 # include "Svcconf_Handler.inl"
 #endif /* __ACEXML_INLINE__ */
 
-ACEXML_Svcconf_Handler::ACEXML_Svcconf_Handler (void)
+ACEXML_Svcconf_Handler::ACEXML_Svcconf_Handler ()
   : in_stream_def_ (0),
     in_module_ (0),
     stream_svc_type_ (0),
@@ -25,7 +25,7 @@ ACEXML_Svcconf_Handler::ACEXML_Svcconf_Handler (void)
 {
 }
 
-ACEXML_Svcconf_Handler::~ACEXML_Svcconf_Handler (void)
+ACEXML_Svcconf_Handler::~ACEXML_Svcconf_Handler ()
 {
 }
 
@@ -37,7 +37,7 @@ ACEXML_Svcconf_Handler::characters (const ACEXML_Char *,
 }
 
 void
-ACEXML_Svcconf_Handler::endDocument (void)
+ACEXML_Svcconf_Handler::endDocument ()
 {
 }
 
@@ -129,7 +129,6 @@ ACEXML_Svcconf_Handler::endElement (const ACEXML_Char *,
                                                      this->stream_,
                                                      svc_dll,
                                                      this->stream_info_.active ());
-
         }
       else
         {
@@ -291,7 +290,7 @@ ACEXML_Svcconf_Handler::skippedEntity (const ACEXML_Char *)
 }
 
 void
-ACEXML_Svcconf_Handler::startDocument (void)
+ACEXML_Svcconf_Handler::startDocument ()
 {
 }
 
@@ -308,7 +307,6 @@ ACEXML_Svcconf_Handler::startElement (const ACEXML_Char *,
   else if (ACE_OS::strcmp (qName, ACE_TEXT ("initializer")) == 0)
     {
       this->get_initializer_attrs (alist);
-
     }
   else if (ACE_OS::strcmp (qName, ACE_TEXT ("static")) == 0)
     {

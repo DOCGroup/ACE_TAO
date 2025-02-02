@@ -25,7 +25,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-  Invocation_Adapter::~Invocation_Adapter (void)
+  Invocation_Adapter::~Invocation_Adapter ()
   {
   }
 
@@ -63,7 +63,7 @@ namespace TAO
 
     // Initial state
     TAO::Invocation_Status status = TAO_INVOKE_START;
-    ACE_Time_Value *max_wait_time = 0;
+    ACE_Time_Value *max_wait_time = nullptr;
     ACE_Time_Value tmp_wait_time = ACE_Time_Value::zero;
     if (this->get_timeout (stub, tmp_wait_time))
       {
@@ -139,11 +139,11 @@ namespace TAO
   }
 
   TAO_Stub *
-  Invocation_Adapter::get_stub (void) const
+  Invocation_Adapter::get_stub () const
   {
     TAO_Stub * const stub = this->target_->_stubobj ();
 
-    if (stub == 0)
+    if (stub == nullptr)
       {
         if (TAO_debug_level > 0)
           {
@@ -277,7 +277,6 @@ namespace TAO
                                         resolver,
                                         max_wait_time,
                                         retry_state);
-
           }
       }
     return TAO_INVOKE_FAILURE;
@@ -365,7 +364,7 @@ namespace TAO
   {
     // The object pointer has to be changed to a TAO_Stub pointer
     // in order to obtain the profiles.
-    TAO_Stub *stubobj = 0;
+    TAO_Stub *stubobj = nullptr;
 
     bool nil_forward_ref = false;
     if (CORBA::is_nil (effective_target.in ()))
@@ -385,7 +384,7 @@ namespace TAO
           0),
         CORBA::COMPLETED_NO);
 
-    if (stubobj == 0)
+    if (stubobj == nullptr)
       throw ::CORBA::INTERNAL (
         CORBA::SystemException::_tao_minor_code (
           TAO_INVOCATION_LOCATION_FORWARD_MINOR_CODE,
@@ -394,13 +393,6 @@ namespace TAO
 
     // Reset the profile in the stubs
     stub->add_forward_profiles (stubobj->base_profiles (), permanent_forward);
-
-    if (stub->next_profile () == 0)
-      throw ::CORBA::TRANSIENT (
-        CORBA::SystemException::_tao_minor_code (
-          TAO_INVOCATION_LOCATION_FORWARD_MINOR_CODE,
-          0),
-        CORBA::COMPLETED_NO);
   }
 
   TAO::Collocation_Strategy
@@ -409,7 +401,7 @@ namespace TAO
     TAO::Collocation_Strategy strategy = TAO::TAO_CS_REMOTE_STRATEGY;
     TAO_Stub *stub = object->_stubobj ();
     if (!CORBA::is_nil (stub->servant_orb_var ().in ()) &&
-        stub->servant_orb_var ()->orb_core () != 0)
+        stub->servant_orb_var ()->orb_core () != nullptr)
       {
         TAO_ORB_Core *orb_core = stub->servant_orb_var ()->orb_core ();
 
@@ -447,7 +439,7 @@ namespace TAO
                 {
                   if (ACE_BIT_ENABLED (this->collocation_opportunity_,
                                       TAO::TAO_CO_DIRECT_STRATEGY)
-                                      && (object->_servant () != 0))
+                                      && (object->_servant () != nullptr))
                     {
                       strategy = TAO::TAO_CS_DIRECT_STRATEGY;
                     }
@@ -474,7 +466,7 @@ namespace TAO
                 {
                   if (ACE_BIT_ENABLED (this->collocation_opportunity_,
                                       TAO::TAO_CO_DIRECT_STRATEGY)
-                      && (object->_servant () != 0))
+                      && (object->_servant () != nullptr))
                     {
                       strategy = TAO::TAO_CS_DIRECT_STRATEGY;
                     }

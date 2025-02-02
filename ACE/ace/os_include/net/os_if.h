@@ -30,16 +30,11 @@
 #  if defined (ACE_HAS_NET_IF_DL_H)
 #    include /**/ <net/if_dl.h>
 #  endif /* ACE_HAS_NET_IF_DL_H */
-#  if defined (HPUX) && defined (IOR)
-   /* HP-UX 11.11 defines IOR in /usr/include/pa/inline.h
-      and we don't want that definition.  See IOP_IORC.h.
-      Thanks to Torsten Kopper <tkue_0931@fastmail.fm> for this patch.*/
-#    undef IOR
-#  endif /* HPUX && IOR */
 #endif /* !ACE_LACKS_NET_IF_H */
 
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
 #  include /**/ <ws2tcpip.h>
+#  include /**/ <iphlpapi.h>
 #endif /* ACE_HAS_WINSOCK2 */
 
 // Place all additions (especially function declarations) within extern "C" {}
@@ -100,6 +95,10 @@ struct  ifconf {
 #if !defined (IFF_BROADCAST)
 # define IFF_BROADCAST 0x2
 #endif /* IFF_BROADCAST */
+
+#if defined (ACE_LACKS_STRUCT_IF_NAMEINDEX)
+struct if_nameindex { int dummy; };
+#endif
 
 #ifdef __cplusplus
 }

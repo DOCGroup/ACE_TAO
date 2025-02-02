@@ -1,4 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
 /*
 
 COPYRIGHT
@@ -82,14 +81,11 @@ public:
               AST_Expression *max_size,
               long wide = 1);
 
-  virtual ~AST_String (void);
+  virtual ~AST_String ();
 
   // Data Accessors.
-  AST_Expression *max_size (void);
-  long width (void);
-
-  // Narrowing.
-  DEF_NARROW_FROM_DECL(AST_String);
+  AST_Expression *max_size ();
+  long width ();
 
   // AST Dumping.
   virtual void dump (ACE_OSTREAM_TYPE &o);
@@ -98,7 +94,7 @@ public:
   virtual int ast_accept (ast_visitor *visitor);
 
   // Cleanup.
-  virtual void destroy (void);
+  virtual void destroy ();
 
   static AST_Decl::NodeType const NT;
 

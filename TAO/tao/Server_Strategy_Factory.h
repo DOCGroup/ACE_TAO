@@ -45,11 +45,10 @@ enum TAO_Demux_Strategy
 class TAO_Export TAO_Server_Strategy_Factory : public ACE_Service_Object
 {
 public:
-
   struct Active_Object_Map_Creation_Parameters
   {
     /// Constructor.
-    Active_Object_Map_Creation_Parameters (void);
+    Active_Object_Map_Creation_Parameters ();
 
     /// Default size of object lookup table.
     CORBA::ULong active_object_map_size_;
@@ -85,10 +84,10 @@ public:
   };
 
   /// Constructor.
-  TAO_Server_Strategy_Factory (void);
+  TAO_Server_Strategy_Factory ();
 
   /// Destructor.
-  virtual ~TAO_Server_Strategy_Factory(void);
+  virtual ~TAO_Server_Strategy_Factory();
 
   /**
    * Call <open> on various strategies.  This is not performed in
@@ -99,7 +98,7 @@ public:
   virtual int open (TAO_ORB_Core* orb_core) = 0;
 
   /// Are server connections active (i.e. run in their own thread)
-  virtual int activate_server_connections (void) = 0;
+  virtual int activate_server_connections () = 0;
 
   /**
    * Obtain the timeout value used by the thread-per-connection server
@@ -111,13 +110,13 @@ public:
   virtual int thread_per_connection_timeout (ACE_Time_Value &timeout) = 0;
 
   /// The thread activation parameters
-  virtual int server_connection_thread_flags (void) = 0;
-  virtual int server_connection_thread_count (void) = 0;
+  virtual int server_connection_thread_flags () = 0;
+  virtual int server_connection_thread_count () = 0;
 
   /// Return the active object map creation parameters.
   virtual
   const Active_Object_Map_Creation_Parameters &
-  active_object_map_creation_parameters (void) const;
+  active_object_map_creation_parameters () const;
 
 protected:
   /// Active object map creation parameters.

@@ -20,12 +20,9 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/OS_NS_sys_utsname.h"
 #include "ace/INET_Addr.h"
-
-
 
 int
 run_main (int, ACE_TCHAR *[])

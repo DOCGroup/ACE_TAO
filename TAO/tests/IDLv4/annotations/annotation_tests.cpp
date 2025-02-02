@@ -1,5 +1,113 @@
 #include "Annotation_Test.h"
 
+#include <ast_valuetype.h>
+#include <ast_porttype.h>
+#include <ast_eventtype.h>
+#include <ast_component.h>
+#include <ast_union_branch.h>
+#include <ast_union_label.h>
+#include <ast_expression.h>
+#include <string>
+
+namespace {
+  void assert_node_has_annotation (
+    Annotation_Test &t, const char *node_name, AST_Annotation_Decl *annotation)
+  {
+    AST_Decl *node = t.assert_node (node_name);
+    t.assert_annotation_appl_count (node, 1);
+    t.assert_annotation_appl (node, 0, annotation);
+  }
+
+  /**
+   * Common Test IDL for what the IDL4 grammer calls "attr_dcl"
+   */
+  const std::string common_attr_dcl_idl =
+    "  @test_annotation_1\n"
+    "  attribute short rw_attribute;\n"
+    "  @test_annotation_1\n"
+    "  readonly attribute short ro_attribute;\n";
+
+  void assert_common_attr_dcl_idl (
+    Annotation_Test &t, AST_Annotation_Decl *test_annotation_1)
+  {
+    assert_node_has_annotation (t, "rw_attribute", test_annotation_1);
+    assert_node_has_annotation (t, "ro_attribute", test_annotation_1);
+  }
+
+  /**
+   * Common Test IDL for what the IDL4 grammer calls "export"
+   */
+  const std::string common_export_idl =
+    // op_dcl
+    "  @test_annotation_1\n"
+    "  void operation();\n"
+    // attr_decl
+    + common_attr_dcl_idl +
+    // type_dcl
+    "  @test_annotation_1\n"
+    "  struct struct_in_export {\n"
+    "    short value;\n"
+    "  };\n"
+    // const_dcl
+    "  @test_annotation_1\n"
+    "  const short const_value = 3;\n"
+    // except_dcl
+    "  @test_annotation_1\n"
+    "  exception exception_in_export {\n"
+    "    short value;\n"
+    "  };\n"
+    // Use expection
+    "  @test_annotation_1\n"
+    "  void operation_with_exception() raises (exception_in_export);\n"
+    // type_id_dcl (Doesn't work)
+    // type_prefix_dcl (No grammar issues, but a type_prefix isn't something
+    //  that's part of the AST, so I'm not sure how this would work).
+    // "  @test_annotation_1\n"
+    // "  typeprefix struct_in_export \"electric_plants\";\n"
+    // import_dcl (TAO_IDL has import as a keyword, but doesn't support it in the grammer)
+    // op_oneway_dcl
+    "  @test_annotation_1\n"
+    "  oneway void oneway_op();\n";
+
+  void assert_common_export_idl (
+    Annotation_Test &t, AST_Annotation_Decl *test_annotation_1)
+  {
+    assert_node_has_annotation (t, "operation", test_annotation_1);
+    assert_common_attr_dcl_idl (t, test_annotation_1);
+    assert_node_has_annotation (t, "struct_in_export", test_annotation_1);
+    assert_node_has_annotation (t, "const_value", test_annotation_1);
+    assert_node_has_annotation (t, "exception_in_export", test_annotation_1);
+    assert_node_has_annotation (t, "operation_with_exception", test_annotation_1);
+    assert_node_has_annotation (t, "oneway_op", test_annotation_1);
+  }
+
+  /**
+   * Common Test IDL for what the IDL4 grammer calls "value_element"
+   */
+  const std::string common_value_element_idl =
+    // export
+    common_export_idl +
+
+    // state_member
+    "  @test_annotation_1\n"
+    "  public short public_state_member;\n"
+    "  @test_annotation_1\n"
+    "  private short private_state_member;\n"
+
+    // init_dcl
+    "  @test_annotation_1\n"
+    "  factory factory_thing();\n";
+
+  void assert_common_value_element_idl (
+    Annotation_Test &t, AST_Annotation_Decl *test_annotation_1)
+  {
+    assert_common_export_idl (t, test_annotation_1);
+    assert_node_has_annotation (t, "public_state_member", test_annotation_1);
+    assert_node_has_annotation (t, "private_state_member", test_annotation_1);
+    assert_node_has_annotation (t, "factory_thing", test_annotation_1);
+  }
+}
+
 /*
  * Notes About These Tests
  * =========================================================================
@@ -18,7 +126,7 @@
  */
 
 void
-annotation_tests()
+annotation_tests ()
 {
   /* -------------------------------------------------------------------------
    * Annotations Declarations
@@ -154,21 +262,18 @@ annotation_tests()
       "};\n"
     ).assert_annotation_decl ("@enum_annotation");
     t.assert_annotation_member_count (enum_annotation, 1);
-    t.set_scope(enum_annotation);
+    t.set_scope (enum_annotation);
     AST_Annotation_Member *value =
       t.get_annotation_member (enum_annotation, "value");
 
-    AST_EnumVal *a = AST_EnumVal::narrow_from_decl(
-      t.assert_node ("A"));
-    enum_annotation_a = a->constant_value();
+    AST_EnumVal *a = t.assert_node<AST_EnumVal> ("A");
+    enum_annotation_a = a->constant_value ();
 
-    AST_EnumVal *b = AST_EnumVal::narrow_from_decl(
-      t.assert_node ("B"));
-    enum_annotation_b = b->constant_value();
+    AST_EnumVal *b = t.assert_node<AST_EnumVal> ("B");
+    enum_annotation_b = b->constant_value ();
 
-    AST_EnumVal *c = AST_EnumVal::narrow_from_decl(
-      t.assert_node ("C"));
-    enum_annotation_c = c->constant_value();
+    AST_EnumVal *c = t.assert_node<AST_EnumVal> ("C");
+    enum_annotation_c = c->constant_value ();
 
     t.assert_annotation_member_value (value, enum_annotation_a);
   } catch (Failed const &) {}
@@ -185,7 +290,7 @@ annotation_tests()
     AST_Annotation_Member *value =
       t.get_annotation_member (string_annotation, "value");
 
-    UTL_String test_string("This is some text");
+    UTL_String test_string ("This is some text");
     t.assert_annotation_member_value<UTL_String*, UTL_String*>
       (value, &test_string);
   } catch (Failed const &) {}
@@ -207,11 +312,8 @@ annotation_tests()
     AST_Annotation_Member *value =
       t.get_annotation_member (constant_annotation, "value");
 
-    AST_Constant *x = dynamic_cast<AST_Constant *> (t.assert_node ("X"));
-    constant_annotation_x = x->constant_value();
-
-    AST_Constant *y = dynamic_cast<AST_Constant *> (t.assert_node ("Y"));
-    constant_annotation_y = y->constant_value();
+    constant_annotation_x = t.assert_node<AST_Constant> ("X")->constant_value ();
+    constant_annotation_y = t.assert_node<AST_Constant> ("Y")->constant_value ();
 
     t.assert_annotation_member_value (value, constant_annotation_x);
   } catch (Failed const &) {}
@@ -253,6 +355,18 @@ annotation_tests()
   } catch (Failed const &) {}
 
   try {
+    Annotation_Test t ("Empty Annotation Application Before Fully Scopped Type");
+    AST_Field *member = t.run (
+      "typedef uint32 fully_scopped_type;\n"
+      "struct empty_annotation_before_fully_scopped_type {\n"
+      "  @test_annotation_1() ::fully_scopped_type member;\n"
+      "};\n"
+    ).assert_node<AST_Field> ("::empty_annotation_before_fully_scopped_type::member");
+    t.assert_annotation_appl_count (member, 1);
+    t.assert_annotation_appl (member, 0, test_annotation_1);
+  } catch (Failed const &) {}
+
+  try {
     Annotation_Test t ("Struct Annotation Application");
     AST_Decl *struct1 = t.run (
       "@test_annotation_1\n"
@@ -284,13 +398,8 @@ annotation_tests()
     t.assert_annotation_appl (short_int, 0, enum_annotation);
 
     // Get type of member
-    AST_Decl *member_decl = t.assert_node ("struct6::member");
-    AST_Field *member = AST_Field::narrow_from_decl (member_decl);
-    if (!member)
-      {
-        t.failed ("Could Not Get member");
-      }
-    AST_Decl* type = dynamic_cast<AST_Decl *> (member->field_type ());
+    AST_Field *member= t.assert_node<AST_Field> ("struct6::member");
+    AST_Type* type = member->field_type ();
 
     // Assert type has enum_annotation, string_annotation, and
     // test_annotation_1.
@@ -302,34 +411,18 @@ annotation_tests()
 
   try {
     Annotation_Test t ("Sequence Type Parameter Annotation Application");
-    AST_Decl *value_decl = t.run (
+    AST_Field *value = t.run (
       "typedef sequence<@test_annotation_1 short, 5> test_seq_t;\n"
       "struct struct7 {\n"
       "  test_seq_t value;\n"
       "};\n"
-    ).assert_node ("::struct7::value");
+    ).assert_node<AST_Field> ("::struct7::value");
 
     // Get Sequence
-    AST_Field *value = AST_Field::narrow_from_decl (value_decl);
-    if (!value)
-      {
-        t.failed (
-          "Could Not Convert struct7::value from AST_Decl into AST_Field");
-      }
-    AST_Typedef *typedef_node =
-      dynamic_cast<AST_Typedef *> (value->field_type ());
-    if (!typedef_node)
-      {
-        t.failed (
-          "Could Not Convert test_seq_t from AST_Decl into AST_Typedef");
-      }
-    AST_Decl *seq_decl = dynamic_cast<AST_Decl *>(typedef_node->base_type ());
-    AST_Sequence *seq = AST_Sequence::narrow_from_decl (seq_decl);
-    if (!seq)
-      {
-        t.failed (
-          "Could Not Convert test_seq_t from AST_Typedef in AST_Sequence");
-      }
+    AST_Typedef *typedef_node = dynamic_cast<AST_Typedef *> (value->field_type ());
+    if (!typedef_node) t.failed ("Could not get AST_Typedef");
+    AST_Sequence *seq = dynamic_cast<AST_Sequence *> (typedef_node->base_type ());
+    if (!seq) t.failed ("Could get AST_Sequence");
 
     // Verify Annotation on Base Type
     AST_Annotation_Appls &annotations = seq->base_type_annotations ();
@@ -339,7 +432,7 @@ annotation_tests()
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("Annotation Test Error: %C:\n")
           ACE_TEXT ("expected one annotation on test_seq_t base type, ")
           ACE_TEXT ("it has %d annotations!\n"),
-          t.name_, count));
+          t.name_.c_str (), count));
         t.failed ();
       }
     AST_Annotation_Appl *annotation = annotations[0];
@@ -355,7 +448,7 @@ annotation_tests()
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("Annotation Test Error: %C:\n")
           ACE_TEXT ("expected annotation for test_seq_t base type to be ")
           ACE_TEXT ("test_annotation_1, but it was %C\n"),
-          t.name_, name));
+          t.name_.c_str (), name));
         if (scopedname)
           {
             delete [] name;
@@ -444,7 +537,7 @@ annotation_tests()
 
   try {
     Annotation_Test t ("Annotation Applications on/in Unions");
-    AST_Decl *test_union_decl = t.run (
+    AST_Union *test_union = t.run (
       /* Annotations on the union and the discriminator */
       "@test_annotation_1\n"
       "union test_union switch (@test_annotation_1 short) {\n"
@@ -455,16 +548,11 @@ annotation_tests()
       "default:\n"
       "  short union_member_2;\n"
       "};\n"
-    ).assert_node ("test_union");
-    AST_Union *test_union = AST_Union::narrow_from_decl (test_union_decl);
-    if (!test_union)
-      {
-        t.failed ("failed to get test_union!");
-      }
+    ).assert_node<AST_Union> ("test_union");
 
     // Annotation On Union
-    t.assert_annotation_appl_count (test_union_decl, 1);
-    t.assert_annotation_appl (test_union_decl, 0, test_annotation_1);
+    t.assert_annotation_appl_count (test_union, 1);
+    t.assert_annotation_appl (test_union, 0, test_annotation_1);
 
     // Annotation On Discriminator
     AST_Annotation_Appls &annotations = test_union->disc_annotations ();
@@ -474,7 +562,7 @@ annotation_tests()
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("Annotation Test Error: %C:\n")
           ACE_TEXT ("expected one annotation on test_union discriminator, ")
           ACE_TEXT ("it has %d annotations!\n"),
-          t.name_, count));
+          t.name_.c_str (), count));
         t.failed ();
       }
     AST_Annotation_Appl *annotation = annotations[0];
@@ -490,7 +578,7 @@ annotation_tests()
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("Annotation Test Error: %C:\n")
           ACE_TEXT ("expected annotation for test_union discriminator to be ")
           ACE_TEXT ("test_annotation_1, but it was %C\n"),
-          t.name_, name));
+          t.name_.c_str (), name));
         if (scopedname)
           {
             delete [] name;
@@ -544,7 +632,7 @@ annotation_tests()
   try {
     idl_global->unknown_annotations_ =
       IDL_GlobalData::UNKNOWN_ANNOTATIONS_ERROR;
-    Annotation_Test t ("Optionally, Unknown Annotation Application Causes Err");
+    Annotation_Test t ("Optionally, Unknown Annotation Application Causes Err0r");
                 // Any mention of "Error" will be picked up by scoreboard ^^^
     t.last_error (UTL_Error::EIDL_LOOKUP_ERROR).error_count (1);
     t.disable_output ();
@@ -602,19 +690,19 @@ annotation_tests()
     AST_Annotation_Member *member;
     AST_Annotation_Appl *annotation;
 
-    UTL_String first_string("This is some text");
+    UTL_String first_string ("This is some text");
     annotation = t.assert_annotation_appl (value, 0, string_annotation);
     member = t.get_annotation_member (annotation, "value");
     t.assert_annotation_member_value <UTL_String *, UTL_String *>
       (member, &first_string);
 
-    UTL_String second_string("Something else");
+    UTL_String second_string ("Something else");
     annotation = t.assert_annotation_appl (value, 1, string_annotation);
     member = t.get_annotation_member (annotation, "value");
     t.assert_annotation_member_value <UTL_String *, UTL_String *>
       (member, &second_string);
 
-    UTL_String third_string("One last thing");
+    UTL_String third_string ("One last thing");
     annotation = t.assert_annotation_appl (value, 2, string_annotation);
     member = t.get_annotation_member (annotation, "value");
     t.assert_annotation_member_value <UTL_String *, UTL_String *>
@@ -650,11 +738,12 @@ annotation_tests()
 
   try {
     Annotation_Test t ("Annotate Array Base Type");
-    AST_Typedef *thetypedef = AST_Typedef::narrow_from_decl (t.run (
+    AST_Typedef *thetypedef = t.run (
       "typedef struct12 struct12Array @test_annotation_1 [12];\n"
-    ).assert_node ("::struct12Array"));
+    ).assert_node<AST_Typedef> ("::struct12Array");
     AST_Array *struct12Array =
       dynamic_cast<AST_Array *> (thetypedef->base_type ());
+    if (!struct12Array) t.failed ("Could not get AST_Array");
 
     // Verify Annotation on Base Type
     AST_Annotation_Appls &annotations =
@@ -665,7 +754,7 @@ annotation_tests()
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("Annotation Test Error: %C:\n")
           ACE_TEXT ("expected one annotation on struct12Array base type, ")
           ACE_TEXT ("it has %d annotations!\n"),
-          t.name_, count));
+          t.name_.c_str (), count));
         t.failed ();
       }
     AST_Annotation_Appl *annotation = annotations[0];
@@ -681,7 +770,7 @@ annotation_tests()
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("Annotation Test Error: %C:\n")
           ACE_TEXT ("expected annotation for struct12Array base type to be ")
           ACE_TEXT ("test_annotation_1, but it was %C\n"),
-          t.name_, name));
+          t.name_.c_str (), name));
         if (scopedname)
           {
             delete [] name;
@@ -748,49 +837,172 @@ annotation_tests()
 
   try {
     Annotation_Test t ("Annotations on and in Interfaces");
-    t.run (
+    t.run ((std::string () +
       "@test_annotation_1\n"
       "interface interface1 {\n"
+      // export
+      + common_export_idl +
+      "};\n"
+    ).c_str ());
+
+    AST_Interface *interface1 = t.assert_node<AST_Interface> ("interface1");
+    t.assert_annotation_appl_count (interface1, 1);
+    t.assert_annotation_appl (interface1, 0, test_annotation_1);
+    t.set_scope (interface1);
+    assert_common_export_idl (t, test_annotation_1);
+  } catch (Failed const &) {}
+
+  try {
+    Annotation_Test t ("Annotations on and in Valuetypes");
+    t.run ((std::string () +
+      "@test_annotation_1\n"
+      "valuetype valuetype1 {\n"
+      // value_element
+      + common_value_element_idl +
+      "};\n"
+    ).c_str ());
+
+    AST_ValueType *valuetype1 = t.assert_node<AST_ValueType> ("valuetype1");
+    t.assert_annotation_appl_count (valuetype1, 1);
+    t.assert_annotation_appl (valuetype1, 0, test_annotation_1);
+    t.set_scope (valuetype1);
+    assert_common_value_element_idl (t, test_annotation_1);
+  } catch (Failed const &) {}
+
+  try {
+    Annotation_Test t ("Annotations on and in Porttypes");
+    t.run ((std::string () +
+      "@test_annotation_1\n"
+      "porttype port_with_provides {\n"
+      // port_ref
       "  @test_annotation_1\n"
-      "  struct struct_in_interface1 {\n"
-      "    short value;\n"
-      "  };\n"
+      "  provides interface1 provides_value;\n"
+      // port_export
+      + common_attr_dcl_idl +
+      "};\n"
+      "\n"
+      "@test_annotation_1\n"
+      "porttype port_with_uses {\n"
+      // port_ref
       "  @test_annotation_1\n"
-      "  void operation();\n"
+      "  uses interface1 uses_value;\n"
+      // port_export
+      + common_attr_dcl_idl +
+      "};\n"
+    ).c_str ());
+
+    AST_PortType *port_with_provides =
+      t.assert_node<AST_PortType> ("port_with_provides");
+    t.assert_annotation_appl_count (port_with_provides, 1);
+    t.assert_annotation_appl (port_with_provides, 0, test_annotation_1);
+    t.set_scope (port_with_provides);
+    assert_node_has_annotation (t, "provides_value", test_annotation_1);
+    assert_common_attr_dcl_idl (t, test_annotation_1);
+
+    AST_PortType *port_with_uses =
+      t.assert_node<AST_PortType> ("port_with_uses");
+    t.assert_annotation_appl_count (port_with_uses, 1);
+    t.assert_annotation_appl (port_with_uses, 0, test_annotation_1);
+    t.set_scope (port_with_uses);
+    assert_node_has_annotation (t, "uses_value", test_annotation_1);
+    assert_common_attr_dcl_idl (t, test_annotation_1);
+  } catch (Failed const &) {}
+
+  try {
+    Annotation_Test t ("Annotations on and in Eventtypes");
+    t.run ((std::string () +
+      "@test_annotation_1\n"
+      "eventtype event1 {\n"
+      + common_value_element_idl +
+      "};\n"
+    ).c_str ());
+    AST_EventType *event1 = t.assert_node<AST_EventType> ("event1");
+    t.assert_annotation_appl_count (event1, 1);
+    t.assert_annotation_appl (event1, 0, test_annotation_1);
+    t.set_scope (event1);
+    assert_common_value_element_idl (t, test_annotation_1);
+  } catch (Failed const &) {}
+
+  try {
+    Annotation_Test t ("Annotations on and in Components");
+    t.run ((std::string () +
+      "@test_annotation_1\n"
+      "component component1 {\n"
+      // provides_dcl
       "  @test_annotation_1\n"
-      "  const short const_value = 3;\n"
+      "  provides interface1 provides_value;\n"
+      // uses_dcl
       "  @test_annotation_1\n"
-      "  attribute short rw_attribute;\n"
+      "  uses interface1 uses_value;\n"
+      // attr_dcl
+      + common_attr_dcl_idl +
+      // port_dcl
       "  @test_annotation_1\n"
-      "  readonly attribute short ro_attribute;\n"
+      "  port port_with_uses port_value;\n"
+      // emits_dcl
+      "  @test_annotation_1\n"
+      "  emits event1 emits_value;\n"
+      // publishes_dcl
+      "  @test_annotation_1\n"
+      "  publishes event1 publishes_value;\n"
+      // consumes_dcl
+      "  @test_annotation_1\n"
+      "  consumes event1 consumes_value;\n"
+      "};\n"
+    ).c_str ());
+    AST_Component *component1 = t.assert_node<AST_Component> ("component1");
+    t.assert_annotation_appl_count (component1, 1);
+    t.assert_annotation_appl (component1, 0, test_annotation_1);
+    t.set_scope (component1);
+    assert_node_has_annotation (t, "provides_value", test_annotation_1);
+    assert_node_has_annotation (t, "uses_value", test_annotation_1);
+    assert_common_attr_dcl_idl (t, test_annotation_1);
+    assert_node_has_annotation (t, "port_value", test_annotation_1);
+    assert_node_has_annotation (t, "emits_value", test_annotation_1);
+    assert_node_has_annotation (t, "publishes_value", test_annotation_1);
+    assert_node_has_annotation (t, "consumes_value", test_annotation_1);
+  } catch (Failed const &) {}
+
+  /*
+   * Test for https://github.com/DOCGroup/ACE_TAO/issues/997
+   *
+   * When the original annotation work (https://github.com/DOCGroup/ACE_TAO/pull/723)
+   * was done it was assumed that when annotations didn't define the symbol
+   * being used, the lookup would go up the scope stack to the current scope.
+   * This turned out not the case, so this functionality was implemented just
+   * for annotation parameters.
+   */
+  try {
+    Annotation_Test t ("Passing Constant from Module");
+    t.run (
+      "@annotation range_test_annotation {\n"
+      "  float min;\n"
+      "  float max;\n"
+      "};\n"
+      "\n"
+      "module range_test_annoation_module {\n"
+      "  const float f1 = 1.;\n"
+      "  const float f2 = 2.;\n"
+      "\n"
+      "  @range_test_annotation(min = f1, max = f2)\n"
+      "  @range_test_annotation(\n"
+      "    min = range_test_annoation_module::f1,\n"
+      "    max = range_test_annoation_module::f2)\n"
+      "  @range_test_annotation(\n"
+      "    min = ::range_test_annoation_module::f1,\n"
+      "    max = ::range_test_annoation_module::f2)\n"
+      "  typedef float RangedFloat;\n"
       "};\n"
     );
 
-    AST_Interface *interface1 = dynamic_cast<AST_Interface *> (t.assert_node ("interface1"));
-    t.assert_annotation_appl_count (interface1, 1);
-    t.assert_annotation_appl (interface1, 0, test_annotation_1);
-
-    t.set_scope (interface1);
-
-    AST_Decl *struct_in_interface1 = t.assert_node ("struct_in_interface1");
-    t.assert_annotation_appl_count (struct_in_interface1, 1);
-    t.assert_annotation_appl (struct_in_interface1, 0, test_annotation_1);
-
-    AST_Decl *operation = t.assert_node ("operation");
-    t.assert_annotation_appl_count (operation, 1);
-    t.assert_annotation_appl (operation, 0, test_annotation_1);
-
-    AST_Decl *const_value = t.assert_node ("const_value");
-    t.assert_annotation_appl_count (const_value, 1);
-    t.assert_annotation_appl (const_value, 0, test_annotation_1);
-
-    AST_Decl *rw_attribute = t.assert_node ("rw_attribute");
-    t.assert_annotation_appl_count (rw_attribute, 1);
-    t.assert_annotation_appl (rw_attribute, 0, test_annotation_1);
-
-    AST_Decl *ro_attribute = t.assert_node ("ro_attribute");
-    t.assert_annotation_appl_count (ro_attribute, 1);
-    t.assert_annotation_appl (ro_attribute, 0, test_annotation_1);
+    AST_Annotation_Decl *range_like_test_annotation =
+      t.assert_annotation_decl ("::@range_test_annotation");
+    AST_Decl *RangedFloat = t.assert_node (
+      "::range_test_annoation_module::RangedFloat");
+    t.assert_annotation_appl_count (RangedFloat, 3);
+    t.assert_annotation_appl (RangedFloat, 0, range_like_test_annotation);
+    t.assert_annotation_appl (RangedFloat, 1, range_like_test_annotation);
+    t.assert_annotation_appl (RangedFloat, 2, range_like_test_annotation);
   } catch (Failed const &) {}
 
   /* -------------------------------------------------------------------------
@@ -850,19 +1062,52 @@ annotation_tests()
    */
   try {
     Annotation_Test t ("Struct Field Visibility Must be vis_NA");
-    AST_Decl *member_decl = t.assert_node ("struct1::member");
-    AST_Field *member = AST_Field::narrow_from_decl (member_decl);
-    if (!member)
-      {
-        t.failed ("Could Not Get member");
-      }
-    if (member->visibility() != AST_Field::vis_NA)
+    AST_Field *member = t.assert_node<AST_Field> ("struct1::member");
+    if (member->visibility () != AST_Field::vis_NA)
       {
         char buffer[100];
         ACE_OS::snprintf (&buffer[0], 100,
           "struct field visibility is %u, which is not equal to vis_NA",
           static_cast<unsigned> (member->visibility ()));
         t.failed (&buffer[0]);
+      }
+  } catch (Failed const &) {}
+
+  /* -------------------------------------------------------------------------
+   * Empty union cases aliasing the default case must always be evaluated
+   * -------------------------------------------------------------------------
+   * When the union has an enum discriminator, and one or more empty cases
+   * acting as an alias to the default case the IDL compiler was failing to
+   * resolve the ordinal value for these empty labels and this causes trouble
+   * for at least OpenDDS.
+   *
+   * This test is designed to verify that the condition is corrected by
+   * parsing a specially crafted union and validating the value of the
+   * label aliasing the default case.
+   */
+  try {
+    Annotation_Test t ("empty union branch label");
+    AST_Union *test_union = t.run (
+               "enum disc {A, B, C};\n"
+               "union empty_union switch (disc) {\n"
+               "case A: long along;\n"
+               "case B: short bshort;\n"
+               "case C:\n"
+               "default: float cfloat;\n"
+               "};\n").assert_node<AST_Union>("::empty_union");
+    AST_Field **af = 0;
+    test_union->field(af, 2);
+    AST_UnionBranch *ub = dynamic_cast<AST_UnionBranch *>(*af);
+    if (ub != nullptr)
+      {
+         AST_UnionLabel *ul = ub->label ();
+         if (ul != nullptr)
+           {
+              if (ul->label_val()->ev()->u.ulval != 2)
+                {
+                  t.failed("did not get the correct label value");
+                }
+           }
       }
   } catch (Failed const &) {}
 

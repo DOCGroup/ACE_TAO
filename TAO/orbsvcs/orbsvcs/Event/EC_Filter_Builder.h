@@ -42,14 +42,13 @@ class TAO_RTEvent_Serv_Export TAO_EC_Filter_Builder
 {
 public:
   /// destructor...
-  virtual ~TAO_EC_Filter_Builder (void);
+  virtual ~TAO_EC_Filter_Builder ();
 
   /// Create the filter, the caller must assume ownership of the filter
   /// returned.
   virtual TAO_EC_Filter*
       build (TAO_EC_ProxyPushSupplier *supplier,
              RtecEventChannelAdmin::ConsumerQOS& qos) const = 0;
-
 };
 
 // ****************************************************************
@@ -65,10 +64,10 @@ class TAO_RTEvent_Serv_Export TAO_EC_Null_Filter_Builder : public TAO_EC_Filter_
 {
 public:
   /// constructor.
-  TAO_EC_Null_Filter_Builder (void);
+  TAO_EC_Null_Filter_Builder ();
 
   /// destructor...
-  virtual ~TAO_EC_Null_Filter_Builder (void);
+  virtual ~TAO_EC_Null_Filter_Builder ();
 
   // = The TAO_EC_Filter_Builder methods...
   TAO_EC_Filter* build (TAO_EC_ProxyPushSupplier *supplier,

@@ -520,7 +520,6 @@ MQX_Filesystem::fstat (int fd, ACE_stat *statbuf)
  */
 
 extern "C" {
-
 int __open (const char *filename, int mode)
 {
   return MQX_Filesystem::inst ().open (filename, mode);
