@@ -621,7 +621,7 @@ ACE_Log_Msg::ACE_Log_Msg ()
     linenum_ (0),
     msg_ (0),
     restart_ (1),  // Restart by default...
-    ostream_ (0),
+    ostream_ (nullptr),
     ostream_refcount_ (0),
     msg_callback_ (0),
     trace_depth_ (0),
@@ -753,8 +753,8 @@ ACE_Log_Msg::cleanup_ostream ()
           ACE_OS::fclose (this->ostream_);
 #else
           delete this->ostream_;
-          this->ostream_ = 0;
 #endif
+          this->ostream_ = nullptr;
         }
       this->ostream_refcount_ = 0;
     }
