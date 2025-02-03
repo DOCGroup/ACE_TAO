@@ -431,7 +431,7 @@ ACE_Logging_Strategy::handle_timeout (const ACE_Time_Value &, const void *)
         {
           if (ACE_OS::fclose (output_file) != 0)
             {
-              ACELIB_ERROR ((LM_ERROR, ACE_TEXT ("Failed to close output file\n")));
+              ACELIB_ERROR ((LM_ERROR, ACE_TEXT ("ACE_Logging_Strategy::handle_timeout, Failed to close output file\n")));
             }
           this->log_msg_->msg_ostream (nullptr);
           output_file = nullptr;
@@ -529,7 +529,7 @@ ACE_Logging_Strategy::handle_timeout (const ACE_Time_Value &, const void *)
         }
       else
         ACELIB_ERROR ((LM_ERROR,
-                    ACE_TEXT ("Backup file name too long; ")
+                    ACE_TEXT ("ACE_Logging_Strategy::handle_timeout, Backup file name too long; ")
                     ACE_TEXT ("backup logfile not saved.\n")));
 
       // Open a new log file by the same name
