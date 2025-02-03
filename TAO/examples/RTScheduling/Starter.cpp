@@ -12,7 +12,7 @@ Starter::Starter (CORBA::ORB_ptr orb)
 }
 
 void
-Starter::init (void)
+Starter::init ()
 {
   this->resolve_synch_objs ();
 
@@ -20,7 +20,7 @@ Starter::init (void)
 }
 
 void
-Starter::fire (void)
+Starter::fire ()
 {
   ACE_Time_Value base_time = ACE_OS::gettimeofday ();
   for (Synchs::iterator iterator = this->synchs_.begin ();
@@ -32,7 +32,7 @@ Starter::fire (void)
 }
 
 void
-Starter::resolve_synch_objs (void)
+Starter::resolve_synch_objs ()
 {
   CosNaming::Name name (1);
   name.length (1);
@@ -126,7 +126,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       Starter starter (orb.in ());
 
       starter.init ();
-
     }
   catch (const CORBA::Exception& ex)
     {

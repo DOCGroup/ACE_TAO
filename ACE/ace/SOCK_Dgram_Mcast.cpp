@@ -18,7 +18,7 @@
 #endif
 
 #if defined (ACE_HAS_GETIFADDRS)
-#  if defined (ACE_VXWORKS)
+#  if defined (ACE_VXWORKS) && (ACE_VXWORKS < 0x700)
 #    include /**/ <net/ifaddrs.h>
 #  else
 #    include /**/ <ifaddrs.h>
@@ -70,7 +70,7 @@ public:
 ACE_ALLOC_HOOK_DEFINE (ACE_SOCK_Dgram_Mcast)
 
 void
-ACE_SOCK_Dgram_Mcast::dump (void) const
+ACE_SOCK_Dgram_Mcast::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_SOCK_Dgram_Mcast::dump");
@@ -136,14 +136,14 @@ ACE_SOCK_Dgram_Mcast::dump (void) const
 // Constructor.
 ACE_SOCK_Dgram_Mcast::ACE_SOCK_Dgram_Mcast
   (ACE_SOCK_Dgram_Mcast::options opts)
-  :  opts_ (opts),
-     send_net_if_ (0)
+ : send_addr_ ()
+ , opts_ (opts)
 {
   ACE_TRACE ("ACE_SOCK_Dgram_Mcast::ACE_SOCK_Dgram_Mcast");
 }
 
 // Destructor.
-ACE_SOCK_Dgram_Mcast::~ACE_SOCK_Dgram_Mcast (void)
+ACE_SOCK_Dgram_Mcast::~ACE_SOCK_Dgram_Mcast ()
 {
   ACE_TRACE ("ACE_SOCK_Dgram_Mcast::~ACE_SOCK_Dgram_Mcast");
 
@@ -466,7 +466,6 @@ ACE_SOCK_Dgram_Mcast::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
     }
 
   return 0;
-
 }
 
 int
@@ -565,17 +564,13 @@ ACE_SOCK_Dgram_Mcast::subscribe_i (const ACE_INET_Addr &mcast_addr,
 
   // Open the socket IFF this is the first ::subscribe and ::open
   // was not explicitly invoked.
-  if (this->open (mcast_addr,
-                  net_if,
-                  reuse_addr) == -1)
+  if (this->open (mcast_addr, net_if, reuse_addr) == -1)
     return -1;
 
   // Only do this if net_if == 0, i.e., INADDR_ANY
   if (net_if == 0)
     {
-      int result = this->subscribe_ifs (mcast_addr,
-                                        net_if,
-                                        reuse_addr);
+      int const result = this->subscribe_ifs (mcast_addr, net_if, reuse_addr);
       // Check for error or "short-circuit" return.
       if (result != 0)
         return result;
@@ -626,10 +621,7 @@ ACE_SOCK_Dgram_Mcast::unsubscribe_ifs (const ACE_INET_Addr &mcast_addr,
         {
           size_t nr_unsubscribed = 0;
 # if defined(ACE_LINUX)
-
-          struct if_nameindex *intf;
-
-          intf = ACE_OS::if_nameindex ();
+          struct if_nameindex *intf = ACE_OS::if_nameindex ();
 
           if (intf == 0)
             return -1;
@@ -694,8 +686,6 @@ ACE_SOCK_Dgram_Mcast::unsubscribe_ifs (const ACE_INET_Addr &mcast_addr,
             }
 
           return 1;
-
-
         }
       else
         {
@@ -746,7 +736,6 @@ ACE_SOCK_Dgram_Mcast::unsubscribe_ifs (const ACE_INET_Addr &mcast_addr,
             }
 
           return 1;
-
         }
 #else /* ACE_HAS_IPV6 */
       // Unsubscribe on all local multicast-capable network interfaces, by
@@ -915,7 +904,7 @@ ACE_SOCK_Dgram_Mcast::unsubscribe_i (const ACE_INET_Addr &mcast_addr,
 }
 
 int
-ACE_SOCK_Dgram_Mcast::clear_subs_list (void)
+ACE_SOCK_Dgram_Mcast::clear_subs_list ()
 {
   ACE_TRACE ("ACE_SOCK_Dgram_Mcast::clear_subs_list");
   int result = 0;

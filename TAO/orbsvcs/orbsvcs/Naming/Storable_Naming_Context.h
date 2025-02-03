@@ -15,7 +15,7 @@
 #include "orbsvcs/Naming/Hash_Naming_Context.h"
 #include "tao/Storable_File_Guard.h"
 #include "ace/Hash_Map_Manager.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 #include "orbsvcs/Naming/Storable.h"
 
@@ -37,7 +37,7 @@ class TAO_Naming_Serv_Export TAO_Storable_IntId
 {
 public:
   /// Constructor.
-  TAO_Storable_IntId (void);
+  TAO_Storable_IntId ();
 
   /// Constructor.
   TAO_Storable_IntId (/* in */ const char * ior,
@@ -47,7 +47,7 @@ public:
   TAO_Storable_IntId (const TAO_Storable_IntId & rhs);
 
   /// Destructor.
-  ~TAO_Storable_IntId (void);
+  ~TAO_Storable_IntId ();
 
   /// Assignment operator.
   void operator= (const TAO_Storable_IntId & rhs);
@@ -65,7 +65,7 @@ class TAO_Naming_Serv_Export TAO_Storable_ExtId
 {
 public:
   /// Constructor.
-  TAO_Storable_ExtId (void);
+  TAO_Storable_ExtId ();
 
   /// Constructor.
   TAO_Storable_ExtId (/* in */ const char *id,
@@ -75,7 +75,7 @@ public:
   TAO_Storable_ExtId (const TAO_Storable_ExtId & rhs);
 
   /// Destructor.
-  ~TAO_Storable_ExtId (void);
+  ~TAO_Storable_ExtId ();
 
   // = Assignment and comparison methods.
 
@@ -90,7 +90,7 @@ public:
 
   /// <hash> function is required in order for this class to be usable by
   /// ACE_Hash_Map_Manager.
-  u_long hash (void) const;
+  u_long hash () const;
 
   // = Data members.
 
@@ -105,9 +105,8 @@ public:
   // Accessors.
   // follow the mapping rules!
 
-  const char * id (void);
-  const char * kind (void);
-
+  const char * id ();
+  const char * kind ();
 };
 
 
@@ -132,19 +131,19 @@ public:
   TAO_Storable_Bindings_Map (size_t hash_table_size, CORBA::ORB_ptr orb);
 
   /// Destructor.
-  virtual ~TAO_Storable_Bindings_Map (void);
+  virtual ~TAO_Storable_Bindings_Map ();
 
   // = Accessors.
 
   /// Get a reference to the underlying hash map.
-  HASH_MAP &map (void);
+  HASH_MAP &map ();
 
   /// Return the size of the underlying hash table.
-  size_t total_size (void);
+  size_t total_size ();
 
   /// Return current number of entries (name bindings) in the
   /// underlying hash map.
-  virtual size_t current_size (void);
+  virtual size_t current_size ();
 
   // = Name bindings manipulation methods.
 
@@ -188,7 +187,6 @@ public:
                     CosNaming::BindingType &type);
 
 private:
-
   /// Helper: factors common code from <bind> and <rebind>.
   int shared_bind (const char *id,
                    const char *kind,
@@ -200,7 +198,6 @@ private:
   HASH_MAP map_;
 
   CORBA::ORB_var orb_;
-
 };
 
 /**
@@ -231,7 +228,7 @@ public:
                                size_t hash_table_size = ACE_DEFAULT_MAP_SIZE);
 
   /// Destructor.
-  virtual ~TAO_Storable_Naming_Context (void);
+  virtual ~TAO_Storable_Naming_Context ();
 
   // = Utility methods.
   /**
@@ -267,7 +264,7 @@ public:
    * same naming server in which the operation was invoked.  The
    * context is not bound.
    */
-  virtual CosNaming::NamingContext_ptr new_context (void);
+  virtual CosNaming::NamingContext_ptr new_context ();
 
   /**
    * Returns at most the requested number of bindings <how_many> in
@@ -345,15 +342,14 @@ public:
    * NOTE: after <destroy> is invoked on a Naming Context, all
    * BindingIterators associated with that Naming Context are also destroyed.
    */
-  virtual void destroy (void);
+  virtual void destroy ();
 
 protected:
-
   /**
    * A helper function to ensure the current object was not destroyed by raising
    * an exception if it was. Uses the lock as a Reader.
    */
-  void verify_not_destroyed (void);
+  void verify_not_destroyed ();
 
   /**
    * A helper function to validate the name argument and return a final context
@@ -368,7 +364,7 @@ protected:
    * This will have been done after the file is closed. Check the
    * last_changed_ attribute for the time of the write.
    */
-  virtual void context_written (void);
+  virtual void context_written ();
 
   /**
    * An internal callback invoked by the File_Open_Lock_and_Check
@@ -422,7 +418,7 @@ protected:
   static const char * root_name_;
 
   /// The pointer to the global file used to allocate new contexts
-  static ACE_Auto_Ptr<TAO::Storable_Base> gfl_;
+  static std::unique_ptr<TAO::Storable_Base> gfl_;
 
 /**
  * @class File_Open_Lock_and_Check
@@ -433,7 +429,6 @@ class TAO_Naming_Serv_Export File_Open_Lock_and_Check :
 public TAO::Storable_File_Guard
 {
 public:
-
   /// Constructor
   File_Open_Lock_and_Check (TAO_Storable_Naming_Context * context,
                             Method_Type method_type,
@@ -442,15 +437,14 @@ public:
   ~File_Open_Lock_and_Check ();
 
 protected:
-
   /// Check if the guarded object is current with the last
   /// update which could have been performed independently of
   /// the owner of this object.
-  virtual bool object_obsolete (void);
+  virtual bool object_obsolete ();
 
   /// Mark the object as current with respect to the
   /// file to which it was persisted.
-  virtual void mark_object_current (void);
+  virtual void mark_object_current ();
 
   /// Mark the time at which the object was modified and
   virtual void set_object_last_changed (const time_t & time);
@@ -467,10 +461,9 @@ protected:
 
 private:
   /// Default constructor
-  File_Open_Lock_and_Check(void);
+  File_Open_Lock_and_Check();
 
   TAO_Storable_Naming_Context * context_;
-
 }; // end of embedded class File_Open_Lock_and_Check
 
   friend class File_Open_Lock_and_Check;

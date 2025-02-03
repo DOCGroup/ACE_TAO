@@ -32,16 +32,16 @@ public:
   Cubit_i (CORBA::ORB_ptr orb);
 
   /// Destructor
-  ~Cubit_i (void);
+  ~Cubit_i ();
 
   /// Returns the default POA for this servant.
-  virtual PortableServer::POA_ptr _default_POA (void);
+  virtual PortableServer::POA_ptr _default_POA ();
 
   /// Test a oneway call.
-  virtual void cube_oneway (void);
+  virtual void cube_oneway ();
 
   /// Test a twoway call.
-  virtual void cube_void (void);
+  virtual void cube_void ();
 
   /// Cube an octet
   virtual CORBA::Octet cube_octet (CORBA::Octet o);
@@ -81,11 +81,11 @@ public:
   virtual CORBA::Any * cube_any_struct (const CORBA::Any & any);
 
   /// Shutdown routine.
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
 
   /// A ping. Please see the idl file for details.
-  virtual void ping (void);
+  virtual void ping ();
 
 
   /// Set default poa.
@@ -112,10 +112,10 @@ public:
   Cubit_Factory_i (CORBA::ORB_ptr orb);
 
   /// Destructor.
-  ~Cubit_Factory_i (void);
+  ~Cubit_Factory_i ();
 
   /// Make a cubit object.
-  virtual Cubit_ptr make_cubit (void);
+  virtual Cubit_ptr make_cubit ();
 
   void set_default_poa (PortableServer::POA_ptr poa);
 

@@ -14,13 +14,11 @@
 
 class Demux_Stats
 {
-
 public:
-
   /// Calculates the average latency and Standard deviation.
   /// Expects the input data in my_results.dat.
   int
-  calculate_avg_latency (void);
+  calculate_avg_latency ();
 
   /// parses args.
   int
@@ -39,7 +37,6 @@ private :
 int
 Demux_Stats::parse_args (int argc_, char * argv_ [])
 {
-
   ACE_Get_Opt get_opts (argc_, argv_, ACE_TEXT("i:"));
   int c;
 
@@ -59,7 +56,6 @@ Demux_Stats::parse_args (int argc_, char * argv_ [])
 int
 Demux_Stats::calculate_avg_latency ()
 {
-
   CORBA::ULong i, time;
   char str1[50], str2[50], str3[50];
 
@@ -98,7 +94,6 @@ Demux_Stats::calculate_avg_latency ()
 
   while (fscanf (this->result_fp_, "%s %s %s %ld %ld", &str1, &str2, &str3, &i, &time) != EOF)
     {
-
       if(ACE_OS::strcmp (str1,"POA::locate_poa_i")==0 && (ACE_OS::strcmp (str3,"end") == 0))
         {
           if (items < 1) { items = items + 1; counter++; }
@@ -317,7 +312,6 @@ Demux_Stats::calculate_avg_latency ()
 
   if (iterations == 0)
     {
-
       ACE_OS::printf("Average response times = POA = %lf SERVANT = %lf DISPATCH = %lf PERFECT = %lf DYNAMIC = %lf BINARY = %lf LINEAR = %lf PARSE = %lf microsec\n", mean_poa, mean_servant,
                      mean_dispatch,
                      mean_perfect,

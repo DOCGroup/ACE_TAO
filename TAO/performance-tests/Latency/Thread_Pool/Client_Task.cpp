@@ -9,7 +9,7 @@ Client_Task::Client_Task (Test::Roundtrip_ptr roundtrip,
 }
 
 int
-Client_Task::svc (void)
+Client_Task::svc ()
 {
   try
     {
@@ -43,7 +43,7 @@ Client_Task::accumulate_and_dump (
 }
 
 void
-Client_Task::validate_connection (void)
+Client_Task::validate_connection ()
 {
   CORBA::ULongLong dummy = 0;
   for (int i = 0; i != 100; ++i)

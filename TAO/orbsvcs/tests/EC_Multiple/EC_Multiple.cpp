@@ -16,16 +16,12 @@
 #include "tao/ORB_Core.h"
 
 #include "ace/Get_Opt.h"
-#include "ace/Auto_Ptr.h"
 #include "ace/Sched_Params.h"
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_strings.h"
+#include <memory>
 
-#if defined (sun)
-# include <sys/lwp.h> /* for _lwp_self */
-#endif /* sun */
-
-Test_ECG::Test_ECG (void)
+Test_ECG::Test_ECG ()
   : lcl_name_ ("Test_ECG"),
     rmt_name_ (""),
     scheduling_type_ (Test_ECG::ss_runtime),
@@ -60,22 +56,13 @@ Test_ECG::Test_ECG (void)
 void
 print_priority_info (const char *const name)
 {
-#if defined (ACE_HAS_PTHREADS) || defined (sun)
+#if defined (ACE_HAS_PTHREADS)
 #if defined (ACE_HAS_PTHREADS)
   struct sched_param param;
   int policy, status;
 
   if ((status = pthread_getschedparam (pthread_self (), &policy,
                                        &param)) == 0) {
-#   ifdef sun
-    ACE_DEBUG ((LM_DEBUG,
-                "%C (%lu|%u); policy is %d, priority is %d\n",
-                name,
-                ACE_OS::getpid (),
-                _lwp_self (),
-                pthread_self (),
-                policy, param.sched_priority));
-#   else  /* ! sun */
     ACE_DEBUG ((LM_DEBUG,
                 "%C (%lu|%u); policy is %d, priority is %d\n",
                 name,
@@ -83,7 +70,6 @@ print_priority_info (const char *const name)
                 0,
                 pthread_self (),
                 policy, param.sched_priority ));
-#   endif /* ! sun */
   } else {
     ACE_DEBUG ((LM_DEBUG,"pthread_getschedparam failed: %d\n", status));
   }
@@ -119,7 +105,7 @@ print_priority_info (const char *const name)
 #endif /* sun */
 #else
   ACE_UNUSED_ARG (name);
-#endif /* ACE_HAS_PTHREADS || sun */
+#endif /* ACE_HAS_PTHREADS */
 }
 
 int
@@ -205,7 +191,7 @@ Test_ECG::run (int argc, ACE_TCHAR* argv[])
                   this->lpc_event_b_,
 
                   this->schedule_file_?this->schedule_file_:ACE_TEXT("nil"),
-                  this->pid_file_name_?this->pid_file_name_:ACE_TEXT("nil")) );
+                  this->pid_file_name_?this->pid_file_name_:ACE_TEXT("nil")));
 
       print_priority_info ("Test_ECG::run (Main)");
 
@@ -222,7 +208,7 @@ Test_ECG::run (int argc, ACE_TCHAR* argv[])
 
       int min_priority =
         ACE_Sched_Params::priority_min (ACE_SCHED_FIFO);
-        // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
+      // Enable FIFO scheduling
 
       if (ACE_OS::sched_params (ACE_Sched_Params (ACE_SCHED_FIFO,
                                                   min_priority,
@@ -255,7 +241,7 @@ Test_ECG::run (int argc, ACE_TCHAR* argv[])
       CosNaming::NamingContext_var naming_context =
         CosNaming::NamingContext::_narrow (naming_obj.in ());
 
-      auto_ptr<POA_RtecScheduler::Scheduler> scheduler_impl;
+      std::unique_ptr<POA_RtecScheduler::Scheduler> scheduler_impl;
       RtecScheduler::Scheduler_var scheduler;
 
       switch (this->scheduling_type_)
@@ -263,14 +249,14 @@ Test_ECG::run (int argc, ACE_TCHAR* argv[])
         default:
           ACE_ERROR ((LM_WARNING, "Unknown scheduling type %d\n",
                       this->scheduling_type_));
-          /*FALLTHROUGH*/
+          ACE_FALLTHROUGH;
         case Test_ECG::ss_global:
           break;
 
         case Test_ECG::ss_local:
           {
-            auto_ptr<POA_RtecScheduler::Scheduler> auto_scheduler_impl (new ACE_Config_Scheduler);
-            scheduler_impl = auto_scheduler_impl;
+            std::unique_ptr<POA_RtecScheduler::Scheduler> auto_scheduler_impl (new ACE_Config_Scheduler);
+            scheduler_impl = std::move(auto_scheduler_impl);
           }
           if (scheduler_impl.get () == 0)
             return -1;
@@ -287,12 +273,12 @@ Test_ECG::run (int argc, ACE_TCHAR* argv[])
                 sizeof (runtime_infos_1)/sizeof (runtime_infos_1[0]),
                 runtime_infos_1);
 
-              auto_ptr<POA_RtecScheduler::Scheduler> auto_scheduler_impl
+              std::unique_ptr<POA_RtecScheduler::Scheduler> auto_scheduler_impl
                 (new ACE_Runtime_Scheduler (runtime_configs_1_size,
                                             runtime_configs_1,
                                             runtime_infos_1_size,
                                             runtime_infos_1));
-              scheduler_impl = auto_scheduler_impl;
+              scheduler_impl = std::move(auto_scheduler_impl);
 
               if (scheduler_impl.get () == 0)
                 return -1;
@@ -307,12 +293,12 @@ Test_ECG::run (int argc, ACE_TCHAR* argv[])
                 sizeof (runtime_infos_2)/sizeof (runtime_infos_2[0]),
                 runtime_infos_2);
 
-              auto_ptr<POA_RtecScheduler::Scheduler> auto_scheduler_impl
+              std::unique_ptr<POA_RtecScheduler::Scheduler> auto_scheduler_impl
                 (new ACE_Runtime_Scheduler (runtime_configs_2_size,
                                             runtime_configs_2,
                                             runtime_infos_2_size,
                                             runtime_infos_2));
-              scheduler_impl = auto_scheduler_impl;
+              scheduler_impl = std::move(auto_scheduler_impl);
 
               if (scheduler_impl.get () == 0)
                 return -1;
@@ -327,12 +313,12 @@ Test_ECG::run (int argc, ACE_TCHAR* argv[])
                 sizeof (runtime_infos_3)/sizeof (runtime_infos_3[0]),
                 runtime_infos_3);
 
-              auto_ptr<POA_RtecScheduler::Scheduler> auto_scheduler_impl
+              std::unique_ptr<POA_RtecScheduler::Scheduler> auto_scheduler_impl
                 (new ACE_Runtime_Scheduler (runtime_configs_3_size,
                                             runtime_configs_3,
                                             runtime_infos_3_size,
                                             runtime_infos_3));
-              scheduler_impl = auto_scheduler_impl;
+              scheduler_impl = std::move(auto_scheduler_impl);
 
               if (scheduler_impl.get () == 0)
                 return -1;
@@ -344,15 +330,14 @@ Test_ECG::run (int argc, ACE_TCHAR* argv[])
                           "Unknown name <%C> defaulting to "
                           "config scheduler\n", this->lcl_name_.c_str ()));
 
-              auto_ptr<POA_RtecScheduler::Scheduler> auto_scheduler_impl (new ACE_Config_Scheduler);
-              scheduler_impl = auto_scheduler_impl;
+              std::unique_ptr<POA_RtecScheduler::Scheduler> auto_scheduler_impl (new ACE_Config_Scheduler);
+              scheduler_impl = std::move(auto_scheduler_impl);
 
               if (scheduler_impl.get () == 0)
                 return -1;
               scheduler = scheduler_impl->_this ();
             }
           break;
-
         }
 
       // We use this buffer to generate the names of the local
@@ -599,7 +584,7 @@ Test_ECG::get_ec (CosNaming::NamingContext_ptr naming_context,
 }
 
 void
-Test_ECG::disconnect_suppliers (void)
+Test_ECG::disconnect_suppliers ()
 {
   for (int i = 0; i < this->hp_suppliers_ + this->lp_suppliers_; ++i)
     {
@@ -656,7 +641,7 @@ Test_ECG::connect_suppliers (RtecEventChannelAdmin::EventChannel_ptr local_ec)
 }
 
 void
-Test_ECG::disconnect_consumers (void)
+Test_ECG::disconnect_consumers ()
 {
   for (int i = 0; i < this->hp_consumers_ + this->lp_consumers_; ++i)
     {
@@ -893,7 +878,7 @@ Test_ECG::push_consumer (void *consumer_cookie,
 }
 
 void
-Test_ECG::wait_until_ready (void)
+Test_ECG::wait_until_ready ()
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ready_mon, this->ready_mtx_);
   while (!this->ready_)
@@ -904,7 +889,6 @@ void
 Test_ECG::shutdown_supplier (void* /* supplier_cookie */,
                              RtecEventComm::PushConsumer_ptr consumer)
 {
-
   this->running_suppliers_--;
   if (this->running_suppliers_ != 0)
     return;
@@ -947,7 +931,7 @@ Test_ECG::shutdown_consumer (int id)
 }
 
 int
-Test_ECG::shutdown (void)
+Test_ECG::shutdown ()
 {
   ACE_DEBUG ((LM_DEBUG, "Shutting down the multiple EC test\n"));
 
@@ -961,7 +945,7 @@ Test_ECG::shutdown (void)
 }
 
 void
-Test_ECG::dump_results (void)
+Test_ECG::dump_results ()
 {
   const int bufsize = 512;
   ACE_TCHAR buf[bufsize];
@@ -1261,7 +1245,7 @@ Test_Supplier::open (const char* name,
 }
 
 void
-Test_Supplier::close (void)
+Test_Supplier::close ()
 {
   if (CORBA::is_nil (this->consumer_proxy_.in ()))
     return;
@@ -1389,7 +1373,7 @@ Test_Supplier::push (const RtecEventComm::EventSet& events)
 }
 
 void
-Test_Supplier::disconnect_push_supplier (void)
+Test_Supplier::disconnect_push_supplier ()
 {
   if (CORBA::is_nil (this->supplier_proxy_.in ()))
     return;
@@ -1398,11 +1382,11 @@ Test_Supplier::disconnect_push_supplier (void)
 }
 
 void
-Test_Supplier::disconnect_push_consumer (void)
+Test_Supplier::disconnect_push_consumer ()
 {
 }
 
-int Test_Supplier::supplier_id (void) const
+int Test_Supplier::supplier_id () const
 {
   return this->supplier_id_;
 }
@@ -1460,7 +1444,7 @@ Test_Consumer::open (const char* name,
 }
 
 void
-Test_Consumer::close (void)
+Test_Consumer::close ()
 {
   if (CORBA::is_nil (this->supplier_proxy_.in ()))
     return;
@@ -1478,7 +1462,7 @@ Test_Consumer::push (const RtecEventComm::EventSet& events)
 }
 
 void
-Test_Consumer::disconnect_push_consumer (void)
+Test_Consumer::disconnect_push_consumer ()
 {
 }
 

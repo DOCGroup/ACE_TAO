@@ -20,7 +20,6 @@
 #include "ace/Containers.h"
 
 
-
 int
 run_main (int, ACE_TCHAR *[])
 {

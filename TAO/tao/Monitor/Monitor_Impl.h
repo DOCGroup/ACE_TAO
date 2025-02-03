@@ -48,7 +48,6 @@ public:
       const ::Monitor::ConstraintStructList & constraint);
 
 private:
-
   /// Use an ORB reference to convert strings to objects and shutdown
   /// the application.
   CORBA::ORB_var orb_;

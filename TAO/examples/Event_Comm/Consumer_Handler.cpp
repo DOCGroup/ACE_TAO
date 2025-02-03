@@ -1,15 +1,10 @@
 #include "Consumer_Handler.h"
 #include "tao/ORB_Core.h"
 
-Consumer_Handler::Consumer_Handler (void)
+Consumer_Handler::Consumer_Handler ()
   : receiver_ (0),
     notifier_ (0),
     shutdowncallback (0)
-{
-  // No-Op.
-}
-
-Consumer_Handler::~Consumer_Handler (void)
 {
   // No-Op.
 }
@@ -76,7 +71,7 @@ Consumer_Handler::init (int argc,
 }
 
 int
-Consumer_Handler::get_notifier (void)
+Consumer_Handler::get_notifier ()
 {
   try
     {
@@ -109,13 +104,13 @@ Consumer_Handler::get_notifier (void)
 }
 
 void
-Consumer_Handler::close (void)
+Consumer_Handler::close ()
 {
   this->orb_->shutdown ();
 }
 
 void
-Consumer_Handler::shutdown (void)
+Consumer_Handler::shutdown ()
 {
   ACE_ASSERT (this->shutdowncallback != 0);
 
@@ -123,7 +118,7 @@ Consumer_Handler::shutdown (void)
 }
 
 int
-Consumer_Handler::run (void)
+Consumer_Handler::run ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "Running the Consumer...\n"));
@@ -140,7 +135,7 @@ Consumer_Handler::run (void)
 }
 
 ACE_Reactor*
-Consumer_Handler::reactor(void)
+Consumer_Handler::reactor()
 {
   // @@ Please see if there's a way to get to the Reactor without
   // using the TAO_ORB_Core_instance().
@@ -148,13 +143,13 @@ Consumer_Handler::reactor(void)
 }
 
 Event_Comm::Consumer_ptr
-Consumer_Handler::receiver (void)
+Consumer_Handler::receiver ()
 {
   return this->receiver_.in ();
 }
 
 Event_Comm::Notifier_ptr
-Consumer_Handler::notifier (void)
+Consumer_Handler::notifier ()
 {
   return this->notifier_.in ();
 }

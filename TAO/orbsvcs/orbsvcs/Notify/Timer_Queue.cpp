@@ -2,7 +2,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Notify_Timer_Queue::TAO_Notify_Timer_Queue (void)
+TAO_Notify_Timer_Queue::TAO_Notify_Timer_Queue ()
 {
 }
 
@@ -11,7 +11,7 @@ TAO_Notify_Timer_Queue::~TAO_Notify_Timer_Queue ()
 }
 
 void
-TAO_Notify_Timer_Queue::release (void)
+TAO_Notify_Timer_Queue::release ()
 {
   delete this;
   //@@ inform factory
@@ -36,7 +36,7 @@ TAO_Notify_Timer_Queue::cancel_timer (long timer_id)
 }
 
 ACE_Timer_Queue&
-TAO_Notify_Timer_Queue::impl (void)
+TAO_Notify_Timer_Queue::impl ()
 {
   return this->timer_queue_;
 }

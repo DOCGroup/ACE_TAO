@@ -11,9 +11,9 @@ public:
 
   virtual void the_operation(CORBA::Long & x);
 
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
-  char * create_and_activate_server(void);
+  char * create_and_activate_server();
 private:
   CORBA::ORB_var orb_;
 };

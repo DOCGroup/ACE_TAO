@@ -39,7 +39,7 @@ class TAO_PortableServer_Export TAO_Network_Priority_Hook
   : public ACE_Service_Object
 {
 public:
-  virtual ~TAO_Network_Priority_Hook(void);
+  virtual ~TAO_Network_Priority_Hook();
 
   virtual void update_network_priority (TAO_Root_POA& poa,
                                         TAO_POA_Policy_Set& poa_policy_set);
@@ -49,8 +49,7 @@ public:
                                    TAO_Root_POA& poa);
 
   /// Static initializer ensures the factory is loaded
-  static int initialize (void);
-
+  static int initialize ();
 };
 
 

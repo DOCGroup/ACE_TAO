@@ -42,7 +42,7 @@ public:
   virtual ~TAO_Notify_AnyEvent_No_Copy ();
 
   /// Get the event type.
-  virtual const TAO_Notify_EventType& type (void) const;
+  virtual const TAO_Notify_EventType& type () const;
 
   CORBA::Boolean do_match (CosNotifyFilter::Filter_ptr filter) const;
 
@@ -74,10 +74,9 @@ public:
 
 protected:
   /// returns a copy of this event allocated from the heap
-  virtual TAO_Notify_Event * copy (void) const;
+  virtual TAO_Notify_Event * copy () const;
 
 protected:
-
   // This must be a pointer rather than a reference, because the derived
   // class needs to redirect it to a new copy
   const CORBA::Any* event_;

@@ -41,7 +41,6 @@ class TAO_Naming_Serv_Export TAO_Storable_Naming_Context_Activator :
   public virtual PortableServer::ServantActivator
 {
 public:
-
   /**
    * The constructor takes arguments needed to create a
    * TAO_Storable_Naming_Context and TAO_Naming_Context on demand.
@@ -72,7 +71,6 @@ public:
                             CORBA::Boolean remaining_activations);
 
 private:
-
   CORBA::ORB_ptr orb_;
 
   /// The factory for constructing the persistence mechanism for the contexts

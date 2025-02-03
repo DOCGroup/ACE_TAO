@@ -63,7 +63,6 @@ associate_state (CORBA::ORB_ptr orb, CORBA::Any const& state)
 
 
     pic->set_slot (state_slot_id (), state);
-
   }
   catch (const CORBA::Exception& ex)
   {
@@ -107,14 +106,14 @@ ReplicaController (CORBA::ORB_ptr orb)
   ACE_DEBUG ((LM_DEBUG, "Becoming a member with id %s\n",
               uuid.to_string ()->c_str ()));
 
-  ACE_auto_ptr_reset (group_, new ACE_TMCast::Group (address, uuid.to_string ()->c_str ()));
+  group_.reset (new ACE_TMCast::Group (address, uuid.to_string ()->c_str ()));
 
   int r = ACE_Thread_Manager::instance ()->spawn (
     &ReplicaController::listener_thunk, this);
 
   if (r < 0)
   {
-    orb_->shutdown (0);
+    orb_->shutdown (false);
   }
 }
 
@@ -189,7 +188,7 @@ listener ()
     ACE_DEBUG ((LM_DEBUG, "Group::InsufficienSpace\n"));
   }
 
-  orb_->shutdown (0);
+  orb_->shutdown (false);
 }
 
 PortableServer::POA_ptr ReplicaController::
@@ -466,7 +465,7 @@ namespace
 
 
 char*
-ReplicaController::name (void)
+ReplicaController::name ()
 {
   return CORBA::string_dup ("ReplicaController");
 }
@@ -484,7 +483,7 @@ ReplicaController::send_other (
 }
 
 void
-ReplicaController::destroy (void)
+ReplicaController::destroy ()
 {
 }
 
@@ -492,7 +491,6 @@ void
 ReplicaController::receive_request_service_contexts (
     PortableInterceptor::ServerRequestInfo_ptr)
 {
-
 }
 
 void

@@ -12,7 +12,7 @@ Messenger_i::send_message (const char *user_name, const char *subject,
   message = CORBA::string_dup (reply);
   if (++this->count_ == 6)
     {
-      this->orb_->shutdown (0);
+      this->orb_->shutdown (false);
     }
   return true;
 }

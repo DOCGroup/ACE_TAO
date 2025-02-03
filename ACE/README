@@ -18,9 +18,9 @@ The ADAPTIVE Communication Environment (ACE) is an object-oriented
 communication software.  ACE provides a rich set of reusable C++
 wrappers and frameworks that perform common communication software
 tasks across a range of OS platforms, including Win32/Win64, most
-versions of UNIX (e.g., SunOS, HP-UX , AIX, Linux, NetBSD, and FreeBSD),
+versions of UNIX (e.g., SunOS, Linux, NetBSD, and FreeBSD),
 real-time operating systems (e.g., VxWorks, Chorus, LynxOS, and QNX),
-OpenVMS, and MVS OpenEdition.  A single source tree is used for all
+and MVS OpenEdition.  A single source tree is used for all
 these platforms and porting ACE to other platforms is relatively easy.
 
 The communication software components provided by ACE include event
@@ -43,7 +43,7 @@ ACE is currently used in commercial projects and products by dozens of
 companies including Ericsson, Bellcore, Siemens, Motorola, Kodak,
 Boeing, Lucent, DEC, Lockheed Martin, and SAIC.  Commercial support
 for ACE is available from several companies as listed at
-http://www.dre.vanderbilt.edu/~schmidt/commercial-support.html
+https://github.com/DOCGroup/ACE_TAO/wiki/ACE-and-TAO-Commercial-support
 
 ----------------------------------------
 
@@ -62,8 +62,7 @@ interfaces:
       WaitForMultipleObjects and I/O completion ports;
 
 . Multi-threading and synchronization
-  -- e.g., Solaris threads, POSIX Pthreads, and Win32
-      threads;
+  -- e.g., POSIX Pthreads, and Win32 threads;
 
 . Explicit dynamic linking
   -- e.g., dlopen/dlsym on UNIX and LoadLibrary/GetProc
@@ -178,15 +177,11 @@ http://www.dre.vanderbilt.edu/~schmidt/ACE.html
 
 ----------------------------------------
 
-ACE MAILING LIST AND NEWSGROUP
+ACE GITHUB ISSUES AND DISCUSSIONS
 
-A mailing list, ace-users@list.isis.vanderbilt.edu, is available for
+Github issues and discussions are available at
+https://github.com/DOCGroup/ACE_TAO for
 discussing bug fixes, enhancements, and porting issues regarding ACE.
-Please send mail to me at the
-ace-users-request@list.isis.vanderbilt.edu if you'd like to join the
-mailing list. Please see
-http://www.dre.vanderbilt.edu/~schmidt/ACE-mail.html for details on
-how to subscribe to the mailing list.
 
 ----------------------------------------
 
@@ -198,15 +193,10 @@ BIBLIOGRAPHY file contains information on where to obtain articles
 that describe the ACE wrappers and the ADAPTIVE system in more detail.
 
 The current release has been tested extensively, but if you find any
-bugs, please report them to the ACE mailing list
-ace-users@list.isis.vanderbilt.edu using the
+bugs, please open a issue or discussion at
+https://github.com/DOCGroup/ACE_TAO using the
 $ACE_ROOT/PROBLEM-REPORT-FORM.  Please use the same form to submit
-questions, comments, etc.  To ensure that you see responses, please do
-one of the following:
-
-1) Subscribe to the ace-users mail list, by sending email with
-    contents "subscribe ace-users" to
-    ace-users-request@list.isis.vanderbilt.edu.
+questions, comments, etc.
 
 ----------------------------------------
 

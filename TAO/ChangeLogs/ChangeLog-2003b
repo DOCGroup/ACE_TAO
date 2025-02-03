@@ -66,7 +66,7 @@ Wed Jun 11 15:58:39 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
         * tao/Transport_Cache_Manager.cpp (make_idle_i): Fixes for BUG
           1528. Please see
 
-          http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1528
+          http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=1528
 
           for the motivation. This checkin just removes the call to find
           () on the map. It just changes the state of the map entry to
@@ -1337,7 +1337,7 @@ Mon May 19 13:02:16 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
 Mon May 19 11:05:26 2003  Ossama Othman  <ossama@dre.vanderbilt.edu>
 
-        From Knut-Håvard Aksnes <knut@orion.no>
+        From Knut-Hï¿½vard Aksnes <knut@orion.no>
         * orbsvcs/orbsvcs/SSLIOP/SSLIOP_Acceptor.cpp (parse_options):
 
           Fixed support for "hostname_in_ior" endpoint option.  [Bug 1370]
@@ -7585,7 +7585,7 @@ Thu Apr  3 13:13:24 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
         * tao/Muxed_TMS.cpp (connection_closed): Fix for bug 1482. Please
           refer to
 
-          http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1482
+          http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=1482
 
           for details. The patch does the following
 
@@ -7620,7 +7620,7 @@ Thu Apr  3 10:57:23 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
         * tests/Bug_1482_Regression: A regression test for bug
 
-          http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1482
+          http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=1482
 
           Please see the bugzilla entry for details.
 

@@ -24,7 +24,7 @@ be_visitor_valuetype_obv_cs::be_visitor_valuetype_obv_cs (
 {
 }
 
-be_visitor_valuetype_obv_cs::~be_visitor_valuetype_obv_cs (void)
+be_visitor_valuetype_obv_cs::~be_visitor_valuetype_obv_cs ()
 {
 }
 
@@ -40,20 +40,7 @@ be_visitor_valuetype_obv_cs::visit_valuetype (be_valuetype *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
-
-  // Default constructor.
-  *os << node->full_obv_skel_name () << "::";
-
-  if (! node->is_nested ())
-    {
-      *os << "OBV_";
-    }
-
-  *os << node->local_name () << " (void)" << be_nl;
-  *os << ": require_truncation_ (false)" << be_nl
-      << "{}" << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   // Initializing constructor.
   if (node->has_member ())
@@ -71,7 +58,6 @@ be_visitor_valuetype_obv_cs::visit_valuetype (be_valuetype *node)
       this->gen_obv_init_constructor_args (node, index);
 
       *os << ")" << be_uidt << be_uidt << be_uidt_nl
-          << ": require_truncation_ (false)" << be_nl
           << "{" << be_idt;
 
       this->gen_obv_init_constructor_inits (node);
@@ -86,7 +72,7 @@ be_visitor_valuetype_obv_cs::visit_valuetype (be_valuetype *node)
     {
       *os << "OBV_";
     }
-  *os << node->local_name () << " (void)" << be_nl
+  *os << node->local_name () << " ()" << be_nl
       << "{}";
 
   // Virtual _copy_value() only provided in OBV_* class when
@@ -100,9 +86,9 @@ be_visitor_valuetype_obv_cs::visit_valuetype (be_valuetype *node)
     {
       *os << be_nl_2
           << "::CORBA::ValueBase *" << be_nl
-          << node->full_obv_skel_name () << "::_copy_value (void)" << be_nl
+          << node->full_obv_skel_name () << "::_copy_value ()" << be_nl
           << "{" << be_idt_nl
-          << "::CORBA::ValueBase *ret_val = 0;" << be_nl
+          << "::CORBA::ValueBase *ret_val {};" << be_nl
           << "ACE_NEW_THROW_EX (" << be_idt_nl
           << "ret_val," << be_nl;
       if (! node->is_nested ())
@@ -118,8 +104,8 @@ be_visitor_valuetype_obv_cs::visit_valuetype (be_valuetype *node)
           *os << be_uidt_nl;
         }
       *os << ")," << be_nl
-          << "::CORBA::NO_MEMORY ()" << be_uidt_nl
-          << ");" << be_nl
+          << "::CORBA::NO_MEMORY ());" << be_uidt
+          << be_nl
           << "return ret_val;" << be_uidt_nl
           << "}";
     }
@@ -128,21 +114,24 @@ be_visitor_valuetype_obv_cs::visit_valuetype (be_valuetype *node)
   // or the valuetype is abstract.
   if (!node->opt_accessor ())
     {
-      *os << be_nl_2 << "::CORBA::Boolean" << be_nl
-          << node->full_obv_skel_name ()
-          << "::_tao_marshal__" << node->flat_name ()
-          <<    " (TAO_OutputCDR &strm, TAO_ChunkInfo& ci) const" << be_nl
-          << "{" << be_idt_nl
-          << "return _tao_marshal_state (strm, ci);" << be_uidt_nl
-          << "}" << be_nl_2;
+      if (be_global->cdr_support ())
+        {
+          *os << be_nl_2 << "::CORBA::Boolean" << be_nl
+              << node->full_obv_skel_name()
+              << "::_tao_marshal__" << node->flat_name()
+              << " (TAO_OutputCDR &strm, TAO_ChunkInfo& ci) const" << be_nl
+              << "{" << be_idt_nl
+              << "return _tao_marshal_state (strm, ci);" << be_uidt_nl
+              << "}" << be_nl_2;
 
-      *os << "::CORBA::Boolean" << be_nl
-          << node->full_obv_skel_name ()
-          << "::_tao_unmarshal__" << node->flat_name ()
-          << " (TAO_InputCDR &strm, TAO_ChunkInfo& ci)" << be_nl
-          << "{" << be_idt_nl
-          << "return _tao_unmarshal_state (strm, ci);" << be_uidt_nl
-          << "}";
+          *os << "::CORBA::Boolean" << be_nl
+              << node->full_obv_skel_name()
+              << "::_tao_unmarshal__" << node->flat_name()
+              << " (TAO_InputCDR &strm, TAO_ChunkInfo& ci)" << be_nl
+              << "{" << be_idt_nl
+              << "return _tao_unmarshal_state (strm, ci);" << be_uidt_nl
+              << "}";
+        }
 
       if (this->visit_scope (node) == -1)
         {
@@ -160,7 +149,7 @@ be_visitor_valuetype_obv_cs::visit_valuetype (be_valuetype *node)
         {
           *os << be_nl_2 << "void" << be_nl
               << node->full_obv_skel_name ()
-              << "::_add_ref (void)" << be_nl
+              << "::_add_ref ()" << be_nl
               << "{" << be_idt_nl
               << "this->::CORBA::DefaultValueRefCountBase::_add_ref ();"
               << be_uidt_nl
@@ -168,7 +157,7 @@ be_visitor_valuetype_obv_cs::visit_valuetype (be_valuetype *node)
 
           *os << be_nl << "void" << be_nl
               << node->full_obv_skel_name ()
-              << "::_remove_ref (void)" << be_nl
+              << "::_remove_ref ()" << be_nl
               << "{" << be_idt_nl
               << "this->::CORBA::DefaultValueRefCountBase::_remove_ref ();"
               << be_uidt_nl
@@ -190,7 +179,7 @@ be_visitor_valuetype_obv_cs::visit_field (be_field *node)
 {
   be_visitor_context ctx = (*this->ctx_);
   be_visitor_valuetype_field_cs visitor (&ctx);
-  visitor.in_obv_space_ = 1;
+  visitor.in_obv_space_ = true;
 
   if (visitor.visit_field (node) == -1)
     {
@@ -214,10 +203,10 @@ be_visitor_valuetype_obv_cs::gen_obv_init_base_constructor_args (
   AST_Type *parent = node->inherits_concrete ();
 
   // Generate for inherited members first.
-  if (parent != 0)
+  if (parent != nullptr)
     {
       be_valuetype *be_parent =
-        be_valuetype::narrow_from_decl (parent);
+        dynamic_cast<be_valuetype*> (parent);
       this->gen_obv_init_base_constructor_args (be_parent, index);
     }
 
@@ -227,11 +216,11 @@ be_visitor_valuetype_obv_cs::gen_obv_init_base_constructor_args (
     {
       // be_attribute inherits from be_field
       // so we have to also screen out attributes
-      be_field *f = be_field::narrow_from_decl (si.item ());
+      be_field *f = dynamic_cast<be_field*> (si.item ());
       be_attribute *attr =
-        be_attribute::narrow_from_decl (si.item ());
+        dynamic_cast<be_attribute*> (si.item ());
 
-      if (f == 0 || attr != 0)
+      if (f == nullptr || attr != nullptr)
         {
           continue;
         }
@@ -250,9 +239,9 @@ be_visitor_valuetype_obv_cs::gen_obv_init_constructor_inits (
   AST_Type *parent = node->inherits_concrete ();
 
   // Generate for inherited members first.
-  if (parent != 0)
+  if (parent != nullptr)
     {
-      be_valuetype *be_parent = be_valuetype::narrow_from_decl (parent);
+      be_valuetype *be_parent = dynamic_cast<be_valuetype*> (parent);
       this->gen_obv_init_constructor_inits (be_parent);
     }
 
@@ -262,11 +251,11 @@ be_visitor_valuetype_obv_cs::gen_obv_init_constructor_inits (
     {
       // be_attribute inherits from be_field
       // so we have to also screen out attributes
-      be_field *f = be_field::narrow_from_decl (si.item ());
+      be_field *f = dynamic_cast<be_field*> (si.item ());
       be_attribute *attr =
-        be_attribute::narrow_from_decl (si.item ());
+        dynamic_cast<be_attribute*> (si.item ());
 
-      if (f == 0 || attr != 0)
+      if (f == nullptr || attr != nullptr)
         {
           continue;
         }
@@ -287,10 +276,10 @@ be_visitor_valuetype_obv_cs::gen_obv_call_base_constructor_args (
 
   // Generate for inherited members first.
   AST_Type *parent = node->inherits_concrete ();
-  if (parent != 0)
+  if (parent != nullptr)
     {
       be_valuetype *be_parent =
-        be_valuetype::narrow_from_decl (parent);
+        dynamic_cast<be_valuetype*> (parent);
       this->gen_obv_call_base_constructor_args (be_parent, index);
     }
 
@@ -301,8 +290,8 @@ be_visitor_valuetype_obv_cs::gen_obv_call_base_constructor_args (
     {
       // be_attribute inherits from be_field
       // so we have to also screen out attributes
-      be_field *f = be_field::narrow_from_decl (si.item ());
-      if (f && !be_attribute::narrow_from_decl (si.item ()))
+      be_field *f = dynamic_cast<be_field*> (si.item ());
+      if (f && !dynamic_cast<be_attribute*> (si.item ()))
         {
           if (index++) // comma before 2nd onwards
             *os << ",";
@@ -311,10 +300,10 @@ be_visitor_valuetype_obv_cs::gen_obv_call_base_constructor_args (
           *os << be_nl;
 
           // Check the member type for nested valuetypes
-          be_type *t = be_type::narrow_from_decl (f->field_type ());
-          if (be_valuetype_fwd::narrow_from_decl (t) ||
-              be_valuetype::narrow_from_decl (t) ||
-              be_valuebox::narrow_from_decl (t) )
+          be_type *t = dynamic_cast<be_type*> (f->field_type ());
+          if (dynamic_cast<be_valuetype_fwd*> (t) ||
+              dynamic_cast<be_valuetype*> (t) ||
+              dynamic_cast<be_valuebox*> (t) )
             {
               // Nested valuetypes/boxes need to be deep copied also
               *os << "(" << f->local_name () << " () ?" << be_idt_nl

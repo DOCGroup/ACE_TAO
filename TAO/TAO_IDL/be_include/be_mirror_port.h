@@ -31,13 +31,11 @@ public:
     UTL_ScopedName *n,
     AST_PortType *porttype_ref);
 
-  virtual ~be_mirror_port (void);
+  virtual ~be_mirror_port ();
 
-  virtual void destroy (void);
+  virtual void destroy ();
 
   virtual int accept (be_visitor *visitor);
-
-  DEF_NARROW_FROM_DECL (be_mirror_port);
 };
 
 #endif // BE_MIRROR_PORT_H

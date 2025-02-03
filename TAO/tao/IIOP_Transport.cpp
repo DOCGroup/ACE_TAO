@@ -27,28 +27,18 @@ TAO_IIOP_Transport::TAO_IIOP_Transport (TAO_IIOP_Connection_Handler *handler,
 {
 }
 
-TAO_IIOP_Transport::~TAO_IIOP_Transport (void)
+TAO_IIOP_Transport::~TAO_IIOP_Transport ()
 {
 }
 
-/*
- * Hook to copy over all concrete implementations
- * of Transport class from this class to the base
- * class as a part of the specialization.
- * All enhancements to the IIOP_Transport
- * class, i.e., addition of new concrete non virtual
- * methods should be added within this hook.
- */
-
-//@@ TAO_TRANSPORT_SPL_COPY_HOOK_START
 ACE_Event_Handler *
-TAO_IIOP_Transport::event_handler_i (void)
+TAO_IIOP_Transport::event_handler_i ()
 {
   return this->connection_handler_;
 }
 
 TAO_Connection_Handler *
-TAO_IIOP_Transport::connection_handler_i (void)
+TAO_IIOP_Transport::connection_handler_i ()
 {
   return this->connection_handler_;
 }
@@ -92,7 +82,7 @@ TAO_IIOP_Transport::sendfile (TAO_MMAP_Allocator * allocator,
 
   // If we don't have an allocator, fallback to the regular way of sending
   // data
-  if (allocator == 0)
+  if (allocator == nullptr)
     return this->send (iov, iovcnt, bytes_transferred, this->io_timeout(dc));
 
   // We can only use sendfile when all data is coming from the mmap allocator,
@@ -217,7 +207,7 @@ TAO_IIOP_Transport::send_request (TAO_Stub *stub,
 
   if (this->send_message (stream,
                           stub,
-                          0,
+                          nullptr,
                           message_semantics,
                           max_wait_time) == -1)
     {
@@ -351,7 +341,7 @@ TAO_IIOP_Transport::get_listen_point (
   TAO_IIOP_Acceptor *iiop_acceptor =
     dynamic_cast<TAO_IIOP_Acceptor *> (acceptor);
 
-  if (iiop_acceptor == 0)
+  if (iiop_acceptor == nullptr)
     return -1;
 
   // Get the array of endpoints serviced by TAO_IIOP_Acceptor
@@ -366,8 +356,7 @@ TAO_IIOP_Transport::get_listen_point (
   // been established. If this is wrong, please correct me.
 
   ACE_INET_Addr local_addr;
-  if (this->connection_handler_->peer ().get_local_addr (local_addr)
-      == -1)
+  if (this->connection_handler_->peer ().get_local_addr (local_addr) == -1)
     {
       TAOLIB_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("TAO (%P|%t) - IIOP_Transport::get_listen_point, ")
@@ -436,10 +425,6 @@ TAO_IIOP_Transport::get_listen_point (
     }
   return 1;
 }
-//@@ TAO_TRANSPORT_SPL_COPY_HOOK_END
-/*
- * End of copy hook.
- */
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

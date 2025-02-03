@@ -3,7 +3,6 @@
 #include "orbsvcs/Log_Macros.h"
 
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_EC_Sched_Filter::
@@ -27,25 +26,25 @@ TAO_EC_Sched_Filter::
   this->adopt_child (this->body_);
 }
 
-TAO_EC_Sched_Filter::~TAO_EC_Sched_Filter (void)
+TAO_EC_Sched_Filter::~TAO_EC_Sched_Filter ()
 {
   delete this->body_;
 }
 
 TAO_EC_Filter::ChildrenIterator
-TAO_EC_Sched_Filter::begin (void) const
+TAO_EC_Sched_Filter::begin () const
 {
   return this->body_->begin ();
 }
 
 TAO_EC_Filter::ChildrenIterator
-TAO_EC_Sched_Filter::end (void) const
+TAO_EC_Sched_Filter::end () const
 {
   return this->body_->end ();
 }
 
 int
-TAO_EC_Sched_Filter::size (void) const
+TAO_EC_Sched_Filter::size () const
 {
   return this->body_->size ();
 }
@@ -117,13 +116,13 @@ TAO_EC_Sched_Filter::push_nocopy (RtecEventComm::EventSet &event,
 }
 
 void
-TAO_EC_Sched_Filter::clear (void)
+TAO_EC_Sched_Filter::clear ()
 {
   this->body_->clear ();
 }
 
 CORBA::ULong
-TAO_EC_Sched_Filter::max_event_size (void) const
+TAO_EC_Sched_Filter::max_event_size () const
 {
   return this->body_->max_event_size ();
 }
@@ -172,7 +171,7 @@ TAO_EC_Sched_Filter::get_qos_info (TAO_EC_QOS_Info& qos_info)
 }
 
 void
-TAO_EC_Sched_Filter::init_rt_info (void)
+TAO_EC_Sched_Filter::init_rt_info ()
 {
   if (this->rt_info_computed_)
     return;
@@ -208,7 +207,6 @@ TAO_EC_Sched_Filter::init_rt_info (void)
       ORBSVCS_DEBUG ((LM_DEBUG, "[%s] ----> [%s]\n",
                   info->entry_point.in (),
                   this->name_.c_str ()));
-
     }
 #endif /* 0 */
 

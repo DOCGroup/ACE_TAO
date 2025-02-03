@@ -4,7 +4,6 @@
  * Date: 26-Jan-2006
  */
 
-#include <ace/Auto_Ptr.h>
 #include <ace/INET_Addr.h>
 #include <ace/Log_Msg.h>
 #include <ace/SOCK_Acceptor.h>
@@ -12,7 +11,7 @@
 #include <ace/SOCK_Stream.h>
 #include <ace/streams.h>
 #include <ace/OS_NS_stdlib.h>
-
+#include <memory>
 #include "common.h"
 
 /**
@@ -30,7 +29,6 @@ int printUsage(ACE_TCHAR *arg) {
 }
 
 int ACE_TMAIN(int argc, ACE_TCHAR **argv) {
-
     // size and count for transmissions
     int size = 0, count = -1;
 
@@ -52,7 +50,7 @@ int ACE_TMAIN(int argc, ACE_TCHAR **argv) {
                          ACE_TEXT ("data buffer.\n")), -1);
 
     // put someData in a kind of auto_ptr so it gets deleted automatically
-    ACE_Auto_Array_Ptr<char> pSomeData(someData);
+    std::unique_ptr<char[]> pSomeData(someData);
 
     // parse the <count> argument if available
     if ((argc == 3) && (((count = ACE_OS::strtol(argv[2], 0, 10)) < 1) ||
@@ -67,7 +65,6 @@ int ACE_TMAIN(int argc, ACE_TCHAR **argv) {
 
     // -1 is running indefinitely
     while ((count == -1) || (count-- != 0)) {
-
         // some output, that we know something is happening
         //ACE_DEBUG((LM_DEBUG, ACE_TEXT("%N:%l: Passes left: %i\n"), count));
         ACE_DEBUG((LM_DEBUG, ACE_TEXT(".")));
@@ -81,7 +78,6 @@ int ACE_TMAIN(int argc, ACE_TCHAR **argv) {
         }
 
         try {
-
             // send the request to the server (number of MiB in the next call)
             // Note: only use the sizeof and pointer to int on compatible
             //       platforms (i.e. little-endian/big-endian, data type size)
@@ -100,7 +96,6 @@ int ACE_TMAIN(int argc, ACE_TCHAR **argv) {
 
             // server answer, 'K" indicates a positive answer
             if (answer == 'K') {
-
                 // send a huge message to the server
                 if (stream.send_n(someData, size, &connTimeout) != size) {
                   ACE_ERROR((LM_ERROR, ACE_TEXT("%N:%l: Failed to send ")

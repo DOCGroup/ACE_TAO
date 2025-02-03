@@ -1,4 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
 #include "tao/Strategies/DIOP_Acceptor.h"
 
 #if defined (TAO_HAS_DIOP) && (TAO_HAS_DIOP != 0)
@@ -11,7 +10,6 @@
 #include "tao/Codeset_Manager.h"
 #include "tao/CDR.h"
 
-#include "ace/Auto_Ptr.h"
 #include "ace/OS_NS_string.h"
 
 #if !defined(__ACE_INLINE__)
@@ -19,12 +17,15 @@
 #endif /* __ACE_INLINE__ */
 
 #include "ace/os_include/os_netdb.h"
+#include <cstring>
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_DIOP_Acceptor::TAO_DIOP_Acceptor (void)
+TAO_DIOP_Acceptor::TAO_DIOP_Acceptor ()
   : TAO_Acceptor (TAO_TAG_DIOP_PROFILE),
     addrs_ (0),
+    port_span_ (1),
     hosts_ (0),
     endpoint_count_ (0),
     version_ (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR),
@@ -38,7 +39,7 @@ TAO_DIOP_Acceptor::TAO_DIOP_Acceptor (void)
 {
 }
 
-TAO_DIOP_Acceptor::~TAO_DIOP_Acceptor (void)
+TAO_DIOP_Acceptor::~TAO_DIOP_Acceptor ()
 {
   // Make sure we are closed before we start destroying the
   // strategies.
@@ -219,7 +220,7 @@ TAO_DIOP_Acceptor::is_collocated (const TAO_Endpoint *endpoint)
       // this code by comparing the IP address instead.  That would
       // trigger the following bug:
       //
-      // http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1220
+      // http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=1220
       //
       if (endp->port () == this->addrs_[i].get_port_number ()
           && ACE_OS::strcmp (endp->host (), this->hosts_[i]) == 0)
@@ -230,7 +231,7 @@ TAO_DIOP_Acceptor::is_collocated (const TAO_Endpoint *endpoint)
 }
 
 int
-TAO_DIOP_Acceptor::close (void)
+TAO_DIOP_Acceptor::close ()
 {
   return 0;
 }
@@ -393,27 +394,56 @@ int
 TAO_DIOP_Acceptor::open_i (const ACE_INET_Addr& addr,
                            ACE_Reactor *reactor)
 {
-  ACE_NEW_RETURN (this->connection_handler_,
-                  TAO_DIOP_Connection_Handler (this->orb_core_),
-                  -1);
+  unsigned short const requested_port = addr.get_port_number ();
+  ACE_UINT32 const last_port = ACE_MIN (requested_port + this->port_span_ - 1,
+                                        ACE_MAX_DEFAULT_PORT);
 
-  this->connection_handler_->local_addr (addr);
-  int result = this->connection_handler_->open_server ();
-  if (result == -1)
+  ACE_INET_Addr a(addr);
+  bool found_a_port = false;
+  for (ACE_UINT32 p = requested_port; p <= last_port; p++)
     {
-      delete this->connection_handler_;
-      return result;
+      ACE_NEW_RETURN (this->connection_handler_,
+                      TAO_DIOP_Connection_Handler (this->orb_core_),
+                      -1);
+
+      if (TAO_debug_level > 5)
+        TAOLIB_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("TAO (%P|%t) - DIOP_Acceptor::open_i, ")
+                    ACE_TEXT ("trying to listen on port %d\n"), p));
+      // Now try to actually open on that port
+      a.set_port_number ((u_short)p);
+      this->connection_handler_->local_addr (a);
+      int result = this->connection_handler_->open_server ();
+      if (result == -1)
+        {
+          delete this->connection_handler_;
+          continue;
+        }
+
+      // Register only with a valid handle
+      result =
+        reactor->register_handler (this->connection_handler_,
+                                   ACE_Event_Handler::READ_MASK);
+      if (result == -1)
+        {
+          // Close the handler (this will also delete connection_handler_).
+          this->connection_handler_->close ();
+          continue;
+        }
+
+      found_a_port = true;
+      break;
     }
 
-  // Register only with a valid handle
-  result =
-    reactor->register_handler (this->connection_handler_,
-                               ACE_Event_Handler::READ_MASK);
-  if (result == -1)
+  if (! found_a_port)
     {
-      // Close the handler (this will also delete connection_handler_).
-      this->connection_handler_->close ();
-      return result;
+      if (TAO_debug_level > 0)
+        TAOLIB_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("TAO (%P|%t) - DIOP_Acceptor::open_i, ")
+                    ACE_TEXT ("cannot open acceptor in port range (%d,%d)")
+                    ACE_TEXT ("- %p\n"),
+                    requested_port, last_port, ACE_TEXT("")));
+      return -1;
     }
 
   // Connection handler ownership now belongs to the Reactor.
@@ -516,7 +546,7 @@ TAO_DIOP_Acceptor::parse_address (const char *address,
     specified_hostname.clear();
   }
 
-  const char *port_separator_loc = ACE_OS::strchr (address, ':');
+  const char *port_separator_loc = std::strchr (address, ':');
   char tmp_host[MAXHOSTNAMELEN + 1];
   tmp_host[0] = '\0';
   bool host_defaulted = port_separator_loc == address;
@@ -533,7 +563,7 @@ TAO_DIOP_Acceptor::parse_address (const char *address,
     {
       // In this case we have to find the end of the numeric address and
       // start looking for the port separator from there.
-      char const * const cp_pos = ACE_OS::strchr (address, ']');
+      char const * const cp_pos = std::strchr (address, ']');
       if (cp_pos == 0)
         {
           // No valid IPv6 address specified.
@@ -757,7 +787,7 @@ TAO_DIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core, int def_type)
 
   // The instantiation for this template is in
   // tao/DIOP_Connector.cpp.
-  ACE_Auto_Basic_Array_Ptr<ACE_INET_Addr> safe_if_addrs (if_addrs);
+  std::unique_ptr<ACE_INET_Addr[]> safe_if_addrs (if_addrs);
 
 #if defined (ACE_HAS_IPV6)
   bool ipv4_only = def_type == AF_INET;
@@ -895,7 +925,7 @@ TAO_DIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core, int def_type)
 }
 
 CORBA::ULong
-TAO_DIOP_Acceptor::endpoint_count (void)
+TAO_DIOP_Acceptor::endpoint_count ()
 {
   return this->endpoint_count_;
 }
@@ -1037,6 +1067,20 @@ TAO_DIOP_Acceptor::parse_options (const char *str)
                                  ACE_TEXT ("TAO (%P|%t) - Invalid DIOP endpoint format: ")
                                  ACE_TEXT ("endpoint priorities no longer supported.\n")),
                                 -1);
+            }
+          else if (name == "portspan")
+            {
+              int const range = ACE_OS::atoi (value.c_str ());
+              // @@ What's the lower bound on the range?  zero, or one?
+              if (range < 1 || range > ACE_MAX_DEFAULT_PORT)
+                TAOLIB_ERROR_RETURN ((LM_ERROR,
+                                   ACE_TEXT ("TAO (%P|%t) Invalid DIOP endpoint ")
+                                   ACE_TEXT ("portspan: <%C>\n")
+                                   ACE_TEXT ("Valid range 1 -- %d\n"),
+                                   value.c_str (), ACE_MAX_DEFAULT_PORT),
+                                  -1);
+
+              this->port_span_ = static_cast <u_short> (range);
             }
           else
             {

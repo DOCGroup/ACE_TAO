@@ -32,10 +32,10 @@ class RtEC_Based_CosEC : public CosEC_ServantBase
 {
  public:
   /// Constructor.
-  RtEC_Based_CosEC (void);
+  RtEC_Based_CosEC ();
 
   /// Destructor.
-  virtual ~RtEC_Based_CosEC (void);
+  virtual ~RtEC_Based_CosEC ();
 
   /// Parses the command line arguments.
   int parse_args (int argc, ACE_TCHAR *argv []);
@@ -46,32 +46,32 @@ class RtEC_Based_CosEC : public CosEC_ServantBase
 
   /// run the COS Event Service.
   /// Returns 0 on success, -1 on error.
-  int run (void);
+  int run ();
 
   /// Shutdown the COS Event Service.
   /// Returns 0 on success, -1 on error.
-  void shutdown (void);
+  void shutdown ();
 
 protected:
   // = Methods from CosEC_ServantBase
   /// Create a local rtec.
   virtual POA_RtecEventChannelAdmin::EventChannel_ptr
-  create_rtec (void);
+  create_rtec ();
 
   /// Activates the rtec.
-  virtual void activate_rtec (void);
+  virtual void activate_rtec ();
 
   /// Deactivates the rtec.
-  virtual void deactivate_rtec (void);
+  virtual void deactivate_rtec ();
 
   /// initialize the ORB.
   void init_ORB (int& argc, ACE_TCHAR *argv []);
 
   /// Resolve the naming service.
-  void resolve_naming_service (void);
+  void resolve_naming_service ();
 
   /// Locate a rtec.
-  void locate_rtec (void);
+  void locate_rtec ();
 
   // = Data members
   /// The name we use to register with the Naming Service.

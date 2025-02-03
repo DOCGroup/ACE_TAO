@@ -39,13 +39,13 @@ public:
   typedef TAO_ESF_Proxy_Collection<PROXY> COLLECTION;
 
   /// Constructor
-  TAO_Notify_Event_Map_Entry_T (void);
+  TAO_Notify_Event_Map_Entry_T ();
 
   /// Destructor
-  ~TAO_Notify_Event_Map_Entry_T (void);
+  ~TAO_Notify_Event_Map_Entry_T ();
 
   /// Init - Allocates collection
-  void init (void);
+  void init ();
 
   /// Connect
   void connected (PROXY* proxy);
@@ -54,17 +54,17 @@ public:
   void disconnected (PROXY* proxy);
 
   /// Collection accessor
-  COLLECTION* collection (void);
+  COLLECTION* collection ();
 
   /// Count accessor
-  int count (void);
+  int count ();
 
   ///= Reference counting methods.
   // Incr the ref count.
-  CORBA::ULong _incr_refcnt (void);
+  CORBA::ULong _incr_refcnt ();
 
   // Decr the ref count. This object is destroyed when the count is 0.
-  CORBA::ULong _decr_refcnt (void);
+  CORBA::ULong _decr_refcnt ();
 
 protected:
   /// The Collection
@@ -83,13 +83,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #include "orbsvcs/Notify/Event_Map_Entry_T.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "orbsvcs/Notify/Event_Map_Entry_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Event_Map_Entry_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 

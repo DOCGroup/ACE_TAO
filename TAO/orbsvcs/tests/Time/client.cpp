@@ -2,7 +2,6 @@
 #include "ace/Log_Msg.h"
 
 
-
 // This function runs the Time Service client test.
 
 int

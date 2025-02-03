@@ -17,8 +17,7 @@
 #include "tao/Base_Transport_Property.h"
 
 #include "ace/OS_NS_string.h"
-
-//@@ TAO_CONNECTOR_SPL_INCLUDE_ADD_HOOK
+#include <cstring>
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Transport_Connector.inl"
@@ -67,13 +66,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Connector
 TAO_Connector::TAO_Connector (CORBA::ULong tag)
-  : active_connect_strategy_ (0),
+  : active_connect_strategy_ (nullptr),
     tag_ (tag),
-    orb_core_ (0)
+    orb_core_ (nullptr)
 {
 }
 
-TAO_Connector::~TAO_Connector (void)
+TAO_Connector::~TAO_Connector ()
 {
   delete this->active_connect_strategy_;
 }
@@ -82,14 +81,14 @@ TAO_Profile *
 TAO_Connector::corbaloc_scan (const char *str, size_t &len)
 {
   if (this->check_prefix (str) != 0)
-    return 0;
-  const char *comma_pos = ACE_OS::strchr (str,',');
-  const char *slash_pos = ACE_OS::strchr (str,'/');
-  if (comma_pos == 0 && slash_pos == 0)
+    return nullptr;
+  const char *comma_pos = std::strchr (str,',');
+  const char *slash_pos = std::strchr (str,'/');
+  if (comma_pos == nullptr && slash_pos == nullptr)
     {
-      len = ACE_OS::strlen (str);
+      len = std::strlen (str);
     }
-  else if (comma_pos == 0 || comma_pos > slash_pos)
+  else if (comma_pos == nullptr || comma_pos > slash_pos)
     len = (slash_pos - str);
   else len = comma_pos - str;
   return this->make_profile();
@@ -137,7 +136,7 @@ TAO_Connector::make_mprofile (const char *string, TAO_MProfile &mprofile)
 
   ACE_CString ior;
 
-  ior.set (string, ACE_OS::strlen (string), 1);
+  ior.set (string, std::strlen (string), 1);
 
   // Find out where the protocol ends
   ACE_CString::size_type ior_index = ior.find ("://");
@@ -238,8 +237,7 @@ TAO_Connector::make_mprofile (const char *string, TAO_MProfile &mprofile)
           // Initialize a Profile using the individual endpoint
           // string.
           // @@ Not exception safe!  We need a TAO_Profile_var!
-          profile->parse_string (endpoint.c_str ()
-                                );
+          profile->parse_string (endpoint.c_str ());
 
           // Give up ownership of the profile.
           if (mprofile.give_profile (profile) == -1)
@@ -266,7 +264,7 @@ TAO_Connector::make_mprofile (const char *string, TAO_MProfile &mprofile)
 }
 
 int
-TAO_Connector::supports_parallel_connects(void) const
+TAO_Connector::supports_parallel_connects() const
 {
   return 0; // by default, we don't support parallel connection attempts;
 }
@@ -276,7 +274,7 @@ TAO_Connector::make_parallel_connection (TAO::Profile_Transport_Resolver *,
                                          TAO_Transport_Descriptor_Interface &,
                                          ACE_Time_Value *)
 {
-  return 0;
+  return nullptr;
 }
 
 
@@ -288,14 +286,14 @@ TAO_Connector::parallel_connect (TAO::Profile_Transport_Resolver *r,
   if (this->supports_parallel_connects() == 0)
     {
       errno = ENOTSUP;
-      return 0;
+      return nullptr;
     }
 
   errno = 0; // need to clear errno to ensure a stale enotsup is not set
-  if (desc == 0)
-    return 0;
+  if (desc == nullptr)
+    return nullptr;
   TAO_Endpoint *root_ep = desc->endpoint();
-  TAO_Transport *base_transport = 0;
+  TAO_Transport *base_transport = nullptr;
 
   TAO::Transport_Cache_Manager &tcm =
     this->orb_core ()->lane_resources ().transport_cache ();
@@ -303,8 +301,8 @@ TAO_Connector::parallel_connect (TAO::Profile_Transport_Resolver *r,
   // Iterate through the endpoints. Since find_transport takes a
   // Transport Descriptor rather than an endpoint, we must create a
   // local TDI for each endpoint. The first one found will be used.
-  for (TAO_Endpoint *ep = root_ep->next_filtered (this->orb_core(),0);
-       ep != 0;
+  for (TAO_Endpoint *ep = root_ep->next_filtered (this->orb_core(),nullptr);
+       ep != nullptr;
        ep = ep->next_filtered(this->orb_core(),root_ep))
     {
       TAO_Base_Transport_Property desc2(ep,0);
@@ -332,13 +330,13 @@ TAO_Connector::parallel_connect (TAO::Profile_Transport_Resolver *r,
   // when one succeeds the rest are cancelled or closed.
 
   unsigned int endpoint_count = 0;
-  for (TAO_Endpoint *ep = root_ep->next_filtered (this->orb_core(),0);
-       ep != 0;
+  for (TAO_Endpoint *ep = root_ep->next_filtered (this->orb_core(),nullptr);
+       ep != nullptr;
        ep = ep->next_filtered(this->orb_core(),root_ep))
     if (this->set_validate_endpoint (ep) == 0)
       ++endpoint_count;
   if (endpoint_count == 0)
-    return 0;
+    return nullptr;
   return this->make_parallel_connection (r,*desc,timeout);
 }
 
@@ -407,7 +405,7 @@ TAO_Connector::wait_for_transport (TAO::Profile_Transport_Resolver *r,
       // connection, the wait() call will block forever (or until the ORB
       // thread leaves the reactor, which may not happen).
       int result = 0;
-      if (timeout == 0 && !r->blocked_connect ())
+      if (timeout == nullptr && !r->blocked_connect ())
         {
           ACE_Time_Value tv (0, 500);
           result = this->active_connect_strategy_->wait (transport, &tv);
@@ -491,7 +489,7 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
     {
       // Find a connection in the cache
       // If transport found, reference count is incremented on assignment
-      TAO_Transport *base_transport = 0;
+      TAO_Transport *base_transport = nullptr;
       size_t busy_count = 0;
       TAO::Transport_Cache_Manager::Find_Result found =
           tcm.find_transport (desc,
@@ -570,7 +568,7 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
                                   "TAO (%P|%t) - Transport_Connector::connect,"
                                   " wait for completion failed\n"));
                     }
-                  return 0;
+                  return nullptr;
                 }
 
               if (base_transport->is_connected () &&
@@ -585,7 +583,7 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
                                   "in the reactor.\n",
                                   base_transport->id ()));
                     }
-                  return 0;
+                  return nullptr;
                 }
 
               tg.clear ();
@@ -614,7 +612,7 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
                   if (!base_transport->register_if_necessary ())
                     {
                         base_transport->remove_reference ();
-                        return 0;
+                        return nullptr;
                     }
                 }
 
@@ -641,9 +639,9 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
         }
       else
         {
-          if (desc == 0 ||
+          if (desc == nullptr ||
               (this->set_validate_endpoint (desc->endpoint ()) == -1))
-            return 0;
+            return nullptr;
 
           // @todo: This is not the right place for this! (bugzilla 3023)
           // Purge connections (if necessary)
@@ -657,13 +655,13 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
             {
               // we aren't going to use the transport returned from the cache
               // (if any)
-              if (base_transport != 0)
+              if (base_transport != nullptr)
                 {
                   base_transport->remove_reference ();
                 }
 
               base_transport = this->make_connection (r, *desc, timeout);
-              if (base_transport == 0)
+              if (base_transport == nullptr)
                 {
                   if (TAO_debug_level > 4)
                     {
@@ -671,7 +669,7 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
                         ACE_TEXT ("TAO (%P|%t) - Transport_Connector::")
                         ACE_TEXT ("connect, make_connection failed\n")));
                     }
-                  return 0;
+                  return nullptr;
                 }
 
               if (TAO_debug_level > 4)
@@ -817,7 +815,7 @@ TAO_Connector::wait_for_connection_completion (
                 {
                   if (errno == ETIME)
                     {
-                      if (timeout == 0)
+                      if (timeout == nullptr)
                         {
                           // There was an error during connecting and the errno was
                           // ETIME.  We didn't pass in a timeout, so there's
@@ -876,7 +874,7 @@ TAO_Connector::wait_for_connection_completion (
       // Set transport to zero, it is not usable, and the reference
       // count we added above was decremented by the base connector
       // handling the connection failure.
-      transport = 0;
+      transport = nullptr;
       return false;
     }
   // Connection not ready yet but we can use this transport, if
@@ -929,7 +927,7 @@ TAO_Connector::wait_for_connection_completion (
   if (r->blocked_connect ())
     {
       result = this->active_connect_strategy_->wait (mev, timeout);
-      the_winner = 0;
+      the_winner = nullptr;
     }
   else
     {
@@ -966,7 +964,7 @@ TAO_Connector::wait_for_connection_completion (
   this->cleanup_pending (the_winner, transport, count);
 
   // In case of errors.
-  if (the_winner == 0)
+  if (the_winner == nullptr)
     {
       // Report that making the connection failed, don't print errno
       // because we touched the reactor and errno could be changed
@@ -998,7 +996,7 @@ TAO_Connector::wait_for_connection_completion (
       // Forget the return value. We are busted anyway. Try our best
       // here.
       (void) this->cancel_svc_handler (the_winner->connection_handler ());
-      the_winner = 0;
+      the_winner = nullptr;
       return false;
     }
 
@@ -1009,16 +1007,16 @@ TAO_Connector::wait_for_connection_completion (
 }
 
 int
-TAO_Connector::create_connect_strategy (void)
+TAO_Connector::create_connect_strategy ()
 {
-  if (this->active_connect_strategy_ == 0)
+  if (this->active_connect_strategy_ == nullptr)
     {
       this->active_connect_strategy_ =
         this->orb_core_->client_factory ()->create_connect_strategy (
           this->orb_core_);
     }
 
-  if (this->active_connect_strategy_ == 0)
+  if (this->active_connect_strategy_ == nullptr)
     {
       return -1;
     }
@@ -1029,7 +1027,7 @@ TAO_Connector::create_connect_strategy (void)
 bool
 TAO_Connector::new_connection_is_ok (size_t busy_count)
 {
-  if (this->orb_core_ == 0)
+  if (this->orb_core_ == nullptr)
     return true;
 
   unsigned int mux_limit = this->orb_core_->resource_factory ()
@@ -1090,7 +1088,5 @@ TAO_Connector::check_connection_closure (
 
   return result;
 }
-
-//@@ TAO_CONNECTOR_SPL_METHODS_ADD_HOOK
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -1,15 +1,12 @@
-
 //=============================================================================
 /**
  *  @file    typecode.idl
  *
  *  Test a sequence of typecodes
  *
- *
  *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
 //=============================================================================
-
 
 #include "orb.idl"
 

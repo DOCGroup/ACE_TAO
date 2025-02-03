@@ -41,31 +41,31 @@ TAO::Storable_Base::setstate (TAO::Storable_Base::Storable_State state)
 }
 
 ACE_INLINE TAO::Storable_Base::Storable_State
-TAO::Storable_Base::rdstate (void) const
+TAO::Storable_Base::rdstate () const
 {
   return this->state_;
 }
 
 ACE_INLINE bool
-TAO::Storable_Base::good (void) const
+TAO::Storable_Base::good () const
 {
   return (this->state_ == goodbit);
 }
 
 ACE_INLINE bool
-TAO::Storable_Base::bad (void) const
+TAO::Storable_Base::bad () const
 {
   return (this->state_ & badbit);
 }
 
 ACE_INLINE bool
-TAO::Storable_Base::eof (void) const
+TAO::Storable_Base::eof () const
 {
   return (this->state_ & eofbit);
 }
 
 ACE_INLINE bool
-TAO::Storable_Base::fail (void) const
+TAO::Storable_Base::fail () const
 {
   return (this->state_ & failbit);
 }

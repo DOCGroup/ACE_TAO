@@ -186,7 +186,6 @@ DualEC_Supplier::init ()
 
     this->naming_context_ =
       CosNaming::NamingContext::_narrow (namingObj_var.in ());
-
   }
   catch (const CORBA::Exception& ex)
   {
@@ -266,7 +265,7 @@ DualEC_Supplier::init ()
 // Private class that implements a termination servant.
 
 void
-DualEC_Supplier::Terminator::shutdown (void)
+DualEC_Supplier::Terminator::shutdown ()
 {
   TAO_ORB_Core_instance ()->orb ()->shutdown ();
 }
@@ -349,10 +348,8 @@ DualEC_Supplier::run_nav_thread (void *arg)
 
         if (nav_iter.done ())
           nav_iter.first ();
-
       }
       while (++total_sent < sup->total_messages_);
-
     }
   catch (const CORBA::Exception&)
     {
@@ -418,10 +415,8 @@ DualEC_Supplier::run_weap_thread (void *arg)
 
         if (weap_iter.done ())
           weap_iter.first ();
-
       }
       while (++total_sent < sup->total_messages_);
-
     }
   catch (const CORBA::Exception&)
     {
@@ -431,12 +426,11 @@ DualEC_Supplier::run_weap_thread (void *arg)
 }
 
 
-
 // Create two scheduling service instances, register
 // them with the Naming Service.
 
 int
-DualEC_Supplier::create_schedulers (void)
+DualEC_Supplier::create_schedulers ()
 {
   // @@TBD - look at a command line modified setting,
   // create either a runtime or a config scheduler for
@@ -548,8 +542,6 @@ DualEC_Supplier::create_schedulers (void)
                  this->rt_info_dummy_lo_.quantum,
                  this->rt_info_dummy_lo_.threads,
                  static_cast<RtecScheduler::Info_Type_t> (this->rt_info_dummy_lo_.info_type));
-
-
         }
     }
   catch (const CORBA::Exception& ex)
@@ -566,7 +558,7 @@ DualEC_Supplier::create_schedulers (void)
 // them with the Naming Service.
 
 int
-DualEC_Supplier::create_event_channels (void)
+DualEC_Supplier::create_event_channels ()
 {
   try
     {
@@ -601,7 +593,6 @@ DualEC_Supplier::create_event_channels (void)
 
       naming_context_->bind (this->channel_lo_name_,
                                      this->ec_lo_.in ());
-
   }
   catch (const CORBA::Exception& ex)
   {
@@ -613,7 +604,7 @@ DualEC_Supplier::create_event_channels (void)
 }
 
 void
-DualEC_Supplier::compute_schedules (void)
+DualEC_Supplier::compute_schedules ()
 {
   try
     {
@@ -662,7 +653,7 @@ DualEC_Supplier::compute_schedules (void)
 }
 
 void
-DualEC_Supplier::start_generating_events (void)
+DualEC_Supplier::start_generating_events ()
 {
   try
     {
@@ -1013,7 +1004,7 @@ DualEC_Supplier::get_options (int argc, ACE_TCHAR *argv [])
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-  // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
+  // Enable FIFO scheduling
   int min_priority =
     ACE_Sched_Params::priority_min (ACE_SCHED_FIFO);
 
@@ -1030,7 +1021,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           ACE_ERROR ((LM_ERROR,
                       "%s: ACE_OS::sched_params failed\n", argv[0]));
     }
-
 
 
   try

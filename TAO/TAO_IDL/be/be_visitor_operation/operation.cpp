@@ -20,7 +20,7 @@ be_visitor_operation::be_visitor_operation (be_visitor_context *ctx)
 {
 }
 
-be_visitor_operation::~be_visitor_operation (void)
+be_visitor_operation::~be_visitor_operation ()
 {
 }
 
@@ -31,12 +31,12 @@ be_visitor_operation::void_return_type (be_type *bt)
   if (bt->node_type () == AST_Decl::NT_pre_defined)
     {
       be_predefined_type * const bpd =
-        be_predefined_type::narrow_from_decl (bt);
+        dynamic_cast<be_predefined_type*> (bt);
 
       if (!bpd)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "TAO_IDL (%N:%l) "
-                           "be_predefined_type::narrow_from_decl "
+                           "dynamic_cast<be_predefined_type*> "
                            "failed\n"),
                           0);
 
@@ -75,14 +75,14 @@ be_visitor_operation::count_non_out_parameters (be_operation *node)
        si.next ())
     {
       be_argument *bd =
-        be_argument::narrow_from_decl (si.item ());
+        dynamic_cast<be_argument*> (si.item ());
 
       // We do not generate insertion operators for valuetypes
       // yet. Do not include them in the count.
       be_valuetype *vt =
-        be_valuetype::narrow_from_decl (bd->field_type ());
+        dynamic_cast<be_valuetype*> (bd->field_type ());
 
-      if ((bd->direction () != AST_Argument::dir_OUT) && vt == 0)
+      if ((bd->direction () != AST_Argument::dir_OUT) && vt == nullptr)
         {
           ++count;
         }
@@ -106,7 +106,7 @@ be_visitor_operation::is_amh_exception_holder (be_interface *node)
     {
       //ACE_DEBUG ((LM_DEBUG, "Passed first test of amh_excepholder\n"));
       const char *last_E = ACE_OS::strrchr (node->full_name (), 'E');
-      if (last_E != 0
+      if (last_E != nullptr
           && ACE_OS::strcmp (last_E, "ExceptionHolder") == 0)
         {
           //ACE_DEBUG ((LM_DEBUG, "be_visitor_operation: Passed second test of amh_excepholder\n"));
@@ -140,13 +140,13 @@ be_visitor_operation::gen_stub_operation_body (
       ? this->ctx_->attribute ()->defined_in ()
       : node->defined_in ();
 
-  be_interface *intf = be_interface::narrow_from_scope (s);
+  be_interface *intf = dynamic_cast<be_interface*> (s);
 
-  if (intf == 0)
+  if (intf == nullptr)
     {
-      be_porttype *pt = be_porttype::narrow_from_scope (s);
+      be_porttype *pt = dynamic_cast<be_porttype*> (s);
 
-      if (pt == 0)
+      if (pt == nullptr)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("be_visitor_operation::")
@@ -213,18 +213,18 @@ be_visitor_operation::gen_stub_operation_body (
   *os << be_nl_2
       << "TAO::Argument *_the_tao_operation_signature [] =" << be_idt_nl
       << "{" << be_idt_nl
-      << "&_tao_retval";
+      << "std::addressof(_tao_retval)";
 
-  AST_Argument *arg = 0;
+  AST_Argument *arg = nullptr;
 
   for (UTL_ScopeActiveIterator arg_list_iter (node, UTL_Scope::IK_decls);
        ! arg_list_iter.is_done ();
        arg_list_iter.next ())
     {
-      arg = AST_Argument::narrow_from_decl (arg_list_iter.item ());
+      arg = dynamic_cast<AST_Argument*> (arg_list_iter.item ());
 
       *os << "," << be_nl
-          << "&_tao_" << arg->local_name ();
+          << "std::addressof(_tao_" << arg->local_name () << ")";
     }
 
   *os << be_uidt_nl
@@ -241,7 +241,7 @@ be_visitor_operation::gen_stub_operation_body (
 
   *os << be_nl_2
       << "TAO::" << (node->is_abstract () ? "AbstractBase_" : "" )
-      << "Invocation_Adapter _tao_call (" << be_idt << be_idt_nl
+      << "Invocation_Adapter _invocation_call (" << be_idt << be_idt_nl
       << "this," << be_nl
       << "_the_tao_operation_signature," << be_nl
       << node->argument_count () + 1 << "," << be_nl
@@ -321,7 +321,7 @@ be_visitor_operation::gen_stub_operation_body (
   // case covered as well.
   if (node->exceptions ())
     {
-      *os << "_tao_call.invoke (" << be_idt << be_idt_nl
+      *os << "_invocation_call.invoke (" << be_idt << be_idt_nl
           << "_tao_" << node->flat_name ()
           << "_exceptiondata," << be_nl
           << node->exceptions ()->length () << be_uidt_nl
@@ -329,7 +329,7 @@ be_visitor_operation::gen_stub_operation_body (
     }
   else
     {
-      *os << "_tao_call.invoke (0, 0);";
+      *os << "_invocation_call.invoke (nullptr, 0);";
     }
 
   if (!this->void_return_type (return_type))
@@ -408,7 +408,7 @@ be_visitor_operation::gen_stub_body_arglist (be_operation *node,
                                              TAO_OutStream *os,
                                              bool ami)
 {
-  AST_Argument *arg = 0;
+  AST_Argument *arg = nullptr;
   UTL_ScopeActiveIterator arg_decl_iter (node, UTL_Scope::IK_decls);
 
   if (ami)
@@ -419,7 +419,7 @@ be_visitor_operation::gen_stub_body_arglist (be_operation *node,
 
   for (; ! arg_decl_iter.is_done (); arg_decl_iter.next ())
     {
-      arg = AST_Argument::narrow_from_decl (arg_decl_iter.item ());
+      arg = dynamic_cast<AST_Argument*> (arg_decl_iter.item ());
 
       *os << be_nl
           << "TAO::Arg_Traits< ";
@@ -459,11 +459,11 @@ be_visitor_operation::gen_arg_template_param_name (AST_Decl *scope,
                                                    AST_Type *bt,
                                                    TAO_OutStream *os)
 {
-  AST_Typedef *alias = 0;
+  AST_Typedef *alias = nullptr;
 
   if (bt->node_type () == AST_Decl::NT_typedef)
     {
-      alias = AST_Typedef::narrow_from_decl (bt);
+      alias = dynamic_cast<AST_Typedef*> (bt);
     }
 
   AST_Decl::NodeType nt = bt->unaliased_type ()->node_type ();
@@ -472,7 +472,7 @@ be_visitor_operation::gen_arg_template_param_name (AST_Decl *scope,
   if (nt == AST_Decl::NT_string || nt == AST_Decl::NT_wstring)
     {
       AST_String *s =
-        AST_String::narrow_from_decl (bt->unaliased_type  ());
+        dynamic_cast<AST_String*> (bt->unaliased_type  ());
       bound = s->max_size ()->ev ()->u.ulval;
 
       // If the (w)string is unbounded, code is generated below by the
@@ -481,7 +481,7 @@ be_visitor_operation::gen_arg_template_param_name (AST_Decl *scope,
         {
           *os << "::TAO::";
 
-          if (alias != 0)
+          if (alias != nullptr)
             {
               *os << alias->local_name () << "_" << bound;
             }
@@ -513,7 +513,7 @@ be_visitor_operation::gen_arg_template_param_name (AST_Decl *scope,
   if (nt == AST_Decl::NT_pre_defined)
     {
       AST_PredefinedType *pdt =
-        AST_PredefinedType::narrow_from_decl (ut);
+        dynamic_cast<AST_PredefinedType*> (ut);
 
       switch (pdt->pt ())
         {
@@ -528,6 +528,12 @@ be_visitor_operation::gen_arg_template_param_name (AST_Decl *scope,
             return;
           case AST_PredefinedType::PT_wchar:
             *os << "::ACE_InputCDR::to_wchar";
+            return;
+          case AST_PredefinedType::PT_uint8:
+            *os << "::ACE_InputCDR::to_uint8";
+            return;
+          case AST_PredefinedType::PT_int8:
+            *os << "::ACE_InputCDR::to_int8";
             return;
           case AST_PredefinedType::PT_void:
             break;

@@ -24,8 +24,8 @@
 class Svc_Handler : public ACE_Svc_Handler <ACE_SPIPE_STREAM, ACE_NULL_SYNCH>, public ACE_Handler
 {
 public:
-  Svc_Handler (void);
-  ~Svc_Handler (void);
+  Svc_Handler ();
+  ~Svc_Handler ();
 
   virtual int open (void *);
 
@@ -41,17 +41,17 @@ private:
 class IPC_Server : public ACE_Oneshot_Acceptor<Svc_Handler, ACE_SPIPE_ACCEPTOR>
 {
 public:
-  IPC_Server (void);
-  ~IPC_Server (void);
+  IPC_Server ();
+  ~IPC_Server ();
 
   // = Dynamic linking hooks.
   virtual int init (int argc, ACE_TCHAR *argv[]);
   // Initialize the network server.
 
-  virtual int fini (void);
+  virtual int fini ();
   // Close down the server.
 
-  virtual int svc (void);
+  virtual int svc ();
   // Run the interative service.
 
 private:

@@ -1,5 +1,8 @@
 #include "Default_Dispatcher_Impl.h"
+
 #include "ace/Sched_Params.h"
+#include <utility>
+#include <memory>
 
 #if ! defined (__ACE_INLINE__)
 #include "Default_Dispatcher_Impl.inl"
@@ -7,7 +10,6 @@
 
 namespace Kokyu
 {
-
 Default_Dispatcher_Impl::Default_Dispatcher_Impl ()
   : activated_ (0)
 {
@@ -28,13 +30,13 @@ Default_Dispatcher_Impl::init_i (const Dispatcher_Attributes& attrs)
 
   this->ntasks_ = size;
 
-  Dispatcher_Task_Auto_Ptr * tasks_array=0;
+  Dispatcher_Task_Auto_Ptr * tasks_array = 0;
   ACE_NEW_RETURN (tasks_array, Dispatcher_Task_Auto_Ptr[ntasks_], -1);
 
   //ACE_DEBUG ((LM_DEBUG, "after new on task array\n" ));
   tasks_.reset(tasks_array);
 
-  //ACE_DEBUG ((LM_DEBUG, "task array auto_ptr set\n" ));
+  //ACE_DEBUG ((LM_DEBUG, "task array unique_ptr set\n" ));
 
   ConfigInfoSet& config_set =
     const_cast<ConfigInfoSet&> (attrs.config_info_set_);
@@ -50,12 +52,8 @@ Default_Dispatcher_Impl::init_i (const Dispatcher_Attributes& attrs)
                       Dispatcher_Task (*config,
                                        ACE_Thread_Manager::instance()),
                       -1);
-      auto_ptr<Dispatcher_Task> tmp_task_auto_ptr (task);
-      tasks_[i++] = tmp_task_auto_ptr;
-      //I couldn't use reset because MSVC6 auto_ptr does not have reset method.
-      //So in configurations where the auto_ptr maps to the std::auto_ptr instead
-      //of ACE auto_ptr, this would be a problem.
-      //tasks_[i++].reset (task);
+      std::unique_ptr<Dispatcher_Task> tmp_task_unique_ptr (task);
+      tasks_[i++] = std::move(tmp_task_unique_ptr);
     }
 
   this->thr_creation_flags_ = attrs.thread_creation_flags ();

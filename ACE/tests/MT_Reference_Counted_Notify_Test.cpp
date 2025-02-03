@@ -37,20 +37,18 @@ static int debug = 1;
 class Reference_Counted_Event_Handler : public ACE_Event_Handler
 {
 public:
+  Reference_Counted_Event_Handler ();
 
-  Reference_Counted_Event_Handler (void);
+  ~Reference_Counted_Event_Handler () override;
 
-  ~Reference_Counted_Event_Handler (void);
+  int handle_input (ACE_HANDLE) override;
 
-  int handle_input (ACE_HANDLE);
+  ACE_Event_Handler::Reference_Count add_reference () override;
 
-  ACE_Event_Handler::Reference_Count add_reference (void);
-
-  ACE_Event_Handler::Reference_Count remove_reference (void);
-
+  ACE_Event_Handler::Reference_Count remove_reference () override;
 };
 
-Reference_Counted_Event_Handler::Reference_Counted_Event_Handler (void)
+Reference_Counted_Event_Handler::Reference_Counted_Event_Handler ()
 {
   this->reference_counting_policy ().value
     (ACE_Event_Handler::Reference_Counting_Policy::ENABLED);
@@ -60,24 +58,24 @@ Reference_Counted_Event_Handler::Reference_Counted_Event_Handler (void)
       ((LM_DEBUG,
         ACE_TEXT ("Reference count in Reference_Counted_Event_Handler() ")
         ACE_TEXT ("is %d\n"),
-        this->reference_count_.value ()));
+        this->reference_count_.load ()));
 }
 
-Reference_Counted_Event_Handler::~Reference_Counted_Event_Handler (void)
+Reference_Counted_Event_Handler::~Reference_Counted_Event_Handler ()
 {
   if (debug)
     ACE_DEBUG
       ((LM_DEBUG,
         ACE_TEXT ("Reference count in ~Reference_Counted_Event_Handler() ")
         ACE_TEXT ("is %d\n"),
-        this->reference_count_.value ()));
+        this->reference_count_.load ()));
 
-  if (0 != this->reference_count_.value ())
+  if (0 != this->reference_count_.load ())
     ACE_ERROR
       ((LM_ERROR,
         ACE_TEXT ("Reference count in ~Reference_Counted_Event_Handler() ")
         ACE_TEXT ("should be 0 but is %d\n"),
-        this->reference_count_.value ()));
+        this->reference_count_.load ()));
 }
 
 int
@@ -88,20 +86,20 @@ Reference_Counted_Event_Handler::handle_input (ACE_HANDLE)
       ((LM_DEBUG,
         ACE_TEXT ("Reference count in Reference_Counted_Event_Handler::")
         ACE_TEXT ("handle_input() is %d\n"),
-        this->reference_count_.value ()));
+        this->reference_count_.load ()));
 
-  if (2 != this->reference_count_.value ())
+  if (2 != this->reference_count_.load ())
     ACE_ERROR
       ((LM_ERROR,
         ACE_TEXT ("Reference count in Reference_Counted_Event_Handler::")
         ACE_TEXT ("handle_input() should be 2 but is %d\n"),
-        this->reference_count_.value ()));
+        this->reference_count_.load ()));
 
   return 0;
 }
 
 ACE_Event_Handler::Reference_Count
-Reference_Counted_Event_Handler::add_reference (void)
+Reference_Counted_Event_Handler::add_reference ()
 {
   ACE_Event_Handler::Reference_Count reference_count =
     this->ACE_Event_Handler::add_reference ();
@@ -109,13 +107,13 @@ Reference_Counted_Event_Handler::add_reference (void)
   if (debug)
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("Reference count after add_reference() is %d\n"),
-                this->reference_count_.value ()));
+                this->reference_count_.load ()));
 
   return reference_count;
 }
 
 ACE_Event_Handler::Reference_Count
-Reference_Counted_Event_Handler::remove_reference (void)
+Reference_Counted_Event_Handler::remove_reference ()
 {
   ACE_Event_Handler::Reference_Count reference_count =
     this->ACE_Event_Handler::remove_reference ();
@@ -131,12 +129,11 @@ Reference_Counted_Event_Handler::remove_reference (void)
 class Simple_Event_Handler : public ACE_Event_Handler
 {
 public:
-
   Simple_Event_Handler (int notifies);
 
-  ~Simple_Event_Handler (void);
+  ~Simple_Event_Handler () override;
 
-  int handle_input (ACE_HANDLE);
+  int handle_input (ACE_HANDLE) override;
 
   int notifies_;
 };
@@ -148,7 +145,7 @@ Simple_Event_Handler::Simple_Event_Handler (int notifies)
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Simple_Event_Handler()\n")));
 }
 
-Simple_Event_Handler::~Simple_Event_Handler (void)
+Simple_Event_Handler::~Simple_Event_Handler ()
 {
   if (debug)
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("~Simple_Event_Handler()\n")));
@@ -172,12 +169,11 @@ Simple_Event_Handler::handle_input (ACE_HANDLE)
 class Event_Loop_Thread : public ACE_Task_Base
 {
 public:
-
   Event_Loop_Thread (ACE_Thread_Manager &thread_manager,
                      ACE_Reactor &reactor,
                      int extra_iterations_needed);
 
-  int svc (void);
+  int svc () override;
 
   ACE_Reactor &reactor_;
 
@@ -194,7 +190,7 @@ Event_Loop_Thread::Event_Loop_Thread (ACE_Thread_Manager &thread_manager,
 }
 
 int
-Event_Loop_Thread::svc (void)
+Event_Loop_Thread::svc ()
 {
   int counter = 0;
 

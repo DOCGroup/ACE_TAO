@@ -93,7 +93,7 @@ private:
 
   /**
    * Set to 1 if priority values increase with increasing priority,
-   * such as on Solaris and Win32, or 0 if they decrease, such as on
+   * such as on Win32, or 0 if they decrease, such as on
    * VxWorks.
    */
   int increasing_priority_;

@@ -13,13 +13,13 @@ CORBA::ServerRequest::_duplicate (CORBA::ServerRequest_ptr x)
 }
 
 ACE_INLINE CORBA::ServerRequest_ptr
-CORBA::ServerRequest::_nil (void)
+CORBA::ServerRequest::_nil ()
 {
-  return static_cast <CORBA::ServerRequest_ptr>(0);
+  return nullptr;
 }
 
 ACE_INLINE CORBA::Context_ptr
-CORBA::ServerRequest::ctx (void) const
+CORBA::ServerRequest::ctx () const
 {
   return this->ctx_;
 }
@@ -31,7 +31,7 @@ CORBA::ServerRequest::ctx (CORBA::Context_ptr ctx)
 }
 
 ACE_INLINE const char *
-CORBA::ServerRequest::operation (void) const
+CORBA::ServerRequest::operation () const
 {
   return this->orb_server_request_.operation ();
 }
@@ -43,7 +43,7 @@ CORBA::ServerRequest::_tao_lazy_evaluation (bool lazy_evaluation)
 }
 
 ACE_INLINE int
-CORBA::ServerRequest::_tao_incoming_byte_order (void) const
+CORBA::ServerRequest::_tao_incoming_byte_order () const
 {
   return this->orb_server_request_.incoming ()->byte_order ();
 }
@@ -55,7 +55,7 @@ CORBA::ServerRequest::_tao_reply_byte_order (int byte_order)
 }
 
 ACE_INLINE TAO_ServerRequest &
-CORBA::ServerRequest::_tao_server_request (void)
+CORBA::ServerRequest::_tao_server_request ()
 {
   return this->orb_server_request_;
 }

@@ -40,20 +40,20 @@ TAO_LB_LoadMinimum::TAO_LB_LoadMinimum (PortableServer::POA_ptr poa)
   TAO_LB_Random::init ();
 }
 
-TAO_LB_LoadMinimum::~TAO_LB_LoadMinimum (void)
+TAO_LB_LoadMinimum::~TAO_LB_LoadMinimum ()
 {
   delete this->load_map_;
   delete this->lock_;
 }
 
 char *
-TAO_LB_LoadMinimum::name (void)
+TAO_LB_LoadMinimum::name ()
 {
   return CORBA::string_dup ("LoadMinimum");
 }
 
 CosLoadBalancing::Properties *
-TAO_LB_LoadMinimum::get_properties (void)
+TAO_LB_LoadMinimum::get_properties ()
 {
   CosLoadBalancing::Properties * props = 0;
   ACE_NEW_THROW_EX (props,
@@ -311,7 +311,6 @@ TAO_LB_LoadMinimum::analyze_loads (
             }
           else
             {
-
               CORBA::Float percent_diff =
                 (tmp[j].value / min_load) - 1;
 
@@ -357,7 +356,7 @@ TAO_LB_LoadMinimum::analyze_loads (
 }
 
 PortableServer::POA_ptr
-TAO_LB_LoadMinimum::_default_POA (void)
+TAO_LB_LoadMinimum::_default_POA ()
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
@@ -408,7 +407,6 @@ TAO_LB_LoadMinimum::get_location (
 */
           if (load.value < min_load)
             {
-
               if (i > 0 && !ACE::is_equal (load.value, 0.0f))
                 {
                   /*
@@ -469,7 +467,6 @@ TAO_LB_LoadMinimum::get_location (
 //                         ORBSVCS_DEBUG ((LM_DEBUG, "^^^^^ PREVIOUS LOCATION\n"));
 //                       else
 //                         ORBSVCS_DEBUG ((LM_DEBUG, "^^^^^ CURRENT LOCATION\n"));
-
                     }
                   else
                     {

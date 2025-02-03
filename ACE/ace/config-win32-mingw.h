@@ -26,8 +26,8 @@
 
 #define ACE_HAS_USER_MODE_MASKS
 
-#if (__MINGW32_MAJOR_VERSION < 2)
-#  error You need a newer version (>= 2.0) of mingw32/w32api
+#if (__MINGW32_MAJOR_VERSION < 3)
+#  error You need a newer version (>= 3.0) of mingw32/w32api
 #endif
 
 // In strict ANSI mode (default when using --std=c++0x) the fileno()
@@ -36,18 +36,10 @@
 # define ACE_FILENO_EQUIVALENT ::_fileno
 #endif
 
-#if (__MINGW32_MAJOR_VERSION >= 3)
-#  define ACE_HAS_SSIZE_T
-#  undef ACE_LACKS_STRUCT_DIR
-#  undef ACE_LACKS_OPENDIR
-#  undef ACE_LACKS_CLOSEDIR
-#  undef ACE_LACKS_READDIR
-#  undef ACE_LACKS_TELLDIR
-#  undef ACE_LACKS_SEEKDIR
-#  undef ACE_LACKS_REWINDDIR
-#else
-#  define ACE_LACKS_DIRENT_H
-#endif
+#define ACE_HAS_SSIZE_T
+#undef ACE_LACKS_TELLDIR
+#undef ACE_LACKS_SEEKDIR
+#undef ACE_LACKS_REWINDDIR
 
 #if (__MINGW32_MAJOR_VERSION > 3) || ((__MINGW32_MAJOR_VERSION == 3) && (__MINGW32_MINOR_VERSION >= 15))
 # undef ACE_LACKS_USECONDS_T
@@ -92,6 +84,10 @@
 #define ACE_HAS_NONCONST_WCSDUP
 #define ACE_HAS_WINSOCK2_GQOS
 #define ACE_ISCTYPE_EQUIVALENT ::_isctype
+#define ACE_LACKS_SET_ABORT_BEHAVIOR
+#define ACE_LACKS_NLINK_T
+#define ACE_LACKS_UID_T
+#define ACE_LACKS_GID_T
 
 // We trust the user: He must have used -mpentiumpro or -mpentium
 // if that is what he wants.

@@ -30,7 +30,7 @@ class be_visitor_operation_exs : public be_visitor_scope
 public:
   be_visitor_operation_exs (be_visitor_context *ctx);
 
-  ~be_visitor_operation_exs (void);
+  ~be_visitor_operation_exs ();
 
   virtual int visit_operation (be_operation *node);
 

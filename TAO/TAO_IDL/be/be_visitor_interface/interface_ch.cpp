@@ -16,7 +16,7 @@ be_visitor_interface_ch::be_visitor_interface_ch (be_visitor_context *ctx)
 {
 }
 
-be_visitor_interface_ch::~be_visitor_interface_ch (void)
+be_visitor_interface_ch::~be_visitor_interface_ch ()
 {
 }
 
@@ -36,10 +36,9 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
 
   *os << be_nl_2;
 
-  *os << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (os);
 
-  AST_Component *c = AST_Component::narrow_from_decl (node);
+  AST_Component *c = dynamic_cast<AST_Component*> (node);
 
   // Now generate the class definition.
   *os << be_nl_2
@@ -74,7 +73,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
       << "static " << node->local_name () << "_ptr " << "_duplicate ("
       << node->local_name () << "_ptr obj);" << be_nl_2;
 
-  if (c == 0)
+  if (c == nullptr)
     {
       *os << "static void _tao_release ("
           << node->local_name () << "_ptr obj);"
@@ -91,7 +90,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
                         -1);
     }
 
-  if (c == 0)
+  if (c == nullptr)
     {
       if (! this->gen_xxx_narrow ("_unchecked_narrow", node, os))
         {
@@ -104,7 +103,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
         }
     }
 
-  *os << "static " << node->local_name () << "_ptr _nil (void);";
+  *os << "static " << node->local_name () << "_ptr _nil ();";
 
   // Generate code for the interface definition by traversing thru the
   // elements of its scope. We depend on the front-end to have made sure
@@ -133,8 +132,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
 
   *os << be_nl_2;
 
-  *os << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (os);
 
   *os << be_nl_2;
 
@@ -142,7 +140,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
   // we have to override _add_ref() to avoid ambiguity.
   if (node->has_mixed_parentage ())
     {
-      *os << "virtual void _add_ref (void);" << be_nl_2;
+      *os << "virtual void _add_ref ();" << be_nl_2;
     }
 
   // The _is_a method
@@ -151,13 +149,13 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
 
   // The _interface_repository_id method.
   *os << "virtual const char* _interface_repository_id "
-      << "(void) const;";
+      << "() const;";
 
   if (be_global->gen_static_desc_operations ())
     {
-      *os << be_nl << "static const char* _desc_repository_id (void);";
+      *os << be_nl << "static const char* _desc_repository_id ();";
 
-      *os << be_nl << "static const char* _desc_interface_name (void);";
+      *os << be_nl << "static const char* _desc_interface_name ();";
     }
 
   // The virtual marshal method, to prevent marshal of local interfaces.
@@ -171,8 +169,8 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
       *os << be_nl
           << "virtual CORBA::Boolean _tao_encode (TAO_OutputCDR &);" << be_nl
           << "virtual CORBA::Boolean _tao_decode (TAO_InputCDR &);" << be_nl
-          << "virtual TAO_Cached_Policy_Type _tao_cached_type (void) const;" << be_nl
-          << "virtual TAO_Policy_Scope _tao_scope (void) const;" << be_nl;
+          << "virtual TAO_Cached_Policy_Type _tao_cached_type () const;" << be_nl
+          << "virtual TAO_Policy_Scope _tao_scope () const;" << be_nl;
     }
 
   if (be_global->gen_ostream_operators ())
@@ -188,11 +186,10 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
     {
       // Generate the "protected" constructor so that users cannot
       // instantiate us.
-
       if (! node->is_abstract ())
         {
           *os << "// Concrete interface only." << be_nl
-              << node->local_name () << " (void);"
+              << node->local_name () << " ();"
               << be_nl_2;
         }
     }
@@ -201,7 +198,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
     {
       // Protected default constructor for abstract interfaces.
       *os << "// Abstract or local interface only." << be_nl
-          << node->local_name () << " (void);" << be_nl_2;
+          << node->local_name () << " ();" << be_nl_2;
     }
 
   if (node->is_abstract ())
@@ -218,22 +215,22 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
       if (! node->is_abstract ())
         {
           *os << "// Concrete non-local interface only." << be_nl
-              << node->local_name () << " (" << be_idt << be_idt_nl
-              << "::IOP::IOR *ior," << be_nl
-              << "TAO_ORB_Core *orb_core);" << be_uidt
-              << be_uidt_nl << be_nl;
+              << node->local_name () << " ("
+              << "::IOP::IOR *ior, "
+              << "TAO_ORB_Core *orb_core);"
+              << be_nl << be_nl;
         }
 
       *os << "// Non-local interface only." << be_nl
           << node->local_name () << " (" << be_idt << be_idt_nl
           << "TAO_Stub *objref," << be_nl
           << "::CORBA::Boolean _tao_collocated = false," << be_nl
-          << "TAO_Abstract_ServantBase *servant = 0," <<  be_nl
-          << "TAO_ORB_Core *orb_core = 0);"
+          << "TAO_Abstract_ServantBase *servant = nullptr," <<  be_nl
+          << "TAO_ORB_Core *orb_core = nullptr);"
           << be_uidt << be_uidt;
     }
 
-  if (c != 0)
+  if (c != nullptr)
     {
       // Friends declarations, component only.
       *os << be_nl_2
@@ -243,7 +240,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
 
   // Protected destructor.
   *os << be_nl_2
-      << "virtual ~" << node->local_name () << " (void);";
+      << "virtual ~" << node->local_name () << " () = default;";
 
   // Private copy constructor and assignment operator. These are not
   // allowed, hence they are private.
@@ -255,12 +252,15 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
     {
       *os << "// Private and unimplemented for concrete interfaces." << be_nl
           << node->local_name () << " (const "
-          << node->local_name () << " &);" << be_nl_2;
+          << node->local_name () << " &) = delete;" << be_nl
+          << node->local_name () << " ("
+          << node->local_name () << " &&) = delete;" << be_nl;
     }
 
-  *os << "void operator= (const " << node->local_name () << " &);";
-
-  *os << be_uidt_nl
+  *os << node->local_name ()
+      << " &operator= (const " << node->local_name () << " &) = delete;" << be_nl
+      <<  node->local_name ()
+      << " &operator= (" << node->local_name () << " &&) = delete;" << be_uidt_nl
       << "};";
 
   be_visitor_context ctx (*this->ctx_);
@@ -328,7 +328,7 @@ be_visitor_interface_ch::visit_extended_port (be_extended_port *node)
   /// original porttype, this is a way for visitors down the
   /// line to tell what scope we are actually in.
   this->ctx_->interface (
-    be_interface::narrow_from_scope (node->defined_in ()));
+    dynamic_cast<be_interface*> (node->defined_in ()));
 
   /// Will ignore everything but porttype attributes.
   int status = this->visit_scope (node->port_type ());
@@ -357,7 +357,7 @@ be_visitor_interface_ch::visit_mirror_port (be_mirror_port *node)
   /// original porttype, this is a way for visitors down the
   /// line to tell what scope we are actually in.
   this->ctx_->interface (
-    be_interface::narrow_from_scope (node->defined_in ()));
+    dynamic_cast<be_interface*> (node->defined_in ()));
 
   /// Will ignore everything but porttype attributes.
   int status = this->visit_scope (node->port_type ());
@@ -386,7 +386,7 @@ be_visitor_interface_ch::gen_abstract_ops_helper (be_interface *node,
       return 0;
     }
 
-  AST_Decl *d = 0;
+  AST_Decl *d = nullptr;
   be_visitor_context ctx;
   ctx.stream (os);
 
@@ -396,7 +396,7 @@ be_visitor_interface_ch::gen_abstract_ops_helper (be_interface *node,
     {
       d = si.item ();
 
-      if (d == 0)
+      if (d == nullptr)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("be_interface::")
@@ -407,8 +407,7 @@ be_visitor_interface_ch::gen_abstract_ops_helper (be_interface *node,
 
       if (d->node_type () == AST_Decl::NT_op)
         {
-
-          be_operation *op = be_operation::narrow_from_decl (d);
+          be_operation *op = dynamic_cast<be_operation*> (d);
           op->set_local (node->is_local ());
           ctx.state (TAO_CodeGen::TAO_OPERATION_CH);
           be_visitor_operation_ch op_visitor (&ctx);

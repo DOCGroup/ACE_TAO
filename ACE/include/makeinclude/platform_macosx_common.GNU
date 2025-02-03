@@ -27,21 +27,22 @@ CC              ?= gcc
 CXX             ?= g++
 DCCFLAGS        += -g
 DCFLAGS         += -g
-DLD		= $(CXX)
-LD		= $(CXX)
+DLD              = $(CXX)
+LD               = $(CXX)
 #LIBS += -lstdc++.6 -lSystem -lSystemStubs
 
-OCFLAGS		   += -O2
-RANLIB          = ranlib
-SOEXT			= dylib
-SOFLAGS		   += -dynamiclib
-SOBUILD			= -o $(VSHDIR)$*.dylib $<
+OCFLAGS  += -O2
+RANLIB    = ranlib
+SOEXT     = dylib
+SOFLAGS  += -dynamiclib
+SOBUILD   = -o $(VSHDIR)$*.dylib $<
 
 # Test for template instantiation, add to SOFLAGS if versioned_so set,
 # add -E to LDFLAGS if using GNU ld
 ifeq ($(findstring g++,$(CXX)),)#
   include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
 else
+  c++std ?= c++17
   include $(ACE_ROOT)/include/makeinclude/platform_clang_common.GNU
 endif
 

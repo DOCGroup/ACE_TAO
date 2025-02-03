@@ -40,7 +40,7 @@ namespace TAO
 #if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_value (CORBA::Any *any) const;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    typename S_forany::_slice_type const * arg (void) const;
+    typename S_forany::_slice_type const * arg () const;
 
   protected:
     S_forany x_;
@@ -59,9 +59,9 @@ namespace TAO
   {
   public:
     In_Var_Array_Clonable_Argument_T (const typename S_forany::_slice_type * x);
-    virtual ~In_Var_Array_Clonable_Argument_T (void);
+    virtual ~In_Var_Array_Clonable_Argument_T ();
 
-    virtual Argument* clone (void);
+    virtual Argument* clone ();
 
   private:
     bool is_clone_;
@@ -85,7 +85,7 @@ namespace TAO
 #if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_value (CORBA::Any *any) const;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    typename S_forany::_slice_type * arg (void);
+    typename S_forany::_slice_type * arg ();
 
   private:
     S_forany x_;
@@ -109,7 +109,7 @@ namespace TAO
 #if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_value (CORBA::Any *any) const;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    typename S_forany::_slice_type *& arg (void);
+    typename S_forany::_slice_type *& arg ();
 
   private:
     typename S_forany::_slice_type *& x_;
@@ -127,16 +127,16 @@ namespace TAO
   class Ret_Var_Array_Argument_T : public RetArgument
   {
   public:
-    Ret_Var_Array_Argument_T (void);
+    Ret_Var_Array_Argument_T ();
 
     virtual CORBA::Boolean demarshal (TAO_InputCDR &);
 #if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_value (CORBA::Any *any) const;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    typename S_forany::_slice_type *& arg (void);
+    typename S_forany::_slice_type *& arg ();
 
-    typename S_forany::_slice_type * excp (void);
-    typename S_forany::_slice_type * retn (void);
+    typename S_forany::_slice_type * excp ();
+    typename S_forany::_slice_type * retn ();
 
   private:
     S_var x_;
@@ -180,13 +180,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #include "tao/Var_Array_Argument_T.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "tao/Var_Array_Argument_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Var_Array_Argument_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 

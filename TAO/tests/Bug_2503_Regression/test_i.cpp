@@ -36,8 +36,8 @@ create_and_activate_server()
 }
 
 void
-test_i::shutdown (void)
+test_i::shutdown ()
 {
   if (!CORBA::is_nil (this->orb_.in ()))
-    this->orb_->shutdown (0);
+    this->orb_->shutdown (false);
 }

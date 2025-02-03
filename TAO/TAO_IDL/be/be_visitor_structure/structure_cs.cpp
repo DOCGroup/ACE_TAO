@@ -20,7 +20,7 @@ be_visitor_structure_cs::be_visitor_structure_cs (be_visitor_context *ctx)
 {
 }
 
-be_visitor_structure_cs::~be_visitor_structure_cs (void)
+be_visitor_structure_cs::~be_visitor_structure_cs ()
 {
 }
 
@@ -52,8 +52,7 @@ be_visitor_structure_cs::visit_structure (be_structure *node)
       TAO_OutStream *os = this->ctx_->stream ();
 
       *os << be_nl_2;
-      *os << "// TAO_IDL - Generated from" << be_nl
-          << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+      TAO_INSERT_COMMENT (os);
 
       *os << "void" << be_nl
           << node->name ()

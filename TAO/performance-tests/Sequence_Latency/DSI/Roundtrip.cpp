@@ -16,7 +16,7 @@ Roundtrip::invoke (CORBA::ServerRequest_ptr request)
 {
   if (ACE_OS::strcmp ("shutdown", request->operation ()) == 0)
     {
-      this->orb_->shutdown (0);
+      this->orb_->shutdown (false);
 
       return;
     }

@@ -31,16 +31,13 @@ public:
   be_valuetype_fwd (AST_Interface *dummy,
                     UTL_ScopedName *n);
 
-  virtual ~be_valuetype_fwd (void);
+  virtual ~be_valuetype_fwd ();
 
   // Visiting.
   virtual int accept (be_visitor* visitor);
 
   // Cleanup
-  virtual void destroy (void);
-
-  // Narrowing.
-  DEF_NARROW_FROM_DECL (be_valuetype_fwd);
+  virtual void destroy ();
 };
 
 #endif // if !defined

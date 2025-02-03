@@ -24,20 +24,20 @@ Test_DynStruct::Test_DynStruct (CORBA::ORB_var orb, int debug)
 {
 }
 
-Test_DynStruct::~Test_DynStruct (void)
+Test_DynStruct::~Test_DynStruct ()
 {
   CORBA::string_free (this->test_name_);
   this->test_name_ = 0;
 }
 
 const char*
-Test_DynStruct::test_name (void) const
+Test_DynStruct::test_name () const
 {
   return this->test_name_;
 }
 
 int
-Test_DynStruct::run_test (void)
+Test_DynStruct::run_test ()
 {
   Data data (this->orb_);
 
@@ -206,8 +206,7 @@ Test_DynStruct::run_test (void)
         {
           DynamicAny::DynAny_var ftc2_base =
             dynany_factory->create_dyn_any_from_type_code (
-                                DynAnyTests::_tc_test_struct_alias
-                              );
+                                DynAnyTests::_tc_test_struct_alias);
 
           ftc2 = DynamicAny::DynStruct::_narrow (ftc2_base.in ());
 
@@ -315,8 +314,7 @@ Test_DynStruct::run_test (void)
 
       DynamicAny::DynAny_var sm_base =
         dynany_factory->create_dyn_any_from_type_code (
-            DynAnyTests::_tc_test_struct
-          );
+            DynAnyTests::_tc_test_struct);
 
       DynamicAny::DynStruct_var sm =
         DynamicAny::DynStruct::_narrow (sm_base.in ());

@@ -45,7 +45,7 @@ protected:
   virtual int open (void *a = 0);
   virtual int close (u_long flags = 0);
   virtual int put (ACE_Message_Block *msg, ACE_Time_Value * = 0);
-  virtual int svc (void);
+  virtual int svc ();
 
   // Dynamic linking hooks inherited from Peer_Router.
   virtual int info (ACE_TCHAR **info_string, size_t length) const;

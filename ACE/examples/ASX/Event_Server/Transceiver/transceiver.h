@@ -5,53 +5,51 @@
 #include "ace/SOCK_Stream.h"
 #include "ace/Svc_Handler.h"
 
+// Generate and receives messages from the event server.
+//
+// This class is both a consumer and supplier of events, i.e.,
+// it's a ``transceiver.''
 class Event_Transceiver : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 {
-  // = TITLE
-  //     Generate and receives messages from the event server.
-  //
-  // = DESCRIPTION
-  //     This class is both a consumer and supplier of events, i.e.,
-  //     it's a ``transceiver.''
 public:
-  Event_Transceiver (int argc, ACE_TCHAR *argv[]);
   // Performs the actual initialization.
+  Event_Transceiver (int argc, ACE_TCHAR *argv[]);
 
-  Event_Transceiver (void);
   // No-op constructor (required by the <ACE_Connector>).
+  Event_Transceiver ();
 
   // = Svc_Handler hook called by the <ACE_Connector>.
-  virtual int open (void *);
   // Initialize the transceiver when we are connected.
+  virtual int open (void *);
 
   // = Demultplexing hooks from the <ACE_Reactor>.
-  virtual int handle_input (ACE_HANDLE);
   // Receive data from STDIN or socket.
+  virtual int handle_input (ACE_HANDLE);
 
-  virtual int handle_signal (int signum, siginfo_t *, ucontext_t *);
   // Close down via SIGINT.
+  virtual int handle_signal (int signum, siginfo_t *, ucontext_t *);
 
-  virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask);
   // Close down the event loop.
+  virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask);
 
 private:
-  int receiver (void);
   // Reads data from socket and writes to ACE_STDOUT.
+  int receiver ();
 
-  int transmitter (void);
   // Writes data from ACE_STDIN to socket.
+  int transmitter ();
 
-  int parse_args (int argc, ACE_TCHAR *argv[]);
   // Parse the command-line arguments.
+  int parse_args (int argc, ACE_TCHAR *argv[]);
 
-  u_short port_number_;
   // Port number of event server.
+  u_short port_number_;
 
-  const ACE_TCHAR *host_name_;
   // Name of event server.
+  const ACE_TCHAR *host_name_;
 
-  const ACE_TCHAR *role_;
   // Are we playing the Consumer or Supplier role?
+  const ACE_TCHAR *role_;
 };
 
 #endif /* ACE_TRANSCEIVER_H */

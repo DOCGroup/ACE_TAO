@@ -40,7 +40,7 @@ ACE_QtReactor::ACE_QtReactor (size_t size,
     reopen_notification_pipe();
 }
 
-void ACE_QtReactor::reopen_notification_pipe( void)
+void ACE_QtReactor::reopen_notification_pipe()
 {
   // When the ACE_Select_Reactor is constructed it creates the notify
   // pipe and registers it with the register_handler_i() method. The
@@ -67,7 +67,7 @@ void ACE_QtReactor::reopen_notification_pipe( void)
 #endif /* ACE_MT_SAFE */
 }
 
-ACE_QtReactor::~ACE_QtReactor (void)
+ACE_QtReactor::~ACE_QtReactor ()
 {
     // iterate over QSocketNotifiers for read and release them
     MAP::ITERATOR iter = this->read_notifier_.begin ();
@@ -114,7 +114,7 @@ ACE_QtReactor::qapplication (QApplication *qapp)
 }
 
 void
-ACE_QtReactor::timeout_event (void)
+ACE_QtReactor::timeout_event ()
 {
   // Deal with any timer events
   ACE_Select_Reactor_Handle_Set handle_set;
@@ -396,7 +396,6 @@ ACE_QtReactor::create_notifiers_for_handle (ACE_HANDLE handle)
     if ((this->exception_notifier_.find (handle,
              qsock_notifier) == -1))
     {
-
         ACE_NEW (qsock_notifier,
             QSocketNotifier (ACE_QT_HANDLE_TYPE(handle), QSocketNotifier::Exception, this));
 
@@ -509,7 +508,7 @@ ACE_QtReactor::remove_handler_i (const ACE_Handle_Set &handles,
 // first timeout in the Reactor's Timer_Queue.
 
 void
-ACE_QtReactor::reset_timeout (void)
+ACE_QtReactor::reset_timeout ()
 {
   if (this->qtime_ != 0)
     {
@@ -660,7 +659,6 @@ ACE_QtReactor::wait_for_multiple_events (
     nfound = QtWaitForMultipleEvents (static_cast<int> (width),
                                       handle_set,
                                       max_wait_time);
-
   } while( nfound == -1 && this->handle_error () > 0 );
 
   if (nfound > 0)

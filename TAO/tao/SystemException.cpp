@@ -55,7 +55,7 @@ const CORBA::ULong TAO_ENOTSUP_MINOR_CODE            = 0x14U;
 
 // ****************************************************************
 
-CORBA::SystemException::SystemException (void)
+CORBA::SystemException::SystemException ()
   : minor_ (0),
     completed_ (CORBA::COMPLETED_NO)
 {
@@ -83,10 +83,6 @@ CORBA::SystemException::SystemException (const CORBA::SystemException &src)
   : CORBA::Exception (src),
     minor_ (src.minor_),
     completed_ (src.completed_)
-{
-}
-
-CORBA::SystemException::~SystemException (void)
 {
 }
 
@@ -152,8 +148,6 @@ CORBA::SystemException::_tao_errno (int errno_value)
       return TAO_ECONNREFUSED_MINOR_CODE;
     case ENOENT:
       return TAO_ENOENT_MINOR_CODE;
-
-#if !defined (ACE_HAS_WINCE)
     case EMFILE:
       return TAO_EMFILE_MINOR_CODE;
     case EBADF:
@@ -162,8 +156,6 @@ CORBA::SystemException::_tao_errno (int errno_value)
       return TAO_EPERM_MINOR_CODE;
     case EINVAL:
       return TAO_EINVAL_MINOR_CODE;
-#endif  // ACE_HAS_WINCE
-
 #if (ENOSYS != EFAULT)
     case ENOSYS:
       return TAO_ENOSYS_MINOR_CODE;
@@ -197,9 +189,9 @@ CORBA::SystemException::_tao_errno (int errno_value)
 }
 
 CORBA::Exception *
-CORBA::SystemException::_tao_duplicate (void) const
+CORBA::SystemException::_tao_duplicate () const
 {
-  return 0;
+  return nullptr;
 }
 
 CORBA::ULong
@@ -220,7 +212,7 @@ CORBA::SystemException::_tao_print_system_exception (FILE *) const
 }
 
 ACE_CString
-CORBA::SystemException::_info (void) const
+CORBA::SystemException::_info () const
 {
   // @@ there are a few other "user exceptions" in the CORBA scope,
   // they're not all standard/system exceptions ... really need to
@@ -241,7 +233,7 @@ CORBA::SystemException::_info (void) const
   if (VMCID == TAO::VMCID)
     {
       // @@ Move the following code to a subroutine, it is too long already!
-      const char *location = 0;
+      const char *location = nullptr;
       switch (this->minor () & 0x00000F80u)
         {
         case TAO_INVOCATION_LOCATION_FORWARD_MINOR_CODE:
@@ -308,7 +300,7 @@ CORBA::SystemException::_info (void) const
           location = "unknown location";
         }
 
-      const char *errno_indication = 0;
+      const char *errno_indication = nullptr;
       char unknown_errno [255];
       CORBA::ULong minor_code = this->minor () & 0x7FU;
       switch (minor_code)
@@ -410,7 +402,7 @@ CORBA::SystemException::_info (void) const
     {
       CORBA::ULong const minor_code = this->minor () & 0xFFFU;
 
-      const char *minor_description = 0;
+      const char *minor_description = nullptr;
 
       if (minor_code > 0)
           minor_description =
@@ -697,133 +689,133 @@ CORBA::SystemException::_tao_get_omg_exception_description (
 
   CORBA::UNKNOWN const * unknown_exception =
     dynamic_cast <const CORBA::UNKNOWN *> (&exc);
-  if (unknown_exception != 0
+  if (unknown_exception != nullptr
       && minor_code < sizeof UNKNOWN_TABLE / sizeof (char *))
     return UNKNOWN_TABLE[minor_code];
 
   CORBA::BAD_PARAM const * bad_param__exception =
     dynamic_cast <const CORBA::BAD_PARAM *> (&exc);
-  if (bad_param__exception != 0
+  if (bad_param__exception != nullptr
       && minor_code < sizeof BAD_PARAM_TABLE / sizeof (char *))
     return BAD_PARAM_TABLE[minor_code];
 
   CORBA::IMP_LIMIT const * imp_limit_exception =
     dynamic_cast <const CORBA::IMP_LIMIT *> (&exc);
-  if (imp_limit_exception != 0
+  if (imp_limit_exception != nullptr
       && minor_code < sizeof IMP_LIMIT_TABLE / sizeof (char *))
     return IMP_LIMIT_TABLE[minor_code];
 
   CORBA::INITIALIZE const * initialize_exception =
     dynamic_cast <const CORBA::INITIALIZE *> (&exc);
-  if (initialize_exception != 0
+  if (initialize_exception != nullptr
       && minor_code < sizeof INITIALIZE_TABLE / sizeof (char *))
     return INITIALIZE_TABLE[minor_code];
 
   CORBA::INV_OBJREF const * inv_objref_exception =
     dynamic_cast <const CORBA::INV_OBJREF *> (&exc);
-  if (inv_objref_exception != 0
+  if (inv_objref_exception != nullptr
       && minor_code < sizeof INV_OBJREF_TABLE / sizeof (char *))
     return INV_OBJREF_TABLE[minor_code];
 
   CORBA::MARSHAL const * marshal_exception =
     dynamic_cast <const CORBA::MARSHAL *> (&exc);
-  if (marshal_exception != 0
+  if (marshal_exception != nullptr
       && minor_code < sizeof MARSHAL_TABLE / sizeof (char *))
     return MARSHAL_TABLE[minor_code];
 
   CORBA::BAD_TYPECODE const * bad_typecode_exception =
     dynamic_cast <const CORBA::BAD_TYPECODE *> (&exc);
-  if (bad_typecode_exception != 0
+  if (bad_typecode_exception != nullptr
       && minor_code < sizeof BAD_TYPECODE_TABLE / sizeof (char *))
     return BAD_TYPECODE_TABLE[minor_code];
 
   CORBA::NO_IMPLEMENT const * no_implement_exception =
     dynamic_cast <const CORBA::NO_IMPLEMENT *> (&exc);
-  if (no_implement_exception != 0
+  if (no_implement_exception != nullptr
       && minor_code < sizeof NO_IMPLEMENT_TABLE / sizeof (char *))
     return NO_IMPLEMENT_TABLE[minor_code];
 
   CORBA::NO_RESOURCES const * no_resource_exception =
     dynamic_cast <const CORBA::NO_RESOURCES *> (&exc);
-  if (no_resource_exception != 0
+  if (no_resource_exception != nullptr
       && minor_code < sizeof NO_RESOURCES_TABLE / sizeof (char *))
     return NO_RESOURCES_TABLE[minor_code];
 
   CORBA::BAD_INV_ORDER const * bad_inv_order_exception =
     dynamic_cast <const CORBA::BAD_INV_ORDER *> (&exc);
-  if (bad_inv_order_exception != 0
+  if (bad_inv_order_exception != nullptr
       && minor_code < sizeof BAD_INV_ORDER_TABLE / sizeof (char *))
     return BAD_INV_ORDER_TABLE[minor_code];
 
   CORBA::TRANSIENT const * transient_exception =
     dynamic_cast <const CORBA::TRANSIENT *> (&exc);
-  if (transient_exception != 0
+  if (transient_exception != nullptr
       && minor_code < sizeof TRANSIENT_TABLE / sizeof (char *))
     return TRANSIENT_TABLE[minor_code];
 
   CORBA::OBJ_ADAPTER const * obj_adapter_exception =
     dynamic_cast <const CORBA::OBJ_ADAPTER *> (&exc);
-  if (obj_adapter_exception != 0
+  if (obj_adapter_exception != nullptr
       && minor_code < sizeof OBJ_ADAPTER_TABLE / sizeof (char *))
     return OBJ_ADAPTER_TABLE[minor_code];
 
   CORBA::DATA_CONVERSION const * data_conversion_exception =
     dynamic_cast <const CORBA::DATA_CONVERSION *> (&exc);
-  if (data_conversion_exception != 0
+  if (data_conversion_exception != nullptr
       && minor_code < sizeof DATA_CONVERSION_TABLE / sizeof (char *))
     return DATA_CONVERSION_TABLE[minor_code];
 
   CORBA::OBJECT_NOT_EXIST const * object_not_exist_exception =
     dynamic_cast <const CORBA::OBJECT_NOT_EXIST *> (&exc);
-  if (object_not_exist_exception != 0
+  if (object_not_exist_exception != nullptr
       && minor_code < sizeof OBJECT_NOT_EXIST_TABLE / sizeof (char *))
     return OBJECT_NOT_EXIST_TABLE[minor_code];
 
   CORBA::INV_POLICY const * inv_policy_exception =
     dynamic_cast <const CORBA::INV_POLICY *> (&exc);
-  if (inv_policy_exception != 0
+  if (inv_policy_exception != nullptr
       && minor_code < sizeof INV_POLICY_TABLE / sizeof (char *))
     return INV_POLICY_TABLE[minor_code];
 
   CORBA::ACTIVITY_COMPLETED const * activity_completed_exception =
     dynamic_cast <const CORBA::ACTIVITY_COMPLETED *> (&exc);
-  if (activity_completed_exception != 0
+  if (activity_completed_exception != nullptr
       && minor_code < sizeof ACTIVITY_COMPLETED_TABLE / sizeof (char *))
     return ACTIVITY_COMPLETED_TABLE[minor_code];
 
   CORBA::ACTIVITY_REQUIRED const * activity_required_exception =
     dynamic_cast <const CORBA::ACTIVITY_REQUIRED *> (&exc);
-  if (activity_required_exception != 0
+  if (activity_required_exception != nullptr
       && minor_code < sizeof ACTIVITY_REQUIRED_TABLE / sizeof (char *))
     return ACTIVITY_REQUIRED_TABLE[minor_code];
 
   CORBA::BAD_OPERATION const * bad_operation_exception =
     dynamic_cast <const CORBA::BAD_OPERATION *> (&exc);
-  if (bad_operation_exception != 0
+  if (bad_operation_exception != nullptr
       && minor_code < sizeof BAD_OPERATION_TABLE / sizeof (char *))
     return BAD_OPERATION_TABLE[minor_code];
 
   CORBA::BAD_CONTEXT const * bad_context_exception =
     dynamic_cast <const CORBA::BAD_CONTEXT *> (&exc);
-  if (bad_context_exception != 0
+  if (bad_context_exception != nullptr
       && minor_code < sizeof BAD_CONTEXT_TABLE / sizeof (char *))
     return BAD_CONTEXT_TABLE[minor_code];
 
   CORBA::CODESET_INCOMPATIBLE const * codeset_incompatible_exception =
     dynamic_cast <const CORBA::CODESET_INCOMPATIBLE *> (&exc);
-  if (codeset_incompatible_exception != 0
+  if (codeset_incompatible_exception != nullptr
       && minor_code < sizeof CODESET_INCOMPATIBLE_TABLE / sizeof (char *))
     return CODESET_INCOMPATIBLE_TABLE[minor_code];
 
   CORBA::INTF_REPOS const * intf_repos_exception =
     dynamic_cast <const CORBA::INTF_REPOS *> (&exc);
-  if (intf_repos_exception != 0
+  if (intf_repos_exception != nullptr
       && minor_code < sizeof INTF_REPOS_TABLE / sizeof (char *))
     return INTF_REPOS_TABLE[minor_code];
 
   CORBA::TIMEOUT const * timeout_exception =
     dynamic_cast <const CORBA::TIMEOUT *> (&exc);
-  if (timeout_exception != 0
+  if (timeout_exception != nullptr
       && minor_code < sizeof TIMEOUT_TABLE / sizeof (char *))
     return TIMEOUT_TABLE[minor_code];
 
@@ -893,7 +885,7 @@ static const char *repo_id_array[] = {
                   (char *) "IDL:omg.org/CORBA/" #name ":1.0",
       STANDARD_EXCEPTION_LIST
 #undef  TAO_SYSTEM_EXCEPTION
-      0
+      nullptr
   };
 
 // Since we add an extra element subtract 1
@@ -907,12 +899,12 @@ TAO::excp_factory excp_array [] = {
       &CORBA::name::_tao_create,
       STANDARD_EXCEPTION_LIST
 #undef  TAO_SYSTEM_EXCEPTION
-      0
+      nullptr
 };
 
 // Concrete SystemException constructors
 #define TAO_SYSTEM_EXCEPTION(name) \
-CORBA::name ::name (void) \
+CORBA::name ::name () \
   :  CORBA::SystemException ("IDL:omg.org/CORBA/" #name ":1.0", \
                              #name, \
                              0, \
@@ -933,13 +925,12 @@ STANDARD_EXCEPTION_LIST
 
 #define TAO_SYSTEM_EXCEPTION(name) \
 CORBA::TypeCode_ptr \
-CORBA::name ::_tao_type (void) const \
+CORBA::name ::_tao_type () const \
 { \
   TAO_AnyTypeCode_Adapter *adapter = \
     ACE_Dynamic_Service<TAO_AnyTypeCode_Adapter>::instance ( \
-        "AnyTypeCode_Adapter" \
-      ); \
-  if (adapter != 0) \
+        "AnyTypeCode_Adapter"); \
+  if (adapter != nullptr) \
     return adapter->_tao_type_ ## name (); \
   else \
     { \
@@ -963,12 +954,12 @@ TAO::create_system_exception (const char *id)
         return (*(excp_array[i])) ();
     }
 
-  return 0;
+  return nullptr;
 }
 
 #define TAO_SYSTEM_EXCEPTION(name) \
 void \
-CORBA::name ::_raise (void) const \
+CORBA::name ::_raise () const \
 { \
   throw *this; \
 }
@@ -978,7 +969,7 @@ STANDARD_EXCEPTION_LIST
 
 #define TAO_SYSTEM_EXCEPTION(name) \
 CORBA::Exception * \
-CORBA::name ::_tao_duplicate (void) const \
+CORBA::name ::_tao_duplicate () const \
 { \
   CORBA::Exception * result = 0; \
   ACE_NEW_RETURN (result, CORBA::name (*this), 0); \
@@ -990,7 +981,7 @@ STANDARD_EXCEPTION_LIST
 
 #define TAO_SYSTEM_EXCEPTION(name) \
 CORBA::SystemException * \
-CORBA::name ::_tao_create (void) \
+CORBA::name ::_tao_create () \
 { \
   CORBA::name *result = 0; \
   ACE_NEW_RETURN (result, CORBA::name (), 0); \

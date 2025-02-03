@@ -20,24 +20,24 @@ public:
   Dump_Restore (int argc, ACE_TCHAR *argv[]);
   // Initialize name options and naming context
 
-  ~Dump_Restore (void);
+  ~Dump_Restore ();
 
   virtual int handle_input (ACE_HANDLE handle);
   // Handle user entered commands
 
-  void dump (void);
+  void dump ();
 
 private:
   ACE_TCHAR hostname_[MAXHOSTNAMELEN + 1];
   // Cache the hostname and port number for remote case
 
-  void display_menu (void);
+  void display_menu ();
   // Display user menu.
 
-  int set_proc_local (void);
+  int set_proc_local ();
   // Set options to use PROC_LOCAL naming context.
 
-  int set_node_local (void);
+  int set_node_local ();
   // Set options to use NODE_LOCAL naming context.
 
   int set_host (const ACE_TCHAR *hostname,
@@ -45,7 +45,7 @@ private:
   // Set options to use NET_LOCAL naming context specifying host name
   // and port number.
 
-  int quit (void);
+  int quit ();
   // Gracefully exit.
 
   int populate (Dump_Restore::Operation_Type op);

@@ -10,7 +10,6 @@ Thread_Task::Thread_Task (CORBA::ORB_ptr orb)
 int
 Thread_Task::activate_task (int thr_count)
 {
-
   try
     {
       ACE_NEW_RETURN (shutdown_lock_,
@@ -85,7 +84,7 @@ Thread_Task::activate_task (int thr_count)
 }
 
 int
-Thread_Task::svc (void)
+Thread_Task::svc ()
 {
   try
     {
@@ -156,7 +155,7 @@ Thread_Task::svc (void)
             // exceptions on fast dual processor machines.
             ACE_OS::sleep (1);
 
-            orb_->shutdown (0);
+            orb_->shutdown (false);
           }
       }
     }
@@ -169,7 +168,7 @@ Thread_Task::svc (void)
   return 0;
 }
 
-Thread_Task::~Thread_Task (void)
+Thread_Task::~Thread_Task ()
 {
   delete shutdown_lock_;
   delete lock_;

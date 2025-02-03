@@ -34,9 +34,9 @@ public:
                    CORBA::Long in_l,
                    const char* in_str);
 
-  void shutdown (void);
+  void shutdown ();
 
-  CORBA::Long yadda (void);
+  CORBA::Long yadda ();
 
   void yadda (CORBA::Long yadda);
 
@@ -44,8 +44,6 @@ public:
 
 private:
   CORBA::ORB_var orb_;
-
-  CORBA::Long number_;
 
   CORBA::Long yadda_;
 

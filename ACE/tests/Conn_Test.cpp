@@ -23,7 +23,7 @@
 #include "ace/Acceptor.h"
 #include "ace/Handle_Set.h"
 #include "ace/Connector.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/Get_Opt.h"
 #include "ace/Process_Mutex.h"
 #include "ace/Signal.h"
@@ -34,7 +34,6 @@
 #include "ace/OS_NS_sys_wait.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/os_include/os_netdb.h"
-
 
 
 static const char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
@@ -66,43 +65,24 @@ static const char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
      typedef ACE_Null_Mutex ACCEPTOR_LOCKING;
 #  else
 #    include "ace/Process_Mutex.h"
-     typedef ACE_Process_Mutex ACCEPTOR_LOCKING;
+     using ACCEPTOR_LOCKING = ACE_Process_Mutex;
 #    define CLEANUP_PROCESS_MUTEX
 #  endif /* ACE_HAS_THREAD_SAFE_ACCEPT */
 #endif /* ACE_LACKS_FORK */
 
-typedef ACE_Oneshot_Acceptor<Svc_Handler,
-                             ACE_LOCK_SOCK_Acceptor<ACCEPTOR_LOCKING> >
-        ACCEPTOR;
-typedef ACE_Connector<Svc_Handler,
-                      ACE_SOCK_CONNECTOR>
-        CONNECTOR;
-typedef ACE_Strategy_Connector<Svc_Handler,
-                               ACE_SOCK_CONNECTOR>
-        STRAT_CONNECTOR;
-typedef ACE_NOOP_Creation_Strategy<Svc_Handler>
-        NULL_CREATION_STRATEGY;
-typedef ACE_NOOP_Concurrency_Strategy<Svc_Handler>
-        NULL_ACTIVATION_STRATEGY;
-typedef ACE_Cached_Connect_Strategy<Svc_Handler,
-                                    ACE_SOCK_CONNECTOR,
-                                    ACE_SYNCH_MUTEX>
-        CACHED_CONNECT_STRATEGY;
+using ACCEPTOR = ACE_Oneshot_Acceptor<Svc_Handler, ACE_LOCK_SOCK_Acceptor<ACCEPTOR_LOCKING>>;
+using CONNECTOR = ACE_Connector<Svc_Handler, ACE_SOCK_Connector>;
+using STRAT_CONNECTOR = ACE_Strategy_Connector<Svc_Handler, ACE_SOCK_Connector>;
+using NULL_CREATION_STRATEGY = ACE_NOOP_Creation_Strategy<Svc_Handler>;
+using NULL_ACTIVATION_STRATEGY = ACE_NOOP_Concurrency_Strategy<Svc_Handler>;
+using CACHED_CONNECT_STRATEGY = ACE_Cached_Connect_Strategy<Svc_Handler, ACE_SOCK_Connector, ACE_MT_SYNCH::MUTEX>;
 
 #define CACHED_CONNECT_STRATEGY ACE_Cached_Connect_Strategy<Svc_Handler, ACE_SOCK_CONNECTOR, ACE_SYNCH_MUTEX>
 #define REFCOUNTED_HASH_RECYCLABLE_ADDR ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>
 
 // Default number of clients/servers.
-#if defined (ACE_HAS_PHARLAP)
-// PharLap is, by default, resource contrained. Test for something that works
-// on the default configuration.
-static int n_servers = 2;
-static int n_clients = 4;
-#else
 static int n_servers = 5;
 static int n_clients = 5;
-#endif /* ACE_HAS_PHARLAP */
-
 static int n_client_iterations = 3;
 
 Svc_Handler::Svc_Handler (ACE_Thread_Manager *)
@@ -136,7 +116,7 @@ Svc_Handler::recycle (void *)
 }
 
 void
-Svc_Handler::send_data (void)
+Svc_Handler::send_data ()
 {
   // Send data to server.
 
@@ -148,7 +128,7 @@ Svc_Handler::send_data (void)
 }
 
 void
-Svc_Handler::recv_data (void)
+Svc_Handler::recv_data ()
 {
   ACE_SOCK_Stream &new_stream = this->peer ();
 
@@ -537,7 +517,7 @@ spawn_processes (ACCEPTOR *acceptor,
   ACE_NEW_RETURN (children_ptr,
                   pid_t[n_servers],
                   -1);
-  ACE_Auto_Basic_Array_Ptr<pid_t> children (children_ptr);
+  std::unique_ptr<pid_t[]> children (children_ptr);
   int i;
 
   // Spawn off a number of server processes all of which will listen

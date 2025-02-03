@@ -19,7 +19,7 @@ TimeStamp_Protocol_Object::TimeStamp_Protocol_Object (TAO_AV_Callback *callback,
 
 
 int
-TimeStamp_Protocol_Object::handle_input (void)
+TimeStamp_Protocol_Object::handle_input ()
 {
   ssize_t n = this->transport_->recv (this->frame_->rd_ptr (),
                                       this->frame_->size ());
@@ -33,7 +33,7 @@ TimeStamp_Protocol_Object::handle_input (void)
 }
 
 //  int
-//  TimeStamp_Protocol_Object::handle_input (void)
+//  TimeStamp_Protocol_Object::handle_input ()
 //  {
 //    iovec iov;
 //    int iovcnt;
@@ -88,7 +88,6 @@ TimeStamp_Protocol_Object::handle_input (void)
 //        }
 //      else
 //        {
-
 //      ACE_DEBUG ((LM_DEBUG,
 //                  "(%N|%l) Frame Size %d\n",
 //                  n));
@@ -168,18 +167,18 @@ TimeStamp_Protocol_Object::send_frame (const char* buf,
 
 /// end the stream.
 int
-TimeStamp_Protocol_Object::destroy (void)
+TimeStamp_Protocol_Object::destroy ()
 {
   this->callback_->handle_destroy ();
   return 0;
 }
 
 
-TimeStamp_Protocol_Factory::TimeStamp_Protocol_Factory (void)
+TimeStamp_Protocol_Factory::TimeStamp_Protocol_Factory ()
 {
 }
 
-TimeStamp_Protocol_Factory::~TimeStamp_Protocol_Factory (void)
+TimeStamp_Protocol_Factory::~TimeStamp_Protocol_Factory ()
 {
 }
 
@@ -232,8 +231,6 @@ ACE_STATIC_SVC_DEFINE (TimeStamp_Protocol_Factory,
                        ACE_Service_Type::DELETE_THIS |
                        ACE_Service_Type::DELETE_OBJ,
                        0)
-
-
 
 
 

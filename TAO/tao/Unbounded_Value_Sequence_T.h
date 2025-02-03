@@ -17,8 +17,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-
-template<class T>
+template<class T, class Tag=int>
 class unbounded_value_sequence
 {
 public:
@@ -78,7 +77,7 @@ public:
   inline value_type * get_buffer(CORBA::Boolean orphan = false) {
     return impl_.get_buffer(orphan);
   }
-  inline void swap(unbounded_value_sequence & rhs) throw() {
+  inline void swap(unbounded_value_sequence & rhs) noexcept {
     impl_.swap(rhs.impl_);
   }
   static value_type * allocbuf(CORBA::ULong maximum) {
@@ -88,75 +87,9 @@ public:
     implementation_type::freebuf(buffer);
   }
 
-#if defined TAO_HAS_SEQUENCE_ITERATORS && TAO_HAS_SEQUENCE_ITERATORS == 1
-
-  ///
-  /// Additions to support iterator semantics for TAO unbounded value
-  /// sequences.
-  ///
-
-  // = Traits and factory methods that create iterators.
-  typedef details::Generic_Sequence_Iterator<details::generic_sequence<value_type, allocation_traits, element_traits> > iterator;
-  typedef details::Const_Generic_Sequence_Iterator<details::generic_sequence<value_type, allocation_traits, element_traits> > const_iterator;
-  typedef details::Generic_Sequence_Reverse_Iterator<details::generic_sequence<value_type, allocation_traits, element_traits> > reverse_iterator;
-  typedef details::Const_Generic_Sequence_Reverse_Iterator<details::generic_sequence<value_type, allocation_traits, element_traits> > const_reverse_iterator;
-
-  // Get an iterator that points to the beginning of the sequence.
-  iterator begin (void)
-  {
-    return impl_.begin ();
-  }
-
-  // Get a const iterator that points to the beginning of the sequence.
-  const_iterator begin (void) const
-  {
-    return impl_.begin ();
-  }
-
-  // Get an iterator that points to the end of the sequence.
-  iterator end (void)
-  {
-    return impl_.end ();
-  }
-
-  // Get a const iterator that points to the end of the sequence.
-  const_iterator end (void) const
-  {
-    return impl_.end ();
-  }
-
-  // Get a reverse iterator that points to the end of the sequence.
-  reverse_iterator rbegin (void)
-  {
-    return impl_.rbegin ();
-  }
-
-  // Get a const reverse iterator that points to the end of the sequence.
-  const_reverse_iterator rbegin (void) const
-  {
-    return impl_.rbegin ();
-  }
-
-  // Get a reverse iterator that points to one before the beginning
-  // of the sequence.
-  reverse_iterator rend (void)
-  {
-    return impl_.rend ();
-  }
-
-  // Get a const reverse iterator that points to one before the
-  // beginning of the sequence.
-  const_reverse_iterator rend (void) const
-  {
-    return impl_.rend ();
-  }
-
-#endif /* TAO_HAS_SEQUENCE_ITERATORS==1 */
-
 private:
   implementation_type impl_;
 };
-
 } // namespace TAO
 
 TAO_END_VERSIONED_NAMESPACE_DECL

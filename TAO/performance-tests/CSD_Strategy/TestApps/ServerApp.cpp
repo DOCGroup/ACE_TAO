@@ -107,7 +107,7 @@ ServerApp::init(int argc, ACE_TCHAR* argv[])
 
 
 void
-ServerApp::poa_setup(void)
+ServerApp::poa_setup()
 {
   this->poa_ = this->create_poa(this->orb_.in(),
                                 "ChildPoa");
@@ -115,7 +115,7 @@ ServerApp::poa_setup(void)
 
 
 void
-ServerApp::csd_setup(void)
+ServerApp::csd_setup()
 {
   this->tp_strategy_ = new TAO::CSD::TP_Strategy(this->num_csd_threads_);
 
@@ -132,7 +132,7 @@ ServerApp::csd_setup(void)
 
 
 void
-ServerApp::servant_setup(void)
+ServerApp::servant_setup()
 {
   this->servants_.create_and_activate(this->num_servants_,
                                       this->orb_.in (),
@@ -165,7 +165,7 @@ ServerApp::collocated_setup()
 
 
 void
-ServerApp::poa_activate(void)
+ServerApp::poa_activate()
 {
   PortableServer::POAManager_var poa_manager
     = this->poa_->the_POAManager();
@@ -175,7 +175,7 @@ ServerApp::poa_activate(void)
 
 
 void
-ServerApp::run_collocated_clients(void)
+ServerApp::run_collocated_clients()
 {
   if (this->num_collocated_clients_ > 0)
     {
@@ -188,7 +188,7 @@ ServerApp::run_collocated_clients(void)
 
 
 void
-ServerApp::run_orb_event_loop(void)
+ServerApp::run_orb_event_loop()
 {
   OrbRunner orb_runner(this->orb_.in(), this->num_orb_threads_);
   orb_runner.run();
@@ -386,7 +386,6 @@ ServerApp::create_poa(CORBA::ORB_ptr orb,
 bool
 ServerApp::check_results()
 {
-
   this->stats_.init(this->num_remote_clients_ +
                     this->num_collocated_clients_,
                     this->num_loops_);

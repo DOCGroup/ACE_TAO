@@ -47,20 +47,19 @@ struct TAO_Dynamic_TP_Export TAO_DTP_Definition
     stack_size_(ACE_DEFAULT_THREAD_STACKSIZE),
     timeout_(60,0),
     queue_depth_(0){}
-
 };
 
 class TAO_Dynamic_TP_Export TAO_DTP_Config_Registry_Installer
 {
  public:
-  TAO_DTP_Config_Registry_Installer (void);
+  TAO_DTP_Config_Registry_Installer ();
 };
 
 class TAO_Dynamic_TP_Export TAO_DTP_Config_Registry : public ACE_Service_Object
 {
 public:
-  TAO_DTP_Config_Registry (void);
-  virtual ~TAO_DTP_Config_Registry (void);
+  TAO_DTP_Config_Registry ();
+  virtual ~TAO_DTP_Config_Registry ();
 
   virtual int init (int argc, ACE_TCHAR* []);
 
@@ -79,10 +78,10 @@ class TAO_Dynamic_TP_Export TAO_DTP_Config : public ACE_Service_Object
 {
 public:
   /// Constructor.
-  TAO_DTP_Config (void);
+  TAO_DTP_Config ();
 
   /// Destructor.
-  virtual ~TAO_DTP_Config (void);
+  virtual ~TAO_DTP_Config ();
 
   /// Read a definition parameter set from the supplied args.
   /// There must be a -TPName argument, which, if replicated will cause the set to be ignored, unless -TPOverwrite is also set
@@ -101,7 +100,6 @@ private:
   int parse_string (int &curarg, int argc, ACE_TCHAR* argv[], const ACE_TCHAR *match, ACE_TCHAR *&value);
   void report_option_value_error (const ACE_TCHAR* option_name,
                                   const ACE_TCHAR* option_value);
-
 };
 
 static TAO_DTP_Config_Registry_Installer config_installer;

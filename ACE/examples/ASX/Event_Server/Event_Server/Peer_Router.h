@@ -82,13 +82,13 @@ public:
   // <ACE_Acceptor>.
 
   // = Set/Get Router Task.
-  Peer_Router *peer_router (void);
+  Peer_Router *peer_router ();
   void peer_router (Peer_Router *);
 
-  void release (void);
+  void release ();
   // Decrement the reference count and delete <this> when count == 0;
 
-  void duplicate (void);
+  void duplicate ();
   // Increment the reference count.
 
 private:
@@ -109,7 +109,7 @@ private:
   int reference_count_;
   // Keep track of when we can delete ourselves.
 
-  ~Peer_Router_Context (void);
+  ~Peer_Router_Context ();
   // Private to ensure dynamic allocation.
 
   friend class Friend_Of_Peer_Router_Context;
@@ -136,7 +136,7 @@ protected:
   virtual int control (ACE_Message_Block *);
   // Handle control messages arriving from adjacent Modules.
 
-  Peer_Router_Context *context (void) const;
+  Peer_Router_Context *context () const;
   // Returns the routing context.
 
   typedef ACE_Task<ACE_SYNCH> inherited;

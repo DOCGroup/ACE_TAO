@@ -50,12 +50,12 @@ class TAO_PortableServer_Export TAO_Acceptor_Filter_Factory
   : public ACE_Service_Object
 {
 public:
-  virtual ~TAO_Acceptor_Filter_Factory(void);
+  ~TAO_Acceptor_Filter_Factory() override = default;
 
   virtual TAO_Acceptor_Filter* create_object (TAO_POA_Manager& poamanager);
 
   /// Static initializer ensures the factory is loaded
-  static int initialize (void);
+  static int initialize ();
 };
 
 

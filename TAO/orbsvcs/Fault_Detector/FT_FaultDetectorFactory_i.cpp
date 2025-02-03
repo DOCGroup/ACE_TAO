@@ -13,9 +13,10 @@
 #include "Fault_Detector_i.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_unistd.h"
-#include "ace/Auto_Ptr.h"
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/PortableGroup/PG_Property_Set.h"
+
+#include <memory>
 
 // Use this macro at the beginning of CORBA methods
 // to aid in debugging.
@@ -89,7 +90,7 @@ TAO::FT_FaultDetectorFactory_i::~FT_FaultDetectorFactory_i ()
 ////////////////////////////////////////////
 // FT_FaultDetectorFactory_i private methods
 
-void TAO::FT_FaultDetectorFactory_i::shutdown_i(void)
+void TAO::FT_FaultDetectorFactory_i::shutdown_i()
 {
   // assume mutex is locked
   for (size_t nDetector = 0; nDetector < this->detectors_.size(); ++nDetector)
@@ -102,7 +103,7 @@ void TAO::FT_FaultDetectorFactory_i::shutdown_i(void)
   }
 }
 
-int TAO::FT_FaultDetectorFactory_i::write_ior(void)
+int TAO::FT_FaultDetectorFactory_i::write_ior()
 {
   int result = -1;
   FILE* out = ACE_OS::fopen (this->ior_output_file_, "w");
@@ -345,7 +346,7 @@ int TAO::FT_FaultDetectorFactory_i::init (CORBA::ORB_ptr orb)
   return result;
 }
 
-int TAO::FT_FaultDetectorFactory_i::fini (void)
+int TAO::FT_FaultDetectorFactory_i::fini ()
 {
   if (this->ior_output_file_ != 0)
   {
@@ -464,7 +465,7 @@ void TAO::FT_FaultDetectorFactory_i::change_properties (
   METHOD_RETURN(TAO::FT_FaultDetectorFactory_i::change_properties);
 }
 
-void TAO::FT_FaultDetectorFactory_i::shutdown (void)
+void TAO::FT_FaultDetectorFactory_i::shutdown ()
 {
   METHOD_ENTRY(TAO::FT_FaultDetectorFactory_i::shutdown);
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->internals_);
@@ -601,7 +602,7 @@ CORBA::Object_ptr TAO::FT_FaultDetectorFactory_i::create_object (
       ));
     throw PortableGroup::ObjectNotCreated();
   }
-  auto_ptr<TAO::Fault_Detector_i> detector(pFD);
+  std::unique_ptr<TAO::Fault_Detector_i> detector(pFD);
 
   ACE_NEW_NORETURN ( factory_creation_id,
     PortableGroup::GenericFactory::FactoryCreationId);
@@ -653,7 +654,7 @@ void TAO::FT_FaultDetectorFactory_i::delete_object (
   METHOD_RETURN(TAO::FT_FaultDetectorFactory_i::delete_object);
 }
 
-CORBA::Boolean TAO::FT_FaultDetectorFactory_i::is_alive (void)
+CORBA::Boolean TAO::FT_FaultDetectorFactory_i::is_alive ()
 {
   METHOD_RETURN(TAO::FT_FaultDetectorFactory_i::is_alive)
     1;

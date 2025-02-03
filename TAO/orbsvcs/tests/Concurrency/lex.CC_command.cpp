@@ -610,7 +610,6 @@ ACE_CC_YY_DECL
 
 
 
-
   if ( ace_cc_yy_init )
     {
     ace_cc_yy_init = 0;
@@ -1309,7 +1308,7 @@ ACE_CC_YY_BUFFER_STATE new_buffer;
 
 
 #ifdef ACE_CC_YY_USE_PROTOS
-void ace_cc_yy_load_buffer_state( void )
+void ace_cc_yy_load_buffer_state()
 #else
 void ace_cc_yy_load_buffer_state()
 #endif
@@ -1370,7 +1369,6 @@ ACE_CC_YY_BUFFER_STATE b;
 
   ace_cc_yy_flex_free( (void *) b );
   }
-
 
 
 #ifdef ACE_CC_YY_USE_PROTOS
@@ -1590,7 +1588,6 @@ char msg[];
   (void) ACE_OS::fprintf( stderr, "%s\n", msg );
   ACE_OS::exit( ACE_CC_YY_EXIT_FAILURE );
   }
-
 
 
 /* Redefine ace_cc_yyless() so it works in section 3 code. */

@@ -9,7 +9,7 @@
  */
 //=============================================================================
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 #include "utl_identifier.h"
 #include "utl_exceptlist.h"

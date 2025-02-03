@@ -6,7 +6,7 @@
 #include "orbsvcs/IFRService/ExceptionDef_i.h"
 #include "orbsvcs/IFRService/IFR_Service_Utils.h"
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/SString.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -19,12 +19,12 @@ TAO_OperationDef_i::TAO_OperationDef_i (
 {
 }
 
-TAO_OperationDef_i::~TAO_OperationDef_i (void)
+TAO_OperationDef_i::~TAO_OperationDef_i ()
 {
 }
 
 CORBA::DefinitionKind
-TAO_OperationDef_i::def_kind (void)
+TAO_OperationDef_i::def_kind ()
 {
   return CORBA::dk_Operation;
 }
@@ -60,7 +60,7 @@ TAO_OperationDef_i::describe_i ( )
 }
 
 CORBA::TypeCode_ptr
-TAO_OperationDef_i::result (void)
+TAO_OperationDef_i::result ()
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::TypeCode::_nil ());
 
@@ -70,7 +70,7 @@ TAO_OperationDef_i::result (void)
 }
 
 CORBA::TypeCode_ptr
-TAO_OperationDef_i::result_i (void)
+TAO_OperationDef_i::result_i ()
 {
   ACE_TString result_path;
   this->repo_->config ()->get_string_value (this->section_key_,
@@ -86,7 +86,7 @@ TAO_OperationDef_i::result_i (void)
 }
 
 CORBA::IDLType_ptr
-TAO_OperationDef_i::result_def (void)
+TAO_OperationDef_i::result_def ()
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::IDLType::_nil ());
 
@@ -96,7 +96,7 @@ TAO_OperationDef_i::result_def (void)
 }
 
 CORBA::IDLType_ptr
-TAO_OperationDef_i::result_def_i (void)
+TAO_OperationDef_i::result_def_i ()
 {
   ACE_TString result_path;
   this->repo_->config ()->get_string_value (this->section_key_,
@@ -132,7 +132,7 @@ TAO_OperationDef_i::result_def_i (CORBA::IDLType_ptr result_def)
 }
 
 CORBA::ParDescriptionSeq *
-TAO_OperationDef_i::params (void)
+TAO_OperationDef_i::params ()
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
@@ -142,7 +142,7 @@ TAO_OperationDef_i::params (void)
 }
 
 CORBA::ParDescriptionSeq *
-TAO_OperationDef_i::params_i (void)
+TAO_OperationDef_i::params_i ()
 {
   CORBA::ULong i = 0;
   ACE_Configuration_Section_Key params_key;
@@ -307,7 +307,7 @@ TAO_OperationDef_i::params_i (const CORBA::ParDescriptionSeq &params)
 }
 
 CORBA::OperationMode
-TAO_OperationDef_i::mode (void)
+TAO_OperationDef_i::mode ()
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::OP_NORMAL);
 
@@ -317,7 +317,7 @@ TAO_OperationDef_i::mode (void)
 }
 
 CORBA::OperationMode
-TAO_OperationDef_i::mode_i (void)
+TAO_OperationDef_i::mode_i ()
 {
   u_int mode;
   this->repo_->config ()->get_integer_value (this->section_key_,
@@ -346,7 +346,7 @@ TAO_OperationDef_i::mode_i (CORBA::OperationMode mode)
 }
 
 CORBA::ContextIdSeq *
-TAO_OperationDef_i::contexts (void)
+TAO_OperationDef_i::contexts ()
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
@@ -356,7 +356,7 @@ TAO_OperationDef_i::contexts (void)
 }
 
 CORBA::ContextIdSeq *
-TAO_OperationDef_i::contexts_i (void)
+TAO_OperationDef_i::contexts_i ()
 {
   ACE_Configuration_Section_Key contexts_key;
   int status =
@@ -665,7 +665,7 @@ TAO_OperationDef_i::make_description (
 }
 
 CORBA::TypeCode_ptr
-TAO_OperationDef_i::type_i (void)
+TAO_OperationDef_i::type_i ()
 {
   return this->result_i ();
 }

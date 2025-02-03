@@ -51,7 +51,7 @@ namespace TAO
                 bool check_host);
 
       /// Destructor.
-      ~Acceptor (void);
+      ~Acceptor ();
 
       typedef TAO_Strategy_Acceptor<Connection_Handler, ACE_SSL_SOCK_Acceptor> BASE_ACCEPTOR;
       typedef TAO_Creation_Strategy<Connection_Handler> CREATION_STRATEGY;
@@ -75,7 +75,7 @@ namespace TAO
                                 int version_major,
                                 int version_minor,
                                 const char *options = 0);
-      virtual int close (void);
+      virtual int close ();
       virtual int create_profile (const TAO::ObjectKey &object_key,
                                   TAO_MProfile &mprofile,
                                   CORBA::Short priority);
@@ -84,7 +84,7 @@ namespace TAO
 
       /// Retrieve the CSIv1 SSLIOP::SSL component associated with the
       /// endpoints set up by this acceptor.
-      const ::SSLIOP::SSL &ssl_component (void) const;
+      const ::SSLIOP::SSL &ssl_component () const;
 
     private:
       /// Implement the common part of the open*() methods.

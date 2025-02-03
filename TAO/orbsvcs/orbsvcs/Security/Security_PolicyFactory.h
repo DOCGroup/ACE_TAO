@@ -36,7 +36,6 @@ namespace TAO
 {
   namespace Security
   {
-
     /**
      * @class PolicyFactory
      *
@@ -49,11 +48,9 @@ namespace TAO
         public ::CORBA::LocalObject
     {
     public:
-
       virtual CORBA::Policy_ptr create_policy (CORBA::PolicyType type,
                                                const CORBA::Any & value);
     };
-
   } // End Security namespace
 }  // End TAO namespace
 

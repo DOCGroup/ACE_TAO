@@ -2,7 +2,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE int
-ACE_Dirent_Selector::length (void) const
+ACE_Dirent_Selector::length () const
 {
   return n_;
 }

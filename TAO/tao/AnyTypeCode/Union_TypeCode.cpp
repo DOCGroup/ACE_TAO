@@ -83,7 +83,7 @@ void
 TAO::TypeCode::Union<StringType,
                      TypeCodeType,
                      CaseArrayType,
-                     RefCountPolicy>::tao_duplicate (void)
+                     RefCountPolicy>::tao_duplicate ()
 {
   this->RefCountPolicy::add_ref ();
 }
@@ -96,7 +96,7 @@ void
 TAO::TypeCode::Union<StringType,
                      TypeCodeType,
                      CaseArrayType,
-                     RefCountPolicy>::tao_release (void)
+                     RefCountPolicy>::tao_release ()
 {
   this->RefCountPolicy::remove_ref ();
 }
@@ -109,7 +109,7 @@ const CaseArrayType &
 TAO::TypeCode::Union<StringType,
                      TypeCodeType,
                      CaseArrayType,
-                     RefCountPolicy>::cases (void) const
+                     RefCountPolicy>::cases () const
 {
   return cases_;
 }
@@ -234,7 +234,7 @@ CORBA::TypeCode_ptr
 TAO::TypeCode::Union<StringType,
                      TypeCodeType,
                      CaseArrayType,
-                     RefCountPolicy>::get_compact_typecode_i (void) const
+                     RefCountPolicy>::get_compact_typecode_i () const
 {
 //   typedef ACE::Value_Ptr<TAO::TypeCode::Case<CORBA::String_var,
 //                                              CORBA::TypeCode_var> > elem_type;
@@ -254,8 +254,7 @@ TAO::TypeCode::Union<StringType,
 //           // the compact TypeCode.
 //           tc_cases[i].name = empty_name;
 //           tc_cases[i].type =
-//             this->cases_[i]->type ()->get_compact_typecode (
-//              );
+//             this->cases_[i]->type ()->get_compact_typecode ();
 //         }
 //     }
 
@@ -278,9 +277,7 @@ TAO::TypeCode::Union<StringType,
 //       this->ncases_,
 //       this->default_index_,
 //       "",
-//       Traits<StringType>::get_typecode (this->default_case_.type)
-//      );
-
+//       Traits<StringType>::get_typecode (this->default_case_.type));
   throw ::CORBA::NO_IMPLEMENT ();
 }
 
@@ -292,7 +289,7 @@ char const *
 TAO::TypeCode::Union<StringType,
                      TypeCodeType,
                      CaseArrayType,
-                     RefCountPolicy>::id_i (void) const
+                     RefCountPolicy>::id_i () const
 {
   // Ownership is retained by the TypeCode, as required by the C++
   // mapping.
@@ -307,7 +304,7 @@ char const *
 TAO::TypeCode::Union<StringType,
                      TypeCodeType,
                      CaseArrayType,
-                     RefCountPolicy>::name_i (void) const
+                     RefCountPolicy>::name_i () const
 {
   // Ownership is retained by the TypeCode, as required by the C++
   // mapping.
@@ -322,7 +319,7 @@ CORBA::ULong
 TAO::TypeCode::Union<StringType,
                      TypeCodeType,
                       CaseArrayType,
-                      RefCountPolicy>::member_count_i (void) const
+                      RefCountPolicy>::member_count_i () const
 {
   return this->ncases_;
 }
@@ -406,7 +403,7 @@ CORBA::TypeCode_ptr
 TAO::TypeCode::Union<StringType,
                      TypeCodeType,
                      CaseArrayType,
-                     RefCountPolicy>::discriminator_type_i (void) const
+                     RefCountPolicy>::discriminator_type_i () const
 {
   return
     CORBA::TypeCode::_duplicate (
@@ -421,7 +418,7 @@ CORBA::Long
 TAO::TypeCode::Union<StringType,
                      TypeCodeType,
                      CaseArrayType,
-                     RefCountPolicy>::default_index_i (void) const
+                     RefCountPolicy>::default_index_i () const
 {
   return this->default_index_;
 }

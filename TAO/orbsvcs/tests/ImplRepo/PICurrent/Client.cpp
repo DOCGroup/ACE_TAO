@@ -17,7 +17,7 @@ PortableInterceptor::Current_var pic;
 PortableInterceptor::SlotId slot_id;
 const IOP::ServiceId service_id = 0xdeadbeef;
 
-int get_offset (void)
+int get_offset ()
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, mon, ofs_lock, 0);
   int r = ofs;
@@ -33,10 +33,10 @@ public:
   Worker (Messenger_ptr m)
     : messenger(Messenger::_duplicate (m)) {}
 
-  int svc (void)
+  int svc ()
   {
     int offset = get_offset ();
-    CORBA::String_var message = CORBA::string_dup( "Hello!" );
+    CORBA::String_var message = CORBA::string_dup( "Hello!");
     char user [100];
     ACE_OS::snprintf(user, 100, "client %d", offset / 100);
     int try_count = 0;
@@ -50,7 +50,7 @@ public:
         pic->set_slot (slot_id, in);
         try
           {
-            messenger->send_message( user, "Test 1", message.inout() );
+            messenger->send_message( user, "Test 1", message.inout());
 
             ACE_DEBUG ((LM_INFO,
                         ACE_TEXT("(%P|%t) received response for ")
@@ -66,7 +66,6 @@ public:
       }
     return 0;
   }
-
 };
 
 
@@ -75,12 +74,12 @@ class Client_Req_Int
     public virtual ::CORBA::LocalObject
 {
 public:
-  virtual char * name (void)
+  virtual char * name ()
   {
     return CORBA::string_dup ("Client_Req_Int");
   }
 
-  virtual void destroy (void)
+  virtual void destroy ()
   {
   }
 
@@ -102,7 +101,6 @@ public:
 
   virtual void send_request (PortableInterceptor::ClientRequestInfo_ptr ri)
   {
-
     if (CORBA::is_nil (this->pic_.in()))
       {
         ACE_GUARD (TAO_SYNCH_MUTEX, g, this->lock_);
@@ -141,7 +139,6 @@ public:
 private:
   TAO_SYNCH_MUTEX lock_;
   PortableInterceptor::Current_var pic_;
-
 };
 
 class ORB_Initializer : public virtual PortableInterceptor::ORBInitializer,
@@ -170,7 +167,6 @@ public:
       client_interceptor = interceptor;
 
     info->add_client_request_interceptor (client_interceptor.in ());
-
   }
 };
 
@@ -209,13 +205,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         new ORB_Initializer ();
       PortableInterceptor::register_orb_initializer (orb_initializer.in ());
 
-      CORBA::ORB_var orb = CORBA::ORB_init( argc, argv );
+      CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
 
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      CORBA::Object_var obj = orb->string_to_object( ior );
-      Messenger_var messenger = Messenger::_narrow( obj.in() );
+      CORBA::Object_var obj = orb->string_to_object(ior);
+      Messenger_var messenger = Messenger::_narrow(obj.in());
 
       obj = orb->resolve_initial_references ("PICurrent");
       pic = PortableInterceptor::Current::_narrow (obj.in ());

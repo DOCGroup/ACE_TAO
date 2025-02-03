@@ -10,7 +10,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 // operation.
 
 ACE_INLINE ACE_Scheduler_Factory::Factory_Status
-ACE_Scheduler_Factory::status (void)
+ACE_Scheduler_Factory::status ()
 {
   return status_;
 }

@@ -9,7 +9,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 // ****************************************************************
 
 template<class PROXY>
-TAO_ESF_Proxy_Collection<PROXY>::~TAO_ESF_Proxy_Collection (void)
+TAO_ESF_Proxy_Collection<PROXY>::~TAO_ESF_Proxy_Collection ()
 {
 }
 

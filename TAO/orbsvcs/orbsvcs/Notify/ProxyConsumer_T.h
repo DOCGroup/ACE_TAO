@@ -32,7 +32,7 @@ class TAO_Notify_Serv_Export TAO_Notify_ProxyConsumer_T
 {
 public:
   /// Constructor
-  TAO_Notify_ProxyConsumer_T (void);
+  TAO_Notify_ProxyConsumer_T ();
 
   /// Destructor
   ~TAO_Notify_ProxyConsumer_T ();
@@ -41,7 +41,7 @@ public:
   virtual void admin_types_changed (const CosNotification::EventTypeSeq & added,
                                     const CosNotification::EventTypeSeq & removed);
 
-  virtual CosNotifyChannelAdmin::SupplierAdmin_ptr MyAdmin (void);
+  virtual CosNotifyChannelAdmin::SupplierAdmin_ptr MyAdmin ();
 
   virtual CosNotification::EventTypeSeq * obtain_subscription_types (
     CosNotifyChannelAdmin::ObtainInfoMode mode);
@@ -50,18 +50,11 @@ public:
     const CosNotification::EventTypeSeq & added,
     const CosNotification::EventTypeSeq & removed
   );
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "orbsvcs/Notify/ProxyConsumer_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("ProxyConsumer_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 #endif /* TAO_Notify_PROXYCONSUMER_T_H */

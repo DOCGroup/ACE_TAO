@@ -42,7 +42,7 @@ class TAO_Property_Serv_Export CosProperty_Hash_Key
   //     Key for the Hash Table. The EXT_ID of the
   //     ACE_Hash_Map_Manager.
 public:
-  CosProperty_Hash_Key (void);
+  CosProperty_Hash_Key ();
   // Default constructor.
 
   CosProperty_Hash_Key (const char * &name);
@@ -54,17 +54,16 @@ public:
   CosProperty_Hash_Key (const CosProperty_Hash_Key &hash_key);
   // Copy constructor.
 
-  virtual ~CosProperty_Hash_Key (void);
+  virtual ~CosProperty_Hash_Key ();
   // Destructor.
 
   virtual bool operator == (const CosProperty_Hash_Key &hash_key) const;
   // The operator for hash binding and "find"ing.
 
-  virtual u_long hash (void) const;
+  virtual u_long hash () const;
   // The function that computes a hash value.
 
 // private:
-
   CosPropertyService::PropertyName_var pname_;
   // Storage pointer.
 };
@@ -75,7 +74,7 @@ class TAO_Property_Serv_Export CosProperty_Hash_Value
   //     This will be the value part in the Hash_Table. The INT_ID of
   //     the ACE_Hash_Map_Manager.
 public:
-  CosProperty_Hash_Value (void);
+  CosProperty_Hash_Value ();
   // Default constructor.
 
   CosProperty_Hash_Value (const CORBA::Any &any,
@@ -85,11 +84,10 @@ public:
   CosProperty_Hash_Value (const CosProperty_Hash_Value &hash_value);
   // Copy constructor.
 
-  virtual ~CosProperty_Hash_Value (void);
+  virtual ~CosProperty_Hash_Value ();
   // Destructor.
 
 //private:
-
   CORBA::Any pvalue_;
   // property value.
 
@@ -112,14 +110,14 @@ class TAO_Property_Serv_Export TAO_PropertySetFactory :  public virtual POA_CosP
   // = DESCRIPTION
   //     The object may be created with some predfined properties.
 public:
-  TAO_PropertySetFactory (void);
+  TAO_PropertySetFactory ();
   // Constructor.
 
-  virtual ~TAO_PropertySetFactory (void);
+  virtual ~TAO_PropertySetFactory ();
   // Destructor.
 
   virtual CosPropertyService::PropertySet_ptr
-  create_propertyset (void);
+  create_propertyset ();
   // Returns a  new TAO_PropertySet object. "The property set returned
   // will *not* have any initial properties."
 
@@ -156,14 +154,14 @@ class TAO_Property_Serv_Export TAO_PropertySetDefFactory : public virtual POA_Co
   // = DESCRIPTION
   //     The object creation may be done with some predefined properties.
 public:
-  TAO_PropertySetDefFactory(void);
+  TAO_PropertySetDefFactory();
   // Constructor.
 
-  virtual ~TAO_PropertySetDefFactory (void);
+  virtual ~TAO_PropertySetDefFactory ();
   // Destructor.
 
   virtual CosPropertyService::PropertySetDef_ptr
-  create_propertysetdef (void);
+  create_propertysetdef ();
   // Returns a new TAO_PropertySetDef object.
 
   virtual CosPropertyService::PropertySetDef_ptr
@@ -198,7 +196,7 @@ public:
   friend class TAO_PropertiesIterator;
 
   /// Default constructor.
-  TAO_PropertySet (void);
+  TAO_PropertySet ();
 
   TAO_PropertySet (const CosPropertyService::PropertyTypes allowed_property_types,
                    const CosPropertyService::Properties allowed_properties);
@@ -211,7 +209,7 @@ public:
                    const CORBA::ULong number_of_allowed_propertydefs);
   // PropertySetDef's construction needs this.
 
-  virtual ~TAO_PropertySet (void);
+  virtual ~TAO_PropertySet ();
   // Destructor function.
 
   virtual void define_property (const char *property_name,
@@ -223,7 +221,7 @@ public:
   virtual void define_properties (const CosPropertyService::Properties &nproperties);
   // Define a sequence of properties at a time.
 
-  virtual CORBA::ULong get_number_of_properties (void);
+  virtual CORBA::ULong get_number_of_properties ();
   // Get the number of properties that are currently defined in the
   // PropertySet.
 
@@ -253,7 +251,7 @@ public:
   virtual void delete_properties (const CosPropertyService::PropertyNames &property_names);
   // Delete all the these properties from this property set.
 
-  virtual CORBA::Boolean delete_all_properties (void);
+  virtual CORBA::Boolean delete_all_properties ();
   // Delete everything from this property set.
 
   virtual CORBA::Boolean is_property_defined (const char *property_name);
@@ -318,7 +316,7 @@ class TAO_Property_Serv_Export TAO_PropertySetDef : public virtual POA_CosProper
   //     provide more client access and control of the characteristics
   //     (metadata) of a PropertySet.
 public:
-  TAO_PropertySetDef (void);
+  TAO_PropertySetDef ();
   // Constructor.
 
   TAO_PropertySetDef (const CosPropertyService::PropertyTypes allowed_property_types,
@@ -328,7 +326,7 @@ public:
   TAO_PropertySetDef (const CosPropertyService::PropertyDefs initial_property_defs);
   // This is also for the factory.
 
-  virtual ~TAO_PropertySetDef (void);
+  virtual ~TAO_PropertySetDef ();
   // Destructor.
 
   virtual void get_allowed_property_types (CosPropertyService::PropertyTypes_out property_types);
@@ -411,10 +409,10 @@ public:
   TAO_PropertyNamesIterator (TAO_PropertySet &property_set);
   // Constructor.
 
-  virtual ~TAO_PropertyNamesIterator (void);
+  virtual ~TAO_PropertyNamesIterator ();
   // Destructor.
 
-  virtual void reset (void);
+  virtual void reset ();
   // The reset operation resets the position in an iterator to the
   // first property name, if one exists.
 
@@ -432,7 +430,7 @@ public:
   // with at most the how_many number of names. A return of false
   // signifies no more items in the iterator.
 
-  virtual void destroy (void);
+  virtual void destroy ();
   // Destroys the iterator.
 private:
   typedef ACE_Hash_Map_Manager<CosProperty_Hash_Key, CosProperty_Hash_Value, ACE_Null_Mutex>
@@ -467,10 +465,10 @@ public:
   TAO_PropertiesIterator (TAO_PropertySet &property_set);
   // Constructor.
 
-  virtual ~TAO_PropertiesIterator (void);
+  virtual ~TAO_PropertiesIterator ();
   // Destructor.
 
-  virtual void reset (void);
+  virtual void reset ();
   // Resets the position in an iterator to the first property, if one exists.
 
   virtual CORBA::Boolean next_one (CosPropertyService::Property_out aproperty);
@@ -487,7 +485,7 @@ public:
   // at most the how_many number of properties. A return of false
   // signifies no more items in the iterator.
 
-  virtual void destroy (void);
+  virtual void destroy ();
   // Destroys the iterator.
 
 private:

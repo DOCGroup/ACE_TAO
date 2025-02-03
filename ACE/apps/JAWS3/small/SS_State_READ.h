@@ -9,7 +9,6 @@
 class TeraSS_State_READ : public JAWS_Protocol_State
 {
 public:
-
   int service (JAWS_Event_Completer *, void *data);
 
   JAWS_Protocol_State * transition ( const JAWS_Event_Result &result
@@ -17,11 +16,10 @@ public:
                                    , void *act
                                    );
 
-  static JAWS_Protocol_State * instance (void)
+  static JAWS_Protocol_State * instance ()
   {
     return ACE_Singleton<TeraSS_State_READ, ACE_SYNCH_MUTEX>::instance ();
   }
-
 };
 
 #endif /* TERA_SS_STATE_READ_H */

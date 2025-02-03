@@ -8,7 +8,7 @@
 #include "SS_State_READ.h"
 #include "SS_Data.h"
 
-TeraSS_Service_Handler::TeraSS_Service_Handler (void)
+TeraSS_Service_Handler::TeraSS_Service_Handler ()
   : JAWS_Protocol_Handler (TeraSS_State_READ::instance (), & this->data_)
   , data_ (this)
 {

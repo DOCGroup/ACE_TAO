@@ -43,16 +43,15 @@ class TAO_IORTable_Export TAO_IOR_Table_Impl
     public virtual ::CORBA::LocalObject
 {
 public:
-  static TAO_IOR_Table_Impl_ptr
-  _nil (void)
+  static TAO_IOR_Table_Impl_ptr _nil ()
   {
-    return static_cast<TAO_IOR_Table_Impl_ptr> (0);
+    return nullptr;
   }
 
   /// Constructor
-  TAO_IOR_Table_Impl (void);
+  TAO_IOR_Table_Impl ();
 
-  virtual bool async_available (void) { return false; }
+  virtual bool async_available () { return false; }
 
   /// Find the object, using the locator if it is not on the table.
   char *find (const char *object_key);
@@ -99,7 +98,7 @@ namespace TAO
 
     static void release (TAO_IOR_Table_Impl_ptr);
 
-    static TAO_IOR_Table_Impl_ptr nil (void);
+    static TAO_IOR_Table_Impl_ptr nil ();
 
     static ::CORBA::Boolean marshal (const TAO_IOR_Table_Impl_ptr p,
                                      TAO_OutputCDR &cdr);

@@ -10,7 +10,7 @@
 #include "tao/CORBA_String.h"
 #include "tao/SystemException.h"
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -40,7 +40,7 @@ TAO::Any_SystemException::Any_SystemException (CORBA::TypeCode_ptr tc)
 {
 }
 
-TAO::Any_SystemException::~Any_SystemException (void)
+TAO::Any_SystemException::~Any_SystemException ()
 {
 }
 
@@ -116,11 +116,7 @@ TAO::Any_SystemException::extract (const CORBA::Any & any,
                                                 empty_value),
                       false);
 
-#if defined (ACE_HAS_CPP11)
       std::unique_ptr<TAO::Any_SystemException > replacement_safety (replacement);
-#else
-      auto_ptr<TAO::Any_SystemException > replacement_safety (replacement);
-#endif /* ACE_HAS_CPP11 */
 
       // We know this will work since the unencoded case is covered above.
       TAO::Unknown_IDL_Type * const unk =
@@ -152,7 +148,7 @@ TAO::Any_SystemException::extract (const CORBA::Any & any,
 }
 
 void
-TAO::Any_SystemException::free_value (void)
+TAO::Any_SystemException::free_value ()
 {
   if (this->value_destructor_ != 0)
     {
@@ -165,7 +161,7 @@ TAO::Any_SystemException::free_value (void)
 }
 
 const void *
-TAO::Any_SystemException::value (void) const
+TAO::Any_SystemException::value () const
 {
   return this->value_;
 }

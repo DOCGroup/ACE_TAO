@@ -21,7 +21,7 @@ TAO::CSD::TP_Collocated_Synch_With_Server_Request::TP_Collocated_Synch_With_Serv
 
 ACE_INLINE
 bool
-TAO::CSD::TP_Collocated_Synch_With_Server_Request::wait(void)
+TAO::CSD::TP_Collocated_Synch_With_Server_Request::wait()
 {
   return this->synch_helper_.wait_while_pending();
 }

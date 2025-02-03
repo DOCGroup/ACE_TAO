@@ -112,13 +112,13 @@ PMC_Flo::insert_protocol_info (Protocol_Record &protocol_record)
 }
 
 void
-PMC_Flo::process (void)
+PMC_Flo::process ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "remote friends logged on\n"));
   PM_Client::process ();
 }
 
-PMC_Flo::PMC_Flo (void)
+PMC_Flo::PMC_Flo ()
 {
 }

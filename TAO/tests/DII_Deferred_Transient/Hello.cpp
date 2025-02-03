@@ -2,10 +2,6 @@
 #include "Hello.h"
 #include "ace/OS_NS_unistd.h"
 
-Hello::Hello ()
-{
-}
-
 void
 Hello::crash ()
 {

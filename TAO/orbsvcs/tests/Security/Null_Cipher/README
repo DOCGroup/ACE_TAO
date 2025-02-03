@@ -1,5 +1,3 @@
-
-
 This test verifies that a NULL cipher may be used. Sometime between
 openssl release 0.9.7a and 0.9.8g, openssl changed the way it evaluated
 cipher strings so that "DEFAULT:eNULL" no longer allowed use of a NULL

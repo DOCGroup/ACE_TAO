@@ -23,7 +23,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 const char TAO_UIPMC_Profile::object_key_delimiter_ = '/';
 
 char
-TAO_UIPMC_Profile::object_key_delimiter (void) const
+TAO_UIPMC_Profile::object_key_delimiter () const
 {
   return TAO_UIPMC_Profile::object_key_delimiter_;
 }
@@ -63,30 +63,6 @@ TAO_UIPMC_Profile::TAO_UIPMC_Profile (const ACE_INET_Addr &addr,
   this->component_version_.minor = 0;
 
   this->addressing_mode_ = default_addressing_mode_;
-}
-
-TAO_UIPMC_Profile::TAO_UIPMC_Profile (const CORBA::Octet class_d_address[4],
-                                      CORBA::UShort port,
-                                      TAO_ORB_Core *orb_core)
-  : TAO_Profile (IOP::TAG_UIPMC,
-                 orb_core,
-                 TAO_GIOP_Message_Version (TAO_DEF_GIOP_MAJOR,
-                                           TAO_DEF_GIOP_MINOR))
-  , endpoint_ (class_d_address, port)
-  , tagged_profile_ ()
-  , group_id_ (0)
-  , ref_version_ (0)
-  , has_ref_version_ (false)
-{
-  // The default for component version is 1.0.
-  this->component_version_.major = 1;
-  this->component_version_.minor = 0;
-
-  this->addressing_mode_ = default_addressing_mode_;
-}
-
-TAO_UIPMC_Profile::~TAO_UIPMC_Profile (void)
-{
 }
 
 int
@@ -157,7 +133,7 @@ TAO_UIPMC_Profile::decode (TAO_InputCDR& cdr)
 }
 
 int
-TAO_UIPMC_Profile::decode_endpoints (void)
+TAO_UIPMC_Profile::decode_endpoints ()
 {
   ACE_NOTSUP_RETURN (-1);
 }
@@ -528,25 +504,25 @@ TAO_UIPMC_Profile::hash (CORBA::ULong max)
 }
 
 TAO_Endpoint*
-TAO_UIPMC_Profile::endpoint (void)
+TAO_UIPMC_Profile::endpoint ()
 {
   return &this->endpoint_;
 }
 
 int
-TAO_UIPMC_Profile::encode_endpoints (void)
+TAO_UIPMC_Profile::encode_endpoints ()
 {
   return 1;
 }
 
 CORBA::ULong
-TAO_UIPMC_Profile::endpoint_count (void) const
+TAO_UIPMC_Profile::endpoint_count () const
 {
   return 1;
 }
 
 char *
-TAO_UIPMC_Profile::to_string (void) const
+TAO_UIPMC_Profile::to_string () const
 {
   // corbaloc:miop:1.0@1.0-group_id-1-1/host:port
 
@@ -617,13 +593,13 @@ TAO_UIPMC_Profile::to_string (void) const
 }
 
 const char *
-TAO_UIPMC_Profile::prefix (void)
+TAO_UIPMC_Profile::prefix ()
 {
   return ::the_prefix;
 }
 
 IOP::TaggedProfile &
-TAO_UIPMC_Profile::create_tagged_profile (void)
+TAO_UIPMC_Profile::create_tagged_profile ()
 {
   // Check whether we have already created the TaggedProfile
   if (this->tagged_profile_.profile_data.length () == 0)
@@ -695,7 +671,7 @@ TAO_UIPMC_Profile::set_group_info (
 }
 
 void
-TAO_UIPMC_Profile::update_cached_group_component (void)
+TAO_UIPMC_Profile::update_cached_group_component ()
 {
   PortableGroup::TagGroupTaggedComponent group;
 
@@ -770,7 +746,7 @@ TAO_UIPMC_Profile::request_target_specifier (
 }
 
 int
-TAO_UIPMC_Profile::supports_multicast (void) const
+TAO_UIPMC_Profile::supports_multicast () const
 {
   // Yes!  We support multicast!
   return 1;

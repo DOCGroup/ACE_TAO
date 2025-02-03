@@ -1,5 +1,7 @@
 #include "Kokyu.h"
 
+#include <utility>
+
 #include "Default_Dispatcher_Impl.h"
 
 #if ! defined (__ACE_INLINE__)
@@ -8,7 +10,6 @@
 
 namespace Kokyu
 {
-
 int Dispatcher::dispatch (const Dispatch_Command* cmd, const QoSDescriptor& qos)
 {
   return dispatcher_impl_->dispatch (cmd, qos);
@@ -26,13 +27,8 @@ int Dispatcher::activate ()
 
 void Dispatcher::implementation (Dispatcher_Impl* impl)
 {
-  auto_ptr<Dispatcher_Impl> tmp_impl (impl);
-  dispatcher_impl_ = tmp_impl;
-
-  //I couldn't use reset because MSVC++ auto_ptr does not have reset method.
-  //So in configurations where the auto_ptr maps to the std::auto_ptr instead
-  //of ACE auto_ptr, this would be a problem.
-  //dispatcher_impl_.reset (impl);
+  std::unique_ptr<Dispatcher_Impl> tmp_impl (impl);
+  dispatcher_impl_ = std::move(tmp_impl);
 }
 
 Dispatcher*

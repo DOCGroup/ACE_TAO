@@ -21,7 +21,7 @@ be_visitor_valuetype_ss::be_visitor_valuetype_ss (be_visitor_context *ctx)
 {
 }
 
-be_visitor_valuetype_ss::~be_visitor_valuetype_ss (void)
+be_visitor_valuetype_ss::~be_visitor_valuetype_ss ()
 {
 }
 
@@ -37,7 +37,7 @@ be_visitor_valuetype_ss::visit_valuetype (be_valuetype *node)
 
   // We generate a skeleton class only if the valuetype supports a
   // non-abstract interface.
-  if (concrete == 0)
+  if (concrete == nullptr)
     {
       return 0;
     }
@@ -53,8 +53,7 @@ be_visitor_valuetype_ss::visit_valuetype (be_valuetype *node)
 
   const char *full_skel_name = full_skel_name_holder.c_str ();
 
-  *os << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   // Find if we are at the top scope or inside some module,
   // pre-compute the prefix that must be added to the local name in
@@ -73,7 +72,7 @@ be_visitor_valuetype_ss::visit_valuetype (be_valuetype *node)
 
   *os << full_skel_name << "::"
       << local_name_prefix << node_local_name
-      << " (void)" << be_nl
+      << " ()" << be_nl
       << "{}" << be_nl_2;
 
 // @@@ (JP) I'm commenting out the copy constructor for now. The
@@ -102,7 +101,7 @@ be_visitor_valuetype_ss::visit_valuetype (be_valuetype *node)
     }
   else
     {
-      be_interface *bd = be_interface::narrow_from_decl (concrete);
+      be_interface *bd = dynamic_cast<be_interface*> (concrete);
       *os << bd->full_skel_name () << " (rhs)," << be_nl;
     }
 
@@ -112,7 +111,7 @@ be_visitor_valuetype_ss::visit_valuetype (be_valuetype *node)
 
   *os << full_skel_name << "::~"
       << local_name_prefix << node_local_name
-      << " (void)" << be_nl
+      << " ()" << be_nl
       << "{}";
 
   return 0;

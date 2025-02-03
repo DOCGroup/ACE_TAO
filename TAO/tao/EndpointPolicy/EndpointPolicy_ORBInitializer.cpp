@@ -15,8 +15,7 @@ TAO_EndpointPolicy_ORBInitializer::pre_init (
 
 void
 TAO_EndpointPolicy_ORBInitializer::post_init (
-    PortableInterceptor::ORBInitInfo_ptr info
-    )
+    PortableInterceptor::ORBInitInfo_ptr info)
 {
   this->register_policy_factories (info);
 }

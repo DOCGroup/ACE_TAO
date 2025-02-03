@@ -16,10 +16,6 @@ be_visitor_array_cs::be_visitor_array_cs (be_visitor_context *ctx)
 {
 }
 
-be_visitor_array_cs::~be_visitor_array_cs (void)
-{
-}
-
 int be_visitor_array_cs::visit_array (be_array *node)
 {
   // Nothing to do if we are imported or code is already generated.
@@ -33,7 +29,7 @@ int be_visitor_array_cs::visit_array (be_array *node)
   this->ctx_->node (node);
 
   // Retrieve the type.
-  be_type *bt = be_type::narrow_from_decl (node->base_type ());
+  be_type *bt = dynamic_cast<be_type*> (node->base_type ());
 
   if (!bt)
     {
@@ -70,7 +66,7 @@ int be_visitor_array_cs::visit_array (be_array *node)
       if (node->is_nested ())
         {
           be_decl *parent =
-            be_scope::narrow_from_scope (node->defined_in ())->decl ();
+            dynamic_cast<be_scope*> (node->defined_in ())->decl ();
           ACE_OS::sprintf (fname,
                            "%s::_%s",
                            parent->full_name (),
@@ -90,30 +86,27 @@ int be_visitor_array_cs::visit_array (be_array *node)
         }
     }
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   // dup method.
   *os << fname << "_slice *" << be_nl
       << fname << "_dup (const " << fname
       << "_slice *_tao_src_array)" << be_nl;
   *os << "{" << be_idt_nl;
-  *os << fname << "_slice *_tao_dup_array =" << be_idt_nl
-      << fname << "_alloc ();" << be_uidt_nl << be_nl;
-  *os << "if (!_tao_dup_array)" << be_idt_nl
-      << "{" << be_idt_nl
-      << "return static_cast <" << fname
-      << "_slice *> (0);" << be_uidt_nl
+  *os << fname << "_slice *_tao_dup_array = "
+      << fname << "_alloc ();" << be_nl << be_nl;
+  *os << "if (_tao_dup_array)" << be_idt_nl
+      << "{" << be_idt_nl;
+  *os << fname << "_copy (_tao_dup_array, _tao_src_array);" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl;
-  *os << fname << "_copy (_tao_dup_array, _tao_src_array);" << be_nl;
   *os << "return _tao_dup_array;" << be_uidt_nl;
   *os << "}" << be_nl_2;
 
   // alloc method.
   *os << fname << "_slice *" << be_nl;
-  *os << fname << "_alloc (void)" << be_nl;
+  *os << fname << "_alloc ()" << be_nl;
   *os << "{" << be_idt_nl;
-  *os << fname << "_slice *retval = 0;" << be_nl;
+  *os << fname << "_slice *retval {};" << be_nl;
   *os << "ACE_NEW_RETURN (retval, ";
 
   if (bt->accept (this) == -1)
@@ -134,15 +127,14 @@ int be_visitor_array_cs::visit_array (be_array *node)
                         -1);
     }
 
-  *os << ", 0);" << be_nl;
+  *os << ", nullptr);" << be_nl;
   *os << "return retval;" << be_uidt_nl;
   *os << "}" << be_nl_2;
 
   // free method.
   *os << "void" << be_nl
-      << fname << "_free (" << be_idt << be_idt_nl
-      << fname << "_slice *_tao_slice)" << be_uidt
-      << be_uidt_nl;
+      << fname << "_free (" << fname << "_slice *_tao_slice)"
+      << be_nl;
   *os << "{" << be_idt_nl;
   *os << "delete [] _tao_slice;" << be_uidt_nl;
   *os << "}" << be_nl_2;
@@ -164,7 +156,7 @@ int be_visitor_array_cs::visit_array (be_array *node)
       // Retrieve the ith dimension value.
       AST_Expression *expr = node->dims ()[i];
 
-      if ((expr == 0) || ((expr != 0) && (expr->ev () == 0)))
+      if ((expr == nullptr) || ((expr != nullptr) && (expr->ev () == nullptr)))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_array_cs::"
@@ -176,7 +168,7 @@ int be_visitor_array_cs::visit_array (be_array *node)
       if (expr->ev ()->et == AST_Expression::EV_ulong)
         {
           // Generate a loop for each dimension.
-          *os << "for ( ::CORBA::ULong i" << i << " = 0; i" << i << " < "
+          *os << "for (::CORBA::ULong i" << i << " = 0; i" << i << " < "
               << expr->ev ()->u.ulval << "; ++i" << i << ")" << be_idt_nl
               << "{" << be_idt_nl;
         }
@@ -192,7 +184,7 @@ int be_visitor_array_cs::visit_array (be_array *node)
 
   // Now generate code such that every element of the array gets assigned
   // inside the innermost level of the  nested loops generated above.
-  be_array *primitive_type = 0;
+  be_array *primitive_type = nullptr;
 
   if (bt->node_type () == AST_Decl::NT_typedef)
     {
@@ -206,14 +198,14 @@ int be_visitor_array_cs::visit_array (be_array *node)
 
       while (tmp->node_type () == AST_Decl::NT_typedef)
         {
-          be_typedef *tdef = be_typedef::narrow_from_decl (tmp);
-          tmp = be_type::narrow_from_decl (tdef->base_type ());
+          be_typedef *tdef = dynamic_cast<be_typedef*> (tmp);
+          tmp = dynamic_cast<be_type*> (tdef->base_type ());
         }
 
-      primitive_type = be_array::narrow_from_decl (tmp);
+      primitive_type = dynamic_cast<be_array*> (tmp);
     }
 
-  if (primitive_type != 0)
+  if (primitive_type != nullptr)
     {
       // The base type is a typedef to another array type, so
       // we use the base type's copy method.
@@ -297,7 +289,7 @@ int be_visitor_array_cs::visit_array (be_array *node)
   // If the member's element type
   // is a declaration (not a reference), we must generate code for
   // the declaration.
-  if (this->ctx_->alias () == 0 // Not a typedef.
+  if (this->ctx_->alias () == nullptr // Not a typedef.
       && bt->is_child (this->ctx_->scope ()->decl ()))
     {
       int status = 0;

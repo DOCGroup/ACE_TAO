@@ -19,7 +19,6 @@
 using namespace TAO_VERSIONED_NAMESPACE_NAME::TAO::details;
 
 
-
 template<typename charT>
 struct helper
 {

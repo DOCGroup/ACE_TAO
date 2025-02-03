@@ -15,7 +15,7 @@ Foo_i::~Foo_i()
 
 
 void
-Foo_i::op1(void)
+Foo_i::op1()
 {
 }
 
@@ -28,11 +28,10 @@ Foo_i::op2(CORBA::Long value)
 
 
 CORBA::Long
-Foo_i::op3(void)
+Foo_i::op3()
 {
   return this->value_;
 }
-
 
 
 void
@@ -43,14 +42,14 @@ Foo_i::op4(CORBA::Long value)
 
 
 void
-Foo_i::op5(void)
+Foo_i::op5()
 {
   throw FooException();
 }
 
 
 void
-Foo_i::done(void)
+Foo_i::done()
 {
   unsigned num_left = --this->num_clients_;
 

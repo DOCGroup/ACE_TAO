@@ -39,14 +39,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_HTTP_Parser : public TAO_IOR_Parser
 {
 public:
-
-  /// The destructor
-  virtual ~TAO_HTTP_Parser (void);
+  TAO_HTTP_Parser () = default;
+  ~TAO_HTTP_Parser () override = default;
 
   // = The IOR_Parser methods, please read the documentation in
   //   IOR_Parser.h
-  virtual bool match_prefix (const char *ior_string) const;
-  virtual CORBA::Object_ptr parse_string (const char *ior, CORBA::ORB_ptr orb);
+  bool match_prefix (const char *ior_string) const override;
+  CORBA::Object_ptr parse_string (const char *ior, CORBA::ORB_ptr orb) override;
 };
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO, TAO_HTTP_Parser)

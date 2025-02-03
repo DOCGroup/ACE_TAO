@@ -40,7 +40,7 @@ class Connection_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_SYNCH>
 {
 public:
   /// Default constructor (needed to make <ACE_Connector> happy).
-  Connection_Handler (void);
+  Connection_Handler ();
 
   /// Real constructor.
   Connection_Handler (const Connection_Config_Info &);
@@ -61,42 +61,42 @@ public:
 
   // = Set/get the current state.
   void state (State);
-  State state (void) const;
+  State state () const;
 
   // = Set/get remote INET addr.
   void remote_addr (ACE_INET_Addr &);
-  const ACE_INET_Addr &remote_addr (void) const;
+  const ACE_INET_Addr &remote_addr () const;
 
   // = Set/get local INET addr.
   void local_addr (ACE_INET_Addr &);
-  const ACE_INET_Addr &local_addr (void) const;
+  const ACE_INET_Addr &local_addr () const;
 
   // = Set/get connection id.
   void connection_id (CONNECTION_ID);
-  CONNECTION_ID connection_id (void) const;
+  CONNECTION_ID connection_id () const;
 
   // = Set/get the current retry timeout delay.
   void timeout (long);
-  long timeout (void);
+  long timeout ();
 
   // = Set/get the maximum retry timeout delay.
   void max_timeout (long);
-  long max_timeout (void) const;
+  long max_timeout () const;
 
   // = Set/get proxy role (i.e., 'S' for Supplier and 'C' for Consumer
   // (necessary for error checking).
   void connection_role (char);
-  char connection_role (void) const;
+  char connection_role () const;
 
   // = Set/get the <Event_Channel> *.
   void event_channel (Event_Channel *);
-  Event_Channel *event_channel (void) const;
+  Event_Channel *event_channel () const;
 
   // = The total number of bytes sent/received on this proxy.
   /// Increment count by <bytes>.
   /// Return the current byte count.
   void total_bytes (size_t bytes);
-  size_t total_bytes (void) const;
+  size_t total_bytes () const;
 
   /// Perform timer-based Connection_Handler reconnection.
   virtual int handle_timeout (const ACE_Time_Value &, const void *arg);

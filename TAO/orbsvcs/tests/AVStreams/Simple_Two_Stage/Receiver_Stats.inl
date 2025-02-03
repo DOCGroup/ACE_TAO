@@ -1,5 +1,5 @@
 ACE_INLINE
-Receiver_Stats::Receiver_Stats (void)
+Receiver_Stats::Receiver_Stats ()
   : samples_count_ (0)
   , min_ (0)
   , min_at_ (0)
@@ -11,7 +11,7 @@ Receiver_Stats::Receiver_Stats (void)
 }
 
 ACE_INLINE ACE_UINT32
-Receiver_Stats::samples_count (void) const
+Receiver_Stats::samples_count () const
 {
   return this->samples_count_;
 }

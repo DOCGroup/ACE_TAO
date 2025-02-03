@@ -39,7 +39,7 @@ Server_Peer::callme(Test::Peer_ptr callback,
     {
     }
 
-    // orb_->shutdown (0);
+    // orb_->shutdown (false);
   }
   else if (max_depth > 0)
   {
@@ -54,12 +54,12 @@ Server_Peer::callme(Test::Peer_ptr callback,
 }
 
 void
-Server_Peer::crash(void)
+Server_Peer::crash()
 {
   throw CORBA::NO_IMPLEMENT ();
 }
 
 void
-Server_Peer::noop(void)
+Server_Peer::noop()
 {
 }

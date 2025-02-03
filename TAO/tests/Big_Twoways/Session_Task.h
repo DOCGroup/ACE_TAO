@@ -19,7 +19,7 @@ public:
   Session_Task (Session *session);
 
   /// Thread entry point
-  int svc (void);
+  int svc ();
 
 private:
   /// Reference to the test interface

@@ -56,7 +56,7 @@ namespace TAO
       Connection_Handler (TAO_ORB_Core *orb_core);
 
       /// Destructor.
-      ~Connection_Handler (void);
+      ~Connection_Handler ();
 
       /**
        * @name Connection Handler overloads
@@ -74,8 +74,8 @@ namespace TAO
       //@{
       /** @name Event Handler overloads
        */
-      virtual int resume_handler (void);
-      virtual int close_connection (void);
+      virtual int resume_handler ();
+      virtual int close_connection ();
       virtual int handle_input (ACE_HANDLE);
       virtual int handle_output (ACE_HANDLE);
       virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask);
@@ -85,7 +85,7 @@ namespace TAO
       //@}
 
       /// Add ourselves to cache.
-      int add_transport_to_cache (void);
+      int add_transport_to_cache ();
 
       /// Process the @a listen_list.
       int process_listen_point_list (IIOP::ListenPointList &listen_list);
@@ -103,14 +103,14 @@ namespace TAO
 
       /// Return true if the host name matches the name/domain in the peer
       /// certificate.
-      bool check_host (void);
+      bool check_host ();
 
     protected:
       //@{
       /**
        * @name TAO_Connection Handler overloads
        */
-      virtual int release_os_resources (void);
+      virtual int release_os_resources ();
       virtual void pos_io_hook (int & return_value);
       virtual int handle_write_ready (const ACE_Time_Value *timeout);
       //@}
@@ -146,7 +146,7 @@ namespace TAO
                    int &result);
 
       /// Destructor that tears down the TSS SSL state.
-      ~State_Guard (void);
+      ~State_Guard ();
 
     private:
       /// Pointer to the connection handler currently handling the

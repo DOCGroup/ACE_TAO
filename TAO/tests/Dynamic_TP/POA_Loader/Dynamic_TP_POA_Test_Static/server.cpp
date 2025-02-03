@@ -67,7 +67,7 @@ next_parm (const ACE_TCHAR **pstart)
 }
 
 void
-set_parms ( TAO_DTP_Definition * this_config)
+set_parms (TAO_DTP_Definition * this_config)
 {
   // Get past the brace
   const ACE_TCHAR *pstart = parms + 1;
@@ -187,11 +187,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Wait for all CSD task threads exit.
       ACE_Thread_Manager::instance ()->wait ();
 
-      root_poa->destroy (1, 1);
+      root_poa->destroy (true, true);
 
       orb->destroy ();
-
-
     }
   catch (const CORBA::Exception& ex)
     {

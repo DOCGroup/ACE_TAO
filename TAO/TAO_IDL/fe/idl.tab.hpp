@@ -1,8 +1,8 @@
-/* A Bison parser, made by GNU Bison 3.6.2.  */
+/* A Bison parser, made by GNU Bison 3.8.2.  */
 
 /* Bison interface for Yacc-like parsers in C
 
-   Copyright (C) 1984, 1989-1990, 2000-2015, 2018-2020 Free Software Foundation,
+   Copyright (C) 1984, 1989-1990, 2000-2015, 2018-2021 Free Software Foundation,
    Inc.
 
    This program is free software: you can redistribute it and/or modify
@@ -16,7 +16,7 @@
    GNU General Public License for more details.
 
    You should have received a copy of the GNU General Public License
-   along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
+   along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
 /* As a special exception, you may create a larger work that contains
    part or all of the Bison parser skeleton and distribute that work
@@ -132,13 +132,25 @@ extern int tao_yydebug;
     IDL_FIXED_PT_LITERAL = 333,    /* IDL_FIXED_PT_LITERAL  */
     IDL_TRUETOK = 334,             /* IDL_TRUETOK  */
     IDL_FALSETOK = 335,            /* IDL_FALSETOK  */
-    IDL_SCOPE_DELIMITOR = 336,     /* IDL_SCOPE_DELIMITOR  */
-    IDL_LEFT_SHIFT = 337,          /* IDL_LEFT_SHIFT  */
-    IDL_RIGHT_SHIFT = 338,         /* IDL_RIGHT_SHIFT  */
-    IDL_WCHAR_LITERAL = 339,       /* IDL_WCHAR_LITERAL  */
-    IDL_WSTRING_LITERAL = 340,     /* IDL_WSTRING_LITERAL  */
-    IDL_ANNOTATION_DECL = 341,     /* IDL_ANNOTATION_DECL  */
-    IDL_ANNOTATION_SYMBOL = 342    /* IDL_ANNOTATION_SYMBOL  */
+    IDL_INT8 = 336,                /* IDL_INT8  */
+    IDL_UINT8 = 337,               /* IDL_UINT8  */
+    IDL_INT16 = 338,               /* IDL_INT16  */
+    IDL_UINT16 = 339,              /* IDL_UINT16  */
+    IDL_INT32 = 340,               /* IDL_INT32  */
+    IDL_UINT32 = 341,              /* IDL_UINT32  */
+    IDL_INT64 = 342,               /* IDL_INT64  */
+    IDL_UINT64 = 343,              /* IDL_UINT64  */
+    IDL_SCOPE_DELIMITOR = 344,     /* IDL_SCOPE_DELIMITOR  */
+    IDL_LEFT_SHIFT = 345,          /* IDL_LEFT_SHIFT  */
+    IDL_RIGHT_SHIFT = 346,         /* IDL_RIGHT_SHIFT  */
+    IDL_WCHAR_LITERAL = 347,       /* IDL_WCHAR_LITERAL  */
+    IDL_WSTRING_LITERAL = 348,     /* IDL_WSTRING_LITERAL  */
+    IDL_ANNOTATION_DECL = 349,     /* IDL_ANNOTATION_DECL  */
+    IDL_ANNOTATION_SYMBOL = 350,   /* IDL_ANNOTATION_SYMBOL  */
+    IDL_BITFIELD = 351,            /* IDL_BITFIELD  */
+    IDL_BITMASK = 352,             /* IDL_BITMASK  */
+    IDL_BITSET = 353,              /* IDL_BITSET  */
+    IDL_MAP = 354                  /* IDL_MAP  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -147,7 +159,7 @@ extern int tao_yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 163 "fe/idl.ypp"
+#line 164 "fe/idl.ypp"
 
   AST_Decl                      *dcval;         /* Decl value           */
   UTL_StrList                   *slval;         /* String list          */
@@ -191,8 +203,9 @@ union YYSTYPE
   AST_Annotation_Decl *annotation_decl_val;
   AST_Decls *decls_val;
   Decl_Annotations_Pair *decl_annotations_pair_val;
+  Decl_Annotations_Pair_Pair* decl_annotations_pair_val_pair;
 
-#line 196 "fe/idl.tab.hpp"
+#line 209 "fe/idl.tab.hpp"
 
 };
 typedef union YYSTYPE YYSTYPE;
@@ -203,6 +216,8 @@ typedef union YYSTYPE YYSTYPE;
 
 extern YYSTYPE tao_yylval;
 
+
 int tao_yyparse (void);
+
 
 #endif /* !YY_TAO_YY_FE_IDL_TAB_HPP_INCLUDED  */

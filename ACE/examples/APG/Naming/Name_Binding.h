@@ -4,8 +4,8 @@
 
 #include "ace/OS_NS_stdlib.h"
 #include "ace/OS_NS_string.h"
-#include "ace/Auto_Ptr.h"
 #include "ace/Name_Space.h"
+#include <memory>
 
 // Listing 1 code/ch21
 class Name_Binding
@@ -35,16 +35,16 @@ public:
     this->type_ = 0;
   }
 
-  char *name (void)
+  char *name ()
   { return this->name_; }
 
-  char *value (void)
+  char *value ()
   { return this->value_; }
 
-  const char *type (void)
+  const char *type ()
   { return this->type_; }
 
-  int int_value (void)
+  int int_value ()
   { return ACE_OS::atoi (this->value ()); }
 
 private:
@@ -53,7 +53,7 @@ private:
   char *type_;
 };
 
-typedef auto_ptr<Name_Binding> Name_Binding_Ptr;
+typedef std::unique_ptr<Name_Binding> Name_Binding_Ptr;
 // Listing 1
 
 #endif /* NAME_BINDING_H */

@@ -11,8 +11,7 @@ test_invalid_compression_factory (Compression::CompressionManager_ptr cm)
   try
     {
       // Get an invalid compression factory
-      Compression::CompressorFactory_var factory =
-        cm->get_factory (100);
+      Compression::CompressorFactory_var factory = cm->get_factory (100);
     }
   catch (const Compression::UnknownCompressorId&)
     {

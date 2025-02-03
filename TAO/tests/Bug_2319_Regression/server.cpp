@@ -8,7 +8,6 @@
 #include "TestC.h"
 
 int num_calls = 10; // total calls client is going to make
-const int sleep_time = 1; // sleep for  1 sec on each call
 
 // This should equal num_calls within 'sleep * num_calls' seconds
 int calls_received = 0;
@@ -43,7 +42,7 @@ protected:
 class ST_AMH_Server
 {
 public:
-  ST_AMH_Server (void);
+  ST_AMH_Server () = default;
   virtual ~ST_AMH_Server ();
 
   /// ORB inititalisation stuff
@@ -56,7 +55,6 @@ public:
   virtual void run_event_loop ();
 
 public:
-
 protected:
   CORBA::ORB_ptr orb_;
   PortableServer::POA_var root_poa_;
@@ -121,12 +119,6 @@ ST_AMH_Servant::test_method (Test::AMH_RoundtripResponseHandler_ptr,
 }
 
 /*** Server Declaration ***/
-
-// ------------------------------------------------------------------------
-//
-ST_AMH_Server::ST_AMH_Server (void)
-{
-}
 
 // ------------------------------------------------------------------------
 //

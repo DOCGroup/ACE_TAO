@@ -2,11 +2,9 @@
 #include "orbsvcs/IFRService/Repository_i.h"
 #include "orbsvcs/IFRService/IFR_Service_Utils.h"
 #include "orbsvcs/IFRService/IDLType_i.h"
-
 #include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
-
-#include "ace/Auto_Ptr.h"
 #include "ace/SString.h"
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -16,18 +14,18 @@ TAO_ConstantDef_i::TAO_ConstantDef_i (TAO_Repository_i *repo)
 {
 }
 
-TAO_ConstantDef_i::~TAO_ConstantDef_i (void)
+TAO_ConstantDef_i::~TAO_ConstantDef_i ()
 {
 }
 
 CORBA::DefinitionKind
-TAO_ConstantDef_i::def_kind (void)
+TAO_ConstantDef_i::def_kind ()
 {
   return CORBA::dk_Constant;
 }
 
 CORBA::Contained::Description *
-TAO_ConstantDef_i::describe (void)
+TAO_ConstantDef_i::describe ()
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
@@ -37,7 +35,7 @@ TAO_ConstantDef_i::describe (void)
 }
 
 CORBA::Contained::Description *
-TAO_ConstantDef_i::describe_i (void)
+TAO_ConstantDef_i::describe_i ()
 {
   CORBA::Contained::Description *desc_ptr = 0;
   ACE_NEW_THROW_EX (desc_ptr,
@@ -73,7 +71,7 @@ TAO_ConstantDef_i::describe_i (void)
 }
 
 CORBA::TypeCode_ptr
-TAO_ConstantDef_i::type (void)
+TAO_ConstantDef_i::type ()
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::TypeCode::_nil ());
 
@@ -83,7 +81,7 @@ TAO_ConstantDef_i::type (void)
 }
 
 CORBA::TypeCode_ptr
-TAO_ConstantDef_i::type_i (void)
+TAO_ConstantDef_i::type_i ()
 {
   ACE_TString type_path;
   this->repo_->config ()->get_string_value (this->section_key_,
@@ -97,7 +95,7 @@ TAO_ConstantDef_i::type_i (void)
 }
 
 CORBA::IDLType_ptr
-TAO_ConstantDef_i::type_def (void)
+TAO_ConstantDef_i::type_def ()
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::IDLType::_nil ());
 
@@ -107,7 +105,7 @@ TAO_ConstantDef_i::type_def (void)
 }
 
 CORBA::IDLType_ptr
-TAO_ConstantDef_i::type_def_i (void)
+TAO_ConstantDef_i::type_def_i ()
 {
   ACE_TString type_path;
   this->repo_->config ()->get_string_value (this->section_key_,
@@ -142,7 +140,7 @@ TAO_ConstantDef_i::type_def_i (CORBA::IDLType_ptr type_def)
 }
 
 CORBA::Any *
-TAO_ConstantDef_i::value (void)
+TAO_ConstantDef_i::value ()
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
@@ -152,7 +150,7 @@ TAO_ConstantDef_i::value (void)
 }
 
 CORBA::Any *
-TAO_ConstantDef_i::value_i (void)
+TAO_ConstantDef_i::value_i ()
 {
   CORBA::TypeCode_var tc = this->type_i ();
 
@@ -167,7 +165,7 @@ TAO_ConstantDef_i::value_i (void)
                             );
 
   char *data = static_cast<char *> (ref);
-  ACE_Auto_Basic_Array_Ptr<char> safety (data);
+  std::unique_ptr<char[]> safety (data);
 
   ACE_Message_Block mb (data,
                         length);
@@ -232,7 +230,7 @@ TAO_ConstantDef_i::value_i (const CORBA::Any &value)
       TAO_InputCDR in (out);
       mb = in.steal_contents ();
     }
-  ACE_Auto_Ptr<ACE_Message_Block> safe (mb);
+  std::unique_ptr<ACE_Message_Block> safe (mb);
 
   CORBA::TCKind kind = val_tc->kind ();
 

@@ -6,12 +6,13 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_strings.h"
 #include "tao/debug.h"
+#include <cstring>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_HTTP_Handler::TAO_HTTP_Handler (void) :
-  mb_ (0),
-  filename_ (0),
+TAO_HTTP_Handler::TAO_HTTP_Handler () :
+  mb_ (nullptr),
+  filename_ (nullptr),
   bytecount_ (0)
 {
 }
@@ -24,12 +25,12 @@ TAO_HTTP_Handler::TAO_HTTP_Handler (ACE_Message_Block * mb,
 {
 }
 
-TAO_HTTP_Handler::~TAO_HTTP_Handler (void)
+TAO_HTTP_Handler::~TAO_HTTP_Handler ()
 {
   if (this->filename_)
     {
       ACE_OS::free (this->filename_);
-      filename_ = 0;
+      filename_ = nullptr;
     }
 }
 
@@ -42,7 +43,6 @@ TAO_HTTP_Handler::open (void *)
   if (this->receive_reply () != 0)
     TAOLIB_ERROR_RETURN ((LM_ERROR, "TAO (%P|%t) - HTTP_Handler::open, receive_reply failed\n"), -1);
   return 0;
-
 }
 
 int
@@ -52,19 +52,19 @@ TAO_HTTP_Handler::close (u_long)
 }
 
 int
-TAO_HTTP_Handler::send_request (void)
+TAO_HTTP_Handler::send_request ()
 {
   return -1;
 }
 
 int
-TAO_HTTP_Handler::receive_reply (void)
+TAO_HTTP_Handler::receive_reply ()
 {
   return -1;
 }
 
 size_t
-TAO_HTTP_Handler::byte_count (void) const
+TAO_HTTP_Handler::byte_count () const
 {
   return bytecount_;
 }
@@ -82,14 +82,14 @@ TAO_HTTP_Reader::TAO_HTTP_Reader (ACE_Message_Block * mb,
 }
 
 int
-TAO_HTTP_Reader::send_request (void)
+TAO_HTTP_Reader::send_request ()
 {
   char mesg [MAX_HEADER_SIZE];
 
   // Check to see if the request is too big
-  if (MAX_HEADER_SIZE < (ACE_OS::strlen (request_prefix_)
+  if (MAX_HEADER_SIZE < (std::strlen (request_prefix_)
                          + ACE_OS::strlen (filename_)
-                         + ACE_OS::strlen (request_suffix_) + 4))
+                         + std::strlen (request_suffix_) + 4))
     TAOLIB_ERROR_RETURN((LM_ERROR,"TAO (%P|%t) - HTTP_Reader::send_request, request too large!"), -1);
 
   // Create a message to send to the server requesting retrieval of the file
@@ -105,27 +105,27 @@ TAO_HTTP_Reader::send_request (void)
 }
 
 int
-TAO_HTTP_Reader::receive_reply (void)
+TAO_HTTP_Reader::receive_reply ()
 {
   size_t num_recvd = 0;
   char buf [MTU+1];
-  char *buf_ptr = 0;
+  char *buf_ptr = nullptr;
   size_t bytes_read = 0;
 
   // Receive the first MTU bytes and strip the header off.
   // Note that we assume that the header will fit into MTU bytes.
-  if (peer ().recv_n (buf, MTU, 0, &num_recvd) >= 0)
+  if (peer ().recv_n (buf, MTU, nullptr, &num_recvd) >= 0)
     {
       //Make sure that response type is 200 OK
-      if (ACE_OS::strstr (buf,"200 OK") == 0)
+      if (ACE_OS::strstr (buf,"200 OK") == nullptr)
         TAOLIB_ERROR_RETURN ((LM_ERROR,
                             "TAO (%P|%t) - HTTP_Reader::receive_reply, Response is not 200 OK\n" ), -1);
 
       // Search for the header termination string "\r\n\r\n", or "\n\n". If
       // found, move past it to get to the data portion.
-      if ((buf_ptr = ACE_OS::strstr (buf,"\r\n\r\n")) != 0)
+      if ((buf_ptr = ACE_OS::strstr (buf,"\r\n\r\n")) != nullptr)
         buf_ptr += 4;
-      else if ((buf_ptr = ACE_OS::strstr (buf, "\n\n")) != 0)     //for compatibility with JAWS
+      else if ((buf_ptr = ACE_OS::strstr (buf, "\n\n")) != nullptr)     //for compatibility with JAWS
         buf_ptr += 2;
       else
         buf_ptr = buf;
@@ -133,7 +133,6 @@ TAO_HTTP_Reader::receive_reply (void)
       // Determine number of data bytes read. This is equal to the
       // total bytes read minus number of header bytes.
       bytes_read = num_recvd - (buf_ptr - buf);
-
     }
   else
     {
@@ -145,7 +144,7 @@ TAO_HTTP_Reader::receive_reply (void)
   // At this point, we have stripped off the header and are ready to
   // process data. buf_ptr points to the data
 
-  ACE_Message_Block* temp = 0;
+  ACE_Message_Block* temp = nullptr;
   ACE_Message_Block* curr = this->mb_;
 
   ACE_NEW_RETURN (temp,
@@ -175,14 +174,13 @@ TAO_HTTP_Reader::receive_reply (void)
       curr = curr->cont ();
     }
 
-  if (peer ().recv_n (curr->wr_ptr (), curr->space (), 0, &num_recvd) >= 0)
+  if (peer ().recv_n (curr->wr_ptr (), curr->space (), nullptr, &num_recvd) >= 0)
     {
       // Move the write pointer
       curr->wr_ptr (num_recvd);
 
       // Increment bytes_read
       bytes_read += num_recvd;
-
     }
   else
     {

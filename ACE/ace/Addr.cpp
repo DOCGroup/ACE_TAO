@@ -28,12 +28,8 @@ ACE_Addr::ACE_Addr (int type, int size) :
 {
 }
 
-ACE_Addr::~ACE_Addr (void)
-{
-}
-
 void *
-ACE_Addr::get_addr (void) const
+ACE_Addr::get_addr () const
 {
   return 0;
 }
@@ -53,7 +49,7 @@ ACE_Addr::base_set (int type, int size)
 }
 
 void
-ACE_Addr::dump (void) const
+ACE_Addr::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Addr::dump");

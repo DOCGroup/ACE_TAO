@@ -82,13 +82,13 @@ UTL_NameList::UTL_NameList (UTL_ScopedName *s,
 
 // Get list item.
 UTL_ScopedName *
-UTL_NameList::head (void)
+UTL_NameList::head ()
 {
   return this->pd_car_data;
 }
 
 bool
-UTL_NameList::truncatable (void) const
+UTL_NameList::truncatable () const
 {
   return this->pd_truncatable;
 }
@@ -100,11 +100,11 @@ UTL_NameList::truncatable (bool val)
 }
 
 void
-UTL_NameList::destroy (void)
+UTL_NameList::destroy ()
 {
   this->pd_car_data->destroy ();
   delete this->pd_car_data;
-  this->pd_car_data = 0;
+  this->pd_car_data = nullptr;
 
   this->UTL_List::destroy ();
 }
@@ -116,11 +116,11 @@ UTL_NamelistActiveIterator::UTL_NamelistActiveIterator (UTL_NameList *s)
 
 // Get current item.
 UTL_ScopedName *
-UTL_NamelistActiveIterator::item (void)
+UTL_NamelistActiveIterator::item ()
 {
-  if (source == 0)
+  if (source == nullptr)
     {
-      return 0;
+      return nullptr;
     }
 
   return ((UTL_NameList *) source)->head ();

@@ -26,7 +26,7 @@ public:
   virtual ~TAO_Notify_Tests_Driver_Base () {};
 
   /// Shutdown
-  virtual void shutdown (void) = 0;
+  virtual void shutdown () = 0;
 };
 
 #include /**/ "ace/post.h"

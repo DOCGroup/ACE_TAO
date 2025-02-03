@@ -4,11 +4,12 @@
 #include <ast_porttype.h>
 #include <ast_eventtype.h>
 #include <ast_component.h>
-
+#include <ast_union_branch.h>
+#include <ast_union_label.h>
+#include <ast_expression.h>
 #include <string>
 
 namespace {
-
   void assert_node_has_annotation (
     Annotation_Test &t, const char *node_name, AST_Annotation_Decl *annotation)
   {
@@ -351,6 +352,18 @@ annotation_tests ()
     ).assert_node ("::module1");
     t.assert_annotation_appl_count (module1, 1);
     t.assert_annotation_appl (module1, 0, test_annotation_1);
+  } catch (Failed const &) {}
+
+  try {
+    Annotation_Test t ("Empty Annotation Application Before Fully Scopped Type");
+    AST_Field *member = t.run (
+      "typedef uint32 fully_scopped_type;\n"
+      "struct empty_annotation_before_fully_scopped_type {\n"
+      "  @test_annotation_1() ::fully_scopped_type member;\n"
+      "};\n"
+    ).assert_node<AST_Field> ("::empty_annotation_before_fully_scopped_type::member");
+    t.assert_annotation_appl_count (member, 1);
+    t.assert_annotation_appl (member, 0, test_annotation_1);
   } catch (Failed const &) {}
 
   try {
@@ -1057,6 +1070,44 @@ annotation_tests ()
           "struct field visibility is %u, which is not equal to vis_NA",
           static_cast<unsigned> (member->visibility ()));
         t.failed (&buffer[0]);
+      }
+  } catch (Failed const &) {}
+
+  /* -------------------------------------------------------------------------
+   * Empty union cases aliasing the default case must always be evaluated
+   * -------------------------------------------------------------------------
+   * When the union has an enum discriminator, and one or more empty cases
+   * acting as an alias to the default case the IDL compiler was failing to
+   * resolve the ordinal value for these empty labels and this causes trouble
+   * for at least OpenDDS.
+   *
+   * This test is designed to verify that the condition is corrected by
+   * parsing a specially crafted union and validating the value of the
+   * label aliasing the default case.
+   */
+  try {
+    Annotation_Test t ("empty union branch label");
+    AST_Union *test_union = t.run (
+               "enum disc {A, B, C};\n"
+               "union empty_union switch (disc) {\n"
+               "case A: long along;\n"
+               "case B: short bshort;\n"
+               "case C:\n"
+               "default: float cfloat;\n"
+               "};\n").assert_node<AST_Union>("::empty_union");
+    AST_Field **af = 0;
+    test_union->field(af, 2);
+    AST_UnionBranch *ub = dynamic_cast<AST_UnionBranch *>(*af);
+    if (ub != nullptr)
+      {
+         AST_UnionLabel *ul = ub->label ();
+         if (ul != nullptr)
+           {
+              if (ul->label_val()->ev()->u.ulval != 2)
+                {
+                  t.failed("did not get the correct label value");
+                }
+           }
       }
   } catch (Failed const &) {}
 

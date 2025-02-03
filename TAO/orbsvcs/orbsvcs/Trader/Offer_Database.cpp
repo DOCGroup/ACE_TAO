@@ -8,12 +8,12 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class LOCK_TYPE>
-TAO_Offer_Database<LOCK_TYPE>::TAO_Offer_Database (void)
+TAO_Offer_Database<LOCK_TYPE>::TAO_Offer_Database ()
 {
 }
 
 template <class LOCK_TYPE>
-TAO_Offer_Database<LOCK_TYPE>::~TAO_Offer_Database (void)
+TAO_Offer_Database<LOCK_TYPE>::~TAO_Offer_Database ()
 {
   ACE_WRITE_GUARD (LOCK_TYPE, ace_mon, this->db_lock_);
 
@@ -220,7 +220,7 @@ lookup_offer (const char* type, CORBA::ULong id)
 }
 
 template <class LOCK_TYPE> TAO_Offer_Id_Iterator*
-TAO_Offer_Database<LOCK_TYPE>::retrieve_all_offer_ids (void)
+TAO_Offer_Database<LOCK_TYPE>::retrieve_all_offer_ids ()
 {
   ACE_READ_GUARD_RETURN (LOCK_TYPE, ace_mon, this->db_lock_, 0);
 
@@ -328,7 +328,7 @@ TAO_Service_Offer_Iterator (const char* type,
 }
 
 template <class LOCK_TYPE>
-TAO_Service_Offer_Iterator<LOCK_TYPE>::~TAO_Service_Offer_Iterator (void)
+TAO_Service_Offer_Iterator<LOCK_TYPE>::~TAO_Service_Offer_Iterator ()
 {
   this->stm_.db_lock_.release ();
 
@@ -340,7 +340,7 @@ TAO_Service_Offer_Iterator<LOCK_TYPE>::~TAO_Service_Offer_Iterator (void)
 }
 
 template <class LOCK_TYPE> CosTrading::OfferId
-TAO_Service_Offer_Iterator<LOCK_TYPE>::get_id (void)
+TAO_Service_Offer_Iterator<LOCK_TYPE>::get_id ()
 {
   return (this->offer_iter_ != 0)
     ? TAO_Offer_Database<LOCK_TYPE>::generate_offer_id (this->type_, (**this->offer_iter_).ext_id_)
@@ -348,20 +348,20 @@ TAO_Service_Offer_Iterator<LOCK_TYPE>::get_id (void)
 }
 
 template <class LOCK_TYPE> int
-TAO_Service_Offer_Iterator<LOCK_TYPE>::has_more_offers (void)
+TAO_Service_Offer_Iterator<LOCK_TYPE>::has_more_offers ()
 {
   return (this->offer_iter_ != 0) ? ! this->offer_iter_->done () : 0;
 }
 
 
 template <class LOCK_TYPE> CosTrading::Offer*
-TAO_Service_Offer_Iterator<LOCK_TYPE>::get_offer (void)
+TAO_Service_Offer_Iterator<LOCK_TYPE>::get_offer ()
 {
   return (this->offer_iter_ != 0) ? (**this->offer_iter_).int_id_ : 0;
 }
 
 template <class LOCK_TYPE> void
-TAO_Service_Offer_Iterator<LOCK_TYPE>::next_offer (void)
+TAO_Service_Offer_Iterator<LOCK_TYPE>::next_offer ()
 {
   if (this->offer_iter_ != 0)
     this->offer_iter_->advance ();

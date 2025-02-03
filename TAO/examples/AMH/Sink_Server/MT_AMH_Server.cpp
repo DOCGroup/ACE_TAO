@@ -10,7 +10,7 @@ MT_AMH_Server::MT_AMH_Server (int &argc, ACE_TCHAR **argv)
 {
 }
 
-MT_AMH_Server::~MT_AMH_Server (void)
+MT_AMH_Server::~MT_AMH_Server ()
 {
 }
 
@@ -32,9 +32,8 @@ MT_AMH_Server::usage (const char *message)
 
 
 int
-MT_AMH_Server::parse_args (void)
+MT_AMH_Server::parse_args ()
 {
-
   // Let the base server parse it's argumrents first
   if (Base_Server::parse_args () != 1)
     {
@@ -77,7 +76,7 @@ MT_AMH_Server::parse_args (void)
 }
 
 void
-MT_AMH_Server::start_threads (void)
+MT_AMH_Server::start_threads ()
 {
   // Each of this thread runs the event loop
   this->activate (THR_NEW_LWP | THR_JOINABLE, this->nthreads_, 1);
@@ -85,7 +84,7 @@ MT_AMH_Server::start_threads (void)
 }
 
 int
-MT_AMH_Server::svc (void)
+MT_AMH_Server::svc ()
 {
   run_event_loop ();
   return 1;

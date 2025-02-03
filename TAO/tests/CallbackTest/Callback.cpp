@@ -17,17 +17,17 @@ Callback::are_you_there (CORBA::String_out answer)
 }
 
 void
-Callback::test_oneway (void)
+Callback::test_oneway ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) Callback - test_oneway!\n"));
 }
 
 void
-Callback::shutdown (void)
+Callback::shutdown ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) Callback - shutdown!\n"));
 
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

@@ -37,7 +37,7 @@ ACE_SV_Semaphore_Simple::control (int cmd,
 // operations...
 
 ACE_INLINE int
-ACE_SV_Semaphore_Simple::close (void)
+ACE_SV_Semaphore_Simple::close ()
 {
   ACE_TRACE ("ACE_SV_Semaphore_Simple::close");
 #ifdef ACE_HAS_SYSV_IPC
@@ -120,7 +120,7 @@ ACE_SV_Semaphore_Simple::release (u_short n, short flags) const
 }
 
 ACE_INLINE int
-ACE_SV_Semaphore_Simple::get_id (void) const
+ACE_SV_Semaphore_Simple::get_id () const
 {
   ACE_TRACE ("ACE_SV_Semaphore_Simple::get_id");
   return this->internal_id_;

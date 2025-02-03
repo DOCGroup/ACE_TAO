@@ -46,7 +46,7 @@ class TAO_Export TAO_Request_Dispatcher
 {
 public:
   /// Destructor.
-  virtual ~TAO_Request_Dispatcher (void);
+  virtual ~TAO_Request_Dispatcher ();
 
   /**
    * Dispatch a request.

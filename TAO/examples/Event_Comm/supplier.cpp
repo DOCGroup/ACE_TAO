@@ -2,16 +2,6 @@
 #include "Supplier_Input_Handler.h"
 #include "supplier.h"
 
-Supplier::Supplier (void)
-{
-  // No-Op.
-}
-
-Supplier::~Supplier (void)
-{
-  // No-Op.
-}
-
 int
 Supplier::handle_signal (int signum, siginfo_t *, ucontext_t *)
 {
@@ -24,7 +14,7 @@ Supplier::handle_signal (int signum, siginfo_t *, ucontext_t *)
 }
 
 void
-Supplier::run (void)
+Supplier::run ()
 {
   if (nh_.run () == -1)
     ACE_ERROR ((LM_ERROR,
@@ -33,7 +23,7 @@ Supplier::run (void)
 }
 
 void
-Supplier::close (void)
+Supplier::close ()
 {
   ih_.close ();
   nh_.close ();
@@ -70,7 +60,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
   try
     {
-
       if (supplier.init (argc, argv) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
                           "%p\n",

@@ -56,21 +56,21 @@ PCB::setID (long timerID)
 }
 
 long
-PCB::getID (void) const
+PCB::getID () const
 {
   ACE_TRACE ("PCB::getID");
   return timerID_;
 }
 
 int
-PCB::handleClose (void)
+PCB::handleClose ()
 {
   ACE_TRACE ("PCB::handleClose");
   return 0;
 }
 
 int
-PCB::handleCancel (void)
+PCB::handleCancel ()
 {
   ACE_TRACE ("PCB::handleCancel");
   return 0;

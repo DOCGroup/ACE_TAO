@@ -14,7 +14,7 @@ class  Manager_i
 public:
   Manager_i (long retryCount);
 
-  virtual ~Manager_i (void);
+  virtual ~Manager_i ();
 
   virtual CORBA::Long registerServer ();
 
@@ -23,7 +23,6 @@ public:
   virtual CORBA::Long endRetry ();
 
 private:
-
   long server_instance_;
   long retry_count_;
   long retry_attempt_;

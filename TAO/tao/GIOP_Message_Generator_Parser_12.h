@@ -77,15 +77,15 @@ public:
                                   TAO_Pluggable_Reply_Params &params);
 
   /// Our versions
-  virtual CORBA::Octet major_version (void) const;
-  virtual CORBA::Octet minor_version (void) const;
+  virtual CORBA::Octet major_version () const;
+  virtual CORBA::Octet minor_version () const;
 
   /// Is the messaging object ready for processing BiDirectional
   /// request/response?
-  virtual bool is_ready_for_bidirectional (void) const;
+  virtual bool is_ready_for_bidirectional () const;
 
   /// The header length of a fragment
-  virtual size_t fragment_header_length (void) const;
+  virtual size_t fragment_header_length () const;
 
 private:
   /// Marshall the TargetSpecification

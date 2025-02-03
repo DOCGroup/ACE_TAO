@@ -49,10 +49,10 @@ public:
   TAO_EventLogNotification (CosEventChannelAdmin::EventChannel_ptr);
 
   /// Destructor.
-  ~TAO_EventLogNotification (void);
+  ~TAO_EventLogNotification ();
 
   /// The skeleton methods.
-  virtual void disconnect_push_supplier (void);
+  virtual void disconnect_push_supplier ();
 
 protected:
   /// Used to connect this PushSupplier to the EventChannel

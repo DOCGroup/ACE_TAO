@@ -7,7 +7,7 @@ class Messenger_i : public POA_SimpleMessenger::Messenger
 {
 public:
   Messenger_i (CORBA::ORB_ptr orb);
-  virtual void send (void);
+  virtual void send ();
 
 private:
   /// Use an ORB reference to convert strings to objects and shutdown

@@ -20,7 +20,6 @@
 #if defined (ACE_HAS_THREADS) && defined (ACE_HAS_THREADS_LIBRARY)
 
 
-
 typedef ACE_Token_Invariant_Manager ACE_TOKEN_INVARIANTS;
 
 static ACE_Token_Proxy *global_rlock;
@@ -175,7 +174,8 @@ parse_args (int argc, ACE_TCHAR *argv[])
           ignore_deadlock = 1;
           break;
         case 'u':
-        // usage: fallthrough
+          // usage same as unknown.
+          ACE_FALLTHROUGH;
         default:
           ACE_ERROR_RETURN ((LM_ERROR,
                              "%n:\n"

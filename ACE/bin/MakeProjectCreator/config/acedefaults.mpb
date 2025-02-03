@@ -4,12 +4,6 @@ project: ipv6, vc_warnings, build_files, test_files, svc_conf_files, ace_unicode
   includes    += $(ACE_ROOT)
   libpaths    += $(ACE_ROOT)/lib
 
-  // Support the alternative Borland Make project type
-  specific(bmake) {
-    unicode_flags += -DACE_USES_WCHAR
-    macros += MPC_LIB_MODIFIER=\\"$(LIBMODIFIER)$(ULIBMODIFIER)\\"
-    debug_macros += ACE_NO_INLINE=1
-  }
 
   specific(prop:microsoft) {
     macro_for_lib_modifier=1
@@ -19,11 +13,30 @@ project: ipv6, vc_warnings, build_files, test_files, svc_conf_files, ace_unicode
     lit_libs += iphlpapi
   }
 
-  specific(cdt6) {
-    win32::platform_libs += ws2_32 mswsock netapi32
-    release::macros += ACE_NDEBUG ACE_USE_RCSID=0
+  // Support the alternative Borland Make project type
+  specific(bmake) {
+    unicode_flags += -DACE_USES_WCHAR
+    debug_macros += ACE_NO_INLINE=1
+    platform_libs += iphlpapi
+    lit_libs -= iphlpapi
   }
 
+  verbatim(cmake, top, 1) {
+    set(ACE_ROOT $ENV{ACE_ROOT})
+    if(WIN32)
+    "  link_libraries(iphlpapi)"
+    endif()
+  }
+
+  specific(cdt6) {
+    win32::platform_libs += ws2_32 mswsock netapi32
+    release::macros += ACE_NDEBUG
+  }
+
+  // Link To Android Logging Library for Log_Msg_Android_Logcat
+  specific(gnuace) {
+    linkflags += $(if $(android_abi),-llog)
+  }
 }
 
 feature(ace_inline) {
@@ -44,5 +57,14 @@ feature(!threads) {
     // and without threads we must remove support for AIO.
     macros -= ACE_HAS_AIO_CALLS
     platform_libs -= rt
+  }
+}
+
+feature(ace_languagestandard2017) {
+  specific(vs2017,vs2019,vs2022) {
+    LanguageStandard = stdcpp17
+  }
+  specific(cmake) {
+    languagestandard = 17
   }
 }

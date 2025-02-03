@@ -25,18 +25,17 @@
 /**
  * @class MT_Cubit_Timer
  *
- * @brief A class that encapsulates the pccTimer for chorus and uses
- * ACE Timer for other platforms.
+ * @brief A class that encapsulates the ACE timer
  */
 class MT_Cubit_Timer
 {
 public:
   MT_Cubit_Timer (u_int granularity);
 
-  void start (void);
-  void stop (void);
+  void start ();
+  void stop ();
 
-  ACE_timer_t get_elapsed (void);
+  ACE_timer_t get_elapsed ();
 
 private:
   /// timer.

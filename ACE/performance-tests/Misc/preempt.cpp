@@ -37,10 +37,6 @@
 
 #if defined (ACE_HAS_THREADS) || ! defined (ACE_LACKS_FORK)
 
-#if defined (ACE_HAS_STHREADS)
-# include <sys/lwp.h> /* for _lwp_self () */
-#endif /* ACE_HAS_STHREADS */
-
 static const char usage [] = "[-? |\n"
 #if defined (ACE_HAS_THREADS)
                             "       [-f use fork instead of spawn]\n"
@@ -77,14 +73,14 @@ ACE_hrtime_t starttime;
 class High_Priority_Task : public ACE_Task<ACE_SYNCH>
 {
 public:
-  High_Priority_Task (void);
-  ~High_Priority_Task (void);
+  High_Priority_Task ();
+  ~High_Priority_Task ();
 
   //FUZZ: disable check_for_lack_ACE_OS
   int open (void *);
   //FUZZ: enable check_for_lack_ACE_OS
 
-  int svc (void);
+  int svc ();
   int done () const { return done_; }
   void print_times () const;
 
@@ -94,7 +90,7 @@ private:
   u_long *time_;
 };
 
-High_Priority_Task::High_Priority_Task (void)
+High_Priority_Task::High_Priority_Task ()
   : ACE_Task<ACE_SYNCH> (ACE_Thread_Manager::instance ()),
     priority_ (ACE_Sched_Params::next_priority (
                  ACE_SCHED_FIFO,
@@ -106,7 +102,7 @@ High_Priority_Task::High_Priority_Task (void)
   ACE_NEW (time_, u_long[high_iterations]);
 }
 
-High_Priority_Task::~High_Priority_Task (void)
+High_Priority_Task::~High_Priority_Task ()
 {
   delete [] time_;
   time_ = 0;
@@ -141,7 +137,7 @@ High_Priority_Task::open (void *)
 }
 
 int
-High_Priority_Task::svc (void)
+High_Priority_Task::svc ()
 {
   ACE_hthread_t thr_handle;
   ACE_Thread::self (thr_handle);
@@ -150,13 +146,9 @@ High_Priority_Task::svc (void)
   if (ACE_Thread::getprio (thr_handle, prio) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "getprio failed"), -1);
 
-#if defined (ACE_HAS_STHREADS)
-  ACE_DEBUG ((LM_DEBUG, "(%P|%u|%t) High: prio = %d, priority_ = %d\n",
-              _lwp_self (), prio, this->priority_));
-#else  /* ! ACE_HAS_STHREADS */
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) High: prio = %d, priority_ = %d\n",
               prio, this->priority_));
-#endif /* ! ACE_HAS_STHREADS */
+
   ACE_ASSERT (this->priority_ == prio);
 
   ACE_Time_Value pause (0, read_period);
@@ -199,7 +191,7 @@ public:
   int open (void *);
   //FUZZ: enable check_for_lack_ACE_OS
 
-  int svc (void);
+  int svc ();
 
 private:
   int priority_;
@@ -242,7 +234,7 @@ Low_Priority_Task::open (void *)
 }
 
 int
-Low_Priority_Task::svc (void)
+Low_Priority_Task::svc ()
 {
   ACE_hthread_t thr_handle;
   ACE_Thread::self (thr_handle);
@@ -251,13 +243,9 @@ Low_Priority_Task::svc (void)
   if (ACE_Thread::getprio (thr_handle, prio) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "getprio failed"), -1);
 
-#if defined (ACE_HAS_STHREADS)
-  ACE_DEBUG ((LM_DEBUG, "(%P|%u|%t) Low: prio = %d, priority_ = %d\n",
-              _lwp_self (), prio, this->priority_));
-#else  /* ! ACE_HAS_STHREADS */
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Low: prio = %d, priority_ = %d\n",
               prio, this->priority_));
-#endif /* ! ACE_HAS_STHREADS */
+
   ACE_ASSERT (this->priority_ == prio);
 
   u_long iterations = 0;
@@ -371,7 +359,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   if (get_options (argc, argv))
     ACE_OS::exit (-1);
 
-  // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
+  // Enable FIFO scheduling
   if (ACE_OS::sched_params (
         ACE_Sched_Params (
           ACE_SCHED_FIFO,

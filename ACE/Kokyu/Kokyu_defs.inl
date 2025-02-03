@@ -44,13 +44,13 @@ Dispatch_Command::Dispatch_Command (int dont_delete,
 }
 
 ACE_INLINE
-int Dispatch_Command::can_be_deleted (void) const
+int Dispatch_Command::can_be_deleted () const
 {
   return !dont_delete_;
 }
 
 ACE_INLINE
-void Dispatch_Command::destroy (void)
+void Dispatch_Command::destroy ()
 {
   if (allocator_)
   {
@@ -80,5 +80,5 @@ bool operator != (const Kokyu::ConfigInfo& lhs,
 {
   return (lhs.preemption_priority_ != rhs.preemption_priority_ ||
           lhs.thread_priority_ != rhs.thread_priority_ ||
-          lhs.dispatching_type_ != rhs.dispatching_type_ );
+          lhs.dispatching_type_ != rhs.dispatching_type_);
 }

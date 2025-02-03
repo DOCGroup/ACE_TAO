@@ -16,18 +16,15 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // The pseudo-object _nil method.
 TAO_DII_Reply_Handler_ptr
-TAO_DII_Reply_Handler::_nil (void)
+TAO_DII_Reply_Handler::_nil ()
 {
-  return static_cast<TAO_DII_Reply_Handler_ptr> (0);
+  return nullptr;
 }
 
 // DII Request class implementation
 int TAO_DII_Reply_Handler::_tao_class_id = 0;
-TAO_DII_Reply_Handler::TAO_DII_Reply_Handler ()
-{
-}
 
-TAO_DII_Reply_Handler::~TAO_DII_Reply_Handler (void)
+TAO_DII_Reply_Handler::~TAO_DII_Reply_Handler ()
 {
 }
 

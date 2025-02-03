@@ -11,7 +11,7 @@
 #include "tao/debug.h"
 #include "tao/SystemException.h"
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/Log_Msg.h"
 #include "ace/CORBA_macros.h"
 
@@ -23,13 +23,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Reference counting for DII Request object
 CORBA::ULong
-CORBA::NamedValue::_incr_refcount (void)
+CORBA::NamedValue::_incr_refcount ()
 {
   return ++this->refcount_;
 }
 
 CORBA::ULong
-CORBA::NamedValue::_decr_refcount (void)
+CORBA::NamedValue::_decr_refcount ()
 {
   CORBA::ULong const new_count = --this->refcount_;
 
@@ -39,7 +39,7 @@ CORBA::NamedValue::_decr_refcount (void)
   return new_count;
 }
 
-CORBA::NamedValue::~NamedValue (void)
+CORBA::NamedValue::~NamedValue ()
 {
   if (this->name_)
     {
@@ -52,13 +52,13 @@ CORBA::NamedValue::~NamedValue (void)
 // ****************************************************************
 
 CORBA::ULong
-CORBA::NVList::_incr_refcount (void)
+CORBA::NVList::_incr_refcount ()
 {
   return ++this->refcount_;
 }
 
 CORBA::ULong
-CORBA::NVList::_decr_refcount (void)
+CORBA::NVList::_decr_refcount ()
 {
   CORBA::ULong const new_count = --this->refcount_;
 
@@ -68,7 +68,7 @@ CORBA::NVList::_decr_refcount (void)
   return new_count;
 }
 
-CORBA::NVList::~NVList (void)
+CORBA::NVList::~NVList ()
 {
   // initialize an iterator and delete each NamedValue
   ACE_Unbounded_Queue_Iterator<CORBA::NamedValue_ptr> iter (this->values_);
@@ -145,7 +145,6 @@ CORBA::NVList::add_value (const char *name,
 CORBA::NamedValue_ptr
 CORBA::NVList::add_item_consume (char *name, CORBA::Flags flags)
 {
-
   // call the helper to allocate a NamedValue element
   CORBA::NamedValue_ptr nv = this->add_element (flags);
 
@@ -402,7 +401,7 @@ CORBA::NVList::_tao_decode (TAO_InputCDR &incoming, int flag)
 }
 
 ptrdiff_t
-CORBA::NVList::_tao_target_alignment (void)
+CORBA::NVList::_tao_target_alignment ()
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                     ace_mon,
@@ -426,17 +425,13 @@ CORBA::NVList::_tao_target_alignment (void)
 }
 
 void
-CORBA::NVList::evaluate (void)
+CORBA::NVList::evaluate ()
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 
   if (this->incoming_ != 0)
     {
-#if defined (ACE_HAS_CPP11)
       std::unique_ptr<TAO_InputCDR> incoming (this->incoming_);
-#else
-      auto_ptr<TAO_InputCDR> incoming (this->incoming_);
-#endif /* ACE_HAS_CPP11 */
       this->incoming_ = 0;
 
       this->_tao_decode (*(incoming.get ()), this->incoming_flag_);
@@ -444,7 +439,7 @@ CORBA::NVList::evaluate (void)
 }
 
 CORBA::Boolean
-CORBA::NVList::_lazy_has_arguments (void) const
+CORBA::NVList::_lazy_has_arguments () const
 {
   if (this->incoming_ != 0)
     {

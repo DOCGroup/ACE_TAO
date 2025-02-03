@@ -13,18 +13,18 @@ TAO_UsesDef_i::TAO_UsesDef_i (TAO_Repository_i *repo)
 {
 }
 
-TAO_UsesDef_i::~TAO_UsesDef_i (void)
+TAO_UsesDef_i::~TAO_UsesDef_i ()
 {
 }
 
 CORBA::DefinitionKind
-TAO_UsesDef_i::def_kind (void)
+TAO_UsesDef_i::def_kind ()
 {
   return CORBA::dk_Uses;
 }
 
 CORBA::Contained::Description *
-TAO_UsesDef_i::describe (void)
+TAO_UsesDef_i::describe ()
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
@@ -34,7 +34,7 @@ TAO_UsesDef_i::describe (void)
 }
 
 CORBA::Contained::Description *
-TAO_UsesDef_i::describe_i (void)
+TAO_UsesDef_i::describe_i ()
 {
   CORBA::ComponentIR::UsesDescription ud;
   TAO_IFR_Desc_Utils<CORBA::ComponentIR::UsesDescription,
@@ -62,7 +62,7 @@ TAO_UsesDef_i::describe_i (void)
 }
 
 CORBA::InterfaceDef_ptr
-TAO_UsesDef_i::interface_type (void)
+TAO_UsesDef_i::interface_type ()
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::InterfaceDef::_nil ());
 
@@ -72,7 +72,7 @@ TAO_UsesDef_i::interface_type (void)
 }
 
 CORBA::InterfaceDef_ptr
-TAO_UsesDef_i::interface_type_i (void)
+TAO_UsesDef_i::interface_type_i ()
 {
   ACE_TString holder;
   this->repo_->config ()->get_string_value (this->section_key_,
@@ -135,7 +135,7 @@ TAO_UsesDef_i::interface_type_i (
 }
 
 CORBA::Boolean
-TAO_UsesDef_i::is_multiple (void)
+TAO_UsesDef_i::is_multiple ()
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
@@ -145,7 +145,7 @@ TAO_UsesDef_i::is_multiple (void)
 }
 
 CORBA::Boolean
-TAO_UsesDef_i::is_multiple_i (void)
+TAO_UsesDef_i::is_multiple_i ()
 {
   CORBA::ULong val = 0;
   this->repo_->config ()->get_integer_value (this->section_key_,

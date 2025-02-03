@@ -418,7 +418,6 @@ u_char * asn1::build_header( u_char *data,
   *data++ = type;
   (*datalength)--;
   return asn1::build_length(data, datalength, length);
-
 }
 
 /*
@@ -519,7 +518,6 @@ u_char *asn1::build_length( u_char *data,
   }
   *datalength -= (data - start_data);
   return data;
-
 }
 
 /*
@@ -951,7 +949,6 @@ u_char * asn1::build_unsigned_int64( u_char *data,
     high = (high << 8)
       | ((low & mask) >> (8 * (sizeof(long) - 1)));
     low <<= 8;
-
   }
   return data;
 }
@@ -1084,7 +1081,6 @@ void cmu_snmp::add_var(struct snmp_pdu *pdu,
       break;
 
 
-
     case sNMP_SYNTAX_TIMETICKS:
     case sNMP_SYNTAX_CNTR32:
     case sNMP_SYNTAX_GAUGE32:
@@ -1125,7 +1121,6 @@ void cmu_snmp::add_var(struct snmp_pdu *pdu,
                        sizeof( SmiCNTR64));
       }
       break;
-
     } // end switch
 
 }
@@ -1316,7 +1311,6 @@ int cmu_snmp::build( struct snmp_pdu *pdu, u_char *packet,
 
   length = *out_length;
   if (pdu->command != TRP_REQ_MSG) {
-
     // request id
     cp = asn1::build_int( packet,
                        &length,
@@ -1519,7 +1513,6 @@ cmu_snmp::parse_var_op( u_char *data, oid *var_name,
   *listlength -= (int)(data - var_op_start);
   return data;
 }
-
 
 
 // build a pdu from a data and length

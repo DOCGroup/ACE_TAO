@@ -28,9 +28,7 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/os_include/os_netdb.h"
 
-
-
-TAO_Trading_Loader::TAO_Trading_Loader (void)
+TAO_Trading_Loader::TAO_Trading_Loader ()
   : federate_ (0),
     ior_output_file_ (0),
     bootstrapper_ (0)
@@ -74,11 +72,6 @@ TAO_Trading_Loader::TAO_Trading_Loader (void)
     }
 }
 
-TAO_Trading_Loader::~TAO_Trading_Loader (void)
-{
-  // Destructor
-}
-
 int
 TAO_Trading_Loader::init (int argc, ACE_TCHAR *argv[])
 {
@@ -101,7 +94,6 @@ TAO_Trading_Loader::init (int argc, ACE_TCHAR *argv[])
       // Initializes and sets up the Trading Service
       CORBA::Object_var object =
         this->create_object (orb.in (), command_line.get_argc(), command_line.get_TCHAR_argv());
-
     }
   catch (const CORBA::Exception&)
     {
@@ -112,7 +104,7 @@ TAO_Trading_Loader::init (int argc, ACE_TCHAR *argv[])
 }
 
 int
-TAO_Trading_Loader::fini (void)
+TAO_Trading_Loader::fini ()
 {
   try
     {
@@ -178,7 +170,7 @@ TAO_Trading_Loader::fini (void)
 }
 
 int
-TAO_Trading_Loader::run (void)
+TAO_Trading_Loader::run ()
 {
   int return_value =
     this->orb_manager_.run ();
@@ -198,9 +190,9 @@ TAO_Trading_Loader::create_object (CORBA::ORB_ptr orb_ptr,
   this->orb_manager_.activate_poa_manager ();
 
   // Create a Trader Object and set its Service Type Repository.
-  auto_ptr<TAO_Trader_Factory::TAO_TRADER> auto_trader (TAO_Trader_Factory::create_trader (argc, argv));
+  std::unique_ptr<TAO_Trader_Factory::TAO_TRADER> auto_trader (TAO_Trader_Factory::create_trader (argc, argv));
 
-  this->trader_ = auto_trader;
+  this->trader_ = std::move(auto_trader);
 
   TAO_Support_Attributes_i &sup_attr =
     this->trader_->support_attributes ();
@@ -266,7 +258,7 @@ TAO_Trading_Loader::create_object (CORBA::ORB_ptr orb_ptr,
 }
 
 int
-TAO_Trading_Loader::bootstrap_to_federation (void)
+TAO_Trading_Loader::bootstrap_to_federation ()
 {
   // If all traders follow this strategy, it creates a complete graph
   // of all known traders on a multicast network.
@@ -364,7 +356,7 @@ TAO_Trading_Loader::bootstrap_to_federation (void)
 }
 
 int
-TAO_Trading_Loader::init_multicast_server (void)
+TAO_Trading_Loader::init_multicast_server ()
 {
 #if defined (ACE_HAS_IP_MULTICAST)
   // Get reactor instance from TAO.

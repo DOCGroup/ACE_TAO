@@ -44,7 +44,6 @@ class FOO_IORInterceptor
     public virtual ::CORBA::LocalObject
 {
 public:
-
   /// Constructor
   FOO_IORInterceptor (IOP::Codec_ptr codec);
 
@@ -57,10 +56,10 @@ public:
    */
   //@{
   /// Return the name of this IORInterceptor.
-  virtual char * name (void);
+  virtual char * name ();
 
   /// Cleanup resources acquired by this IORInterceptor.
-  virtual void destroy (void);
+  virtual void destroy ();
 
   /// Add the tagged components to the IOR.
   virtual void establish_components (
@@ -80,11 +79,9 @@ public:
   //@}
 
 private:
-
   /// The CDR encapsulation coder/decoder used to encapsulate data
   /// into a CDR encapsulation.
   IOP::Codec_var codec_;
-
 };
 
 #if defined(_MSC_VER)

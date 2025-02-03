@@ -22,7 +22,7 @@
 # include "tao/Stub.inl"
 #endif /* ! __ACE_INLINE__ */
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/CORBA_macros.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -35,23 +35,23 @@ TAO_Stub::TAO_Stub (const char *repository_id,
   , orb_ ()
   , is_collocated_ (false)
   , servant_orb_ ()
-  , collocated_servant_ (0)
+  , collocated_servant_ (nullptr)
   , object_proxy_broker_ (the_tao_remote_object_proxy_broker ())
   , base_profiles_ ((CORBA::ULong) 0)
-  , forward_profiles_ (0)
-  , forward_profiles_perm_ (0)
-  , profile_in_use_ (0)
+  , forward_profiles_ (nullptr)
+  , forward_profiles_perm_ (nullptr)
+  , profile_in_use_ (nullptr)
   , profile_success_ (false)
   , refcount_ (1)
 #if (TAO_HAS_CORBA_MESSAGING == 1)
-  , policies_ (0)
+  , policies_ (nullptr)
 #endif
-  , ior_info_ (0)
-  , forwarded_ior_info_ (0)
+  , ior_info_ (nullptr)
+  , forwarded_ior_info_ (nullptr)
   , collocation_opt_ (orb_core->optimize_collocation_objects ())
   , forwarded_on_exception_ (false)
 {
-  if (this->orb_core_.get() == 0)
+  if (this->orb_core_.get() == nullptr)
     {
       if (TAO_debug_level > 0)
         {
@@ -79,7 +79,7 @@ TAO_Stub::TAO_Stub (const char *repository_id,
   this->base_profiles (profiles);
 }
 
-TAO_Stub::~TAO_Stub (void)
+TAO_Stub::~TAO_Stub ()
 {
   ACE_ASSERT (this->refcount_ == 0);
 
@@ -89,11 +89,11 @@ TAO_Stub::~TAO_Stub (void)
   // reset_profiles doesn't delete forward_profiles_perm_.
   delete this->forward_profiles_perm_;
 
-  if (this->profile_in_use_ != 0)
+  if (this->profile_in_use_ != nullptr)
     {
       // decrease reference count on profile
       this->profile_in_use_->_decr_refcnt ();
-      this->profile_in_use_ = 0;
+      this->profile_in_use_ = nullptr;
     }
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
@@ -125,13 +125,13 @@ TAO_Stub::add_forward_profiles (const TAO_MProfile &mprofiles,
   if (permanent_forward)
     {
       // paranoid, reset the bookmark, then clear the forward-stack
-      this->forward_profiles_perm_ = 0;
+      this->forward_profiles_perm_ = nullptr;
 
       this->reset_forward ();
     }
 
   TAO_MProfile *now_pfiles = this->forward_profiles_;
-  if (now_pfiles == 0)
+  if (now_pfiles == nullptr)
     now_pfiles = &this->base_profiles_;
 
   ACE_NEW (this->forward_profiles_,
@@ -155,6 +155,16 @@ TAO_Stub::add_forward_profiles (const TAO_MProfile &mprofiles,
   // Since we have been forwarded, we must set profile_success_ to false
   // since we are starting a new with a new set of profiles!
   this->profile_success_ = false;
+
+  // Set the new forward profile.
+  if (this->next_profile_i () == nullptr)
+    {
+      throw ::CORBA::TRANSIENT (
+              CORBA::SystemException::_tao_minor_code (
+                  TAO_INVOCATION_LOCATION_FORWARD_MINOR_CODE,
+                  0),
+              CORBA::COMPLETED_NO);
+    }
 }
 
 int
@@ -175,11 +185,11 @@ TAO_Stub::create_ior_info (IOP::IOR *&ior_info, CORBA::ULong &index)
     }
 
 
-  IOP::IOR *tmp_info = 0;
+  IOP::IOR *tmp_info = nullptr;
 
-  if (this->forward_profiles_ != 0)
+  if (this->forward_profiles_ != nullptr)
     {
-      if (this->forwarded_ior_info_ == 0)
+      if (this->forwarded_ior_info_ == nullptr)
         {
           this->get_profile_ior_info (*this->forward_profiles_, tmp_info);
 
@@ -203,7 +213,7 @@ TAO_Stub::create_ior_info (IOP::IOR *&ior_info, CORBA::ULong &index)
     }
 
   // Else we look at the base profiles
-  if (this->ior_info_ == 0)
+  if (this->ior_info_ == nullptr)
     {
       this->get_profile_ior_info (this->base_profiles_, tmp_info);
 
@@ -228,7 +238,7 @@ TAO_Stub::create_ior_info (IOP::IOR *&ior_info, CORBA::ULong &index)
 }
 
 const TAO::ObjectKey &
-TAO_Stub::object_key (void) const
+TAO_Stub::object_key () const
 {
   // Return the profile in use's object key if you see one.
   if (this->profile_in_use_)
@@ -242,7 +252,7 @@ TAO_Stub::object_key (void) const
         const_cast <TAO_SYNCH_MUTEX&>(this->profile_lock_));
       // FUZZ: enable check_for_ACE_Guard
 
-      if (obj.locked () != 0 &&  this->forward_profiles_ != 0)
+      if (obj.locked () != 0 &&  this->forward_profiles_ != nullptr)
         return this->forward_profiles_->get_profile (0)->object_key ();
     }
 
@@ -271,7 +281,7 @@ TAO_Stub::get_profile_ior_info (TAO_MProfile &profiles, IOP::IOR *&ior_info)
 
       IOP::TaggedProfile *tp = prof->create_tagged_profile ();
 
-      if (tp == 0)
+      if (tp == nullptr)
         throw ::CORBA::NO_MEMORY ();
       ior_info->profiles[index] = *tp;
     }
@@ -285,7 +295,7 @@ TAO_Stub::is_collocated (CORBA::Boolean collocated)
   if (this->is_collocated_ != collocated)
     {
       if (collocated &&
-          _TAO_Object_Proxy_Broker_Factory_function_pointer != 0)
+          _TAO_Object_Proxy_Broker_Factory_function_pointer != nullptr)
         {
           this->object_proxy_broker_ =
             _TAO_Object_Proxy_Broker_Factory_function_pointer ();
@@ -327,7 +337,7 @@ TAO_Stub::is_equivalent (CORBA::Object_ptr other_obj)
   TAO_Profile * const other_profile = other_obj->_stubobj ()->profile_in_use_;
   TAO_Profile * const this_profile = this->profile_in_use_;
 
-  if (other_profile == 0 || this_profile == 0)
+  if (other_profile == nullptr || this_profile == nullptr)
     return false;
 
   // Compare the profiles
@@ -359,7 +369,7 @@ TAO_Stub::set_profile_in_use_i (TAO_Profile *pfile)
 }
 
 void
-TAO_Stub::forward_back_one (void)
+TAO_Stub::forward_back_one ()
 {
   TAO_MProfile *from = forward_profiles_->forward_from ();
 
@@ -371,12 +381,12 @@ TAO_Stub::forward_back_one (void)
   // longer being forwarded, so set the reference to zero.
   if (from == &this->base_profiles_)
     {
-      this->base_profiles_.get_current_profile ()->forward_to (0);
-      this->forward_profiles_ = 0;
+      this->base_profiles_.get_current_profile ()->forward_to (nullptr);
+      this->forward_profiles_ = nullptr;
     }
   else
     {
-      from->get_current_profile ()->forward_to (0);
+      from->get_current_profile ()->forward_to (nullptr);
       this->forward_profiles_ = from;
     }
 }
@@ -418,7 +428,7 @@ TAO_Stub::get_policy (CORBA::PolicyType type)
   // construction time...
 
   CORBA::Policy_var result;
-  if (this->policies_ != 0)
+  if (this->policies_ != nullptr)
     {
       result = this->policies_->get_policy (type);
     }
@@ -438,7 +448,7 @@ TAO_Stub::get_cached_policy (TAO_Cached_Policy_Type type)
   // construction time...
 
   CORBA::Policy_var result;
-  if (this->policies_ != 0)
+  if (this->policies_ != nullptr)
     {
       result = this->policies_->get_cached_policy (type);
     }
@@ -456,17 +466,13 @@ TAO_Stub::set_policy_overrides (const CORBA::PolicyList & policies,
                                 CORBA::SetOverrideType set_add)
 {
   // Notice the use of an explicit constructor....
-#if defined (ACE_HAS_CPP11)
   std::unique_ptr<TAO_Policy_Set> policy_manager (new TAO_Policy_Set (TAO_POLICY_OBJECT_SCOPE));
-#else
-  auto_ptr<TAO_Policy_Set> policy_manager (new TAO_Policy_Set (TAO_POLICY_OBJECT_SCOPE));
-#endif /* ACE_HAS_CPP11 */
 
   if (set_add == CORBA::SET_OVERRIDE)
     {
       policy_manager->set_policy_overrides (policies, set_add);
     }
-  else if (this->policies_ == 0)
+  else if (this->policies_ == nullptr)
     {
       policy_manager->set_policy_overrides (policies, CORBA::SET_OVERRIDE);
     }
@@ -491,9 +497,9 @@ TAO_Stub::set_policy_overrides (const CORBA::PolicyList & policies,
 CORBA::PolicyList *
 TAO_Stub::get_policy_overrides (const CORBA::PolicyTypeSeq &types)
 {
-  if (this->policies_ == 0)
+  if (this->policies_ == nullptr)
     {
-      CORBA::PolicyList *policy_list_ptr = 0;
+      CORBA::PolicyList *policy_list_ptr = nullptr;
       ACE_NEW_THROW_EX (policy_list_ptr,
                         CORBA::PolicyList (),
                         CORBA::NO_MEMORY ());
@@ -548,7 +554,7 @@ TAO_Stub::marshal (TAO_OutputCDR &cdr)
     }
 
 
-      ACE_ASSERT(this->forward_profiles_ !=0);
+      ACE_ASSERT(this->forward_profiles_ !=nullptr);
 
       // paranoid - in case of FT the basic_profiles_ would do, too,
       // but might be dated
@@ -573,7 +579,7 @@ TAO_Stub::marshal (TAO_OutputCDR &cdr)
       // release ACE_Lock
     }
 
-  return (CORBA::Boolean) cdr.good_bit ();
+  return cdr.good_bit ();
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

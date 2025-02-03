@@ -27,19 +27,17 @@
 class TAO_TTest_Export TAO_Offer_Importer
 {
 public:
-
   TAO_Offer_Importer (CosTrading::Lookup_ptr lookup_if,
                       CORBA::Boolean verbose = 1);
 
-  void perform_queries (void);
+  void perform_queries ();
   // Barrage the bootstrapped-to trader with queries.
 
-  void perform_directed_queries (void);
+  void perform_directed_queries ();
   // Direct a query to a trader two graph edges distant from the
   // bootstrapped-to trader.
 
 private:
-
   void perform_queries_with_policies (const TAO_Policy_Creator& policy_manager);
   // Perform a query on the bootstrapped-to trader given the policies
   // pass in <policy_manager>.

@@ -31,11 +31,11 @@ public:
    * @todo This method could benefit from the error logging described
    * in Servant_var.cpp
    */
-  ~ORB_Holder (void);
+  ~ORB_Holder ();
 
   /// Access the underlying ORB, using the canonical CORBA memory
   /// management model
-  CORBA::ORB_ptr orb (void);
+  CORBA::ORB_ptr orb ();
 
   /// Implicit conversion to CORBA::ORB_ptr
   /**

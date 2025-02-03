@@ -37,7 +37,7 @@ extern const char *version_string;
 /// of 2), may initialize the associated values array, and determines
 /// the maximum hash table size.  Note: using the random numbers is
 /// often helpful, though not as deterministic, of course!
-Gen_Perf::Gen_Perf (void)
+Gen_Perf::Gen_Perf ()
   : max_hash_value (0),
     fewest_collisions (0),
     num_done (1),
@@ -232,7 +232,7 @@ Gen_Perf::change (List_Node *prior, List_Node *curr)
 }
 
 int
-Gen_Perf::open (void)
+Gen_Perf::open ()
 {
   if (this->key_list.read_keys () == -1)
     return -1;
@@ -314,7 +314,7 @@ Gen_Perf::open (void)
 /// assign hash values from 0 to N-1. Then go ahead with the normal
 /// logic that is there for perfect hashing.
 int
-Gen_Perf::compute_binary_search (void)
+Gen_Perf::compute_binary_search ()
 {
   // Do a string sort.
   this->key_list.string_sort ();
@@ -333,7 +333,7 @@ Gen_Perf::compute_binary_search (void)
 }
 
 int
-Gen_Perf::compute_linear_search (void)
+Gen_Perf::compute_linear_search ()
 {
   // Convert the list of keys to a linear list without
   // equivalence classes.
@@ -352,7 +352,7 @@ Gen_Perf::compute_linear_search (void)
 }
 
 int
-Gen_Perf::compute_perfect_hash (void)
+Gen_Perf::compute_perfect_hash ()
 {
   List_Node *curr = 0;
 
@@ -416,7 +416,7 @@ Gen_Perf::compute_perfect_hash (void)
 /// The alternatives (e.g., back-tracking) are too time-consuming, i.e,
 /// exponential in the number of keys.
 int
-Gen_Perf::run (void)
+Gen_Perf::run ()
 {
   if (this->open () == -1)
     return 1;
@@ -447,7 +447,7 @@ Gen_Perf::run (void)
 }
 
 /// Prints out some diagnostics upon completion.
-Gen_Perf::~Gen_Perf (void)
+Gen_Perf::~Gen_Perf ()
 {
   if (option[DEBUGGING])
     {

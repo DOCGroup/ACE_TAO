@@ -34,14 +34,14 @@ class TAO_Seq_Var_Base_T
 public:
   typedef typename T::subscript_type T_elem;
 
-  TAO_Seq_Var_Base_T (void);
+  TAO_Seq_Var_Base_T ();
   TAO_Seq_Var_Base_T (T *);
   TAO_Seq_Var_Base_T (const TAO_Seq_Var_Base_T<T> &);
 
-  ~TAO_Seq_Var_Base_T (void);
+  ~TAO_Seq_Var_Base_T ();
 
-  T *operator-> (void);
-  const T *operator-> (void) const;
+  T *operator-> ();
+  const T *operator-> () const;
 
   operator const T & () const;
   operator T & ();
@@ -53,13 +53,13 @@ public:
   typedef       T *   _retn_type;
 
   // in, inout, out, _retn
-  _in_type      in (void) const;
-  _inout_type   inout (void);
-  _out_type     out (void);
-  _retn_type    _retn (void);
+  _in_type      in () const;
+  _inout_type   inout ();
+  _out_type     out ();
+  _retn_type    _retn ();
 
   /// TAO extension.
-  _retn_type    ptr (void) const;
+  _retn_type    ptr () const;
 
 protected:
   T * ptr_;
@@ -78,7 +78,7 @@ public:
   typedef typename T::subscript_type T_elem;
   typedef typename T::const_subscript_type T_const_elem;
 
-  TAO_FixedSeq_Var_T (void);
+  TAO_FixedSeq_Var_T ();
   TAO_FixedSeq_Var_T (T *);
   TAO_FixedSeq_Var_T (const TAO_FixedSeq_Var_T<T> &);
 
@@ -108,7 +108,7 @@ public:
   typedef typename T::subscript_type T_elem;
   typedef typename T::const_subscript_type T_const_elem;
 
-  TAO_VarSeq_Var_T (void);
+  TAO_VarSeq_Var_T ();
   TAO_VarSeq_Var_T (T *);
   TAO_VarSeq_Var_T (const TAO_VarSeq_Var_T<T> &);
 
@@ -128,13 +128,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #include "tao/Seq_Var_T.inl"
 #endif /* defined INLINE */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "tao/Seq_Var_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Seq_Var_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 

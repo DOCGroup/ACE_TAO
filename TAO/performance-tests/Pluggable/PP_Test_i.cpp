@@ -60,12 +60,12 @@ Pluggable_Test_Factory_i::Pluggable_Test_Factory_i (CORBA::ORB_ptr orb)
 
 // Factory Destructor
 
-Pluggable_Test_Factory_i::~Pluggable_Test_Factory_i (void)
+Pluggable_Test_Factory_i::~Pluggable_Test_Factory_i ()
 {
 }
 
 Pluggable_Test_ptr
-Pluggable_Test_Factory_i::make_pluggable_test (void)
+Pluggable_Test_Factory_i::make_pluggable_test ()
 {
   ACE_FUNCTION_TIMEPROBE (PP_TEST_I_MAKE_PLUGGABLE_START);
   return my_pluggable_test_._this ();
@@ -80,14 +80,14 @@ PP_Test_i::PP_Test_i (CORBA::ORB_ptr orb)
 
 // Destructor
 
-PP_Test_i::~PP_Test_i (void)
+PP_Test_i::~PP_Test_i ()
 {
 }
 
 // Oneway send
 
 void
-PP_Test_i::send_oneway (void)
+PP_Test_i::send_oneway ()
 {
   ACE_FUNCTION_TIMEPROBE (PP_TEST_I_SEND_ONEWAY_START);
 }
@@ -95,14 +95,14 @@ PP_Test_i::send_oneway (void)
 // Twoway send
 
 void
-PP_Test_i::send_void (void)
+PP_Test_i::send_void ()
 {
   ACE_FUNCTION_TIMEPROBE (PP_TEST_I_SEND_VOID_START);
 }
 
 // Shutdown.
 
-void PP_Test_i::shutdown (void)
+void PP_Test_i::shutdown ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "%s\n",

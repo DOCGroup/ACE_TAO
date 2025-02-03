@@ -17,7 +17,6 @@
 #include "orbsvcs/Property/CosPropertyService_i.h"
 
 
-
 class TAO_PropertySet_Tester
 {
   // = TITLE
@@ -32,36 +31,36 @@ public:
   // He has to instantiate TAO_NamesIterator class using the instance
   // of TAO_PropertySet.
 
-  TAO_PropertySet_Tester (void);
+  TAO_PropertySet_Tester ();
   // Constructor.
 
-  ~TAO_PropertySet_Tester (void);
+  ~TAO_PropertySet_Tester ();
   // Destructor.
 
-  int test_define_property (void);
+  int test_define_property ();
   // Defines a char,a short, a long, a float and a string property.
 
-  int test_get_number_of_properties (void);
+  int test_get_number_of_properties ();
   // Gets the number of properties currently defined in the PropertySet.
 
   int test_delete_property (const char *property_name);
   // Delete a given property.
 
-  int test_is_property_defined (void);
+  int test_is_property_defined ();
   // Check the following properties are defined or
   // no. "char_property", "short_property" and a "string_property".
 
-  int test_get_property_value (void);
+  int test_get_property_value ();
   // Get the "float_property" and "string_property" and print them
   // out.
 
-  int test_delete_properties (void);
+  int test_delete_properties ();
   // Delete char, short,long, and string properties.
 
-  int test_delete_all_properties (void);
+  int test_delete_all_properties ();
   // Delete all the properties.
 
-  int test_define_properties (void);
+  int test_define_properties ();
   // Define a sequence of properties. a char, a short, a long, a float
   // and a string.
 
@@ -83,14 +82,14 @@ public:
   TAO_PropertyNamesIterator_Tester (TAO_PropertySet_Tester &propertyset_tester);
   // Constructor. To make names iterator from the property set object.
 
-  ~TAO_PropertyNamesIterator_Tester (void);
+  ~TAO_PropertyNamesIterator_Tester ();
   // Destructor.
 
-  int test_next_one (void);
+  int test_next_one ();
   // Test next one method. Iterate thru all the names in the
   // PropertySet and print them out.
 
-  int test_reset (void);
+  int test_reset ();
   // Test the reset method.
 
   int test_next_n (size_t n);
@@ -102,18 +101,18 @@ private:
 
 
 // Constructor.
-TAO_PropertySet_Tester::TAO_PropertySet_Tester (void)
+TAO_PropertySet_Tester::TAO_PropertySet_Tester ()
 {
 }
 
 // Destructor.
-TAO_PropertySet_Tester::~TAO_PropertySet_Tester (void)
+TAO_PropertySet_Tester::~TAO_PropertySet_Tester ()
 {
 }
 
 // Defines a char, a short, a long, a float and a string.
 int
-TAO_PropertySet_Tester::test_define_property (void)
+TAO_PropertySet_Tester::test_define_property ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "\nChecking define_property\n"));
@@ -186,7 +185,7 @@ TAO_PropertySet_Tester::test_define_property (void)
 
 // Testing, get_number_of_properties.
 int
-TAO_PropertySet_Tester::test_get_number_of_properties (void)
+TAO_PropertySet_Tester::test_get_number_of_properties ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "Main : Number of props : %d\n",
@@ -209,7 +208,7 @@ TAO_PropertySet_Tester::test_delete_property (const char *property_name)
 // Gets the value of "short_property" and "string_property".
 
 int
-TAO_PropertySet_Tester::test_get_property_value (void)
+TAO_PropertySet_Tester::test_get_property_value ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "\nChecking get_property_value\n"));
@@ -247,7 +246,7 @@ TAO_PropertySet_Tester::test_get_property_value (void)
 // "string_property" and "char_property".
 
 int
-TAO_PropertySet_Tester::test_is_property_defined (void)
+TAO_PropertySet_Tester::test_is_property_defined ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "\nChecking is_property_defined ()\n"));
@@ -277,7 +276,7 @@ TAO_PropertySet_Tester::test_is_property_defined (void)
 // PropertySet.  Deleting char, short, long, float and string
 // properties.
 int
-TAO_PropertySet_Tester::test_delete_properties (void)
+TAO_PropertySet_Tester::test_delete_properties ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "\nChecking delete_properties == Deleting a sequence of Properties\n"));
@@ -299,7 +298,7 @@ TAO_PropertySet_Tester::test_delete_properties (void)
 // Defines a sequnce of properties containing, char, short, long,
 // float and string property in the property set.
 int
-TAO_PropertySet_Tester::test_define_properties (void)
+TAO_PropertySet_Tester::test_define_properties ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "\nChecking define_properties == Defining sequence of properties\n"));
@@ -354,7 +353,7 @@ TAO_PropertySet_Tester::test_define_properties (void)
 
 // Delete all the properties.
 int
-TAO_PropertySet_Tester::test_delete_all_properties (void)
+TAO_PropertySet_Tester::test_delete_all_properties ()
 {
   // Deleting all the properties
   ACE_DEBUG ((LM_DEBUG,
@@ -376,14 +375,14 @@ TAO_PropertyNamesIterator_Tester::TAO_PropertyNamesIterator_Tester (TAO_Property
 }
 
 // Destructor.
-TAO_PropertyNamesIterator_Tester::~TAO_PropertyNamesIterator_Tester (void)
+TAO_PropertyNamesIterator_Tester::~TAO_PropertyNamesIterator_Tester ()
 {
 }
 
 // Test next one method. Iterate thru all the names in the
 // PropertySet and print them out.
 int
-TAO_PropertyNamesIterator_Tester::test_next_one (void)
+TAO_PropertyNamesIterator_Tester::test_next_one ()
 {
   CORBA::String_var strvar;
   ACE_DEBUG ((LM_DEBUG,
@@ -400,7 +399,7 @@ TAO_PropertyNamesIterator_Tester::test_next_one (void)
 
 // Reset the names iterator.
 int
-TAO_PropertyNamesIterator_Tester::test_reset (void)
+TAO_PropertyNamesIterator_Tester::test_reset ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "Resetting (reset ()) the NamesIterator."));

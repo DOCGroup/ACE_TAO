@@ -4,7 +4,6 @@
 #include "TestC.h"
 
 
-
 Client_Task::Client_Task (CosNaming::NamingContext_ptr root_context,
                           CORBA::ORB_ptr corb,
                           ACE_Thread_Manager *thr_mgr,
@@ -17,7 +16,7 @@ Client_Task::Client_Task (CosNaming::NamingContext_ptr root_context,
 }
 
 int
-Client_Task::svc (void)
+Client_Task::svc ()
 {
   try
     {
@@ -71,5 +70,4 @@ Client_Task::svc (void)
     }
 
   return 0;
-
 }

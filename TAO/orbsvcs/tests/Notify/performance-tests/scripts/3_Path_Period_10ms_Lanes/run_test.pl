@@ -22,8 +22,6 @@ my $nfs = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\
 my $sup = PerlACE::TestTarget::create_target (3) || die "Create target 3 failed\n";
 my $con = PerlACE::TestTarget::create_target (4) || die "Create target 4 failed\n";
 
-PerlACE::check_privilege_group();
-
 # -n notify.conf -s supplier.conf -c consumer.conf -o output_dir -h
 getopts ("n:s:c:o:h");
 

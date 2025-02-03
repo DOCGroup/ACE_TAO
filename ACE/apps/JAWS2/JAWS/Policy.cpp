@@ -4,16 +4,15 @@
 #include "JAWS/IO_Acceptor.h"
 
 
-
-JAWS_Dispatch_Policy::JAWS_Dispatch_Policy (void)
+JAWS_Dispatch_Policy::JAWS_Dispatch_Policy ()
 {
 }
 
-JAWS_Dispatch_Policy::~JAWS_Dispatch_Policy (void)
+JAWS_Dispatch_Policy::~JAWS_Dispatch_Policy ()
 {
 }
 
-JAWS_Default_Dispatch_Policy::JAWS_Default_Dispatch_Policy (void)
+JAWS_Default_Dispatch_Policy::JAWS_Default_Dispatch_Policy ()
   : ratio_ (1),
     concurrency_ (JAWS_Thread_Pool_Singleton::instance ()),
     ioh_factory_ (JAWS_Synch_IO_Handler_Factory_Singleton::instance ()),
@@ -22,36 +21,36 @@ JAWS_Default_Dispatch_Policy::JAWS_Default_Dispatch_Policy (void)
 {
 }
 
-JAWS_Default_Dispatch_Policy::~JAWS_Default_Dispatch_Policy (void)
+JAWS_Default_Dispatch_Policy::~JAWS_Default_Dispatch_Policy ()
 {
 }
 
 int
-JAWS_Default_Dispatch_Policy::ratio (void)
+JAWS_Default_Dispatch_Policy::ratio ()
 {
   return this->ratio_;
 }
 
 JAWS_IO *
-JAWS_Default_Dispatch_Policy::io (void)
+JAWS_Default_Dispatch_Policy::io ()
 {
   return this->io_;
 }
 
 JAWS_IO_Handler_Factory *
-JAWS_Default_Dispatch_Policy::ioh_factory (void)
+JAWS_Default_Dispatch_Policy::ioh_factory ()
 {
   return this->ioh_factory_;
 }
 
 JAWS_IO_Acceptor *
-JAWS_Default_Dispatch_Policy::acceptor (void)
+JAWS_Default_Dispatch_Policy::acceptor ()
 {
   return this->acceptor_;
 }
 
 JAWS_Concurrency_Base *
-JAWS_Default_Dispatch_Policy::concurrency (void)
+JAWS_Default_Dispatch_Policy::concurrency ()
 {
   return this->concurrency_;
 }

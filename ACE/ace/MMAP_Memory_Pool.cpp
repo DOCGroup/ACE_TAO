@@ -22,7 +22,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_ALLOC_HOOK_DEFINE(ACE_MMAP_Memory_Pool)
 
 void
-ACE_MMAP_Memory_Pool::dump (void) const
+ACE_MMAP_Memory_Pool::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_MMAP_Memory_Pool::dump");
@@ -206,7 +206,7 @@ ACE_MMAP_Memory_Pool::ACE_MMAP_Memory_Pool (
 #endif /* ACE_WIN32 */
 }
 
-ACE_MMAP_Memory_Pool::~ACE_MMAP_Memory_Pool (void)
+ACE_MMAP_Memory_Pool::~ACE_MMAP_Memory_Pool ()
 {
 }
 
@@ -255,10 +255,6 @@ ACE_MMAP_Memory_Pool::commit_backing_store_name (size_t rounded_bytes,
                           -1);
     }
 
-#if defined (ACE_OPENVMS)
-  ::fsync(this->mmap_.handle());
-#endif
-
   // Increment by one to put us at the beginning of the next chunk...
   ++map_size;
 #endif /* __Lynx__ */
@@ -294,11 +290,7 @@ ACE_MMAP_Memory_Pool::map_file (size_t map_size)
                        0,
                        this->sa_) == -1
       || (this->base_addr_ != 0
-#ifdef ACE_HAS_WINCE
-      && this->mmap_.addr () == 0))  // WinCE does not allow users to specify alloc addr.
-#else
       && this->mmap_.addr () != this->base_addr_))
-#endif  // ACE_HAS_WINCE
     {
 #if 0
       ACELIB_ERROR ((LM_ERROR,
@@ -330,7 +322,6 @@ ACE_MMAP_Memory_Pool::map_file (size_t map_size)
 // Ask operating system for more shared memory, increasing the mapping
 // accordingly.  Note that this routine assumes that the appropriate
 // locks are held when it is called.
-
 void *
 ACE_MMAP_Memory_Pool::acquire (size_t nbytes,
                                size_t &rounded_bytes)
@@ -547,7 +538,7 @@ ACE_MMAP_Memory_Pool::handle_signal (int signum, siginfo_t *siginfo, ucontext_t 
 #endif
 
 void *
-ACE_MMAP_Memory_Pool::base_addr (void) const
+ACE_MMAP_Memory_Pool::base_addr () const
 {
   ACE_TRACE ("ACE_MMAP_Memory_Pool::base_addr");
   return this->base_addr_;
@@ -569,7 +560,7 @@ ACE_Lite_MMAP_Memory_Pool::ACE_Lite_MMAP_Memory_Pool (const ACE_TCHAR *backing_s
   ACE_TRACE ("ACE_Lite_MMAP_Memory_Pool::ACE_Lite_MMAP_Memory_Pool");
 }
 
-ACE_Lite_MMAP_Memory_Pool::~ACE_Lite_MMAP_Memory_Pool (void)
+ACE_Lite_MMAP_Memory_Pool::~ACE_Lite_MMAP_Memory_Pool ()
 {
 }
 

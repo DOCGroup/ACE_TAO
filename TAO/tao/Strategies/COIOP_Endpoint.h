@@ -45,14 +45,14 @@ public:
   friend class TAO_SSLIOP_Profile;
 
   /// Default constructor.
-  TAO_COIOP_Endpoint (void);
+  TAO_COIOP_Endpoint ();
 
   /// Constructor.  This is the most efficient constructor since it
   /// does not require any address resolution processing.
   TAO_COIOP_Endpoint (const ACE_Utils::UUID& uuid);
 
   /// Destructor.
-  ~TAO_COIOP_Endpoint (void);
+  ~TAO_COIOP_Endpoint () = default;
 
   /**
    * @name TAO_Endpoint Methods
@@ -60,23 +60,23 @@ public:
    * Please check the documentation in Endpoint.h for details.
    */
   //@{
-  virtual TAO_Endpoint *next (void);
+  virtual TAO_Endpoint *next ();
   virtual int addr_to_string (char *buffer, size_t length);
-  virtual TAO_Endpoint *duplicate (void);
+  virtual TAO_Endpoint *duplicate ();
 
   /// Return true if this endpoint is equivalent to @a other_endpoint.  Two
   /// endpoints are equivalent if their port and host are the same.
   CORBA::Boolean is_equivalent (const TAO_Endpoint *other_endpoint);
 
   /// Return a hash value for this object.
-  CORBA::ULong hash (void);
+  CORBA::ULong hash ();
   //@}
 
   // = COIOP_Endpoint-specific methods.
 
   /// Return a pointer to the host string.  This object maintains
   /// ownership of this string.
-  const ACE_Utils::UUID& uuid (void) const;
+  const ACE_Utils::UUID& uuid () const;
 
 private:
   /// UUID uniquely identifying this COIOP endpoint

@@ -15,7 +15,6 @@ public:
   int handle_timeout(const ACE_Time_Value & currentTime, const void * data);
 
 private:
-
   CORBA::ORB_ptr m_orb;
   Callee_var     m_callee;
 };

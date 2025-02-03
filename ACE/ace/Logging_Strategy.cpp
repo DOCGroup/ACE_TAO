@@ -18,10 +18,8 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Parse the string containing (thread) priorities and set them
 // accordingly.
-
 void
-ACE_Logging_Strategy::priorities (ACE_TCHAR *priority_string,
-                                  ACE_Log_Msg::MASK_TYPE mask)
+ACE_Logging_Strategy::priorities (ACE_TCHAR *priority_string, ACE_Log_Msg::MASK_TYPE mask)
 {
   u_long priority_mask = 0;
 
@@ -32,7 +30,7 @@ ACE_Logging_Strategy::priorities (ACE_TCHAR *priority_string,
   else
     priority_mask = thread_priority_mask_;
 
-  ACE_TCHAR *strtokp = 0;
+  ACE_TCHAR *strtokp {};
 
   // Parse string and alternate priority mask.
 
@@ -91,7 +89,6 @@ ACE_Logging_Strategy::priorities (ACE_TCHAR *priority_string,
     }
 
   // Affect right priority mask.
-
   if (mask == ACE_Log_Msg::PROCESS)
     process_priority_mask_ = priority_mask;
   else
@@ -104,7 +101,7 @@ ACE_Logging_Strategy::priorities (ACE_TCHAR *priority_string,
 void
 ACE_Logging_Strategy::tokenize (ACE_TCHAR *flag_string)
 {
-  ACE_TCHAR *strtokp;
+  ACE_TCHAR *strtokp {};
 
   for (ACE_TCHAR *flag = ACE_OS::strtok_r (flag_string,
                                            ACE_TEXT ("|"),
@@ -133,7 +130,7 @@ int
 ACE_Logging_Strategy::parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_TRACE ("ACE_Logging_Strategy::parse_args");
-  ACE_TCHAR *temp;
+  ACE_TCHAR *temp {};
 
   // Perform data member initializations.  BTW, do *not* initialize
   // <thread_priority_mask_> or <process_priority_mask_> here to avoid
@@ -234,21 +231,8 @@ ACE_Logging_Strategy::parse_args (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-ACE_Logging_Strategy::ACE_Logging_Strategy (void)
-  : thread_priority_mask_ (0),
-    process_priority_mask_ (0),
-    flags_ (0),
-    filename_ (0),
-    logger_key_ (0),
-    program_name_ (0),
-    wipeout_logfile_ (false),
-    fixed_number_ (false),
-    order_files_ (false),
-    count_ (0),
-    max_file_number_ (1), // 2 files by default (max file number + 1)
-    interval_ (ACE_DEFAULT_LOGFILE_POLL_INTERVAL),
-    max_size_ (0),
-    log_msg_ (ACE_Log_Msg::instance ())
+ACE_Logging_Strategy::ACE_Logging_Strategy ()
+  : log_msg_ (ACE_Log_Msg::instance ())
 {
 #if defined (ACE_DEFAULT_LOGFILE)
   this->filename_ = ACE::strnew (ACE_DEFAULT_LOGFILE);
@@ -257,14 +241,11 @@ ACE_Logging_Strategy::ACE_Logging_Strategy (void)
   ACE_ALLOCATOR (this->filename_,
                  static_cast<ACE_TCHAR *>(ACE_Allocator::instance()->malloc(sizeof(ACE_TCHAR) * (MAXPATHLEN + 1))));
 #else
-  ACE_NEW (this->filename_,
-           ACE_TCHAR[MAXPATHLEN + 1]);
+  ACE_NEW (this->filename_, ACE_TCHAR[MAXPATHLEN + 1]);
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
   // Get the temporary directory
-  if (ACE::get_temp_dir
-      (this->filename_,
-       MAXPATHLEN - 7) == -1) // 7 for "logfile"
+  if (ACE::get_temp_dir (this->filename_, MAXPATHLEN - 7) == -1) // 7 for "logfile"
     {
       ACELIB_ERROR ((LM_ERROR,
                   ACE_TEXT ("Temporary path too long, ")
@@ -273,12 +254,11 @@ ACE_Logging_Strategy::ACE_Logging_Strategy (void)
     }
 
   // Add the filename to the end
-  ACE_OS::strcat (this->filename_,
-                  ACE_TEXT ("logfile"));
+  ACE_OS::strcat (this->filename_, ACE_TEXT ("logfile"));
 #endif /* ACE_DEFAULT_LOGFILE */
 }
 
-ACE_Logging_Strategy::~ACE_Logging_Strategy (void)
+ACE_Logging_Strategy::~ACE_Logging_Strategy ()
 {
   // This is allocated in constructor, so it must be deallocated in
   // the destructor!
@@ -290,7 +270,7 @@ ACE_Logging_Strategy::~ACE_Logging_Strategy (void)
 }
 
 int
-ACE_Logging_Strategy::fini (void)
+ACE_Logging_Strategy::fini ()
 {
 #if defined (ACE_HAS_ALLOC_HOOKS)
   ACE_Allocator::instance()->free(this->filename_);
@@ -301,15 +281,16 @@ ACE_Logging_Strategy::fini (void)
 
 #if defined (ACE_HAS_ALLOC_HOOKS)
   ACE_Allocator::instance()->free(this->logger_key_);
-  ACE_Allocator::instance()->free(this->program_name_);;
+  ACE_Allocator::instance()->free(this->program_name_);
 #else
   delete [] this->logger_key_;
   delete [] this->program_name_;
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
-  if (this->reactor ()
-      && this->interval_ > 0 && this->max_size_ > 0)
+  if (this->reactor () && this->interval_ > 0 && this->max_size_ > 0)
+  {
     this->reactor ()->cancel_timer (this);
+  }
 
   return 0;
 }
@@ -320,23 +301,15 @@ ACE_Logging_Strategy::init (int argc, ACE_TCHAR *argv[])
   ACE_TRACE ("ACE_Logging_Strategy::init");
 
   // Store current priority masks for changes in <parse_args>.
-
-  this->process_priority_mask_ =
-    this->log_msg_->priority_mask (ACE_Log_Msg::PROCESS);
-
-  this->thread_priority_mask_ =
-    this->log_msg_->priority_mask (ACE_Log_Msg::THREAD);
+  this->process_priority_mask_ = this->log_msg_->priority_mask (ACE_Log_Msg::PROCESS);
+  this->thread_priority_mask_ = this->log_msg_->priority_mask (ACE_Log_Msg::THREAD);
 
   // Use the options hook to parse the command line arguments.
   this->parse_args (argc, argv);
 
   // Setup priorities (to original if not specified on command line)
-
-  this->log_msg_->priority_mask (thread_priority_mask_,
-                                 ACE_Log_Msg::THREAD);
-
-  this->log_msg_->priority_mask (process_priority_mask_,
-                                 ACE_Log_Msg::PROCESS);
+  this->log_msg_->priority_mask (thread_priority_mask_, ACE_Log_Msg::THREAD);
+  this->log_msg_->priority_mask (process_priority_mask_, ACE_Log_Msg::PROCESS);
 
   // Check if any flags were specified. If none were specified, let
   // the default behavior take effect.
@@ -351,8 +324,7 @@ ACE_Logging_Strategy::init (int argc, ACE_TCHAR *argv[])
                                  | ACE_Log_Msg::SILENT
                                  | ACE_Log_Msg::SYSLOG);
       // Check if OSTREAM bit is set
-      if (ACE_BIT_ENABLED (this->flags_,
-                           ACE_Log_Msg::OSTREAM))
+      if (ACE_BIT_ENABLED (this->flags_, ACE_Log_Msg::OSTREAM))
         {
           int delete_ostream = 0;
 #if defined (ACE_LACKS_IOSTREAM_TOTALLY)
@@ -396,7 +368,9 @@ ACE_Logging_Strategy::init (int argc, ACE_TCHAR *argv[])
           if (output_file->rdstate () != ios::goodbit)
             {
               if (delete_ostream)
+              {
                 delete output_file;
+              }
               return -1;
             }
 #endif /* ACE_LACKS_IOSTREAM_TOTALLY */
@@ -408,9 +382,11 @@ ACE_Logging_Strategy::init (int argc, ACE_TCHAR *argv[])
           // check (if required).
           if (this->interval_ > 0 && this->max_size_ > 0)
             {
-              if (this->reactor () == 0)
+              if (this->reactor () == nullptr)
+              {
                 // Use singleton.
                 this->reactor (ACE_Reactor::instance ());
+              }
             }
         }
       // Now set the flags for Log_Msg
@@ -423,8 +399,7 @@ ACE_Logging_Strategy::init (int argc, ACE_TCHAR *argv[])
 }
 
 int
-ACE_Logging_Strategy::handle_timeout (const ACE_Time_Value &,
-                                      const void *)
+ACE_Logging_Strategy::handle_timeout (const ACE_Time_Value &, const void *)
 {
 #if defined (ACE_LACKS_IOSTREAM_TOTALLY)
   if ((size_t) ACE_OS::ftell (this->log_msg_->msg_ostream ()) > this->max_size_)
@@ -433,20 +408,26 @@ ACE_Logging_Strategy::handle_timeout (const ACE_Time_Value &,
 #endif /* ACE_LACKS_IOSTREAM_TOTALLY */
     {
       // Lock out any other logging.
-      if (this->log_msg_->acquire ())
-        ACELIB_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("Cannot acquire lock!\n")),
-                          -1);
+      ACE_GUARD_RETURN (ACE_Log_Msg, guard, *this->log_msg_, -1);
 
       // Close the current ostream.
 #if defined (ACE_LACKS_IOSTREAM_TOTALLY)
       FILE *output_file = (FILE *) this->log_msg_->msg_ostream ();
-      ACE_OS::fclose (output_file);
-      // We'll call msg_ostream() modifier later.
+      if (output_file)
+        {
+          if (ACE_OS::fclose (output_file) != 0)
+            {
+              ACELIB_ERROR ((LM_ERROR, ACE_TEXT ("ACE_Logging_Strategy::handle_timeout, Failed to close output file\n")));
+            }
+          this->log_msg_->msg_ostream (nullptr);
+          output_file = nullptr;
+        }
 #else
-      ofstream *output_file =
-        (ofstream *) this->log_msg_->msg_ostream ();
-      output_file->close ();
+      ofstream *output_file = (ofstream *) this->log_msg_->msg_ostream ();
+      if (output_file)
+        {
+          output_file->close ();
+        }
 #endif /* ACE_LACKS_IOSTREAM_TOTALLY */
       // Save current logfile to logfile.old analyze if it was set any
       // fixed number for the log_files.
@@ -459,29 +440,24 @@ ACE_Logging_Strategy::handle_timeout (const ACE_Time_Value &,
 
               // Open a new log file with the same name.
 #if defined (ACE_LACKS_IOSTREAM_TOTALLY)
-              output_file = ACE_OS::fopen (this->filename_,
-                                           ACE_TEXT ("wt"));
+              output_file = ACE_OS::fopen (this->filename_, ACE_TEXT ("wt"));
 
-              if (output_file == 0)
+              if (output_file == nullptr)
                 return -1;
 
               this->log_msg_->msg_ostream (output_file);
 #else
-              output_file->open (ACE_TEXT_ALWAYS_CHAR (this->filename_),
-                                 ios::out);
+              output_file->open (ACE_TEXT_ALWAYS_CHAR (this->filename_), ios::out);
 #endif /* ACE_LACKS_IOSTREAM_TOTALLY */
-
-              // Release the lock previously acquired.
-              this->log_msg_->release ();
               return 0;
             }
         }
-      count_++;
+      ++count_;
 
       // Set the number of digits of the log_files labels.
       int digits = 1, res = count_;
       while((res = (res / 10))>0)
-        digits++;
+        ++digits;
 
       if (ACE_OS::strlen (this->filename_) + digits <= MAXPATHLEN)
         {
@@ -506,14 +482,8 @@ ACE_Logging_Strategy::handle_timeout (const ACE_Time_Value &,
 
               for (int i = max_num ; i > 1 ;i--)
                 {
-                  ACE_OS::snprintf (backup, MAXPATHLEN + 1,
-                                    ACE_TEXT ("%s.%d"),
-                                    this->filename_,
-                                    i);
-                  ACE_OS::snprintf (to_backup, MAXPATHLEN + 1,
-                                    ACE_TEXT ("%s.%d"),
-                                    this->filename_,
-                                    i - 1);
+                  ACE_OS::snprintf (backup, MAXPATHLEN + 1, ACE_TEXT ("%s.%d"), this->filename_, i);
+                  ACE_OS::snprintf (to_backup, MAXPATHLEN + 1, ACE_TEXT ("%s.%d"), this->filename_, i - 1);
 
                   // Remove any existing old file; ignore error as
                   // file may not exist.
@@ -523,19 +493,16 @@ ACE_Logging_Strategy::handle_timeout (const ACE_Time_Value &,
                   // backup log file.
                   ACE_OS::rename (to_backup, backup);
                 }
-              ACE_OS::snprintf (backup, MAXPATHLEN + 1,
-                                ACE_TEXT ("%s.1"),
-                                this->filename_);
+              ACE_OS::snprintf (backup, MAXPATHLEN + 1, ACE_TEXT ("%s.1"), this->filename_);
             }
           else
             {
               if (fixed_number_ && count_>max_file_number_)
-                count_ = 1; // start over from 1
+                {
+                  count_ = 1; // start over from 1
+                }
 
-              ACE_OS::snprintf (backup, MAXPATHLEN + 1,
-                                ACE_TEXT ("%s.%d"),
-                                this->filename_,
-                                count_);
+              ACE_OS::snprintf (backup, MAXPATHLEN + 1, ACE_TEXT ("%s.%d"), this->filename_, count_);
             }
 
           // Remove any existing old file; ignore error as file may
@@ -548,35 +515,30 @@ ACE_Logging_Strategy::handle_timeout (const ACE_Time_Value &,
         }
       else
         ACELIB_ERROR ((LM_ERROR,
-                    ACE_TEXT ("Backup file name too long; ")
+                    ACE_TEXT ("ACE_Logging_Strategy::handle_timeout, Backup file name too long; ")
                     ACE_TEXT ("backup logfile not saved.\n")));
 
       // Open a new log file by the same name
 #if defined (ACE_LACKS_IOSTREAM_TOTALLY)
       output_file = ACE_OS::fopen (this->filename_, ACE_TEXT ("wt"));
 
-      if (output_file == 0)
+      if (output_file == nullptr)
         return -1;
 
       this->log_msg_->msg_ostream (output_file);
 #else
-      output_file->open (ACE_TEXT_ALWAYS_CHAR (this->filename_),
-                         ios::out);
+      output_file->open (ACE_TEXT_ALWAYS_CHAR (this->filename_), ios::out);
 #endif /* ACE_LACKS_IOSTREAM_TOTALLY */
-
-      // Release the lock previously acquired.
-      this->log_msg_->release ();
     }
 
   return 0;
 }
 
 int
-ACE_Logging_Strategy::handle_close (ACE_HANDLE,
-                                    ACE_Reactor_Mask)
+ACE_Logging_Strategy::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
 {
   // This will reset reactor member and cancel timer events.
-  this->reactor (0);
+  this->reactor (nullptr);
   return 0;
 }
 
@@ -603,7 +565,7 @@ ACE_Logging_Strategy::reactor (ACE_Reactor *r)
 }
 
 ACE_Reactor *
-ACE_Logging_Strategy::reactor (void) const
+ACE_Logging_Strategy::reactor () const
 {
   return ACE_Service_Object::reactor ();
 }
