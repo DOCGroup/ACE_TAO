@@ -55,10 +55,10 @@ namespace ACE_OS
     stp->st_ctime = ACE_Time_Value (fdata.ftCreationTime).sec ();
     stp->st_nlink = static_cast<short> (fdata.nNumberOfLinks);
     stp->st_dev = stp->st_rdev = 0; // No equivalent conversion.
-    stp->st_mode = S_IXOTH | S_IROTH |
-      (fdata.dwFileAttributes & FILE_ATTRIBUTE_READONLY ? 0 : S_IWOTH) |
-      (fdata.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY ? S_IFDIR : S_IFREG);
-
+    mode_t const BASE_MODE = S_IXOTH | S_IROTH;
+    mode_t const WRITE_MODE = (fdata.dwFileAttributes & FILE_ATTRIBUTE_READONLY) ? 0 : S_IWOTH;
+    mode_t const TYPE_MODE = (fdata.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) ? S_IFDIR : S_IFREG;
+    stp->st_mode = BASE_MODE | WRITE_MODE | TYPE_MODE;
     return 0;
 #elif defined (ACE_LACKS_FSTAT)
     ACE_NOTSUP_RETURN (-1);
