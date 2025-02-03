@@ -36,23 +36,30 @@ namespace ACE_OS
         ACE_OS::set_errno_to_last_error ();
         return -1;
       }
-    else if (fdata.nFileSizeHigh != 0)
+    if (fdata.nFileSizeHigh != 0)
       {
+#if defined (_FILE_OFFSET_BITS) && (_FILE_OFFSET_BITS == 64)
+        ULARGE_INTEGER ul;
+        ul.HighPart = fdata.nFileSizeHigh;
+        ul.LowPart = fdata.nFileSizeLow;
+        stp->st_size = ul.QuadPart;
+#else
         errno = EINVAL;
         return -1;
+#endif // _FILE_OFFSET_BITS == 64
       }
     else
       {
         stp->st_size = fdata.nFileSizeLow;
-        stp->st_atime = ACE_Time_Value (fdata.ftLastAccessTime).sec ();
-        stp->st_mtime = ACE_Time_Value (fdata.ftLastWriteTime).sec ();
-        stp->st_ctime = ACE_Time_Value (fdata.ftCreationTime).sec ();
-        stp->st_nlink = static_cast<short> (fdata.nNumberOfLinks);
-        stp->st_dev = stp->st_rdev = 0; // No equivalent conversion.
-        stp->st_mode = S_IXOTH | S_IROTH |
-          (fdata.dwFileAttributes & FILE_ATTRIBUTE_READONLY ? 0 : S_IWOTH) |
-          (fdata.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY ? S_IFDIR : S_IFREG);
       }
+    stp->st_atime = ACE_Time_Value (fdata.ftLastAccessTime).sec ();
+    stp->st_mtime = ACE_Time_Value (fdata.ftLastWriteTime).sec ();
+    stp->st_ctime = ACE_Time_Value (fdata.ftCreationTime).sec ();
+    stp->st_nlink = static_cast<short> (fdata.nNumberOfLinks);
+    stp->st_dev = stp->st_rdev = 0; // No equivalent conversion.
+    stp->st_mode = S_IXOTH | S_IROTH |
+      (fdata.dwFileAttributes & FILE_ATTRIBUTE_READONLY ? 0 : S_IWOTH) |
+      (fdata.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY ? S_IFDIR : S_IFREG);
     return 0;
 #elif defined (ACE_LACKS_FSTAT)
     ACE_NOTSUP_RETURN (-1);
