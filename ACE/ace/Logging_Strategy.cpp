@@ -232,20 +232,7 @@ ACE_Logging_Strategy::parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 ACE_Logging_Strategy::ACE_Logging_Strategy ()
-  : thread_priority_mask_ (0),
-    process_priority_mask_ (0),
-    flags_ (0),
-    filename_ (nullptr),
-    logger_key_ (nullptr),
-    program_name_ (nullptr),
-    wipeout_logfile_ (false),
-    fixed_number_ (false),
-    order_files_ (false),
-    count_ (0),
-    max_file_number_ (1), // 2 files by default (max file number + 1)
-    interval_ (ACE_DEFAULT_LOGFILE_POLL_INTERVAL),
-    max_size_ (0),
-    log_msg_ (ACE_Log_Msg::instance ())
+  : log_msg_ (ACE_Log_Msg::instance ())
 {
 #if defined (ACE_DEFAULT_LOGFILE)
   this->filename_ = ACE::strnew (ACE_DEFAULT_LOGFILE);
@@ -254,8 +241,7 @@ ACE_Logging_Strategy::ACE_Logging_Strategy ()
   ACE_ALLOCATOR (this->filename_,
                  static_cast<ACE_TCHAR *>(ACE_Allocator::instance()->malloc(sizeof(ACE_TCHAR) * (MAXPATHLEN + 1))));
 #else
-  ACE_NEW (this->filename_,
-           ACE_TCHAR[MAXPATHLEN + 1]);
+  ACE_NEW (this->filename_, ACE_TCHAR[MAXPATHLEN + 1]);
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
   // Get the temporary directory
