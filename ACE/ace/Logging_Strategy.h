@@ -85,34 +85,31 @@ public:
   ~ACE_Logging_Strategy ();
 
   /// Dynamic linking initialization hook.
-  virtual int init (int argc, ACE_TCHAR *argv[]);
+  int init (int argc, ACE_TCHAR *argv[]) override;
 
   /// Dynamic linking termination hook.
-  virtual int fini ();
+  int fini () override;
 
   /**
    * Timeout handler which tests logfile size.  If the current logfile
    * size exceeds @c max_size_, the current logfile is closed, saved to
    * logfile.old, and a new logfile is reopened.
    */
-  virtual int handle_timeout (const ACE_Time_Value& tv,
-                              const void* arg);
-
+  int handle_timeout (const ACE_Time_Value& tv, const void* arg) override;
   /**
    * This function helps to cancel timer events for this logging strategy
    * in reactor during shutdown.
    */
-  virtual int handle_close (ACE_HANDLE,
-                            ACE_Reactor_Mask);
+  int handle_close (ACE_HANDLE, ACE_Reactor_Mask) override;
 
   /**
    * Reactor accessors. If reactor changes then we need remove this
    * event handler from previous reactor and scheduler for timer events
    * in a new one.
    */
-  virtual void reactor (ACE_Reactor *r);
+  void reactor (ACE_Reactor *r) override;
 
-  virtual ACE_Reactor * reactor () const;
+  ACE_Reactor * reactor () const override;
 
   /**
    * Parse arguments provided in svc.conf file.
@@ -148,8 +145,7 @@ protected:
   void tokenize (ACE_TCHAR *flag_string);
 
   /// Tokenize to set priorities (either process or thread one).
-  void priorities (ACE_TCHAR *priority_string,
-                   ACE_Log_Msg::MASK_TYPE mask);
+  void priorities (ACE_TCHAR *priority_string, ACE_Log_Msg::MASK_TYPE mask);
 
   /// Current thread's priority mask set by @c priorities
   u_long thread_priority_mask_ {};
