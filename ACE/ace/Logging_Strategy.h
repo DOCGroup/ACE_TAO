@@ -82,7 +82,7 @@ public:
   ACE_Logging_Strategy ();
 
   /// Destructor.
-  ~ACE_Logging_Strategy ();
+  ~ACE_Logging_Strategy () override;
 
   /// Dynamic linking initialization hook.
   int init (int argc, ACE_TCHAR *argv[]) override;
