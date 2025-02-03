@@ -188,6 +188,9 @@ public:
    * permanent_forward=true is only valid if currently used profile
    * set represents a GroupObject (IOGR), otherwise this flag will be
    * ignored.
+   *
+   * Updates the profile in use to be the first profile of
+   * the newly set forward target.
    */
   void add_forward_profiles (const TAO_MProfile &mprofiles,
                              const CORBA::Boolean permanent_forward = false);
@@ -299,9 +302,10 @@ private:
   int get_profile_ior_info (TAO_MProfile &profile, IOP::IOR *&ior_info);
 
 private:
-  // = Disallow copy construction and assignment.
-  TAO_Stub (const TAO_Stub &);
-  TAO_Stub &operator = (const TAO_Stub &);
+  TAO_Stub (const TAO_Stub &) = delete;
+  TAO_Stub (TAO_Stub &&) = delete;
+  TAO_Stub &operator = (const TAO_Stub &) = delete;
+  TAO_Stub &operator = (TAO_Stub &&) = delete;
 
 protected:
   /// Automatically manage the ORB_Core reference count

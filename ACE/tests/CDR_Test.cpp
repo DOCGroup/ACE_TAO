@@ -111,6 +111,7 @@ short_stream ()
   ACE_CDR::WChar *wstr = wchar2;
   ACE_CString str ("Test String");
   std::string std_str ("std string");
+  std::string_view std_stringview {"std stringview"};
 #if !defined(ACE_LACKS_STD_WSTRING)
   std::wstring std_wstr (L"std wstring");
 #endif
@@ -136,6 +137,7 @@ short_stream ()
   os << str;
   os << wstr;
   os << std_str;
+  os << std_stringview;
 #if !defined(ACE_LACKS_STD_WSTRING)
   os << std_wstr;
 #endif
@@ -158,6 +160,7 @@ short_stream ()
   ss << str;
   ss << wstr;
   ss << std_str;
+  ss << std_stringview;
 #if !defined(ACE_LACKS_STD_WSTRING)
   ss << std_wstr;
 #endif
@@ -215,6 +218,7 @@ short_stream ()
   ACE_CDR::WChar *wstr1 = 0;
   ACE_CString str1;
   std::string std_str1;
+  std::string std_stringview1;
 #if !defined(ACE_LACKS_STD_WSTRING)
   std::wstring std_wstr1;
 #endif
@@ -246,6 +250,7 @@ short_stream ()
   //       std::string, or the like.
   std::unique_ptr<ACE_CDR::WChar[]> safe_wstr (wstr1);
   is >> std_str1;
+  is >> std_stringview1;
 #if !defined(ACE_LACKS_STD_WSTRING)
   is >> std_wstr1;
 #endif
@@ -289,6 +294,12 @@ short_stream ()
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),
                        ACE_TEXT ("std::string transfer error")),
+                      1);
+
+  if (std_stringview1 != std_stringview)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("std::string_view transfer error")),
                       1);
 
 #if !defined(ACE_LACKS_STD_WSTRING)

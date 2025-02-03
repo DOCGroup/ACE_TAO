@@ -57,10 +57,10 @@ class TAO_Event_Serv_Export TAO_CEC_SupplierControl
 {
 public:
   /// Constructor
-  TAO_CEC_SupplierControl ();
+  TAO_CEC_SupplierControl () = default;
 
   /// destructor...
-  virtual ~TAO_CEC_SupplierControl ();
+  virtual ~TAO_CEC_SupplierControl () = default;
 
   /// Activate any internal threads or timers used to poll the state of
   /// the suppliers

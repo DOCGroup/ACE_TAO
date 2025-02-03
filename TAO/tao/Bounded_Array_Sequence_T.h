@@ -93,33 +93,38 @@ private:
 namespace TAO
 {
   template <typename stream, typename T_array, typename T_slice, typename T_tag, CORBA::ULong MAX>
-  bool demarshal_sequence(stream & strm, TAO::bounded_array_sequence<T_array, T_slice, T_tag, MAX> & target) {
+  bool demarshal_sequence (stream &strm, TAO::bounded_array_sequence<T_array, T_slice, T_tag, MAX> &target) {
     typedef typename TAO::bounded_array_sequence<T_array, T_slice, T_tag, MAX> sequence;
     typedef TAO_Array_Forany_T<T_array, T_slice, T_tag> forany;
     typedef TAO::Array_Traits<forany> array_traits;
 
     ::CORBA::ULong new_length = 0;
-    if (!(strm >> new_length)) {
-      return false;
-    }
-    if ((new_length > strm.length()) || (new_length > target.maximum ())) {
-      return false;
-    }
-    sequence tmp;
-    tmp.length(new_length);
-    typename sequence::value_type * buffer = tmp.get_buffer();
-    for(CORBA::ULong i = 0; i < new_length; ++i) {
-      forany tmp (array_traits::alloc ());
-      bool const _tao_marshal_flag = (strm >> tmp);
-      if (_tao_marshal_flag) {
-        array_traits::copy (buffer[i], tmp.in ());
-      }
-      array_traits::free (tmp.inout ());
-      if (!_tao_marshal_flag) {
+    if (!(strm >> new_length))
+      {
         return false;
       }
-    }
-    tmp.swap(target);
+    if ((new_length > strm.length ()) || (new_length > target.maximum ()))
+      {
+        return false;
+      }
+    sequence tmp;
+    tmp.length (new_length);
+    typename sequence::value_type *const buffer = tmp.get_buffer ();
+    for (CORBA::ULong i = 0; i < new_length; ++i)
+      {
+        forany wrapper (array_traits::alloc ());
+        bool const _tao_marshal_flag = strm >> wrapper;
+        if (_tao_marshal_flag)
+          {
+            array_traits::copy (buffer[i], wrapper.in ());
+          }
+        array_traits::free (wrapper.inout ());
+        if (!_tao_marshal_flag)
+          {
+            return false;
+          }
+      }
+    tmp.swap (target);
     return true;
   }
 

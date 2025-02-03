@@ -59,20 +59,32 @@ else
   CXX_FOR_VERSION_TEST ?= $(CXX)
 endif
 
-CXX_VERSION := $(shell $(CXX_FOR_VERSION_TEST) -dumpversion)
-CXX_MACHINE := $(shell $(CXX_FOR_VERSION_TEST) -dumpmachine)
-ifeq (cmd,$(findstring cmd,$(SHELL)))
-CXX_MAJOR_VERSION := $(firstword $(subst ., ,$(CXX_VERSION)))
-else
-CXX_MAJOR_VERSION := $(shell $(CXX_FOR_VERSION_TEST) -dumpversion | sed -e 's/[^0-9\.]//g' | sed -e 's/\..*$$//')
+ifndef CXX_VERSION
+  CXX_VERSION := $(shell $(CXX_FOR_VERSION_TEST) -dumpversion)
 endif
-ifeq (cmd,$(findstring cmd,$(SHELL)))
-CXX_MINOR_VERSION := $(word 2,$(subst ., ,$(CXX_VERSION)))
-else
-CXX_MINOR_VERSION := $(shell $(CXX_FOR_VERSION_TEST) -dumpversion | sed -e 's/[^0-9\.]//g' | sed -e 's/^[0-9]*\.//' | sed -e 's/\..*$$//')
+ifndef CXX_MACHINE
+  CXX_MACHINE := $(shell $(CXX_FOR_VERSION_TEST) -dumpmachine)
+endif
+ifndef CXX_FULL_VERSION
+  CXX_FULL_VERSION := $(shell $(CXX_FOR_VERSION_TEST) --version)
 endif
 
-CXX_FULL_VERSION := $(shell $(CXX_FOR_VERSION_TEST) --version)
+CXX_MAJOR_VERSION := $(firstword $(subst ., ,$(CXX_VERSION)))
+CXX_MINOR_VERSION := $(word 2,$(subst ., ,$(CXX_VERSION)))
+
+# Minimum C++ level is now C++17, gcc until version 11 have an older version as default
+ifeq ($(CXX_MAJOR_VERSION),7)
+  c++std ?= c++17
+endif
+ifeq ($(CXX_MAJOR_VERSION),8)
+  c++std ?= c++17
+endif
+ifeq ($(CXX_MAJOR_VERSION),9)
+  c++std ?= c++17
+endif
+ifeq ($(CXX_MAJOR_VERSION),10)
+  c++std ?= c++17
+endif
 
 # Only modify LDFLAGS if DLD has been set.
 ifneq ($(DLD),)
@@ -97,13 +109,11 @@ ifeq ($(no_strict_aliasing), 1)
   FLAGS_C_CC += -fno-strict-aliasing
 else
   ifneq ($(no_strict_aliasing), 0)
-    # if not explicitly disabled enable suppression of strict-aliasing checks by default
-    # for GCC >= 4.2; these checks and the resulting warnings are very controversial and
+    # if not explicitly disabled enable suppression of strict-aliasing checks by default;
+    # these checks and the resulting warnings are very controversial and
     # popular opinion on the web seems to be that it brings little practical value and a
     # lot of pain to attempt to solve code issues and the best way to deal is to suppress
-    ifneq ($(findstring $(CXX_MAJOR_VERSION).$(CXX_MINOR_VERSION),4.1),$(CXX_MAJOR_VERSION).$(CXX_MINOR_VERSION))
-      FLAGS_C_CC += -fno-strict-aliasing
-    endif
+    FLAGS_C_CC += -fno-strict-aliasing
   endif
 endif
 

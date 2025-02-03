@@ -400,7 +400,7 @@ TAO_IIOP_Endpoint_get_ip_interfaces (ACE_Vector<ACE_CString> &local_ips)
 {
   ACE_INET_Addr* tmp = nullptr;
   size_t cnt = 0u;
-  int err = ACE::get_ip_interfaces (cnt, tmp);
+  int const err = ACE::get_ip_interfaces (cnt, tmp);
   if (err != 0)
     return;
 #if defined (ACE_HAS_IPV6)
@@ -446,10 +446,18 @@ TAO_IIOP_Endpoint::find_preferred_interfaces (
   const ACE_CString &csvPreferred,
   ACE_Vector<ACE_CString> &preferred)
 {
+  // When no preferred interfaces directives are given we can directly return
+  if(csvPreferred.length() == 0)
+    {
+      return;
+    }
+
   ACE_Vector<ACE_CString> local_ips;
   TAO_IIOP_Endpoint_get_ip_interfaces (local_ips);
   if (local_ips.size () == 0)
-    return;
+    {
+      return;
+    }
 
   // The outer loop steps through each preferred interface directive
   // and chains a new endpoint if the remote interface matches the
@@ -487,7 +495,7 @@ TAO_IIOP_Endpoint::find_preferred_interfaces (
           // If it's a match, then it means we need to use any/all
           // local interface(s) that matches wild_local.
           const char *const wild_local_cstr =  wild_local.c_str ();
-          bool found= false;
+          bool found = false;
           for (size_t i = 0u; i < local_ips.size (); ++i)
             {
               ACE_CString &ret = local_ips[i];
@@ -569,7 +577,7 @@ TAO_IIOP_Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint)
     dynamic_cast<const TAO_IIOP_Endpoint *> (other_endpoint);
 
   if (endpoint == nullptr)
-    return 0;
+    return false;
 
   return (this->port_ == endpoint->port_
           && (ACE_OS::strcmp (this->host (), endpoint->host ()) == 0));

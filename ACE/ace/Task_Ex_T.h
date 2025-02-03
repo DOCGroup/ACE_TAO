@@ -136,7 +136,7 @@ public: // Should be protected:
   /// Set next Task pointer.
   void next (ACE_Task<ACE_SYNCH_USE, TIME_POLICY> *);
 
-  /// Alwasy return 0. @todo FIXME
+  /// Always return 0. @todo FIXME
   ACE_Task<ACE_SYNCH_USE, TIME_POLICY> *sibling ();
 
   /// Return the Task's Module if there is one, else returns 0.
