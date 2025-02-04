@@ -16,7 +16,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Copy_Disabled.h"
 #include "ace/Atomic_Op.h"
 #include "ace/CORBA_macros.h"
 #include "tao/ORB_Constants.h"
@@ -33,13 +32,18 @@ template <class PROXY> class TAO_ESF_Proxy_Collection;
  * @brief The entry stored in the event map.
  */
 template <class PROXY>
-class TAO_Notify_Event_Map_Entry_T : private ACE_Copy_Disabled
+class TAO_Notify_Event_Map_Entry_T
 {
 public:
   typedef TAO_ESF_Proxy_Collection<PROXY> COLLECTION;
 
   /// Constructor
   TAO_Notify_Event_Map_Entry_T ();
+
+  TAO_Notify_Event_Map_Entry_T (const TAO_Notify_Event_Map_Entry_T &) = delete;
+  TAO_Notify_Event_Map_Entry_T (TAO_Notify_Event_Map_Entry_T &&) = delete;
+  TAO_Notify_Event_Map_Entry_T &operator= (const TAO_Notify_Event_Map_Entry_T &) = delete;
+  TAO_Notify_Event_Map_Entry_T &operator= (TAO_Notify_Event_Map_Entry_T &&) = delete;
 
   /// Destructor
   ~TAO_Notify_Event_Map_Entry_T ();

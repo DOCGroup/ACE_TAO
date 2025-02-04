@@ -81,8 +81,7 @@ protected:
  * unloaded.
  */
 template <class TYPE, class ACE_LOCK>
-class TAO_TSS_Singleton : public ACE_Cleanup,
-                          private ACE_Copy_Disabled
+class TAO_TSS_Singleton : public ACE_Cleanup
 {
 public:
   /// Global access point to the Singleton.
@@ -98,6 +97,11 @@ public:
 protected:
   /// Default constructor.
   TAO_TSS_Singleton ();
+
+  TAO_TSS_Singleton (const TAO_TSS_Singleton &) = delete;
+  TAO_TSS_Singleton (TAO_TSS_Singleton &&) = delete;
+  TAO_TSS_Singleton &operator= (const TAO_TSS_Singleton &) = delete;
+  TAO_TSS_Singleton &operator= (TAO_TSS_Singleton &&) = delete;
 
   /// Contained instance.
   ACE_TSS_TYPE (TYPE) instance_;
