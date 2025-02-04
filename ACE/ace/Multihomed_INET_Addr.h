@@ -102,7 +102,7 @@ public:
   /// Use compiler-generated assignment operator.
 
   /// Default destructor.
-  ~ACE_Multihomed_INET_Addr ();
+  ~ACE_Multihomed_INET_Addr () = default;
 
   // = Direct initialization methods.
 
