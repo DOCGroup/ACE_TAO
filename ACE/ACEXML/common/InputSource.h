@@ -19,7 +19,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ACEXML/common/CharStream.h"
-#include "ace/Copy_Disabled.h"
 
 /**
  * @class ACEXML_InputSource
@@ -49,7 +48,7 @@
  *
  * @sa ACEXML_CharStream
  */
-class ACEXML_Export ACEXML_InputSource : private ACE_Copy_Disabled
+class ACEXML_Export ACEXML_InputSource
 {
 public:
   /**
@@ -57,6 +56,10 @@ public:
    */
   ACEXML_InputSource ();
 
+  ACEXML_InputSource (const ACEXML_InputSource &) = delete;
+  ACEXML_InputSource (ACEXML_InputSource &&) = delete;
+  ACEXML_InputSource &operator= (const ACEXML_InputSource &) = delete;
+  ACEXML_InputSource &operator= (ACEXML_InputSource &&) = delete;
 
   /**
    * Create a new input source with a ACEXML_Char stream.

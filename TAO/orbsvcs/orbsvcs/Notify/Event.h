@@ -37,7 +37,6 @@ class TAO_Notify_EventType;
  */
 class TAO_Notify_Serv_Export TAO_Notify_Event
     : public TAO_Notify_Refcountable
-    , private ACE_Copy_Disabled
 {
 public:
   typedef TAO_Notify_Refcountable_Guard_T<TAO_Notify_Event> Ptr;

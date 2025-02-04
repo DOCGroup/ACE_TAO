@@ -32,7 +32,6 @@
 
 #include "Options.h"
 #include "List_Node.h"
-#include "ace/Copy_Disabled.h"
 
 /**
  * Hash table used to check for duplicate keyword entries.
@@ -43,11 +42,16 @@
  * ACE_Hash_Map_Manager.  Perhaps we should implement a new
  * ACE_Hash_Map that uses double hashing, however!
  */
-class Hash_Table : private ACE_Copy_Disabled
+class Hash_Table
 {
 public:
   /// Constructor
   Hash_Table (size_t s);
+
+  Hash_Table (const Hash_Table &) = delete;
+  Hash_Table (Hash_Table &&) = delete;
+  Hash_Table &operator= (const Hash_Table &) = delete;
+  Hash_Table &operator= (Hash_Table &&) = delete;
 
   /// Destructor
   ~Hash_Table ();

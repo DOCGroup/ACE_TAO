@@ -28,16 +28,22 @@
 
 #include "List_Node.h"
 #include "Vectors.h"
-#include "ace/Copy_Disabled.h"
 
 /**
  * Describes a duplicate entry.
  *
  * This is used for generating code by the <Key_List>.
  */
-class Duplicate_Entry : private ACE_Copy_Disabled
+class Duplicate_Entry
 {
 public:
+  Duplicate_Entry () = default;
+  Duplicate_Entry (const Duplicate_Entry &) = delete;
+  Duplicate_Entry (Duplicate_Entry &&) = delete;
+  Duplicate_Entry &operator= (const Duplicate_Entry &) = delete;
+  Duplicate_Entry &operator= (Duplicate_Entry &&) = delete;
+  ~Duplicate_Entry () = default;
+
   /// Hash value for this particular duplicate set.
   int hash_value;
 
@@ -56,10 +62,14 @@ public:
  * the Gen_Perf.hash function.  A Key_List is a singly-linked list
  * of List_Nodes.
  */
-class Key_List : private ACE_Copy_Disabled
+class Key_List
 {
 public:
   Key_List ();
+  Key_List (const Key_List &) = delete;
+  Key_List (Key_List &&) = delete;
+  Key_List &operator= (const Key_List &) = delete;
+  Key_List &operator= (Key_List &&) = delete;
   ~Key_List ();
   int keyword_list_length ();
   int max_key_length ();

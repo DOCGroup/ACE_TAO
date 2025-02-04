@@ -12,8 +12,6 @@
 #include "tao/SystemException.h"
 #include "tao/PortableServer/ForwardRequestC.h"
 
-#include "ace/Copy_Disabled.h"
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_AMH_Response_Handler::TAO_AMH_Response_Handler ()
