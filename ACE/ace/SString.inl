@@ -51,11 +51,6 @@ operator+ (const ACE_NS_WString &s, const ACE_NS_WString &t)
 
 // -------------------------------------------------------
 
-ACE_INLINE
-ACE_SString::~ACE_SString ()
-{
-}
-
 ACE_INLINE ACE_SString
 ACE_SString::substr (size_type offset,
                      size_type length) const
@@ -162,7 +157,7 @@ ACE_SString::find (const char *s, size_type pos) const
 {
   char *substr = this->rep_ + pos;
   char *pointer = ACE_OS::strstr (substr, s);
-  if (pointer == 0)
+  if (pointer == nullptr)
     return ACE_SString::npos;
   else
     return pointer - this->rep_;
@@ -173,7 +168,7 @@ ACE_SString::find (char c, size_type pos) const
 {
   char *substr = this->rep_ + pos;
   char *pointer = ACE_OS::strchr (substr, c);
-  if (pointer == 0)
+  if (pointer == nullptr)
     return ACE_SString::npos;
   else
     return pointer - this->rep_;
@@ -231,7 +226,7 @@ ACE_INLINE
 ACE_Auto_String_Free::ACE_Auto_String_Free (ACE_Auto_String_Free& rhs)
   :  p_ (rhs.p_)
 {
-  rhs.p_ = 0;
+  rhs.p_ = nullptr;
 }
 
 ACE_INLINE void
@@ -248,10 +243,10 @@ ACE_Auto_String_Free::reset (char* p)
 ACE_INLINE ACE_Auto_String_Free&
 ACE_Auto_String_Free::operator= (ACE_Auto_String_Free& rhs)
 {
-  if (this != &rhs)
+  if (this != std::addressof(rhs))
     {
       this->reset (rhs.p_);
-      rhs.p_ = 0;
+      rhs.p_ = nullptr;
     }
   return *this;
 }
@@ -259,7 +254,7 @@ ACE_Auto_String_Free::operator= (ACE_Auto_String_Free& rhs)
 ACE_INLINE
 ACE_Auto_String_Free::~ACE_Auto_String_Free ()
 {
-  this->reset (0);
+  this->reset (nullptr);
 }
 
 ACE_INLINE char*
@@ -274,6 +269,12 @@ ACE_Auto_String_Free::operator[] (size_t i) const
   return this->p_[i];
 }
 
+ACE_INLINE
+ACE_Auto_String_Free::operator bool () const
+{
+  return this->p_ != nullptr;
+}
+
 ACE_INLINE char*
 ACE_Auto_String_Free::get () const
 {
@@ -284,7 +285,7 @@ ACE_INLINE char*
 ACE_Auto_String_Free::release ()
 {
   char* p = this->p_;
-  this->p_ = 0;
+  this->p_ = nullptr;
   return p;
 }
 

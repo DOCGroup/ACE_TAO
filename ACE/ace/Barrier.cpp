@@ -78,11 +78,10 @@ ACE_Barrier::wait ()
   ACE_TRACE ("ACE_Barrier::wait");
   ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1);
 
-  ACE_Sub_Barrier *sbp =
-    this->sub_barrier_[this->current_generation_];
+  ACE_Sub_Barrier *sbp = this->sub_barrier_[this->current_generation_];
 
   // Check for shutdown...
-  if (sbp == 0)
+  if (sbp == nullptr)
     {
       errno = ESHUTDOWN;
       return -1;
@@ -127,19 +126,18 @@ ACE_Barrier::shutdown ()
   ACE_TRACE ("ACE_Barrier::shutdown");
   ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1);
 
-  ACE_Sub_Barrier *sbp =
-    this->sub_barrier_[this->current_generation_];
+  ACE_Sub_Barrier *sbp = this->sub_barrier_[this->current_generation_];
 
   // Check for shutdown...
-  if (sbp == 0)
+  if (sbp == nullptr)
     {
       errno = ESHUTDOWN;
       return -1;
     }
 
   // Flag the shutdown
-  this->sub_barrier_[0] = 0;
-  this->sub_barrier_[1] = 0;
+  this->sub_barrier_[0] = nullptr;
+  this->sub_barrier_[1] = nullptr;
   // Tell all the threads waiting on the barrier to continue on their way.
   sbp->running_threads_ = this->count_;
   sbp->barrier_finished_.broadcast ();

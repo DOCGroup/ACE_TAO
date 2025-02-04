@@ -23,8 +23,7 @@ TAO_CEC_ProxyPullSupplier::TAO_CEC_ProxyPullSupplier
   this->lock_ =
     this->event_channel_->create_supplier_lock ();
 
-  this->default_POA_ =
-    this->event_channel_->supplier_poa ();
+  this->default_POA_ = this->event_channel_->supplier_poa ();
 
   this->event_channel_->get_servant_retry_map ().bind (this, 0);
 }

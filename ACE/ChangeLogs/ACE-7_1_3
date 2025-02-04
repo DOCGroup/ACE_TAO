@@ -1,0 +1,154 @@
+commit 06c65e4ec63d867b08b28524e65d404397c15d98
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jan 15 11:07:27 2024 +0100
+
+    List changes
+    
+        * ACE/NEWS:
+
+commit 56d5db9cd27ab6fb7aa88809f097daf94f8ef232
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jan 15 09:44:35 2024 +0100
+
+    Some modernization, use default, nullptr, const
+    
+        * ACE/ace/Barrier.cpp:
+        * ACE/ace/Future.cpp:
+        * ACE/ace/Future.h:
+        * ACE/ace/Future_Set.cpp:
+
+commit 0af46b720336d28f2b248d781d98f6a5ddf22158
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Jan 14 13:03:11 2024 +0100
+
+    Add include for std::atomic
+    
+        * ACE/ace/Future.h:
+
+commit 6695073ad566bbcb5a4e8dd186308dd7e2911af3
+Merge: b94f1dc4f62 8c49e7b9d4c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Jan 14 13:01:17 2024 +0100
+
+    Merge branch 'master' into #2163-Race-condition-in-ACE_Future-double-checked-locking-pattern-code
+
+commit 4689fd055bff2c4280c6f0b8d81856b7e0bba666
+Merge: 4939d6b7232 7efcd5faa4d
+Author: Steve Huston <shuston@riverace.com>
+Date:   Fri Jan 12 16:18:47 2024 -0500
+
+    Merge branch 'master' into barrier_concurrency_fail
+
+commit b94f1dc4f622111ede7d06f0af70d39ff35056d7
+Author: Frank Hilliger <frank.hilliger@cs-sol.de>
+Date:   Wed Jan 10 11:31:12 2024 +0100
+
+    Fixed failed quality gates: C-style pointer casting
+
+commit 8ff73f4b883da21c5de3c53a0d9ef943e3757edd
+Author: Frank Hilliger <frank.hilliger@cs-sol.de>
+Date:   Wed Jan 10 08:38:47 2024 +0100
+
+    fixed findings of trailing_whitespaces check
+
+commit 13cafcfb76ed29d6687b5c8a7211e40dd142e944
+Author: Frank Hilliger <frank.hilliger@cs-sol.de>
+Date:   Tue Jan 9 18:08:47 2024 +0100
+
+    #2179: Fixed a race condition caused by the double checked locking pattern
+    - test case
+
+commit 30ab3c0586b7413490e98f181f4db0528c3f2119
+Author: nfrmtkr <frank.hilliger@cs-sol.de>
+Date:   Mon Jan 8 10:03:39 2024 +0100
+
+    Update Future.h
+    
+    Fixed a race condition caused by the double checked locking pattern by using an std::atomic that ensures correct and deterministic create and assignment logic.
+
+commit 58ea863f3a2e50b6a3045b59c7f1f060a8b7b5ae
+Merge: 587a7279b17 4df4192f41c
+Author: Justin Wilson <wilsonj@unityfoundation.io>
+Date:   Wed Dec 13 13:17:38 2023 -0600
+
+    Merge pull request #2171 from mitza-oci/install_proj
+    
+    Added a script install_proj.sh that can be used to run make install
+
+commit ee67b0516f51c3d722989e4b0e735dc1ae5596c6
+Author: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
+Date:   Wed Dec 13 14:15:40 2023 +0000
+
+    Sync debian/* files for ACE
+    
+    Signed-off-by: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
+
+commit 4df4192f41c078099fddbbad68d212263137184f
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Dec 8 12:18:25 2023 -0600
+
+    Added a script install_proj.sh that can be used to run make install
+
+commit 4939d6b723293824d970788a7726b222cdf8ca2b
+Author: Steve Huston <shuston@riverace.com>
+Date:   Fri Dec 1 22:04:44 2023 +0000
+
+    Change to C++ std::atomic
+
+commit 7e06ab1addf4df12d774fbb1a4fdf44b1d03ae39
+Author: Steve Huston <shuston@riverace.com>
+Date:   Fri Dec 1 17:59:11 2023 +0000
+
+    Change running_count_ to atomic to ensure accurate values across cores/CPUs.
+
+commit 160a687e5c78f0d83099c068e3cd051af7e25824
+Author: Marcin Cieślak <saper@saper.info>
+Date:   Sat Nov 25 03:06:02 2023 +0100
+
+    Build on FreeBSD 15.0
+    
+    ACE builds now with __FreeBSD_version 1500001
+
+commit f2bfbf8ce64ec3d34aa9ad369f9515be3b33ae59
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Nov 22 11:16:44 2023 +0100
+
+    Identation change
+    
+        * ACE/ace/Future.cpp:
+
+commit c80d23d1123788cc4497376fb2a26b6dffb48d7c
+Merge: bd35628db2f 527ba7711f6
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Nov 9 09:07:04 2023 +0100
+
+    Merge branch 'master' into jwi-nonconstcmsgspace
+
+commit bd35628db2ff60209d947222f4c1adaac412a841
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Nov 9 09:05:58 2023 +0100
+
+    Add support for a non const CMSG_SPACE macro, some code is disabled at that moment
+    
+        * ACE/ace/SOCK_Dgram.cpp:
+        * ACE/ace/config-qnx.h:
+
+commit 1b2a86a2057f96fff3d72e8d2269d6b68c3a8da5
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Oct 30 08:23:58 2023 +0100
+
+    Next release
+    
+        * ACE/bin/copy-local-script.sh:
+
+commit c9c19d844a1ca78ab287023c48ffa2e740c8bfc2
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Oct 30 08:22:34 2023 +0100
+
+    Make x.1.2 publicly available
+    
+        * ACE/NEWS:
+        * ACE/bin/diff-builds-and-group-fixed-tests-only.sh:
+        * ACE/docs/Download.html:
+        * ACE/etc/index.html:
+        * TAO/NEWS:

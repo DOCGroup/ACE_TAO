@@ -45,7 +45,7 @@ TAO_CEC_Dispatching_Task::svc ()
               continue;
             }
 
-          int result = command->execute ();
+          int const result = command->execute ();
 
           ACE_Message_Block::release (mb);
 

@@ -112,6 +112,8 @@ static AST_Decl *           idl_find_node (const char *);
 #undef ECHO
 #endif
 
+#define IDL4_KEYWORD(TOKEN_NAME) if (idl_global->idl_version_ >= IDL_VERSION_4) return TOKEN_NAME;
+
 %}
 
 /* SO we don't choke on files that use \r\n */
@@ -138,7 +140,6 @@ enum            return IDL_ENUM;
 string          return IDL_STRING;
 wstring         return IDL_WSTRING;
 sequence        return IDL_SEQUENCE;
-map             return IDL_MAP;
 union           return IDL_UNION;
 fixed           return IDL_FIXED;
 switch          return IDL_SWITCH;
@@ -157,79 +158,6 @@ void            return IDL_VOID;
 native          return IDL_NATIVE;
 local           return IDL_LOCAL;
 abstract        return IDL_ABSTRACT;
-
-int8 {
-  if (idl_global->idl_version_ >= IDL_VERSION_4)
-    return IDL_INT8;
-  else
-    {
-      REJECT;
-    }
-}
-uint8 {
-  if (idl_global->idl_version_ >= IDL_VERSION_4)
-    return IDL_UINT8;
-  else
-    {
-      REJECT;
-    }
-}
-int16 {
-  if (idl_global->idl_version_ >= IDL_VERSION_4)
-    return IDL_INT16;
-  else
-    {
-      REJECT;
-    }
-}
-uint16 {
-  if (idl_global->idl_version_ >= IDL_VERSION_4)
-    return IDL_UINT16;
-  else
-    {
-      REJECT;
-    }
-}
-int32 {
-  if (idl_global->idl_version_ >= IDL_VERSION_4)
-    return IDL_INT32;
-  else
-    {
-      REJECT;
-    }
-}
-uint32 {
-  if (idl_global->idl_version_ >= IDL_VERSION_4)
-    return IDL_UINT32;
-  else
-    {
-      REJECT;
-    }
-}
-int64 {
-  if (idl_global->idl_version_ >= IDL_VERSION_4)
-    return IDL_INT64;
-  else
-    {
-      REJECT;
-    }
-}
-uint64 {
-  if (idl_global->idl_version_ >= IDL_VERSION_4)
-    return IDL_UINT64;
-  else
-    {
-      REJECT;
-    }
-}
-map {
-  if (idl_global->idl_version_ >= IDL_VERSION_4)
-    return IDL_MAP;
-  else
-    {
-      REJECT;
-    }
-}
 
 custom          return IDL_CUSTOM;
 factory         return IDL_FACTORY;
@@ -281,6 +209,20 @@ oneway          return IDL_ONEWAY;
 
 @annotation[^A-Za-z0-9_] return IDL_ANNOTATION_DECL; // Allow annotation names that start with "annotation"
 @ return IDL_ANNOTATION_SYMBOL;
+
+int8 IDL4_KEYWORD(IDL_INT8); REJECT;
+uint8 IDL4_KEYWORD(IDL_UINT8); REJECT;
+int16 IDL4_KEYWORD(IDL_INT16); REJECT;
+uint16 IDL4_KEYWORD(IDL_UINT16); REJECT;
+int32 IDL4_KEYWORD(IDL_INT32); REJECT;
+uint32 IDL4_KEYWORD(IDL_UINT32); REJECT;
+int64 IDL4_KEYWORD(IDL_INT64); REJECT;
+uint64 IDL4_KEYWORD(IDL_UINT64); REJECT;
+
+bitfield IDL4_KEYWORD(IDL_BITFIELD); REJECT;
+bitmask IDL4_KEYWORD(IDL_BITMASK); REJECT;
+bitset IDL4_KEYWORD(IDL_BITSET); REJECT;
+map IDL4_KEYWORD(IDL_MAP); REJECT;
 
 [a-ij-rs-zA-IJ-RS-Z_][a-ij-rs-zA-IJ-RS-Z0-9_]* {
   // Make sure that this identifier is not a C++ keyword. If it is,
