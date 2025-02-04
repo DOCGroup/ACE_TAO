@@ -36,7 +36,7 @@ public:
   ACE_Dynamic ();
 
   /// Destructor.
-  ~ACE_Dynamic ();
+  ~ACE_Dynamic () = default;
 
   /**
    * Sets a flag that indicates that the object was dynamically

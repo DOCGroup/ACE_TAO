@@ -286,11 +286,6 @@ ACE_Map_Impl<KEY, VALUE, IMPLEMENTATION, ITERATOR, REVERSE_ITERATOR, ENTRY>::ren
   return temp;
 }
 
-template <class T, class VALUE>
-ACE_Active_Map_Manager_Iterator_Adapter<T, VALUE>::~ACE_Active_Map_Manager_Iterator_Adapter ()
-{
-}
-
 template <class T, class VALUE> ACE_Iterator_Impl<T> *
 ACE_Active_Map_Manager_Iterator_Adapter<T, VALUE>::clone () const
 {

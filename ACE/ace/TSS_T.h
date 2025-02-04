@@ -32,7 +32,6 @@
 # endif /* ACE_HAS_THREADS && (ACE_HAS_THREAD_SPECIFIC_STORAGE || ACE_HAS_TSS_EMULATION) */
 
 #include "ace/Thread_Mutex.h"
-#include "ace/Copy_Disabled.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -72,7 +71,7 @@ class ACE_TSS_Adapter;
  * limits its lifetime appropriately.
  */
 template <class TYPE>
-class ACE_TSS : private ACE_Copy_Disabled
+class ACE_TSS
 {
 public:
   /**
@@ -88,7 +87,12 @@ public:
    *                 threads use the ts_object (TYPE *) method to set
    *                 a specific value.
    */
-  ACE_TSS (TYPE *ts_obj = 0);
+  ACE_TSS (TYPE *ts_obj = nullptr);
+
+  ACE_TSS (const ACE_TSS &) = delete;
+  ACE_TSS (ACE_TSS &&) = delete;
+  ACE_TSS &operator= (const ACE_TSS &) = delete;
+  ACE_TSS &operator= (ACE_TSS &&) = delete;
 
   /// Deregister this object from thread-specific storage administration.
   /// Will cause all threads' copies of TYPE to be destroyed.

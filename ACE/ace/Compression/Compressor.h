@@ -22,7 +22,6 @@
 #include "ace/Guard_T.h"
 #include "ace/Thread_Mutex.h"
 #include "ace/Synch_Traits.h"
-#include "ace/Copy_Disabled.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

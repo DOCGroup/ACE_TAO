@@ -34,8 +34,8 @@ class ACE_ETCL_Export ETCL_Constraint
 {
 public:
   /// Constructor and destructor
-  ETCL_Constraint ();
-  virtual ~ETCL_Constraint ();
+  ETCL_Constraint () = default;
+  virtual ~ETCL_Constraint () = default;
 
   virtual int accept (ETCL_Constraint_Visitor *visitor);
 
