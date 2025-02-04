@@ -58,6 +58,7 @@ namespace Kokyu
   class Kokyu_Export Dispatcher
   {
   public:
+    Dispatcher () = default;
     Dispatcher (const Dispatcher &) = delete;
     Dispatcher (Dispatcher &&) = delete;
     Dispatcher &operator= (const Dispatcher &) = delete;

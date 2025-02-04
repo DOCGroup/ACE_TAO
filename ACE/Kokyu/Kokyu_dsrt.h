@@ -59,6 +59,8 @@ namespace Kokyu
     /// Shut down the dispatcher. The dispatcher will stop processing requests.
     int shutdown ();
 
+    DSRT_Dispatcher () = default;
+
     DSRT_Dispatcher (const DSRT_Dispatcher &) = delete;
     DSRT_Dispatcher (DSRT_Dispatcher &&) = delete;
     DSRT_Dispatcher &operator= (const DSRT_Dispatcher &) = delete;
