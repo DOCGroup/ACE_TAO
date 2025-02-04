@@ -50,12 +50,12 @@ public:
   virtual ~ACE_Cleanup () = default;
 
   /// Cleanup method that, by default, simply deletes itself.
-  virtual void cleanup (void *param = 0);
+  virtual void cleanup (void *param = nullptr);
 };
 
 /// Adapter for cleanup, used by ACE_Object_Manager.
 extern "C" ACE_Export
-void ACE_CLEANUP_DESTROYER_NAME (ACE_Cleanup *, void *param = 0);
+void ACE_CLEANUP_DESTROYER_NAME (ACE_Cleanup *, void *param = nullptr);
 
 /**
  * @class ACE_Cleanup_Info_Node

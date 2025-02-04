@@ -50,7 +50,7 @@ public:
 
   /// Cleanup method, used by @c ace_cleanup_destroyer to destroy the
   /// singleton.
-  virtual void cleanup (void *param = 0);
+  virtual void cleanup (void *param = nullptr);
 
   /// Dump the state of the object.
   static void dump ();
@@ -89,7 +89,7 @@ public:
 
   /// Cleanup method, used by @c ace_cleanup_destroyer to destroy the
   /// singleton.
-  virtual void cleanup (void *param = 0);
+  virtual void cleanup (void *param = nullptr);
 
   /// Dump the state of the object.
   static void dump ();
