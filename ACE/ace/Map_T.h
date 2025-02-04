@@ -722,7 +722,7 @@ public:
   ACE_Active_Map_Manager_Iterator_Adapter (const ACE_Map_Iterator<ACE_Active_Map_Manager_Key, VALUE, ACE_Null_Mutex> &impl);
 
   /// Destructor.
-  virtual ~ACE_Active_Map_Manager_Iterator_Adapter ();
+  virtual ~ACE_Active_Map_Manager_Iterator_Adapter () = default;
 
   /// Clone.
   virtual ACE_Iterator_Impl<T> *clone () const;

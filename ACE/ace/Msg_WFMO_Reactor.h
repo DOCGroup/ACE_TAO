@@ -55,7 +55,7 @@ public:
                         ACE_Timer_Queue * = 0);
 
   /// Close down the ACE_Msg_WFMO_Reactor and release all of its resources.
-  virtual ~ACE_Msg_WFMO_Reactor ();
+  virtual ~ACE_Msg_WFMO_Reactor () = default;
 
   /**
    * This event loop driver blocks for up to @a max_wait_time before
