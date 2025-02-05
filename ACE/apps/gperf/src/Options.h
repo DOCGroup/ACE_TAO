@@ -26,7 +26,6 @@
 
 #include "ace/Log_Msg.h"
 #include "ace/SString.h"
-#include "ace/Copy_Disabled.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -71,12 +70,6 @@ enum Option_Type
 // g++ doesn't seem to do the right thing with them at the
 // moment... ;-(
 
-// PharLap ETS defines EOS as well... so if building for ETS, clear out
-// their EOS.
-#if defined (ACE_HAS_PHARLAP) && defined (EOS)
-# undef EOS
-#endif /* ACE_HAS_PHARLAP && EOS */
-
 enum
 {
   MAX_KEY_POS = 128 - 1,    /**< Max size of each word's key set. */
@@ -97,32 +90,36 @@ enum
  *
  * @todo The Options class should be changed to use the Singleton pattern.
  */
-class Options : private ACE_Copy_Disabled
+class Options
 {
 public:
-  Options (void);
-  ~Options (void);
+  Options ();
+  Options (const Options &) = delete;
+  Options (Options &&) = delete;
+  Options &operator= (const Options &) = delete;
+  Options &operator= (Options &&) = delete;
+  ~Options ();
   int operator[] (Option_Type option);
   int parse_args (int argc, ACE_TCHAR *argv[]);
   void operator= (enum Option_Type);
   bool operator!= (enum Option_Type);
-  static void print_options (void);
+  static void print_options ();
   static void asso_max (int r);
-  static int asso_max (void);
-  static void reset (void);
-  static int get (void);
-  static int iterations (void);
-  static u_int max_keysig_size (void);
+  static int asso_max ();
+  static void reset ();
+  static int get ();
+  static int iterations ();
+  static u_int max_keysig_size ();
   static void keysig_size (u_int);
-  static int jump (void);
-  static int initial_value (void);
-  static int total_switches (void);
-  static const char *function_name (void);
-  static const char *fill_default (void);
-  static const char *key_name (void);
-  static const char *class_name (void);
-  static const char *hash_name (void);
-  static const char *delimiter (void);
+  static int jump ();
+  static int initial_value ();
+  static int total_switches ();
+  static const char *function_name ();
+  static const char *fill_default ();
+  static const char *key_name ();
+  static const char *class_name ();
+  static const char *hash_name ();
+  static const char *delimiter ();
 
 private:
   /// Holds the user-specified Options.
@@ -180,7 +177,7 @@ private:
   static int key_sort (char *base, int len);
 
   /// Prints proper program usage.
-  static void usage (void);
+  static void usage ();
 };
 
 /// Global option coordinator for the entire program.

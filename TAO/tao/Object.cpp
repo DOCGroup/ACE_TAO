@@ -136,7 +136,7 @@ CORBA::Object::marshal (const CORBA::Object_ptr x, TAO_OutputCDR &cdr)
       cdr.write_ulong (1);
       cdr.write_char ('\0');
       cdr.write_ulong (0);
-      return (CORBA::Boolean) cdr.good_bit ();
+      return cdr.good_bit ();
     }
 
   return x->marshal (cdr);
@@ -707,7 +707,7 @@ operator<< (TAO_OutputCDR& cdr, const CORBA::Object* x)
       cdr.write_ulong (1);
       cdr.write_char ('\0');
       cdr.write_ulong (0);
-      return (CORBA::Boolean) cdr.good_bit ();
+      return cdr.good_bit ();
     }
 
   if (!x->is_evaluated ())
@@ -873,7 +873,7 @@ operator>> (TAO_InputCDR& cdr, CORBA::Object*& x)
       if (profile_count == 0)
         {
           x = CORBA::Object::_nil ();
-          return (CORBA::Boolean) cdr.good_bit ();
+          return cdr.good_bit ();
         }
 
       // get a profile container to store all profiles in the IOR.
@@ -969,10 +969,9 @@ operator>> (TAO_InputCDR& cdr, CORBA::Object*& x)
           return false;
         }
 
-      ACE_NEW_NORETURN (x,
-                        CORBA::Object (ior, orb_core));
+      x = new (std::nothrow) CORBA::Object (ior, orb_core);
 
-      if (x == nullptr)
+      if (!x)
         {
           // Can't allocate a CORBA Object so delete first the
           // memory we already allocated before we return
@@ -981,7 +980,7 @@ operator>> (TAO_InputCDR& cdr, CORBA::Object*& x)
         }
     }
 
-  return (CORBA::Boolean) cdr.good_bit ();
+  return cdr.good_bit ();
 }
 
 #if defined (GEN_OSTREAM_OPS)

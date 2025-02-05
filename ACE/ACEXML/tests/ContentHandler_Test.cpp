@@ -23,7 +23,7 @@ public:
                            size_t start,
                            size_t length);
 
-  const ACEXML_Char *get_test_string (void)
+  const ACEXML_Char *get_test_string ()
     { return Basic_Content_Tester::test_string_; }
 
 private:

@@ -18,7 +18,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_SCIOP_Acceptor::TAO_SCIOP_Acceptor (void)
+TAO_SCIOP_Acceptor::TAO_SCIOP_Acceptor ()
   : TAO_Acceptor (TAO_TAG_SCIOP_PROFILE),
     addrs_ (0),
     port_span_ (1),
@@ -34,7 +34,7 @@ TAO_SCIOP_Acceptor::TAO_SCIOP_Acceptor (void)
 {
 }
 
-TAO_SCIOP_Acceptor::~TAO_SCIOP_Acceptor (void)
+TAO_SCIOP_Acceptor::~TAO_SCIOP_Acceptor ()
 {
   // Make sure we are closed before we start destroying the
   // strategies.
@@ -202,7 +202,7 @@ TAO_SCIOP_Acceptor::is_collocated (const TAO_Endpoint *endpoint)
 }
 
 int
-TAO_SCIOP_Acceptor::close (void)
+TAO_SCIOP_Acceptor::close ()
 {
   return this->base_acceptor_.close ();
 }
@@ -238,7 +238,7 @@ TAO_SCIOP_Acceptor::open (TAO_ORB_Core *orb_core,
   ACE_Multihomed_INET_Addr addr;
 
   const char *port_separator_loc = std::strchr (address, ':');
-  ACE_Auto_Basic_Array_Ptr<char> tmp_host_auto;
+  std::unique_ptr<char[]> tmp_host_auto;
 
   if (port_separator_loc == address)
     {
@@ -329,7 +329,7 @@ TAO_SCIOP_Acceptor::open (TAO_ORB_Core *orb_core,
   {
     // Obtain a char* for the primary hostname.
     ACE_CString & primary_hostname_obj = hostnames[0];
-    ACE_Auto_Basic_Array_Ptr<char> primary_hostname_auto(primary_hostname_obj.rep());
+    std::unique_ptr<char[]> primary_hostname_auto(primary_hostname_obj.rep());
     const char* primary_hostname = primary_hostname_auto.get();
 
     // Convert the primary hostname to ACE_UINT32
@@ -342,7 +342,7 @@ TAO_SCIOP_Acceptor::open (TAO_ORB_Core *orb_core,
 
   // Allocate an array of secondary ip addresses.
   ACE_UINT32 *secondary_ip_addrs = 0;
-  ACE_Auto_Basic_Array_Ptr<ACE_UINT32> secondary_ip_addrs_auto;
+  std::unique_ptr<ACE_UINT32[]> secondary_ip_addrs_auto;
   size_t num_secondary_ip_addrs = hostnames.size() - 1;
   if (num_secondary_ip_addrs > 0) {
     ACE_NEW_RETURN(secondary_ip_addrs,
@@ -357,7 +357,7 @@ TAO_SCIOP_Acceptor::open (TAO_ORB_Core *orb_core,
   while (i < num_secondary_ip_addrs) {
     // Obtain a char* for a single secondary hostname.
     ACE_CString & hostname_obj = hostnames[i + 1];
-    ACE_Auto_Basic_Array_Ptr<char> hostname_auto(hostname_obj.rep());
+    std::unique_ptr<char[]> hostname_auto(hostname_obj.rep());
     const char* hostname = hostname_auto.get();
 
     // Obtain the ip address for this secondary hostname.
@@ -424,7 +424,7 @@ TAO_SCIOP_Acceptor::open (TAO_ORB_Core *orb_core,
     {
       // Obtain a char* for the hostname.
       ACE_CString & hostname_obj = hostnames[i];
-      ACE_Auto_Basic_Array_Ptr<char> hostname_auto(hostname_obj.rep());
+      std::unique_ptr<char[]> hostname_auto(hostname_obj.rep());
       const char* hostname = hostname_auto.get();
 
       if (this->hostname (orb_core,
@@ -728,7 +728,7 @@ TAO_SCIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core)
 
   // The instantiation for this template is in
   // tao/SCIOP_Connector.cpp.
-  ACE_Auto_Basic_Array_Ptr<ACE_INET_Addr> safe_if_addrs (if_addrs);
+  std::unique_ptr<ACE_INET_Addr[]> safe_if_addrs (if_addrs);
 
   // If the loopback interface is the only interface then include it
   // in the list of interfaces to query for a hostname, otherwise
@@ -806,7 +806,7 @@ TAO_SCIOP_Acceptor::parse_multiple_hostnames (const char *hostnames,
   ACE_NEW_RETURN (hostnames_copy,
                   char[hostnames_string_length],
                   -1);
-  ACE_Auto_Basic_Array_Ptr<char> hostnames_copy_auto(hostnames_copy);
+  std::unique_ptr<char[]> hostnames_copy_auto(hostnames_copy);
   ACE_OS::strncpy(hostnames_copy, hostnames, hostnames_string_length);
 
   // Count the number of hostnames separated by "+"
@@ -851,7 +851,7 @@ TAO_SCIOP_Acceptor::parse_multiple_hostnames (const char *hostnames,
 }
 
 CORBA::ULong
-TAO_SCIOP_Acceptor::endpoint_count (void)
+TAO_SCIOP_Acceptor::endpoint_count ()
 {
   return this->endpoint_count_;
 }

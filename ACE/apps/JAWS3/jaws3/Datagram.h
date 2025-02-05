@@ -13,7 +13,7 @@
 class JAWS_Export JAWS_Datagram_Impl
 {
 public:
-  virtual ~JAWS_Datagram_Impl (void) {}
+  virtual ~JAWS_Datagram_Impl () {}
 
   virtual void accept ( const ACE_Addr &local_sap
                       , ACE_SOCK_Dgram &new_dgram
@@ -79,7 +79,7 @@ class JAWS_Export JAWS_Datagram
 public:
   JAWS_Datagram (JAWS_Datagram_Impl *impl = 0);
 
-  static JAWS_Datagram * instance (void)
+  static JAWS_Datagram * instance ()
   {
     return ACE_Singleton<JAWS_Datagram, ACE_SYNCH_MUTEX>::instance ();
   }

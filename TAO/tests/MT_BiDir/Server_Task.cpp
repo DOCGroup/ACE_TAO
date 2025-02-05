@@ -20,7 +20,7 @@ Server_Task::Server_Task (Sender_i *sender,
 }
 
 int
-Server_Task::svc (void)
+Server_Task::svc ()
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Wait for the Event\n"));
 

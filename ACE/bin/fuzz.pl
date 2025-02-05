@@ -906,7 +906,7 @@ sub check_for_NULL ()
                 }
                 if ($disable == 0) {
                     if(/(\(|\)|\s+|=)NULL(\)|\s+|\;|\,)/ and $` !~ /\/\// and $` !~ /\/\*/ and $` !~ /\*\*+/ and $` !~ /\s+\*+\s+/) {
-                        print_error ("$file:$.: NULL found");
+                        print_error ("$file:$.: NULL found, use nullptr");
                     }
                 }
             }

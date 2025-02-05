@@ -3,15 +3,13 @@
 #include "tao/ORB_Table.h"
 #include "tao/ORB_Core_Auto_Ptr.h"
 
-  Hello::Hello (CORBA::ORB_ptr orb,
-              ACE_thread_t thrid)
+Hello::Hello (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
-    , thr_id_ (thrid)
 {
 }
 
 char *
-Hello::get_string (void)
+Hello::get_string ()
 {
   ACE_ERROR ((LM_ERROR,
               "(%P|%t) ERROR: Unexpected Upcall in process ..\n"));
@@ -20,7 +18,7 @@ Hello::get_string (void)
 }
 
 void
-Hello::shutdown (void)
+Hello::shutdown ()
 {
   // Give the client thread time to return from the collocated
   // call to this method before shutting down the ORB.  We sleep

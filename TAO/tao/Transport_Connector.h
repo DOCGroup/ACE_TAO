@@ -59,7 +59,7 @@ public:
   TAO_Connector (CORBA::ULong tag);
 
   /// The destructor.
-  virtual ~TAO_Connector (void);
+  virtual ~TAO_Connector ();
 
   /**
    * The tag identifying the specific ORB transport layer protocol.
@@ -86,7 +86,7 @@ public:
   virtual int open (TAO_ORB_Core *orb_core) = 0;
 
   /// Shutdown Connector bridge and concrete Connector.
-  virtual int close (void) = 0;
+  virtual int close () = 0;
 
   /**
    * To support pluggable we need to abstract away the details of the
@@ -121,7 +121,7 @@ protected:
   virtual int supports_parallel_connects () const;
 
   /// Create a profile with a given endpoint.
-  virtual TAO_Profile *make_profile (void) = 0;
+  virtual TAO_Profile *make_profile () = 0;
 
   /// Set and validate endpoint. We need to do this to initialize our
   /// remote *_Addr's which have not been done during IOR decode.
@@ -199,10 +199,10 @@ protected:
   void orb_core (TAO_ORB_Core *orb_core);
 
   /// Create a connect strategy
-  int create_connect_strategy (void);
+  int create_connect_strategy ();
 
   /// Return the TAO_ORB_Core pointer
-  TAO_ORB_Core *orb_core (void);
+  TAO_ORB_Core *orb_core ();
 
 protected:
   /// The (a)synch connect strategy

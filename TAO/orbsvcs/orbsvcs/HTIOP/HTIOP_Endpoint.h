@@ -48,7 +48,7 @@ namespace TAO
       friend class TAO_SSLIOP_Profile;
 
       /// Default constructor.
-      Endpoint (void);
+      Endpoint ();
 
       /// Constructor.  This is the most efficient constructor since it
       /// does not require any address resolution processing.
@@ -67,24 +67,24 @@ namespace TAO
                 const char *htid);
 
       /// Destructor.
-      ~Endpoint (void);
+      ~Endpoint ();
 
       // = Implementation of abstract TAO_Endpoint methods.  See
       // Endpoint.h for their documentation.
 
-      virtual TAO_Endpoint *next (void);
+      virtual TAO_Endpoint *next ();
       virtual int addr_to_string (char *buffer, size_t length);
-      virtual void reset_hint (void);
+      virtual void reset_hint ();
 
       /// Makes a copy of <this>
-      virtual TAO_Endpoint *duplicate (void);
+      virtual TAO_Endpoint *duplicate ();
 
       /// Return true if this endpoint is equivalent to @a other_endpoint.  Two
       /// endpoints are equivalent if their port and host are the same.
       CORBA::Boolean is_equivalent (const TAO_Endpoint *other_endpoint);
 
       /// Return a hash value for this object.
-      CORBA::ULong hash (void);
+      CORBA::ULong hash ();
 
       // Allocates memory and returns a copy of <this>
 
@@ -115,7 +115,7 @@ namespace TAO
       /// This object maintains ownership of this string.
       const char *htid (const char *h);
 
-      //Connection_Handler *&hint (void);
+      //Connection_Handler *&hint ();
       // Access to our <hint_>.
 
     private:

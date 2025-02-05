@@ -1036,7 +1036,7 @@ Catior_i::_find_info (CORBA::ULong id)
 void
 Catior_i::displayHex (TAO_InputCDR & str)
 {
-  if (str.good_bit () == 0)
+  if (!str.good_bit ())
     return;
 
   TAO_InputCDR clone_str (str);
@@ -1258,7 +1258,7 @@ Catior_i::cat_profile_helper (TAO_InputCDR& stream,
   // buffer, and skip the encapsulation.
   TAO_InputCDR str (stream, encap_len);
 
-  if (str.good_bit () == 0 || stream.skip_bytes (encap_len) == 0)
+  if (!str.good_bit () || stream.skip_bytes (encap_len) == 0)
     return false;
 
   static const size_t bufsize = 512;
@@ -1346,7 +1346,7 @@ Catior_i::cat_coiop_profile (TAO_InputCDR& stream)
   // buffer, and skip the encapsulation.
   TAO_InputCDR str (stream, encap_len);
 
-  if (str.good_bit () == 0 || stream.skip_bytes (encap_len) == 0)
+  if (!str.good_bit () || stream.skip_bytes (encap_len) == 0)
     return false;
 
   static const size_t bufsize = 512;
@@ -1436,7 +1436,7 @@ Catior_i::cat_uiop_profile (TAO_InputCDR& stream)
   // buffer, and skip the encapsulation.
   TAO_InputCDR str (stream, encap_len);
 
-  if (str.good_bit () == 0 || stream.skip_bytes (encap_len) == 0)
+  if (!str.good_bit () || stream.skip_bytes (encap_len) == 0)
     return false;
 
   static const size_t bufsize = 512;
@@ -1517,7 +1517,7 @@ Catior_i::cat_sciop_profile (TAO_InputCDR& stream)
   // buffer, and skip the encapsulation.
   TAO_InputCDR str (stream, encap_len);
 
-  if (str.good_bit () == 0 || stream.skip_bytes (encap_len) == 0)
+  if (!str.good_bit () || stream.skip_bytes (encap_len) == 0)
     return false;
 
   static const size_t bufsize = 512;
@@ -1623,7 +1623,7 @@ Catior_i::cat_nsk_profile_helper (TAO_InputCDR& stream,
   // buffer, and skip the encapsulation.
   TAO_InputCDR str (stream, encap_len);
 
-  if (str.good_bit () == 0 || stream.skip_bytes (encap_len) == 0)
+  if (!str.good_bit () || stream.skip_bytes (encap_len) == 0)
     return false;
 
   static const size_t bufsize = 512;

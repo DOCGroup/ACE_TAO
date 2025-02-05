@@ -173,7 +173,7 @@ Roundtrip_Handler::test_longlong_method_excep (::Messaging::ExceptionHolder *hol
 // = Other methods
 
 void
-Roundtrip_Handler::shutdown (void)
+Roundtrip_Handler::shutdown ()
 {
 }
 

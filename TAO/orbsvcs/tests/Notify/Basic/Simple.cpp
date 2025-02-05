@@ -32,18 +32,18 @@ Event_AnyPushSupplier::Event_AnyPushSupplier (Simple_Test* test_client)
 {
 }
 
-Event_AnyPushSupplier::~Event_AnyPushSupplier (void)
+Event_AnyPushSupplier::~Event_AnyPushSupplier ()
 {
 }
 
 //***************************************************************************
 
-Simple_Test::Simple_Test (void)
+Simple_Test::Simple_Test ()
   : event_count_ (5)
 {
 }
 
-Simple_Test::~Simple_Test (void)
+Simple_Test::~Simple_Test ()
 {
 }
 
@@ -92,7 +92,7 @@ Simple_Test::init (int argc,
 
   this->supplier_->connect (this->supplier_admin_.in ());
 
-  consumer_start( 0 );
+  consumer_start(0);
 
   return 0;
 }
@@ -135,7 +135,7 @@ Simple_Test::parse_args (int argc,
 }
 
 void
-Simple_Test::create_EC (void)
+Simple_Test::create_EC ()
 {
   CosNotifyChannelAdmin::ChannelID id;
 
@@ -147,7 +147,7 @@ Simple_Test::create_EC (void)
 }
 
 void
-Simple_Test::on_event_received (void)
+Simple_Test::on_event_received ()
 {
   ++this->result_count_;
 
@@ -163,7 +163,7 @@ Simple_Test::on_event_received (void)
 }
 
 void
-Simple_Test::run_test (void)
+Simple_Test::run_test ()
 {
   CORBA::Any data;
 
@@ -176,13 +176,13 @@ Simple_Test::run_test (void)
 }
 
 void
-Simple_Test::end_test (void)
+Simple_Test::end_test ()
 {
-  consumer_done( 0 );
+  consumer_done(0);
 }
 
 int
-Simple_Test::check_results (void)
+Simple_Test::check_results ()
 {
   // Destroy the channel
   this->ec_->destroy ();
@@ -220,7 +220,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       events.run_test ();
 
-      events.ORB_run( );
+      events.ORB_run();
     }
   catch (const CORBA::Exception& se)
     {

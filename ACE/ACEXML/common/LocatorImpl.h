@@ -20,7 +20,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ACEXML/common/Locator.h"
-#include "ace/Copy_Disabled.h"
 
 /**
  * @class ACEXML_LocatorImpl
@@ -58,8 +57,7 @@
  * @sa ACEXML_Locator
  */
 class ACEXML_Export ACEXML_LocatorImpl :
-  public ACEXML_Locator,
-  private ACE_Copy_Disabled
+  public ACEXML_Locator
 {
 public:
   /*
@@ -80,6 +78,11 @@ public:
    * scope of DocumentHandler methods).
    */
   ACEXML_LocatorImpl (const ACEXML_Locator& locator);
+
+  ACEXML_LocatorImpl (const ACEXML_LocatorImpl &) = delete;
+  ACEXML_LocatorImpl (ACEXML_LocatorImpl &&) = delete;
+  ACEXML_LocatorImpl &operator= (const ACEXML_LocatorImpl &) = delete;
+  ACEXML_LocatorImpl &operator= (ACEXML_LocatorImpl &&) = delete;
 
   /*
    * Destructor.

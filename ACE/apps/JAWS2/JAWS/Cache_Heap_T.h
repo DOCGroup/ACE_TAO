@@ -26,7 +26,7 @@ public:
   // maxsize is the total number of objects the in memory cache is
   // willing to manage
 
-  ~JAWS_Cache_Heap (void);
+  ~JAWS_Cache_Heap ();
 
   int is_empty () const;
   int is_full () const;
@@ -57,7 +57,7 @@ protected:
   void remove_i (size_t pos);
   // remove the element residing at pos, but do not delete it.
 
-  void remove_i (void);
+  void remove_i ();
   // remove the element residing at the top of heap, but do not delete it.
 
 private:
@@ -77,7 +77,7 @@ class JAWS_Cache_Heap_Item
 
 public:
   JAWS_Cache_Heap_Item (const EXT_ID &ext_id, JAWS_Cache_Object *const &int_id);
-  unsigned int priority (void);
+  unsigned int priority ();
 
 private:
   EXT_ID ext_id_;
@@ -86,8 +86,6 @@ private:
   size_t heap_idx_;
 };
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "JAWS/Cache_Heap_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #endif /* JAWS_CACHE_HEAP_T_H */

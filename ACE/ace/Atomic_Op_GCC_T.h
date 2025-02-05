@@ -120,14 +120,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #include "ace/Atomic_Op_GCC_T.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Atomic_Op_GCC_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Atomic_Op_GCC_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
-
 
 #endif /* ACE_HAS_GCC_ATOMIC_BUILTINS */
 

@@ -2,10 +2,10 @@
 #include "ace/Log_Msg.h"
 
 
-void test_http_addr (void);
-void test_ftp_addr (void);
-void test_mailto_addr (void);
-void test_url_addr (void);
+void test_http_addr ();
+void test_ftp_addr ();
+void test_mailto_addr ();
+void test_url_addr ();
 
 int ACE_TMAIN (int, ACE_TCHAR*[])
 {
@@ -42,7 +42,7 @@ int ACE_TMAIN (int, ACE_TCHAR*[])
 #define URL_TEST_ARRAY \
     ACE_TEXT("file:/etc/passwd")
 
-void test_http_addr (void)
+void test_http_addr ()
 {
   static const ACE_TCHAR *addresses[] = {
     HTTP_TEST_ARRAY
@@ -82,7 +82,7 @@ void test_http_addr (void)
     }
 }
 
-void test_ftp_addr (void)
+void test_ftp_addr ()
 {
   static const ACE_TCHAR *addresses[] = {
     FTP_TEST_ARRAY
@@ -122,7 +122,7 @@ void test_ftp_addr (void)
     }
 }
 
-void test_mailto_addr (void)
+void test_mailto_addr ()
 {
   static const ACE_TCHAR *addresses[] = {
     MAILTO_TEST_ARRAY
@@ -162,7 +162,7 @@ void test_mailto_addr (void)
     }
 }
 
-void test_url_addr (void)
+void test_url_addr ()
 {
   static const ACE_TCHAR *addresses[] = {
     HTTP_TEST_ARRAY,

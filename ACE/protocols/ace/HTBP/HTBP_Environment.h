@@ -39,7 +39,7 @@ namespace ACE
       ~Environment ();
 
       /// removes all htbp related values from the configuration
-      void clear (void);
+      void clear ();
 
       /// Accessors to HTID URL
       /// Returns 0 on success

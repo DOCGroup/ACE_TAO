@@ -25,13 +25,13 @@ class server_i
 {
 public:
   server_i (CORBA::ORB_ptr orb);
-  virtual ~server_i (void);
+  virtual ~server_i ();
 
   virtual void set_client (client_ptr c);
 
   virtual void test_request (const char *msg);
 
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
 private:
   CORBA::ORB_var orb_;

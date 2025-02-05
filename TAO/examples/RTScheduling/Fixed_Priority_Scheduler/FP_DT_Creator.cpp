@@ -2,7 +2,7 @@
 #include "test.h"
 #include "FP_Task.h"
 
-FP_DT_Creator::FP_DT_Creator (void)
+FP_DT_Creator::FP_DT_Creator ()
 {
   DT_TEST::instance ()->dt_creator (this);
 }
@@ -45,13 +45,13 @@ FP_DT_Creator::yield (time_t suspend_time,
 }
 
 int
-FP_DT_Creator::total_load (void)
+FP_DT_Creator::total_load ()
 {
   return BUFSIZ;
 }
 
 void
-FP_DT_Creator::wait (void)
+FP_DT_Creator::wait ()
 {
 }
 

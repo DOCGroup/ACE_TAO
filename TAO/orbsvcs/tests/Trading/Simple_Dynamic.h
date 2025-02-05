@@ -29,8 +29,7 @@ public:
 
   virtual CORBA::Any* evalDP (const char* /* name */,
                               CORBA::TypeCode_ptr /* returned_type */,
-                              const CORBA::Any& /* extra_info */
-                              );
+                              const CORBA::Any&); /* extra_info */
 
 private:
   T dp_;
@@ -40,8 +39,6 @@ private:
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "Simple_Dynamic.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #endif /* TAO_SIMPLE_DYNAMIC_H */

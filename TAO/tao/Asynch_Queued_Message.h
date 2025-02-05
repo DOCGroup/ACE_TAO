@@ -58,7 +58,7 @@ public:
 
 
   /// Destructor
-  virtual ~TAO_Asynch_Queued_Message (void);
+  virtual ~TAO_Asynch_Queued_Message ();
 
   /**
    * @name Implement the Template Methods from TAO_Queued_Message
@@ -71,7 +71,7 @@ public:
   /// @note No reason to believe why this would be called. But have
   /// it here for the sake of uniformity.
   virtual TAO_Queued_Message *clone (ACE_Allocator *alloc);
-  virtual void destroy (void);
+  virtual void destroy ();
   virtual bool is_expired (const ACE_Time_Value &now) const;
   virtual void copy_if_necessary (const ACE_Message_Block* chain);
   //@}

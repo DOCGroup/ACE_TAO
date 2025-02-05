@@ -173,11 +173,11 @@ public:
      typename TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::RT_INFO_MAP & rt_info_map);
 
   /// Accessor for number of cycles detected in traversal.
-  int number_of_cycles (void);
+  int number_of_cycles ();
 
   /// Accessor for whether or not the recursion is within a previously
   /// detected cycle.
-  int in_a_cycle (void);
+  int in_a_cycle ();
 
   /// Mutator for whether or not the recursion is within a previously
   /// detected cycle.
@@ -289,19 +289,19 @@ public:
      typename TAO_RSE_Dependency_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::RT_INFO_MAP & rt_info_map);
 
   /// Accessor for number of nodes with unresolved local dependencies.
-  int unresolved_locals (void);
+  int unresolved_locals ();
 
   /// Mutator for numberof nodes with unresolved local dependencies.
   void unresolved_locals (int);
 
   /// Accessor for number of nodes with unresolved remote dependencies.
-  int unresolved_remotes (void);
+  int unresolved_remotes ();
 
   /// Mutator for number of nodes with unresolved remote dependencies.
   void unresolved_remotes (int);
 
   /// Accessor for number of nodes with thread specification errors.
-  int thread_specification_errors (void);
+  int thread_specification_errors ();
 
   /// Mutator for number of nodes with thread specification errors.
   void thread_specification_errors (int);
@@ -489,13 +489,7 @@ protected:
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "orbsvcs/Sched/Reconfig_Sched_Utils_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Reconfig_Sched_Utils_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 #endif /* TAO_RECONFIG_SCHED_UTILS_T_H */

@@ -52,8 +52,7 @@ ACE_Test_Output::~ACE_Test_Output ()
   ACE_LOG_MSG->clr_flags (ACE_Log_Msg::OSTREAM);
   ACE_LOG_MSG->set_flags (ACE_Log_Msg::STDERR);
 
-#if !defined (ACE_LACKS_IOSTREAM_TOTALLY) && \
-    (!defined (ACE_HAS_PHARLAP) || defined (ACE_PHARLAP_TESTLOG_TO_FILE))
+#if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
   delete this->output_file_;
 #endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
 }
@@ -74,13 +73,6 @@ ACE_Test_Output::output_file ()
 int
 ACE_Test_Output::set_output (const ACE_TCHAR *filename, int append)
 {
-#if defined (ACE_HAS_PHARLAP) && !defined (ACE_PHARLAP_TESTLOG_TO_FILE)
-  // For PharLap, just send it all to the host console for now - redirect
-  // to a file there for saving/analysis.
-  EtsSelectConsole(ETS_CO_HOST);
-  ACE_LOG_MSG->msg_ostream (&cout);
-
-#else
   ACE_TCHAR temp[MAXPATHLEN + 1] = { 0 };
   // Ignore the error value since the directory may already exist.
   const ACE_TCHAR *test_dir = 0;
@@ -118,7 +110,7 @@ ACE_Test_Output::set_output (const ACE_TCHAR *filename, int append)
 #if defined (ACE_VXWORKS)
   // This is the only way I could figure out to avoid a console
   // warning about opening an existing file (w/o O_CREAT), or
-  // attempting to unlink a non-existant one.
+  // attempting to unlink a non-existent one.
   ACE_HANDLE fd = ACE_OS::open (temp,
                                 O_WRONLY|O_CREAT,
                                 S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH);
@@ -151,8 +143,6 @@ ACE_Test_Output::set_output (const ACE_TCHAR *filename, int append)
 # endif /* ACE_LACKS_IOSTREAM_TOTALLY */
 
   ACE_LOG_MSG->msg_ostream (this->output_file_, 0);
-#endif /* ACE_HAS_PHARLAP && !ACE_PHARLAP_TESTLOG_TO_FILE */
-
   ACE_LOG_MSG->clr_flags (ACE_Log_Msg::STDERR | ACE_Log_Msg::LOGGER );
   ACE_LOG_MSG->set_flags (ACE_Log_Msg::OSTREAM);
 

@@ -16,10 +16,9 @@
 #include "ace/Reactor.h"
 #include "ace/WFMO_Reactor.h"
 #include "ace/Select_Reactor.h"
-#include "ace/Auto_Ptr.h"
 #include "ace/Pipe.h"
 #include "ace/OS_main.h"
-
+#include <memory>
 
 // Use the WFMO_Reactor
 static int opt_wfmo_reactor = 0;
@@ -56,7 +55,7 @@ public:
   {
   }
 
-  ~Handler (void)
+  ~Handler ()
   {
     this->reactor (0);
   }
@@ -116,7 +115,7 @@ public:
   {
   }
 
-  ~Different_Handler (void)
+  ~Different_Handler ()
   {
     this->reactor (0);
   }
@@ -203,13 +202,13 @@ protected:
 // Selection of which reactor should get created
 //
 ACE_Reactor *
-create_reactor (void)
+create_reactor ()
 {
   ACE_Reactor_Impl *impl = 0;
 
   if (opt_wfmo_reactor)
     {
-#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
+#if defined (ACE_WIN32)
       ACE_NEW_RETURN (impl,
                       ACE_WFMO_Reactor,
                       0);
@@ -279,7 +278,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   Different_Handler different_handler (pipe2);
 
   // Manage memory automagically.
-  auto_ptr<ACE_Reactor> reactor (create_reactor ());
+  std::unique_ptr<ACE_Reactor> reactor (create_reactor ());
 
   // Register handlers
   ACE_Reactor_Mask handler_mask =

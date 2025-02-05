@@ -173,7 +173,7 @@ struct HRTimer : ACE_High_Res_Timer
     HRTimer(const ACE_TCHAR* msg) : msg_(msg) {
         this->reset(); this->start();
     }
-    ~HRTimer(void) {
+    ~HRTimer() {
         this->stop(); this->print_ave(this->msg_, 1);
     }
 };

@@ -39,7 +39,6 @@ class ACE_Event_Handler;
  */
 template <class TYPE, class FUNCTOR, class ACE_LOCK>
 class ACE_Timer_Hash_Upcall
-  : private ACE_Copy_Disabled
 {
 public:
   typedef ACE_Timer_Queue_T<ACE_Event_Handler *,
@@ -53,6 +52,11 @@ public:
 
   /// Constructor that specifies a Timer_Hash to call up to
   ACE_Timer_Hash_Upcall (ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK> *timer_hash);
+
+  ACE_Timer_Hash_Upcall (const ACE_Timer_Hash_Upcall &) = delete;
+  ACE_Timer_Hash_Upcall (ACE_Timer_Hash_Upcall &&) = delete;
+  ACE_Timer_Hash_Upcall &operator= (const ACE_Timer_Hash_Upcall &) = delete;
+  ACE_Timer_Hash_Upcall &operator= (ACE_Timer_Hash_Upcall &&) = delete;
 
   /// This method is called when a timer is registered.
   int registration (TIMER_QUEUE &timer_queue,
@@ -337,13 +341,7 @@ private:
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Timer_Hash_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE  */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Timer_Hash_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_TIMER_HASH_T_H */

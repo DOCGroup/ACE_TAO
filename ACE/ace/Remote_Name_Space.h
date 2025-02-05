@@ -46,7 +46,7 @@ class ACE_Export ACE_Remote_Name_Space : public ACE_Name_Space
 {
 public:
   /// "Do-nothing" constructor.
-  ACE_Remote_Name_Space (void);
+  ACE_Remote_Name_Space ();
 
   /**
    * Specifies the scope of this namespace, opens and memory-maps the
@@ -64,7 +64,7 @@ public:
 
   /// destructor, do some cleanup :TBD: last dtor should "compress"
   /// file
-  ~ACE_Remote_Name_Space (void);
+  ~ACE_Remote_Name_Space ();
 
   /// Bind a new name to a naming context (Wide character strings).
   virtual int bind (const ACE_NS_WString &name_in,

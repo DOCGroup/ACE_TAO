@@ -3,7 +3,7 @@
 
 #include "TestC.h"
 
-Factory::Factory (void)
+Factory::Factory ()
 {
    this->fcid_ = 0;
 }

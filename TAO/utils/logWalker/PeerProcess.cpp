@@ -8,7 +8,7 @@
 #include "Thread.h"
 #include "Session.h"
 
-Endpoint::Endpoint (void)
+Endpoint::Endpoint ()
   : addr_ (),
     host_ (),
     port_ (),
@@ -132,7 +132,7 @@ PeerProcess::PeerProcess (size_t offset, const ACE_CString &time, bool is_server
   this->ident_ = PeerProcess::nextIdent(is_server);
 }
 
-PeerProcess::~PeerProcess (void)
+PeerProcess::~PeerProcess ()
 {
   delete [] ident_;
   while (this->invocations_.size())
@@ -199,7 +199,7 @@ PeerProcess::add_transport (Transport *t)
 }
 
 Transport *
-PeerProcess::last_transport (void)
+PeerProcess::last_transport ()
 {
   return this->last_transport_;
 }
@@ -330,7 +330,7 @@ PeerProcess::set_owner (HostProcess *hp)
 }
 
 HostProcess *
-PeerProcess::owner (void)
+PeerProcess::owner ()
 {
   return this->owner_;
 }

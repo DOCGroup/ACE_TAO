@@ -42,9 +42,9 @@ namespace TAO
   class TAO_FlResource_Export FlResource_Loader
   {
   public:
-    FlResource_Loader (void);
+    FlResource_Loader ();
 
-    virtual ~FlResource_Loader (void);
+    virtual ~FlResource_Loader ();
   };
 }
 

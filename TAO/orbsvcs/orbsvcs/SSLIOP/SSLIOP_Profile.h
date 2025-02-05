@@ -74,8 +74,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
       // = Please see Profile.h for the documentation of these methods.
       virtual int decode (TAO_InputCDR& cdr);
-      virtual int encode_endpoints (void);
-      virtual TAO_Endpoint *endpoint (void);
+      virtual int encode_endpoints ();
+      virtual TAO_Endpoint *endpoint ();
 
       /**
        * Override parse_string() from the base class to update the SSL
@@ -109,7 +109,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
        * Protected destructor to enforce proper memory management
        * through the reference counting mechanism.
        */
-      ~TAO_SSLIOP_Profile (void);
+      ~TAO_SSLIOP_Profile ();
 
       /// Profile equivalence template method.
       /**
@@ -129,7 +129,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
        *       but sadly others pay the price (of footprint) under
        *       normal operations.
        */
-      int decode_tagged_endpoints (void);
+      int decode_tagged_endpoints ();
 
       /**
        * Head of this profile's list of endpoints.  This endpoint is

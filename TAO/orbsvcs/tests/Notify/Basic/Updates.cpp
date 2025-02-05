@@ -44,7 +44,7 @@ Updates_StructuredPushSupplier::subscription_change (
 
 /***************************************************************************/
 
-Updates::Updates (void)
+Updates::Updates ()
   : added_count_ (0), removed_count_ (0)
 {
 }
@@ -96,7 +96,7 @@ Updates::init (int argc,
 }
 
 void
-Updates::create_EC (void)
+Updates::create_EC ()
 {
   CosNotifyChannelAdmin::ChannelID id;
 
@@ -161,7 +161,7 @@ Updates::wait_for_updates (int expected_added, int expected_removed)
 }
 
 void
-Updates::reset_counts (void)
+Updates::reset_counts ()
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, mon, this->lock_);
   this->added_count_ = 0;
@@ -169,7 +169,7 @@ Updates::reset_counts (void)
 }
 
 void
-Updates::run_test (void)
+Updates::run_test ()
 {
   this->test_subscription_change ();
 
@@ -182,7 +182,7 @@ Updates::run_test (void)
 }
 
 void
-Updates::test_subscription_change (void)
+Updates::test_subscription_change ()
 {
   {
     // reset counts.
@@ -209,9 +209,7 @@ Updates::test_subscription_change (void)
         this->print_event_types (removed);
       }
 
-    this->consumer_->get_proxy_supplier ()->subscription_change (added,
-                                                                 removed
-                                                                 );
+    this->consumer_->get_proxy_supplier ()->subscription_change (added, removed);
 
     this->wait_for_updates (3, 0); // The supplier should receive Added (RED, GREEN, BLUE)
 
@@ -245,9 +243,7 @@ Updates::test_subscription_change (void)
         this->print_event_types (removed);
       }
 
-    this->consumer_->get_proxy_supplier ()->subscription_change (added,
-                                                                 removed
-                                                                 );
+    this->consumer_->get_proxy_supplier ()->subscription_change (added, removed);
 
     this->wait_for_updates (1, 0); // The supplier should receive Added (PURPLE).
 
@@ -279,9 +275,7 @@ Updates::test_subscription_change (void)
         this->print_event_types (removed);
       }
 
-    this->consumer_->get_proxy_supplier ()->subscription_change (added,
-                                                                 removed
-                                                                 );
+    this->consumer_->get_proxy_supplier ()->subscription_change (added, removed);
 
     this->wait_for_updates (0, 4);
     // The supplier should receive Remove {RED, GREEN} out of the 4 actally removed (RED, GREEN, BLUE, PURPLE) becaue that whats it offered for.
@@ -300,7 +294,7 @@ Updates::test_subscription_change (void)
 }
 
 void
-Updates::test_offer_change (void)
+Updates::test_offer_change ()
 {
   {
     // reset counts.
@@ -327,9 +321,7 @@ Updates::test_offer_change (void)
         this->print_event_types (removed);
       }
 
-    this->supplier_->get_proxy_consumer ()->offer_change (added,
-                                                          removed
-                                                          );
+    this->supplier_->get_proxy_consumer ()->offer_change (added, removed);
 
     this->wait_for_updates (3, 0); // The consumer should receive Added (RED, GREEN, BLUE)
 
@@ -363,9 +355,7 @@ Updates::test_offer_change (void)
         this->print_event_types (removed);
       }
 
-    this->supplier_->get_proxy_consumer ()->offer_change (added,
-                                                          removed
-                                                                 );
+    this->supplier_->get_proxy_consumer ()->offer_change (added, removed);
 
     this->wait_for_updates (1, 0); // The consumer should receive Added (PURPLE).
 
@@ -397,9 +387,7 @@ Updates::test_offer_change (void)
         this->print_event_types (removed);
       }
 
-    this->supplier_->get_proxy_consumer ()->offer_change (added,
-                                                          removed
-                                                          );
+    this->supplier_->get_proxy_consumer ()->offer_change (added, removed);
 
     this->wait_for_updates (0, 4);
     // The consumer should receive Remove {RED, GREEN} out of the 4 actally removed (RED, GREEN, BLUE, PURPLE) becaue that whats it offered for.

@@ -653,8 +653,6 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
 
 #if defined (ACE_HAS_WTHREADS)
   // Have to duplicate handle if client asks for it.
-  // @@ How are thread handles implemented on AIX?  Do they
-  // also need to be duplicated?
   if (t_handle != 0)
 # if defined (ACE_LACKS_DUPLICATEHANDLE)
     *t_handle = thr_handle;

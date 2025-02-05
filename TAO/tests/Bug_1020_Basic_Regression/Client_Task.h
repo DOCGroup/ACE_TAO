@@ -18,7 +18,7 @@ public:
   Client_Task (CORBA::ORB_ptr orb);
 
   /// Thread entry point
-  int svc (void);
+  int svc ();
 
 private:
   CORBA::ORB_var orb_;

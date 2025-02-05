@@ -117,7 +117,7 @@ public:
   ACE_Scheduler_Strategy (ACE_DynScheduler::Preemption_Priority minimum_critical_priority = 0);
 
   /// Destructor.
-  virtual ~ACE_Scheduler_Strategy (void);
+  virtual ~ACE_Scheduler_Strategy ();
 
     /**
      * = Compares two dispatch entries in strategy specific high to low
@@ -244,11 +244,7 @@ protected:
 
 private:
     // = Comparison function to pass to qsort: calls instance ()->sort_comp ().
-#if defined (ACE_HAS_WINCE)
-  static int _cdecl sort_function (void *arg1, void *arg2);
-#else
   static int sort_function (void *arg1, void *arg2);
-#endif  // ACE_HAS_WINCE
 
     /// Instance of the strategy.
   static ACE_MUF_Scheduler_Strategy *instance_;

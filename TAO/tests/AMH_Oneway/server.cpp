@@ -4,7 +4,6 @@
 #include "TestS.h"
 
 int num_calls = 10; // total calls client is going to make
-const int sleep_time = 1; // sleep for  1 sec on each call
 
 // This should equal num_calls within 'sleep * num_calls' seconds
 int calls_received = 0;
@@ -44,7 +43,6 @@ protected:
   CORBA::ORB_var orb_;
 };
 
-
 /***************************/
 /*** Servant Definition ***/
 
@@ -65,7 +63,6 @@ ST_AMH_Servant::test_method (Test::AMH_RoundtripResponseHandler_ptr,
   // the client as well
 }
 
-
 /*** Server Declaration ***/
 
 /**
@@ -76,10 +73,10 @@ class ST_AMH_Server
 {
 public:
   ST_AMH_Server (int *argc, ACE_TCHAR **argv);
-  virtual ~ST_AMH_Server ();
+  virtual ~ST_AMH_Server () = default;
 
   /// ORB initialization stuff
-  int start_orb_and_poa (void);
+  int start_orb_and_poa ();
 
   /// register the servant with the poa
   virtual void register_servant (ST_AMH_Servant *servant);
@@ -121,10 +118,6 @@ ST_AMH_Server::ST_AMH_Server (int* argc, ACE_TCHAR **argv)
   this->ior_output_file_ = const_cast<char*> ("test.ior");
 }
 
-ST_AMH_Server::~ST_AMH_Server ()
-{
-}
-
 void
 ST_AMH_Server::cleanup ()
 {
@@ -142,7 +135,7 @@ ST_AMH_Server::cleanup ()
 }
 
 int
-ST_AMH_Server::start_orb_and_poa (void)
+ST_AMH_Server::start_orb_and_poa ()
 {
   try
     {

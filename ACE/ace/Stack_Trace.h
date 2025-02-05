@@ -52,8 +52,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  *        - Any platform using glibc as its runtime library, or where ACE_HAS_EXECINFO_H is defined
  *          (this covers Linux and Mac) and gcc version >= 3.3.
  *        - VxWorks, both kernel and RTP
- *        - Solaris
- *        - Windows 32 and 64 bit (Visual C++, excluding WinCE/mobile)
+ *        - Windows 32 and 64 bit (Visual C++)
  *
  *  @note Since stack trace buffer size has limitation(@c ACE_STACK_TRACE_SYMBUFSIZ), you will not
  *        get a complete stack trace if @c ACE_STACK_TRACE_SYMBUFSIZ value is less than actual stack

@@ -8,7 +8,7 @@
 #include "orbsvcs/FtRtEvent/Utils/resolve_init.h"
 
 int
-PushSupplier_impl::ReactorTask::svc (void)
+PushSupplier_impl::ReactorTask::svc ()
 {
   ACE_DEBUG((LM_DEBUG, "Reactor Thread started\n"));
   ACE_Reactor reactor (new ACE_Select_Reactor) ;

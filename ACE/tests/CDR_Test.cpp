@@ -12,7 +12,7 @@
 
 #include "test_config.h"
 #include "ace/Get_Opt.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/CDR_Stream.h"
 #include "ace/CDR_Size.h"
 #include "ace/SString.h"
@@ -111,6 +111,7 @@ short_stream ()
   ACE_CDR::WChar *wstr = wchar2;
   ACE_CString str ("Test String");
   std::string std_str ("std string");
+  std::string_view std_stringview {"std stringview"};
 #if !defined(ACE_LACKS_STD_WSTRING)
   std::wstring std_wstr (L"std wstring");
 #endif
@@ -136,6 +137,7 @@ short_stream ()
   os << str;
   os << wstr;
   os << std_str;
+  os << std_stringview;
 #if !defined(ACE_LACKS_STD_WSTRING)
   os << std_wstr;
 #endif
@@ -158,6 +160,7 @@ short_stream ()
   ss << str;
   ss << wstr;
   ss << std_str;
+  ss << std_stringview;
 #if !defined(ACE_LACKS_STD_WSTRING)
   ss << std_wstr;
 #endif
@@ -215,6 +218,7 @@ short_stream ()
   ACE_CDR::WChar *wstr1 = 0;
   ACE_CString str1;
   std::string std_str1;
+  std::string std_stringview1;
 #if !defined(ACE_LACKS_STD_WSTRING)
   std::wstring std_wstr1;
 #endif
@@ -242,10 +246,11 @@ short_stream ()
   is >> str1;
   ACE_InputCDR::to_wstring twstr (wstr1, 0);
   is >> twstr;
-  // @todo Lose the ACE_Auto_Array_Ptr.  We should be using a
+  // @todo Lose the std::unique_ptr.  We should be using a
   //       std::string, or the like.
-  ACE_Auto_Array_Ptr<ACE_CDR::WChar> safe_wstr (wstr1);
+  std::unique_ptr<ACE_CDR::WChar[]> safe_wstr (wstr1);
   is >> std_str1;
+  is >> std_stringview1;
 #if !defined(ACE_LACKS_STD_WSTRING)
   is >> std_wstr1;
 #endif
@@ -289,6 +294,12 @@ short_stream ()
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),
                        ACE_TEXT ("std::string transfer error")),
+                      1);
+
+  if (std_stringview1 != std_stringview)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("std::string_view transfer error")),
                       1);
 
 #if !defined(ACE_LACKS_STD_WSTRING)
@@ -498,7 +509,7 @@ CDR_Test_Types::test_get (ACE_InputCDR &cdr) const
                            ACE_TEXT ("read_string2[%d] failed\n"),
                            i),
                           1);
-      ACE_Auto_Basic_Array_Ptr<ACE_CDR::Char> auto_xstr (xstr);
+      std::unique_ptr<ACE_CDR::Char[]> auto_xstr (xstr);
       if (ACE_OS::strcmp (auto_xstr.get (), this->str) != 0)
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("string[%d] differs\n"),
@@ -512,7 +523,7 @@ CDR_Test_Types::test_get (ACE_InputCDR &cdr) const
                             i),
                            1);
       // zero length
-      ACE_Auto_Basic_Array_Ptr<ACE_CDR::WChar> auto_xwstr (wstr1);
+      std::unique_ptr<ACE_CDR::WChar[]> auto_xwstr (wstr1);
        if (ACE_OS::wslen(auto_xwstr.get () ))
          ACE_ERROR_RETURN ((LM_ERROR,
                             ACE_TEXT ("wstring[%d] differs\n"),

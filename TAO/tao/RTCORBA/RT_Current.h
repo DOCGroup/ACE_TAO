@@ -46,14 +46,14 @@ public:
   /// Default constructor.
   TAO_RT_Current (TAO_ORB_Core *orb_core);
 
-  virtual RTCORBA::Priority the_priority (void);
+  virtual RTCORBA::Priority the_priority ();
 
   virtual void the_priority (RTCORBA::Priority the_priority);
 
 protected:
   /// Protected destructor to enforce proper memory management of this
   /// reference counted object.
-  virtual ~TAO_RT_Current (void);
+  virtual ~TAO_RT_Current ();
 
 private:
   /// ORB Core that owns us.

@@ -292,8 +292,8 @@ sub failover_test()
     my $client_stderr_file     = $client->LocalFile ($stderr_file);
 
     print_msg("Failover Test");
-    init_naming_context_directory ($server, $name_dir );
-    init_naming_context_directory ($server, $group_dir );
+    init_naming_context_directory ($server, $name_dir);
+    init_naming_context_directory ($server, $group_dir);
 
     # Run two Naming Servers
     my $ns1_args = "--primary ".

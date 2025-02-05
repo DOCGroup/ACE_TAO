@@ -76,6 +76,6 @@ PMS_Usr::decode (char *packet, int &packet_length)
   return 1;
 }
 
-PMS_Usr::PMS_Usr (void)
+PMS_Usr::PMS_Usr ()
 {
 }

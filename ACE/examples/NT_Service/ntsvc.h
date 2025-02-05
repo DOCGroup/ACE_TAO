@@ -27,9 +27,9 @@
 class Service : public ACE_NT_Service
 {
 public:
-  Service (void);
+  Service ();
 
-  ~Service (void);
+  ~Service ();
 
   /// We override <handle_control> because it handles stop requests
   /// privately.

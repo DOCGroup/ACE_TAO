@@ -99,7 +99,7 @@ public:
 #ifdef ACE_USES_GPROF
   /// Accessor to the itimer_
   /// followed http://sam.zoy.org/writings/programming/gprof.html
-  struct itimerval* timerval (void);
+  struct itimerval* timerval ();
 #endif // ACE_USES_PROF
 
   /// Invoke the close_log_msg_hook, if it is present

@@ -14,7 +14,7 @@ Supplier::handle_signal (int signum, siginfo_t *, ucontext_t *)
 }
 
 void
-Supplier::run (void)
+Supplier::run ()
 {
   if (nh_.run () == -1)
     ACE_ERROR ((LM_ERROR,
@@ -23,7 +23,7 @@ Supplier::run (void)
 }
 
 void
-Supplier::close (void)
+Supplier::close ()
 {
   ih_.close ();
   nh_.close ();

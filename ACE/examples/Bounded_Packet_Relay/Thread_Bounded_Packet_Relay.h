@@ -76,7 +76,7 @@ public:
                              int logging = 0);
 
   /// Destructor.
-  virtual ~Text_Input_Device_Wrapper (void);
+  virtual ~Text_Input_Device_Wrapper ();
 
   /**
    * Modifies device settings based on passed pointer to a u_long.
@@ -88,7 +88,7 @@ public:
 protected:
   /// Creates a new message block, carrying data read from the
   /// underlying input device.
-  virtual ACE_Message_Block *create_input_message (void);
+  virtual ACE_Message_Block *create_input_message ();
 
 private:
   /// Length of the buffer into which to "read".
@@ -168,7 +168,7 @@ public:
                    Thread_Bounded_Packet_Relay_Driver &timer_queue_driver);
 
   /// Destructor.
-  virtual ~User_Input_Task (void);
+  virtual ~User_Input_Task ();
 
   /// This method runs the event loop in the new thread.
   virtual int svc ();
@@ -207,7 +207,7 @@ public:
   int shutdown (void *);
 
   /// Helper method: clears all timers.
-  int clear_all_timers (void);
+  int clear_all_timers ();
 
 private:
   /// How many microseconds are in a second.
@@ -245,7 +245,7 @@ public:
                     Thread_Timer_Queue &queue);
 
   /// Destructor.
-  virtual ~BPR_Handler_Base (void);
+  virtual ~BPR_Handler_Base ();
 
   // = Command accessible entry points.
 
@@ -291,14 +291,14 @@ public:
                 Thread_Bounded_Packet_Relay_Driver &driver);
 
   /// Destructor.
-  virtual ~Send_Handler (void);
+  virtual ~Send_Handler ();
 
   /// Call back hook.
   virtual int handle_timeout (const ACE_Time_Value &current_time,
                               const void *arg);
 
   /// Cancellation hook.
-  virtual int cancelled (void);
+  virtual int cancelled ();
 
   // = Command accessible entry points.
 
@@ -336,14 +336,14 @@ public:
                        Thread_Bounded_Packet_Relay_Driver &driver);
 
   /// Destructor.
-  virtual ~Termination_Handler (void);
+  virtual ~Termination_Handler ();
 
   /// Call back hook.
   virtual int handle_timeout (const ACE_Time_Value &current_time,
                               const void *arg);
 
   /// Cancellation hook.
-  virtual int cancelled (void);
+  virtual int cancelled ();
 
 private:
   /// Reference to the driver that will redisplay the user input menu.
@@ -371,16 +371,16 @@ public:
   Thread_Bounded_Packet_Relay_Driver (Bounded_Packet_Relay *relay);
 
   /// Destructor.
-  virtual ~Thread_Bounded_Packet_Relay_Driver (void);
+  virtual ~Thread_Bounded_Packet_Relay_Driver ();
 
   /// Displays the user menu.
-  virtual int display_menu (void);
+  virtual int display_menu ();
 
   /// Initializes the driver.
-  virtual int init (void);
+  virtual int init ();
 
   /// Run the driver.
-  virtual int run (void);
+  virtual int run ();
 
 private:
   /// User input task, subclassed from ACE_Task.

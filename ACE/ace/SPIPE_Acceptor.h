@@ -46,7 +46,7 @@ class ACE_Export ACE_SPIPE_Acceptor : public ACE_SPIPE
 {
 public:
   /// Default constructor.
-  ACE_SPIPE_Acceptor (void);
+  ACE_SPIPE_Acceptor ();
 
   /// Initiate a passive-mode STREAM pipe listener.
   /**
@@ -96,10 +96,10 @@ public:
             int pipe_mode = PIPE_TYPE_MESSAGE | PIPE_READMODE_MESSAGE);
 
   /// Close down the passive-mode STREAM pipe listener.
-  int close (void);
+  int close ();
 
   /// Remove the underlying mounted pipe from the file system.
-  int remove (void);
+  int remove ();
 
   // = Passive connection acceptance method.
   /**

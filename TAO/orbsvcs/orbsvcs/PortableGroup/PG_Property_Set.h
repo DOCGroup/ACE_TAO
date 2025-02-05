@@ -64,7 +64,7 @@ namespace TAO
     /**
      * constructor: empty set with no defaults.
      */
-    PG_Property_Set (void);
+    PG_Property_Set ();
 
     /**
      * constructor
@@ -147,8 +147,8 @@ namespace TAO
     ////////////////////
     // Forbidden methods
   private:
-    PG_Property_Set(const PG_Property_Set & rhs);
-    PG_Property_Set & operator = (const PG_Property_Set & rhs);
+    PG_Property_Set(const PG_Property_Set & rhs) = delete;
+    PG_Property_Set & operator = (const PG_Property_Set & rhs) = delete;
 
     ///////////////
     // Data Members

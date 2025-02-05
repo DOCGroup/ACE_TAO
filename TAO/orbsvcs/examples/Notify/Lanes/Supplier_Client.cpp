@@ -58,7 +58,7 @@ TAO_Notify_Lanes_Supplier_Client::parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 void
-TAO_Notify_Lanes_Supplier_Client::initialize (void)
+TAO_Notify_Lanes_Supplier_Client::initialize ()
 {
   PortableServer::POAManager_var poa_manager =
     this->orb_objects_.root_poa_->the_POAManager ();
@@ -83,7 +83,7 @@ TAO_Notify_Lanes_Supplier_Client::initialize (void)
 }
 
 CosNotifyChannelAdmin::EventChannel_ptr
-TAO_Notify_Lanes_Supplier_Client::create_ec (void)
+TAO_Notify_Lanes_Supplier_Client::create_ec ()
 {
   CosNotifyChannelAdmin::EventChannel_var ec;
 
@@ -144,7 +144,7 @@ TAO_Notify_Lanes_Supplier_Client::create_ec (void)
 }
 
 void
-TAO_Notify_Lanes_Supplier_Client::run (void)
+TAO_Notify_Lanes_Supplier_Client::run ()
 {
   /// First, signal that the supplier is ready.
   this->write_ior ();
@@ -153,7 +153,7 @@ TAO_Notify_Lanes_Supplier_Client::run (void)
 }
 
 void
-TAO_Notify_Lanes_Supplier_Client::write_ior (void)
+TAO_Notify_Lanes_Supplier_Client::write_ior ()
 {
   CosNotifyComm::StructuredPushSupplier_var objref = this->supplier_->_this ();
 
@@ -173,7 +173,7 @@ TAO_Notify_Lanes_Supplier_Client::write_ior (void)
 }
 
 int
-TAO_Notify_Lanes_Supplier_Client::svc (void)
+TAO_Notify_Lanes_Supplier_Client::svc ()
 {
   try
     {

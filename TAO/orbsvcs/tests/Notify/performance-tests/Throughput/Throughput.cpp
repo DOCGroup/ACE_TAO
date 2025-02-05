@@ -115,7 +115,7 @@ Throughput_StructuredPushSupplier::dump_stats (
 }
 
 int
-Throughput_StructuredPushSupplier::svc (void)
+Throughput_StructuredPushSupplier::svc ()
 {
   // Initialize a time value to pace the test.
   ACE_Time_Value tv (0, test_client_->burst_pause_);
@@ -179,7 +179,7 @@ Throughput_StructuredPushSupplier::svc (void)
 }
 
 /***************************************************************************/
-Notify_Throughput::Notify_Throughput (void)
+Notify_Throughput::Notify_Throughput ()
   : collocated_ec_ (0),
     burst_count_ (1),
     burst_pause_ (10000),
@@ -285,8 +285,7 @@ Notify_Throughput::init (int argc, ACE_TCHAR* argv [])
                       Throughput_StructuredPushSupplier (this),
                       -1);
       suppliers_[i]->TAO_Notify_Tests_StructuredPushSupplier::init (
-                         root_poa_.in ()
-                       );
+                         root_poa_.in ());
       suppliers_[i]->connect (this->supplier_admin_.in ());
     }
 
@@ -388,7 +387,7 @@ Notify_Throughput::parse_args(int argc, ACE_TCHAR *argv[])
 }
 
 void
-Notify_Throughput::create_EC (void)
+Notify_Throughput::create_EC ()
 {
   if (this->collocated_ec_ == 1)
     {
@@ -438,7 +437,7 @@ else
 }
 
 void
-Notify_Throughput::run_test (void)
+Notify_Throughput::run_test ()
 {
   ACE_DEBUG ((LM_DEBUG, "collocated_ec_ %d ,"
               "burst_count_ %d, "
@@ -491,7 +490,7 @@ Notify_Throughput::run_test (void)
 }
 
 void
-Notify_Throughput::peer_done (void)
+Notify_Throughput::peer_done ()
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, lock_);
 
@@ -503,7 +502,7 @@ Notify_Throughput::peer_done (void)
 }
 
 void
-Notify_Throughput::dump_results (void)
+Notify_Throughput::dump_results ()
 {
   ACE_Throughput_Stats throughput;
   ACE_High_Res_Timer::global_scale_factor_type gsf =
@@ -575,7 +574,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
 // ****************************************************************
 
-Worker::Worker (void)
+Worker::Worker ()
 :done_ (0)
 {
 }
@@ -587,7 +586,7 @@ Worker::orb (CORBA::ORB_ptr orb)
 }
 
 int
-Worker::svc (void)
+Worker::svc ()
 {
   ACE_Time_Value tv(5);
 

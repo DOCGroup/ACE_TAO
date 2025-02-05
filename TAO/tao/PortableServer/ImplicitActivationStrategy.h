@@ -12,7 +12,7 @@
 #define TAO_ACTIVATION_STRATEGY_H
 #include /**/ "ace/pre.h"
 
-#include "tao/PortableServer/Policy_Strategy.h"
+#include "tao/orbconf.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -25,12 +25,10 @@ namespace TAO
   namespace Portable_Server
   {
     class ImplicitActivationStrategy
-      : public Policy_Strategy
     {
     public:
-      virtual void strategy_init(TAO_Root_POA *poa);
-
-      virtual void strategy_cleanup();
+      ImplicitActivationStrategy () = default;
+      virtual ~ImplicitActivationStrategy () = default;
 
       virtual bool allow_implicit_activation () const = 0;
     };

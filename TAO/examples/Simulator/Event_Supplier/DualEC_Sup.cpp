@@ -265,7 +265,7 @@ DualEC_Supplier::init ()
 // Private class that implements a termination servant.
 
 void
-DualEC_Supplier::Terminator::shutdown (void)
+DualEC_Supplier::Terminator::shutdown ()
 {
   TAO_ORB_Core_instance ()->orb ()->shutdown ();
 }
@@ -430,7 +430,7 @@ DualEC_Supplier::run_weap_thread (void *arg)
 // them with the Naming Service.
 
 int
-DualEC_Supplier::create_schedulers (void)
+DualEC_Supplier::create_schedulers ()
 {
   // @@TBD - look at a command line modified setting,
   // create either a runtime or a config scheduler for
@@ -558,7 +558,7 @@ DualEC_Supplier::create_schedulers (void)
 // them with the Naming Service.
 
 int
-DualEC_Supplier::create_event_channels (void)
+DualEC_Supplier::create_event_channels ()
 {
   try
     {
@@ -604,7 +604,7 @@ DualEC_Supplier::create_event_channels (void)
 }
 
 void
-DualEC_Supplier::compute_schedules (void)
+DualEC_Supplier::compute_schedules ()
 {
   try
     {
@@ -653,7 +653,7 @@ DualEC_Supplier::compute_schedules (void)
 }
 
 void
-DualEC_Supplier::start_generating_events (void)
+DualEC_Supplier::start_generating_events ()
 {
   try
     {
@@ -1004,7 +1004,7 @@ DualEC_Supplier::get_options (int argc, ACE_TCHAR *argv [])
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-  // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
+  // Enable FIFO scheduling
   int min_priority =
     ACE_Sched_Params::priority_min (ACE_SCHED_FIFO);
 

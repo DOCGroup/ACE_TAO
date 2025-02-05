@@ -26,7 +26,7 @@ class JAWS_HTTP_Service_Handler
 //     there is less programming effort.
 {
 public:
-  JAWS_HTTP_Service_Handler (void);
+  JAWS_HTTP_Service_Handler ();
 
   int open (void *);
 

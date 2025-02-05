@@ -23,7 +23,7 @@ public:
 
   ////////////
   // execution
-  int run (void);
+  int run ();
 
   /////////////////
   // implementation
@@ -34,11 +34,9 @@ private:
     long & counter,         // inout
     int & more,             // out
     ACE_CString & command,  // inout
-    int retry               // in
-    );
+    int retry);             // in
 
-
-  int next_replica (void);
+  int next_replica ();
 
   ////////////////////
   // forbidden methods
@@ -488,7 +486,7 @@ int FTClientMain::pass (
   return result;
 }
 
-int FTClientMain::next_replica (void)
+int FTClientMain::next_replica ()
 {
   int result = 0;
   if (this->replica_pos_ < this->replica_iors_.size())
@@ -518,7 +516,7 @@ int FTClientMain::next_replica (void)
 }
 
 
-int FTClientMain::run (void)
+int FTClientMain::run ()
 {
   int result = 0;
 

@@ -26,7 +26,7 @@ public:
 
   void get_out (CORBA::Long_out arg);
 
-  void shutdown (void);
+  void shutdown ();
 
 private:
   /// The ORB pseudo-reference (for shutdown).

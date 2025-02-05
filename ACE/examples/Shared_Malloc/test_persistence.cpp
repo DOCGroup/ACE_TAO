@@ -27,7 +27,7 @@ static ACE_TCHAR backing_store[MAXPATHLEN + 1] = ACE_TEXT ("");
 class Employee
 {
 public:
-  Employee (void): name_ (0), id_ (0) {}
+  Employee () : name_ (0), id_ (0) {}
 
   Employee (const char *name, u_long id) : id_ (id)
   {
@@ -36,7 +36,7 @@ public:
     ACE_OS::strcpy (this->name_, name);
   }
 
-  ~Employee (void) { shmem_allocator->free (this->name_); }
+  ~Employee () { shmem_allocator->free (this->name_); }
 
   const char *name () const { return this->name_; }
 
@@ -63,7 +63,7 @@ public:
   {
     return shmem_allocator->malloc (sizeof (Employee));
   }
-  void operator delete (void *p, const std::nothrow_t&) throw ()
+  void operator delete (void *p, const std::nothrow_t&) noexcept
   {
     shmem_allocator->free (p);
   }
@@ -84,16 +84,16 @@ private:
 class GUI_Handler
 {
 public:
-  GUI_Handler (void) { menu (); }
+  GUI_Handler () { menu (); }
 
-  ~GUI_Handler (void)
+  ~GUI_Handler ()
   {
     TEST_MALLOC::MEMORY_POOL &pool =
       shmem_allocator->memory_pool ();
     pool.sync ();
   }
 
-  int service(void)
+  int service()
   {
     char option[BUFSIZ];
     char buf1[BUFSIZ];
@@ -149,7 +149,7 @@ public:
     return 0;
   }
 
-  void menu(void)
+  void menu()
   {
     cout << endl;
     cout << "\t**************************                                  " << endl;
@@ -169,7 +169,7 @@ private:
   int insert_employee (const char *name,
                        u_long id);
   int find_employee (const char *name);
-  int list_employees (void);
+  int list_employees ();
   int delete_employee (const char *name);
 };
 
@@ -219,7 +219,7 @@ GUI_Handler::find_employee (const char *name)
 }
 
 int
-GUI_Handler::list_employees (void)
+GUI_Handler::list_employees ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "The following employees were found.......\n\n"));

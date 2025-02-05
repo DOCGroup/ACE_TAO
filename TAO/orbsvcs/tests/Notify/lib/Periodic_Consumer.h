@@ -34,7 +34,7 @@ class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_Periodic_Consumer : public TAO_Not
 {
 public:
   /// Constructor
-  TAO_Notify_Tests_Periodic_Consumer (void);
+  TAO_Notify_Tests_Periodic_Consumer ();
 
   /// Destructor
   ~TAO_Notify_Tests_Periodic_Consumer ();

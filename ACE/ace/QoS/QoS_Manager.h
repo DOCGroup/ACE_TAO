@@ -42,10 +42,10 @@ class ACE_QoS_Export ACE_QoS_Manager
 {
 public:
   /// Default constructor.
-  ACE_QoS_Manager (void);
+  ACE_QoS_Manager ();
 
   /// Default destructor.
-  ~ACE_QoS_Manager (void);
+  ~ACE_QoS_Manager ();
 
   /**
    * Join the given QoS session. A socket can join multiple QoS
@@ -57,7 +57,7 @@ public:
   typedef ACE_Unbounded_Set <ACE_QoS_Session *> ACE_QOS_SESSION_SET;
 
   /// Get the QoS session set.
-  ACE_QOS_SESSION_SET qos_session_set (void);
+  ACE_QOS_SESSION_SET qos_session_set ();
 
 private:
   /// Set of QoS sessions that this socket has joined.

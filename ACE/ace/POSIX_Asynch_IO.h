@@ -103,7 +103,7 @@ public:
   int post_completion (ACE_Proactor_Impl *proactor);
 
   /// Destructor.
-  virtual ~ACE_POSIX_Asynch_Result (void);
+  virtual ~ACE_POSIX_Asynch_Result ();
 
   /// Simulate error value to use in the post_completion ()
   void set_error (u_long errcode);
@@ -170,7 +170,7 @@ public:
             ACE_Proactor *proactor = 0);
 
   /// Check the documentation for ACE_Asynch_Operation::cancel.
-  int cancel (void);
+  int cancel ();
 
   // = Access methods.
 
@@ -185,7 +185,7 @@ protected:
   ACE_POSIX_Asynch_Operation (ACE_POSIX_Proactor *posix_proactor);
 
   /// Destructor.
-  virtual ~ACE_POSIX_Asynch_Operation (void);
+  virtual ~ACE_POSIX_Asynch_Operation ();
 
   // This call is for the POSIX implementation. This method is used by
   // ACE_Asynch_Operation to store some information with the
@@ -259,7 +259,7 @@ protected:
                          u_long error);
 
   /// Destructor.
-  virtual ~ACE_POSIX_Asynch_Read_Stream_Result (void);
+  virtual ~ACE_POSIX_Asynch_Read_Stream_Result ();
 
   // aiocb::aio_nbytes
   // Bytes requested when the asynchronous read was initiated.
@@ -293,7 +293,7 @@ public:
             int signal_number = 0);
 
   /// Destructor.
-  virtual ~ACE_POSIX_Asynch_Read_Stream (void);
+  virtual ~ACE_POSIX_Asynch_Read_Stream ();
 };
 
 
@@ -346,7 +346,7 @@ protected:
                          u_long error);
 
   /// Destructor.
-  virtual ~ACE_POSIX_Asynch_Write_Stream_Result (void);
+  virtual ~ACE_POSIX_Asynch_Write_Stream_Result ();
 
 protected:
   // aiocb::aio_nbytes
@@ -382,7 +382,7 @@ public:
              int signal_number = 0);
 
   /// Destructor.
-  virtual ~ACE_POSIX_Asynch_Write_Stream (void);
+  virtual ~ACE_POSIX_Asynch_Write_Stream ();
 };
 
 /**
@@ -421,7 +421,7 @@ protected:
                          u_long error);
 
   /// Destructor.
-  virtual ~ACE_POSIX_Asynch_Read_File_Result (void);
+  virtual ~ACE_POSIX_Asynch_Read_File_Result ();
 };
 
 /**
@@ -461,7 +461,7 @@ public:
             int signal_number = 0);
 
   /// Destructor.
-  virtual ~ACE_POSIX_Asynch_Read_File (void);
+  virtual ~ACE_POSIX_Asynch_Read_File ();
 
 private:
   /**
@@ -524,7 +524,7 @@ protected:
                          u_long error);
 
   /// Destructor.
-  virtual ~ACE_POSIX_Asynch_Write_File_Result (void);
+  virtual ~ACE_POSIX_Asynch_Write_File_Result ();
 };
 
 /**
@@ -556,7 +556,7 @@ public:
              int signal_number = 0);
 
   /// Destructor.
-  virtual ~ACE_POSIX_Asynch_Write_File (void);
+  virtual ~ACE_POSIX_Asynch_Write_File ();
 
 private:
   /**
@@ -625,7 +625,7 @@ protected:
                          u_long error);
 
   /// Destructor.
-  virtual ~ACE_POSIX_Asynch_Accept_Result (void);
+  virtual ~ACE_POSIX_Asynch_Accept_Result ();
 
   // aiocb::aio_nbytes
   // Bytes requested when the asynchronous read was initiated.
@@ -658,7 +658,7 @@ public:
   ACE_POSIX_Asynch_Accept (ACE_POSIX_Proactor * posix_proactor);
 
   /// Destructor.
-  virtual ~ACE_POSIX_Asynch_Accept (void);
+  virtual ~ACE_POSIX_Asynch_Accept ();
 
  /**
    * This <open> belongs to ACE_POSIX_Asynch_Operation. We forward
@@ -693,7 +693,7 @@ public:
    *  Cancel all pending pseudo-asynchronus requests
    *  Behavior as usual AIO request
    */
-  int cancel (void);
+  int cancel ();
 
   /**
    *  Close performs cancellation of all pending requests
@@ -779,7 +779,7 @@ protected:
                          u_long error);
 
   /// Destructor.
-  virtual ~ACE_POSIX_Asynch_Connect_Result (void);
+  virtual ~ACE_POSIX_Asynch_Connect_Result ();
 
   // aiocb::aio_filedes
   // I/O handle for the new connection.
@@ -800,7 +800,7 @@ public:
   ACE_POSIX_Asynch_Connect (ACE_POSIX_Proactor * posix_proactor);
 
   /// Destructor.
-  virtual ~ACE_POSIX_Asynch_Connect (void);
+  virtual ~ACE_POSIX_Asynch_Connect ();
 
  /**
    * This belongs to ACE_POSIX_Asynch_Operation. We forward
@@ -831,12 +831,12 @@ public:
    *  Cancel all pending pseudo-asynchronus requests
    *  Behavior as usual AIO request
    */
-  int cancel (void);
+  int cancel ();
 
   /**
    *  Close performs cancellation of all pending requests.
    */
-  int close (void);
+  int close ();
 
   /// virtual from ACE_Event_Handler
   ACE_HANDLE get_handle () const;
@@ -956,7 +956,7 @@ protected:
                          u_long error);
 
   /// Destructor.
-  virtual ~ACE_POSIX_Asynch_Transmit_File_Result (void);
+  virtual ~ACE_POSIX_Asynch_Transmit_File_Result ();
 
   /// Network I/O handle.
   ACE_HANDLE socket_;
@@ -1015,7 +1015,7 @@ public:
                      int signal_number = 0);
 
   /// Destructor.
-  virtual ~ACE_POSIX_Asynch_Transmit_File (void);
+  virtual ~ACE_POSIX_Asynch_Transmit_File ();
 };
 
 
@@ -1037,7 +1037,7 @@ class ACE_Export ACE_POSIX_Asynch_Read_Dgram : public virtual ACE_Asynch_Read_Dg
 public:
   /// Constructor.
   ACE_POSIX_Asynch_Read_Dgram (ACE_POSIX_Proactor *posix_proactor);
-  virtual ~ACE_POSIX_Asynch_Read_Dgram (void);
+  virtual ~ACE_POSIX_Asynch_Read_Dgram ();
 
   /** This method queues an asynchronous read.  Up to
    * @a message_block->total_size() bytes will be read and stored in the
@@ -1070,7 +1070,7 @@ public:
 
 protected:
   /// Do-nothing constructor.
-  ACE_POSIX_Asynch_Read_Dgram (void);
+  ACE_POSIX_Asynch_Read_Dgram ();
 };
 
 /**
@@ -1122,7 +1122,7 @@ protected:
                          u_long error);
 
   /// Destructor.
-  virtual ~ACE_POSIX_Asynch_Write_Dgram_Result (void);
+  virtual ~ACE_POSIX_Asynch_Write_Dgram_Result ();
 
   /// The number of bytes which were requested at the start of the
   /// asynchronous write.
@@ -1160,7 +1160,7 @@ public:
   ACE_POSIX_Asynch_Write_Dgram (ACE_POSIX_Proactor *posix_proactor);
 
   /// Destructor
-  virtual ~ACE_POSIX_Asynch_Write_Dgram (void);
+  virtual ~ACE_POSIX_Asynch_Write_Dgram ();
 
   /** This method queues an asynchronous send.  Up to
    * @a message_block->total_length bytes will be sent, beginning at the
@@ -1193,7 +1193,7 @@ public:
 
 protected:
   /// Do-nothing constructor.
-  ACE_POSIX_Asynch_Write_Dgram (void);
+  ACE_POSIX_Asynch_Write_Dgram ();
 };
 
 
@@ -1254,7 +1254,7 @@ protected:
                          u_long error);
 
   /// Destructor.
-  virtual ~ACE_POSIX_Asynch_Read_Dgram_Result (void);
+  virtual ~ACE_POSIX_Asynch_Read_Dgram_Result ();
 
   /// Bytes requested when the asynchronous read was initiated.
   size_t bytes_to_read_;

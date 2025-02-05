@@ -24,7 +24,7 @@ ClientInterceptor (IOP::CodecFactory_var cf)
   this->codec = cf->create_codec (encoding);
 }
 
-ClientInterceptor::~ClientInterceptor (void)
+ClientInterceptor::~ClientInterceptor ()
 {
 }
 

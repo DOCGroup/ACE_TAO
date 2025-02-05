@@ -118,9 +118,9 @@ jobs:
       VCPKG_INSTALLED_DIR: ${{ github.workspace }}/vcpkg_installed
     steps:
     - name: checkout ACE/TAO
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
     - name: checkout MPC
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         repository: DOCGroup/MPC
         path: ${{ env.MPC_ROOT }}
@@ -129,10 +129,9 @@ jobs:
         '{"name": "tao","version-string": "githubaction","dependencies": [ ${{ matrix.vcpkgpackages }} ]}' > vcpkg.json
       shell: pwsh
     - name: Install vcpkg
-      uses: lukka/run-vcpkg@v10
+      uses: lukka/run-vcpkg@v11
       with:
-        vcpkgGitCommitId: f93ba152d55e1d243160e690bc302ffe8638358e
-        appendedCacheKey: ${{ matrix.name }}
+        vcpkgGitCommitId: c82f74667287d3dc386bce81e44964370c91a289
         runVcpkgInstall: true
     - name: create $ACE_ROOT/ace/config.h
       run: |
@@ -165,7 +164,7 @@ jobs:
         perl ${env:ACE_ROOT}/bin/mwc.pl -type ${{ matrix.mpctype }} ${env:TAO_ROOT}/tests/IDL_Test -workers 4 ${{ matrix.OptionalMpcArgs }}
       shell: pwsh
     - name: Setup msbuild
-      uses: microsoft/setup-msbuild@v1
+      uses: microsoft/setup-msbuild@v2
     - name: Build solution TAO/TAO_ACE.sln
       run: msbuild -maxcpucount -p:Platform=${{ matrix.BuildPlatform }} -p:Configuration=${{ matrix.BuildConfiguration }} TAO/TAO_ACE.sln
     - name: Build solution ACE/tests/tests.sln
@@ -188,9 +187,9 @@ jobs:
       MPC_ROOT: ${{ github.workspace }}/MPC
     steps:
     - name: checkout ACE/TAO
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
     - name: checkout MPC
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         repository: DOCGroup/MPC
         path: ${{ env.MPC_ROOT }}

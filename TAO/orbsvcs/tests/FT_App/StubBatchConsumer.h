@@ -36,7 +36,7 @@ public:
    */
   virtual ~StubBatchConsumer ();
 
-  ::PortableServer::POA_ptr _default_POA (void);
+  ::PortableServer::POA_ptr _default_POA ();
   ::PortableServer::ObjectId objectId()const;
 
   /**
@@ -64,7 +64,7 @@ public:
   /**
    * Clean house for process shut down.
    */
-  void fini (void);
+  void fini ();
 
 
 public:
@@ -72,16 +72,13 @@ public:
     // CORBA methods
 
     virtual void push_structured_events (
-        const CosNotification::EventBatch & notifications
-      );
+        const CosNotification::EventBatch & notifications);
 
-    virtual void disconnect_sequence_push_consumer (
-      );
+    virtual void disconnect_sequence_push_consumer ();
 
    virtual void offer_change (
         const CosNotification::EventTypeSeq & added,
-        const CosNotification::EventTypeSeq & removed
-      );
+        const CosNotification::EventTypeSeq & removed);
 
   ////////////////////
   // Forbidden methods

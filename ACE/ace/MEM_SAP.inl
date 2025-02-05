@@ -24,7 +24,7 @@ ACE_MEM_SAP_Node::capacity () const
 }
 
 ACE_INLINE void *
-ACE_MEM_SAP_Node::data (void)
+ACE_MEM_SAP_Node::data ()
 {
   return  this + 1;
 }

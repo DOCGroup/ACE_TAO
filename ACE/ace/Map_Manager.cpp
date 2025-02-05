@@ -133,7 +133,7 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::next_free (ACE_UINT32 &free_slot)
 #if defined (ACE_HAS_LAZY_MAP_MANAGER)
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK> void
-ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::move_all_free_slots_from_occupied_list (void)
+ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::move_all_free_slots_from_occupied_list ()
 {
   //
   // In the case of lazy map managers, the movement of free slots from

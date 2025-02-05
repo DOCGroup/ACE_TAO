@@ -53,10 +53,10 @@ public:
   // Find the <value> associated with <key>.
 
 public:
-  void reset (void);
+  void reset ();
   // Re-read the configuration file.
 
-  void dump (void);
+  void dump ();
   // Dump the values of all configuration variables.
 
 private:

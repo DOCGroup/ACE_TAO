@@ -41,7 +41,7 @@ public:
 
 private:
   /// Validate the connection
-  void validate_connection (void);
+  void validate_connection ();
 
 private:
   /// The server.

@@ -11,7 +11,7 @@
 
 #if defined (ACE_HAS_THREADS)
 
-Options::Options (void)
+Options::Options ()
     : thr_count_ (4),
       t_flags_ (THR_DETACHED),
       high_water_mark_ (8 * 1024),
@@ -28,11 +28,11 @@ Options::Options (void)
 {
 }
 
-Options::~Options (void)
+Options::~Options ()
 {
 }
 
-void Options::print_results (void)
+void Options::print_results ()
 {
   ACE_Profile_Timer::ACE_Elapsed_Time et;
   this->itimer_.elapsed_time (et);

@@ -46,8 +46,8 @@ namespace TAO
    *   class MyHostClass : private RefCountPolicy
    *   {
    *   public:
-   *     void my_add_ref (void)    { this->RefCountPolicy::add_ref (); }
-   *     void my_remove_ref (void) { this->RefCountPolicy::remove_ref (); }
+   *     void my_add_ref () { this->RefCountPolicy::add_ref (); }
+   *     void my_remove_ref () { this->RefCountPolicy::remove_ref (); }
    *   };
    * @endcode
    *

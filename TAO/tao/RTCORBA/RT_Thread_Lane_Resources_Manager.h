@@ -44,31 +44,31 @@ public:
   TAO_RT_Thread_Lane_Resources_Manager (TAO_ORB_Core &orb_core);
 
   /// Destructor.
-  ~TAO_RT_Thread_Lane_Resources_Manager (void);
+  ~TAO_RT_Thread_Lane_Resources_Manager ();
 
   /// Finalize resources.
-  void finalize (void);
+  void finalize ();
 
   /// Open default resources.
-  int open_default_resources (void);
+  int open_default_resources ();
 
   /// Shutdown reactor.
-  void shutdown_reactor (void);
+  void shutdown_reactor ();
 
   /// Certain ORB policies such as dropping replies on shutdown
   /// would need cleanup of transports to wake threads up.
-  void close_all_transports (void);
+  void close_all_transports ();
 
   /// Does @a mprofile belong to us?
   int is_collocated (const TAO_MProfile &mprofile);
 
   /// @name Accessors
   // @{
-  TAO_Thread_Lane_Resources &lane_resources (void);
+  TAO_Thread_Lane_Resources &lane_resources ();
 
-  TAO_Thread_Lane_Resources &default_lane_resources (void);
+  TAO_Thread_Lane_Resources &default_lane_resources ();
 
-  TAO_Thread_Pool_Manager &tp_manager (void);
+  TAO_Thread_Pool_Manager &tp_manager ();
 
   // @}
 

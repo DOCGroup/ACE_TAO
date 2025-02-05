@@ -14,9 +14,9 @@ class JAWS_Task_Timer;
 class JAWS_Export JAWS_Task_Timer : public JAWS_Timer_Impl
 {
 public:
-  JAWS_Task_Timer (void);
+  JAWS_Task_Timer ();
 
-  static JAWS_Timer_Impl * instance (void)
+  static JAWS_Timer_Impl * instance ()
   {
     return ACE_Singleton<JAWS_Task_Timer, ACE_SYNCH_MUTEX>::instance ();
   }

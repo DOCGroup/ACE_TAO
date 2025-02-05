@@ -43,7 +43,7 @@ namespace TAO
     {
     public:
       /// Destructor.
-      virtual ~CredentialsAcquirerFactory (void);
+      virtual ~CredentialsAcquirerFactory ();
 
       /// Create a TAO::SL3::CredentialsAcquirerFactory.
       virtual SecurityLevel3::CredentialsAcquirer_ptr make (

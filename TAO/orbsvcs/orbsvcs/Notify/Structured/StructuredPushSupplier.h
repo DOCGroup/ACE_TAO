@@ -43,14 +43,14 @@ public:
   virtual ACE_CString get_ior () const;
 
 protected:
-  virtual CORBA::Object_ptr get_supplier (void);
+  virtual CORBA::Object_ptr get_supplier ();
 
   /// The Supplier
   CosNotifyComm::StructuredPushSupplier_var push_supplier_;
 
 private:
   /// Release
-  virtual void release (void);
+  virtual void release ();
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

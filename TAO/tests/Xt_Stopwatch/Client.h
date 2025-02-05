@@ -24,7 +24,7 @@ public:
   Client (CORBA::ORB_ptr orb);
 
   ///Dtor..
-  ~Client (void);
+  ~Client ();
 
   /// The callbacks
   static void start_callback (Widget w,
@@ -35,8 +35,8 @@ public:
                               XtPointer call_data);
 
   /// The hooks...
-  void start_hook (void);
-  void stop_hook (void);
+  void start_hook ();
+  void stop_hook ();
 
   /// Adds the callbacks to the GUI underneath.....
   void add_callback (Control &);

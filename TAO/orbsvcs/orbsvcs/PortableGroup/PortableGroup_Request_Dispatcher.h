@@ -39,14 +39,14 @@ class TAO_PortableGroup_Export PortableGroup_Request_Dispatcher
 
 public:
   /// Destructor.
-  virtual ~PortableGroup_Request_Dispatcher (void);
+  ~PortableGroup_Request_Dispatcher () override = default;
 
   /**
    * Dispatch a request.
    */
-  virtual void dispatch (TAO_ORB_Core *orb_core,
-                         TAO_ServerRequest &request,
-                         CORBA::Object_out forward_to);
+  void dispatch (TAO_ORB_Core *orb_core,
+                 TAO_ServerRequest &request,
+                 CORBA::Object_out forward_to) override;
 
 private:
   /// Hash map containing the GroupId->ObjectKey mappings.

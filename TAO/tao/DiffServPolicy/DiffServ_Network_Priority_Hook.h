@@ -29,7 +29,7 @@ class TAO_DiffServPolicy_Export TAO_DiffServ_Network_Priority_Hook
   : public TAO_Network_Priority_Hook
 {
 public:
-  virtual ~TAO_DiffServ_Network_Priority_Hook(void);
+  virtual ~TAO_DiffServ_Network_Priority_Hook();
 
   /// This function is a hook, that is called from the Root_POA's
   /// constructor. It allows the POA to cache the server side network

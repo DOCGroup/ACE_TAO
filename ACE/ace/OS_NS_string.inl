@@ -403,8 +403,6 @@ ACE_OS::strstr (const wchar_t *s, const wchar_t *t)
 {
 #  if defined (ACE_LACKS_WCSSTR)
   return ACE_OS::wcsstr_emulation (s, t);
-#  elif defined (HPUX)
-  return const_cast <const wchar_t *> (::wcswcs (s, t));
 #  else /* ACE_LACKS_WCSSTR */
   return const_cast <const wchar_t *> (::wcsstr (s, t));
 #  endif /* ACE_LACKS_WCSSTR */
@@ -423,8 +421,6 @@ ACE_OS::strstr (wchar_t *s, const wchar_t *t)
 {
 #  if defined (ACE_LACKS_WCSSTR)
   return ACE_OS::wcsstr_emulation (s, t);
-#  elif defined (HPUX)
-  return ::wcswcs (s, t);
 #  else /* ACE_LACKS_WCSSTR */
   return ::wcsstr (s, t);
 #  endif /* ACE_LACKS_WCSSTR */

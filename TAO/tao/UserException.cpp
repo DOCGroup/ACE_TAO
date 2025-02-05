@@ -9,11 +9,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// Virtual.  Do not inline.
-CORBA::UserException::~UserException ()
-{
-}
-
 CORBA::UserException &
 CORBA::UserException::operator= (CORBA::UserException const & rhs)
 {

@@ -113,7 +113,7 @@ int TAO::FT_FaultConsumer::init (
 * - Disconnect from FT::FaultNotifier.
 * - Deactivate from the POA.
 */
-int TAO::FT_FaultConsumer::fini (void)
+int TAO::FT_FaultConsumer::fini ()
 {
   if (TAO_debug_level > 1)
   {

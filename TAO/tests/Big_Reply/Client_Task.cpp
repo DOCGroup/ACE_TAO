@@ -13,7 +13,7 @@ Client_Task::Client_Task (Test::Big_Reply_ptr reply_gen,
 }
 
 int
-Client_Task::svc (void)
+Client_Task::svc ()
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Starting client task\n"));
 
@@ -43,7 +43,7 @@ Client_Task::svc (void)
 }
 
 void
-Client_Task::validate_connection (void)
+Client_Task::validate_connection ()
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Validating connection ..\n"));
 

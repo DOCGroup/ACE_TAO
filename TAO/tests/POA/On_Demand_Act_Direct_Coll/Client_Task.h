@@ -21,7 +21,7 @@ public:
                CORBA::Boolean exception);
 
   /// Thread entry point
-  int svc (void);
+  int svc ();
 
 private:
   const ACE_TCHAR *input_;

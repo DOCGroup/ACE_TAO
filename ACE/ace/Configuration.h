@@ -108,7 +108,7 @@ public:
   ACE_Configuration_Section_Key (const ACE_Configuration_Section_Key &rhs);
 
   /// Destructor, decrements reference count on the referenced key.
-  ~ACE_Configuration_Section_Key (void);
+  ~ACE_Configuration_Section_Key ();
 
   /// Assignment operator, increments reference count for this object
   /// and decrements it on @a rhs.
@@ -349,7 +349,7 @@ public:
    * error The path consists of sections separated by the backslash
    * '\' or forward slash '/'.
    * Returns 0 on success, -1 if <create) is 0 and the path refers
-   * a nonexistant section
+   * a non-existent section
    */
   int expand_path (const ACE_Configuration_Section_Key& key,
                    const ACE_TString& path_in,
@@ -407,7 +407,7 @@ protected:
   ACE_Configuration_Section_Key root_;
 };
 
-#if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_REGISTRY)
+#if defined (ACE_WIN32)
 
 /**
  * @class ACE_Section_Key_Win32
@@ -454,7 +454,7 @@ public:
                                             u_long security_access = KEY_ALL_ACCESS);
 
   /// Destructor
-  virtual ~ACE_Configuration_Win32Registry ();
+  virtual ~ACE_Configuration_Win32Registry () = default;
 
   virtual int open_section (const ACE_Configuration_Section_Key& base,
                             const ACE_TCHAR* sub_section,
@@ -528,13 +528,13 @@ protected:
   int load_key (const ACE_Configuration_Section_Key& key, HKEY& hKey);
 
   // Not used
-  ACE_Configuration_Win32Registry (void);
+  ACE_Configuration_Win32Registry ();
   ACE_Configuration_Win32Registry (const ACE_Configuration_Win32Registry& rhs);
   ACE_Configuration_Win32Registry& operator= (const ACE_Configuration_Win32Registry& rhs);
 
   const u_long security_access_;
 };
-#endif /* ACE_WIN32 && !ACE_LACKS_WIN32_REGISTRY */
+#endif /* ACE_WIN32 */
 
 // ACE_Allocator version
 
@@ -612,7 +612,7 @@ class ACE_Export ACE_Configuration_Value_IntId
 {
 public:
   /// Default constructor
-  ACE_Configuration_Value_IntId (void);
+  ACE_Configuration_Value_IntId ();
 
   /// String constructor, takes ownership of string
   explicit ACE_Configuration_Value_IntId (ACE_TCHAR* string);
@@ -627,7 +627,7 @@ public:
   ACE_Configuration_Value_IntId (const ACE_Configuration_Value_IntId& rhs);
 
   /// Destructor
-  ~ACE_Configuration_Value_IntId (void);
+  ~ACE_Configuration_Value_IntId () = default;
 
   /// Assignment operator
   ACE_Configuration_Value_IntId& operator= (
@@ -673,7 +673,7 @@ class ACE_Export ACE_Configuration_Section_IntId
 {
 public:
   /// Default ctor
-  ACE_Configuration_Section_IntId (void);
+  ACE_Configuration_Section_IntId ();
 
   /// Named ctor
   ACE_Configuration_Section_IntId (VALUE_MAP* value_hash_map,
@@ -683,7 +683,7 @@ public:
   ACE_Configuration_Section_IntId (const ACE_Configuration_Section_IntId& rhs);
 
   /// Destructor
-  ~ACE_Configuration_Section_IntId (void);
+  ~ACE_Configuration_Section_IntId () = default;
 
   /// Assignment operator
   ACE_Configuration_Section_IntId& operator= (
@@ -739,7 +739,7 @@ public:
 
 protected:
   /// Destructor - will delete the iterators
-  virtual ~ACE_Configuration_Section_Key_Heap (void);
+  virtual ~ACE_Configuration_Section_Key_Heap ();
 
   // Not used
   ACE_Configuration_Section_Key_Heap (const ACE_Configuration_Section_Key_Heap& rhs);

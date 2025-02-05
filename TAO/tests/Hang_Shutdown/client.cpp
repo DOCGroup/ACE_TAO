@@ -57,7 +57,7 @@ namespace Test
       : h_ (Hang::_duplicate (h))
     {}
 
-    virtual int svc (void)
+    virtual int svc ()
     {
       try
         {
@@ -114,7 +114,7 @@ namespace Test
       : o_ (CORBA::ORB::_duplicate (o))
     {}
 
-    virtual int svc (void)
+    virtual int svc ()
     {
       try
         {

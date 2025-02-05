@@ -44,10 +44,10 @@ class TAO_Strategies_Export TAO_COIOP_Acceptor : public TAO_Acceptor
 {
 public:
   /// Constructor.
-  TAO_COIOP_Acceptor (void);
+  TAO_COIOP_Acceptor ();
 
   /// Destructor.
-  ~TAO_COIOP_Acceptor (void);
+  ~TAO_COIOP_Acceptor ();
 
   /**
    * @name The TAO_Acceptor Methods
@@ -66,13 +66,13 @@ public:
                             int version_major,
                             int version_minor,
                             const char *options = 0);
-  virtual int close (void);
+  virtual int close ();
   virtual int create_profile (const TAO::ObjectKey &object_key,
                               TAO_MProfile &mprofile,
                               CORBA::Short priority);
 
   virtual int is_collocated (const TAO_Endpoint *endpoint);
-  virtual CORBA::ULong endpoint_count (void);
+  virtual CORBA::ULong endpoint_count ();
 
   virtual int object_key (IOP::TaggedProfile &profile,
                           TAO::ObjectKey &key);

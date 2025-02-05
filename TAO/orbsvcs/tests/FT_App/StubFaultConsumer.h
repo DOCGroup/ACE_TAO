@@ -38,7 +38,7 @@ public:
   virtual ~StubFaultConsumer ();
 
 
-  ::PortableServer::POA_ptr _default_POA (void);
+  ::PortableServer::POA_ptr _default_POA ();
   ::PortableServer::ObjectId objectId()const;
 
   /**
@@ -66,7 +66,7 @@ public:
   /**
    * Clean house for process shut down.
    */
-  int fini (void);
+  int fini ();
 
 
   size_t notifications() const;
@@ -75,15 +75,13 @@ public:
     ////////////////
     // CORBA methods
     virtual void push_structured_event(
-      const CosNotification::StructuredEvent &notification
-      );
+      const CosNotification::StructuredEvent &notification);
 
    virtual void offer_change (
         const CosNotification::EventTypeSeq & added,
-        const CosNotification::EventTypeSeq & removed
-      );
+        const CosNotification::EventTypeSeq & removed);
 
-   virtual void disconnect_structured_push_consumer(void);
+   virtual void disconnect_structured_push_consumer();
 
   ////////////////////
   // Forbidden methods

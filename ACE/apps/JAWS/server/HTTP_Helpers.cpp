@@ -106,7 +106,7 @@ HTTP_Helper::HTTP_mktime (const char *httpdate)
 }
 
 const char *
-HTTP_Helper::HTTP_date (void)
+HTTP_Helper::HTTP_date ()
 {
   if (HTTP_Helper::date_string_ == 0)
     {
@@ -378,7 +378,7 @@ HTTP_Helper::fixyear (int year)
 }
 
 const char **
-HTTP_Status_Code::instance (void)
+HTTP_Status_Code::instance ()
 {
   if (HTTP_Status_Code::instance_ == 0)
     {

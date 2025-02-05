@@ -13,12 +13,12 @@
 #include "helper.h"
 #include "ulonglong.h"
 
-Test_ULongLong::Test_ULongLong (void)
+Test_ULongLong::Test_ULongLong ()
   : opname_ (CORBA::string_dup ("test_ulonglong"))
 {
 }
 
-Test_ULongLong::~Test_ULongLong (void)
+Test_ULongLong::~Test_ULongLong ()
 {
   CORBA::string_free (this->opname_);
   this->opname_ = 0;
@@ -63,7 +63,7 @@ Test_ULongLong::init_parameters (Param_Test_ptr)
 }
 
 int
-Test_ULongLong::reset_parameters (void)
+Test_ULongLong::reset_parameters ()
 {
   this->inout_ =  0;
   this->out_ =  0;
@@ -91,7 +91,7 @@ Test_ULongLong::run_sii_test (Param_Test_ptr objref)
 }
 
 CORBA::Boolean
-Test_ULongLong::check_validity (void)
+Test_ULongLong::check_validity ()
 {
   if (this->inout_ == this->in_ * 2 &&
       this->out_ == this->in_ * 3 &&
@@ -108,7 +108,7 @@ Test_ULongLong::check_validity (CORBA::Request_ptr )
 }
 
 void
-Test_ULongLong::print_values (void)
+Test_ULongLong::print_values ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "\n=*=*=*=*=*=*\n"

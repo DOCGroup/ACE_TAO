@@ -11,7 +11,7 @@ class Hello
 {
 public:
   /// Constructor
-  Hello (void);
+  Hello ();
 };
 
 #include /**/ "ace/post.h"

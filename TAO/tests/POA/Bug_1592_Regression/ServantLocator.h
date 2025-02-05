@@ -62,7 +62,7 @@ public:
   bool error_status_;
 protected:
   /// Destructor.
-  ~ServantLocator (void);
+  ~ServantLocator ();
 
 private:
   /// Pseudo-reference to the ORB.

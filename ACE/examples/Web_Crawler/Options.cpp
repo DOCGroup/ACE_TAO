@@ -172,7 +172,7 @@ Options::visitor (URL_Visitor *v)
 }
 
 int
-Options::handle_limit (void)
+Options::handle_limit ()
 {
   return this->handle_limit_;
 }

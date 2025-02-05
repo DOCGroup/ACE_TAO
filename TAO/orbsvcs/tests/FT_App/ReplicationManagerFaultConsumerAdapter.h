@@ -58,7 +58,7 @@ public:
   /**
    * Clean house for process shut down.
    */
-  int fini (void);
+  int fini ();
 
 
   size_t notifications() const;

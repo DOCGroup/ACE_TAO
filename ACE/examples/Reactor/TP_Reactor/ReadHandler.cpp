@@ -44,13 +44,13 @@ ReadHandler::~ReadHandler() {
     delete[] mData;
 }
 
-ACE_SOCK_Stream &ReadHandler::getStream(void) {
-    ACE_TRACE("ReadHandler::getStream(void)");
+ACE_SOCK_Stream &ReadHandler::getStream() {
+    ACE_TRACE("ReadHandler::getStream()");
     return mStream;
 }
 
 ACE_HANDLE ReadHandler::get_handle() const {
-    ACE_TRACE("ReadHandler::get_handle(void)");
+    ACE_TRACE("ReadHandler::get_handle()");
     return mStream.get_handle();
 }
 

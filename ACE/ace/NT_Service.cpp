@@ -1,5 +1,5 @@
 #include "ace/config-all.h"
-#if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_SERVICES)
+#if defined (ACE_WIN32)
 
 #include "ace/NT_Service.h"
 
@@ -17,7 +17,7 @@ ACE_ALLOC_HOOK_DEFINE(ACE_NT_Service)
 
 // ACE_NT_Service destructor.
 
-ACE_NT_Service::~ACE_NT_Service (void)
+ACE_NT_Service::~ACE_NT_Service ()
 {
   if (this->svc_sc_handle_ != 0)
     {
@@ -236,7 +236,7 @@ ACE_NT_Service::insert (DWORD start_type,
 }
 
 int
-ACE_NT_Service::remove (void)
+ACE_NT_Service::remove ()
 {
   if (this->svc_sc_handle () == 0)
     return -1;
@@ -275,7 +275,7 @@ ACE_NT_Service::startup (DWORD startup)
 // Returns the current startup type.
 
 DWORD
-ACE_NT_Service::startup (void)
+ACE_NT_Service::startup ()
 {
   // The query buffer will hold strings as well as the defined struct.
   // The string pointers in the struct point to other areas in the
@@ -516,7 +516,7 @@ ACE_NT_Service::report_status (DWORD new_status,
 }
 
 SC_HANDLE
-ACE_NT_Service::svc_sc_handle (void)
+ACE_NT_Service::svc_sc_handle ()
 {
   if (this->svc_sc_handle_ == 0)
     {
@@ -610,4 +610,4 @@ ACE_NT_Service::wait_for_service_state (DWORD desired_state,
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#endif /* ACE_WIN32 && !ACE_LACKS_WIN32_SERVICES */
+#endif /* ACE_WIN32 */

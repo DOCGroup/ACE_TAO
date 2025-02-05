@@ -79,7 +79,7 @@ public:
 
   /// Return an iterator that will traverse and return all the offer
   /// ids in the service type map.
-  TAO_Offer_Id_Iterator* retrieve_all_offer_ids (void);
+  TAO_Offer_Id_Iterator* retrieve_all_offer_ids ();
 
   struct Offer_Map_Entry
   {
@@ -155,19 +155,19 @@ public:
                               TAO_Offer_Database<LOCK_TYPE>& offer_database);
 
   /// Release all the locks acquired.
-  ~TAO_Service_Offer_Iterator (void);
+  ~TAO_Service_Offer_Iterator ();
 
   /// Returns 1 if there are more offers, 0 otherwise.
-  int has_more_offers (void);
+  int has_more_offers ();
 
   /// Get the id for the current offer.
-  CosTrading::OfferId get_id (void);
+  CosTrading::OfferId get_id ();
 
   /// Returns the next offer in the series.
-  CosTrading::Offer* get_offer (void);
+  CosTrading::Offer* get_offer ();
 
   /// Advances the iterator 1.
-  void next_offer (void);
+  void next_offer ();
 
  private:
   /// Lock the top_level map.
@@ -185,9 +185,7 @@ public:
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "orbsvcs/Trader/Offer_Database.cpp"
-#endif  /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #include /**/ "ace/post.h"
 #endif /* TAO_SERVICE_TYPE_MAP_H */

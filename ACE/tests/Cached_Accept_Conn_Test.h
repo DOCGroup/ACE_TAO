@@ -3,8 +3,7 @@
 /**
  *  @file    Cached_Accept_Conn_Test.h
  *
- *  Define class needed for generating templates. IBM C++ requires this to
- *  be in its own file for auto template instantiation.
+ *  Define class needed for generating templates.
  *
  *  @author Kirthika Parameswaran  <kirthika@cs.wustl.edu>
  */
@@ -122,7 +121,7 @@ protected:
   typedef ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2> ACCEPT_STRATEGY_BASE;
 
   /// Handler for removing cached connections.
-  int out_of_sockets_handler (void);
+  int out_of_sockets_handler ();
 
   CACHED_CONNECT_STRATEGY &caching_connect_strategy_;
 };

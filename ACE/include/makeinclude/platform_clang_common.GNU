@@ -30,7 +30,6 @@ else
 endif
 
 CXX_VERSION := $(shell $(CXX_FOR_VERSION_TEST) -dumpversion)
-
 CXX_FULL_VERSION := $(shell $(CXX_FOR_VERSION_TEST) --version)
 
 # Only modify LDFLAGS if DLD has been set.

@@ -23,8 +23,7 @@ Is HP SNMP++ compatible with ASNMP?
   with the HP interface as well as locking down valid() semantics, etc.
 
 What platforms have the test programs been verified on?
-  Solaris 2.4, 2.5.1 using SUN C++ 4.1,4.2 compiler. Linux/GCC
-  fixes are now in as well.
+  Linux/GCC fixes are now in as well.
 
 Why use this version?
   The SNMP++ version ships only for HP-UX and for Windows.
@@ -144,7 +143,7 @@ readme.txt ( this file)
 
 src Directory Contents:
 --------------------------------------------------------------------
-Makefile             - make file for ACE/Solaris 2. build
+Makefile             - make file for ACE. build
 target.cpp           - Collection of attributes(address, timeout, etc) used
                        to define a command session
 snmp.cpp             - A logical session between NM app and agent

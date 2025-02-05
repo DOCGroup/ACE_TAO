@@ -33,11 +33,11 @@
 class Time_Handler : public ACE_Task<ACE_SYNCH>
 {
 public:
-  Time_Handler (void);
+  Time_Handler ();
 
-  void setup (void);
+  void setup ();
 
-  int verify_results(void);
+  int verify_results();
 
   /// Run by a daemon thread to handle deferred processing.
   virtual int svc ();
@@ -77,7 +77,7 @@ private:
 class Dispatch_Count_Handler : public ACE_Event_Handler
 {
 public:
-  Dispatch_Count_Handler (void);
+  Dispatch_Count_Handler ();
 
   /// Clean up resources from the Reactor.
   int handle_close (ACE_HANDLE h,
@@ -94,7 +94,7 @@ public:
   virtual int handle_exception (ACE_HANDLE);
 
   /// Verify that the expected events did happen.
-  int verify_results (void);
+  int verify_results ();
 
 private:
   /// Provide something to trigger I/O.

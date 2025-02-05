@@ -19,12 +19,12 @@ const CORBA::ULong MAX_SEQ_LENGTH = 2;
 //               Test_Recursive_Union
 // ************************************************************************
 
-Test_Recursive_Union::Test_Recursive_Union (void)
+Test_Recursive_Union::Test_Recursive_Union ()
   : opname_ (CORBA::string_dup ("test_recursive_union"))
 {
 }
 
-Test_Recursive_Union::~Test_Recursive_Union (void)
+Test_Recursive_Union::~Test_Recursive_Union ()
 {
   CORBA::string_free (this->opname_);
   this->opname_ = 0;
@@ -74,7 +74,7 @@ Test_Recursive_Union::init_parameters (Param_Test_ptr)
 }
 
 int
-Test_Recursive_Union::reset_parameters (void)
+Test_Recursive_Union::reset_parameters ()
 {
   // Since these are _vars, we do this the first call and
   // every call thereafter (if any).
@@ -125,7 +125,7 @@ Test_Recursive_Union::run_sii_test (Param_Test_ptr objref)
 }
 
 CORBA::Boolean
-Test_Recursive_Union::check_validity (void)
+Test_Recursive_Union::check_validity ()
 {
   // Pair in_ with each of the returned values and call the
   // helper function with that pair.
@@ -165,7 +165,7 @@ Test_Recursive_Union::check_validity (CORBA::Request_ptr)
 }
 
 void
-Test_Recursive_Union::print_values (void)
+Test_Recursive_Union::print_values ()
 {
 }
 

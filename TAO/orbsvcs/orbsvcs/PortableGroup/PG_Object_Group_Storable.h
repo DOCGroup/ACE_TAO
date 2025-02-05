@@ -46,8 +46,6 @@ namespace TAO
   class TAO_PortableGroup_Export PG_Object_Group_Storable
     : public PG_Object_Group
   {
-    /////////////////////
-    // Construct/Destruct
   public:
     /**
      * This constructor is suitable for creating an object group from
@@ -78,8 +76,6 @@ namespace TAO
     /// Destructor
     ~PG_Object_Group_Storable ();
 
-    /////////////////
-    // public methods
   public:
     /**
      * Indicate that this object group is to be permanently
@@ -115,14 +111,14 @@ namespace TAO
         const char * type_id,
         const PortableGroup::Criteria & the_criteria);
 
-    virtual PortableGroup::Locations * locations_of_members (void);
+    virtual PortableGroup::Locations * locations_of_members ();
 
     virtual CORBA::Object_ptr get_member_reference (
         const PortableGroup::Location & the_location);
 
-    virtual void initial_populate (void);
+    virtual void initial_populate ();
 
-    virtual void minimum_populate (void);
+    virtual void minimum_populate ();
 
     virtual int has_member_at (const PortableGroup::Location & location );
 
@@ -130,7 +126,7 @@ namespace TAO
 
     virtual void set_name (const char* group_name);
 
-    virtual const char* get_name (void);
+    virtual const char* get_name ();
 
     virtual PortableGroup::ObjectGroupId  get_object_group_id () const;
 
@@ -165,7 +161,7 @@ namespace TAO
     /**
      * Signals that this context was updated.
      */
-    virtual void state_written (void);
+    virtual void state_written ();
 
     /**
      * A callback invoked by the object group file guard

@@ -193,13 +193,13 @@ const char * TAO::FT_FaultNotifier_i::identity () const
   return this->identity_.c_str();
 }
 
-PortableServer::POA_ptr TAO::FT_FaultNotifier_i::_default_POA (void)
+PortableServer::POA_ptr TAO::FT_FaultNotifier_i::_default_POA ()
 {
   return this->poa_.in();
 }
 
 
-void TAO::FT_FaultNotifier_i::_remove_ref (void)
+void TAO::FT_FaultNotifier_i::_remove_ref ()
 {
   notify_channel_->destroy();
 
@@ -209,7 +209,7 @@ void TAO::FT_FaultNotifier_i::_remove_ref (void)
   this->gone_ = 1;
 }
 
-int TAO::FT_FaultNotifier_i::fini (void)
+int TAO::FT_FaultNotifier_i::fini ()
 {
   if (this->ior_output_file_ != 0)
   {
@@ -683,7 +683,7 @@ void TAO::FT_FaultNotifier_i::disconnect_consumer (
   METHOD_RETURN(TAO::FT_FaultNotifier_i::disconnect_consumer);
 }
 
-CORBA::Boolean TAO::FT_FaultNotifier_i::is_alive (void)
+CORBA::Boolean TAO::FT_FaultNotifier_i::is_alive ()
 {
   METHOD_RETURN(TAO::FT_FaultNotifier_i::is_alive) 1;
 }

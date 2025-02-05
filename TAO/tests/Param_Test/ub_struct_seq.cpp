@@ -18,7 +18,7 @@
 //               Test_Struct_Sequence
 // ************************************************************************
 
-Test_Struct_Sequence::Test_Struct_Sequence (void)
+Test_Struct_Sequence::Test_Struct_Sequence ()
   : opname_ (CORBA::string_dup ("test_struct_sequence")),
     inout_ (new Param_Test::StructSeq),
     out_ (new Param_Test::StructSeq),
@@ -26,7 +26,7 @@ Test_Struct_Sequence::Test_Struct_Sequence (void)
 {
 }
 
-Test_Struct_Sequence::~Test_Struct_Sequence (void)
+Test_Struct_Sequence::~Test_Struct_Sequence ()
 {
   CORBA::string_free (this->opname_);
   this->opname_ = 0;
@@ -89,7 +89,7 @@ Test_Struct_Sequence::init_parameters (Param_Test_ptr)
 }
 
 int
-Test_Struct_Sequence::reset_parameters (void)
+Test_Struct_Sequence::reset_parameters ()
 {
   this->inout_ = new Param_Test::StructSeq; // delete the previous one
   this->out_ = new Param_Test::StructSeq;
@@ -118,7 +118,7 @@ Test_Struct_Sequence::run_sii_test (Param_Test_ptr objref)
 }
 
 CORBA::Boolean
-Test_Struct_Sequence::check_validity (void)
+Test_Struct_Sequence::check_validity ()
 {
   if (this->compare (this->in_, this->inout_.in ()) &&
       this->compare (this->in_, this->out_.in ()) &&
@@ -135,7 +135,7 @@ Test_Struct_Sequence::check_validity (CORBA::Request_ptr )
 }
 
 void
-Test_Struct_Sequence::print_values (void)
+Test_Struct_Sequence::print_values ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*\n"
@@ -214,7 +214,7 @@ Test_Struct_Sequence::print_sequence (const Param_Test::StructSeq &s)
 //               Test_Unbounded_Struct_Sequence
 // ************************************************************************
 
-Test_Unbounded_Struct_Sequence::Test_Unbounded_Struct_Sequence (void)
+Test_Unbounded_Struct_Sequence::Test_Unbounded_Struct_Sequence ()
   : opname_ (CORBA::string_dup ("test_unbounded_struct_sequence")),
     inout_ (new Param_Test::PathSpec),
     out_ (new Param_Test::PathSpec),
@@ -222,7 +222,7 @@ Test_Unbounded_Struct_Sequence::Test_Unbounded_Struct_Sequence (void)
 {
 }
 
-Test_Unbounded_Struct_Sequence::~Test_Unbounded_Struct_Sequence (void)
+Test_Unbounded_Struct_Sequence::~Test_Unbounded_Struct_Sequence ()
 {
   CORBA::string_free (this->opname_);
   this->opname_ = 0;
@@ -286,7 +286,7 @@ Test_Unbounded_Struct_Sequence::init_parameters (Param_Test_ptr)
 }
 
 int
-Test_Unbounded_Struct_Sequence::reset_parameters (void)
+Test_Unbounded_Struct_Sequence::reset_parameters ()
 {
   this->inout_ = new Param_Test::PathSpec; // delete the previous one
   this->out_ = new Param_Test::PathSpec;
@@ -306,7 +306,7 @@ Test_Unbounded_Struct_Sequence::run_sii_test (Param_Test_ptr objref)
 }
 
 CORBA::Boolean
-Test_Unbounded_Struct_Sequence::check_validity (void)
+Test_Unbounded_Struct_Sequence::check_validity ()
 {
   if (this->compare (this->in_, this->inout_.in ()) &&
       this->compare (this->in_, this->out_.in ()) &&
@@ -323,7 +323,7 @@ Test_Unbounded_Struct_Sequence::check_validity (CORBA::Request_ptr )
 }
 
 void
-Test_Unbounded_Struct_Sequence::print_values (void)
+Test_Unbounded_Struct_Sequence::print_values ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*\n"

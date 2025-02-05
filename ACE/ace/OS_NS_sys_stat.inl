@@ -28,12 +28,7 @@ namespace ACE_OS
   fstat (ACE_HANDLE handle, ACE_stat *stp)
   {
     ACE_OS_TRACE ("ACE_OS::fstat");
-#if defined (ACE_HAS_X86_STAT_MACROS)
-    // Solaris for intel uses an macro for fstat(), this is a wrapper
-    // for _fxstat() use of the macro.
-    // causes compile and runtime problems.
-    return ::_fxstat (_STAT_VER, handle, stp);
-#elif defined (ACE_WIN32)
+#if defined (ACE_WIN32)
     BY_HANDLE_FILE_INFORMATION fdata;
 
     if (::GetFileInformationByHandle (handle, &fdata) == FALSE)
@@ -41,36 +36,37 @@ namespace ACE_OS
         ACE_OS::set_errno_to_last_error ();
         return -1;
       }
-    else if (fdata.nFileSizeHigh != 0)
+    if ((fdata.nFileSizeHigh != 0) && (sizeof (stp->st_size) < sizeof (ULONGLONG)))
       {
-        errno = EINVAL;
+        errno = EINVAL; // return an error rather than incorrect values
         return -1;
       }
-    else
-      {
-        stp->st_size = fdata.nFileSizeLow;
-        stp->st_atime = ACE_Time_Value (fdata.ftLastAccessTime).sec ();
-        stp->st_mtime = ACE_Time_Value (fdata.ftLastWriteTime).sec ();
-        stp->st_ctime = ACE_Time_Value (fdata.ftCreationTime).sec ();
-        stp->st_nlink = static_cast<short> (fdata.nNumberOfLinks);
-        stp->st_dev = stp->st_rdev = 0; // No equivalent conversion.
-        stp->st_mode = S_IXOTH | S_IROTH |
-          (fdata.dwFileAttributes & FILE_ATTRIBUTE_READONLY ? 0 : S_IWOTH) |
-          (fdata.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY ? S_IFDIR : S_IFREG);
-      }
+
+#if defined (_FILE_OFFSET_BITS) && _FILE_OFFSET_BITS == 64
+    ULARGE_INTEGER ul;
+    ul.HighPart = fdata.nFileSizeHigh;
+    ul.LowPart = fdata.nFileSizeLow;
+    stp->st_size = ul.QuadPart;
+#else
+    stp->st_size = fdata.nFileSizeLow;
+#endif /* _FILE_OFFSET_BITS */
+    stp->st_atime = ACE_Time_Value (fdata.ftLastAccessTime).sec ();
+    stp->st_mtime = ACE_Time_Value (fdata.ftLastWriteTime).sec ();
+    stp->st_ctime = ACE_Time_Value (fdata.ftCreationTime).sec ();
+    stp->st_nlink = static_cast<short> (fdata.nNumberOfLinks);
+    stp->st_dev = stp->st_rdev = 0; // No equivalent conversion.
+    mode_t const BASE_MODE = S_IXOTH | S_IROTH;
+    mode_t const WRITE_MODE = (fdata.dwFileAttributes & FILE_ATTRIBUTE_READONLY) ? 0 : S_IWOTH;
+    mode_t const TYPE_MODE = (fdata.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) ? S_IFDIR : S_IFREG;
+    stp->st_mode = BASE_MODE | WRITE_MODE | TYPE_MODE;
     return 0;
 #elif defined (ACE_LACKS_FSTAT)
     ACE_NOTSUP_RETURN (-1);
 #elif defined (ACE_MQX)
     return MQX_Filesystem::inst ().fstat (handle, stp);
 #else
-#  if defined (ACE_OPENVMS)
-    //FUZZ: disable check_for_lack_ACE_OS
-    ::fsync(handle);
-    //FUZZ: enable check_for_lack_ACE_OS
-#  endif
     return ::fstat (handle, stp);
-#endif /* !ACE_HAS_X86_STAT_MACROS */
+#endif /* !ACE_WIN32 */
   }
 
   // This function returns the number of bytes in the file referenced by
@@ -128,11 +124,7 @@ namespace ACE_OS
     ACE_OS_TRACE ("ACE_OS::lstat");
 # if defined (ACE_LACKS_LSTAT)
     return ACE_OS::stat (file, stp);
-# elif defined (ACE_HAS_X86_STAT_MACROS)
-    // Solaris for intel uses an macro for lstat(), this macro is a
-    // wrapper for _lxstat().
-    return ::_lxstat (_STAT_VER, file, stp);
-# else /* !ACE_HAS_X86_STAT_MACROS */
+# else /* !ACE_LACKS_LSTAT */
     return ::lstat (file, stp);
 # endif /* ACE_LACKS_LSTAT */
   }
@@ -153,12 +145,7 @@ namespace ACE_OS
   ACE_INLINE int
   mkdir (const char *path, mode_t mode)
   {
-#if defined (ACE_HAS_WINCE)
-    ACE_UNUSED_ARG (mode);
-    ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::CreateDirectory (ACE_TEXT_CHAR_TO_TCHAR (path), 0),
-                                            ace_result_),
-                          int, -1);
-#elif defined (ACE_MKDIR_LACKS_MODE)
+#if defined (ACE_MKDIR_LACKS_MODE)
     ACE_UNUSED_ARG (mode);
 #  if defined (ACE_MKDIR_EQUIVALENT)
     return ACE_MKDIR_EQUIVALENT (path);
@@ -175,17 +162,12 @@ namespace ACE_OS
   ACE_INLINE int
   mkdir (const wchar_t *path, mode_t mode)
   {
-#if defined (ACE_HAS_WINCE)
-    ACE_UNUSED_ARG (mode);
-    ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (CreateDirectoryW (path, 0),
-                                            ace_result_),
-                          int, -1);
-#elif defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
+#if defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
     ACE_UNUSED_ARG (mode);
     return ::_wmkdir (path);
 #else
     return ACE_OS::mkdir (ACE_Wide_To_Ascii (path).char_rep (), mode);
-#endif /* ACE_HAS_WINCE */
+#endif /* ACE_WIN32 && ACE_USES_WCHAR */
   }
 
 #endif /* ACE_HAS_WCHAR */
@@ -207,45 +189,13 @@ namespace ACE_OS
   stat (const char *file, ACE_stat *stp)
   {
     ACE_OS_TRACE ("ACE_OS::stat");
-#if defined (ACE_HAS_NONCONST_STAT)
-    return ::stat (const_cast <char *> (file), stp);
-#elif defined (ACE_LACKS_STAT)
+#if defined (ACE_LACKS_STAT)
     ACE_NOTSUP_RETURN (-1);
-#elif defined (ACE_HAS_WINCE)
-    ACE_TEXT_WIN32_FIND_DATA fdata;
-
-    int rc = 0;
-    HANDLE const fhandle = ::FindFirstFile (ACE_TEXT_CHAR_TO_TCHAR (file), &fdata);
-    if (fhandle == INVALID_HANDLE_VALUE)
-      {
-        ACE_OS::set_errno_to_last_error ();
-        return -1;
-      }
-    else if (fdata.nFileSizeHigh != 0)
-      {
-        errno = EINVAL;
-        rc = -1;
-      }
-    else
-      {
-        stp->st_mode = static_cast<mode_t>(fdata.dwFileAttributes);
-        stp->st_size = fdata.nFileSizeLow;
-        stp->st_atime = ACE_Time_Value (fdata.ftLastAccessTime).sec ();
-        stp->st_mtime = ACE_Time_Value (fdata.ftLastWriteTime).sec ();
-        stp->st_ctime = ACE_Time_Value (fdata.ftCreationTime).sec ();
-      }
-
-    ::FindClose (fhandle);
-    return rc;
-#elif defined (ACE_HAS_X86_STAT_MACROS)
-    // Solaris for intel uses an macro for stat(), this macro is a
-    // wrapper for _xstat().
-    return ::_xstat (_STAT_VER, file, stp);
 #elif defined (ACE_MQX)
     return MQX_Filesystem::inst ().stat (file, stp);
 #else
     return ACE_STAT_FUNC_NAME (file, stp);
-#endif /* ACE_HAS_NONCONST_STAT */
+#endif /* ACE_LACKS_STAT */
   }
 
 #if defined (ACE_HAS_WCHAR)
@@ -253,40 +203,14 @@ namespace ACE_OS
   stat (const wchar_t *file, ACE_stat *stp)
   {
     ACE_OS_TRACE ("ACE_OS::stat");
-#if defined (ACE_HAS_WINCE)
-    WIN32_FIND_DATAW fdata;
-
-    int rc = 0;
-    HANDLE const fhandle = ::FindFirstFileW (file, &fdata);
-    if (fhandle == INVALID_HANDLE_VALUE)
-      {
-        ACE_OS::set_errno_to_last_error ();
-        return -1;
-      }
-    else if (fdata.nFileSizeHigh != 0)
-      {
-        errno = EINVAL;
-        rc = -1;
-      }
-    else
-      {
-        stp->st_mode = static_cast<mode_t>(fdata.dwFileAttributes);
-        stp->st_size = fdata.nFileSizeLow;
-        stp->st_atime = ACE_Time_Value (fdata.ftLastAccessTime).sec ();
-        stp->st_mtime = ACE_Time_Value (fdata.ftLastWriteTime).sec ();
-        stp->st_ctime = ACE_Time_Value (fdata.ftCreationTime).sec ();
-      }
-
-    ::FindClose (fhandle);
-    return rc;
-#elif defined (__BORLANDC__) \
-      || defined (_MSC_VER) \
-      || (defined (__MINGW32__) && !defined (__MINGW64_VERSION_MAJOR))
+#if defined (__BORLANDC__) \
+    || defined (_MSC_VER) \
+    || (defined (__MINGW32__) && !defined (__MINGW64_VERSION_MAJOR))
     return ACE_WSTAT_FUNC_NAME (file, stp);
-#else /* ACE_HAS_WINCE */
+#else
     ACE_Wide_To_Ascii nfile (file);
     return ACE_OS::stat (nfile.char_rep (), stp);
-#endif /* ACE_HAS_WINCE */
+#endif /* __BORLANDC__  */
   }
 #endif /* ACE_HAS_WCHAR */
 

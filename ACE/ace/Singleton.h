@@ -82,7 +82,7 @@ public:
 
   /// Cleanup method, used by @c ace_cleanup_destroyer to destroy the
   /// ACE_Singleton.
-  virtual void cleanup (void *param = 0);
+  virtual void cleanup (void *param = nullptr);
 
   /// Explicitly delete the Singleton instance.
   static void close ();
@@ -178,7 +178,7 @@ public:
 
   /// Cleanup method, used by <ace_cleanup_destroyer> to destroy the
   /// singleton.
-  virtual void cleanup (void *param = 0);
+  virtual void cleanup (void *param = nullptr);
 
   /// Dump the state of the object.
   static void dump ();
@@ -271,7 +271,7 @@ template <class TYPE, class ACE_LOCK>
 class ACE_DLL_Singleton_T
 {
 public:
-  //void cleanup (void *param = 0);
+  //void cleanup (void *param = nullptr);
 
   /// Global access point to the Singleton.
   static TYPE *instance ();
@@ -324,13 +324,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #include "ace/Singleton.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Singleton.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Singleton.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_SINGLETON_H */

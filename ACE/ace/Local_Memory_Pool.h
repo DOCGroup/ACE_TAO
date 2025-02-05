@@ -52,7 +52,7 @@ public:
   ACE_Local_Memory_Pool (const ACE_TCHAR *backing_store_name = 0,
                          const OPTIONS *options = 0);
 
-  virtual ~ACE_Local_Memory_Pool (void);
+  virtual ~ACE_Local_Memory_Pool ();
 
   /// Ask system for initial chunk of local memory.
   virtual void *init_acquire (size_t nbytes,

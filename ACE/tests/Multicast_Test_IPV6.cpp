@@ -265,7 +265,7 @@ MCT_Config::open (int argc, ACE_TCHAR *argv[])
           {
             int n = ACE_OS::atoi (getopt.opt_arg ());
             // I'm assuming 0 means unlimited, so just use whatever the
-            // user provides.  Seems to work okay on Solaris 5.8.
+            // user provides.
             if (IP_MAX_MEMBERSHIPS == 0)
               this->groups_ = n;
             else

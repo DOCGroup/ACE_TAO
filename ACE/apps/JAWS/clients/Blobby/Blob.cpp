@@ -2,11 +2,11 @@
 #include "Blob_Handler.h"
 #include "ace/OS_NS_string.h"
 
-ACE_Blob::ACE_Blob (void)
+ACE_Blob::ACE_Blob ()
 {
 }
 
-ACE_Blob::~ACE_Blob (void)
+ACE_Blob::~ACE_Blob ()
 {
   this->close ();
 }
@@ -56,7 +56,7 @@ ACE_Blob::write (ACE_Message_Block *mb, size_t length, size_t offset)
 // close down the blob
 
 int
-ACE_Blob::close (void)
+ACE_Blob::close ()
 {
   if (filename_)
     {

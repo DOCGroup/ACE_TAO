@@ -12,7 +12,7 @@
 
 #include "ace/OS_main.h"
 
-#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE) && _WIN32_WINNT >= 0x400
+#if defined (ACE_WIN32) && _WIN32_WINNT >= 0x400
 
 #include "ace/Reactor.h"
 #include "ace/Auto_Event.h"
@@ -41,7 +41,7 @@ apc_callback (DWORD)
 }
 
 void
-queue_apc (void)
+queue_apc ()
 {
   DWORD result = ::QueueUserAPC (reinterpret_cast<PAPCFUNC> (&apc_callback),
                                                          // pointer to APC function

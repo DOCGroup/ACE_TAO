@@ -59,7 +59,7 @@ public:
   virtual TAO_FT_Request_Duration_Policy *clone () const;
 
   // = The FT::RequestDurationPolicy methods
-  virtual TimeBase::TimeT request_duration_policy_value (void);
+  virtual TimeBase::TimeT request_duration_policy_value ();
 
   virtual CORBA::PolicyType policy_type ();
 
@@ -105,7 +105,7 @@ public:
   virtual TAO_FT_Heart_Beat_Policy *clone () const;
 
   // = The FT::HeartBeatPolicy methods
-  virtual FT::HeartbeatPolicyValue heartbeat_policy_value (void);
+  virtual FT::HeartbeatPolicyValue heartbeat_policy_value ();
 
   virtual CORBA::PolicyType policy_type ();
 

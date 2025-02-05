@@ -28,7 +28,7 @@
 class Timeout_Handler : public ACE_Handler
 {
 public:
-  Timeout_Handler (void)
+  Timeout_Handler ()
     : count_ (0),
       start_time_ (ACE_OS::gettimeofday ())
     {

@@ -45,14 +45,14 @@ ACE::HTBP::Filter::recv_data_trailer(ACE::HTBP::Channel *)
 
 ACE_INLINE
 void
-ACE::HTBP::Filter::reset_http_code (void)
+ACE::HTBP::Filter::reset_http_code ()
 {
   this->http_code_ = 0;
 }
 
 ACE_INLINE
 int
-ACE::HTBP::Filter::http_code (void)
+ACE::HTBP::Filter::http_code ()
 {
   return this->http_code_;
 }

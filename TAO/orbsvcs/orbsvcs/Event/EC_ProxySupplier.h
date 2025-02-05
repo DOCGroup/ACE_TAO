@@ -69,7 +69,7 @@ public:
     RtecEventChannelAdmin::ProxyPushSupplier_ptr &proxy) = 0;
 
   /// Deactivate from the POA
-  virtual void deactivate () throw ();
+  virtual void deactivate () noexcept;
 
   /// Disconnect this from
   virtual void disconnect_push_supplier () = 0;

@@ -10,7 +10,7 @@ Callback::Callback (int iterations,
 }
 
 ACE_Sample_History &
-Callback::sample_history (void)
+Callback::sample_history ()
 {
   return this->sample_history_;
 }
@@ -27,7 +27,7 @@ Callback::sample (Test::Timestamp the_timestamp)
 }
 
 PortableServer::POA_ptr
-Callback::_default_POA (void)
+Callback::_default_POA ()
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }

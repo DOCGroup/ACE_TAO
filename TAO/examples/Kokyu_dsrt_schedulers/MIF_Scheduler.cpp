@@ -21,7 +21,7 @@ MIF_Sched_Param_Policy::MIF_Sched_Param_Policy (
 }
 
 MIF_Scheduling::SchedulingParameter
-MIF_Sched_Param_Policy::value (void)
+MIF_Sched_Param_Policy::value ()
 {
   return this->value_;
 }
@@ -33,7 +33,7 @@ MIF_Sched_Param_Policy::value (const MIF_Scheduling::SchedulingParameter& value)
 }
 
 CORBA::Policy_ptr
-MIF_Sched_Param_Policy::copy (void)
+MIF_Sched_Param_Policy::copy ()
 {
   MIF_Sched_Param_Policy* tmp = 0;
   ACE_NEW_THROW_EX (tmp,
@@ -45,13 +45,13 @@ MIF_Sched_Param_Policy::copy (void)
 }
 
 CORBA::PolicyType
-MIF_Sched_Param_Policy::policy_type (void)
+MIF_Sched_Param_Policy::policy_type ()
 {
   return 0;
 }
 
 void
-MIF_Sched_Param_Policy::destroy (void)
+MIF_Sched_Param_Policy::destroy ()
 {
 }
 
@@ -101,13 +101,13 @@ MIF_Scheduler::MIF_Scheduler (CORBA::ORB_ptr orb,
   codec_ = codec_factory->create_codec (encoding);
 }
 
-MIF_Scheduler::~MIF_Scheduler (void)
+MIF_Scheduler::~MIF_Scheduler ()
 {
   //  delete kokyu_dispatcher_;
 }
 
 void
-MIF_Scheduler::shutdown (void)
+MIF_Scheduler::shutdown ()
 {
   kokyu_dispatcher_->shutdown ();
   ACE_DEBUG ((LM_DEBUG, "kokyu DSRT dispatcher shutdown\n"));
@@ -566,7 +566,7 @@ MIF_Scheduler::cancel (const RTScheduling::Current::IdType &)
 }
 
 CORBA::PolicyList*
-MIF_Scheduler::scheduling_policies (void)
+MIF_Scheduler::scheduling_policies ()
 {
   throw CORBA::NO_IMPLEMENT ();
 }
@@ -578,13 +578,13 @@ MIF_Scheduler::scheduling_policies (const CORBA::PolicyList &)
 }
 
 CORBA::PolicyList*
-MIF_Scheduler::poa_policies (void)
+MIF_Scheduler::poa_policies ()
 {
   throw CORBA::NO_IMPLEMENT ();
 }
 
 char *
-MIF_Scheduler::scheduling_discipline_name (void)
+MIF_Scheduler::scheduling_discipline_name ()
 {
   throw CORBA::NO_IMPLEMENT ();
 }

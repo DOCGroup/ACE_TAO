@@ -12,8 +12,6 @@
 #include "tao/SystemException.h"
 #include "tao/PortableServer/ForwardRequestC.h"
 
-#include "ace/Copy_Disabled.h"
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_AMH_Response_Handler::TAO_AMH_Response_Handler ()
@@ -331,7 +329,7 @@ TAO_AMH_Response_Handler::_remove_ref ()
 namespace TAO
 {
   void
-  ARH_Refcount_Functor::operator () (TAO_AMH_Response_Handler *arh) throw ()
+  ARH_Refcount_Functor::operator () (TAO_AMH_Response_Handler *arh) noexcept
   {
     (void) arh->_remove_ref ();
   }

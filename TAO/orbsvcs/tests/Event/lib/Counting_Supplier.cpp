@@ -2,7 +2,7 @@
 #include "orbsvcs/Event_Utilities.h"
 #include "ace/OS_NS_unistd.h"
 
-EC_Counting_Supplier::EC_Counting_Supplier (void)
+EC_Counting_Supplier::EC_Counting_Supplier ()
   :  event_count (0),
      disconnect_count (0),
      consumer_adapter_ (this),
@@ -38,7 +38,7 @@ EC_Counting_Supplier::activate (RtecEventChannelAdmin::ConsumerAdmin_ptr consume
 }
 
 void
-EC_Counting_Supplier::deactivate (void)
+EC_Counting_Supplier::deactivate ()
 {
   this->supplier_proxy_->disconnect_push_supplier ();
 
@@ -87,7 +87,7 @@ EC_Counting_Supplier::connect (
 }
 
 void
-EC_Counting_Supplier::disconnect (void)
+EC_Counting_Supplier::disconnect ()
 {
   if (!CORBA::is_nil (this->consumer_proxy_.in ()))
     {
@@ -121,12 +121,12 @@ EC_Counting_Supplier::push (const RtecEventComm::EventSet&)
 }
 
 void
-EC_Counting_Supplier::disconnect_push_consumer (void)
+EC_Counting_Supplier::disconnect_push_consumer ()
 {
 }
 
 void
-EC_Counting_Supplier::disconnect_push_supplier (void)
+EC_Counting_Supplier::disconnect_push_supplier ()
 {
   this->disconnect_count++;
   this->consumer_proxy_ =
@@ -158,20 +158,20 @@ EC_Counting_Supplier_Task::svc ()
 }
 
 void
-EC_Counting_Supplier_Task::stop (void)
+EC_Counting_Supplier_Task::stop ()
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
   this->stop_flag_ = 1;
 }
 
 CORBA::ULong
-EC_Counting_Supplier_Task::push_count (void)
+EC_Counting_Supplier_Task::push_count ()
 {
   return this->push_count_;
 }
 
 void
-EC_Counting_Supplier_Task::run (void)
+EC_Counting_Supplier_Task::run ()
 {
   this->event_.length (1);
 

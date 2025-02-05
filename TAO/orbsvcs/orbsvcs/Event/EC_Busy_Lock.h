@@ -35,14 +35,14 @@ public:
   // = The ACE_Lock methods, please check $ACE_ROOT/ace/Synch.h for
   // details.
 
-  int remove (void);
-  int acquire (void);
-  int tryacquire (void);
-  int release (void);
-  int acquire_read (void);
-  int acquire_write (void);
-  int tryacquire_read (void);
-  int tryacquire_write (void);
+  int remove ();
+  int acquire ();
+  int tryacquire ();
+  int release ();
+  int acquire_read ();
+  int acquire_write ();
+  int tryacquire_read ();
+  int tryacquire_write ();
 
 private:
   Adaptee* adaptee_;
@@ -54,13 +54,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #include "orbsvcs/Event/EC_Busy_Lock.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "orbsvcs/Event/EC_Busy_Lock.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("EC_Busy_Lock.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 #endif /* TAO_EC_BUSY_LOCK_H */

@@ -39,7 +39,7 @@ public:
    TAO_CEC_TypedSupplierAdmin (TAO_CEC_TypedEventChannel* event_channel);
 
   /// Destructor
-  virtual ~TAO_CEC_TypedSupplierAdmin (void);
+  virtual ~TAO_CEC_TypedSupplierAdmin () = default;
 
   /// For each elements call <worker->work()>.
   void for_each (TAO_ESF_Worker<TAO_CEC_TypedProxyPushConsumer> *worker);
@@ -51,7 +51,7 @@ public:
 
   /// The typed event channel is shutting down, inform all the consumers of
   /// this
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
   // = The CosTypedEventChannelAdmin::TypedSupplierAdmin methods...
   virtual CosTypedEventChannelAdmin::TypedProxyPushConsumer_ptr
@@ -62,13 +62,13 @@ public:
 
   // = The CosEventChannelAdmin::SupplierAdmin methods...
   virtual CosEventChannelAdmin::ProxyPushConsumer_ptr
-    obtain_push_consumer (void);
+    obtain_push_consumer ();
 
   virtual CosEventChannelAdmin::ProxyPullConsumer_ptr
-    obtain_pull_consumer (void);
+    obtain_pull_consumer ();
 
   // = The PortableServer::ServantBase methods
-  virtual PortableServer::POA_ptr _default_POA (void);
+  virtual PortableServer::POA_ptr _default_POA ();
 
 private:
   /// The Event Channel we belong to

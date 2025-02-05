@@ -75,9 +75,7 @@ spawn_child (const ACE_TCHAR *argv0,
              int sleep_time,
              int my_process_id)
 {
-#if defined (ACE_HAS_WINCE)
-const ACE_TCHAR *cmdline_format = ACE_TEXT("%s %d");
-#elif defined (ACE_WIN32)
+#if defined (ACE_WIN32)
 const ACE_TCHAR *cmdline_format = ACE_TEXT("\"%s\" %s %d");
 #elif !defined (ACE_USES_WCHAR)
 const ACE_TCHAR *cmdline_format = ACE_TEXT (".") ACE_DIRECTORY_SEPARATOR_STR ACE_TEXT("%s %s %d");
@@ -134,9 +132,7 @@ const ACE_TCHAR *cmdline_format = ACE_TEXT (".") ACE_DIRECTORY_SEPARATOR_STR ACE
   opts.process_name (argv0);
 #ifndef ACE_LACKS_VA_FUNCTIONS
   opts.command_line (cmdline_format,
-#if !defined (ACE_HAS_WINCE)
                      argv0,
-#endif /* !ACE_HAS_WINCE */
                      cmd,
                      sleep_time);
 #else
@@ -240,7 +236,7 @@ command_line_test ()
   ACE_Process_Options options (1, command_len + 1);
 
 #ifndef ACE_LACKS_VA_FUNCTIONS
-  options.command_line (command);
+  options.command_line (ACE_TEXT ("%") ACE_TEXT_PRIs, command);
 #endif
 
   ACE_TCHAR * const *procargv = options.command_line_argv ();
@@ -570,8 +566,7 @@ run_main (int argc, ACE_TCHAR *argv[])
     }
 #endif /* ACE_HAS_THREADS */
 
-#if !defined (ACE_OPENVMS) && \
-  (defined ACE_WIN32 || !defined ACE_LACKS_UNIX_SIGNALS)
+#if defined ACE_WIN32 || !defined ACE_LACKS_UNIX_SIGNALS
   // --------------------------------------------------
   // Finally, try the reactor stuff...
   mgr.open (ACE_Process_Manager::DEFAULT_SIZE,
@@ -601,7 +596,7 @@ run_main (int argc, ACE_TCHAR *argv[])
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("(%P) %d processes left in manager\n"),
                 nr_procs));
-#endif /* !defined (ACE_OPENVMS) */
+#endif /* defined (ACE_WIN32) */
 #endif // ACE_HAS_PROCESS_SPAWN
   ACE_END_TEST;
   return test_status;

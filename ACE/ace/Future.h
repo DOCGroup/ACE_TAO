@@ -16,6 +16,7 @@
 
 #include /**/ "ace/pre.h"
 
+#include <atomic>
 #include "ace/Unbounded_Set.h"
 #include "ace/Strategies_T.h"
 
@@ -47,15 +48,13 @@ class ACE_Future_Holder
 {
 public:
   ACE_Future_Holder (const ACE_Future<T> &future);
-  ~ACE_Future_Holder (void);
+  ~ACE_Future_Holder () = default;
+  ACE_Future_Holder () = delete;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
   ACE_Future<T> item_;
-
-protected:
-  ACE_Future_Holder (void);
 };
 
 /**
@@ -73,7 +72,7 @@ class ACE_Future_Observer
 {
 public:
   /// Destructor
-  virtual ~ACE_Future_Observer (void);
+  virtual ~ACE_Future_Observer () = default;
 
   /// Called by the ACE_Future in which we are subscribed to when
   /// its value is written to.
@@ -84,7 +83,7 @@ public:
 
 protected:
   /// Constructor
-  ACE_Future_Observer (void);
+  ACE_Future_Observer () = default;
 };
 
 /**
@@ -163,10 +162,10 @@ private:
 
   /// Allocate a new ACE_Future_Rep<T> instance, returning NULL if it
   /// cannot be created.
-  static ACE_Future_Rep<T> *internal_create (void);
+  static ACE_Future_Rep<T> *internal_create ();
 
   /// Create a ACE_Future_Rep<T> and initialize the reference count.
-  static ACE_Future_Rep<T> *create (void);
+  static ACE_Future_Rep<T> *create ();
 
   /**
    * Increase the reference count and return argument. Uses the
@@ -197,10 +196,10 @@ private:
   int ready () const;
 
   /// Pointer to the result.
-  T *value_;
+  std::atomic<T*> value_ {};
 
   /// Reference count.
-  int ref_count_;
+  int ref_count_ {};
 
   typedef ACE_Future_Observer<T> OBSERVER;
 
@@ -232,7 +231,7 @@ class ACE_Future
 {
 public:
   /// Constructor.
-  ACE_Future (void);
+  ACE_Future ();
 
   /// Copy constructor binds @a this and @a r to the same
   /// ACE_Future_Rep. An ACE_Future_Rep is created if necessary.
@@ -243,7 +242,7 @@ public:
   ACE_Future (const T &r);
 
   /// Destructor.
-  ~ACE_Future (void);
+  ~ACE_Future ();
 
   /// Assignment operator that binds @a this and @a r to the same
   /// ACE_Future_Rep. An ACE_Future_Rep is created if necessary.
@@ -259,7 +258,7 @@ public:
    * to reuse the ACE_Future. But remember, the ACE_Future
    * is now bound to a new ACE_Future_Rep.
    */
-  int cancel (void);
+  int cancel ();
 
   /**
    * Equality operator that returns @c true if both ACE_Future objects
@@ -348,7 +347,7 @@ public:
    * rarely, if ever, be used and that modifying the underlying
    * ACE_Future_Rep should be done with extreme caution.
    */
-  ACE_Future_Rep<T> *get_rep (void);
+  ACE_Future_Rep<T> *get_rep ();
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -362,13 +361,7 @@ private:
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Future.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Future.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #endif /* ACE_HAS_THREADS */
 

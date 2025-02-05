@@ -32,7 +32,7 @@
 #include "ace/OS_NS_stdio.h"
 
 void ace_cc_yyerror (const char* s);
-int ace_cc_yylex(void);
+int ace_cc_yylex();
 
 extern int line_no;
 extern char line_buf[500];
@@ -256,13 +256,6 @@ static const short ace_cc_yycheck[] = {     4,
  #pragma alloca
 #define ACE_CC_YYSTACK_USE_ALLOCA
 #else /* not MSDOS, or __TURBOC__, or _AIX */
-#if 0
-#ifdef __hpux /* haible@ilog.fr says this works for HPUX 9.05 and up,
-     and on HPUX 10.  Eventually we can turn this on.  */
-#define ACE_CC_YYSTACK_USE_ALLOCA
-#define alloca __builtin_alloca
-#endif /* __hpux */
-#endif
 #endif /* not _AIX */
 #endif /* not MSDOS, or __TURBOC__ */
 #endif /* not sparc */
@@ -436,7 +429,7 @@ __ace_cc_yy_memcpy (char *to, char *from, unsigned int count)
 #ifdef ACE_CC_YYPARSE_PARAM
 int ace_cc_yyparse (void *);
 #else
-int ace_cc_yyparse (void);
+int ace_cc_yyparse ();
 #endif
 #endif
 

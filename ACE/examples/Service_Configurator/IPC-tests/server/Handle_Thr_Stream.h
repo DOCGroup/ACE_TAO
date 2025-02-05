@@ -20,8 +20,8 @@ class Handle_Thr_Acceptor : public ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_A
   //   configured <ACE_Thread_Strategy>.
 {
 public:
-  Handle_Thr_Acceptor (void);
-  ~Handle_Thr_Acceptor (void);
+  Handle_Thr_Acceptor ();
+  ~Handle_Thr_Acceptor ();
 
   // = Dynamic linking hooks.
   virtual int init (int argc, ACE_TCHAR *argv[]);
@@ -63,8 +63,6 @@ protected:
 
 extern ACE_Service_Object_Type rts;
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "Handle_Thr_Stream.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 #endif /* ACE_HAS_THREADS */
 #endif /* _HANDLE_THR_STREAM_H */

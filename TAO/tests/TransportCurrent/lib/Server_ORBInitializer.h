@@ -30,7 +30,7 @@ namespace Test
   {
   public:
     Server_ORBInitializer (PortableInterceptor::ServerRequestInterceptor_ptr interceptor);
-    virtual ~Server_ORBInitializer (void);
+    virtual ~Server_ORBInitializer ();
 
     virtual void pre_init(PortableInterceptor::ORBInitInfo*);
 

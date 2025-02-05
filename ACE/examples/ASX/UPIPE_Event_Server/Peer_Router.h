@@ -29,7 +29,7 @@ class Acceptor_Factory : public ACE_Acceptor<PEER_HANDLER, ACE_UPIPE_ACCEPTOR>
 {
 public:
   Acceptor_Factory (Peer_Router<PEER_HANDLER, KEY> *pr);
-  Peer_Router<PEER_HANDLER, KEY> *router (void);
+  Peer_Router<PEER_HANDLER, KEY> *router ();
 
   int init (int argc, ACE_TCHAR *argv[]);
   // Initialize the acceptor when it's linked dynamically.
@@ -74,7 +74,7 @@ class Peer_Router : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
   Peer_Router (ACE_Thread_Manager * = 0);
-  ~Peer_Router (void);
+  ~Peer_Router ();
 
   typedef Peer_Handler<Peer_Router<PEER_HANDLER, PEER_KEY>, PEER_KEY> HANDLER;
 
@@ -112,13 +112,7 @@ private:
 #define ACE_INLINE
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "Peer_Router.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Peer_Router.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #endif /* ACE_HAS_THREADS */
 #endif /* _PEER_ROUTER_H */

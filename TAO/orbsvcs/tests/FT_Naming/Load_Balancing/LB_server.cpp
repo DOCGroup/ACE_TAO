@@ -12,7 +12,7 @@ LB_server::LB_server (int argc, ACE_TCHAR **argv)
 }
 
 int
-LB_server::destroy (void)
+LB_server::destroy ()
 {
   try
     {
@@ -32,19 +32,19 @@ LB_server::destroy (void)
 }
 
 CORBA::ORB_ptr
-LB_server::orb (void)
+LB_server::orb ()
 {
   return this->orb_.in ();
 }
 
 CORBA::Object_ptr
-LB_server::object_group (void)
+LB_server::object_group ()
 {
   return this->object_group_.in ();
 }
 
 FT_Naming::NamingManager_ptr
-LB_server::naming_manager (void)
+LB_server::naming_manager ()
 {
   return this->naming_manager_.in ();
 }
@@ -93,7 +93,7 @@ LB_server::parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-LB_server::start_orb_and_poa (void)
+LB_server::start_orb_and_poa ()
 {
   try
     {
@@ -145,7 +145,7 @@ LB_server::start_orb_and_poa (void)
 }
 
 int
-LB_server::create_object_group (void)
+LB_server::create_object_group ()
 {
   try
     {

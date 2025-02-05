@@ -21,8 +21,8 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// This fudge factor can be overriden for timers that need it, such as on
-// Solaris, by defining the ACE_TIMER_SKEW symbol in the appropriate config
+// This fudge factor can be overriden for timers that need it
+// by defining the ACE_TIMER_SKEW symbol in the appropriate config
 // header.
 #if !defined (ACE_TIMER_SKEW)
 #  define ACE_TIMER_SKEW 0
@@ -31,7 +31,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 template <class TYPE, class FUNCTOR> ACE_INLINE
 ACE_Timer_Queue_Upcall_Base<TYPE, FUNCTOR>::ACE_Timer_Queue_Upcall_Base (FUNCTOR * upcall_functor)
   : ACE_Abstract_Timer_Queue<TYPE>()
-  , ACE_Copy_Disabled()
   , upcall_functor_(upcall_functor)
   , delete_upcall_functor_ (upcall_functor == 0)
 {

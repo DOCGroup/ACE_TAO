@@ -11,7 +11,7 @@ TAO_Notify_ORB_Run_Task::~TAO_Notify_ORB_Run_Task ()
 }
 
 int
-TAO_Notify_ORB_Run_Task::svc (void)
+TAO_Notify_ORB_Run_Task::svc ()
 {
   try
     {

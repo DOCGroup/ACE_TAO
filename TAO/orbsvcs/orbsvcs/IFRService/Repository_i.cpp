@@ -9,7 +9,7 @@
 #include "tao/ORB.h"
 #include "tao/Object_KeyC.h"
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/Lock_Adapter_T.h"
 #include "ace/SString.h"
 

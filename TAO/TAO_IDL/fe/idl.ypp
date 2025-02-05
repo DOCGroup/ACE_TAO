@@ -131,6 +131,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include <ast_consumes.h>
 #include <ast_extended_port.h>
 #include <ast_mirror_port.h>
+#include <ast_map.h>
 
 #include <fe_declarator.h>
 #include <fe_interface_header.h>
@@ -203,6 +204,7 @@ bool stack_based_lookup_for_primary_expr = false;
   AST_Annotation_Decl *annotation_decl_val;
   AST_Decls *decls_val;
   Decl_Annotations_Pair *decl_annotations_pair_val;
+  Decl_Annotations_Pair_Pair* decl_annotations_pair_val_pair;
 }
 
 /*
@@ -312,12 +314,17 @@ bool stack_based_lookup_for_primary_expr = false;
 %token IDL_ANNOTATION_DECL
 %token IDL_ANNOTATION_SYMBOL
 
+%token IDL_BITFIELD
+%token IDL_BITMASK
+%token IDL_BITSET
+%token IDL_MAP
+
 /*
  * These are production names:
  */
 
 %type <dcval>   type_spec simple_type_spec constructed_type_spec
-%type <dcval>   template_type_spec sequence_type_spec string_type_spec
+%type <dcval>   template_type_spec sequence_type_spec string_type_spec map_type_spec
 %type <dcval>   struct_type enum_type switch_type_spec union_type
 %type <dcval>   array_declarator op_type_spec wstring_type_spec
 %type <dcval>   param_type_spec type_dcl type_declarator actual_parameter
@@ -403,6 +410,8 @@ bool stack_based_lookup_for_primary_expr = false;
 %type <annotation_params_val> named_annotation_appl_params more_named_annotation_appl_params
 %type <annotation_param_val> named_annotation_appl_param
 %type <decl_annotations_pair_val> seq_head
+
+%type <decl_annotations_pair_val_pair> map_head
 
 %type <decls_val> member_i state_member value_element
 %type <vival> visibility
@@ -2360,10 +2369,8 @@ annotation_dcl
         : IDL_ANNOTATION_DECL defining_id '{'
         {
           if (idl_global->idl_version_ < IDL_VERSION_4)
-            {
-              idl_global->err ()->idl_version_error (
-                "Annotations are an IDL4 feature");
-            }
+            idl_global->err ()->idl_version_error (
+              "Annotations are not allowed in IDL versions before 4");
 
           Identifier *id = $2;
           UTL_ScopedName name (id, 0);
@@ -2508,10 +2515,8 @@ annotation_appl
         : IDL_ANNOTATION_SYMBOL scoped_name
         {
           if (idl_global->idl_version_ < IDL_VERSION_4)
-            {
-              idl_global->err ()->idl_version_error (
-                "Annotations are an IDL4 feature");
-            }
+            idl_global->err ()->idl_version_error (
+              "Annotations are not allowed in IDL versions before 4");
 
           AST_Annotation_Decl *decl = 0;
           UTL_ScopedName *name = $2;
@@ -2616,6 +2621,10 @@ annotation_appl_params
         | named_annotation_appl_params
         {
           $$ = $1;
+        }
+        | %empty
+        {
+          $$ = 0;
         }
         ;
 
@@ -2834,6 +2843,7 @@ template_type_spec
         | string_type_spec
         | wstring_type_spec
         | fixed_type_spec
+        | map_type_spec
         ;
 
 constructed_type_spec
@@ -3147,14 +3157,8 @@ struct_type
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_StructSqSeen);
         }
-        at_least_one_member
+        struct_body
         {
-          idl_global->set_parse_state (IDL_GlobalData::PS_StructBodySeen);
-        }
-        '}'
-        {
-          idl_global->set_parse_state (IDL_GlobalData::PS_StructQsSeen);
-
           /*
            * Done with this struct. Pop its scope off the scopes stack.
            */
@@ -3165,7 +3169,28 @@ struct_type
         }
         ;
 
-at_least_one_member : member members ;
+struct_body
+        : '}'
+        {
+          if (idl_global->idl_version_ < IDL_VERSION_4)
+            idl_global->err ()->idl_version_error (
+              "Empty structs are not allowed in IDL versions before 4");
+
+          idl_global->set_parse_state (IDL_GlobalData::PS_StructQsSeen);
+        }
+        | struct_body_with_members
+        ;
+
+struct_body_with_members
+        : member members
+        {
+          idl_global->set_parse_state (IDL_GlobalData::PS_StructBodySeen);
+        }
+        '}'
+        {
+          idl_global->set_parse_state (IDL_GlobalData::PS_StructQsSeen);
+        }
+        ;
 
 members
         : members member
@@ -3405,39 +3430,27 @@ union_type
 switch_type_spec :
         integer_type
         {
-          $$ =
-            idl_global->scopes ().bottom ()->lookup_primitive_type (
-                                                 $1
-                                               );
+          $$ = idl_global->scopes ().bottom ()->lookup_primitive_type ($1);
         }
         | char_type
         {
-          /* wchars are not allowed. */
-          if ($1 == AST_Expression::EV_wchar)
-            {
-              idl_global->err ()->error0 (UTL_Error::EIDL_DISC_TYPE);
-            }
+          if ($1 == AST_Expression::EV_wchar && idl_global->idl_version_ < IDL_VERSION_4)
+            idl_global->err ()->idl_version_error (
+              "Using wchar as a union discriminator isn't allowed in IDL versions before 4");
 
-          $$ =
-            idl_global->scopes ().bottom ()->lookup_primitive_type (
-                                                 $1
-                                               );
+          $$ = idl_global->scopes ().bottom ()->lookup_primitive_type ($1);
         }
         | octet_type
         {
-          /* octets are not allowed. */
-          idl_global->err ()->error0 (UTL_Error::EIDL_DISC_TYPE);
-          $$ =
-            idl_global->scopes ().bottom ()->lookup_primitive_type (
-                                                 $1
-                                               );
+          if (idl_global->idl_version_ < IDL_VERSION_4)
+            idl_global->err ()->idl_version_error (
+              "Using octet as a union discriminator isn't allowed in IDL versions before 4");
+
+          $$ = idl_global->scopes ().bottom ()->lookup_primitive_type ($1);
         }
         | boolean_type
         {
-          $$ =
-            idl_global->scopes ().bottom ()->lookup_primitive_type (
-                                                 $1
-                                               );
+          $$ = idl_global->scopes ().bottom ()->lookup_primitive_type ($1);
         }
         | enum_type
         | scoped_name
@@ -3454,8 +3467,7 @@ switch_type_spec :
            * typedef's to arrive at the base type at the end of the
            * chain.
            */
-          d =
-            s->lookup_by_name ($1);
+          d = s->lookup_by_name ($1);
 
           if (s != 0 && d != 0)
             {
@@ -3480,6 +3492,8 @@ switch_type_spec :
                             case AST_PredefinedType::PT_ulonglong:
                             case AST_PredefinedType::PT_short:
                             case AST_PredefinedType::PT_ushort:
+                            case AST_PredefinedType::PT_int8:
+                            case AST_PredefinedType::PT_uint8:
                             case AST_PredefinedType::PT_char:
                             case AST_PredefinedType::PT_boolean:
                               $$ = p;
@@ -3487,11 +3501,10 @@ switch_type_spec :
                               break;
                             case AST_PredefinedType::PT_wchar:
                             case AST_PredefinedType::PT_octet:
-                              /* octets and wchars are not allowed */
-                              idl_global->err ()->error0 (
-                                  UTL_Error::EIDL_DISC_TYPE
-                                );
-                              $$ = 0;
+                              if (idl_global->idl_version_ < IDL_VERSION_4)
+                                idl_global->err ()->idl_version_error (
+                                  "Using octet or wchar as a union discriminator isn't allowed in IDL versions before 4");
+                              $$ = p;
                               found = true;
                               break;
                             default:
@@ -3886,6 +3899,103 @@ enumerator :
             }
 
           delete annotations;
+        }
+        ;
+
+map_type_spec
+        : map_head
+        '>'
+        {
+          AST_Map *map = 0;
+          Decl_Annotations_Pair_Pair* type_pair = $1;
+          Decl_Annotations_Pair *key_type = type_pair->first;
+          Decl_Annotations_Pair *val_type = type_pair->second;
+
+          /*
+           * Remove map marker from scopes stack.
+           */
+          if (idl_global->scopes ().top () == 0)
+            {
+             idl_global->scopes ().pop ();
+            }
+
+          UTL_Scope *s = idl_global->scopes ().top_non_null ();
+
+          /*
+           * Create a node representing a map.
+           */
+          if (key_type && val_type)
+            {
+              AST_Type *ktp = dynamic_cast<AST_Type*> (key_type->decl);
+              AST_Type *vtp = dynamic_cast<AST_Type*> (val_type->decl);
+
+              if (ktp == 0 || vtp == 0)
+                {
+                  ; // Error will be caught in FE_Declarator.
+                }
+              else
+                {
+                  Identifier id ("map");
+                  UTL_ScopedName sn (&id, 0);
+                  ACE_CDR::ULong bound = 0UL;
+
+                  map =
+                    idl_global->gen ()->create_map (
+                        idl_global->gen ()->create_expr (
+                                                bound,
+                                                AST_Expression::EV_ulong
+                                              ),
+                        ktp,
+                        vtp,
+                        &sn,
+                        s->is_local (),
+                        s->is_abstract ()
+                      );
+                  map->key_type_annotations (*key_type->annotations);
+                  map->value_type_annotations (*val_type->annotations);
+
+                  idl_global->err ()->anonymous_type_diagnostic ();
+                }
+            }
+
+          delete key_type->annotations;
+          delete val_type->annotations;
+          delete type_pair;
+          $$ = map;
+        }
+        ;
+
+map_head :
+        IDL_MAP
+        {
+          idl_global->set_parse_state (IDL_GlobalData::PS_MapSeen);
+
+          /*
+           * Push a map marker on scopes stack.
+           */
+          idl_global->scopes ().push (0);
+        }
+        '<'
+        annotations_maybe simple_type_spec
+        {
+          idl_global->set_parse_state(IDL_GlobalData::PS_MapKeyTypeSeen);
+        }
+        ','
+        annotations_maybe simple_type_spec
+        {
+          idl_global->set_parse_state(IDL_GlobalData::PS_MapValueTypeSeen);
+          Decl_Annotations_Pair *key = new Decl_Annotations_Pair;
+          key->decl = $5;
+          key->annotations = $4;
+
+          Decl_Annotations_Pair *value = new Decl_Annotations_Pair;
+          value->decl = $9;
+          value->annotations = $8;
+
+          Decl_Annotations_Pair_Pair* pairs = new Decl_Annotations_Pair_Pair;
+          pairs->first = key;
+          pairs->second = value;
+          $$ = pairs;
         }
         ;
 
@@ -5027,6 +5137,54 @@ param_type_spec
                           || elem_nt == AST_Decl::NT_valuetype_fwd
                           || elem_nt == AST_Decl::NT_component
                           || elem_nt == AST_Decl::NT_component_fwd)
+                        {
+                          can_be_undefined = true;
+                        }
+                    }
+
+                  if (pbt->node_type() == AST_Decl::NT_map)
+                    {
+                      t = pbt;
+                      AST_Map *map_type =
+                        dynamic_cast<AST_Map*> (pbt);
+                      AST_Type *key_type =
+                        map_type->key_type ();
+                      AST_Type *val_type =
+                        map_type->value_type ();
+
+                      AST_Decl::NodeType key_nt =
+                        key_type->node_type ();
+                      AST_Decl::NodeType val_nt =
+                        val_type->node_type ();
+
+                      if (key_nt == AST_Decl::NT_typedef)
+                        {
+                          AST_Typedef *key_td =
+                            dynamic_cast<AST_Typedef*> (key_type);
+                          key_type = key_td->primitive_base_type ();
+                          key_nt = key_type->node_type ();
+                        }
+
+                      if (val_nt == AST_Decl::NT_typedef)
+                        {
+                          AST_Typedef *val_td =
+                            dynamic_cast<AST_Typedef*> (val_type);
+                          val_type = val_td->primitive_base_type ();
+                          val_nt = val_type->node_type ();
+                        }
+
+                      if (key_nt == AST_Decl::NT_interface
+                          || key_nt == AST_Decl::NT_interface_fwd
+                          || key_nt == AST_Decl::NT_valuetype
+                          || key_nt == AST_Decl::NT_valuetype_fwd
+                          || key_nt == AST_Decl::NT_component
+                          || key_nt == AST_Decl::NT_component_fwd
+                          || val_nt == AST_Decl::NT_interface
+                          || val_nt == AST_Decl::NT_interface_fwd
+                          || val_nt == AST_Decl::NT_valuetype
+                          || val_nt == AST_Decl::NT_valuetype_fwd
+                          || val_nt == AST_Decl::NT_component
+                          || val_nt == AST_Decl::NT_component_fwd)
                         {
                           can_be_undefined = true;
                         }
@@ -6605,6 +6763,10 @@ formal_parameter_type
         | IDL_SEQUENCE
         {
           $<ntval>$ = AST_Decl::NT_sequence;
+        }
+        | IDL_MAP
+        {
+          $<ntval>$ = AST_Decl::NT_map;
         }
         | IDL_INTERFACE
         {

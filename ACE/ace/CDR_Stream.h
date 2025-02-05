@@ -57,6 +57,7 @@
 #endif /* ACE_HAS_MONITOR_POINTS==1 */
 
 #include <string>
+#include <string_view>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -284,6 +285,7 @@ public:
   ACE_CDR::Boolean write_wstring (ACE_CDR::ULong length,
                                   const ACE_CDR::WChar *x);
   ACE_CDR::Boolean write_string (const std::string &x);
+  ACE_CDR::Boolean write_string_view (const std::string_view &x);
 #if !defined(ACE_LACKS_STD_WSTRING)
   ACE_CDR::Boolean write_wstring (const std::wstring &x);
 #endif
@@ -536,7 +538,7 @@ public:
 #if defined (ACE_HAS_MONITOR_POINTS) && (ACE_HAS_MONITOR_POINTS == 1)
   /// Register and unregister our buffer size monitor.
   void register_monitor (const char* id);
-  void unregister_monitor (void);
+  void unregister_monitor ();
 #endif /* ACE_HAS_MONITOR_POINTS==1 */
 
 private:
@@ -1086,7 +1088,7 @@ public:
 #if defined (ACE_HAS_MONITOR_POINTS) && (ACE_HAS_MONITOR_POINTS == 1)
   /// Register and unregister our buffer size monitor.
   void register_monitor (const char* id);
-  void unregister_monitor (void);
+  void unregister_monitor ();
 #endif /* ACE_HAS_MONITOR_POINTS==1 */
 
 protected:
@@ -1437,6 +1439,8 @@ extern ACE_Export ACE_CDR::Boolean operator<< (ACE_OutputCDR &os,
                                                ACE_OutputCDR::from_std_string x);
 extern ACE_Export ACE_CDR::Boolean operator<< (ACE_OutputCDR &os,
                                                const std::string& x);
+extern ACE_Export ACE_CDR::Boolean operator<< (ACE_OutputCDR &os,
+                                               const std::string_view& x);
 #if !defined(ACE_LACKS_STD_WSTRING)
 extern ACE_Export ACE_CDR::Boolean operator<< (ACE_OutputCDR &os,
                                                ACE_OutputCDR::from_std_wstring x);

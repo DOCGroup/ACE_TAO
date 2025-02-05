@@ -21,7 +21,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
 // ****************************************************************
 
-Supplier::Supplier (void)
+Supplier::Supplier ()
 {
 }
 
@@ -220,7 +220,7 @@ Supplier::run (int argc, ACE_TCHAR* argv[])
 }
 
 void
-Supplier::disconnect_push_supplier (void)
+Supplier::disconnect_push_supplier ()
 {
 }
 

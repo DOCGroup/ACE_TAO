@@ -67,7 +67,7 @@ Task_Test::close (u_long)
 }
 
 int
-Task_Test::svc (void)
+Task_Test::svc ()
 {
   wait_count++;
   max_count++;

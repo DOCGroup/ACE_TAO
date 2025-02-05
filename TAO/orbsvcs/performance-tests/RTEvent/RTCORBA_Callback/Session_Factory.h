@@ -17,9 +17,9 @@ public:
   // = The skeleton methods
   virtual Test::Session_ptr create_new_session (Test::Callback_ptr cb);
 
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
-  PortableServer::POA_ptr _default_POA (void);
+  PortableServer::POA_ptr _default_POA ();
 
 private:
   /// Use an ORB reference to shutdown the application.

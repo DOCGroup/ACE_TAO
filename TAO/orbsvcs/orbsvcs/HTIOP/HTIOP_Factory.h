@@ -41,8 +41,8 @@ namespace TAO
     class HTIOP_Export Protocol_Factory : public TAO_Protocol_Factory
     {
     public:
-      Protocol_Factory (void);
-      virtual ~Protocol_Factory (void);
+      Protocol_Factory ();
+      virtual ~Protocol_Factory ();
 
       // = Service Configurator hooks.
       /// Dynamic linking hook
@@ -59,8 +59,8 @@ namespace TAO
       virtual char options_delimiter () const;
 
       // = Check Protocol_Factory.h for a description of these methods.
-      virtual TAO_Acceptor  *make_acceptor (void);
-      virtual TAO_Connector *make_connector  (void);
+      virtual TAO_Acceptor  *make_acceptor ();
+      virtual TAO_Connector *make_connector  ();
       virtual int requires_explicit_endpoint () const;
 
     private:

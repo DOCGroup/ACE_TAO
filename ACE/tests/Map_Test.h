@@ -5,8 +5,7 @@
  *  @file    Map_Test.h
  *
  * This file has the class definitions needed for template generation in
- * Map_Test.cpp.  They have to be in a separate file so AIX xlC can
- * find them at auto-instantiate time.
+ * Map_Test.cpp.
  *
  *  @author Irfan Pyarali <irfan@cs.wustl.edu>
  */
@@ -38,7 +37,7 @@ typedef ACE_Array<char> KEY;
 class Key_Generator
 {
 public:
-  Key_Generator (void)
+  Key_Generator ()
     : counter_ (0)
     {
     }

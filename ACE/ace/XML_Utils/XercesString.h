@@ -57,10 +57,10 @@ namespace XML
 
     operator const XMLCh* () const { return _wstr; };
 
-    XMLCh * release (void);
+    XMLCh * release ();
 
     /// Release the held string and free its memory.
-    void reset (void);
+    void reset ();
   private:
     XMLCh* _wstr; // Internal representation
   };

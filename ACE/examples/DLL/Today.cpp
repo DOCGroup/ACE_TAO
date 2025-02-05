@@ -25,7 +25,7 @@ Today::operator new (size_t bytes, const std::nothrow_t&)
   return ::new (std::nothrow) char[bytes];
 }
 void
-Today::operator delete (void *p, const std::nothrow_t&) throw ()
+Today::operator delete (void *p, const std::nothrow_t&) noexcept
 {
   delete [] static_cast <char *> (p);
 }
@@ -38,9 +38,9 @@ Today::operator delete (void *ptr)
 // Returns the pointer to the Today class.
 // The ACE_BUILD_SVC_DLL and ACE_Svc_Export directives are necessary to
 // take care of exporting the function for Win32 platforms.
-extern "C" ACE_Svc_Export Magazine *create_magazine (void);
+extern "C" ACE_Svc_Export Magazine *create_magazine ();
 
-Magazine *create_magazine (void)
+Magazine *create_magazine ()
 {
   Magazine *mag = 0;
   ACE_NEW_RETURN (mag, Today, 0);

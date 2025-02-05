@@ -722,7 +722,7 @@ public:
   ACE_Active_Map_Manager_Iterator_Adapter (const ACE_Map_Iterator<ACE_Active_Map_Manager_Key, VALUE, ACE_Null_Mutex> &impl);
 
   /// Destructor.
-  virtual ~ACE_Active_Map_Manager_Iterator_Adapter ();
+  virtual ~ACE_Active_Map_Manager_Iterator_Adapter () = default;
 
   /// Clone.
   virtual ACE_Iterator_Impl<T> *clone () const;
@@ -1552,13 +1552,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #include "ace/Map_T.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Map_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Map_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_MAP_T_H */

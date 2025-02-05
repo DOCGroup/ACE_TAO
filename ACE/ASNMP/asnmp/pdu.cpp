@@ -32,7 +32,7 @@
 #include "ace/OS_NS_stdio.h"
 
 //=====================[ constructor no args ]=========================
-Pdu::Pdu( void): vb_count_(0), error_status_(0), error_index_(0),
+Pdu::Pdu(): vb_count_(0), error_status_(0), error_index_(0),
 validity_(0), request_id_(0), pdu_type_(0), notify_timestamp_(0),
 output_(0)
 {

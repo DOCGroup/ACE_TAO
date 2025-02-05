@@ -13,7 +13,7 @@
 #include "ace/OS_NS_string.h"
 
 // Constructor
-Demux_Test_Server::Demux_Test_Server (void)
+Demux_Test_Server::Demux_Test_Server ()
   : argc_ (0),
     argv_ (0),
     num_POAs_ (1),
@@ -27,7 +27,7 @@ Demux_Test_Server::Demux_Test_Server (void)
 }
 
 // destructor
-Demux_Test_Server::~Demux_Test_Server (void)
+Demux_Test_Server::~Demux_Test_Server ()
 {
   ACE_OS::fclose (this->poa_fp_);
 }
@@ -320,7 +320,7 @@ Demux_Test_Server::init (int argc, ACE_TCHAR *argv [])
 
 // parse command line arguments (if any).
 int
-Demux_Test_Server::parse_args (void)
+Demux_Test_Server::parse_args ()
 {
   ACE_Get_Opt get_opts (this->argc_, this->argv_, ACE_TEXT("df:o:p:ut"));
   int c;
@@ -393,7 +393,7 @@ Demux_Test_Server::parse_args (void)
 
 // grab a reference to the naming service so that we can register with it.
 int
-Demux_Test_Server::init_naming_service (void)
+Demux_Test_Server::init_naming_service ()
 {
   // Initialize the naming services
   if (this->my_name_client_.init (this->orb_.in ()) == -1)
@@ -408,7 +408,7 @@ Demux_Test_Server::init_naming_service (void)
 
 // The main program for Demux_Test
 int
-Demux_Test_Server::run (void)
+Demux_Test_Server::run ()
 {
   try
     {

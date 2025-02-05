@@ -62,7 +62,7 @@ Hello_Impl::operator new (size_t bytes, const std::nothrow_t &nt)
 }
 
 void
-Hello_Impl::operator delete (void *ptr, const std::nothrow_t&) throw ()
+Hello_Impl::operator delete (void *ptr, const std::nothrow_t&) noexcept
 {
   ACE_DEBUG ((LM_INFO, "Hello_Impl::delete\n"));
   ::delete [] static_cast<char *> (ptr);

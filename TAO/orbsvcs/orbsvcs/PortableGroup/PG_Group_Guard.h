@@ -53,10 +53,10 @@ public:
                       const PortableServer::ObjectId & oid);
 
   /// Destructor.
-  ~TAO_PG_Group_Guard (void);
+  ~TAO_PG_Group_Guard ();
 
   /// Relinquish cleanup responsibility.
-  void release (void);
+  void release ();
 
 private:
   /// Reference to the infrastructure TAO_PG_GenericFactory that

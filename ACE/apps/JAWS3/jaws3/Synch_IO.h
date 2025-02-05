@@ -9,7 +9,7 @@
 class JAWS_Export JAWS_Synch_IO : public JAWS_IO_Impl
 {
 public:
-  static JAWS_Synch_IO * instance (void)
+  static JAWS_Synch_IO * instance ()
   {
     return ACE_Singleton<JAWS_Synch_IO, ACE_SYNCH_MUTEX>::instance ();
   }

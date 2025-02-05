@@ -27,7 +27,7 @@
 
 #include "ace/Thread_Mutex.h"
 
-#if (defined (ACE_WIN32) && !defined (ACE_USES_WINCE_SEMA_SIMULATION)) || defined (ACE_HAS_VXTHREADS)
+#if defined (ACE_WIN32) || defined (ACE_HAS_VXTHREADS)
 // If platforms support semaphores with timed wait, then we use semaphores instead of c.v.
 # define ACE_TOKEN_USES_SEMAPHORE
 #endif /* ACE_WIN32 || ACE_HAS_VXTHREADS */
@@ -56,8 +56,8 @@ class ACE_Time_Value;
  * <acquire> multiple times, however, it must call <release> an
  * equal number of times before the token is actually released.
  * Threads that are blocked awaiting the token are serviced in
- * strict FIFO/LIFO order as other threads release the token (Solaris
- * and Pthread mutexes don't strictly enforce an acquisition
+ * strict FIFO/LIFO order as other threads release the token
+ * (Pthread mutexes don't strictly enforce an acquisition
  * order).  There are two lists within the class.  Write
  * acquires always have higher priority over read acquires.  Which
  * means, if you use both write/read operations, care must be
@@ -89,12 +89,12 @@ public:
   ACE_Token (const ACE_TCHAR *name = 0, void * = 0);
 
   /// Destructor
-  virtual ~ACE_Token (void);
+  virtual ~ACE_Token ();
 
   // = Strategies
 
   /// Retrieve the current queueing strategy.
-  int queueing_strategy (void);
+  int queueing_strategy ();
 
   /// Set the queueing strategy.
   void queueing_strategy (int queueing_strategy);
@@ -131,7 +131,7 @@ public:
    * behavior before <acquire> goes to sleep.  By default, this is a
    * no-op...
    */
-  virtual void sleep_hook (void);
+  virtual void sleep_hook ();
 
   /**
    * An optimized method that efficiently reacquires the token if no
@@ -156,20 +156,20 @@ public:
 
   /// Become interface-compliant with other lock mechanisms (implements
   /// a non-blocking <acquire>).
-  int tryacquire (void);
+  int tryacquire ();
 
   /// Shuts down the ACE_Token instance.
-  int remove (void);
+  int remove ();
 
   /// Relinquish the token.  If there are any waiters then the next one
   /// in line gets it.
-  int release (void);
+  int release ();
 
   /// Behaves like acquire() but at a lower priority.  It should probably
   /// be called acquire_yield() since the semantics aren't really
   /// what's commonly expected for readers/writer locks.  See the class
   /// documentation above for more details.
-  int acquire_read (void);
+  int acquire_read ();
 
   /// Behaves like acquire() but at a lower priority.  It should probably
   /// be called acquire_yield() since the semantics aren't really
@@ -180,7 +180,7 @@ public:
                     ACE_Time_Value *timeout = 0);
 
   /// Calls acquire().
-  int acquire_write (void);
+  int acquire_write ();
 
   /// Calls acquire().
   int acquire_write (void (*sleep_hook)(void *),
@@ -188,22 +188,22 @@ public:
                      ACE_Time_Value *timeout = 0);
 
   /// Lower priority try_acquire().
-  int tryacquire_read (void);
+  int tryacquire_read ();
 
   /// Just calls <tryacquire>.
-  int tryacquire_write (void);
+  int tryacquire_write ();
 
   /// Assumes the caller has acquired the token and returns 0.
-  int tryacquire_write_upgrade (void);
+  int tryacquire_write_upgrade ();
 
   // = Accessor methods.
 
   /// Return the number of threads that are currently waiting to get
   /// the token.
-  int waiters (void);
+  int waiters ();
 
   /// Return the id of the current thread that owns the token.
-  ACE_thread_t current_owner (void);
+  ACE_thread_t current_owner ();
 
   /// Dump the state of an object.
   void dump () const;
@@ -228,7 +228,7 @@ public:
     int wait (ACE_Time_Value *timeout, ACE_Thread_Mutex &lock);
 
     /// Notify (unblock) the entry.
-    int signal (void);
+    int signal ();
 
     /// Pointer to next waiter.
     ACE_Token_Queue_Entry *next_;
@@ -258,7 +258,7 @@ private:
   struct ACE_Token_Queue
   {
     /// Constructor
-    ACE_Token_Queue (void);
+    ACE_Token_Queue ();
 
     /// Remove a waiter from the queue.
     void remove_entry (ACE_Token_Queue_Entry *);
@@ -281,7 +281,7 @@ private:
                       ACE_Token_Op_Type op_type);
 
   /// Wake next in line for ownership.
-  void wakeup_next_waiter (void);
+  void wakeup_next_waiter ();
 
   /// A queue of writer threads.
   ACE_Token_Queue writers_;
@@ -321,12 +321,12 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Token
 {
 public:
-  int queueing_strategy (void) { ACE_NOTSUP_RETURN (-1); }
+  int queueing_strategy () { ACE_NOTSUP_RETURN (-1); }
   void queueing_strategy (int /*queueing_strategy*/) { }
   int acquire (ACE_Time_Value * = 0) { ACE_NOTSUP_RETURN (-1); }
-  int tryacquire (void) { ACE_NOTSUP_RETURN (-1); }
-  int remove (void) { ACE_NOTSUP_RETURN (-1); }
-  int release (void) { ACE_NOTSUP_RETURN (-1); }
+  int tryacquire () { ACE_NOTSUP_RETURN (-1); }
+  int remove () { ACE_NOTSUP_RETURN (-1); }
+  int release () { ACE_NOTSUP_RETURN (-1); }
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
@@ -346,7 +346,7 @@ public:
   };
 
   /// Get queueing strategy.
-  int queueing_strategy (void);
+  int queueing_strategy ();
 
   /// Set queueing strategy.
   void queueing_strategy (int queueing_strategy);

@@ -6,7 +6,7 @@ Worker_Thread::Worker_Thread (CORBA::ORB_ptr orb)
 }
 
 int
-Worker_Thread::svc (void)
+Worker_Thread::svc ()
 {
   try
     {

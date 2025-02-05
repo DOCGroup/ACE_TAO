@@ -6,7 +6,7 @@
 std::atomic<long> server_guid_counter;
 
 RTCORBA::Priority
-Segment_Sched_Param_Policy::value (void)
+Segment_Sched_Param_Policy::value ()
 {
   return this->value_;
 }
@@ -18,7 +18,7 @@ Segment_Sched_Param_Policy::value (RTCORBA::Priority value)
 }
 
 CORBA::Policy_ptr
-Segment_Sched_Param_Policy::copy (void)
+Segment_Sched_Param_Policy::copy ()
 {
   Segment_Sched_Param_Policy *copy = 0;
   ACE_NEW_THROW_EX (copy,
@@ -31,13 +31,13 @@ Segment_Sched_Param_Policy::copy (void)
 }
 
 CORBA::PolicyType
-Segment_Sched_Param_Policy::policy_type (void)
+Segment_Sched_Param_Policy::policy_type ()
 {
   return 0;
 }
 
 void
-Segment_Sched_Param_Policy::destroy (void)
+Segment_Sched_Param_Policy::destroy ()
 {
 }
 
@@ -57,7 +57,7 @@ Fixed_Priority_Scheduler::Fixed_Priority_Scheduler (CORBA::ORB_ptr orb)
     }
 }
 
-Fixed_Priority_Scheduler::~Fixed_Priority_Scheduler (void)
+Fixed_Priority_Scheduler::~Fixed_Priority_Scheduler ()
 {
 }
 
@@ -239,7 +239,7 @@ Fixed_Priority_Scheduler::cancel (const RTScheduling::Current::IdType &)
 }
 
 CORBA::PolicyList*
-Fixed_Priority_Scheduler::scheduling_policies (void)
+Fixed_Priority_Scheduler::scheduling_policies ()
 {
   return 0;
 }
@@ -250,13 +250,13 @@ Fixed_Priority_Scheduler::scheduling_policies (const CORBA::PolicyList &)
 }
 
 CORBA::PolicyList*
-Fixed_Priority_Scheduler::poa_policies (void)
+Fixed_Priority_Scheduler::poa_policies ()
 {
   return 0;
 }
 
 char *
-Fixed_Priority_Scheduler::scheduling_discipline_name (void)
+Fixed_Priority_Scheduler::scheduling_discipline_name ()
 {
   return 0;
 }

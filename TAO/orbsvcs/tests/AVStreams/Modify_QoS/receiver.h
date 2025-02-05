@@ -18,7 +18,7 @@
 class Receiver_Callback : public TAO_AV_Callback
 {
 public:
-  Receiver_Callback (void);
+  Receiver_Callback ();
   /// Constructor.
 
   /// Method that is called when there is data to be received from a
@@ -29,7 +29,7 @@ public:
 
   /// Called when the sender is done sending data and wants to close
   /// down the connection.
-  int handle_destroy (void);
+  int handle_destroy ();
 
   /// Set the related stream control for this flow.
   void streamctrl (AVStreams::StreamCtrl_ptr streamctrl);
@@ -59,10 +59,10 @@ private:
 class Receiver
 {
 public:
-  Receiver (void);
+  Receiver ();
   /// Constructor
 
-  ~Receiver (void);
+  ~Receiver ();
   /// Destructor.
 
   int init (int argc,

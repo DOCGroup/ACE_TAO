@@ -21,7 +21,7 @@ const CORBA::ULong NUM_TEST_TYPES = 4;
 //               Test_AnySeq
 // ************************************************************************
 
-Test_AnySeq::Test_AnySeq (void)
+Test_AnySeq::Test_AnySeq ()
   : opname_ (CORBA::string_dup ("test_anyseq")),
     in_ (new CORBA::AnySeq (TEST_SEQ_LENGTH)),
     inout_ (new CORBA::AnySeq (TEST_SEQ_LENGTH)),
@@ -30,7 +30,7 @@ Test_AnySeq::Test_AnySeq (void)
 {
 }
 
-Test_AnySeq::~Test_AnySeq (void)
+Test_AnySeq::~Test_AnySeq ()
 {
   CORBA::string_free (this->opname_);
   this->opname_ = 0;
@@ -140,7 +140,7 @@ Test_AnySeq::init_parameters (Param_Test_ptr objref)
 }
 
 int
-Test_AnySeq::reset_parameters (void)
+Test_AnySeq::reset_parameters ()
 {
   Generator *gen = GENERATOR::instance (); // value generator
 
@@ -203,7 +203,7 @@ Test_AnySeq::run_sii_test (Param_Test_ptr objref)
 }
 
 CORBA::Boolean
-Test_AnySeq::check_validity (void)
+Test_AnySeq::check_validity ()
 {
   CORBA::Short short_in, short_inout, short_out, short_ret;
   const char *str_in;
@@ -286,7 +286,7 @@ Test_AnySeq::check_validity (CORBA::Request_ptr)
 }
 
 void
-Test_AnySeq::print_values (void)
+Test_AnySeq::print_values ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*\n"

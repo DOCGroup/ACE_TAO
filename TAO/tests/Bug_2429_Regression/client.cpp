@@ -13,7 +13,7 @@ class Reply_Handler
     }
 
    virtual void
-   childMethod (void)
+   childMethod ()
     {
     }
 
@@ -32,7 +32,7 @@ class Reply_Handler
     }
 
    virtual void
-   parentMethod (void)
+   parentMethod ()
     {
       ACE_DEBUG ((LM_DEBUG,
                   "client: parentMethod reply %d @ %T\n",
@@ -57,7 +57,7 @@ class Reply_Handler
         }
    }
 
-   CORBA::ULong reply_count (void) { return parentMethod_count + parentMethod_excep_count; };
+   CORBA::ULong reply_count () { return parentMethod_count + parentMethod_excep_count; };
 
  private:
    // Count of replies and excep

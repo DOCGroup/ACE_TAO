@@ -20,7 +20,7 @@ public:
   // number important?  I am trying to maximize scattering when using
   // mod on the hashed value.  This might be bogus though.
 
-  virtual ~JAWS_Cache_Hash (void);
+  virtual ~JAWS_Cache_Hash ();
 
   int find (const EXT_ID &ext_id) const;
   int find (const EXT_ID &ext_id, JAWS_Cache_Object *&int_id) const;
@@ -47,8 +47,6 @@ private:
   CACHE_BUCKET_MANAGER **hashtable_;
 };
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "JAWS/Cache_Hash_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #endif /* ACE_CACHE_HASH_T_H */

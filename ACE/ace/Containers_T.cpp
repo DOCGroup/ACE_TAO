@@ -1396,7 +1396,7 @@ ACE_Bounded_Set_Iterator<T>::done () const
 {
   ACE_TRACE ("ACE_Bounded_Set_Iterator<T>::done");
 
-  return static_cast<ACE_CAST_CONST size_t> (this->next_) >=
+  return static_cast<size_t> (this->next_) >=
     this->s_.cur_size_;
 }
 
@@ -1418,11 +1418,6 @@ ACE_ALLOC_HOOK_DEFINE_Tc(ACE_DNode)
   template <class T>
 ACE_DNode<T>::ACE_DNode (const T &i, ACE_DNode<T> *n, ACE_DNode<T> *p)
   : next_ (n), prev_ (p), item_ (i)
-{
-}
-
-template <class T>
-ACE_DNode<T>::~ACE_DNode ()
 {
 }
 

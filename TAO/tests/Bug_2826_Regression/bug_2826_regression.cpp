@@ -83,7 +83,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       PortableServer::TRANSIENT);
 
     PortableServer::POA_var fooPoa = rootPOA->create_POA (
-      "FOO_POA", poaMgr.in (), policies );
+      "FOO_POA", poaMgr.in (), policies);
 
     for (CORBA::ULong i = 0; i < policies.length (); ++i)
     {
@@ -91,7 +91,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     }
 
     Foo_i servant;
-    PortableServer::ObjectId_var oid = fooPoa->activate_object( &servant );
+    PortableServer::ObjectId_var oid = fooPoa->activate_object( &servant);
 
     CORBA::Object_var obj = fooPoa->id_to_reference (oid.in ());
 
@@ -105,7 +105,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       return 1;
     }
 
-    fooPoa->deactivate_object (oid.in () );  //servant is gone
+    fooPoa->deactivate_object (oid.in ());  //servant is gone
 
     if (vc_check(client.in(), false))  //exception expected
     {

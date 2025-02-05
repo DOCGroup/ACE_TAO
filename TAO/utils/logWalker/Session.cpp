@@ -13,7 +13,7 @@ AltAddresses
 Session::alt_addrs_;
 
 
-Session::Session (void)
+Session::Session ()
   : split_details_ (false)
 {
   ACE_CString n ("localhost");
@@ -21,7 +21,7 @@ Session::Session (void)
   this->alt_addrs_.bind (n,v);
 }
 
-Session::~Session (void)
+Session::~Session ()
 {
   for (Processes::iterator i = processes_.begin();
        i != processes_.end();
@@ -52,7 +52,7 @@ Session::set_tao_version (ACE_TCHAR *str)
 }
 
 long
-Session::tao_version (void)
+Session::tao_version ()
 {
   return tao_version_;
 }
@@ -167,13 +167,13 @@ Session::outfile (const char *o)
 }
 
 bool
-Session::has_dir (void)
+Session::has_dir ()
 {
   return this->base_dir_.length() > 0;
 }
 
 bool
-Session::has_outfile (void)
+Session::has_outfile ()
 {
   return this->outfile_.length() > 0;
 }
@@ -341,7 +341,7 @@ Session::dump ()
 // iterate over the collection of host processes to associate peer
 // processes via endpoints.
 void
-Session::reconcile (void)
+Session::reconcile ()
 {
   for (Processes::ITERATOR i (this->processes_); !i.done(); i.advance())
     {

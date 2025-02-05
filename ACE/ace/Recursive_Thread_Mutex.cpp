@@ -79,7 +79,7 @@ int
 ACE_Recursive_Thread_Mutex::get_nesting_level ()
 {
   // ACE_TRACE ("ACE_Recursive_Thread_Mutex::get_nesting_level");
-#if defined (ACE_HAS_VXTHREADS) || defined (ACE_HAS_PHARLAP) || defined (ACE_HAS_WINCE)
+#if defined (ACE_HAS_VXTHREADS)
   ACE_NOTSUP_RETURN (-1);
 #elif defined (ACE_HAS_RECURSIVE_MUTEXES)
 # if defined (ACE_WIN32)
@@ -99,7 +99,7 @@ ACE_Recursive_Thread_Mutex::get_nesting_level ()
   nesting_level = this->lock_.nesting_level_;
   ACE_OS::mutex_unlock (&this->lock_.nesting_mutex_);
   return nesting_level;
-#endif /* !ACE_HAS_WINCE */
+#endif /* ACE_HAS_VXTHREADS */
 }
 
 void

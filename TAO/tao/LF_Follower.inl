@@ -2,7 +2,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE TAO_Leader_Follower &
-TAO_LF_Follower::leader_follower (void)
+TAO_LF_Follower::leader_follower ()
 {
   return this->leader_follower_;
 }

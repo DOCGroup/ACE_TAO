@@ -71,7 +71,7 @@ Worker::Worker (CORBA::ORB_ptr orb)
 /// Test referencing the TC data *inside* the context of a client-side
 /// interceptor
 int
-Worker::svc (void)
+Worker::svc ()
 {
   try
     {

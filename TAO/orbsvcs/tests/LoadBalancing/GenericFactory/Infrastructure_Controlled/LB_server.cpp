@@ -13,13 +13,13 @@ LB_server::LB_server (int argc, ACE_TCHAR **argv)
 }
 
 CORBA::ORB_ptr
-LB_server::orb (void)
+LB_server::orb ()
 {
   return this->orb_.in ();
 }
 
 int
-LB_server::run (void)
+LB_server::run ()
 {
   try
     {
@@ -39,7 +39,7 @@ LB_server::run (void)
 
 
 int
-LB_server::destroy (void)
+LB_server::destroy ()
 {
   try
     {
@@ -103,7 +103,7 @@ LB_server::parse_args (int argc, ACE_TCHAR *argv[])
 
 
 int
-LB_server::start_orb_and_poa (void)
+LB_server::start_orb_and_poa ()
 {
   try
     {

@@ -29,8 +29,8 @@
 #  define ACE_HAS_CPP20
 #endif /* _MSVC_LANG >= 202002L */
 
-#ifdef ACE_HAS_CPP17
-#  define ACE_LACKS_AUTO_PTR
+#if __cplusplus >= 202302L
+# define ACE_HAS_CPP23
 #endif
 
 #include /**/ "ace/post.h"

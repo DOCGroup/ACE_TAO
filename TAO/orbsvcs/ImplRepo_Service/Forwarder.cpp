@@ -32,7 +32,7 @@ ImR_DSI_Forwarder::ImR_DSI_Forwarder (ImR_Locator_i& imr_impl)
 {
 }
 
-ImR_DSI_Forwarder::~ImR_DSI_Forwarder (void)
+ImR_DSI_Forwarder::~ImR_DSI_Forwarder ()
 {
 }
 
@@ -171,7 +171,7 @@ ImR_DSI_ResponseHandler::ImR_DSI_ResponseHandler (const char *key,
 {
 }
 
-ImR_DSI_ResponseHandler::~ImR_DSI_ResponseHandler (void)
+ImR_DSI_ResponseHandler::~ImR_DSI_ResponseHandler ()
 {
 }
 

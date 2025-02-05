@@ -52,11 +52,11 @@ public:
                                      TAO_Notify_EventChannelFactory *ecf);
 
   /// destructor...
-  virtual ~TAO_Notify_validate_client_Task (void);
+  virtual ~TAO_Notify_validate_client_Task ();
 
   virtual int svc ();
 
-  void shutdown (void);
+  void shutdown ();
 
 private:
   /// The delay of first time validate.

@@ -638,7 +638,7 @@ Thr_Consumer_Handler::put (ACE_Message_Block *mb, ACE_Time_Value *)
 // from the use of threads, compared with the Reactive solution.
 
 int
-Thr_Consumer_Handler::svc (void)
+Thr_Consumer_Handler::svc ()
 {
   for (in_thread_ = 1;;)
     {
@@ -748,7 +748,7 @@ Thr_Supplier_Handler::open (void *)
 // existing code!).
 
 int
-Thr_Supplier_Handler::svc (void)
+Thr_Supplier_Handler::svc ()
 {
   for (in_thread_ = 1;;)
     {

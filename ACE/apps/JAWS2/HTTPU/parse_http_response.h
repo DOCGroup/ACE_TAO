@@ -13,7 +13,7 @@ class HTTPU_Export Parse_HTTP_Response
 {
 public:
   Parse_HTTP_Response (const char *response = 0);
-  ~Parse_HTTP_Response (void);
+  ~Parse_HTTP_Response ();
 
   void init (const char *response);
 

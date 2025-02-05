@@ -31,14 +31,14 @@ SYSVSema_Test::init (int, ACE_TCHAR *[])
 }
 
 int
-SYSVSema_Test::fini (void)
+SYSVSema_Test::fini ()
 {
   delete SYSVSema_Test::sema;
   return 0;
 }
 
 int
-SYSVSema_Test::svc (void)
+SYSVSema_Test::svc ()
 {
   int ni      = this->thr_id ();
   synch_count = 2;

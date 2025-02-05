@@ -1,7 +1,7 @@
 #include "HTTPU/http_response.h"
 
 void
-HTTP_Response::parse_line (void)
+HTTP_Response::parse_line ()
 {
   this->response_.init (this->line ());
   if (this->response_.error () != Parse_HTTP_Response::HTTPU_OK)
@@ -9,7 +9,7 @@ HTTP_Response::parse_line (void)
 }
 
 int
-HTTP_Response::espouse_line (void)
+HTTP_Response::espouse_line ()
 {
   int count;
   int status;
@@ -35,7 +35,7 @@ HTTP_Response::espouse_line (void)
 }
 
 void
-HTTP_Response::dump (void)
+HTTP_Response::dump ()
 {
   ACE_DEBUG ((LM_DEBUG, "===== BEGIN entera_HTTP_Response::dump =====\n"));
   HTTP_Base::dump ();

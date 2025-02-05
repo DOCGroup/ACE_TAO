@@ -74,7 +74,7 @@ Messenger_i::Messenger_i (CORBA::ORB_ptr orb)
     connect_structured_push_supplier (supplier.in());
 }
 
-Messenger_i::~Messenger_i (void)
+Messenger_i::~Messenger_i ()
 {
 }
 

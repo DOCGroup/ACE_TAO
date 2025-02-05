@@ -78,7 +78,7 @@ protected:
    * Protected destructor to enforce proper memory management through
    * reference counting.
    */
-  ~TAO_LB_CPU_Load_Average_Monitor (void);
+  ~TAO_LB_CPU_Load_Average_Monitor ();
 
 private:
   /// The name of the location at which this LoadMonitor resides.

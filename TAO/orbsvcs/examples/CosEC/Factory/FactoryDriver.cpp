@@ -131,7 +131,7 @@ FactoryDriver::start (int argc, ACE_TCHAR *argv [])
 }
 
 int
-FactoryDriver::stop (void)
+FactoryDriver::stop ()
 {
   orb_->shutdown ();
   return 0;

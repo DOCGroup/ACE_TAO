@@ -41,9 +41,7 @@ public:
   {
   }
 
-  ~string_const_sequence_element()
-  {
-  }
+  ~string_const_sequence_element() = default;
 
   inline operator const_value_type() const
   {

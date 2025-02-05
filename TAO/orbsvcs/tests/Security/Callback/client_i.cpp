@@ -6,7 +6,7 @@ client_i::client_i (server_ptr s)
 {
 }
 
-client_i::~client_i (void)
+client_i::~client_i ()
 {
 }
 

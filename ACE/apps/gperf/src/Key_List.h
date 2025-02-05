@@ -28,16 +28,22 @@
 
 #include "List_Node.h"
 #include "Vectors.h"
-#include "ace/Copy_Disabled.h"
 
 /**
  * Describes a duplicate entry.
  *
  * This is used for generating code by the <Key_List>.
  */
-class Duplicate_Entry : private ACE_Copy_Disabled
+class Duplicate_Entry
 {
 public:
+  Duplicate_Entry () = default;
+  Duplicate_Entry (const Duplicate_Entry &) = delete;
+  Duplicate_Entry (Duplicate_Entry &&) = delete;
+  Duplicate_Entry &operator= (const Duplicate_Entry &) = delete;
+  Duplicate_Entry &operator= (Duplicate_Entry &&) = delete;
+  ~Duplicate_Entry () = default;
+
   /// Hash value for this particular duplicate set.
   int hash_value;
 
@@ -56,18 +62,22 @@ public:
  * the Gen_Perf.hash function.  A Key_List is a singly-linked list
  * of List_Nodes.
  */
-class Key_List : private ACE_Copy_Disabled
+class Key_List
 {
 public:
-  Key_List (void);
-  ~Key_List (void);
-  int keyword_list_length (void);
-  int max_key_length (void);
-  void reorder (void);
-  void sort (void);
-  void string_sort (void);
-  int read_keys (void);
-  int output (void);
+  Key_List ();
+  Key_List (const Key_List &) = delete;
+  Key_List (Key_List &&) = delete;
+  Key_List &operator= (const Key_List &) = delete;
+  Key_List &operator= (Key_List &&) = delete;
+  ~Key_List ();
+  int keyword_list_length ();
+  int max_key_length ();
+  void reorder ();
+  void sort ();
+  void string_sort ();
+  int read_keys ();
+  int output ();
 
   /// Points to the head of the linked list.
   List_Node *head;
@@ -89,20 +99,20 @@ private:
   // @@ All of the following methods should be factored out and
   // replaced by the use of the Strategy/Bridge pattern so that we can
   // easily add new languages.
-  void output_min_max (void);
+  void output_min_max ();
   void output_switch (int use_keyword_table = 0);
-  void output_keyword_table (void);
-  void output_keylength_table (void);
-  void output_hash_function (void);
-  void output_lookup_function (void);
-  int output_binary_search_function(void);
-  int output_linear_search_function (void);
-  int output_lookup_array (void);
-  void output_strcasecmp (void);
-  int output_types (void);
-  void dump (void);
-  char *array_type (void);
-  char *save_include_src (void);
+  void output_keyword_table ();
+  void output_keylength_table ();
+  void output_hash_function ();
+  void output_lookup_function ();
+  int output_binary_search_function();
+  int output_linear_search_function ();
+  int output_lookup_array ();
+  void output_strcasecmp ();
+  int output_types ();
+  void dump ();
+  char *array_type ();
+  char *save_include_src ();
   char *special_input (char delimiter);
   List_Node *merge (List_Node *list1, List_Node *list2);
   List_Node *merge_sort (List_Node *head);

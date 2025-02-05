@@ -15,7 +15,6 @@
 
 #include "tao/GIOP_Fragmentation_Strategy.h"
 #include "ace/CDR_Base.h"
-#include "ace/Copy_Disabled.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -38,15 +37,14 @@ class TAO_Transport;
  *
  * @see TAO_GIOP_Fragmentation_Strategy
  */
-class TAO_On_Demand_Fragmentation_Strategy
-  : public TAO_GIOP_Fragmentation_Strategy
+class TAO_On_Demand_Fragmentation_Strategy : public TAO_GIOP_Fragmentation_Strategy
 {
 public:
   /// Constructor.
   TAO_On_Demand_Fragmentation_Strategy (TAO_Transport * transport,
                                         ACE_CDR::ULong max_message_size);
 
-  virtual ~TAO_On_Demand_Fragmentation_Strategy (void);
+  virtual ~TAO_On_Demand_Fragmentation_Strategy ();
   virtual int fragment (TAO_OutputCDR & cdr,
                         ACE_CDR::ULong pending_alignment,
                         ACE_CDR::ULong pending_length);

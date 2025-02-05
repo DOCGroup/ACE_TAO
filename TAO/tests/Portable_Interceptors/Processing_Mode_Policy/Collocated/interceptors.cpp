@@ -12,7 +12,7 @@ const char *reply_msg = "The Echo_Request_Interceptor reply message";
 CORBA::ULong Echo_Client_Request_Interceptor::client_interceptor_check_ = 0;
 CORBA::ULong Echo_Server_Request_Interceptor::server_interceptor_check_ = 0;
 
-Echo_Client_Request_Interceptor::Echo_Client_Request_Interceptor (void)
+Echo_Client_Request_Interceptor::Echo_Client_Request_Interceptor ()
   : myname_ ("Echo_Client_Interceptor")
 {
 }
@@ -22,13 +22,13 @@ Echo_Client_Request_Interceptor::~Echo_Client_Request_Interceptor ()
 }
 
 char *
-Echo_Client_Request_Interceptor::name (void)
+Echo_Client_Request_Interceptor::name ()
 {
   return CORBA::string_dup (this->myname_);
 }
 
 void
-Echo_Client_Request_Interceptor::destroy (void)
+Echo_Client_Request_Interceptor::destroy ()
 {
 }
 
@@ -169,7 +169,7 @@ Echo_Client_Request_Interceptor::receive_exception (
               exception_id.in ()));
 }
 
-Echo_Server_Request_Interceptor::Echo_Server_Request_Interceptor (void)
+Echo_Server_Request_Interceptor::Echo_Server_Request_Interceptor ()
   : myname_ ("Echo_Server_Interceptor")
 {
 }
@@ -179,13 +179,13 @@ Echo_Server_Request_Interceptor::~Echo_Server_Request_Interceptor ()
 }
 
 char *
-Echo_Server_Request_Interceptor::name (void)
+Echo_Server_Request_Interceptor::name ()
 {
   return CORBA::string_dup (this->myname_);
 }
 
 void
-Echo_Server_Request_Interceptor::destroy (void)
+Echo_Server_Request_Interceptor::destroy ()
 {
 }
 

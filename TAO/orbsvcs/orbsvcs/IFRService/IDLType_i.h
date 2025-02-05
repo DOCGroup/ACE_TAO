@@ -46,7 +46,7 @@ public:
   TAO_IDLType_i (TAO_Repository_i *repo);
 
   /// Destructor.
-  virtual ~TAO_IDLType_i (void);
+  virtual ~TAO_IDLType_i ();
   /// Defined in concrete classes.
   virtual CORBA::TypeCode_ptr type () = 0;
   /// Defined in concrete classes.

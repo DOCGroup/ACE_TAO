@@ -59,7 +59,7 @@ Event_Analyzer::init (int, ACE_TCHAR *[])
 }
 
 int
-Event_Analyzer::fini (void)
+Event_Analyzer::fini ()
 {
   // No-op for now.
   return 0;

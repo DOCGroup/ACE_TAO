@@ -40,7 +40,7 @@ class ACE_Export ACE_Log_Msg_Backend
 {
 public:
   /// No-op virtual destructor.
-  virtual ~ACE_Log_Msg_Backend ();
+  virtual ~ACE_Log_Msg_Backend () = default;
 
   /**
    * Open the back end object. Perform any actions needed to prepare

@@ -59,7 +59,7 @@ public:
             mode_t mode = 0);
 
   /// Remove a File lock by releasing it and closing down the <handle_>.
-  ~ACE_File_Lock (void);
+  ~ACE_File_Lock ();
 
   /// Remove a File lock by releasing it and closing down the
   /// <handle_>.  If @a unlink_file is true then we unlink the file.

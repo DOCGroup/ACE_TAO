@@ -41,7 +41,7 @@ namespace ACE
     {
     public:
       /// Constructor
-      Addr ();
+      Addr () = default;
 
       Addr (const Addr &other);
 

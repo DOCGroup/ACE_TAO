@@ -21,7 +21,7 @@
 #include "ace/WFMO_Reactor.h"
 #include "ace/Select_Reactor.h"
 #include "ace/Dev_Poll_Reactor.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/Atomic_Op.h"
 
 #if defined (ACE_HAS_THREADS)

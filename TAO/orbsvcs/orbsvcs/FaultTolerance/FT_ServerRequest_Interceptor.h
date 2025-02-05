@@ -51,10 +51,10 @@ namespace TAO
   {
   public:
     /// Constructor.
-    FT_ServerRequest_Interceptor (void);
+    FT_ServerRequest_Interceptor ();
 
     /// Destructor.
-    ~FT_ServerRequest_Interceptor (void);
+    ~FT_ServerRequest_Interceptor ();
 
     /**
      * @name Methods Required by the Server Request Interceptor
@@ -66,9 +66,9 @@ namespace TAO
      */
     //@{
     /// Return the name of this ServerRequestinterceptor.
-    virtual char * name (void);
+    virtual char * name ();
 
-    virtual void destroy (void);
+    virtual void destroy ();
 
     virtual void receive_request_service_contexts (
       PortableInterceptor::ServerRequestInfo_ptr ri);

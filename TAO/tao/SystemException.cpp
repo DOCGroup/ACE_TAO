@@ -86,10 +86,6 @@ CORBA::SystemException::SystemException (const CORBA::SystemException &src)
 {
 }
 
-CORBA::SystemException::~SystemException ()
-{
-}
-
 CORBA::SystemException &
 CORBA::SystemException::operator= (const CORBA::SystemException &src)
 {
@@ -152,8 +148,6 @@ CORBA::SystemException::_tao_errno (int errno_value)
       return TAO_ECONNREFUSED_MINOR_CODE;
     case ENOENT:
       return TAO_ENOENT_MINOR_CODE;
-
-#if !defined (ACE_HAS_WINCE)
     case EMFILE:
       return TAO_EMFILE_MINOR_CODE;
     case EBADF:
@@ -162,8 +156,6 @@ CORBA::SystemException::_tao_errno (int errno_value)
       return TAO_EPERM_MINOR_CODE;
     case EINVAL:
       return TAO_EINVAL_MINOR_CODE;
-#endif  // ACE_HAS_WINCE
-
 #if (ENOSYS != EFAULT)
     case ENOSYS:
       return TAO_ENOSYS_MINOR_CODE;
@@ -912,7 +904,7 @@ TAO::excp_factory excp_array [] = {
 
 // Concrete SystemException constructors
 #define TAO_SYSTEM_EXCEPTION(name) \
-CORBA::name ::name (void) \
+CORBA::name ::name () \
   :  CORBA::SystemException ("IDL:omg.org/CORBA/" #name ":1.0", \
                              #name, \
                              0, \
@@ -989,7 +981,7 @@ STANDARD_EXCEPTION_LIST
 
 #define TAO_SYSTEM_EXCEPTION(name) \
 CORBA::SystemException * \
-CORBA::name ::_tao_create (void) \
+CORBA::name ::_tao_create () \
 { \
   CORBA::name *result = 0; \
   ACE_NEW_RETURN (result, CORBA::name (), 0); \

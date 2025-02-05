@@ -72,7 +72,7 @@ namespace TAO
       Connector (ACE::HTBP::Environment *ht_env);
 
       /// Destructor.
-      ~Connector (void);
+      ~Connector ();
 
       /// @}
 
@@ -81,7 +81,7 @@ namespace TAO
       /// Transport_Connector.h
       /// {@
       int open (TAO_ORB_Core *orb_core);
-      int close (void);
+      int close ();
 
       TAO_Profile *create_profile (TAO_InputCDR& cdr);
 
@@ -102,7 +102,7 @@ namespace TAO
 
       /// More TAO_Connector methods, please check the documentation on
       /// Transport_Connector.h
-      virtual TAO_Profile *make_profile (void);
+      virtual TAO_Profile *make_profile ();
 
       /// Cancel the passed cvs handler from the connector
       /// Its not clear what it means to cancel in HTIOP, since there's no

@@ -223,7 +223,7 @@ Activator_Options::init (int argc, ACE_TCHAR *argv[])
 }
 
 int
-Activator_Options::init_from_registry (void)
+Activator_Options::init_from_registry ()
 {
   this->load_registry_options();
   return 0;

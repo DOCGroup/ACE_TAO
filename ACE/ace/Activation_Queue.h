@@ -21,7 +21,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Message_Queue.h"
-#include "ace/Copy_Disabled.h"
 #include "ace/Condition_Thread_Mutex.h"
 
 /// Define to be compatible with the terminology in the POSA2 book!
@@ -77,7 +76,7 @@ public:
                         ACE_Allocator *db_alloc = 0);
 
   /// Destructor.
-  virtual ~ACE_Activation_Queue (void);
+  virtual ~ACE_Activation_Queue ();
 
   // = Activate Queue operations.
 

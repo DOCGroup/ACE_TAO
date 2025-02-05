@@ -146,9 +146,9 @@ class Log_Message_Receiver
 {
 public:
   /// Creates a new Log_Message_Receiver
-  Log_Message_Receiver (void);
+  Log_Message_Receiver ();
   Log_Message_Receiver(Log_Message_Receiver<ACE_SYNCH_USE> const &rhs);
-  ~Log_Message_Receiver (void);
+  ~Log_Message_Receiver ();
 
   void log_record (const ACE_TCHAR *hostname,
                    ACE_Log_Record &record);
@@ -173,7 +173,7 @@ class Log_Message_Receiver_Impl
 {
 public:
   // Methods for handling reference count and instance lifetime
-  static Log_Message_Receiver_Impl *create (void);
+  static Log_Message_Receiver_Impl *create ();
   static Log_Message_Receiver_Impl *attach (Log_Message_Receiver_Impl<ACE_SYNCH_USE> *body);
   static void detach (Log_Message_Receiver_Impl<ACE_SYNCH_USE> *body);
 
@@ -184,8 +184,8 @@ public:
                   ostream *output);
 
 protected:
-  Log_Message_Receiver_Impl (void);
-  ~Log_Message_Receiver_Impl (void);
+  Log_Message_Receiver_Impl ();
+  ~Log_Message_Receiver_Impl ();
 
   /// Attributes
   int count_;
@@ -198,12 +198,6 @@ private:
   Log_Message_Receiver_Impl (const Log_Message_Receiver_Impl<ACE_SYNCH_USE> &) = delete;
 };
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "Log_Message_Receiver.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Log_Message_Receiver.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #endif /* LOG_MESSAGE_RECEIVER_H */

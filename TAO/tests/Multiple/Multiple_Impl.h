@@ -28,18 +28,18 @@ class Bottom_Impl : public virtual POA_Multiple::Bottom
 public:
   // Ctor-Dtor
   Bottom_Impl (CORBA::ORB_ptr orb);
-  virtual ~Bottom_Impl (void);
+  virtual ~Bottom_Impl ();
 
   // IDL Interface Methods
-  virtual char * top_quote (void);
+  virtual char * top_quote ();
 
-  virtual char * left_quote (void);
+  virtual char * left_quote ();
 
-  virtual char * right_quote (void);
+  virtual char * right_quote ();
 
-  virtual char * bottom_quote (void);
+  virtual char * bottom_quote ();
 
-  virtual void shutdown (void);
+  virtual void shutdown ();
 private:
   CORBA::ORB_var orb_;
 };
@@ -59,15 +59,15 @@ class Delegated_Bottom_Impl : public virtual POA_Multiple::Bottom
 public:
   // Ctor-Dtor
   Delegated_Bottom_Impl (Multiple::Bottom_ptr delegate, CORBA::ORB_ptr orb);
-  virtual ~Delegated_Bottom_Impl (void);
+  virtual ~Delegated_Bottom_Impl ();
 
   // IDL Interface Methods.
-  virtual char * top_quote (void);
-  virtual char * left_quote (void);
-  virtual char * right_quote (void);
-  virtual char * bottom_quote (void);
+  virtual char * top_quote ();
+  virtual char * left_quote ();
+  virtual char * right_quote ();
+  virtual char * bottom_quote ();
 
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
 private:
   Multiple::Bottom_var delegate_;

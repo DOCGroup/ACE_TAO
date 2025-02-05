@@ -22,7 +22,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
 // ****************************************************************
 
-Supplier::Supplier (void)
+Supplier::Supplier ()
 {
 }
 
@@ -229,7 +229,7 @@ Supplier::run (int argc, ACE_TCHAR* argv[])
 }
 
 
-Filter_StructuredPushSupplier::Filter_StructuredPushSupplier  (void)
+Filter_StructuredPushSupplier::Filter_StructuredPushSupplier  ()
 {
 }
 
@@ -258,7 +258,7 @@ Filter_StructuredPushSupplier::connect (CosNotifyChannelAdmin::SupplierAdmin_ptr
 }
 
 void
-Filter_StructuredPushSupplier::disconnect (void)
+Filter_StructuredPushSupplier::disconnect ()
 {
   ACE_ASSERT (!CORBA::is_nil (this->proxy_consumer_.in ()));
 
@@ -284,7 +284,7 @@ Filter_StructuredPushSupplier::send_event
 
 void
 Filter_StructuredPushSupplier::disconnect_structured_push_supplier
-   (void)
+   ()
 {
   // No-Op.
 }

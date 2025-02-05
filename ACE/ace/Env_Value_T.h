@@ -19,7 +19,6 @@
 #include /**/ "ace/config-all.h"
 #include "ace/Global_Macros.h"
 #include "ace/OS_NS_stdlib.h"
-#include "ace/Copy_Disabled.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -36,7 +35,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * value.
  */
 template <class T>
-class ACE_Env_Value : private ACE_Copy_Disabled
+class ACE_Env_Value
 {
 public:
   /**
@@ -49,8 +48,13 @@ public:
   /// Constructor that calls open().
   ACE_Env_Value (const ACE_TCHAR *varname, const T &vardefault);
 
+  ACE_Env_Value (const ACE_Env_Value &) = delete;
+  ACE_Env_Value (ACE_Env_Value &&) = delete;
+  ACE_Env_Value &operator= (const ACE_Env_Value &) = delete;
+  ACE_Env_Value &operator= (ACE_Env_Value &&) = delete;
+
   /// Destroy the value.
-  ~ACE_Env_Value ();
+  ~ACE_Env_Value () = default;
 
   /// Returns the value as type T.
   operator T ();
@@ -78,9 +82,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #include "ace/Env_Value_T.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Env_Value_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -150,10 +152,6 @@ ACE_Convert (const ACE_TCHAR *s, T &t)
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Env_Value_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_ENV_VALUE_T_H */

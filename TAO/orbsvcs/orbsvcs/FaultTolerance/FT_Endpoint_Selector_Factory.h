@@ -42,10 +42,10 @@ class TAO_FT_ClientORB_Export TAO_FT_Endpoint_Selector_Factory
 {
 public:
   /// Constructor.
-  TAO_FT_Endpoint_Selector_Factory (void);
+  TAO_FT_Endpoint_Selector_Factory ();
 
   /// Destructor.
-  virtual ~TAO_FT_Endpoint_Selector_Factory (void);
+  virtual ~TAO_FT_Endpoint_Selector_Factory ();
 
   /// Get an Invocation's endpoint selection strategy and
   /// initialize the endpoint selection state instance.

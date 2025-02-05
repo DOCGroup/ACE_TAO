@@ -49,11 +49,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 }
 
 // constructor
-Driver::Driver (void)
+Driver::Driver ()
 {
 }
 
-Driver::~Driver (void)
+Driver::~Driver ()
 {
 }
 
@@ -111,7 +111,7 @@ Driver::init (int argc, ACE_TCHAR **argv)
 }
 
 int
-Driver::run (void)
+Driver::run ()
 {
   // serves as a factory of Param_Client objects. It is also responsible to
   // start the test

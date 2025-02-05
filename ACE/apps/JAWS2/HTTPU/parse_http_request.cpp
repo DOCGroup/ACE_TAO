@@ -13,7 +13,7 @@ Parse_HTTP_Request::Parse_HTTP_Request (const char *request)
     this->init (request);
 }
 
-Parse_HTTP_Request::~Parse_HTTP_Request (void)
+Parse_HTTP_Request::~Parse_HTTP_Request ()
 {
   if (this->request_)
     ACE_OS::free (this->request_);
@@ -23,7 +23,7 @@ Parse_HTTP_Request::~Parse_HTTP_Request (void)
 }
 
 void
-Parse_HTTP_Request::dump (void)
+Parse_HTTP_Request::dump ()
 {
   ACE_DEBUG ((LM_DEBUG, "%s %s %s\n",
               this->method_str (), this->url (), this->version ()));

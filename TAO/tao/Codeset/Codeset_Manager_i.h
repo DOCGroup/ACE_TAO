@@ -90,8 +90,8 @@ public:
   /// codeset id matching the manager's native codeset id.
   void open(TAO_ORB_Core& core);
 
-  virtual TAO_Codeset_Descriptor_Base *char_codeset_descriptor (void);
-  virtual TAO_Codeset_Descriptor_Base *wchar_codeset_descriptor (void);
+  virtual TAO_Codeset_Descriptor_Base *char_codeset_descriptor ();
+  virtual TAO_Codeset_Descriptor_Base *wchar_codeset_descriptor ();
 
 private:
   // Compute the TCS for Char/WChar asper the CORBA Specification

@@ -61,7 +61,7 @@ ifr_adding_visitor::ifr_adding_visitor (
 {
 }
 
-ifr_adding_visitor::~ifr_adding_visitor (void)
+ifr_adding_visitor::~ifr_adding_visitor ()
 {
 }
 
@@ -2299,6 +2299,18 @@ ifr_adding_visitor::visit_sequence (AST_Sequence *node)
     }
 
   return 0;
+}
+
+int
+ifr_adding_visitor::visit_map (AST_Map *)
+{
+  ORBSVCS_ERROR_RETURN ((
+            LM_ERROR,
+            ACE_TEXT ("(%N:%l) ifr_adding_visitor::visit_map -")
+            ACE_TEXT (" maps are not supported\n")
+          ),
+          -1
+        );
 }
 
 int

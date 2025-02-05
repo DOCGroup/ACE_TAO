@@ -51,7 +51,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 #  define YYPARSE_DECL() yyparse(void *YYPARSE_PARAM)
 # endif
 #else
-# define YYPARSE_DECL() yyparse(void)
+# define YYPARSE_DECL() yyparse()
 #endif
 
 /* Parameters sent to lex. */
@@ -59,7 +59,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 # define YYLEX_DECL() yylex(void *YYLEX_PARAM)
 # define YYLEX yylex(YYLEX_PARAM)
 #else
-# define YYLEX_DECL() yylex(void)
+# define YYLEX_DECL() yylex()
 # define YYLEX yylex()
 #endif
 

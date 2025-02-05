@@ -29,7 +29,7 @@ public:
   // maxsize is the total number of objects the in memory cache is
   // willing to manage
 
-  ~JAWS_Cache_List (void);
+  ~JAWS_Cache_List ();
 
   int is_empty () const;
   int is_full () const;
@@ -60,7 +60,7 @@ protected:
   void remove_i (Cache_List_Item *item);
   // remove the element residing at pos, but do not delete it.
 
-  void remove_i (void);
+  void remove_i ();
   // remove the element residing at the top of heap, but do not delete it.
 
 private:
@@ -85,7 +85,7 @@ public:
   typedef JAWS_Cache_List<EXT_ID, FACT, H_FN, E_FN> Cache_List;
 
   JAWS_Cache_List_Item (const EXT_ID &ext_id, JAWS_Cache_Object *const &int_id);
-  unsigned int priority (void);
+  unsigned int priority ();
 
 private:
   EXT_ID ext_id_;
@@ -95,8 +95,6 @@ private:
   JAWS_Cache_List_Item *prev_;
 };
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "JAWS/Cache_List_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #endif /* JAWS_CACHE_LIST_T_H */

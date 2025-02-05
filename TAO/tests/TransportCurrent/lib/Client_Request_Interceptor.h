@@ -64,9 +64,9 @@ namespace Test
      */
     //@{
     /// Return the name of this ClientRequestinterceptor.
-    virtual char * name (void);
+    virtual char * name ();
 
-    virtual void destroy (void);
+    virtual void destroy ();
 
     virtual void send_request (PortableInterceptor::ClientRequestInfo_ptr ri);
 
@@ -80,7 +80,7 @@ namespace Test
     //@}
 
     // Number of interceptions
-    CORBA::Long interceptions (void);
+    CORBA::Long interceptions ();
 
   private:
     // Implementation method, every inteception point will have to

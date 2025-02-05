@@ -28,7 +28,7 @@ enum EndpointRole {
 class Endpoint
 {
 public:
-  Endpoint (void);
+  Endpoint ();
   Endpoint (const Endpoint &other);
   Endpoint (const char *addr, EndpointRole role = ER_UNKNOWN);
   void assign (const char *addr, EndpointRole role = ER_UNKNOWN);
@@ -70,13 +70,13 @@ public:
   static char *nextIdent(bool is_server);
   PeerProcess (size_t offset, const ACE_CString &time, bool is_server);
 
-  virtual ~PeerProcess (void);
+  virtual ~PeerProcess ();
 
   const char * id () const;
   void split_filename (char *buffer, size_t len) const;
 
   void set_owner (HostProcess *host);
-  HostProcess *owner (void);
+  HostProcess *owner ();
 
   void match_hosts (Session *session);
   void set_server_addr (const ACE_CString &addr);
@@ -87,7 +87,7 @@ public:
   size_t offset () const;
   void ssl (bool is_ssl);
   void add_transport (Transport *t);
-  Transport *last_transport (void);
+  Transport *last_transport ();
   Transport *find_transport (long handle);
 
   bool match_local (const char *addr) const;

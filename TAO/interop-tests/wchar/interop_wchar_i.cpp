@@ -10,12 +10,12 @@ interop_WChar_Passer_i::interop_WChar_Passer_i (CORBA::ORB_ptr o,
 }
 
 // Implementation skeleton destructor
-interop_WChar_Passer_i::~interop_WChar_Passer_i (void)
+interop_WChar_Passer_i::~interop_WChar_Passer_i ()
 {
 }
 
 char *
-interop_WChar_Passer_i::orb_name (void)
+interop_WChar_Passer_i::orb_name ()
 {
   return CORBA::string_dup ("TAO");
 }
@@ -211,7 +211,7 @@ interop_WChar_Passer_i::exception_test ( CORBA::Short key)
 }
 
 void
-interop_WChar_Passer_i::shutdown (void)
+interop_WChar_Passer_i::shutdown ()
 {
   this->orb_->shutdown(0);
 }

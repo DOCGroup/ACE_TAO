@@ -59,7 +59,7 @@ public:
   }
 };
 
-DynServer_Loader::DynServer_Loader(void)
+DynServer_Loader::DynServer_Loader()
 {
 }
 
@@ -116,7 +116,7 @@ DynServer_Loader::init (int argc, ACE_TCHAR* argv[])
 }
 
 int
-DynServer_Loader::fini (void)
+DynServer_Loader::fini ()
 {
   ACE_ASSERT(runner_.get() != 0);
   try {

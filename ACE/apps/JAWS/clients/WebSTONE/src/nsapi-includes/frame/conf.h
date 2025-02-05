@@ -140,7 +140,7 @@ char *conf_init(char *cfn);
  * conf_terminate frees any data the conf routines may be holding.
  */
 
-void conf_terminate(void);
+void conf_terminate();
 
 
 /*

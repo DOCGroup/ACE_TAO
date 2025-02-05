@@ -17,7 +17,7 @@ TAO::SSLIOP::State_Guard::State_Guard (
 }
 
 ACE_INLINE
-TAO::SSLIOP::State_Guard::~State_Guard (void)
+TAO::SSLIOP::State_Guard::~State_Guard ()
 {
   this->handler_->teardown_ssl_state (this->previous_current_impl_,
                                       this->setup_done_);

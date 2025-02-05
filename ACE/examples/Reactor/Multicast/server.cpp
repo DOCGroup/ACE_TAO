@@ -22,7 +22,7 @@ public:
   Server_Events (u_short port,
                  const char *mcast_addr,
                  long time_interval = 0);
-  ~Server_Events (void);
+  ~Server_Events ();
 
   virtual int handle_input (ACE_HANDLE fd);
   virtual int handle_timeout (const ACE_Time_Value &tv,
@@ -30,7 +30,7 @@ public:
 
   virtual ACE_HANDLE get_handle () const;
 
-  ACE_Time_Value *wait_time (void);
+  ACE_Time_Value *wait_time ();
 
 private:
   char *message_;
@@ -66,7 +66,7 @@ Server_Events::get_handle () const
 }
 
 ACE_Time_Value *
-Server_Events::wait_time (void)
+Server_Events::wait_time ()
 {
   return this->how_long_;
 }
@@ -104,7 +104,7 @@ Server_Events::Server_Events (u_short port,
 
 // A destructor that emacs refuses to color blue ;-)
 
-Server_Events::~Server_Events (void)
+Server_Events::~Server_Events ()
 {
   this->mcast_dgram_.leave (this->mcast_addr_);
 

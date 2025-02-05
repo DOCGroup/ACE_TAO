@@ -37,12 +37,12 @@ public:
   {
   }
 
-  void go (void)
+  void go ()
   {
     started_ = true;
   }
 
-  void done (void)
+  void done ()
   {
     started_ = false;
   }
@@ -123,7 +123,7 @@ create_supplieradmin (CosNotifyChannelAdmin::EventChannel_ptr ec)
 static void
 SendEvent (int id)
 {
-  const char* type = ( (id & 1) == 1 ? "odd" : "even" );
+  const char* type = ( (id & 1) == 1 ? "odd" : "even");
   CosNotification::StructuredEvent event;
 
   event.header.fixed_header.event_type.domain_name =
@@ -183,7 +183,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       CORBA::ORB_ptr orb = client.orb ();
 
-      sig_impl.reset( new sig_i( orb ) );
+      sig_impl.reset( new sig_i(orb));
       sig_var sig = sig_impl->_this ();
 
       CORBA::String_var ior =

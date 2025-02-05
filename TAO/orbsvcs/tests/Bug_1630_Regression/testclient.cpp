@@ -45,7 +45,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Add an operation to the interface.
       // First get some useful things.
       //
-      ACE_DEBUG((LM_DEBUG, ". Get primitive (void)\n"));
+      ACE_DEBUG((LM_DEBUG, ". Get primitive ()\n"));
       CORBA::PrimitiveDef_var voidPrimitive =
          ifr->get_primitive( CORBA::pk_void) ;
       ACE_DEBUG((LM_DEBUG, ". Get primitive (char)\n"));

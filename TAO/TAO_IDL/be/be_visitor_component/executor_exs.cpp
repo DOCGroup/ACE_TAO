@@ -215,7 +215,7 @@ be_visitor_executor_exs::visit_component (be_component *node)
           << "reactor = orb->orb_core ()->reactor ();"
           << be_uidt_nl << "}"
           << be_uidt << be_uidt_nl << "}"
-          << be_uidt_nl << "if (reactor == 0)" << be_idt_nl
+          << be_uidt_nl << "if (!reactor)" << be_idt_nl
           << "{" << be_idt_nl
           << "throw ::CORBA::INTERNAL ();"
           << be_uidt_nl << "}"

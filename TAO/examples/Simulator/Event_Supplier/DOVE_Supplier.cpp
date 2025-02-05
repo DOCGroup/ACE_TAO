@@ -59,7 +59,7 @@ DOVE_Supplier::~DOVE_Supplier ()
 // Initialize the ORB and the connection to the Name Service
 
 int
-DOVE_Supplier::init (void)
+DOVE_Supplier::init ()
 {
   try
   {

@@ -93,13 +93,6 @@ protected:
 
   /// Initialize a TLI endpoint.
   ACE_TLI (const char device[], int oflag = O_RDWR, struct t_info *info = 0);
-
-private:
-#if defined (ACE_HAS_SVR4_TLI)
-  // XTI/TLI option management.
-  struct t_optmgmt so_opt_req;
-  struct t_optmgmt so_opt_ret;
-#endif /* ACE_HAS_SVR4_TLI */
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

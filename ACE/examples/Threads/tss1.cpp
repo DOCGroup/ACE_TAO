@@ -24,7 +24,6 @@
 
 #include "thread_specific.h"
 
-// (Sun C++ 4.2 with -O3 won't link if the following is not const.)
 static const int iterations = 100;
 
 // Static variables.
@@ -32,7 +31,6 @@ ACE_MT (ACE_Thread_Mutex Errno::lock_);
 int Errno::flags_;
 
 // This is our thread-specific error handler...
-// (Sun C++ 4.2 with -O3 won't link if the following is static.)
 ACE_TSS<Errno> TSS_Error;
 
 // Keeps track of whether Tester::close () has started.
@@ -43,8 +41,8 @@ template <ACE_SYNCH_DECL>
 class Tester: public ACE_Task<ACE_SYNCH_USE>
 {
 public:
-  Tester (void) {}
-  ~Tester (void) {}
+  Tester () {}
+  ~Tester () {}
 
   virtual int svc ();
 
@@ -57,7 +55,7 @@ public:
 };
 
 template <ACE_SYNCH_DECL> int
-Tester<ACE_SYNCH_USE>::svc (void)
+Tester<ACE_SYNCH_USE>::svc ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%t) svc: setting error code to 1\n"));

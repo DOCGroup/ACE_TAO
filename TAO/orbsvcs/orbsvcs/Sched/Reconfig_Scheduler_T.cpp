@@ -308,7 +308,7 @@ init (int config_count,
 
 // Closes the scheduler, releasing all current resources.
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> void
-TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::close (void)
+TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::close ()
 {
 #if defined (SCHEDULER_LOGGING)
   ORBSVCS_DEBUG ((LM_TRACE,
@@ -1434,7 +1434,7 @@ dispatch_configuration (RtecScheduler::Preemption_Priority_t p_priority,
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK>
 RtecScheduler::Preemption_Priority_t
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-last_scheduled_priority (void)
+last_scheduled_priority ()
 {
 #if defined (SCHEDULER_LOGGING)
   ORBSVCS_DEBUG ((LM_TRACE,
@@ -1591,7 +1591,7 @@ create_i (const char *entry_point,
   // Store the new entry in the scheduling entry pointer array.
   entry_ptr_array_ [handle - 1] = new_sched_entry;
 
-  // Release the auto pointers, so their destruction does not
+  // Release the unique pointers, so their destruction does not
   // remove the new rt_info that is now in the map and tree,
   // or the scheduling entry attached to the rt_info.
   new_rt_info_ptr.release ();
@@ -2172,7 +2172,7 @@ map_dependency_enable_state_i (RtecScheduler::handle_t key,
 // has_unresolved_remote_dependencies_, has_unresolved_local_dependencies_,
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> void
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-dfs_traverse_i (void)
+dfs_traverse_i ()
 {
 #if defined (SCHEDULER_LOGGING)
   ORBSVCS_DEBUG ((LM_TRACE,
@@ -2209,7 +2209,7 @@ dfs_traverse_i (void)
 // checks for loops, marks unresolved remote dependencies.
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> void
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-detect_cycles_i (void)
+detect_cycles_i ()
 {
 #if defined (SCHEDULER_LOGGING)
   ORBSVCS_DEBUG ((LM_TRACE,
@@ -2253,7 +2253,7 @@ detect_cycles_i (void)
 
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> void
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-perform_admission_i (void)
+perform_admission_i ()
 {
 #if defined (SCHEDULER_LOGGING)
   ORBSVCS_DEBUG ((LM_TRACE,
@@ -2313,7 +2313,7 @@ perform_admission_i (void)
 
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> void
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-crit_dfs_traverse_i (void)
+crit_dfs_traverse_i ()
 {
 #if defined (SCHEDULER_LOGGING)
   ORBSVCS_DEBUG ((LM_TRACE,
@@ -2347,7 +2347,7 @@ crit_dfs_traverse_i (void)
 
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> void
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-propagate_criticalities_i (void)
+propagate_criticalities_i ()
 {
 #if defined (SCHEDULER_LOGGING)
   ORBSVCS_DEBUG ((LM_TRACE,
@@ -2389,7 +2389,7 @@ propagate_criticalities_i (void)
 // Propagates periods, sets total frame size.
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> void
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-propagate_characteristics_i (void)
+propagate_characteristics_i ()
 {
 #if defined (SCHEDULER_LOGGING)
   ORBSVCS_DEBUG ((LM_TRACE,
@@ -2428,7 +2428,7 @@ propagate_characteristics_i (void)
 // Sets last scheduled priority.
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> void
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-assign_priorities_i (void)
+assign_priorities_i ()
 {
   int i;
 #if defined (SCHEDULER_LOGGING)
@@ -2572,7 +2572,7 @@ assign_priorities_i (void)
 
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> void
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-refresh_tuple_ptr_array_i (void)
+refresh_tuple_ptr_array_i ()
 {
 #if defined (SCHEDULER_LOGGING)
   ORBSVCS_DEBUG ((LM_TRACE,
@@ -2803,7 +2803,7 @@ maintain_scheduling_array (ARRAY_ELEMENT_TYPE ** & current_ptr_array,
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> void
 
 TAO_Reconfig_Scheduler<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-compute_utilization_i (void)
+compute_utilization_i ()
 {
   TAO_RSE_Utilization_Visitor<RECONFIG_SCHED_STRATEGY> util_visitor;
   for (int i = 0; i < this->rt_info_count_; ++i)

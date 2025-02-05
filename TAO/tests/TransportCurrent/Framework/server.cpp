@@ -73,7 +73,7 @@ Worker::Worker (CORBA::ORB_ptr orb)
 /// interceptor
 
 int
-Worker::svc (void)
+Worker::svc ()
 {
   try
     {

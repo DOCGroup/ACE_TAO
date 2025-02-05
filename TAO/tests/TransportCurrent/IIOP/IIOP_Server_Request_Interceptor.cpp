@@ -11,16 +11,11 @@ namespace Test {
   IIOP_Server_Request_Interceptor::IIOP_Server_Request_Interceptor (const char* orbid, TEST test)
     : Server_Request_Interceptor (orbid, test)
     , iiop_test_successful_ (true)
-    , mult_thr_test_successful_ (true)
-  {
-  }
-
-  IIOP_Server_Request_Interceptor::~IIOP_Server_Request_Interceptor (void)
   {
   }
 
   char *
-  IIOP_Server_Request_Interceptor::name (void)
+  IIOP_Server_Request_Interceptor::name ()
   {
     return CORBA::string_dup ("II SRI");
   }
@@ -131,7 +126,7 @@ namespace Test {
   /// Checks if all the endpoints, encountered on the way in have been
   /// cleaned on the way out of the interception point
   bool
-  IIOP_Server_Request_Interceptor::self_test (void)
+  IIOP_Server_Request_Interceptor::self_test ()
   {
     CORBA::String_var name (this->name ());
     bool has_remaining_endpoints = false;

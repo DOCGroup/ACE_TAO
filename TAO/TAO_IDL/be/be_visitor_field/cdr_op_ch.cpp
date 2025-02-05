@@ -15,6 +15,7 @@
 #include "be_visitor_sequence/cdr_op_ch.h"
 #include "be_visitor_structure/structure.h"
 #include "be_visitor_structure/cdr_op_ch.h"
+#include "be_visitor_map/cdr_op_ch.h"
 #include "be_visitor_union/union.h"
 #include "be_visitor_union/cdr_op_ch.h"
 
@@ -139,6 +140,34 @@ be_visitor_field_cdr_op_ch::visit_sequence (be_sequence *node)
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_field_cdr_op_ch::"
                              "visit_sequence - "
+                             "codegen failed\n"
+                             ), -1);
+        }
+    }
+
+  return 0;
+}
+
+int
+be_visitor_field_cdr_op_ch::visit_map (be_map *node)
+{
+  // If not a typedef and we are defined in the use scope, we must be defined.
+  if (!this->ctx_->alias () // not a typedef
+      && node->is_child (this->ctx_->scope ()->decl ()))
+    {
+      // Instantiate a visitor context with a copy of our context. This info
+      // will be modified based on what type of node we are visiting.
+      be_visitor_context ctx (*this->ctx_);
+      ctx.node (node);
+
+      // First generate the map declaration.
+      be_visitor_map_cdr_op_ch visitor (&ctx);
+
+      if (node->accept (&visitor) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) be_visitor_field_cdr_op_ch::"
+                             "visit_map - "
                              "codegen failed\n"
                              ), -1);
         }

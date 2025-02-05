@@ -64,8 +64,8 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-extern int yylex (void);
-extern void yyflush_current_buffer (void);
+extern int yylex ();
+extern void yyflush_current_buffer ();
 
 static void yyerror (const char *)
 {
@@ -351,13 +351,6 @@ ACE_END_VERSIONED_NAMESPACE_DECL
  #pragma alloca
 #define YYSTACK_USE_ALLOCA
 #else /* not MSDOS, or __TURBOC__, or _AIX */
-#if 0
-#ifdef __hpux /* haible@ilog.fr says this works for HPUX 9.05 and up,
-     and on HPUX 10.  Eventually we can turn this on.  */
-#define YYSTACK_USE_ALLOCA
-#define alloca __builtin_alloca
-#endif /* __hpux */
-#endif
 #endif /* not _AIX */
 #endif /* not MSDOS, or __TURBOC__ */
 #endif /* not sparc */
@@ -538,7 +531,7 @@ __yy_memcpy (char *to, char *from, unsigned int count)
 #ifdef YYPARSE_PARAM
 int yyparse (void *);
 #else
-int yyparse (void);
+int yyparse ();
 #endif
 #endif
 

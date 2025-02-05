@@ -50,7 +50,7 @@ MultiTypes_SequencePushConsumer::push_structured_events (const CosNotification::
 
 /***************************************************************************/
 
-MultiTypes::MultiTypes (void)
+MultiTypes::MultiTypes ()
   :any_consumer_ (0),
    structured_consumer_ (0),
    sequence_consumer_ (0),
@@ -184,7 +184,7 @@ MultiTypes::init (int argc,
 
   sequence_supplier_->connect (this->supplier_admin_.in ());
 
-  consumer_start( 0 );
+  consumer_start(0);
 
   return 0;
 }
@@ -197,7 +197,7 @@ MultiTypes::parse_args(int, ACE_TCHAR **)
 }
 
 void
-MultiTypes::create_EC (void)
+MultiTypes::create_EC ()
 {
   CosNotifyChannelAdmin::ChannelID id;
 
@@ -209,7 +209,7 @@ MultiTypes::create_EC (void)
 }
 
 void
-MultiTypes::run_test (void)
+MultiTypes::run_test ()
 {
   // Send an Any, all consumers should receive it.
   CORBA::Any any;
@@ -309,13 +309,13 @@ MultiTypes::wait_for_all_consumers (int expected_count_per_consumer)
 }
 
 void
-MultiTypes::end_test (void)
+MultiTypes::end_test ()
 {
-  consumer_done( 0 );
+  consumer_done(0);
 }
 
 int
-MultiTypes::check_results (void)
+MultiTypes::check_results ()
 {
   // Destroy the channel.
   this->ec_->destroy ();

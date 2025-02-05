@@ -167,9 +167,6 @@ print STDERR "Starting Client: $prog $args\n";
 $CL = $test->CreateProcess ("$prog", "$args");
 
 # Some systems may take a very long time to process 100 objects.
-# For example, on a Solaris/SPARC system it was found that it took
-# 8 seconds to bind 100 objects compared to 0.08 seconds on a
-# Linux/Intel computer. So add to the wait time.
 $client = $CL->SpawnWaitKill ($test->ProcessStartWaitInterval() + 105);
 
 if ($client != 0) {

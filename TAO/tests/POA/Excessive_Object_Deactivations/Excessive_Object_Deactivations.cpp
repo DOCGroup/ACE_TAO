@@ -18,9 +18,9 @@
 class test_i : public POA_test
 {
 public:
-  void deactivate_self (void);
+  void deactivate_self ();
 
-  PortableServer::POA_ptr _default_POA (void);
+  PortableServer::POA_ptr _default_POA ();
 
   PortableServer::POA_var poa_;
 
@@ -28,13 +28,13 @@ public:
 };
 
 PortableServer::POA_ptr
-test_i::_default_POA ( /**/)
+test_i::_default_POA ()
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
 
 void
-test_i::deactivate_self (void)
+test_i::deactivate_self ()
 {
   this->poa_->deactivate_object (this->id_);
 

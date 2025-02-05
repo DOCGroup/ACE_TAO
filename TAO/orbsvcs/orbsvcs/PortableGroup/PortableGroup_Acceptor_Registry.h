@@ -63,16 +63,16 @@ public:
   };
 
   ///  Default constructor.
-  TAO_PortableGroup_Acceptor_Registry (void);
+  TAO_PortableGroup_Acceptor_Registry () = default;
 
   ///  Default destructor.
-  ~TAO_PortableGroup_Acceptor_Registry (void);
+  ~TAO_PortableGroup_Acceptor_Registry ();
 
   /// Open an acceptor based on a tagged profile.
   void open (const TAO_Profile* profile, TAO_ORB_Core &orb_core);
 
   /// Close all open acceptors.
-  int close_all (void);
+  int close_all ();
 
   typedef ACE_Unbounded_Queue<Entry> Acceptor_Registry;
   typedef ACE_Unbounded_Queue_Iterator<Entry> Acceptor_Registry_Iterator;

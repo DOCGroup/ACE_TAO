@@ -16,7 +16,7 @@ public:
               const act &act_for_iterations,
               const act &act_for_flag);
 
-  void shutdown (void);
+  void shutdown ();
 
 private:
   CORBA::ORB_var orb_;
@@ -33,7 +33,7 @@ public:
   void oneway_no_op (const act &act_for_iterations,
                      const act &act_for_flag);
 
-  void twoway_no_op (void);
+  void twoway_no_op ();
 
 private:
   server_var remote_partner_;

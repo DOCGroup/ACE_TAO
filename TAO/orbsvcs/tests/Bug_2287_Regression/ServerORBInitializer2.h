@@ -25,7 +25,7 @@ class Server_ORBInitializer2 :
   public virtual ::CORBA::LocalObject
 {
 public:
-  Server_ORBInitializer2 (void);
+  Server_ORBInitializer2 ();
 
   virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info);
 

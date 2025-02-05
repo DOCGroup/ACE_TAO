@@ -84,15 +84,12 @@ namespace TAO
       PortableServer::POA_ptr poa,
       PortableGroup::FactoryRegistry_ptr factory_registry);
 
-
     TAO::PG_Object_Group * create_group (
         const char * type_id,
         const PortableGroup::Criteria & the_criteria,
         const TAO::PG_Property_Set_var & typeid_properties);
 
-
     void delete_group (PortableGroup::ObjectGroup_ptr object_group);
-
 
     void delete_group (PortableGroup::ObjectGroupId group_id);
 
@@ -104,8 +101,7 @@ namespace TAO
      * return all groups in the factory
      */
     PortableGroup::ObjectGroups *
-    all_groups (void);
-
+    all_groups ();
 
     /**
      * insert existing group.  Take ownership

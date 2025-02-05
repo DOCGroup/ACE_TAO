@@ -94,7 +94,7 @@ namespace TAO_Notify
      * vary based on the type of saver, so we can't include it in the
      * interface.
      */
-    virtual void close (void);
+    virtual void close ();
   };
 } // namespace TAO_Notify
 

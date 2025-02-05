@@ -47,7 +47,7 @@ TAO_BidirectionalPolicy::clone () const
 }
 
 CORBA::Policy_ptr
-TAO_BidirectionalPolicy::copy (void)
+TAO_BidirectionalPolicy::copy ()
 {
   // Future policy implementors: notice how the following code is
   // exception safe!

@@ -48,7 +48,7 @@ McastHello::send_large_octet_array (const Test::Octets &payload)
 }
 
 void
-McastHello::shutdown (void)
+McastHello::shutdown ()
 {
   this->orb_->shutdown (false);
 }

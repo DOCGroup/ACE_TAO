@@ -55,7 +55,7 @@ class ACE_SSL_Export ACE_SSL_SOCK_Connector
 {
 public:
   /// Default constructor.
-  ACE_SSL_SOCK_Connector (void);
+  ACE_SSL_SOCK_Connector ();
 
   /**
    * Actively connect to a peer, producing a connected @c ACE_SSL_SOCK_Stream
@@ -160,7 +160,7 @@ public:
                           int perms = 0);
 
   /// Default dtor.
-  virtual ~ACE_SSL_SOCK_Connector (void);
+  virtual ~ACE_SSL_SOCK_Connector ();
 
   /**
    * Actively connect to a peer, producing a connected @c ACE_SSL_SOCK_Stream

@@ -16,7 +16,7 @@ public:
                                    , void *act
                                    );
 
-  static JAWS_Protocol_State * instance (void)
+  static JAWS_Protocol_State * instance ()
   {
     return ACE_Singleton<TeraSS_State_WRITE, ACE_SYNCH_MUTEX>::instance ();
   }

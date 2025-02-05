@@ -106,8 +106,8 @@ private:
    *
    */
   //@{
-  ACE_Intrusive_List (const ACE_Intrusive_List<T> &);
-  ACE_Intrusive_List<T>& operator= (const ACE_Intrusive_List<T> &);
+  ACE_Intrusive_List (const ACE_Intrusive_List<T> &) = delete;
+  ACE_Intrusive_List<T>& operator= (const ACE_Intrusive_List<T> &) = delete;
   //@}
 
 private:
@@ -124,13 +124,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #include "ace/Intrusive_List.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Intrusive_List.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Intrusive_List.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_INTRUSIVE_LIST_H */

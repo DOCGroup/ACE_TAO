@@ -6,8 +6,6 @@
 
 #include "DllORB.h"
 
-char const * const scpc_orbId = "testDllOrb";
-
 const int max_length = 1000;
 
 #if defined (ACE_USES_WCHAR)

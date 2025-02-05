@@ -84,7 +84,7 @@ ACE_NT_SERVICE_DEFINE (service, Activator_NT_Service, IMR_ACTIVATOR_SERVICE_NAME
 #endif /* ACE_WIN32 && !ACE_LACKS_WIN32_SERVICES */
 
 int
-run_service (void)
+run_service ()
 {
 #if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_SERVICES)
   SERVICE::instance()->name (IMR_ACTIVATOR_SERVICE_NAME, IMR_ACTIVATOR_DISPLAY_NAME);

@@ -48,15 +48,15 @@ class TAO_Strategies_Export TAO_SCIOP_Connector : public TAO_Connector
 {
 public:
   /// Constructor.
-  TAO_SCIOP_Connector (void);
+  TAO_SCIOP_Connector ();
 
   /// Destructor.
-  ~TAO_SCIOP_Connector (void);
+  ~TAO_SCIOP_Connector ();
 
   // = The TAO_Connector methods, please check the documentation on
   // Transport_Connector.h
   int open (TAO_ORB_Core *orb_core);
-  int close (void);
+  int close ();
   TAO_Profile *create_profile (TAO_InputCDR& cdr);
 
   virtual int check_prefix (const char *endpoint);
@@ -89,7 +89,7 @@ protected:
 
   /// More TAO_Connector methods, please check the documentation on
   /// Transport_Connector.h
-  virtual TAO_Profile *make_profile (void);
+  virtual TAO_Profile *make_profile ();
 
   /// Cancel the passed cvs handler from the connector
   int cancel_svc_handler (TAO_Connection_Handler * svc_handler);

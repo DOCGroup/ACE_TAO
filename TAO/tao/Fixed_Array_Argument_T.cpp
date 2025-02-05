@@ -33,7 +33,7 @@ TAO::In_Fixed_Array_Argument_T<S_forany,Insert_Policy>::
 
 template<typename S_forany,
          template <typename> class Insert_Policy>
-TAO::In_Fixed_Array_Clonable_Argument_T<S_forany,Insert_Policy>::~In_Fixed_Array_Clonable_Argument_T (void)
+TAO::In_Fixed_Array_Clonable_Argument_T<S_forany,Insert_Policy>::~In_Fixed_Array_Clonable_Argument_T ()
 {
   if (this->is_clone_)
     {
@@ -47,7 +47,7 @@ TAO::In_Fixed_Array_Clonable_Argument_T<S_forany,Insert_Policy>::~In_Fixed_Array
 template<typename S_forany,
          template <typename> class Insert_Policy>
 TAO::Argument*
-TAO::In_Fixed_Array_Clonable_Argument_T<S_forany,Insert_Policy>::clone (void)
+TAO::In_Fixed_Array_Clonable_Argument_T<S_forany,Insert_Policy>::clone ()
 {
   typedef TAO::details::array_traits<S_forany> ARRAY_TRAITS;
   typename ARRAY_TRAITS::slice_type * tmp_ptr = 0;

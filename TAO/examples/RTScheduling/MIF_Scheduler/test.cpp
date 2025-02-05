@@ -24,7 +24,7 @@ public:
 #endif
   }
 
-  ~TestShutdown (void)
+  ~TestShutdown ()
   {
 #if !defined(ACE_LACKS_UNIX_SIGNALS)
     this->shutdown_.remove_handler (SIGTERM);
@@ -47,7 +47,7 @@ private:
   ACE_Sig_Handler shutdown_;
 };
 
-DT_Test::DT_Test (void)
+DT_Test::DT_Test ()
 {
 }
 
@@ -118,13 +118,13 @@ DT_Test::dt_creator (MIF_DT_Creator* dt_creator)
 
 
 MIF_Scheduler*
-DT_Test::scheduler (void)
+DT_Test::scheduler ()
 {
   return this->scheduler_.in ();
 }
 /*
 int
-DT_Test::activate_task (void)
+DT_Test::activate_task ()
 {
 long flags;
   flags = THR_NEW_LWP | THR_JOINABLE;
@@ -144,7 +144,7 @@ long flags;
 }
 
 int
-DT_Test::svc (void)
+DT_Test::svc ()
 {
   try
     {

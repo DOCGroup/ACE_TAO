@@ -76,7 +76,7 @@ public:
   virtual void create_exception_list (CORBA::ExceptionList_ptr &list);
 
   // Used to force the initialization of the ORB code.
-  static int Initializer (void);
+  static int Initializer ();
 };
 
 static int

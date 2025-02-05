@@ -95,7 +95,7 @@ typedef struct {
  * request_create creates a new request structure.
  */
 
-Request *request_create(void);
+Request *request_create();
 
 /*
  * request_free destroys a request structure.

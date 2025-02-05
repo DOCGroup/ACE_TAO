@@ -16,7 +16,7 @@ class Factory
 {
 public:
   /// Constructor
-  Factory (void);
+  Factory ();
   /// creates a Test::Simple servant reference.
   /// This reference is then passed as a FactoryInfos property
   /// when the LoadManager creates the object group.

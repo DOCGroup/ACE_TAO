@@ -14,7 +14,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 // TAO_AV_SCTP_SEQ_Transport
 //------------------------------------------------------------
 
-TAO_AV_SCTP_SEQ_Transport::TAO_AV_SCTP_SEQ_Transport (void)
+TAO_AV_SCTP_SEQ_Transport::TAO_AV_SCTP_SEQ_Transport ()
   :handler_ (0)
 {
 }
@@ -24,7 +24,7 @@ TAO_AV_SCTP_SEQ_Transport::TAO_AV_SCTP_SEQ_Transport (TAO_AV_SCTP_SEQ_Flow_Handl
 {
 }
 
-TAO_AV_SCTP_SEQ_Transport::~TAO_AV_SCTP_SEQ_Transport (void)
+TAO_AV_SCTP_SEQ_Transport::~TAO_AV_SCTP_SEQ_Transport ()
 {
 }
 
@@ -35,19 +35,19 @@ TAO_AV_SCTP_SEQ_Transport::open (ACE_Addr * /*address*/)
 }
 
 int
-TAO_AV_SCTP_SEQ_Transport::close (void)
+TAO_AV_SCTP_SEQ_Transport::close ()
 {
   return 0;
 }
 
 int
-TAO_AV_SCTP_SEQ_Transport::mtu (void)
+TAO_AV_SCTP_SEQ_Transport::mtu ()
 {
   return 0;
 }
 
 ACE_Addr*
-TAO_AV_SCTP_SEQ_Transport::get_peer_addr (void)
+TAO_AV_SCTP_SEQ_Transport::get_peer_addr ()
 {
   return 0;
 }
@@ -171,7 +171,7 @@ TAO_AV_SCTP_SEQ_Base_Acceptor::acceptor_open (TAO_AV_SCTP_SEQ_Acceptor *acceptor
   this->reactor_ = reactor;
   this->entry_ = entry;
 
-  ACE_Auto_Array_Ptr<ACE_UINT32> local_ip_addr
+  std::unique_ptr<ACE_UINT32[]> local_ip_addr
     (new ACE_UINT32[entry->num_local_sec_addrs ()]);
   ACE_INET_Addr ip_addr;
   char** addrs = entry->get_local_sec_addr ();
@@ -221,11 +221,11 @@ TAO_AV_SCTP_SEQ_Base_Acceptor::make_svc_handler (TAO_AV_SCTP_SEQ_Flow_Handler *&
 // TAO_AV_SCTP_SEQ_Acceptor
 //------------------------------------------------------------
 
-TAO_AV_SCTP_SEQ_Acceptor::TAO_AV_SCTP_SEQ_Acceptor (void)
+TAO_AV_SCTP_SEQ_Acceptor::TAO_AV_SCTP_SEQ_Acceptor ()
 {
 }
 
-TAO_AV_SCTP_SEQ_Acceptor::~TAO_AV_SCTP_SEQ_Acceptor (void)
+TAO_AV_SCTP_SEQ_Acceptor::~TAO_AV_SCTP_SEQ_Acceptor ()
 {
 }
 
@@ -354,7 +354,7 @@ TAO_AV_SCTP_SEQ_Acceptor::open_default (TAO_Base_StreamEndPoint *endpoint,
 
 
 int
-TAO_AV_SCTP_SEQ_Acceptor::close (void)
+TAO_AV_SCTP_SEQ_Acceptor::close ()
 {
   return 0;
 }
@@ -404,11 +404,11 @@ TAO_AV_SCTP_SEQ_Base_Connector::connector_connect (TAO_AV_SCTP_SEQ_Flow_Handler 
 //------------------------------------------------------------
 // TAO_AV_SCTP_SEQ_Connector
 //------------------------------------------------------------
-TAO_AV_SCTP_SEQ_Connector::TAO_AV_SCTP_SEQ_Connector (void)
+TAO_AV_SCTP_SEQ_Connector::TAO_AV_SCTP_SEQ_Connector ()
 {
 }
 
-TAO_AV_SCTP_SEQ_Connector::~TAO_AV_SCTP_SEQ_Connector (void)
+TAO_AV_SCTP_SEQ_Connector::~TAO_AV_SCTP_SEQ_Connector ()
 {
 }
 
@@ -491,7 +491,7 @@ TAO_AV_SCTP_SEQ_Connector::connect (TAO_FlowSpec_Entry *entry,
                       -1);
     }
 
-  ACE_Auto_Array_Ptr<ACE_UINT32> local_ip_addr
+  std::unique_ptr<ACE_UINT32[]> local_ip_addr
     (new ACE_UINT32[entry->num_peer_sec_addrs ()]);
   ACE_INET_Addr ip_addr;
   char** addrs = entry->get_peer_sec_addr ();
@@ -566,7 +566,7 @@ TAO_AV_SCTP_SEQ_Connector::connect (TAO_FlowSpec_Entry *entry,
 }
 
 int
-TAO_AV_SCTP_SEQ_Connector::close (void)
+TAO_AV_SCTP_SEQ_Connector::close ()
 {
   return 0;
 }
@@ -576,11 +576,11 @@ TAO_AV_SCTP_SEQ_Connector::close (void)
 //------------------------------------------------------------
 
 
-TAO_AV_SCTP_SEQ_Factory::TAO_AV_SCTP_SEQ_Factory (void)
+TAO_AV_SCTP_SEQ_Factory::TAO_AV_SCTP_SEQ_Factory ()
 {
 }
 
-TAO_AV_SCTP_SEQ_Factory::~TAO_AV_SCTP_SEQ_Factory (void)
+TAO_AV_SCTP_SEQ_Factory::~TAO_AV_SCTP_SEQ_Factory ()
 {
 }
 
@@ -594,7 +594,7 @@ TAO_AV_SCTP_SEQ_Factory::match_protocol (const char *protocol_string)
 }
 
 TAO_AV_Acceptor*
-TAO_AV_SCTP_SEQ_Factory::make_acceptor (void)
+TAO_AV_SCTP_SEQ_Factory::make_acceptor ()
 {
   if (TAO_debug_level > 0)
     ORBSVCS_DEBUG ((LM_DEBUG,"TAO_AV_SCTP_SEQ_Factory::make_acceptor\n"));
@@ -606,7 +606,7 @@ TAO_AV_SCTP_SEQ_Factory::make_acceptor (void)
 }
 
 TAO_AV_Connector*
-TAO_AV_SCTP_SEQ_Factory::make_connector (void)
+TAO_AV_SCTP_SEQ_Factory::make_connector ()
 {
   if (TAO_debug_level > 0)
     ORBSVCS_DEBUG ((LM_DEBUG,"TAO_AV_SCTP_SEQ_Factory::make_connector\n"));
@@ -629,7 +629,7 @@ TAO_AV_SCTP_SEQ_Factory::init (int, ACE_TCHAR *[])
 //------------------------------------------------------------
 
 int
-TAO_AV_SCTP_SEQ_Object::handle_input (void)
+TAO_AV_SCTP_SEQ_Object::handle_input ()
 {
   int n = this->transport_->recv (this->frame_.rd_ptr (),
                                   this->frame_.size ());
@@ -675,12 +675,12 @@ TAO_AV_SCTP_SEQ_Object::TAO_AV_SCTP_SEQ_Object (TAO_AV_Callback *callback,
   this->frame_.size (BUFSIZ);
 }
 
-TAO_AV_SCTP_SEQ_Object::~TAO_AV_SCTP_SEQ_Object (void)
+TAO_AV_SCTP_SEQ_Object::~TAO_AV_SCTP_SEQ_Object ()
 {
   // No-op
 }
 int
-TAO_AV_SCTP_SEQ_Object::destroy (void)
+TAO_AV_SCTP_SEQ_Object::destroy ()
 {
   this->callback_->handle_destroy ();
   delete this;
@@ -698,13 +698,13 @@ TAO_AV_SCTP_SEQ_Flow_Handler::TAO_AV_SCTP_SEQ_Flow_Handler (TAO_AV_Callback * /*
            TAO_AV_SCTP_SEQ_Transport (this));
 }
 
-TAO_AV_SCTP_SEQ_Flow_Handler::~TAO_AV_SCTP_SEQ_Flow_Handler (void)
+TAO_AV_SCTP_SEQ_Flow_Handler::~TAO_AV_SCTP_SEQ_Flow_Handler ()
 {
   delete this->transport_;
 }
 
 TAO_AV_Transport *
-TAO_AV_SCTP_SEQ_Flow_Handler::transport (void)
+TAO_AV_SCTP_SEQ_Flow_Handler::transport ()
 {
   return this->transport_;
 }
@@ -847,11 +847,11 @@ TAO_AV_SCTP_SEQ_Flow_Handler::handle_timeout (const ACE_Time_Value &tv,
 //------------------------------------------------------------
 // TAO_AV_SCTP_SEQ_Flow_Factory
 //------------------------------------------------------------
-TAO_AV_SCTP_SEQ_Flow_Factory::TAO_AV_SCTP_SEQ_Flow_Factory (void)
+TAO_AV_SCTP_SEQ_Flow_Factory::TAO_AV_SCTP_SEQ_Flow_Factory ()
 {
 }
 
-TAO_AV_SCTP_SEQ_Flow_Factory::~TAO_AV_SCTP_SEQ_Flow_Factory (void)
+TAO_AV_SCTP_SEQ_Flow_Factory::~TAO_AV_SCTP_SEQ_Flow_Factory ()
 {
 }
 

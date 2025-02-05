@@ -32,7 +32,7 @@ ACE_TkReactor::ACE_TkReactor (size_t size,
 #endif /* ACE_MT_SAFE */
 }
 
-ACE_TkReactor::~ACE_TkReactor (void)
+ACE_TkReactor::~ACE_TkReactor ()
 {
   // Delete the remaining items in the linked list.
 
@@ -341,7 +341,7 @@ ACE_TkReactor::remove_handler_i (const ACE_Handle_Set &handles,
 // first timeout in the Reactor's Timer_Queue.
 
 void
-ACE_TkReactor::reset_timeout (void)
+ACE_TkReactor::reset_timeout ()
 {
   if (this->timeout_)
     ::Tk_DeleteTimerHandler (this->timeout_);

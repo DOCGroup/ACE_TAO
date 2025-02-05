@@ -20,7 +20,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if defined (ACE_WIN32) && !defined (ACE_HAS_PHARLAP)
+#if defined (ACE_WIN32)
 
 #include "ace/ACE.h"
 #include "ace/os_include/sys/os_mman.h"
@@ -127,7 +127,7 @@ protected:
   int map (int &firstTime, size_t appendBytes = 0);
 
   /// Release the mapping.
-  int unmap (void);
+  int unmap ();
 
 private:
   /**
@@ -190,7 +190,7 @@ private:
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#endif /* ACE_WIN32 && !ACE_HAS_PHARLAP */
+#endif /* ACE_WIN32 */
 
 #if defined (__ACE_INLINE__)
 #include "ace/Pagefile_Memory_Pool.inl"

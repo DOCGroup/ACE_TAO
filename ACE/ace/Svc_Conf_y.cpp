@@ -1133,7 +1133,7 @@ int ace_yyparse ();
 #endif
 #else /* ! YYPARSE_PARAM */
 #if defined __STDC__ || defined __cplusplus
-int ace_yyparse (void);
+int ace_yyparse ();
 #else
 int ace_yyparse ();
 #endif
@@ -1161,7 +1161,7 @@ ace_yyparse (YYPARSE_PARAM)
 #if (defined __STDC__ || defined __C99__FUNC__ \
      || defined __cplusplus || defined _MSC_VER)
 int
-ace_yyparse (void)
+ace_yyparse ()
 #else
 int
 ace_yyparse ()

@@ -17,7 +17,7 @@ TAO::TypeCode::Case<StringType, TypeCodeType>::Case (
 
 template <typename StringType, typename TypeCodeType>
 ACE_INLINE
-TAO::TypeCode::Case<StringType, TypeCodeType>::Case (void)
+TAO::TypeCode::Case<StringType, TypeCodeType>::Case ()
   : name_ ()
   , type_ ()
 {

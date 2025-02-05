@@ -14,9 +14,6 @@
 #include "ace/DLL.h"
 #include "ace/ACE.h"
 #include "ace/Log_Category.h"
-#if defined (ACE_OPENVMS)
-# include "ace/Lib_Find.h"
-#endif
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -176,14 +173,5 @@ ACE_Service_Type::name (const ACE_TCHAR *n)
 
   this->name_ = ACE::strnew (n);
 }
-
-#if defined (ACE_OPENVMS)
-ACE_Dynamic_Svc_Registrar::ACE_Dynamic_Svc_Registrar (const ACE_TCHAR* alloc_name,
-                                                      void* svc_allocator)
-{
-  // register service allocator function by full name in ACE singleton registry
-  ACE::ldregister (alloc_name, svc_allocator);
-}
-#endif
 
 ACE_END_VERSIONED_NAMESPACE_DECL

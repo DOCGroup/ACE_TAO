@@ -50,7 +50,7 @@ public:
   TAO_Optimized_Connection_Endpoint_Selector (const ACE_Time_Value& tv);
 
   /// Destructor.
-  virtual ~TAO_Optimized_Connection_Endpoint_Selector (void);
+  virtual ~TAO_Optimized_Connection_Endpoint_Selector ();
 
   static void hook (TAO_ORB_Core *,
                     TAO_Stub *,

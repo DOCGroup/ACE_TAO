@@ -293,7 +293,7 @@ ACE_Token_Handler::handle_timeout (const ACE_Time_Value &,
 // Dispatch the appropriate operation to handle the client request.
 
 ACE_Token_Proxy *
-ACE_Token_Handler::get_proxy (void)
+ACE_Token_Handler::get_proxy ()
 {
   ACE_TRACE ("ACE_Token_Handler::get_proxy");
 
@@ -325,7 +325,7 @@ ACE_Token_Handler::get_proxy (void)
 }
 
 ACE_Token_Proxy *
-ACE_Token_Handler::create_proxy (void)
+ACE_Token_Handler::create_proxy ()
 {
   ACE_TRACE ("ACE_Token_Handler::create_proxy");
 
@@ -362,7 +362,7 @@ ACE_Token_Handler::create_proxy (void)
 }
 
 int
-ACE_Token_Handler::dispatch (void)
+ACE_Token_Handler::dispatch ()
 {
   ACE_TRACE ("ACE_Token_Handler::dispatch");
   ACE_Token_Proxy *proxy = this->get_proxy ();
@@ -394,7 +394,7 @@ ACE_Token_Handler::dispatch (void)
 // Note, this method should use non-blocking I/O.
 
 /* VIRTUAL */ int
-ACE_Token_Handler::recv_request (void)
+ACE_Token_Handler::recv_request ()
 {
   ACE_TRACE ("ACE_Token_Handler::recv_request");
   ssize_t n;
@@ -478,7 +478,7 @@ ACE_Token_Handler::handle_input (ACE_HANDLE)
 }
 
 void
-ACE_Token_Handler::sleep_hook (void)
+ACE_Token_Handler::sleep_hook ()
 {
   ACE_TRACE ("ACE_Token_Handler::sleep_hook");
   // @@ what should we do?
@@ -541,7 +541,7 @@ ACE_TS_Mutex::ACE_TS_Mutex (const ACE_TS_Mutex &m)
 }
 
 void
-ACE_TS_Mutex::sleep_hook (void)
+ACE_TS_Mutex::sleep_hook ()
 {
   ACE_TRACE ("ACE_TS_Mutex::sleep_hook");
   th_->sleep_hook ();
@@ -585,7 +585,7 @@ ACE_TS_RLock::ACE_TS_RLock (const ACE_TS_RLock &r)
 }
 
 void
-ACE_TS_RLock::sleep_hook (void)
+ACE_TS_RLock::sleep_hook ()
 {
   ACE_TRACE ("ACE_TS_RLock::sleep_hook");
   th_->sleep_hook ();
@@ -630,7 +630,7 @@ ACE_TS_WLock::ACE_TS_WLock (const ACE_TS_WLock &w)
 }
 
 void
-ACE_TS_WLock::sleep_hook (void)
+ACE_TS_WLock::sleep_hook ()
 {
   ACE_TRACE ("ACE_TS_WLock::sleep_hook");
   th_->sleep_hook ();

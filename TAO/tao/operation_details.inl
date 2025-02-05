@@ -71,7 +71,7 @@ TAO_Operation_Details::in_argument_flag () const
 #endif // TAO_IGNORE_IN_ARGS
 
 ACE_INLINE TAO_Service_Context &
-TAO_Operation_Details::request_service_context (void)
+TAO_Operation_Details::request_service_context ()
 {
   return this->request_service_info_;
 }
@@ -83,7 +83,7 @@ TAO_Operation_Details::request_service_context () const
 }
 
 ACE_INLINE IOP::ServiceContextList &
-TAO_Operation_Details::request_service_info (void)
+TAO_Operation_Details::request_service_info ()
 {
   return this->request_service_context ().service_info ();
 }
@@ -95,7 +95,7 @@ TAO_Operation_Details::request_service_info () const
 }
 
 ACE_INLINE TAO_Service_Context &
-TAO_Operation_Details::reply_service_context (void)
+TAO_Operation_Details::reply_service_context ()
 {
   return this->reply_service_info_;
 }
@@ -107,7 +107,7 @@ TAO_Operation_Details::reply_service_context () const
 }
 
 ACE_INLINE IOP::ServiceContextList &
-TAO_Operation_Details::reply_service_info (void)
+TAO_Operation_Details::reply_service_info ()
 {
   return this->reply_service_context ().service_info ();
 }
@@ -119,12 +119,12 @@ TAO_Operation_Details::reply_service_info () const
 }
 
 ACE_INLINE void
-TAO_Operation_Details::reset_request_service_info (void)
+TAO_Operation_Details::reset_request_service_info ()
 {
   this->request_service_context ().service_info ().length (0);
 }
 ACE_INLINE void
-TAO_Operation_Details::reset_reply_service_info (void)
+TAO_Operation_Details::reset_reply_service_info ()
 {
   this->reply_service_context ().service_info ().length (0);
 }

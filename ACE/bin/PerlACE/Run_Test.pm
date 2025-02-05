@@ -251,29 +251,6 @@ sub add_lib_path {
 
 sub check_privilege_group
 {
-    if ($^O eq 'hpux') {
-        my($access) = 'RTSCHED';
-        my($status) = 0;
-        my($getprivgrp) = '/bin/getprivgrp';
-
-        if (-x $getprivgrp) {
-            if (open(GPG, "$getprivgrp |")) {
-                while(<GPG>) {
-                    if (index($_, $access) >= 0) {
-                          $status = 1;
-                    }
-                }
-                close(GPG);
-            }
-        }
-
-        if (!$status) {
-            print STDERR
-              "WARNING: You must have $access privileges to run this test.\n",
-              "         Run \"man 1m setprivgrp\" for more information.\n";
-            exit(0);
-        }
-    }
 }
 
 # waits until it finds a matching regular expression in a file

@@ -27,7 +27,7 @@ public:
 #endif
   }
 
-  ~TestShutdown (void)
+  ~TestShutdown ()
   {
 #if !defined(ACE_LACKS_UNIX_SIGNALS)
     this->shutdown_.remove_handler (SIGTERM);

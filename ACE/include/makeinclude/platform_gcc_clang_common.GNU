@@ -6,7 +6,6 @@ CCFLAGS += -Wnon-virtual-dtor
 # Suppress "Creating *.a" Message
 ARFLAGS += -c
 
-gcc_template_instantiation_visibility ?= 0
 ifeq ($(shared_libs), 1)
   ifneq ($(static_libs_only), 1)
     # Add all symbols to the dynamic symbol table.  Needed to enable
@@ -16,7 +15,7 @@ ifeq ($(shared_libs), 1)
     ifeq ($(GNU_LD),1)
       # Make sure this version of ld supports the -E option.
       ifneq ($(mingw32),1)
-        LD_EXPORT_DEFINED := $(shell sh -c '$(LD_FOR_VERSION_TEST) -E 2>&1 | egrep -i "(option|flag)" /dev/null; echo $$?')
+        LD_EXPORT_DEFINED := $(shell sh -c '$(LD_FOR_VERSION_TEST) -E 2>&1 | grep -E -i "(option|flag)" /dev/null; echo $$?')
       else
         LD_EXPORT_DEFINED := $(shell $(LD_FOR_VERSION_TEST) -E 2>&1 | grep -c -i -e '(option|flag)')
         ifeq ($(LD_EXPORT_DEFINED),0)
@@ -34,9 +33,6 @@ ifeq ($(shared_libs), 1)
     # improved shared library binaries.
     ifneq ($(no_hidden_visibility),1)
       CCFLAGS += -fvisibility=hidden -fvisibility-inlines-hidden
-      ifeq ($(gcc_template_instantiation_visibility),1)
-        CCFLAGS += -DACE_GCC_HAS_TEMPLATE_INSTANTIATION_VISIBILITY_ATTRS=1
-      endif # gcc_template_instantiation_visibility
     else
       CPPFLAGS += -DACE_HAS_CUSTOM_EXPORT_MACROS=0
     endif # no_hidden_visibility
@@ -53,21 +49,13 @@ else
   CPPFLAGS += -DACE_HAS_CUSTOM_EXPORT_MACROS=0
 endif # shared_libs
 
-ifeq ($(c++20),1)
+ifneq ($(c++std),)
+  CCFLAGS += -std=$(c++std)
+else ifeq ($(c++20),1)
   CCFLAGS += -std=c++20
-else
-  ifeq ($(c++17),1)
-    CCFLAGS += -std=c++17
-  else
-    ifeq ($(c++14),1)
-      CCFLAGS += -std=c++14
-    else
-      ifeq ($(c++11),1)
-        CCFLAGS += -std=c++11
-      endif # c++11
-    endif # c++14
-  endif #c++17
-endif #c++20
+else ifeq ($(c++17),1)
+  CCFLAGS += -std=c++17
+endif
 
 # If no option has been specified, set templates to automatic
 # version of the compiler.
@@ -80,15 +68,7 @@ templates ?= automatic
 versioned_so ?= 1
 with_ld ?=
 ifneq ($(versioned_so),0)
-  ifeq ($(with_ld),hpux)
-    SOFLAGS += -Wl,+h -Wl,$(SONAME)
-  else
-    ifeq ($(with_ld),aix)
-    # What to do here???
-    else
-      SOFLAGS += -Wl,-h -Wl,$(SONAME)
-    endif
-  endif
+  SOFLAGS += -Wl,-h -Wl,$(SONAME)
 endif
 
 ifeq ($(versioned_so),2)

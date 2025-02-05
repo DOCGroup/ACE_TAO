@@ -436,7 +436,7 @@ FE_Utils::create_implied_ami_uses_stuff ()
 int
 FE_Utils::path_cmp (const char *s, const char *t)
 {
-#if defined (WIN32) || defined (ACE_OPENVMS)
+#if defined (WIN32)
   // Since Windows has case-insensitive filenames, the preprocessor,
   // when searching using a provided relative path, will sometimes
   // capitalize the first letter of the last segment of a path name

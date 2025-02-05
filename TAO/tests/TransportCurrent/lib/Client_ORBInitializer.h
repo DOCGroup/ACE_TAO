@@ -31,7 +31,7 @@ namespace Test
   {
   public:
     Client_ORBInitializer (PortableInterceptor::ClientRequestInterceptor_ptr interceptor);
-    virtual ~Client_ORBInitializer (void);
+    virtual ~Client_ORBInitializer ();
 
     virtual void pre_init(PortableInterceptor::ORBInitInfo*);
 

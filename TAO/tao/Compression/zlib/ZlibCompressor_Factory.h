@@ -34,7 +34,7 @@ namespace TAO
         const ::Compression::Compressor_var> ZlibCompressorMap;
 
   public:
-    Zlib_CompressorFactory (void);
+    Zlib_CompressorFactory ();
 
     virtual ::Compression::Compressor_ptr get_compressor (
         ::Compression::CompressionLevel compression_level);

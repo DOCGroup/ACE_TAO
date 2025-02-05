@@ -24,7 +24,6 @@
 #include "ace/Abstract_Timer_Queue.h"
 #include "ace/Timer_Queue_Iterator.h"
 #include "ace/Time_Policy.h"
-#include "ace/Copy_Disabled.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -39,11 +38,15 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 template<typename TYPE, typename FUNCTOR>
 class ACE_Timer_Queue_Upcall_Base
   : public ACE_Abstract_Timer_Queue<TYPE>
-  , private ACE_Copy_Disabled
 {
 public:
   // Constructor
   explicit ACE_Timer_Queue_Upcall_Base(FUNCTOR * upcall_functor = nullptr);
+
+  ACE_Timer_Queue_Upcall_Base (const ACE_Timer_Queue_Upcall_Base &) = delete;
+  ACE_Timer_Queue_Upcall_Base (ACE_Timer_Queue_Upcall_Base &&) = delete;
+  ACE_Timer_Queue_Upcall_Base &operator= (const ACE_Timer_Queue_Upcall_Base &) = delete;
+  ACE_Timer_Queue_Upcall_Base &operator= (ACE_Timer_Queue_Upcall_Base &&) = delete;
 
   /// Destructor
   virtual ~ACE_Timer_Queue_Upcall_Base ();
@@ -237,13 +240,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #include "ace/Timer_Queue_T.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Timer_Queue_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Timer_Queue_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_TIMER_QUEUE_T_H */

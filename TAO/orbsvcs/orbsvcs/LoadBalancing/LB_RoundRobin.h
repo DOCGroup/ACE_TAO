@@ -49,7 +49,7 @@ public:
    * Methods required by the CosLoadBalancing::Strategy interface.
    */
   //@{
-  virtual char * name (void);
+  virtual char * name ();
 
   virtual CosLoadBalancing::Properties * get_properties ();
 
@@ -76,7 +76,7 @@ public:
 
 protected:
   /// Destructor
-  ~TAO_LB_RoundRobin (void);
+  ~TAO_LB_RoundRobin ();
 
 private:
   /// Keep a copy of location list for verify if the list is changed

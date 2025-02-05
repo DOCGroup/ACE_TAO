@@ -58,12 +58,14 @@ template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB> ACE_INLINE int
 ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::release (int close)
 {
   ACE_GUARD_RETURN (ACE_LOCK, ace_mon, *this->lock_, -1);
-  if (this->cb_ptr_ != 0)
+  if (this->cb_ptr_ != nullptr)
     {
       int const retv = --this->cb_ptr_->ref_counter_;
 
       if (close)
-        this->memory_pool_.release (0);
+        {
+          this->memory_pool_.release (0);
+        }
 
       if (retv == 0)
         {
@@ -109,9 +111,7 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::protect (ssize_t len,
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB> ACE_INLINE int
-ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::protect (void *addr,
-                                                             size_t len,
-                                                             int flags)
+ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::protect (void *addr, size_t len, int flags)
 {
   ACE_TRACE ("ACE_Malloc_T<MEMORY_POOL, ACE_LOCK, ACE_CB>::protect");
   return this->memory_pool_.protect (addr, len, flags);

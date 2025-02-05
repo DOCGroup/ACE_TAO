@@ -48,7 +48,7 @@ public:
   //= Initialization and termination code.
 
   /// Constructor - default.
-  TAO_NotifyLogFactory_i (void);
+  TAO_NotifyLogFactory_i ();
 
   /// Constructor.
   TAO_NotifyLogFactory_i (CosNotifyChannelAdmin::EventChannelFactory_ptr ecf);
@@ -81,20 +81,20 @@ public:
 
 
   // = Methods from CosNotifyChannelAdmin::ConsumerAdmin.
-  CosNotifyChannelAdmin::AdminID MyID (void);
+  CosNotifyChannelAdmin::AdminID MyID ();
 
-  CosNotifyChannelAdmin::EventChannel_ptr MyChannel (void);
+  CosNotifyChannelAdmin::EventChannel_ptr MyChannel ();
 
-  CosNotifyChannelAdmin::InterFilterGroupOperator MyOperator (void);
+  CosNotifyChannelAdmin::InterFilterGroupOperator MyOperator ();
 
-  CosNotifyFilter::MappingFilter_ptr priority_filter (void);
+  CosNotifyFilter::MappingFilter_ptr priority_filter ();
   void priority_filter (CosNotifyFilter::MappingFilter_ptr);
 
-  CosNotifyFilter::MappingFilter_ptr lifetime_filter (void);
+  CosNotifyFilter::MappingFilter_ptr lifetime_filter ();
   void lifetime_filter (CosNotifyFilter::MappingFilter_ptr);
 
-  CosNotifyChannelAdmin::ProxyIDSeq* pull_suppliers (void);
-  CosNotifyChannelAdmin::ProxyIDSeq* push_suppliers (void);
+  CosNotifyChannelAdmin::ProxyIDSeq* pull_suppliers ();
+  CosNotifyChannelAdmin::ProxyIDSeq* push_suppliers ();
 
   CosNotifyChannelAdmin::ProxySupplier_ptr get_proxy_supplier (
     CosNotifyChannelAdmin::ProxyID proxy_id);
@@ -107,18 +107,18 @@ public:
     CosNotifyChannelAdmin::ClientType ctype,
     CosNotifyChannelAdmin::ProxyID& id);
 
-  CosEventChannelAdmin::ProxyPushSupplier_ptr obtain_push_supplier (void);
+  CosEventChannelAdmin::ProxyPushSupplier_ptr obtain_push_supplier ();
 
-  CosEventChannelAdmin::ProxyPullSupplier_ptr obtain_pull_supplier (void);
+  CosEventChannelAdmin::ProxyPullSupplier_ptr obtain_pull_supplier ();
 
-  void destroy (void);
+  void destroy ();
 
   /// CosNotifyComm::NotifySubscribe.
   void subscription_change (const CosNotification::EventTypeSeq& added,
                             const CosNotification::EventTypeSeq& removed);
 
   /// CosNotification::QoSAdmin.
-  CosNotification::QoSProperties* get_qos (void);
+  CosNotification::QoSProperties* get_qos ();
   void set_qos (const CosNotification::QoSProperties&);
   void validate_qos (const CosNotification::QoSProperties&,
                      CosNotification::NamedPropertyRangeSeq_out);
@@ -127,8 +127,8 @@ public:
   CosNotifyFilter::FilterID add_filter (CosNotifyFilter::Filter_ptr);
   void remove_filter (CosNotifyFilter::FilterID);
   CosNotifyFilter::Filter_ptr get_filter (CosNotifyFilter::FilterID);
-  CosNotifyFilter::FilterIDSeq* get_all_filters (void);
-  void remove_all_filters (void);
+  CosNotifyFilter::FilterIDSeq* get_all_filters ();
+  void remove_all_filters ();
 
 protected:
   virtual CORBA::RepositoryId

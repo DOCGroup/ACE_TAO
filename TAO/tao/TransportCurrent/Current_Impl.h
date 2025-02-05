@@ -76,7 +76,7 @@ namespace TAO
         /// reference counted, and should not be destroyed using
         /// delete() by anything other than the reference counting
         /// mechanism.
-        virtual ~Current_Impl (void);
+        virtual ~Current_Impl ();
 
       private:
         Current_Impl (const Current_Impl &) = delete;

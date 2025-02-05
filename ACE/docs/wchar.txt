@@ -35,7 +35,7 @@ Like Regular Support, both char and wchar_t versions of some methods are
 available, but unlike Regular Support, other methods that have char arguments
 or return values may have wchar_t arguments or return values.
 
-This has been tested on Windows and Linux, and is the default for Windows CE.
+This has been tested on Windows and Linux.
 
 @subsection wchar_othermacros Other Important Macros
 

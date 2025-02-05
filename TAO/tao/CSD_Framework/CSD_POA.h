@@ -47,7 +47,7 @@ public:
                TAO_Object_Adapter *object_adapter);
 
   /// Destructor
-  virtual ~TAO_CSD_POA (void);
+  virtual ~TAO_CSD_POA ();
 
   /// Pass the Strategy object reference to the CSD poa.
   virtual

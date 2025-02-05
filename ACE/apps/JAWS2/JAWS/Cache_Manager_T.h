@@ -71,9 +71,9 @@ public:
                                       // counts
             );
 
-  ~JAWS_Cache_Manager (void);
+  ~JAWS_Cache_Manager ();
 
-  int close (void);
+  int close ();
 
   // Search Methods
 
@@ -96,7 +96,7 @@ public:
   // Decrement reference count on cached object, perhaps delete.
   // Returns 0 if only decremented, 1 if deleted, -1 if error.
 
-  int FLUSH (void);
+  int FLUSH ();
   // Removes lowest priority object from cache.
 
 protected:
@@ -109,7 +109,7 @@ protected:
   // Inserts or replaces object associated with key into cache.
   // Return 0 on success, -1 on failure.
 
-  int FLUSH_i (void);
+  int FLUSH_i ();
   // Removes lowest priority object from cache.
 
   int FLUSH_i (const KEY &key);
@@ -153,7 +153,7 @@ public:
   JAWS_Cache_Proxy (const KEY &, DATA *, size_t, Cache_Manager * = 0);
   // Corresponds to a U/PUT
 
-  virtual ~JAWS_Cache_Proxy (void);
+  virtual ~JAWS_Cache_Proxy ();
 
   DATA *data () const;
   operator DATA * () const;
@@ -165,8 +165,6 @@ private:
   Cache_Manager *manager_;
 };
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "JAWS/Cache_Manager_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #endif /* JAWS_CACHE_MANAGER_T_H */

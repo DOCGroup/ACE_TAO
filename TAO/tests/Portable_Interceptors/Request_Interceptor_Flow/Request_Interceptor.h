@@ -55,9 +55,9 @@ public:
    */
   //@{
   /// Return the name of this Requestinterceptor.
-  virtual char * name (void);
+  virtual char * name ();
 
-  virtual void destroy (void);
+  virtual void destroy ();
   //@}
 
 protected:

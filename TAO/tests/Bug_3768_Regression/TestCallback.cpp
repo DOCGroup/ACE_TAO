@@ -7,7 +7,7 @@ TestCallback::TestCallback (CORBA::ORB_ptr orb)
 }
 
 void
-TestCallback::start_threads_and_block (void)
+TestCallback::start_threads_and_block ()
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) client - start_threads_and_block\n"));
   work_.activate(THR_NEW_LWP | THR_JOINABLE | THR_INHERIT_SCHED,10);
@@ -15,13 +15,13 @@ TestCallback::start_threads_and_block (void)
 }
 
 void
-TestCallback::test_call (void)
+TestCallback::test_call ()
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) client - test_call\n"));
 }
 
 void
-TestCallback::shutdown (void)
+TestCallback::shutdown ()
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) client - test completed\n"));
   exit (0);

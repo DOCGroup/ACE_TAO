@@ -264,7 +264,7 @@ public:
        // VxWorks' compiler (gcc 2.96) gets confused by the operator long
        // double, so we avoid using long double as the NativeImpl.
        // Linux's x86 long double format (12 or 16 bytes) is incompatible
-       // with Windows, Solaris, AIX, MacOS X and HP-UX (and probably others)
+       // with Windows, and MacOS X (and probably others)
        // long double format (8 or 16 bytes).  If you need 32-bit Linux to
        // inter-operate with 64-bit Linux you will want to define this
        // macro to 0 so that "long double" is used.  Otherwise, do not define

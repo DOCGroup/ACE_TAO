@@ -104,7 +104,7 @@ ThreadPool::ThreadPool(CORBA::ORB_ptr orb)
 {
 }
 
-int ThreadPool::svc (void)
+int ThreadPool::svc ()
 {
   try
     {

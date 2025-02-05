@@ -4,7 +4,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace TAO
 {
   ACE_INLINE
-  ServerRequestDetails::ServerRequestDetails (void)
+  ServerRequestDetails::ServerRequestDetails ()
     : processing_mode_(PortableInterceptor::LOCAL_AND_REMOTE)
   {
   }

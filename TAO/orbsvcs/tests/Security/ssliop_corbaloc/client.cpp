@@ -70,7 +70,7 @@ CosNaming_Client::CosNaming_Client ()
 
 // Parses the command line arguments and returns an error status.
 int
-CosNaming_Client::parse_args (void)
+CosNaming_Client::parse_args ()
 {
   ACE_Get_Opt get_opts (argc_, argv_, ACE_TEXT("p:dstieym:c:"));
   int c;
@@ -171,7 +171,7 @@ CosNaming_Client::parse_args (void)
 // Execute client example code.
 
 int
-CosNaming_Client::run (void)
+CosNaming_Client::run ()
 {
   this->activate();
   int rv = test_->execute (naming_client_);
@@ -183,7 +183,7 @@ CosNaming_Client::run (void)
   return rv;
 }
 
-CosNaming_Client::~CosNaming_Client (void)
+CosNaming_Client::~CosNaming_Client ()
 {
   delete test_;
 }
@@ -242,7 +242,7 @@ MT_Test::MT_Test (CORBA::ORB_ptr orb,
 }
 
 int
-MT_Test::svc (void)
+MT_Test::svc ()
 {
   // Obtain object reference to the Naming Service (create new stub.)
 
@@ -964,7 +964,7 @@ Persistent_Test_Begin::Persistent_Test_Begin (CORBA::ORB_ptr orb,
 {
 }
 
-Persistent_Test_Begin::~Persistent_Test_Begin (void)
+Persistent_Test_Begin::~Persistent_Test_Begin ()
 {
 }
 
@@ -1015,7 +1015,7 @@ Persistent_Test_End::Persistent_Test_End (CORBA::ORB_ptr orb,
 {
 }
 
-Persistent_Test_End::~Persistent_Test_End (void)
+Persistent_Test_End::~Persistent_Test_End ()
 {
 }
 

@@ -430,11 +430,6 @@ run_main (int argc, ACE_TCHAR *argv[])
                       mutex_name.c_str (),
                       ACE_TEXT ("ctor")));
         }
-#if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
-      static const ACE_TCHAR* format = ACE_TEXT ("%ls -c %d -p %u -n %ls");
-#else
-      static const ACE_TCHAR* format = ACE_TEXT ("%s -c %d -p %u -n %s");
-#endif /* !ACE_WIN32 && ACE_USES_WCHAR */
 
       // The parent process reads time ranges sent from the children via
       // UDP. Grab an unused UDP port to tell the children to send to.
@@ -461,13 +456,12 @@ run_main (int argc, ACE_TCHAR *argv[])
           Child *child = (i == 0 ? &writer : &readers[i-1]);
           ACE_Process_Options options;
 #ifndef ACE_LACKS_VA_FUNCTIONS
-          options.command_line (format,
+          options.command_line (ACE_TEXT ("%") ACE_TEXT_PRIs
+                                ACE_TEXT (" -c %d -p %u -n %") ACE_TEXT_PRIs,
                                 argc > 0 ? argv[0] : ACE_TEXT ("RW_Process_Mutex_Test"),
                                 i,
                                 (unsigned int)me.get_port_number (),
                                 mutex_name.c_str ());
-#else
-          ACE_UNUSED_ARG (format);
 #endif
           if (child->spawn (options) == -1)
             {

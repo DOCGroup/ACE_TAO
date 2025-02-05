@@ -93,7 +93,7 @@ public:
   // The thread entry point.
 
 private:
-  void validate_connection (void);
+  void validate_connection ();
   // Validate the connection
 
 private:
@@ -208,7 +208,7 @@ Worker::Worker (CORBA::ORB_ptr orb)
 }
 
 int
-Worker::svc (void)
+Worker::svc ()
 {
   try
     {
@@ -232,7 +232,7 @@ SelfClient::SelfClient (CORBA::ORB_ptr orb, Simple_Server_ptr server,
 }
 
 void
-SelfClient::validate_connection (void)
+SelfClient::validate_connection ()
 {
   // Ping the object 100 times, ignoring all exceptions.
   // It would be better to use validate_connection() but the test must
@@ -250,7 +250,7 @@ SelfClient::validate_connection (void)
 }
 
 int
-SelfClient::svc (void)
+SelfClient::svc ()
 {
   try
     {

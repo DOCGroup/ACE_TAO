@@ -25,7 +25,7 @@ Quoter_Generic_Factory_i::Quoter_Generic_Factory_i (int debug_level)
 }
 
 // Destructor.
-Quoter_Generic_Factory_i::~Quoter_Generic_Factory_i (void)
+Quoter_Generic_Factory_i::~Quoter_Generic_Factory_i ()
 {
 }
 

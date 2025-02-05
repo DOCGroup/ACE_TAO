@@ -44,7 +44,7 @@ namespace TAO_PG
     Fragments_Cleanup_Strategy (int bound);
 
     /// The destructor
-    virtual ~Fragments_Cleanup_Strategy (void);
+    virtual ~Fragments_Cleanup_Strategy () = default;
 
     /// Sub-classes must implement these methods
     virtual void cleanup (TAO_UIPMC_Mcast_Transport::Packets_Map &) = 0;

@@ -174,8 +174,8 @@ public:
   /// <Svc_Handler> is allocated dynamically, which allows it to clean
   /// itself up correctly whether or not it's allocated statically or
   /// dynamically.
-  void *operator new (size_t n, const std::nothrow_t&) throw();
-  void operator delete (void *p, const std::nothrow_t&) throw ();
+  void *operator new (size_t n, const std::nothrow_t&) noexcept;
+  void operator delete (void *p, const std::nothrow_t&) noexcept;
 
   /// This operator permits "placement new" on a per-object basis.
   void * operator new (size_t n, void *p);
@@ -337,13 +337,7 @@ protected:
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Svc_Handler.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Svc_Handler.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 

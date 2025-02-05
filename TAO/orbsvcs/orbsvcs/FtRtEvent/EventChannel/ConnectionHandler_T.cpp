@@ -29,7 +29,7 @@ int ConnectionAcceptHandler<ACE_PEER_STREAM_2>::open (void * acceptor)
 }
 
 template <ACE_PEER_STREAM_1>
-void ConnectionAcceptHandler<ACE_PEER_STREAM_2>::destroy (void)
+void ConnectionAcceptHandler<ACE_PEER_STREAM_2>::destroy ()
 {
   // Remove ourselves from the reactor
   reactor_->remove_handler

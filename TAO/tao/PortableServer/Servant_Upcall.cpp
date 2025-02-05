@@ -403,7 +403,7 @@ namespace TAO
                   ex._tao_print_exception ("TAO_POA::~complete_destruction_i");
                 }
 
-              this->poa_ = 0;
+              this->poa_ = nullptr;
             }
         }
     }

@@ -50,10 +50,10 @@ public:
   friend class TAO_Leader_Follower;
 
   /// Constructor
-  TAO_LF_Event (void);
+  TAO_LF_Event ();
 
   /// Destructor
-  virtual ~TAO_LF_Event (void);
+  virtual ~TAO_LF_Event ();
 
   /// Bind a follower
   /**

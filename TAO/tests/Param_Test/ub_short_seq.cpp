@@ -17,7 +17,7 @@
 //               Test_Short_Sequence
 // ************************************************************************
 
-Test_Short_Sequence::Test_Short_Sequence (void)
+Test_Short_Sequence::Test_Short_Sequence ()
   : opname_ (CORBA::string_dup ("test_short_sequence")),
     in_ (new CORBA::ShortSeq),
     inout_ (new CORBA::ShortSeq),
@@ -26,7 +26,7 @@ Test_Short_Sequence::Test_Short_Sequence (void)
 {
 }
 
-Test_Short_Sequence::~Test_Short_Sequence (void)
+Test_Short_Sequence::~Test_Short_Sequence ()
 {
   CORBA::string_free (this->opname_);
   this->opname_ = 0;
@@ -87,7 +87,7 @@ Test_Short_Sequence::init_parameters (Param_Test_ptr)
 }
 
 int
-Test_Short_Sequence::reset_parameters (void)
+Test_Short_Sequence::reset_parameters ()
 {
   this->inout_ = new CORBA::ShortSeq; // delete the previous ones
   this->out_ = new CORBA::ShortSeq;
@@ -116,7 +116,7 @@ Test_Short_Sequence::run_sii_test (Param_Test_ptr objref)
 }
 
 CORBA::Boolean
-Test_Short_Sequence::check_validity (void)
+Test_Short_Sequence::check_validity ()
 {
   CORBA::Boolean flag = 0;
   if ((this->in_->length () == this->inout_->length ()) &&
@@ -144,7 +144,7 @@ Test_Short_Sequence::check_validity (CORBA::Request_ptr )
 }
 
 void
-Test_Short_Sequence::print_values (void)
+Test_Short_Sequence::print_values ()
 {
   CORBA::ULong i;
   ACE_DEBUG ((LM_DEBUG, "\n*=*=*=*=*=*=*=*=*=*=\n"));

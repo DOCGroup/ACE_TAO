@@ -11,7 +11,7 @@
 class Crasher : public ACE_Event_Handler
 {
 public:
-  Crasher (void);
+  Crasher ();
 
   virtual int handle_timeout (ACE_Time_Value const & current_time,
                               void const * arg);
@@ -39,7 +39,7 @@ Client_Peer::callme(Test::Peer_ptr callback,
 }
 
 void
-Client_Peer::crash(void)
+Client_Peer::crash()
 {
   Crasher * crasher = new Crasher;
 
@@ -49,11 +49,11 @@ Client_Peer::crash(void)
 }
 
 void
-Client_Peer::noop(void)
+Client_Peer::noop()
 {
 }
 
-Crasher::Crasher(void)
+Crasher::Crasher()
 {
 }
 
@@ -63,12 +63,6 @@ Crasher::handle_timeout (ACE_Time_Value const & ,
 {
   // ACE_DEBUG ((LM_DEBUG, "(%P|%t) Performing intentional crash
   // %a\n"));
-  // This tests hangs on OpenVMS when abort() is used.
-  // Also see Crashed_Callback test.
-#if defined (ACE_OPENVMS)
-  ACE_OS::_exit ();
-#else
   ACE_OS::abort();
-#endif
   return 0;
 }

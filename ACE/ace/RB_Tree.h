@@ -118,11 +118,9 @@ public:
   /**
    * @note This method is inlined here rather than in RB_Tree.inl
    *       since that file may be included multiple times when
-   *       inlining is disabled and on platforms where
-   *       @c ACE_TEMPLATES_REQUIRE_SOURCE is defined.  In those
-   *       platform/configuration combinations, multiple definitions
-   *       of this method occurred.  Placing the definition inline in
-   *       the header avoids such errors.
+   *       inlining is disabled.  In those platform/configuration
+   *       combinations, multiple definitions of this method occurred.
+   *       Placing the definition inline in the header avoids such errors.
    */
   ACE_Allocator * allocator () const { return this->allocator_; }
 
@@ -742,7 +740,7 @@ public:
    * be declared and defined in both the derived forward and
    * reverse iterator classes rather than in the base iterator
    * class because of a method signature resolution problem
-   * caused by the existence of the deprecated next (void)
+   * caused by the existence of the deprecated next ()
    * method in the derived forward iterator class.  When that
    * deprecated method is removed, this method should be removed
    * from the derived classes and placed in the base class.
@@ -857,7 +855,7 @@ public:
    * be declared and defined in both the derived forward and
    * reverse iterator classes rather than in the base iterator
    * class because of a method signature resolution problem
-   * caused by the existence of the deprecated next (void)
+   * caused by the existence of the deprecated next ()
    * method in the derived forward iterator class.  When that
    * deprecated method is removed, this method should be removed
    * from the derived classes and placed in the base class.
@@ -871,13 +869,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #include "ace/RB_Tree.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/RB_Tree.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("RB_Tree.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 #endif /* ! defined (ACE_RB_TREE_H) */

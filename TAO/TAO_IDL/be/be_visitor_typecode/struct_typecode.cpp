@@ -105,7 +105,7 @@ TAO::be_visitor_struct_typecode::visit (AST_Structure * node,
     {
       // Should only be possible for user exceptions with no fields.
       os << "* const " << be_idt_nl
-         << fields_name.c_str () << " = 0;" << be_uidt_nl << be_uidt_nl;
+         << fields_name.c_str () << " = nullptr;" << be_uidt_nl << be_uidt_nl;
     }
   else
     {

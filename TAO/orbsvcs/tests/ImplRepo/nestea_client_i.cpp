@@ -6,7 +6,7 @@
 
 
 // Constructor.
-Nestea_Client_i::Nestea_Client_i (void)
+Nestea_Client_i::Nestea_Client_i ()
   : argc_ (0)
   , argv_ (0)
   , server_key_ (ACE::strnew (ACE_TEXT("key0")))
@@ -19,7 +19,7 @@ Nestea_Client_i::Nestea_Client_i (void)
 // Parses the command line arguments and returns an error status.
 
 int
-Nestea_Client_i::parse_args (void)
+Nestea_Client_i::parse_args ()
 {
   ACE_Get_Opt get_opts (argc_, argv_, ACE_TEXT("dsn:k:"));
   int c;
@@ -83,7 +83,7 @@ Nestea_Client_i::run ()
   return 0;
 }
 
-Nestea_Client_i::~Nestea_Client_i (void)
+Nestea_Client_i::~Nestea_Client_i ()
 {
   // Free resources
   CORBA::release (this->server_);

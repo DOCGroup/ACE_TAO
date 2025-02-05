@@ -16,7 +16,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/CDR_Stream.h"
 #include "ace/FILE_Connector.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/Get_Opt.h"
 #include "ace/ACE.h"
 #include "ace/Truncate.h"
@@ -70,32 +70,6 @@ ostream &
 operator << (ostream &os,
              const CDR_Test &t)
 {
-#if defined (ACE_OPENVMS)
-  // to circumvent some obscure bug with OpenVMS iostreams digit conversions
-  // combined with shared libraries????
-  ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("\n"
-                        "Char:               %c\n"
-                        "Short:              %u\n"
-                        "Long:               %d\n"),
-              t.char_,
-              t.word2_,
-              t.word4_));
-
-  ACE_CDR::ULongLong hi = (t.word8_ >> 32);
-  ACE_CDR::ULongLong lo = (t.word8_ & 0xffffffff);
-
-  ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("\n"
-                        "ULongLong 1st half: %x\n"
-                        "ULongLong 2nd half: %x\n"
-                        "Float:              %f\n"
-                        "Double:             %f\n"),
-              ACE_Utils::truncate_cast<ACE_UINT32> (hi),
-              ACE_Utils::truncate_cast<ACE_UINT32> (lo),
-              t.fpoint_,
-              t.dprec_));
-#else
   os << "Char:              " << t.char_ << endl
      << "Short:             " << t.word2_ << endl
      << "Long:              " << t.word4_ << endl;
@@ -113,7 +87,6 @@ operator << (ostream &os,
      << dec << endl
      << "Float:             " << t.fpoint_ << endl
      << "Double:            " << t.dprec_ << endl;
-#endif
   return os;
 }
 
@@ -252,7 +225,7 @@ run_test (int write_file,
 #endif /* ACE_INITIALIZE_MEMORY_BEFORE_USE */
 
       // Make sure <buffer> is released automagically.
-      ACE_Auto_Basic_Array_Ptr<char> b (buffer);
+      std::unique_ptr<char[]> b (buffer);
 
       // Move the file pointer back to the beginning of the file.
       if (file.seek (0,

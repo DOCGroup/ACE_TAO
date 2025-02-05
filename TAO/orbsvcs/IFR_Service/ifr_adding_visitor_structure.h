@@ -33,7 +33,7 @@ class ifr_adding_visitor_structure : public ifr_adding_visitor
 public:
   ifr_adding_visitor_structure (AST_Decl *scope);
 
-  virtual ~ifr_adding_visitor_structure (void);
+  virtual ~ifr_adding_visitor_structure ();
 
   virtual int visit_scope (UTL_Scope *node);
   virtual int visit_structure (AST_Structure *node);

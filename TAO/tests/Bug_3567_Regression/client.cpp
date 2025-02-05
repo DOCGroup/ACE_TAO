@@ -93,7 +93,7 @@ public:
   /// ctor
   Client (A::AMI_Test_ptr server, int niterations, A::AMI_AMI_TestHandler_ptr hnd);
   /// dtor
-  ~Client () ;
+  ~Client ();
 
   /// The thread entry point.
   virtual int svc ();
@@ -112,7 +112,7 @@ public:
 class Handler : public POA_A::AMI_AMI_TestHandler
 {
 public:
-  Handler (void)
+  Handler ()
   {
   }
 
@@ -170,7 +170,7 @@ public:
                   "Callback method <get_yadda_excep> called:\n"));
     }
 
-  void set_yadda (void)
+  void set_yadda ()
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Callback method <set_yadda> called:\n"));
@@ -181,7 +181,7 @@ public:
       ACE_DEBUG ((LM_DEBUG,
                   "Callback method <set_yadda_excep> called:\n"));
     }
-  ~Handler (void)
+  ~Handler ()
   {
   }
 
@@ -325,7 +325,7 @@ Client::~Client ()
 }
 
 int
-Client::svc (void)
+Client::svc ()
 {
   try
     {
@@ -353,7 +353,7 @@ Worker::Worker (CORBA::ORB_ptr orb)
 }
 
 int
-Worker::svc (void)
+Worker::svc ()
 {
   while (number_of_replies > 0)
     {

@@ -6,7 +6,6 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/os_include/os_netdb.h"
-#include "ace/os_include/sys/os_loadavg.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -124,7 +123,7 @@ TAO_LB_CPU_Utilization_Monitor::loads ()
 {
   CORBA::Float load = 0;
 
-#if defined (ACE_LINUX) || defined (sun)
+#if defined (ACE_LINUX)
   double load_double = calc_cpu_loading ();
   load = load_double;
 
@@ -153,7 +152,7 @@ TAO_LB_CPU_Utilization_Monitor::loads ()
   ACE_UNUSED_ARG (load);
   throw CORBA::NO_IMPLEMENT ();
 
-#endif  /* linux || sun */
+#endif  /* linux */
 
 }
 

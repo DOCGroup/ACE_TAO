@@ -9,8 +9,6 @@
 #include "ace/High_Res_Timer.h"
 #include "ace/Reactor.h"
 
-const int TIME_THRESHOLD = 50; //ms
-
 int activate_delay = 0000;
 int run_delay = 00;
 int request_delay = 00;
@@ -29,17 +27,13 @@ class Tester_i
 public:
   Tester_i (CORBA::ORB_ptr orb)
     : orb_ (orb)
-    , id1_ (0)
-    , id2_ (0)
     , count_ (0)
     , failed_ (false)
   {
     this->start_ = ACE_High_Res_Timer::gettimeofday_hr ();
   }
 
-  virtual ~Tester_i ()
-  {
-  }
+  virtual ~Tester_i () = default;
 
   virtual void test (CORBA::Long id)
   {
@@ -137,8 +131,6 @@ public:
 
 private:
   CORBA::ORB_ptr orb_;
-  CORBA::Long id1_;
-  CORBA::Long id2_;
   int count_;
   bool failed_;
   ACE_Time_Value start_;

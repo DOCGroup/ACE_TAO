@@ -67,7 +67,7 @@ next_parm (const ACE_TCHAR **pstart)
 }
 
 void
-set_parms ( TAO_DTP_Definition * this_config)
+set_parms (TAO_DTP_Definition * this_config)
 {
   // Get past the brace
   const ACE_TCHAR *pstart = parms + 1;

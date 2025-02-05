@@ -9,14 +9,14 @@ Supplier_Input_Handler::Supplier_Input_Handler ()
   // No-Op.
 }
 
-Supplier_Input_Handler::~Supplier_Input_Handler (void)
+Supplier_Input_Handler::~Supplier_Input_Handler ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "closing down Supplier_Input_Handler::~Supplier_Input_Handler\n"));
 }
 
 int
-Supplier_Input_Handler::close (void)
+Supplier_Input_Handler::close ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "closing down Supplier::Supplier_Input_Handler\n"));

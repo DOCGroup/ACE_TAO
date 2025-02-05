@@ -28,10 +28,6 @@ TAO_Regular_POA::TAO_Regular_POA (const TAO_Root_POA::String &name,
 {
 }
 
-TAO_Regular_POA::~TAO_Regular_POA ()
-{
-}
-
 void
 TAO_Regular_POA::remove_from_parent_i ()
 {

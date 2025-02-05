@@ -23,7 +23,7 @@ public:
   // <iterations> is the number of buffers to send.  If <iterations>
   // == 0, then read from stdin.
 
-  ~Peer_Handler (void);
+  ~Peer_Handler ();
 
   virtual int open (void * = 0);
   // Activate the handler when connection is established.
@@ -36,7 +36,7 @@ public:
   virtual ACE_HANDLE get_handle () const;
 
 private:
-  void display_menu (void);
+  void display_menu ();
 
   int iterations_;
   // No. of buffers to send.
@@ -46,8 +46,8 @@ class IPC_Client : public ACE_Connector<Peer_Handler, ACE_SPIPE_CONNECTOR>
 {
 public:
   // Initialization
-  IPC_Client (void);
-  ~IPC_Client (void);
+  IPC_Client ();
+  ~IPC_Client ();
 
   // = Dynamic linking hooks.
   virtual int init (int argc, ACE_TCHAR *argv[]);

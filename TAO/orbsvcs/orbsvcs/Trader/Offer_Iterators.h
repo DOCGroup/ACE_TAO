@@ -46,7 +46,7 @@ class TAO_Offer_Iterator
 public:
   TAO_Offer_Iterator (const TAO_Property_Filter& property_filter);
 
-  virtual ~TAO_Offer_Iterator (void);
+  virtual ~TAO_Offer_Iterator ();
 
   /**
    * BEGIN SPEC
@@ -55,14 +55,14 @@ public:
    * destroyed.
    * END SPEC
    */
-  virtual void destroy (void);
+  virtual void destroy ();
 
   /// Add an offer to the collection of offers the iterator will
   /// iterate over.
   virtual void add_offer (CosTrading::OfferId offer_id,
                           const CosTrading::Offer* offer) = 0;
 
-  virtual CORBA::ULong max_left (void) = 0;
+  virtual CORBA::ULong max_left () = 0;
 
   // BEGIN SPEC
   // The max_left operation returns the number of service offers
@@ -116,7 +116,7 @@ class TAO_Query_Only_Offer_Iterator
 public:
   TAO_Query_Only_Offer_Iterator (const TAO_Property_Filter& pfilter);
 
-  virtual ~TAO_Query_Only_Offer_Iterator (void);
+  virtual ~TAO_Query_Only_Offer_Iterator ();
 
   /// Deposit at maximum n offers into the return sequence and return 1,
   /// or return 0 if the iterator is done and no offers are returned.
@@ -124,7 +124,7 @@ public:
                                  CosTrading::OfferSeq_out offers);
 
   /// Return the number of items left in the iterator.
-  virtual CORBA::ULong max_left (void);
+  virtual CORBA::ULong max_left ();
 
   /// Add an offer the iterator should iterate over.
   void add_offer (CosTrading::OfferId offer_id,
@@ -163,19 +163,19 @@ class TAO_Offer_Iterator_Collection :
 public:
   // = Constructors.
 
-  TAO_Offer_Iterator_Collection (void);
+  TAO_Offer_Iterator_Collection ();
 
-  virtual ~TAO_Offer_Iterator_Collection (void);
+  virtual ~TAO_Offer_Iterator_Collection ();
 
   /// Retrieve n offers from the set of iterators.
   virtual CORBA::Boolean next_n (CORBA::ULong n,
                                  CosTrading::OfferSeq_out offers);
 
   /// Destroy the collection of iterators.
-  virtual void destroy (void);
+  virtual void destroy ();
 
   /// Determine how many offers are left in the collection.
-  virtual CORBA::ULong max_left (void);
+  virtual CORBA::ULong max_left ();
 
   /// Add an iterator to the collection.
   void add_offer_iterator (CosTrading::OfferIterator_ptr offer_iter);
@@ -212,9 +212,9 @@ class TAO_Offer_Id_Iterator :
 {
  public:
   /// No op constructor
-  TAO_Offer_Id_Iterator(void);
+  TAO_Offer_Id_Iterator();
 
-  ~TAO_Offer_Id_Iterator (void);
+  ~TAO_Offer_Id_Iterator ();
 
   /**
    * The max_left operation returns the number of offer identifiers
@@ -223,14 +223,14 @@ class TAO_Offer_Id_Iterator :
    * identifiers (e.g., if the iterator determines its set of offer
    * identifiers through lazy evaluation).
    */
-  virtual CORBA::ULong max_left(void);
+  virtual CORBA::ULong max_left();
 
   /**
    * The destroy operation destroys the iterator. No further
    * operations can be invoked on an iterator after it has been
    * destroyed.
    */
-  virtual void destroy(void);
+  virtual void destroy();
 
   /**
    * The next_n operation returns a set of offer identifiers in the

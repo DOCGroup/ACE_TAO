@@ -21,10 +21,6 @@ TAO_UIPMC_Connector::TAO_UIPMC_Connector ()
 {
 }
 
-TAO_UIPMC_Connector::~TAO_UIPMC_Connector ()
-{
-}
-
 int
 TAO_UIPMC_Connector::open (TAO_ORB_Core *orb_core)
 {
