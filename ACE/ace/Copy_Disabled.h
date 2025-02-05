@@ -42,6 +42,18 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * {
  * // code here
  * };
+ *
+ * @deprecated This class is deprecated. Instead of using inheritance,
+ * directly delete copy operations in your class:
+ *
+ * class Foo
+ * {
+ * public:
+ *   Foo(const Foo&) = delete;
+ *   Foo(Foo&&) = delete;
+ *   Foo& operator=(const Foo&) = delete;
+ *   Foo& operator=(Foo&&) = delete;
+ * };
  */
 class [[deprecated]] ACE_Export ACE_Copy_Disabled
 {
