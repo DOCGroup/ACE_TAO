@@ -13,7 +13,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include /**/ "ace/ACE_export.h"
+#include /**/ "ace/config-lite.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -55,7 +55,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  *   Foo& operator=(Foo&&) = delete;
  * };
  */
-class [[deprecated]] ACE_Export ACE_Copy_Disabled
+class [[deprecated]] ACE_Copy_Disabled
 {
 public:
   /// Default constructor
