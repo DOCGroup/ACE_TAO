@@ -43,7 +43,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * // code here
  * };
  */
-class ACE_Export ACE_Copy_Disabled
+class ACE_Export [[deprecated]] ACE_Copy_Disabled
 {
 public:
   /// Default constructor
