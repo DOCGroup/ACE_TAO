@@ -47,7 +47,7 @@ class [[deprecated]] ACE_Export ACE_Copy_Disabled
 {
 public:
   /// Default constructor
-  ACE_Copy_Disabled ();
+  ACE_Copy_Disabled () = default;
 
 private:
   ACE_Copy_Disabled (const ACE_Copy_Disabled &) = delete;
