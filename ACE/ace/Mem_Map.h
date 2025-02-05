@@ -20,7 +20,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Global_Macros.h"
-#include "ace/Copy_Disabled.h"
 #include "ace/os_include/sys/os_mman.h"
 #include "ace/os_include/os_limits.h"
 #include "ace/os_include/os_fcntl.h"
@@ -36,11 +35,16 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * This class works with both the mmap(2) UNIX system and the
  * Win32 family of memory mapping system calls.
  */
-class ACE_Export ACE_Mem_Map : private ACE_Copy_Disabled
+class ACE_Export ACE_Mem_Map
 {
 public:
   /// Default constructor.
   ACE_Mem_Map ();
+
+  ACE_Mem_Map (const ACE_Mem_Map &) = delete;
+  ACE_Mem_Map (ACE_Mem_Map &&) = delete;
+  ACE_Mem_Map &operator= (const ACE_Mem_Map &) = delete;
+  ACE_Mem_Map &operator= (ACE_Mem_Map &&) = delete;
 
   /// Map a file from an open file descriptor @a handle.  This function
   /// will lookup the length of the file if it is not given.

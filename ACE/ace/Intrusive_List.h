@@ -106,8 +106,8 @@ private:
    *
    */
   //@{
-  ACE_Intrusive_List (const ACE_Intrusive_List<T> &);
-  ACE_Intrusive_List<T>& operator= (const ACE_Intrusive_List<T> &);
+  ACE_Intrusive_List (const ACE_Intrusive_List<T> &) = delete;
+  ACE_Intrusive_List<T>& operator= (const ACE_Intrusive_List<T> &) = delete;
   //@}
 
 private:

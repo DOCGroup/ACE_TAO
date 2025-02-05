@@ -41,8 +41,8 @@ class ETCL_Preference;
 class ACE_ETCL_Export ETCL_Constraint_Visitor
 {
 public:
-  ETCL_Constraint_Visitor ();
-  virtual ~ETCL_Constraint_Visitor ();
+  ETCL_Constraint_Visitor () = default;
+  virtual ~ETCL_Constraint_Visitor () = default;
 
   virtual int visit_literal (ETCL_Literal_Constraint *);
   virtual int visit_identifier (ETCL_Identifier *);

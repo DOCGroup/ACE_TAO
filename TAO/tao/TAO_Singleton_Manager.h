@@ -94,7 +94,7 @@ public:
    * memory, or EEXIST if the object (or array) had already been
    * registered.
    */
-  static int at_exit (ACE_Cleanup *object, void *param = 0, const char* name = 0);
+  static int at_exit (ACE_Cleanup *object, void *param = nullptr, const char* name = nullptr);
 
   /// Register an object (or array) for cleanup at process
   /// termination.

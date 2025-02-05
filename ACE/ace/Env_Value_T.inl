@@ -50,9 +50,4 @@ ACE_Env_Value<T>::varname () const
   return this->varname_;
 }
 
-template <class T> ACE_INLINE
-ACE_Env_Value<T>::~ACE_Env_Value ()
-{
-}
-
 ACE_END_VERSIONED_NAMESPACE_DECL

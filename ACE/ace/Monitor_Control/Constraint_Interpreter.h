@@ -44,9 +44,9 @@ namespace ACE
       : public ETCL_Interpreter
     {
     public:
-      Constraint_Interpreter ();
+      Constraint_Interpreter () = default;
 
-      virtual ~Constraint_Interpreter ();
+      virtual ~Constraint_Interpreter () = default;
 
       /**
        * This method builds an expression tree representing the

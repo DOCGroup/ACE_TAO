@@ -25,8 +25,6 @@
 #include "orbsvcs/CosNotifyFilterC.h"
 #include "orbsvcs/CosNotificationC.h"
 
-#include "ace/Copy_Disabled.h"
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Notify_Consumer;
@@ -39,15 +37,20 @@ class TAO_Notify_EventType;
  */
 class TAO_Notify_Serv_Export TAO_Notify_Event
     : public TAO_Notify_Refcountable
-    , private ACE_Copy_Disabled
 {
 public:
   typedef TAO_Notify_Refcountable_Guard_T<TAO_Notify_Event> Ptr;
 
   // Codes to distinguish marshaled events in persistent storage
   enum {MARSHAL_ANY=1,MARSHAL_STRUCTURED=2};
+
   /// Constructor
   TAO_Notify_Event ();
+
+  TAO_Notify_Event (const TAO_Notify_Event &) = delete;
+  TAO_Notify_Event (TAO_Notify_Event &&) = delete;
+  TAO_Notify_Event &operator= (const TAO_Notify_Event &) = delete;
+  TAO_Notify_Event &operator= (TAO_Notify_Event &&) = delete;
 
   /// Destructor
   virtual ~TAO_Notify_Event ();

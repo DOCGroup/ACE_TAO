@@ -133,7 +133,7 @@ public:
    /// Constructor
    ACE_At_Thread_Exit_Func (void *object,
                             ACE_CLEANUP_FUNC func,
-                            void *param = 0);
+                            void *param = nullptr);
 
   virtual ~ACE_At_Thread_Exit_Func ();
 

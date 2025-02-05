@@ -79,7 +79,7 @@ public:
   virtual int close () = 0;
 
   /// Close down the message queue and release all resources.
-  virtual ~ACE_Message_Queue_Base ();
+  virtual ~ACE_Message_Queue_Base () = default;
 
   // = Enqueue and dequeue methods.
 
@@ -200,9 +200,8 @@ public:
   virtual void dump () const = 0;
 
 private:
-  // = Disallow copying and assignment.
-  ACE_Message_Queue_Base (const ACE_Message_Queue_Base &);
-  void operator= (const ACE_Message_Queue_Base &);
+  ACE_Message_Queue_Base (const ACE_Message_Queue_Base &) = delete;
+  void operator= (const ACE_Message_Queue_Base &) = delete;
 
 protected:
   /// Indicates the state of the queue, which can be

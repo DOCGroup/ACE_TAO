@@ -8,7 +8,6 @@
 #ifndef KOKYU_DSRT_H
 #define KOKYU_DSRT_H
 #include /**/ "ace/pre.h"
-#include "ace/Copy_Disabled.h"
 
 #include "kokyu_export.h"
 #include "Kokyu_defs.h"
@@ -31,7 +30,7 @@ namespace Kokyu
    * dynamic scheduling of threads.
    */
   template <class DSRT_Scheduler_Traits>
-  class DSRT_Dispatcher : private ACE_Copy_Disabled
+  class DSRT_Dispatcher
   {
   public:
     typedef typename DSRT_Scheduler_Traits::Guid_t Guid_t;
@@ -60,6 +59,13 @@ namespace Kokyu
     /// Shut down the dispatcher. The dispatcher will stop processing requests.
     int shutdown ();
 
+    DSRT_Dispatcher () = default;
+
+    DSRT_Dispatcher (const DSRT_Dispatcher &) = delete;
+    DSRT_Dispatcher (DSRT_Dispatcher &&) = delete;
+    DSRT_Dispatcher &operator= (const DSRT_Dispatcher &) = delete;
+    DSRT_Dispatcher &operator= (DSRT_Dispatcher &&) = delete;
+
     /// Non virtual destructor. Read as <b><i>this class not available
     /// for inheritance<i></b>.
     ~DSRT_Dispatcher ();
@@ -82,9 +88,14 @@ namespace Kokyu
    */
 
   template <class DSRT_Scheduler_Traits>
-  class DSRT_Dispatcher_Factory : private ACE_Copy_Disabled
+  class DSRT_Dispatcher_Factory
   {
   public:
+    DSRT_Dispatcher_Factory (const DSRT_Dispatcher_Factory &) = delete;
+    DSRT_Dispatcher_Factory (DSRT_Dispatcher_Factory &&) = delete;
+    DSRT_Dispatcher_Factory &operator= (const DSRT_Dispatcher_Factory &) = delete;
+    DSRT_Dispatcher_Factory &operator= (DSRT_Dispatcher_Factory &&) = delete;
+
     typedef std::unique_ptr<DSRT_Dispatcher<DSRT_Scheduler_Traits> > DSRT_Dispatcher_Auto_Ptr;
 
     /**

@@ -4,12 +4,17 @@
 #include "ace/Task.h"
 #include "ace/Barrier.h"
 
-struct X : private ACE_Copy_Disabled
+struct X
 {
   static int count_;
 
   X() { ++count_; }
   ~X() { --count_; }
+
+  X (const X &) = delete;
+  X (X &&) = delete;
+  X &operator= (const X &) = delete;
+  X &operator= (X &&) = delete;
 };
 
 int X::count_;

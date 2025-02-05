@@ -31,7 +31,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 template <class TYPE, class FUNCTOR> ACE_INLINE
 ACE_Timer_Queue_Upcall_Base<TYPE, FUNCTOR>::ACE_Timer_Queue_Upcall_Base (FUNCTOR * upcall_functor)
   : ACE_Abstract_Timer_Queue<TYPE>()
-  , ACE_Copy_Disabled()
   , upcall_functor_(upcall_functor)
   , delete_upcall_functor_ (upcall_functor == 0)
 {

@@ -311,7 +311,7 @@ class ACE_DNode
 
 public:
   /// This isn't necessary, but it keeps some compilers happy.
-  ~ACE_DNode ();
+  ~ACE_DNode () = default;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
