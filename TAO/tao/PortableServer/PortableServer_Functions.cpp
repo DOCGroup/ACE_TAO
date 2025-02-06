@@ -32,13 +32,13 @@ namespace PortableServer
     ACE_OS::memcpy (buffer, string, buffer_size);
 
     // Create and return a new ID
-    PortableServer::ObjectId *id = 0;
+    PortableServer::ObjectId *id {};
     ACE_NEW_RETURN (id,
                     PortableServer::ObjectId (buffer_size,
                                               buffer_size,
                                               buffer,
                                               1),
-                    0);
+                    nullptr);
 
     return id;
   }

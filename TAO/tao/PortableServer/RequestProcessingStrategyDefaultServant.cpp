@@ -218,7 +218,7 @@ namespace TAO
                         (TAO_TSS_Resources::instance ()->poa_current_impl_);
           // If we are in an upcall on the default servant, return the
           // ObjectId associated with the current invocation.
-          if (poa_current_impl != 0 &&
+          if (poa_current_impl != nullptr &&
               servant == poa_current_impl->servant ())
             {
               return poa_current_impl->get_object_id ();

@@ -446,8 +446,7 @@ TAO_ServantBase::_create_stub ()
 
   CORBA::ORB_ptr servant_orb = nullptr;
 
-  if (poa_current_impl != 0
-      && this == poa_current_impl->servant ())
+  if (poa_current_impl != nullptr && this == poa_current_impl->servant ())
     {
       servant_orb = poa_current_impl->orb_core ().orb () ;
 
