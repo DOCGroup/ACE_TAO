@@ -34,7 +34,7 @@ TAO_Perfect_Hash_OpTable::find (const char *opname,
 
   TAO_operation_db_entry const * const entry = lookup (opname,
                                                        length);
-  if (entry == 0)
+  if (entry == nullptr)
     {
       skelfunc = 0; // insure that somebody can't call a wrong function!
       TAOLIB_ERROR_RETURN ((LM_ERROR,
@@ -59,7 +59,7 @@ TAO_Perfect_Hash_OpTable::find (const char *opname,
   ACE_FUNCTION_TIMEPROBE (TAO_PERFECT_HASH_OPTABLE_FIND_START);
 
   TAO_operation_db_entry const * const entry = lookup (opname, length);
-  if (entry == 0)
+  if (entry == nullptr)
     {
       skelfunc = 0; // insure that somebody can't call a wrong function!
       TAOLIB_ERROR_RETURN ((LM_ERROR,

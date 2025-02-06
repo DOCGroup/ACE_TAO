@@ -45,7 +45,7 @@ TAO_Regular_POA::remove_from_parent_i ()
 CORBA::Boolean
 TAO_Regular_POA::root () const
 {
-  return (parent_ == 0);
+  return (parent_ == nullptr);
 }
 
 char

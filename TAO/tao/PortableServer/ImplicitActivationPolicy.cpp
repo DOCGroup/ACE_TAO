@@ -19,7 +19,7 @@ namespace TAO
     CORBA::Policy_ptr
     ImplicitActivationPolicy::copy ()
     {
-      ImplicitActivationPolicy *copy = 0;
+      ImplicitActivationPolicy *copy {};
       ACE_NEW_THROW_EX (copy,
                         ImplicitActivationPolicy (this->value_),
                         CORBA::NO_MEMORY ());

@@ -12,7 +12,7 @@ namespace PortableServer
   {
     // Passing in a nil pointer is illegal so throw an exception to
     // indicate that
-    if (string == 0)
+    if (string == nullptr)
     {
       throw ::CORBA::BAD_PARAM ();
     }

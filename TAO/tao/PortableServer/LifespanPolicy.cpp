@@ -21,7 +21,7 @@ namespace TAO
     CORBA::Policy_ptr
     LifespanPolicy::copy ()
     {
-      LifespanPolicy *copy = 0;
+      LifespanPolicy *copy {};
       ACE_NEW_THROW_EX (copy,
                         LifespanPolicy (this->value_),
                         CORBA::NO_MEMORY ());

@@ -139,7 +139,7 @@ namespace TAO
                                            operation,
                                            cookie);
 
-      if (servant == 0)
+      if (servant == nullptr)
         {
           throw ::CORBA::OBJ_ADAPTER (CORBA::OMGVMCID | 7, CORBA::COMPLETED_NO);
         }

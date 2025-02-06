@@ -389,7 +389,7 @@ TAO_ServantBase::_get_interface ()
     ACE_Dynamic_Service<TAO_IFR_Client_Adapter>::instance (
         TAO_ORB_Core::ifr_client_adapter_name ());
 
-  if (adapter == 0)
+  if (adapter == nullptr)
     {
       throw ::CORBA::INTF_REPOS ();
     }
