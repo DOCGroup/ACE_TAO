@@ -211,7 +211,7 @@ public:
   class TAO_PortableServer_Export Hint_Strategy
   {
   public:
-    virtual ~Hint_Strategy ();
+    virtual ~Hint_Strategy ()= default;
 
     virtual int find_persistent_poa (const poa_name &system_name,
                                      TAO_Root_POA *&poa) = 0;
@@ -226,7 +226,7 @@ public:
     void object_adapter (TAO_Object_Adapter *oa);
 
   protected:
-    TAO_Object_Adapter *object_adapter_;
+    TAO_Object_Adapter *object_adapter_ {};
   };
 
   /**
@@ -243,17 +243,16 @@ public:
   public:
     Active_Hint_Strategy (CORBA::ULong map_size);
 
-    virtual ~Active_Hint_Strategy ();
+    ~Active_Hint_Strategy () override = default;
 
-    virtual int find_persistent_poa (const poa_name &system_name,
-                                     TAO_Root_POA *&poa);
+    int find_persistent_poa (const poa_name &system_name, TAO_Root_POA *&poa) override;
 
-    virtual int bind_persistent_poa (const poa_name &folded_name,
-                                     TAO_Root_POA *poa,
-                                     poa_name_out system_name);
+    int bind_persistent_poa (const poa_name &folded_name,
+                             TAO_Root_POA *poa,
+                             poa_name_out system_name) override;
 
-    virtual int unbind_persistent_poa (const poa_name &folded_name,
-                                       const poa_name &system_name);
+    int unbind_persistent_poa (const poa_name &folded_name,
+                               const poa_name &system_name) override;
 
   protected:
     typedef ACE_Active_Map_Manager_Adapter<
@@ -278,17 +277,17 @@ public:
   class TAO_PortableServer_Export No_Hint_Strategy : public Hint_Strategy
   {
   public:
-    virtual ~No_Hint_Strategy ();
+    ~No_Hint_Strategy () override = default;
 
     virtual int find_persistent_poa (const poa_name &system_name,
-                                     TAO_Root_POA *&poa);
+                                     TAO_Root_POA *&poa) override;
 
     virtual int bind_persistent_poa (const poa_name &folded_name,
                                      TAO_Root_POA *poa,
-                                     poa_name_out system_name);
+                                     poa_name_out system_name) override;
 
     virtual int unbind_persistent_poa (const poa_name &folded_name,
-                                       const poa_name &system_name);
+                                       const poa_name &system_name) override;
   };
 
   friend class No_Hint_Strategy;

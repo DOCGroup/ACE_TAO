@@ -922,10 +922,6 @@ TAO_Object_Adapter::get_collocated_servant (const TAO_MProfile &mp)
 
 // ****************************************************************
 
-TAO_Object_Adapter::Hint_Strategy::~Hint_Strategy ()
-{
-}
-
 void
 TAO_Object_Adapter::Hint_Strategy::object_adapter (TAO_Object_Adapter *oa)
 {
@@ -934,10 +930,6 @@ TAO_Object_Adapter::Hint_Strategy::object_adapter (TAO_Object_Adapter *oa)
 
 TAO_Object_Adapter::Active_Hint_Strategy::Active_Hint_Strategy (CORBA::ULong map_size)
   : persistent_poa_system_map_ (map_size)
-{
-}
-
-TAO_Object_Adapter::Active_Hint_Strategy::~Active_Hint_Strategy ()
 {
 }
 
@@ -1006,10 +998,6 @@ TAO_Object_Adapter::Active_Hint_Strategy::unbind_persistent_poa (
       this->object_adapter_->persistent_poa_name_map_->unbind (folded_name);
 
   return result;
-}
-
-TAO_Object_Adapter::No_Hint_Strategy::~No_Hint_Strategy ()
-{
 }
 
 int

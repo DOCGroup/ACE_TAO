@@ -79,10 +79,6 @@ TAO_ServantBase::operator= (const TAO_ServantBase &rhs)
   return *this;
 }
 
-TAO_ServantBase::~TAO_ServantBase ()
-{
-}
-
 PortableServer::POA_ptr
 TAO_ServantBase::_default_POA ()
 {

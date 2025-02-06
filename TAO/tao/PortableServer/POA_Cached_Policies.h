@@ -56,7 +56,7 @@ namespace TAO
 
       Cached_Policies ();
 
-      ~Cached_Policies ();
+      ~Cached_Policies () = default;
 
       /// Update the cached policy values.
       void update (TAO_POA_Policy_Set &policy_set);
