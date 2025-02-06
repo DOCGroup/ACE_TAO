@@ -66,7 +66,7 @@ public:
   /// of one-off values.
   IIOPEndpointValue_i (const char *host, CORBA::UShort port);
 
-  virtual ~IIOPEndpointValue_i ();
+  virtual ~IIOPEndpointValue_i () = default;
 
   /// The is_equivalent test is used by the endpoint policy framework
   /// for testing if a target endpoint is the same as the endpoint
