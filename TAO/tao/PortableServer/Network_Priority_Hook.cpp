@@ -4,10 +4,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Network_Priority_Hook::~TAO_Network_Priority_Hook()
-{
-}
-
 void
 TAO_Network_Priority_Hook::update_network_priority (
   TAO_Root_POA &poa, TAO_POA_Policy_Set &)
