@@ -208,7 +208,7 @@ namespace TAO
     {
       PortableServer::Servant default_servant = this->default_servant_.in ();
 
-      if (default_servant != 0 &&
+      if (default_servant != nullptr &&
           default_servant == servant)
         {
           // If they are the same servant, then check if we are in an

@@ -976,20 +976,18 @@ TAO_Object_Adapter::Active_Hint_Strategy::bind_persistent_poa (
   poa_name_out system_name)
 {
   poa_name name = folded_name;
-  int result = this->persistent_poa_system_map_.bind_modify_key (poa,
-                                                                 name);
+  int result = this->persistent_poa_system_map_.bind_modify_key (poa, name);
 
   if (result == 0)
     {
       result =
-        this->object_adapter_->persistent_poa_name_map_->bind (folded_name,
-                                                               poa);
+        this->object_adapter_->persistent_poa_name_map_->bind (folded_name, poa);
 
       if (result != 0)
         this->persistent_poa_system_map_.unbind (name);
       else
         ACE_NEW_RETURN (system_name,
-                        poa_name (name),
+                        poa_name (std::move(name)),
                         -1);
     }
 

@@ -86,7 +86,7 @@ namespace TAO
                                                                   servant_upcall,
                                                                   poa_current_impl);
 
-      if (servant != 0)
+      if (servant != nullptr)
         {
           return servant;
         }

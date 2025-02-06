@@ -600,7 +600,7 @@ TAO_Root_POA::find_POA (const char *adapter_name,
                         CORBA::Boolean activate_it)
 {
   // Lock access for the duration of this transaction.
-  TAO_POA_GUARD_RETURN (0);
+  TAO_POA_GUARD_RETURN (nullptr);
 
   TAO_Root_POA *poa = this->find_POA_i (adapter_name, activate_it);
 
@@ -693,7 +693,7 @@ TAO_Root_POA::create_POA (const char *adapter_name,
                           const CORBA::PolicyList &policies)
 {
   // Lock access for the duration of this transaction.
-  TAO_POA_GUARD_RETURN (0);
+  TAO_POA_GUARD_RETURN (nullptr);
 
   return this->create_POA_i (adapter_name, poa_manager, policies);
 }
@@ -705,7 +705,7 @@ TAO_Root_POA::servant_to_id (PortableServer::Servant servant)
   // If we had upgradeable locks, this would initially be a read lock
   //
   // Lock access for the duration of this transaction.
-  TAO_POA_GUARD_RETURN (0);
+  TAO_POA_GUARD_RETURN (nullptr);
 
   return this->servant_to_id_i (servant);
 }
@@ -721,7 +721,7 @@ PortableServer::Servant
 TAO_Root_POA::reference_to_servant (CORBA::Object_ptr reference)
 {
   // Lock access for the duration of this transaction.
-  TAO_POA_GUARD_RETURN (0);
+  TAO_POA_GUARD_RETURN (nullptr);
 
   return this->reference_to_servant_i (reference);
 }
@@ -740,7 +740,7 @@ PortableServer::POAList *
 TAO_Root_POA::the_children ()
 {
   // Lock access for the duration of this transaction.
-  TAO_POA_GUARD_RETURN (0);
+  TAO_POA_GUARD_RETURN (nullptr);
 
   return this->the_children_i ();
 }
@@ -750,7 +750,7 @@ PortableServer::Servant
 TAO_Root_POA::id_to_servant (const PortableServer::ObjectId &oid)
 {
   // Lock access for the duration of this transaction.
-  TAO_POA_GUARD_RETURN (0);
+  TAO_POA_GUARD_RETURN (nullptr);
 
   return this->id_to_servant_i (oid);
 }
@@ -759,7 +759,7 @@ CORBA::Object_ptr
 TAO_Root_POA::id_to_reference (const PortableServer::ObjectId &oid)
 {
   // Lock access for the duration of this transaction.
-  TAO_POA_GUARD_RETURN (0);
+  TAO_POA_GUARD_RETURN (nullptr);
 
   return this->id_to_reference_i (oid, true);
 }
@@ -1131,7 +1131,7 @@ TAO_Root_POA::activate_object (PortableServer::Servant servant)
       bool wait_occurred_restart_call = false;
 
       // Lock access for the duration of this transaction.
-      TAO_POA_GUARD_RETURN (0);
+      TAO_POA_GUARD_RETURN (nullptr);
 
       PortableServer::ObjectId *result =
         this->activate_object_i (servant,
@@ -1387,7 +1387,7 @@ TAO_Root_POA::reference_to_servant_i (CORBA::Object_ptr reference)
     this->active_policy_strategies_.request_processing_strategy()->
       system_id_to_servant (system_id);
 
-  if (servant != 0)
+  if (servant != nullptr)
     {
       // ATTENTION: Trick locking here, see class header for details
       TAO::Portable_Server::Non_Servant_Upcall non_servant_upcall (*this);
@@ -1465,7 +1465,7 @@ TAO_Root_POA::reference_to_id (CORBA::Object_ptr reference)
     }
 
   // Lock access for the duration of this transaction.
-  TAO_POA_GUARD_RETURN (0);
+  TAO_POA_GUARD_RETURN (nullptr);
 
   return this->active_policy_strategies_.servant_retention_strategy()->
     system_id_to_object_id (system_id);
@@ -1501,7 +1501,7 @@ TAO_Root_POA::id_to_servant_i (const PortableServer::ObjectId &id)
     this->active_policy_strategies_.request_processing_strategy()->
       id_to_servant (id);
 
-  if (servant != 0)
+  if (servant != nullptr)
     {
       // ATTENTION: Trick locking here, see class header for details
       TAO::Portable_Server::Non_Servant_Upcall non_servant_upcall (*this);
@@ -2316,11 +2316,11 @@ PortableServer::Servant
 TAO_Root_POA::get_servant ()
 {
   // Lock access for the duration of this transaction.
-  TAO_POA_GUARD_RETURN (0);
+  TAO_POA_GUARD_RETURN (nullptr);
 
   PortableServer::Servant servant = this->get_servant_i ();
 
-  if (servant != 0)
+  if (servant != nullptr)
     {
       // ATTENTION: Trick locking here, see class header for details
       TAO::Portable_Server::Non_Servant_Upcall non_servant_upcall (*this);
@@ -2483,14 +2483,14 @@ TAO_Root_POA::root () const
 TAO::ORT_Adapter *
 TAO_Root_POA::ORT_adapter ()
 {
-  if (this->ort_adapter_ != 0)
+  if (this->ort_adapter_ != nullptr)
     return this->ort_adapter_;
 
   // Lock access for the duration of this transaction.
-  TAO_POA_GUARD_RETURN (0);
+  TAO_POA_GUARD_RETURN (nullptr);
 
   // DCL ..
-  if (this->ort_adapter_ != 0)
+  if (this->ort_adapter_ != nullptr)
     {
       return this->ort_adapter_;
     }
@@ -2501,7 +2501,7 @@ TAO_Root_POA::ORT_adapter ()
 CORBA::Policy *
 TAO_Root_POA::server_protocol ()
 {
-  return 0;
+  return nullptr;
 }
 
 void

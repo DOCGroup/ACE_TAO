@@ -354,7 +354,7 @@ TAO_Active_Object_Map::is_user_id_in_map (
 
   if (find_result == 0)
     {
-      if (entry->servant_ == 0)
+      if (entry->servant_ == nullptr)
         {
           if (entry->priority_ != priority)
             {
@@ -420,7 +420,7 @@ TAO_Unique_Id_Strategy::bind_using_user_id (
 
   if (result == 0)
     {
-      if (servant != 0)
+      if (servant != nullptr)
         {
           entry->servant_ = servant;
 
@@ -451,24 +451,19 @@ TAO_Unique_Id_Strategy::bind_using_user_id (
       if (result == 0)
         {
           result =
-            this->active_object_map_->user_id_map_->bind (entry->user_id_,
-                                                          entry);
+            this->active_object_map_->user_id_map_->bind (entry->user_id_, entry);
           if (result == 0)
             {
-              if (servant != 0)
+              if (servant != nullptr)
                 {
                   result =
-                    this->active_object_map_->servant_map_->bind (
-                      entry->servant_,
-                      entry);
+                    this->active_object_map_->servant_map_->bind (entry->servant_, entry);
                 }
 
               if (result != 0)
                 {
-                  this->active_object_map_->user_id_map_->unbind (
-                    entry->user_id_);
-                  this->active_object_map_->id_hint_strategy_->unbind (
-                    *entry);
+                  this->active_object_map_->user_id_map_->unbind (entry->user_id_);
+                  this->active_object_map_->id_hint_strategy_->unbind (*entry);
                   delete entry;
                 }
               else
@@ -640,12 +635,11 @@ TAO_Multiple_Id_Strategy::bind_using_user_id (
   CORBA::Short priority,
   TAO_Active_Object_Map_Entry *&entry)
 {
-  int result =
-    this->active_object_map_->user_id_map_->find (user_id, entry);
+  int result = this->active_object_map_->user_id_map_->find (user_id, entry);
 
   if (result == 0)
     {
-      if (servant != 0)
+      if (servant != nullptr)
         {
           entry->servant_ = servant;
         }
@@ -944,7 +938,7 @@ TAO_System_Id_With_Unique_Id_Strategy::bind_using_system_id (
 
       if (result == 0)
         {
-          if (servant != 0)
+          if (servant != nullptr)
             {
               result =
                 this->active_object_map_->servant_map_->bind (entry->servant_,
