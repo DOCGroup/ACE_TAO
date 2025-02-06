@@ -279,15 +279,15 @@ public:
   public:
     ~No_Hint_Strategy () override = default;
 
-    virtual int find_persistent_poa (const poa_name &system_name,
-                                     TAO_Root_POA *&poa) override;
+    int find_persistent_poa (const poa_name &system_name,
+                             TAO_Root_POA *&poa) override;
 
-    virtual int bind_persistent_poa (const poa_name &folded_name,
-                                     TAO_Root_POA *poa,
-                                     poa_name_out system_name) override;
+    int bind_persistent_poa (const poa_name &folded_name,
+                             TAO_Root_POA *poa,
+                             poa_name_out system_name) override;
 
-    virtual int unbind_persistent_poa (const poa_name &folded_name,
-                                       const poa_name &system_name) override;
+    int unbind_persistent_poa (const poa_name &folded_name,
+                               const poa_name &system_name) override;
   };
 
   friend class No_Hint_Strategy;
