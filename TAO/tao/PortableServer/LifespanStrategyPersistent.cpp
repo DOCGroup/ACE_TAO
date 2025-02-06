@@ -85,7 +85,7 @@ namespace TAO
             }
 #endif /* !TAO_AS_STATIC_LIBS */
 
-          if (adapter != 0)
+          if (adapter != nullptr)
             {
               adapter->imr_notify_startup (this->poa_);
             }
@@ -110,7 +110,7 @@ namespace TAO
         ACE_Dynamic_Service<ImR_Client_Adapter>::instance (
           TAO_Root_POA::imr_client_adapter_name ());
 
-      if (adapter != 0)
+      if (adapter != nullptr)
         {
           adapter->imr_notify_shutdown (this->poa_);
         }

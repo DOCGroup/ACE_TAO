@@ -330,14 +330,13 @@ TAO_Root_POA::complete_destruction_i ()
 
   PortableServer::POA_var poa;
   TAO::ORT_Array my_array_obj_ref_template;
-  TAO::ORT_Adapter *ort_adapter = 0;
+  TAO::ORT_Adapter *ort_adapter = nullptr;
   if (doing_complete_destruction)
     {
-      ort_adapter =
-        this->ORT_adapter_i ();
+      ort_adapter = this->ORT_adapter_i ();
 
       // In case no ORT library is linked we get zero.
-      if (ort_adapter != 0)
+      if (ort_adapter != nullptr)
         {
           // Get the ObjectReferenceTemplate.
           PortableInterceptor::ObjectReferenceTemplate * const ort =
@@ -398,7 +397,7 @@ TAO_Root_POA::complete_destruction_i ()
       this->adapter_state_changed (my_array_obj_ref_template,
                                    this->adapter_state_);
 
-      if (ort_adapter != 0)
+      if (ort_adapter != nullptr)
         {
           ort_adapter->release (my_array_obj_ref_template[0]);
 
@@ -837,7 +836,7 @@ TAO_Root_POA::destroy_i (CORBA::Boolean etherealize_objects,
       TAO::ORT_Adapter * const adapter = child_poa->ORT_adapter_i ();
 
       // In case no ORT library is linked we get zero.
-      if (adapter != 0)
+      if (adapter != nullptr)
         {
           // Get the ObjectReferenceTemplate for the child POA.
           PortableInterceptor::ObjectReferenceTemplate * const ort =
@@ -857,7 +856,7 @@ TAO_Root_POA::destroy_i (CORBA::Boolean etherealize_objects,
       this->adapter_state_changed (array_obj_ref_template,
                                    PortableInterceptor::INACTIVE);
 
-      if (adapter != 0)
+      if (adapter != nullptr)
         adapter->release (array_obj_ref_template[0]);
 
       ++i;
@@ -870,8 +869,7 @@ TAO_Root_POA::destroy_i (CORBA::Boolean etherealize_objects,
     {
       TAO_Root_POA *destroy_child_poa = (*destroy_iterator).int_id_;
 
-      destroy_child_poa->destroy_i (etherealize_objects,
-                                    wait_for_completion);
+      destroy_child_poa->destroy_i (etherealize_objects, wait_for_completion);
     }
 
   // Notify the lifespan strategy of our shutdown
@@ -909,7 +907,7 @@ TAO_Root_POA::destroy_i (CORBA::Boolean etherealize_objects,
         this->ORT_adapter_i ();
 
       // In case no ORT library is linked we get zero.
-      if (ort_adapter != 0)
+      if (ort_adapter != nullptr)
         {
           // Get the ObjectReferenceTemplate.
           PortableInterceptor::ObjectReferenceTemplate * const ort =
@@ -937,7 +935,7 @@ TAO_Root_POA::destroy_i (CORBA::Boolean etherealize_objects,
       this->adapter_state_changed (my_array_obj_ref_template,
                                    this->adapter_state_);
 
-      if (ort_adapter != 0)
+      if (ort_adapter != nullptr)
         {
           ort_adapter->release (my_array_obj_ref_template[0]);
 
@@ -946,7 +944,7 @@ TAO_Root_POA::destroy_i (CORBA::Boolean etherealize_objects,
               this->ort_adapter_factory_->destroy (ort_adapter);
             }
 
-          this->ort_adapter_ = 0;
+          this->ort_adapter_ = nullptr;
         }
     }
   else
@@ -1003,7 +1001,6 @@ TAO_Root_POA::adapter_name_i ()
   // The adapter name is the sequence of names starting from the
   // RootPOA to the one whose name is requested.  The name of the
   // RootPOA is "RootPOA".
-
   PortableServer::POA_var poa = PortableServer::POA::_duplicate (this);
 
   CORBA::ULong len = 0;
