@@ -55,7 +55,18 @@ int run_main (int, ACE_TCHAR *[])
   ACE_TEST_ASSERT (strcmp (path, ACE_TEXT_ALWAYS_CHAR(buf)) == 0);
   ACE_TEST_ASSERT (strcmp (path, addr.get_path_name ()) == 0);
 
+  // Bounds checking
+  path = "/tmp/bounds.test";
+  addr.set (path);
+  ACE_TEST_ASSERT (addr.addr_to_string (nullptr, sizeof (buf)) == -1);
+  ACE_TEST_ASSERT (addr.addr_to_string (buf, 0) == -1);
+
 #if defined(ACE_LINUX)
+  // Bounds checking for abstract path
+  path = "@/tmp/bounds.test";
+  addr.set (path);
+  ACE_TEST_ASSERT (addr.addr_to_string (buf, 1) == -1);
+
   // Set abstract path by set.
   path = "@/tmp/ace.test";
   addr.set (path);
