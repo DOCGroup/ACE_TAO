@@ -261,6 +261,26 @@ ACE_SSL_Context::set_mode (int mode)
   SSL_METHOD *method = 0;
 #endif
 
+#if OPENSSL_VERSION_NUMBER >= 0x10100000L
+  switch (mode)
+    {
+    case ACE_SSL_Context::SSLv23_client:
+    case ACE_SSL_Context::TLS_client:
+      method = ::TLS_client_method ();
+      break;
+    case ACE_SSL_Context::SSLv23_server:
+    case ACE_SSL_Context::TLS_server:
+      method = ::TLS_server_method ();
+      break;
+    case ACE_SSL_Context::SSLv23:
+    case ACE_SSL_Context::TLS:
+      method = ::TLS_method ();
+      break;
+    default:
+      method = ::TLS_method ();
+      break;
+    }
+#else
   switch (mode)
     {
     case ACE_SSL_Context::SSLv23_client:
@@ -276,6 +296,7 @@ ACE_SSL_Context::set_mode (int mode)
       method = ::SSLv23_method ();
       break;
     }
+#endif
 
   this->context_ = ::SSL_CTX_new (method);
   if (this->context_ == 0)
@@ -479,7 +500,11 @@ ACE_SSL_Context::load_trusted_ca (const char* ca_file,
 
   // For TLS/SSL servers scan all certificates in ca_file and ca_dir and
   // list them as acceptable CAs when requesting a client certificate.
+#if OPENSSL_VERSION_NUMBER >= 0x10100000L
+  if (mode_ == TLS || mode_ == TLS_server || mode_ == SSLv23 || mode_ == SSLv23_server)
+#else
   if (mode_ == SSLv23 || mode_ == SSLv23_server)
+#endif
     {
       // Note: The STACK_OF(X509_NAME) pointer is a copy of the pointer in
       // the CTX; any changes to it by way of these function calls will
