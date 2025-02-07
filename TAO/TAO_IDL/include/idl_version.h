@@ -50,7 +50,7 @@ enum SpecificIdlVersion
  * This is so that BE can control the version without overriding idl_version_
  * directly and making --default-idl-version incorrect.
  */
-const SpecificIdlVersion DEFAULT_DEFAULT_IDL_VERSION = IDL_VERSION_3;
+const SpecificIdlVersion DEFAULT_DEFAULT_IDL_VERSION = IDL_VERSION_4;
 
 /**
  * Class Operations involving SpecificIdlVersion Values
