@@ -1,4 +1,7 @@
 // -*- C++ -*-
+#include "openssl/err.h"
+#include "openssl/ssl.h"
+
 #include "ace/OS_NS_errno.h"
 #include "ace/Truncate.h"
 
@@ -146,7 +149,6 @@ ACE_SSL_SOCK_Stream::recv_i (void *buf,
         }
 
       int const status = ::SSL_get_error (this->ssl_, bytes_read);
-      int substat = 0;
       switch (status)
         {
         case SSL_ERROR_NONE:
@@ -154,17 +156,18 @@ ACE_SSL_SOCK_Stream::recv_i (void *buf,
 
         case SSL_ERROR_WANT_READ:
         case SSL_ERROR_WANT_WRITE:
+        {
           if (timeout == 0)
             {
               errno = EWOULDBLOCK;
               bytes_read = -1;
               break;
             }
-          substat = ACE::handle_ready (handle,
-                                       timeout,
-                                       status == SSL_ERROR_WANT_READ,
-                                       status == SSL_ERROR_WANT_WRITE,
-                                       false);
+          const int substat = ACE::handle_ready (handle,
+                                                 timeout,
+                                                 status == SSL_ERROR_WANT_READ,
+                                                 status == SSL_ERROR_WANT_WRITE,
+                                                 false);
           if (substat == 1)   // Now ready to proceed
             {
               retry = true;
@@ -174,6 +177,7 @@ ACE_SSL_SOCK_Stream::recv_i (void *buf,
           if (substat == 0)
             errno = ETIME;
           break;
+        }
 
         case SSL_ERROR_ZERO_RETURN:
           bytes_read = 0;
@@ -184,11 +188,25 @@ ACE_SSL_SOCK_Stream::recv_i (void *buf,
 
           break;
 
+#if OPENSSL_VERSION_NUMBER >= 0x30000000L /*OpenSSL 3.0.0*/ || \
+    OPENSSL_VERSION_NUMBER == 0x1010105fL /*OpenSSL 1.1.1e*/
+        // handle SSL_ERROR_SSL|SSL_R_UNEXPECTED_EOF_WHILE_READING the same as
+        // SSL_ERROR_SYSCALL (i.e. the previous behavior, see also:
+        // https://github.com/openssl/openssl/issues/18866
+        // https://www.openssl.org/docs/man1.1.1/man3/SSL_get_error.html)
+        case SSL_ERROR_SSL:
+          if (ERR_GET_REASON (::ERR_peek_last_error ()) != SSL_R_UNEXPECTED_EOF_WHILE_READING)
+            goto default_; // --> handle as default error
+          ACE_FALLTHROUGH;
+
+#endif // OPENSSL_VERSION_NUMBER >= 0x30000000L || OPENSSL_VERSION_NUMBER == 0x1010105fL
         case SSL_ERROR_SYSCALL:
           if (bytes_read == 0)
             // An EOF occurred but the SSL "close_notify" message was not
             // sent.  This is a protocol error, but we ignore it.
             break;
+
+          ACE_SSL_Context::report_error ();
 
           // On some platforms (e.g. MS Windows) OpenSSL does not store
           // the last error in errno so explicitly do so.
@@ -197,12 +215,20 @@ ACE_SSL_SOCK_Stream::recv_i (void *buf,
           break;
 
         default:
+#if OPENSSL_VERSION_NUMBER >= 0x30000000L /*OpenSSL 3.0.0*/ || \
+    OPENSSL_VERSION_NUMBER == 0x1010105fL /*OpenSSL 1.1.1e*/
+default_:
+#endif // OPENSSL_VERSION_NUMBER >= 0x30000000L || OPENSSL_VERSION_NUMBER == 0x1010105fL
           // Reset errno to prevent previous values (e.g. EWOULDBLOCK)
           // from being associated with a fatal SSL error.
           bytes_read = -1;
           errno = 0;
 
           ACE_SSL_Context::report_error ();
+
+          // On some platforms (e.g. MS Windows) OpenSSL does not store
+          // the last error in errno so explicitly do so.
+          ACE_OS::set_errno_to_last_error ();
 
           break;
         }
@@ -317,9 +343,14 @@ ACE_SSL_SOCK_Stream::close ()
   // connection, not 0.
   int const status = ::SSL_shutdown (this->ssl_);
 
-  switch (::SSL_get_error (this->ssl_, status))
+  int const status_2 = ::SSL_get_error (this->ssl_, status);
+  switch (status_2)
     {
     case SSL_ERROR_NONE:
+#if OPENSSL_VERSION_NUMBER >= 0x30000000L /*OpenSSL 3.0.0*/ || \
+    OPENSSL_VERSION_NUMBER == 0x1010105fL /*OpenSSL 1.1.1e*/
+    case SSL_ERROR_SSL: // Ignore this error condition.
+#endif // OPENSSL_VERSION_NUMBER >= 0x30000000L || OPENSSL_VERSION_NUMBER == 0x1010105fL
     case SSL_ERROR_SYSCALL:  // Ignore this error condition.
 
       // Reset the SSL object to allow another connection to be made
@@ -338,6 +369,11 @@ ACE_SSL_SOCK_Stream::close ()
     default:
       ACE_SSL_Context::report_error ();
 
+      // On some platforms (e.g. MS Windows) OpenSSL does not store
+      // the last error in errno so explicitly do so.
+      ACE_OS::set_errno_to_last_error ();
+
+      this->set_handle (ACE_INVALID_HANDLE);
       ACE_Errno_Guard error (errno);   // Save/restore errno
       (void) this->stream_.close ();
 
