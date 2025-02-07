@@ -17,7 +17,7 @@ namespace TAO
     {
       POA_Current_Impl *impl = this->implementation ();
 
-      if (impl == 0)
+      if (impl == nullptr)
         throw PortableServer::Current::NoContext ();
       return impl->get_POA ();
     }
@@ -27,7 +27,7 @@ namespace TAO
     {
       POA_Current_Impl *impl = this->implementation ();
 
-      if (impl == 0)
+      if (impl == nullptr)
         throw PortableServer::Current::NoContext ();
       return impl->get_object_id ();
     }
@@ -37,7 +37,7 @@ namespace TAO
     {
       POA_Current_Impl *impl = this->implementation ();
 
-      if (impl == 0)
+      if (impl == nullptr)
         throw PortableServer::Current::NoContext ();
       return impl->get_servant ();
     }
@@ -47,7 +47,7 @@ namespace TAO
     {
       POA_Current_Impl *impl = this->implementation ();
 
-      if (impl == 0)
+      if (impl == nullptr)
         throw PortableServer::Current::NoContext ();
       return impl->get_reference ();
     }

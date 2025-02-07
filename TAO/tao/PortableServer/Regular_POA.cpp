@@ -32,7 +32,7 @@ void
 TAO_Regular_POA::remove_from_parent_i ()
 {
   // Remove POA from the parent
-  if (this->parent_ != 0)
+  if (this->parent_ != nullptr)
     {
       int const result = this->parent_->delete_child (this->name_);
       if (result != 0)
@@ -45,13 +45,13 @@ TAO_Regular_POA::remove_from_parent_i ()
 CORBA::Boolean
 TAO_Regular_POA::root () const
 {
-  return (parent_ == 0);
+  return (parent_ == nullptr);
 }
 
 char
 TAO_Regular_POA::root_key_type ()
 {
-  if (this->parent_ != 0)
+  if (this->parent_ != nullptr)
     {
       return TAO_Root_POA::non_root_key_char ();
     }

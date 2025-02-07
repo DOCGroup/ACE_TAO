@@ -84,13 +84,9 @@ namespace TAO
       TAO::Portable_Server::POA_Current_Impl &poa_current_impl,
       bool &wait_occurred_restart_call)
     {
-      PortableServer::Servant servant = 0;
+      PortableServer::Servant servant = this->poa_->find_servant (system_id, servant_upcall, poa_current_impl);
 
-      servant = this->poa_->find_servant (system_id,
-                                          servant_upcall,
-                                          poa_current_impl);
-
-      if (servant != 0)
+      if (servant != nullptr)
         {
           return servant;
         }
@@ -125,8 +121,7 @@ namespace TAO
       // will raise an OBJ_ADAPTER system exception for the
       // request.
       bool may_activate =
-        this->poa_->is_servant_activation_allowed (servant,
-                                                   wait_occurred_restart_call);
+        this->poa_->is_servant_activation_allowed (servant, wait_occurred_restart_call);
 
       if (!may_activate)
         {

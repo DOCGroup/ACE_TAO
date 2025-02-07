@@ -34,7 +34,7 @@ class TAO_PortableServer_Export TAO_Default_Servant_Dispatcher
   : public TAO_Servant_Dispatcher
 {
 public:
-  virtual ~TAO_Default_Servant_Dispatcher ();
+  virtual ~TAO_Default_Servant_Dispatcher () = default;
 
   /// Pre_invoke remote request.
   void pre_invoke_remote_request (

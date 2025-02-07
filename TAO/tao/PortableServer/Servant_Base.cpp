@@ -79,10 +79,6 @@ TAO_ServantBase::operator= (const TAO_ServantBase &rhs)
   return *this;
 }
 
-TAO_ServantBase::~TAO_ServantBase ()
-{
-}
-
 PortableServer::POA_ptr
 TAO_ServantBase::_default_POA ()
 {
@@ -389,7 +385,7 @@ TAO_ServantBase::_get_interface ()
     ACE_Dynamic_Service<TAO_IFR_Client_Adapter>::instance (
         TAO_ORB_Core::ifr_client_adapter_name ());
 
-  if (adapter == 0)
+  if (adapter == nullptr)
     {
       throw ::CORBA::INTF_REPOS ();
     }
@@ -446,8 +442,7 @@ TAO_ServantBase::_create_stub ()
 
   CORBA::ORB_ptr servant_orb = nullptr;
 
-  if (poa_current_impl != 0
-      && this == poa_current_impl->servant ())
+  if (poa_current_impl != nullptr && this == poa_current_impl->servant ())
     {
       servant_orb = poa_current_impl->orb_core ().orb () ;
 
