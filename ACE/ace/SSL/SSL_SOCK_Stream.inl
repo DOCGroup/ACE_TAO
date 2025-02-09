@@ -317,16 +317,15 @@ ACE_SSL_SOCK_Stream::close ()
   // connection, not 0.
   int const status = ::SSL_shutdown (this->ssl_);
 
-  switch (::SSL_get_error (this->ssl_, status))
+  int status_2 = ::SSL_get_error (this->ssl_, status);
+  switch (status_2)
     {
     case SSL_ERROR_NONE:
-    case SSL_ERROR_SYSCALL:  // Ignore this error condition.
-
       // Reset the SSL object to allow another connection to be made
       // using this ACE_SSL_SOCK_Stream instance.  This prevents the
       // previous SSL session state from being associated with the new
       // SSL session/connection.
-      (void) ::SSL_clear (this->ssl_);
+      ::SSL_clear (this->ssl_);
       this->set_handle (ACE_INVALID_HANDLE);
       return this->stream_.close ();
 
@@ -335,13 +334,15 @@ ACE_SSL_SOCK_Stream::close ()
       errno = EWOULDBLOCK;
       break;
 
+    case SSL_ERROR_SSL:
+    case SSL_ERROR_SYSCALL:
     default:
       ACE_SSL_Context::report_error ();
 
+      this->set_handle (ACE_INVALID_HANDLE);
       ACE_Errno_Guard error (errno);   // Save/restore errno
-      (void) this->stream_.close ();
-
-      return -1;
+      this->stream_.close ();
+      break;
     }
 
   return -1;
