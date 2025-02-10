@@ -734,7 +734,7 @@ Writer::initiate_write_file ()
   size_t odd_count  = last_chunk (this->odd_chain_, dummy_last);
   size_t even_count = last_chunk (this->even_chain_, dummy_last);
 
-  size_t const merge_size = (std::min) ((std::min) (odd_count, even_count), (size_t) ACE_IOV_MAX);
+  size_t merge_size = (std::min) ((std::min) (odd_count, even_count), (size_t) ACE_IOV_MAX);
 
   // the options here are as follows:
   // io_count_ can be zero or greater.
