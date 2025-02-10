@@ -1,5 +1,5 @@
 #include "ace/UNIX_Addr.h"
-#include "ace/Min_Max.h"
+#include <algorithm>
 
 #if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 
@@ -142,9 +142,9 @@ ACE_UNIX_Addr::set (const sockaddr_un *un, int len)
                    sizeof this->unix_addr_);
   this->unix_addr_.sun_family = AF_UNIX;
 #if defined (ACE_LINUX)
-  int const n = ACE_MIN (len - int (sizeof this->unix_addr_ -
+  int const n = std::min (len - int (sizeof this->unix_addr_ -
                                     sizeof (this->unix_addr_.sun_path)),
-                         int (sizeof (this->unix_addr_.sun_path)));
+                          int (sizeof (this->unix_addr_.sun_path)));
   if (n > 0)
     {
       memcpy (this->unix_addr_.sun_path, un->sun_path, n);
