@@ -74,9 +74,9 @@ int run_main (int, ACE_TCHAR *[])
   a1.set ("@/tmp/boundA");
   a2.set ("@/tmp/boundB");
   ACE_TEST_ASSERT (a1 != a2);
-  a2.set ("/tmp/bound");
+  a2.set ("/tmp/boundA");
   ACE_TEST_ASSERT (a1 != a2);
-  a1.set ("@/tmp/foo");
+  a1.set ("@/tmp/bound");
   ACE_TEST_ASSERT (a1 != a2);
 
   // Set abstract path by set.
