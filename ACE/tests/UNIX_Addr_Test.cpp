@@ -61,11 +61,19 @@ int run_main (int, ACE_TCHAR *[])
   ACE_TEST_ASSERT (addr.addr_to_string (nullptr, sizeof (buf)) == -1);
   ACE_TEST_ASSERT (addr.addr_to_string (buf, 0) == -1);
 
+  ACE_UNIX_Addr a1 ("/tmp/testA");
+  ACE_UNIX_Addr a2 ("/tmp/testB");
+  ACE_TEST_ASSERT (a1 != a2);
+
 #if defined(ACE_LINUX)
   // Bounds checking for abstract path
   path = "@/tmp/bounds.test";
   addr.set (path);
   ACE_TEST_ASSERT (addr.addr_to_string (buf, 1) == -1);
+
+  a1.set ("@/tmp/boundA");
+  a2.set ("@/tmp/boundB");
+  ACE_TEST_ASSERT (a1 != a2);
 
   // Set abstract path by set.
   path = "@/tmp/ace.test";
