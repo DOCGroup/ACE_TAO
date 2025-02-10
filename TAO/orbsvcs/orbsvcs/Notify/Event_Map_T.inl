@@ -48,25 +48,25 @@ TAO_Notify_Event_Map_T<PROXY, ACE_LOCK>::release (ENTRY* entry)
 }
 
 template <class PROXY, class ACE_LOCK>  ACE_INLINE  typename TAO_Notify_Event_Map_Entry_T<PROXY>::COLLECTION*
-TAO_Notify_Event_Map_T<PROXY, ACE_LOCK>::broadcast_collection (void)
+TAO_Notify_Event_Map_T<PROXY, ACE_LOCK>::broadcast_collection ()
 {
   return this->broadcast_entry_.collection ();
 }
 
 template <class PROXY, class ACE_LOCK>  ACE_INLINE  typename TAO_Notify_Event_Map_Entry_T<PROXY>::COLLECTION*
-TAO_Notify_Event_Map_T<PROXY, ACE_LOCK>::updates_collection (void)
+TAO_Notify_Event_Map_T<PROXY, ACE_LOCK>::updates_collection ()
 {
   return this->updates_entry_.collection ();
 }
 
 template <class PROXY, class ACE_LOCK> ACE_INLINE int
-TAO_Notify_Event_Map_T<PROXY, ACE_LOCK>::proxy_count (void)
+TAO_Notify_Event_Map_T<PROXY, ACE_LOCK>::proxy_count ()
 {
   return this->proxy_count_;
 }
 
 template <class PROXY, class ACE_LOCK> ACE_INLINE const TAO_Notify_EventTypeSeq&
-TAO_Notify_Event_Map_T<PROXY, ACE_LOCK>::event_types (void)
+TAO_Notify_Event_Map_T<PROXY, ACE_LOCK>::event_types ()
 {
   return this->event_types_;
 }

@@ -9,7 +9,6 @@ use PerlACE::TestTarget;
 
 $number_of_clients = 1;
 $status = 0;
-$continuous = ($^O eq 'hpux');
 
 my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
 my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
@@ -48,11 +47,6 @@ sub run_clients
 }
 
 $SV = $server->CreateProcess ("server");
-
-if ($continuous) {
-    $SV->Arguments ("-ORBSvcConf continuous$PerlACE::svcconf_ext");
-}
-
 $SV->Spawn ();
 
 for $test (@configurations) {

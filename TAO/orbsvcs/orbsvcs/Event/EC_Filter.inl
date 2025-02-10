@@ -2,13 +2,13 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
-TAO_EC_Filter::TAO_EC_Filter (void)
+TAO_EC_Filter::TAO_EC_Filter ()
   :  parent_ (0)
 {
 }
 
 ACE_INLINE TAO_EC_Filter*
-TAO_EC_Filter::parent (void) const
+TAO_EC_Filter::parent () const
 {
   return this->parent_;
 }
@@ -33,7 +33,7 @@ TAO_EC_Filter::matches (const RtecEventComm::EventHeader& rhs,
 // ****************************************************************
 
 ACE_INLINE
-TAO_EC_Null_Filter::TAO_EC_Null_Filter (void)
+TAO_EC_Null_Filter::TAO_EC_Null_Filter ()
 {
 }
 

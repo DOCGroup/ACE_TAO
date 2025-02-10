@@ -49,7 +49,6 @@ namespace TAO
         private RefCountPolicy
     {
     public:
-
       /// @typedef Type of individual case array element, not the
       ///          array itself.
       typedef TAO::TypeCode::Case<StringType, TypeCodeType> case_type;
@@ -76,15 +75,14 @@ namespace TAO
       //@{
       virtual bool tao_marshal (TAO_OutputCDR & cdr,
                                 CORBA::ULong offset) const;
-      virtual void tao_duplicate (void);
-      virtual void tao_release (void);
+      virtual void tao_duplicate ();
+      virtual void tao_release ();
       //@}
 
       /// Accessor for cases_
-      const CaseArrayType& cases(void) const;
+      const CaseArrayType& cases() const;
 
     protected:
-
       /**
        * @name @c TAO CORBA::TypeCode Template Methods
        *
@@ -95,19 +93,18 @@ namespace TAO
       //@{
       virtual CORBA::Boolean equal_i (CORBA::TypeCode_ptr tc) const;
       virtual CORBA::Boolean equivalent_i (CORBA::TypeCode_ptr tc) const;
-      virtual CORBA::TypeCode_ptr get_compact_typecode_i (void) const;
-      virtual char const * id_i (void) const;
-      virtual char const * name_i (void) const;
-      virtual CORBA::ULong member_count_i (void) const;
+      virtual CORBA::TypeCode_ptr get_compact_typecode_i () const;
+      virtual char const * id_i () const;
+      virtual char const * name_i () const;
+      virtual CORBA::ULong member_count_i () const;
       virtual char const * member_name_i (CORBA::ULong index) const;
       virtual CORBA::TypeCode_ptr member_type_i (CORBA::ULong index) const;
       virtual CORBA::Any * member_label_i (CORBA::ULong index) const;
-      virtual CORBA::TypeCode_ptr discriminator_type_i (void) const;
-      virtual CORBA::Long default_index_i (void) const;
+      virtual CORBA::TypeCode_ptr discriminator_type_i () const;
+      virtual CORBA::Long default_index_i () const;
       //@}
 
     protected:
-
       /**
        * @c Union Attributes
        *
@@ -119,7 +116,6 @@ namespace TAO
        *       increase cache hits by improving spatial locality.
        */
       //@{
-
       /// Base attributes containing repository ID and name of
       /// union type.
       Base_Attributes<StringType> base_attributes_;
@@ -145,7 +141,6 @@ namespace TAO
       //@}
 
     };
-
   }  // End namespace TypeCode
 }  // End namespace TAO
 
@@ -156,14 +151,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 # include "tao/AnyTypeCode/Union_TypeCode.inl"
 #endif  /* __ACE_INLINE__ */
 
-#ifdef ACE_TEMPLATES_REQUIRE_SOURCE
-# include "tao/AnyTypeCode/Union_TypeCode.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#ifdef ACE_TEMPLATES_REQUIRE_PRAGMA
-# pragma implementation ("Union_TypeCode.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
-
+#include "tao/AnyTypeCode/Union_TypeCode.cpp"
 
 #include /**/ "ace/post.h"
 

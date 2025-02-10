@@ -28,13 +28,13 @@ Test_i::Test_i (CORBA::ORB_ptr orb) :
     }
 }
 
-Test_i::~Test_i (void)
+Test_i::~Test_i ()
 {
   this->policies_[0]->destroy ();
 }
 
 int
-Test_i::try_and_create_POA (void)
+Test_i::try_and_create_POA ()
 {
   try
     {
@@ -62,7 +62,7 @@ Test_i::try_and_create_POA (void)
 }
 
 void
-Test_i::shutdown (void)
+Test_i::shutdown ()
 {
-   orb_->shutdown (0);
+   orb_->shutdown (false);
 }

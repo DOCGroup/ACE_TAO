@@ -13,7 +13,6 @@ namespace ACE
 {
   namespace INet
   {
-
     SSL_CertificateCallbackArg::SSL_CertificateCallbackArg (const ACE_SSL_Context* ssl_ctx,
                                                             ::X509_STORE_CTX* cert_ctx)
       : ssl_ctx_ (ssl_ctx),

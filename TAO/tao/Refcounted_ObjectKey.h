@@ -42,20 +42,20 @@ namespace TAO
     Refcounted_ObjectKey (const ObjectKey &ref);
 
     /// Accessor for the underlying ObjectKey.
-    const ObjectKey &object_key (void) const;
+    const ObjectKey &object_key () const;
 
   protected:
     friend class ObjectKey_Table;
 
     /// Protected destructor
-    ~Refcounted_ObjectKey (void);
+    ~Refcounted_ObjectKey ();
 
     /// Methods for incrementing refcount.
-    void incr_refcount (void);
+    void incr_refcount ();
 
     /// Methods for decrementing refcount. Return the refcount, used by the
     /// ObjectKey table.
-    CORBA::ULong decr_refcount (void);
+    CORBA::ULong decr_refcount ();
 
   private:
     /// The object key

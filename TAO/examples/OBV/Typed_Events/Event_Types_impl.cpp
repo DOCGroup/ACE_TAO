@@ -17,15 +17,15 @@ Event_impl::~Event_impl ()
 }
 
 ::CORBA::ValueBase *
-Event_impl::_copy_value (void)
+Event_impl::_copy_value ()
 {
   ::CORBA::ValueBase *ret_val= 0;
-  // Not implimented
+  // Not implemented
   return ret_val;
 }
 
 void
-Event_impl::do_print (void)
+Event_impl::do_print ()
 {
   ACE_DEBUG((LM_DEBUG, "(time %d origin %d)  ",
              (CORBA::ULong) this->time_(),
@@ -38,7 +38,7 @@ Event_factory::~Event_factory ()
 }
 
 TAO_OBV_CREATE_RETURN_TYPE (Event)
-Event_factory::create_for_unmarshal (void)
+Event_factory::create_for_unmarshal ()
 {
   return new Event_impl;
 }
@@ -60,15 +60,15 @@ Temperature_impl::~Temperature_impl ()
 }
 
 ::CORBA::ValueBase *
-Temperature_impl::_copy_value (void)
+Temperature_impl::_copy_value ()
 {
   ::CORBA::ValueBase *ret_val= 0;
-  // Not implimented
+  // Not implemented
   return ret_val;
 }
 
 void
-Temperature_impl::do_print (void)
+Temperature_impl::do_print ()
 {
   // The timestamp
   Event_impl::do_print ();
@@ -81,7 +81,7 @@ Temperature_factory::~Temperature_factory ()
 }
 
 TAO_OBV_CREATE_RETURN_TYPE (Temperature)
-Temperature_factory::create_for_unmarshal (void)
+Temperature_factory::create_for_unmarshal ()
 {
   return new Temperature_impl;
 }
@@ -103,15 +103,15 @@ Position_impl::~Position_impl ()
 }
 
 ::CORBA::ValueBase *
-Position_impl::_copy_value (void)
+Position_impl::_copy_value ()
 {
   ::CORBA::ValueBase *ret_val= 0;
-  // Not implimented
+  // Not implemented
   return ret_val;
 }
 
 void
-Position_impl::do_print (void)
+Position_impl::do_print ()
 {
   // The timestamp
   Event_impl::do_print ();
@@ -126,7 +126,7 @@ Position_impl::do_print (void)
              x, y, z));
 }
 
-CORBA::Float Position_impl::x (void)
+CORBA::Float Position_impl::x ()
 {
   return this->xyz()[0];
 }
@@ -136,7 +136,7 @@ void Position_impl::x (CORBA::Float x)
   this->xyz()[0] = x;
 }
 
-CORBA::Float Position_impl::y (void)
+CORBA::Float Position_impl::y ()
 {
   return this->xyz()[1];
 }
@@ -146,7 +146,7 @@ void Position_impl::y (CORBA::Float y)
   this->xyz()[1] = y;
 }
 
-CORBA::Float Position_impl::z (void)
+CORBA::Float Position_impl::z ()
 {
   return this->xyz()[2];
 }
@@ -161,7 +161,7 @@ Position_factory::~Position_factory ()
 }
 
 TAO_OBV_CREATE_RETURN_TYPE (Position)
-Position_factory::create_for_unmarshal (void)
+Position_factory::create_for_unmarshal ()
 {
   return new Position_impl;
 }
@@ -183,15 +183,15 @@ Log_Msg_impl::~Log_Msg_impl ()
 }
 
 ::CORBA::ValueBase *
-Log_Msg_impl::_copy_value (void)
+Log_Msg_impl::_copy_value ()
 {
   ::CORBA::ValueBase *ret_val= 0;
-  // Not implimented
+  // Not implemented
   return ret_val;
 }
 
 void
-Log_Msg_impl::do_print (void)
+Log_Msg_impl::do_print ()
 {
   // The timestamp
   Event_impl::do_print ();
@@ -211,7 +211,7 @@ Log_Msg_factory::~Log_Msg_factory ()
 }
 
 TAO_OBV_CREATE_RETURN_TYPE (Log_Msg)
-Log_Msg_factory::create_for_unmarshal (void)
+Log_Msg_factory::create_for_unmarshal ()
 {
   return new Log_Msg_impl;
 }
@@ -240,21 +240,21 @@ Event_List_Link_impl::~Event_List_Link_impl ()
 }
 
 ::CORBA::ValueBase *
-Event_List_Link_impl::_copy_value (void)
+Event_List_Link_impl::_copy_value ()
 {
   ::CORBA::ValueBase *ret_val= 0;
-  // Not implimented
+  // Not implemented
   return ret_val;
 }
 
 Event*
-Event_List_Link_impl::get_event (void)
+Event_List_Link_impl::get_event ()
 {
   return this->my_event ();
 }
 
 Event_List_Link*
-Event_List_Link_impl::get_next_link (void)
+Event_List_Link_impl::get_next_link ()
 {
   return this->next ();
 }
@@ -270,29 +270,29 @@ Event_List_Link_factory::~Event_List_Link_factory ()
 }
 
 TAO_OBV_CREATE_RETURN_TYPE (Event_List_Link)
-Event_List_Link_factory::create_for_unmarshal (void)
+Event_List_Link_factory::create_for_unmarshal ()
 {
   return new Event_List_Link_impl;
 }
 
 // Event_List implementation  ===================================
 
-Event_List_impl::Event_List_impl (void)
+Event_List_impl::Event_List_impl ()
 {
   this->first_link (0);
   this->last_link_cache_ = 0;
 }
 
-Event_List_impl::~Event_List_impl (void)
+Event_List_impl::~Event_List_impl ()
 {
   // Destructor does nothing explicit, because the _var types do care.
 }
 
 ::CORBA::ValueBase *
-Event_List_impl::_copy_value (void)
+Event_List_impl::_copy_value ()
 {
   ::CORBA::ValueBase *ret_val= 0;
-  // Not implimented
+  // Not implemented
   return ret_val;
 }
 
@@ -337,12 +337,12 @@ Event_List_impl::store_event (Event* e)
     }
 }
 
-Event_List_factory::~Event_List_factory (void)
+Event_List_factory::~Event_List_factory ()
 {
 }
 
 TAO_OBV_CREATE_RETURN_TYPE (Event_List)
-Event_List_factory::create_for_unmarshal (void)
+Event_List_factory::create_for_unmarshal ()
 {
   return new Event_List_impl;
 }
@@ -352,12 +352,12 @@ Event_List_Iterator::Event_List_Iterator (Event_List *list)
   this->init (list);
 }
 
-Event_List_Iterator::Event_List_Iterator (void)
+Event_List_Iterator::Event_List_Iterator ()
 {
   // current_ is a _var and set itself to null.
 }
 
-Event_List_Iterator::~Event_List_Iterator (void)
+Event_List_Iterator::~Event_List_Iterator ()
 {
   // nothing
 }
@@ -428,10 +428,10 @@ Temperature_Criterion_impl::~Temperature_Criterion_impl ()
 }
 
 ::CORBA::ValueBase *
-Temperature_Criterion_impl::_copy_value (void)
+Temperature_Criterion_impl::_copy_value ()
 {
   ::CORBA::ValueBase *ret_val= 0;
-  // Not implimented
+  // Not implemented
   return ret_val;
 }
 
@@ -452,7 +452,7 @@ Temperature_Criterion_impl::is_critical (Event* e)
 }
 
 void
-Temperature_Criterion_impl::do_print (void)
+Temperature_Criterion_impl::do_print ()
 {
   ACE_DEBUG((LM_DEBUG, "Alarm boundary for events with origin id %d is\n",
              this->origin_id_ () ));
@@ -464,7 +464,7 @@ Temperature_Criterion_factory::~Temperature_Criterion_factory ()
 }
 
 TAO_OBV_CREATE_RETURN_TYPE (Temperature_Criterion)
-Temperature_Criterion_factory::create_for_unmarshal (void)
+Temperature_Criterion_factory::create_for_unmarshal ()
 {
   return new Temperature_Criterion_impl;
 }
@@ -487,10 +487,10 @@ Position_Criterion_impl::~Position_Criterion_impl ()
 }
 
 ::CORBA::ValueBase *
-Position_Criterion_impl::_copy_value (void)
+Position_Criterion_impl::_copy_value ()
 {
   ::CORBA::ValueBase *ret_val= 0;
-  // Not implimented
+  // Not implemented
   return ret_val;
 }
 
@@ -529,7 +529,7 @@ Position_Criterion_factory::~Position_Criterion_factory ()
 }
 
 TAO_OBV_CREATE_RETURN_TYPE (Position_Criterion)
-Position_Criterion_factory::create_for_unmarshal (void)
+Position_Criterion_factory::create_for_unmarshal ()
 {
   return new Position_Criterion_impl;
 }
@@ -543,10 +543,10 @@ Log_Msg_Criterion_impl::~Log_Msg_Criterion_impl ()
 }
 
 ::CORBA::ValueBase *
-Log_Msg_Criterion_impl::_copy_value (void)
+Log_Msg_Criterion_impl::_copy_value ()
 {
   ::CORBA::ValueBase *ret_val= 0;
-  // Not implimented
+  // Not implemented
   return ret_val;
 }
 
@@ -564,7 +564,7 @@ Log_Msg_Criterion_impl::is_critical (Event* e)
 }
 
 void
-Log_Msg_Criterion_impl::do_print (void)
+Log_Msg_Criterion_impl::do_print ()
 {
   ACE_DEBUG((LM_DEBUG,
              "All log messages with urgency greater zero are registered.\n" ));
@@ -575,7 +575,7 @@ Log_Msg_Criterion_factory::~Log_Msg_Criterion_factory ()
 }
 
 TAO_OBV_CREATE_RETURN_TYPE (Log_Msg_Criterion)
-Log_Msg_Criterion_factory::create_for_unmarshal (void)
+Log_Msg_Criterion_factory::create_for_unmarshal ()
 {
   return new Log_Msg_Criterion_impl;
 }
@@ -596,10 +596,10 @@ Criterion_List_impl::~Criterion_List_impl ()
 }
 
 ::CORBA::ValueBase *
-Criterion_List_impl::_copy_value (void)
+Criterion_List_impl::_copy_value ()
 {
   ::CORBA::ValueBase *ret_val= 0;
-  // Not implimented
+  // Not implemented
   return ret_val;
 }
 

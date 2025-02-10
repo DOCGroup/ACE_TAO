@@ -24,13 +24,12 @@ TAO_CEC_ProxyPushConsumer (TAO_CEC_EventChannel* ec,
   this->lock_ =
     this->event_channel_->create_consumer_lock ();
 
-  this->default_POA_ =
-    this->event_channel_->consumer_poa ();
+  this->default_POA_ = this->event_channel_->consumer_poa ();
 
   this->event_channel_->get_servant_retry_map ().bind (this, 0);
 }
 
-TAO_CEC_ProxyPushConsumer::~TAO_CEC_ProxyPushConsumer (void)
+TAO_CEC_ProxyPushConsumer::~TAO_CEC_ProxyPushConsumer ()
 {
   this->event_channel_->get_servant_retry_map ().unbind (this);
   this->event_channel_->destroy_consumer_lock (this->lock_);
@@ -53,7 +52,7 @@ TAO_CEC_ProxyPushConsumer::activate (
 }
 
 void
-TAO_CEC_ProxyPushConsumer::deactivate (void)
+TAO_CEC_ProxyPushConsumer::deactivate ()
 {
   try
     {
@@ -103,7 +102,7 @@ TAO_CEC_ProxyPushConsumer::supplier_non_existent (
 }
 
 void
-TAO_CEC_ProxyPushConsumer::shutdown (void)
+TAO_CEC_ProxyPushConsumer::shutdown ()
 {
   CosEventComm::PushSupplier_var supplier;
 
@@ -134,7 +133,7 @@ TAO_CEC_ProxyPushConsumer::shutdown (void)
 }
 
 void
-TAO_CEC_ProxyPushConsumer::cleanup_i (void)
+TAO_CEC_ProxyPushConsumer::cleanup_i ()
 {
   this->supplier_ =
     CosEventComm::PushSupplier::_nil ();
@@ -142,14 +141,14 @@ TAO_CEC_ProxyPushConsumer::cleanup_i (void)
 }
 
 CORBA::ULong
-TAO_CEC_ProxyPushConsumer::_incr_refcnt (void)
+TAO_CEC_ProxyPushConsumer::_incr_refcnt ()
 {
   ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->lock_, 0);
   return this->refcount_++;
 }
 
 CORBA::ULong
-TAO_CEC_ProxyPushConsumer::_decr_refcnt (void)
+TAO_CEC_ProxyPushConsumer::_decr_refcnt ()
 {
   {
     ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->lock_, 0);
@@ -288,19 +287,19 @@ TAO_CEC_ProxyPushConsumer::disconnect_push_consumer ()
 }
 
 PortableServer::POA_ptr
-TAO_CEC_ProxyPushConsumer::_default_POA (void)
+TAO_CEC_ProxyPushConsumer::_default_POA ()
 {
   return PortableServer::POA::_duplicate (this->default_POA_.in ());
 }
 
 void
-TAO_CEC_ProxyPushConsumer::_add_ref (void)
+TAO_CEC_ProxyPushConsumer::_add_ref ()
 {
   this->_incr_refcnt ();
 }
 
 void
-TAO_CEC_ProxyPushConsumer::_remove_ref (void)
+TAO_CEC_ProxyPushConsumer::_remove_ref ()
 {
   this->_decr_refcnt ();
 }
@@ -334,7 +333,7 @@ TAO_CEC_ProxyPushConsumer_Guard::
 }
 
 TAO_CEC_ProxyPushConsumer_Guard::
-    ~TAO_CEC_ProxyPushConsumer_Guard (void)
+    ~TAO_CEC_ProxyPushConsumer_Guard ()
 {
   // This access is safe because guard objects are created on the
   // stack, only one thread has access to them

@@ -55,11 +55,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 static void *
 test_server (void *arg)
 {
-#if defined (ACE_OPENVMS) && (!defined (__INITIAL_POINTER_SIZE) || (__INITIAL_POINTER_SIZE < 64))
-  int server_nr = reinterpret_cast<int> (arg);
-#else
   intptr_t server_nr = reinterpret_cast<intptr_t> (arg);
-#endif
 
   ACE_TCHAR ior[256];
 

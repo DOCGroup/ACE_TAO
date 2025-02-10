@@ -14,7 +14,7 @@ ACE_Auto_IncDec<ACE_SAFELY_INCREMENTABLE_DECREMENTABLE>::ACE_Auto_IncDec
 // Implicitly and automatically decrement the counter.
 
 template <class ACE_SAFELY_INCREMENTABLE_DECREMENTABLE> ACE_INLINE
-ACE_Auto_IncDec<ACE_SAFELY_INCREMENTABLE_DECREMENTABLE>::~ACE_Auto_IncDec (void)
+ACE_Auto_IncDec<ACE_SAFELY_INCREMENTABLE_DECREMENTABLE>::~ACE_Auto_IncDec ()
 {
   --this->counter_;
 }

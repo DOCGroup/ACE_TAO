@@ -30,10 +30,10 @@ class TAO_RTEC_COSEC_Export TAO_CosEC_SupplierAdmin_i :
   //   TAO's RtecEventChannelAdmin::SupplierAdmin.
 public:
   /// Constructor.
-  TAO_CosEC_SupplierAdmin_i (void);
+  TAO_CosEC_SupplierAdmin_i ();
 
   /// Destructor.
-  ~TAO_CosEC_SupplierAdmin_i (void);
+  ~TAO_CosEC_SupplierAdmin_i () = default;
 
   /// Initializes the SupplierAdmin.  Returns 0 on success, -1 on
   /// error.
@@ -41,12 +41,10 @@ public:
             RtecEventChannelAdmin::SupplierAdmin_ptr rtec_supplieradmin);
 
   /// Returns a new ProxyPushConsumer_ptr.
-  virtual CosEventChannelAdmin::ProxyPushConsumer_ptr
-    obtain_push_consumer (void);
+  virtual CosEventChannelAdmin::ProxyPushConsumer_ptr obtain_push_consumer ();
 
   /// Returns a new ProxyPullConsumer_ptr.
-  virtual CosEventChannelAdmin::ProxyPullConsumer_ptr
-    obtain_pull_consumer(void);
+  virtual CosEventChannelAdmin::ProxyPullConsumer_ptr obtain_pull_consumer();
 
 private:
   /// The SupplierQOS specified by the user of this class.

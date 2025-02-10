@@ -7,7 +7,7 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
 
-Event_Logging_Service::Event_Logging_Service (void)
+Event_Logging_Service::Event_Logging_Service ()
   : service_name_ ("EventLogFactory"),
     ior_file_name_ (0),
     pid_file_name_ (0),
@@ -17,7 +17,7 @@ Event_Logging_Service::Event_Logging_Service (void)
   // No-Op.
 }
 
-Event_Logging_Service::~Event_Logging_Service (void)
+Event_Logging_Service::~Event_Logging_Service ()
 {
   // No-Op.
 }
@@ -163,7 +163,7 @@ Event_Logging_Service::init (int argc, ACE_TCHAR *argv[])
 }
 
 void
-Event_Logging_Service::resolve_naming_service (void)
+Event_Logging_Service::resolve_naming_service ()
 {
   CORBA::Object_var naming_obj =
     this->orb_->resolve_initial_references ("NameService");
@@ -177,7 +177,7 @@ Event_Logging_Service::resolve_naming_service (void)
 }
 
 int
-Event_Logging_Service::run (void)
+Event_Logging_Service::run ()
 {
   if (this->nthreads_ > 0)
     {
@@ -194,7 +194,7 @@ Event_Logging_Service::run (void)
 }
 
 int
-Event_Logging_Service::svc (void)
+Event_Logging_Service::svc ()
 {
   try
     {
@@ -209,7 +209,7 @@ Event_Logging_Service::svc (void)
 }
 
 void
-Event_Logging_Service::shutdown (void)
+Event_Logging_Service::shutdown ()
 {
   if (this->bind_to_naming_service_)
     {

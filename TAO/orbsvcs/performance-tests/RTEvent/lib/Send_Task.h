@@ -28,7 +28,7 @@ class TAO_RTEC_Perf_Export Send_Task : public ACE_Task_Base
 {
 public:
   /// Constructor
-  Send_Task (void);
+  Send_Task ();
 
   /// This is for compilers that are a PITA complaining that we are
   /// hiding something.
@@ -46,10 +46,10 @@ public:
              ACE_Barrier *barrier);
 
   /// Run the experiment
-  int svc (void);
+  int svc ();
 
   /// Stop the experiment
-  void stop (void);
+  void stop ();
 
 private:
   int iterations_;

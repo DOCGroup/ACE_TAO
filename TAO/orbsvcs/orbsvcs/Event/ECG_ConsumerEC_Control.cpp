@@ -1,25 +1,24 @@
 #include "orbsvcs/Event/ECG_ConsumerEC_Control.h"
 
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_ECG_ConsumerEC_Control::TAO_ECG_ConsumerEC_Control (void)
+TAO_ECG_ConsumerEC_Control::TAO_ECG_ConsumerEC_Control ()
 {
 }
 
-TAO_ECG_ConsumerEC_Control::~TAO_ECG_ConsumerEC_Control (void)
+TAO_ECG_ConsumerEC_Control::~TAO_ECG_ConsumerEC_Control ()
 {
 }
 
 int
-TAO_ECG_ConsumerEC_Control::activate (void)
+TAO_ECG_ConsumerEC_Control::activate ()
 {
   return 0;
 }
 
 int
-TAO_ECG_ConsumerEC_Control::shutdown (void)
+TAO_ECG_ConsumerEC_Control::shutdown ()
 {
   return 0;
 }

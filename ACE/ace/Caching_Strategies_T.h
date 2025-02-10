@@ -43,13 +43,13 @@ class ACE_Caching_Strategy
 {
 public:
   /// Destructor.
-  virtual ~ACE_Caching_Strategy (void);
+  virtual ~ACE_Caching_Strategy ();
 
   /// Accessor method for the timer attributes.
-  virtual ATTRIBUTES attributes (void) = 0;
+  virtual ATTRIBUTES attributes () = 0;
 
   /// Get the percentage of entries to purge.
-  virtual double purge_percent (void) = 0;
+  virtual double purge_percent () = 0;
 
   /// Set the percentage of entries to purge.
   virtual void purge_percent (double percentage) = 0;
@@ -82,10 +82,10 @@ public:
                              const ATTRIBUTES &attr) = 0;
 
   /// Purge the cache.
-  virtual CACHING_UTILITY &caching_utility (void) = 0;
+  virtual CACHING_UTILITY &caching_utility () = 0;
 
   /// Dumps the state of the object.
-  virtual void dump (void) const = 0;
+  virtual void dump () const = 0;
 };
 
 //////////////////////////////////////////////////////////////////////////
@@ -107,21 +107,19 @@ template <class ATTRIBUTES, class CACHING_UTILITY, class IMPLEMENTATION>
 class ACE_Caching_Strategy_Adapter
   : public ACE_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>
 {
-
 public:
-
   /// Constructor.
   ACE_Caching_Strategy_Adapter (IMPLEMENTATION *implementation = 0,
                                 bool delete_implementation = false);
 
   /// Destructor.
-  ~ACE_Caching_Strategy_Adapter (void);
+  ~ACE_Caching_Strategy_Adapter ();
 
   /// Accessor method for the timer attributes.
-  ATTRIBUTES attributes (void);
+  ATTRIBUTES attributes ();
 
   /// Get the percentage of entries to purge.
-  double purge_percent (void);
+  double purge_percent ();
 
   /// Set the percentage of entries to purge.
   void purge_percent (double percentage);
@@ -154,19 +152,18 @@ public:
                      const ATTRIBUTES &attr);
 
   /// Accessor to the implementation.
-  IMPLEMENTATION &implementation (void);
+  IMPLEMENTATION &implementation ();
 
   /// Purge the cache.
-  CACHING_UTILITY &caching_utility (void);
+  CACHING_UTILITY &caching_utility ();
 
   /// Dumps the state of the object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
-
   /// Implementation class.
   IMPLEMENTATION *implementation_;
 
@@ -200,7 +197,6 @@ template <class ATTRIBUTES, class CACHING_UTILITY>
 class ACE_LRU_Caching_Strategy
 {
 public:
-
   // Traits.
   typedef ATTRIBUTES CACHING_ATTRIBUTES;
 
@@ -213,15 +209,15 @@ public:
    * in the cache which can be purged automagically and by default is
    * set to 10%.
    */
-  ACE_LRU_Caching_Strategy (void);
+  ACE_LRU_Caching_Strategy ();
 
   // = Operations of the strategy.
 
   /// Accessor method for the timer attributes.
-  ATTRIBUTES attributes (void);
+  ATTRIBUTES attributes ();
 
   /// Get the percentage of entries to purge.
-  double purge_percent (void);
+  double purge_percent ();
 
   /// Set the percentage of entries to purge.
   void purge_percent (double percentage);
@@ -255,16 +251,15 @@ public:
                      const ATTRIBUTES &attr);
 
   /// Purge the cache.
-  CACHING_UTILITY &caching_utility (void);
+  CACHING_UTILITY &caching_utility ();
 
   /// Dumps the state of the object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
-
   /// This element is the one which is the deciding factor for purging
   /// of an ITEM.
   ATTRIBUTES timer_;
@@ -302,9 +297,7 @@ private:
 template <class ATTRIBUTES, class CACHING_UTILITY>
 class ACE_LFU_Caching_Strategy
 {
-
 public:
-
   // Traits.
   typedef ATTRIBUTES CACHING_ATTRIBUTES;
 
@@ -317,15 +310,15 @@ public:
    * in the cache which can be purged automagically and by default is
    * set to 10%.
    */
-  ACE_LFU_Caching_Strategy (void);
+  ACE_LFU_Caching_Strategy ();
 
   // = Strategy methods.
 
   /// Access the attributes.
-  ATTRIBUTES attributes (void);
+  ATTRIBUTES attributes ();
 
   /// Get the percentage of entries to purge.
-  double purge_percent (void);
+  double purge_percent ();
 
   /// Set the percentage of entries to purge.
   void purge_percent (double percentage);
@@ -357,16 +350,15 @@ public:
                      const ATTRIBUTES &attr);
 
   /// Purge the cache.
-  CACHING_UTILITY &caching_utility (void);
+  CACHING_UTILITY &caching_utility ();
 
   /// Dumps the state of the object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
-
   /// The level about which the purging will happen automagically.
   double purge_percent_;
 
@@ -398,9 +390,7 @@ private:
 template<class ATTRIBUTES, class CACHING_UTILITY>
 class ACE_FIFO_Caching_Strategy
 {
-
 public:
-
   typedef ATTRIBUTES CACHING_ATTRIBUTES;
 
   // = Initialisation and termination.
@@ -412,15 +402,15 @@ public:
    * in the cache which can be purged automagically and by default is
    * set to 10%.
    */
-  ACE_FIFO_Caching_Strategy (void);
+  ACE_FIFO_Caching_Strategy ();
 
   // = Strategy methods.
 
   /// Accessor method.
-  ATTRIBUTES attributes (void);
+  ATTRIBUTES attributes ();
 
   /// Get the percentage of entries to purge.
-  double purge_percent (void);
+  double purge_percent ();
 
   /// Set the percentage of entries to purge.
   void purge_percent (double percentage);
@@ -451,16 +441,15 @@ public:
                      const ATTRIBUTES &attr);
 
   /// Purge the cache.
-  CACHING_UTILITY &caching_utility (void);
+  CACHING_UTILITY &caching_utility ();
 
   /// Dumps the state of the object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
-
   /// The order is the deciding factor for the item to be removed from
   /// the cache.
   ATTRIBUTES order_;
@@ -488,19 +477,17 @@ private:
 template<class ATTRIBUTES, class CACHING_UTILITY>
 class ACE_Null_Caching_Strategy
 {
-
 public:
-
   // = Traits.
   typedef ATTRIBUTES CACHING_ATTRIBUTES;
 
   // = Strategy methods. All are NO_OP methods!!!
 
   /// Accessor method.
-  ATTRIBUTES attributes (void);
+  ATTRIBUTES attributes ();
 
   /// Get the percentage of entries to purge.
-  double purge_percent (void);
+  double purge_percent ();
 
   /// Set the percentage of entries to purge.
   void purge_percent (double percentage);
@@ -531,16 +518,15 @@ public:
                      const ATTRIBUTES &attr);
 
   /// Purge the cache.
-  CACHING_UTILITY &caching_utility (void);
+  CACHING_UTILITY &caching_utility ();
 
   /// Dumps the state of the object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
-
   /// This is the helper class which will decide and expunge entries
   /// from the cache.
   CACHING_UTILITY caching_utility_;
@@ -552,13 +538,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #include "ace/Caching_Strategies_T.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Caching_Strategies_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Caching_Strategies_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 

@@ -47,7 +47,7 @@ public:
                TAO_Object_Adapter *object_adapter);
 
   /// Destructor
-  virtual ~TAO_CSD_POA (void);
+  virtual ~TAO_CSD_POA ();
 
   /// Pass the Strategy object reference to the CSD poa.
   virtual
@@ -79,10 +79,9 @@ public:
 
   /// Servant Dispatching Strategy proxy accessor.
   TAO::CSD::Strategy_Proxy&
-    servant_dispatching_strategy_proxy (void) const;
+    servant_dispatching_strategy_proxy () const;
 
 private:
-
   TAO::CSD::Strategy_Proxy* sds_proxy_;
 };
 

@@ -11,10 +11,10 @@ class Oneway_Receiver
 {
 public:
   /// Constructor
-  Oneway_Receiver (void);
+  Oneway_Receiver ();
 
   // = The skeleton methods
-  virtual void receive_oneway (void);
+  virtual void receive_oneway ();
 };
 
 #include /**/ "ace/post.h"

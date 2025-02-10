@@ -14,7 +14,7 @@ public:
   Peer (CORBA::ORB_ptr orb);
 
   /// Destructor
-  virtual ~Peer (void);
+  virtual ~Peer ();
 
   // = The skeleton methods
   virtual Test::Session_ptr create_session (Test::Session_Control_ptr control,
@@ -22,7 +22,7 @@ public:
                                             CORBA::ULong thread_count,
                                             CORBA::ULong message_count,
                                             CORBA::ULong peer_count);
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
 private:
   /// Keep a pointer to the ORB to shutdown cleanly

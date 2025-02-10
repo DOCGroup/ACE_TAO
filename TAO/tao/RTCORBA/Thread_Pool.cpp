@@ -16,7 +16,7 @@
 #include "tao/RTCORBA/Priority_Mapping_Manager.h"
 #include "tao/LF_Follower.h"
 #include "tao/Leader_Follower.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -27,7 +27,7 @@ TAO_RT_New_Leader_Generator::TAO_RT_New_Leader_Generator (
 }
 
 bool
-TAO_RT_New_Leader_Generator::no_leaders_available (void)
+TAO_RT_New_Leader_Generator::no_leaders_available ()
 {
   // Request a new dynamic thread from the Thread Lane
   return this->lane_.new_dynamic_thread ();
@@ -40,7 +40,7 @@ TAO_Thread_Pool_Threads::TAO_Thread_Pool_Threads (TAO_Thread_Lane &lane)
 }
 
 int
-TAO_Thread_Pool_Threads::svc (void)
+TAO_Thread_Pool_Threads::svc ()
 {
   TAO_ORB_Core &orb_core =
     this->lane ().pool ().manager ().orb_core ();
@@ -176,7 +176,7 @@ TAO_Thread_Lane::TAO_Thread_Lane (TAO_Thread_Pool &pool,
 }
 
 bool
-TAO_Thread_Lane::new_dynamic_thread (void)
+TAO_Thread_Lane::new_dynamic_thread ()
 {
   // Note that we are checking this condition below without the lock
   // held.
@@ -223,7 +223,7 @@ TAO_Thread_Lane::new_dynamic_thread (void)
 }
 
 void
-TAO_Thread_Lane::shutting_down (void)
+TAO_Thread_Lane::shutting_down ()
 {
   ACE_GUARD (TAO_SYNCH_MUTEX,
              mon,
@@ -235,7 +235,7 @@ TAO_Thread_Lane::shutting_down (void)
 }
 
 void
-TAO_Thread_Lane::validate_and_map_priority (void)
+TAO_Thread_Lane::validate_and_map_priority ()
 {
   // Make sure that static_threads_number_ is not zero.
   if (this->static_threads_number_ == 0)
@@ -281,7 +281,7 @@ TAO_Thread_Lane::validate_and_map_priority (void)
 }
 
 void
-TAO_Thread_Lane::open (void)
+TAO_Thread_Lane::open ()
 {
   // Validate and map priority.
   this->validate_and_map_priority ();
@@ -353,25 +353,25 @@ TAO_Thread_Lane::open (void)
                  CORBA::COMPLETED_NO);
 }
 
-TAO_Thread_Lane::~TAO_Thread_Lane (void)
+TAO_Thread_Lane::~TAO_Thread_Lane ()
 {
 }
 
 void
-TAO_Thread_Lane::finalize (void)
+TAO_Thread_Lane::finalize ()
 {
   // Finalize resources.
   this->resources_.finalize ();
 }
 
 void
-TAO_Thread_Lane::shutdown_reactor (void)
+TAO_Thread_Lane::shutdown_reactor ()
 {
   this->resources_.shutdown_reactor ();
 }
 
 void
-TAO_Thread_Lane::wait (void)
+TAO_Thread_Lane::wait ()
 {
   this->static_threads_.wait ();
   this->dynamic_threads_.wait ();
@@ -384,7 +384,7 @@ TAO_Thread_Lane::is_collocated (const TAO_MProfile &mprofile)
 }
 
 CORBA::ULong
-TAO_Thread_Lane::current_threads (void) const
+TAO_Thread_Lane::current_threads () const
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                     mon,
@@ -397,7 +397,7 @@ TAO_Thread_Lane::current_threads (void) const
 
 
 int
-TAO_Thread_Lane::create_static_threads (void)
+TAO_Thread_Lane::create_static_threads ()
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                     mon,
@@ -451,7 +451,7 @@ TAO_Thread_Lane::create_threads_i (TAO_Thread_Pool_Threads &thread_pool,
 
   // Make sure the dynamically created stack size array is properly
   // deleted.
-  ACE_Auto_Basic_Array_Ptr<size_t> auto_stack_size_array (stack_size_array);
+  std::unique_ptr<size_t[]> auto_stack_size_array (stack_size_array);
 
   TAO_ORB_Core &orb_core =
     this->pool ().manager ().orb_core ();
@@ -516,8 +516,7 @@ TAO_Thread_Pool::TAO_Thread_Pool (TAO_Thread_Pool_Manager &manager,
                             static_threads,
                             dynamic_threads,
                             lifespan,
-                            dynamic_thread_time
-                           ));
+                            dynamic_thread_time));
 }
 
 TAO_Thread_Pool::TAO_Thread_Pool (TAO_Thread_Pool_Manager &manager,
@@ -561,12 +560,11 @@ TAO_Thread_Pool::TAO_Thread_Pool (TAO_Thread_Pool_Manager &manager,
                               lanes[i].static_threads,
                               lanes[i].dynamic_threads,
                               lifespan,
-                              dynamic_thread_time
-                             ));
+                              dynamic_thread_time));
 }
 
 void
-TAO_Thread_Pool::open (void)
+TAO_Thread_Pool::open ()
 {
   // Open all the lanes.
   for (CORBA::ULong i = 0;
@@ -577,7 +575,7 @@ TAO_Thread_Pool::open (void)
     }
 }
 
-TAO_Thread_Pool::~TAO_Thread_Pool (void)
+TAO_Thread_Pool::~TAO_Thread_Pool ()
 {
   // Delete all the lanes.
   for (CORBA::ULong i = 0;
@@ -589,7 +587,7 @@ TAO_Thread_Pool::~TAO_Thread_Pool (void)
 }
 
 void
-TAO_Thread_Pool::finalize (void)
+TAO_Thread_Pool::finalize ()
 {
   // Finalize all the lanes.
   for (CORBA::ULong i = 0;
@@ -599,7 +597,7 @@ TAO_Thread_Pool::finalize (void)
 }
 
 void
-TAO_Thread_Pool::shutdown_reactor (void)
+TAO_Thread_Pool::shutdown_reactor ()
 {
   // Finalize all the lanes.
   for (CORBA::ULong i = 0;
@@ -609,7 +607,7 @@ TAO_Thread_Pool::shutdown_reactor (void)
 }
 
 void
-TAO_Thread_Pool::shutting_down (void)
+TAO_Thread_Pool::shutting_down ()
 {
   // Finalize all the lanes.
   for (CORBA::ULong i = 0;
@@ -620,7 +618,7 @@ TAO_Thread_Pool::shutting_down (void)
 
 
 void
-TAO_Thread_Pool::wait (void)
+TAO_Thread_Pool::wait ()
 {
   // Finalize all the lanes.
   for (CORBA::ULong i = 0;
@@ -648,7 +646,7 @@ TAO_Thread_Pool::is_collocated (const TAO_MProfile &mprofile)
 }
 
 int
-TAO_Thread_Pool::create_static_threads (void)
+TAO_Thread_Pool::create_static_threads ()
 {
   for (CORBA::ULong i = 0;
        i != this->number_of_lanes_;
@@ -685,7 +683,7 @@ TAO_Thread_Pool_Manager::TAO_Thread_Pool_Manager (TAO_ORB_Core &orb_core)
 {
 }
 
-TAO_Thread_Pool_Manager::~TAO_Thread_Pool_Manager (void)
+TAO_Thread_Pool_Manager::~TAO_Thread_Pool_Manager ()
 {
   // Delete all the pools.
   for (THREAD_POOLS::ITERATOR iterator = this->thread_pools_.begin ();
@@ -695,7 +693,7 @@ TAO_Thread_Pool_Manager::~TAO_Thread_Pool_Manager (void)
 }
 
 void
-TAO_Thread_Pool_Manager::finalize (void)
+TAO_Thread_Pool_Manager::finalize ()
 {
   // Finalize all the pools.
   for (THREAD_POOLS::ITERATOR iterator = this->thread_pools_.begin ();
@@ -705,7 +703,7 @@ TAO_Thread_Pool_Manager::finalize (void)
 }
 
 void
-TAO_Thread_Pool_Manager::shutdown_reactor (void)
+TAO_Thread_Pool_Manager::shutdown_reactor ()
 {
   // Finalize all the pools.
   for (THREAD_POOLS::ITERATOR iterator = this->thread_pools_.begin ();
@@ -715,7 +713,7 @@ TAO_Thread_Pool_Manager::shutdown_reactor (void)
 }
 
 void
-TAO_Thread_Pool_Manager::wait (void)
+TAO_Thread_Pool_Manager::wait ()
 {
   // Finalize all the pools.
   for (THREAD_POOLS::ITERATOR iterator = this->thread_pools_.begin ();
@@ -821,7 +819,6 @@ TAO_Thread_Pool_Manager::destroy_threadpool (RTCORBA::ThreadpoolId threadpool)
 
   // Delete the thread pool.
   delete tao_thread_pool;
-
 }
 
 RTCORBA::ThreadpoolId
@@ -890,11 +887,7 @@ RTCORBA::ThreadpoolId
 TAO_Thread_Pool_Manager::create_threadpool_helper (TAO_Thread_Pool *thread_pool)
 {
   // Make sure of safe deletion in case of errors.
-#if defined (ACE_HAS_CPP11)
   std::unique_ptr<TAO_Thread_Pool> safe_thread_pool (thread_pool);
-#else
-  auto_ptr<TAO_Thread_Pool> safe_thread_pool (thread_pool);
-#endif /* ACE_HAS_CPP11 */
 
   // Open the pool.
   thread_pool->open ();
@@ -949,7 +942,7 @@ TAO_Thread_Pool_Manager::get_threadpool (RTCORBA::ThreadpoolId thread_pool_id )
 }
 
 TAO_ORB_Core &
-TAO_Thread_Pool_Manager::orb_core (void) const
+TAO_Thread_Pool_Manager::orb_core () const
 {
   return this->orb_core_;
 }

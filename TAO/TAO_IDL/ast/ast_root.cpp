@@ -88,14 +88,14 @@ AST_Root::AST_Root (UTL_ScopedName *n)
 {
 }
 
-AST_Root::~AST_Root (void)
+AST_Root::~AST_Root ()
 {
 }
 
 // Overrides the one in UTL_Scope - this one doesn't
 // count the predefined types.
 unsigned long
-AST_Root::nmembers (void)
+AST_Root::nmembers ()
 {
   unsigned long retval = 0;
 
@@ -118,9 +118,9 @@ AST_Root::nmembers (void)
 AST_Sequence *
 AST_Root::fe_add_sequence (AST_Sequence *t)
 {
-  if (t == 0)
+  if (t == nullptr)
     {
-      return 0;
+      return nullptr;
     }
 
   this->add_to_local_types (t);
@@ -131,9 +131,9 @@ AST_Root::fe_add_sequence (AST_Sequence *t)
 AST_String *
 AST_Root::fe_add_string (AST_String *t)
 {
-  if (t == 0)
+  if (t == nullptr)
     {
-      return 0;
+      return nullptr;
     }
 
   this->add_to_local_types (t);
@@ -144,9 +144,9 @@ AST_Root::fe_add_string (AST_String *t)
 AST_Array *
 AST_Root::fe_add_array (AST_Array *t)
 {
-  if (t == 0)
+  if (t == nullptr)
     {
-      return 0;
+      return nullptr;
     }
 
   this->add_to_local_types (t);
@@ -169,10 +169,10 @@ AST_Root::ast_accept (ast_visitor *visitor)
 }
 
 void
-AST_Root::destroy (void)
+AST_Root::destroy ()
 {
   long i = 0;
-  AST_Decl *d = 0;
+  AST_Decl *d = nullptr;
 
   // Just destroy and delete everything but the CORBA
   // module, and the 'void' keyword, in case we are
@@ -186,7 +186,7 @@ AST_Root::destroy (void)
 
       d->destroy ();
       delete d;
-      d = 0;
+      d = nullptr;
       --this->pd_decls_used;
     }
 
@@ -198,7 +198,7 @@ AST_Root::destroy (void)
   // up when AST_Root::fini() calls UTL_Scope::destroy ().
   for (i = 2; i < this->pd_referenced_used; ++i)
     {
-      this->pd_referenced[i] = 0;
+      this->pd_referenced[i] = nullptr;
     }
 
   this->pd_referenced_used = 2;
@@ -208,18 +208,15 @@ AST_Root::destroy (void)
       Identifier *id = this->pd_name_referenced[i];
       id->destroy ();
       delete id;
-      id = 0;
+      id = nullptr;
     }
 
   this->pd_name_referenced_used = 2;
 }
 
 void
-AST_Root::fini (void)
+AST_Root::fini ()
 {
   this->UTL_Scope::destroy ();
   this->AST_Decl::destroy ();
 }
-
-IMPL_NARROW_FROM_DECL(AST_Root)
-IMPL_NARROW_FROM_SCOPE(AST_Root)

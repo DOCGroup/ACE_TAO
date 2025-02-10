@@ -24,7 +24,7 @@ class CC_TestUtils
 
   /// Creates a lock set by means of th lock set factory in the concurrency
   /// service server.
-  static CosConcurrencyControl::LockSet_ptr create_lock_set (void);
+  static CosConcurrencyControl::LockSet_ptr create_lock_set ();
  private:
 };
 

@@ -35,20 +35,20 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Log_Msg_Android_Logcat : public ACE_Log_Msg_Backend
 {
 public:
-  ACE_Log_Msg_Android_Logcat ();
-  virtual ~ACE_Log_Msg_Android_Logcat ();
+  ACE_Log_Msg_Android_Logcat () = default;
+  ~ACE_Log_Msg_Android_Logcat () override;
 
   /// Initialize the event logging facility. NOP in this class.
-  virtual int open (const ACE_TCHAR *);
+  int open (const ACE_TCHAR *) override;
 
   /// Reset the backend. NOP in this class.
-  virtual int reset ();
+  int reset () override;
 
   /// Close the backend completely. NOP in this class.
-  virtual int close ();
+  int close () override;
 
   /// This is called when we want to log a message.
-  virtual ssize_t log (ACE_Log_Record &log_record);
+  ssize_t log (ACE_Log_Record &log_record) override;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

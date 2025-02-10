@@ -42,12 +42,11 @@ class TAO_LoadBalancing_Export TAO_LB_LoadManager
     public ACE_Task_Base
 {
 public:
-
   /// Constructor.
   TAO_LB_LoadManager (int ping_timeout,
                       int ping_interval);
 
-  virtual int svc (void);
+  virtual int svc ();
 
   /**
    * @name CosLoadBalancing::LoadManager Methods
@@ -55,7 +54,6 @@ public:
    * Methods required by the CosLoadBalancing::LoadManager interface.
    */
   //@{
-
   /// For the PUSH load monitoring style.
   virtual void push_loads (const PortableGroup::Location & the_location,
                            const CosLoadBalancing::LoadList & loads);
@@ -108,7 +106,6 @@ public:
    * Methods required by the PortableGroup::PropertyManager interface.
    */
   //@{
-
   /// Set the default properties to be used by all object groups.
   virtual void set_default_properties (
       const PortableGroup::Properties & props);
@@ -168,7 +165,6 @@ public:
    * interface.
    */
   //@{
-
   /// Create a member using the load balancer ObjectGroupManager, and
   /// add the created object to the ObjectGroup.
   virtual PortableGroup::ObjectGroup_ptr create_member (
@@ -228,7 +224,6 @@ public:
    * Methods required by the PortableGroup::GenericFactory interface.
    */
   //@{
-
   /**
    * Create an object of the specified type that adheres to the
    * restrictions defined by the provided Criteria.  The out
@@ -263,7 +258,6 @@ public:
   CORBA::Object_ptr next_member (const PortableServer::ObjectId & oid);
 
 public:
-
   /// Initialize the load balancer.  This will cause a child POA to be
   /// created with the appropriate policies to support ServantLocators
   /// (i.e. for the MemberLocator).
@@ -272,16 +266,14 @@ public:
                    PortableServer::POA_ptr root_poa);
 
 protected:
-
   /// Destructor.
   /**
    * Destructor is protected to enforce correct memory management
    * through reference counting.
    */
-  ~TAO_LB_LoadManager (void);
+  ~TAO_LB_LoadManager ();
 
 private:
-
   /// Extract the value of the InitialNumberReplicas property from
   /// the_criteria.
   int get_initial_number_replicas (
@@ -315,7 +307,6 @@ private:
     const CosLoadBalancing::StrategyInfo * info);
 
 private:
-
   CORBA::ORB_var orb_;
 
   /// Reactor used when pulling loads from registered load monitors.

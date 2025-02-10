@@ -13,7 +13,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
 // ****************************************************************
 
-EC_Throughput::EC_Throughput (void)
+EC_Throughput::EC_Throughput ()
 {
 }
 
@@ -26,13 +26,13 @@ EC_Throughput::parse_args (int& argc, ACE_TCHAR* argv[])
 }
 
 void
-EC_Throughput::print_args (void) const
+EC_Throughput::print_args () const
 {
   this->EC_Driver::print_args ();
 }
 
 void
-EC_Throughput::print_usage (void)
+EC_Throughput::print_usage ()
 {
   this->EC_Driver::print_usage ();
 }
@@ -43,13 +43,13 @@ EC_Throughput::modify_attributes (TAO_EC_Event_Channel_Attributes&)
 }
 
 void
-EC_Throughput::execute_test (void)
+EC_Throughput::execute_test ()
 {
   this->EC_Driver::execute_test ();
 }
 
 void
-EC_Throughput::dump_results (void)
+EC_Throughput::dump_results ()
 {
   this->EC_Driver::dump_results ();
 }

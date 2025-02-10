@@ -28,14 +28,6 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_ctype.h"
 
-#if defined (ACE_OPENVMS)
-// need this to circumvent link error on OpenVMS
-// has to do with interference in template instantiations
-// for the server build by previous compilation of
-// components which are reused here without recompilation
-ACE_Time_Value dum = ACE_Time_Value::zero;
-#endif
-
 static const char usage [] =
 "[[-?]\n"
 "                 [-O[RBport] ORB port number]\n"
@@ -69,7 +61,7 @@ Logging_Supplier::init ()
 }
 
 void
-Logging_Supplier::start_generating_events (void)
+Logging_Supplier::start_generating_events ()
 {
   unsigned long total_sent = 0;
 
@@ -91,7 +83,6 @@ Logging_Supplier::start_generating_events (void)
 
   do
   {
-
   // Insert the event data
     this->insert_event_data (any,
                              schedule_iter);
@@ -364,7 +355,6 @@ Logging_Supplier::insert_event_data (CORBA::Any &data,
       }
 
 
-
             if (last_completion > (*sched_data)->completion_time)
               last_completion = 0;
 
@@ -504,7 +494,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // when done, we clean up
       delete event_Supplier_ptr;
-
     }
   catch (const CORBA::Exception& ex)
     {

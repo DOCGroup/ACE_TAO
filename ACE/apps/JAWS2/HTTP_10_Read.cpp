@@ -6,14 +6,13 @@
 #include "JAWS/Policy.h"
 
 
-
 // --------------- READ TASK ----------------------
 
-JAWS_HTTP_10_Read_Task::JAWS_HTTP_10_Read_Task (void)
+JAWS_HTTP_10_Read_Task::JAWS_HTTP_10_Read_Task ()
 {
 }
 
-JAWS_HTTP_10_Read_Task::~JAWS_HTTP_10_Read_Task (void)
+JAWS_HTTP_10_Read_Task::~JAWS_HTTP_10_Read_Task ()
 {
 }
 

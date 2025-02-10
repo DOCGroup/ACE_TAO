@@ -29,9 +29,9 @@ public:
                   Object_B_ptr object_B_ptr);
 
   /// Destructor.
-  virtual ~Initiator_i (void);
+  virtual ~Initiator_i ();
 
-  virtual void foo_object_B (void);
+  virtual void foo_object_B ();
 
 private:
   /// reference to object A

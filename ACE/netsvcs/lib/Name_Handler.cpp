@@ -1,7 +1,7 @@
 #include "ace/Containers.h"
 #include "ace/Get_Opt.h"
 #include "ace/Singleton.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "Name_Handler.h"
 #include "ace/Signal.h"
 #include "ace/OS_NS_string.h"
@@ -207,7 +207,7 @@ ACE_Name_Handler::send_request (ACE_Name_Request &request)
 // unexpectedly).
 
 /* VIRTUAL */ int
-ACE_Name_Handler::abandon (void)
+ACE_Name_Handler::abandon ()
 {
   ACE_TRACE ("ACE_Name_Handler::abandon");
   return this->send_reply (-1, errno);
@@ -225,7 +225,7 @@ ACE_Name_Handler::handle_timeout (const ACE_Time_Value &, const void *)
 // Return the underlying ACE_HANDLE.
 
 /* VIRTUAL */ ACE_HANDLE
-ACE_Name_Handler::get_handle (void) const
+ACE_Name_Handler::get_handle () const
 {
   ACE_TRACE ("ACE_Name_Handler::get_handle");
   return this->peer ().get_handle ();
@@ -234,7 +234,7 @@ ACE_Name_Handler::get_handle (void) const
 // Dispatch the appropriate operation to handle the client request.
 
 /* VIRTUAL */ int
-ACE_Name_Handler::dispatch (void)
+ACE_Name_Handler::dispatch ()
 {
   ACE_TRACE ("ACE_Name_Handler::dispatch");
   // Dispatch the appropriate request.
@@ -254,7 +254,7 @@ ACE_Name_Handler::dispatch (void)
 // should use non-blocking I/O.
 
 /* VIRTUAL */ int
-ACE_Name_Handler::recv_request (void)
+ACE_Name_Handler::recv_request ()
 {
   ACE_TRACE ("ACE_Name_Handler::recv_request");
   // Read the first 4 bytes to get the length of the message This
@@ -267,14 +267,14 @@ ACE_Name_Handler::recv_request (void)
     case -1:
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("****************** recv_request returned -1\n")));
-      /* FALLTHROUGH */
+      ACE_FALLTHROUGH;
     default:
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("%p got %d bytes, expected %d bytes\n"),
                   ACE_TEXT ("recv failed"),
                   n,
                   sizeof (ACE_UINT32)));
-      /* FALLTHROUGH */
+      ACE_FALLTHROUGH;
     case 0:
       // We've shutdown unexpectedly, let's abandon the connection.
       this->abandon ();
@@ -336,14 +336,14 @@ ACE_Name_Handler::handle_input (ACE_HANDLE)
 }
 
 int
-ACE_Name_Handler::bind (void)
+ACE_Name_Handler::bind ()
 {
   ACE_TRACE ("ACE_Name_Handler::bind");
   return this->shared_bind (0);
 }
 
 int
-ACE_Name_Handler::rebind (void)
+ACE_Name_Handler::rebind ()
 {
   ACE_TRACE ("ACE_Name_Handler::rebind");
   int result = this->shared_bind (1);
@@ -388,7 +388,7 @@ ACE_Name_Handler::shared_bind (int rebind)
 }
 
 int
-ACE_Name_Handler::resolve (void)
+ACE_Name_Handler::resolve ()
 {
   ACE_TRACE ("ACE_Name_Handler::resolve");
 #if 0
@@ -404,7 +404,7 @@ ACE_Name_Handler::resolve (void)
   char *atype;
   if (this->naming_context ()->resolve (a_name, avalue, atype) == 0)
     {
-      ACE_Auto_Basic_Array_Ptr<ACE_WCHAR_T> avalue_urep (avalue.rep ());
+      std::unique_ptr<ACE_WCHAR_T[]> avalue_urep (avalue.rep ());
       ACE_Name_Request nrq (ACE_Name_Request::RESOLVE,
                             0,
                             0,
@@ -421,7 +421,7 @@ ACE_Name_Handler::resolve (void)
 }
 
 int
-ACE_Name_Handler::unbind (void)
+ACE_Name_Handler::unbind ()
 {
   ACE_TRACE ("ACE_Name_Handler::unbind");
 #if 0
@@ -440,7 +440,7 @@ ACE_Name_Request
 ACE_Name_Handler::name_request (ACE_NS_WString *one_name)
 {
   ACE_TRACE ("ACE_Name_Handler::name_request");
-  ACE_Auto_Basic_Array_Ptr<ACE_WCHAR_T> one_name_urep (one_name->rep ());
+  std::unique_ptr<ACE_WCHAR_T[]> one_name_urep (one_name->rep ());
   return ACE_Name_Request (ACE_Name_Request::LIST_NAMES,
                            one_name_urep.get (),
                            one_name->length () * sizeof (ACE_WCHAR_T),
@@ -452,7 +452,7 @@ ACE_Name_Request
 ACE_Name_Handler::value_request (ACE_NS_WString *one_value)
 {
   ACE_TRACE ("ACE_Name_Handler::value_request");
-  ACE_Auto_Basic_Array_Ptr<ACE_WCHAR_T> one_value_urep (one_value->rep ());
+  std::unique_ptr<ACE_WCHAR_T[]> one_value_urep (one_value->rep ());
   return ACE_Name_Request (ACE_Name_Request::LIST_VALUES,
                            0, 0,
                            one_value_urep.get (),
@@ -467,12 +467,12 @@ ACE_Name_Handler::type_request (ACE_NS_WString *one_type)
   return ACE_Name_Request (ACE_Name_Request::LIST_TYPES,
                            0, 0,
                            0, 0,
-                           ACE_Auto_Basic_Array_Ptr<char> (one_type->char_rep ()).get (),
+                           std::unique_ptr<char[]> (one_type->char_rep ()).get (),
                            one_type->length ());
 }
 
 int
-ACE_Name_Handler::lists (void)
+ACE_Name_Handler::lists ()
 {
   ACE_TRACE ("ACE_Name_Handler::lists");
 
@@ -523,7 +523,7 @@ ACE_Name_Handler::lists (void)
 }
 
 int
-ACE_Name_Handler::lists_entries (void)
+ACE_Name_Handler::lists_entries ()
 {
   ACE_TRACE ("ACE_Name_Handler::lists_entries");
   ACE_BINDING_SET set;
@@ -577,10 +577,8 @@ ACE_Name_Handler::lists_entries (void)
            set_iterator.next (one_entry) !=0;
            set_iterator.advance())
         {
-           ACE_Auto_Basic_Array_Ptr<ACE_WCHAR_T>
-             name_urep (one_entry->name_.rep ());
-           ACE_Auto_Basic_Array_Ptr<ACE_WCHAR_T>
-             value_urep (one_entry->value_.rep ());
+           std::unique_ptr<ACE_WCHAR_T[]> name_urep (one_entry->name_.rep ());
+           std::unique_ptr<ACE_WCHAR_T[]> value_urep (one_entry->value_.rep ());
            ACE_Name_Request mynrq (this->name_request_.msg_type (),
                                   name_urep.get (),
                                   one_entry->name_.length () * sizeof (ACE_WCHAR_T),
@@ -612,18 +610,18 @@ ACE_Name_Handler::lists_entries (void)
 }
 
 ACE_Naming_Context *
-ACE_Name_Handler::naming_context (void)
+ACE_Name_Handler::naming_context ()
 {
   return naming_context_;
 }
 
 ACE_Naming_Context *
-ACE_Name_Acceptor::naming_context (void)
+ACE_Name_Acceptor::naming_context ()
 {
   return &naming_context_;
 }
 
-ACE_Name_Handler::~ACE_Name_Handler (void)
+ACE_Name_Handler::~ACE_Name_Handler ()
 {
   ACE_TRACE ("ACE_Name_Handler::~ACE_Name_Handler");
 #if 0

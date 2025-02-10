@@ -2,7 +2,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<class MUTEX> ACE_INLINE int
-ACE_Condition<MUTEX>::remove (void)
+ACE_Condition<MUTEX>::remove ()
 {
   // ACE_TRACE ("ACE_Condition<MUTEX>::remove");
 
@@ -25,21 +25,21 @@ ACE_Condition<MUTEX>::remove (void)
 }
 
 template<class MUTEX> ACE_INLINE MUTEX &
-ACE_Condition<MUTEX>::mutex (void)
+ACE_Condition<MUTEX>::mutex ()
 {
   // ACE_TRACE ("ACE_Condition<MUTEX>::mutex");
   return this->mutex_;
 }
 
 template <class MUTEX> ACE_INLINE int
-ACE_Condition<MUTEX>::signal (void)
+ACE_Condition<MUTEX>::signal ()
 {
 // ACE_TRACE ("ACE_Condition<MUTEX>::signal");
   return ACE_OS::cond_signal (&this->cond_);
 }
 
 template <class MUTEX> ACE_INLINE int
-ACE_Condition<MUTEX>::broadcast (void)
+ACE_Condition<MUTEX>::broadcast ()
 {
 // ACE_TRACE ("ACE_Condition<MUTEX>::broadcast");
   return ACE_OS::cond_broadcast (&this->cond_);

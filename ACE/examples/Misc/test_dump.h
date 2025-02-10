@@ -10,10 +10,10 @@
 class SOCK
 {
 public:
-  SOCK (void) { ACE_REGISTER_OBJECT (SOCK); }
-  ~SOCK (void) { ACE_REMOVE_OBJECT; }
+  SOCK () { ACE_REGISTER_OBJECT (SOCK); }
+  ~SOCK () { ACE_REMOVE_OBJECT; }
 
-  void dump (void) const {
+  void dump () const {
     ACE_DEBUG ((LM_DEBUG, "hello from SOCK = %@\n", this));
   }
 
@@ -23,10 +23,10 @@ public:
 class SOCK_Acceptor : public SOCK
 {
 public:
-  SOCK_Acceptor (void) { ACE_REGISTER_OBJECT (SOCK_Acceptor); }
-  ~SOCK_Acceptor (void) { ACE_REMOVE_OBJECT; }
+  SOCK_Acceptor () { ACE_REGISTER_OBJECT (SOCK_Acceptor); }
+  ~SOCK_Acceptor () { ACE_REMOVE_OBJECT; }
 
-  void dump (void) const {
+  void dump () const {
     ACE_DEBUG ((LM_DEBUG, "hello from SOCK_Acceptor = %@\n", this));
   }
 
@@ -36,10 +36,10 @@ public:
 class SOCK_Stream : public SOCK
 {
 public:
-  SOCK_Stream (void) { ACE_REGISTER_OBJECT (SOCK_Stream); }
-  ~SOCK_Stream (void) { ACE_REMOVE_OBJECT; }
+  SOCK_Stream () { ACE_REGISTER_OBJECT (SOCK_Stream); }
+  ~SOCK_Stream () { ACE_REMOVE_OBJECT; }
 
-  void dump (void) const {
+  void dump () const {
     ACE_DEBUG ((LM_DEBUG, "hello from SOCK_Stream = %@\n", this));
   }
 

@@ -28,7 +28,7 @@ class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_Filter_Command : public TAO_Notify
 {
 public:
   /// Constructor
-  TAO_Notify_Tests_Filter_Command (void);
+  TAO_Notify_Tests_Filter_Command ();
 
   /// Destructor
   ~TAO_Notify_Tests_Filter_Command ();
@@ -37,18 +37,13 @@ public:
   virtual void init (ACE_Arg_Shifter& arg_shifter);
 
   /// Execute the command.
-  virtual void execute_i (void);
+  virtual void execute_i ();
 
   /// Name of object
-  virtual const char* get_name (void);
-  static const char* name (void);
+  virtual const char* get_name ();
+  static const char* name ();
 
 protected:
-
-#ifdef HPUX_11
-   // Remove clash with /usr/include/machine/cpu.h and /usr/include/pa/cpu.h
-#undef COMMAND
-#endif
   enum COMMAND
   {
     CREATE_FACTORY,
@@ -67,11 +62,11 @@ protected:
   ACE_CString constraint_;
 
   ///= Handlers
-  void handle_create_filter_factory (void);
-  void handle_create_filter (void);
-  void handle_add_constraint (void);
-  void handle_add_filter (void);
-  void handle_destroy_filter (void);
+  void handle_create_filter_factory ();
+  void handle_create_filter ();
+  void handle_add_constraint ();
+  void handle_add_filter ();
+  void handle_destroy_filter ();
 };
 
 #include /**/ "ace/post.h"

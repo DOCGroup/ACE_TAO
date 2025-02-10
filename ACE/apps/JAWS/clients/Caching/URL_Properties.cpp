@@ -7,8 +7,8 @@
 #include "URL_Properties.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/Auto_Ptr.h"
 #include "URL_Array_Helper.h"
+#include <memory>
 
 size_t
 ACE_WString_Helper::encode (void *buf, const ACE_WString &wstr)
@@ -57,19 +57,19 @@ ACE_URL_Property::decode (void *buf)
 }
 
 void
-ACE_URL_Property::dump (void) const
+ACE_URL_Property::dump () const
 {
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
 
   if (this->name_.length () > 0)
     ACE_DEBUG ((LM_DEBUG, "\n    name_:  \"%s\"\n",
-                ACE_Auto_Basic_Array_Ptr<char> (this->name_.char_rep ()).get ()));
+                std::unique_ptr<char[]> (this->name_.char_rep ()).get ()));
   else
     ACE_DEBUG ((LM_DEBUG, "\n   name_:  \"\"\n"));
 
   if (this->value_.length () > 0)
     ACE_DEBUG ((LM_DEBUG, "   value_:  \"%s\"\n",
-                ACE_Auto_Basic_Array_Ptr<char> (this->value_.char_rep ()).get ()));
+                std::unique_ptr<char[]> (this->value_.char_rep ()).get ()));
   else
     ACE_DEBUG ((LM_DEBUG, "   value_:  \"\"\n"));
 
@@ -77,7 +77,7 @@ ACE_URL_Property::dump (void) const
 }
 
 size_t
-ACE_URL_Offer::size (void) const
+ACE_URL_Offer::size () const
 {
   size_t sum = (this->url_.length () + 1) * sizeof (ACE_UINT16);
   sum += ::ace_array_size (this->prop_);
@@ -116,13 +116,13 @@ ACE_URL_Offer::decode (void *buf)
 }
 
 void
-ACE_URL_Offer::dump (void) const
+ACE_URL_Offer::dump () const
 {
   ACE_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
 
   if (this->url_.length () > 0)
     ACE_DEBUG ((LM_DEBUG, "\n url_:  \"%s\"\n",
-                ACE_Auto_Basic_Array_Ptr<char> (this->url_.char_rep ()).get ()));
+                std::unique_ptr<char[]> (this->url_.char_rep ()).get ()));
   else
     ACE_DEBUG ((LM_DEBUG, "\n url_:  \"\"\n"));
 

@@ -13,7 +13,7 @@ TAO_Continuous_Priority_Mapping::TAO_Continuous_Priority_Mapping (int policy)
 {
 }
 
-TAO_Continuous_Priority_Mapping::~TAO_Continuous_Priority_Mapping (void)
+TAO_Continuous_Priority_Mapping::~TAO_Continuous_Priority_Mapping ()
 {
 }
 
@@ -79,7 +79,6 @@ CORBA::Boolean
 TAO_Continuous_Priority_Mapping::to_CORBA (RTCORBA::NativePriority native_priority,
                                            RTCORBA::Priority &corba_priority)
 {
-
 #if defined (ACE_WIN32)
 
   int current_native_priority = this->min_;

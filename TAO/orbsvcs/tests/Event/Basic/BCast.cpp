@@ -15,7 +15,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
 // ****************************************************************
 
-EC_BCast::EC_BCast (void)
+EC_BCast::EC_BCast ()
   : bcast_address_ (ACE_TEXT("255.255.255.255")),
     bcast_port_ (12345)
 {
@@ -52,13 +52,13 @@ EC_BCast::parse_args (int& argc, ACE_TCHAR* argv[])
 }
 
 void
-EC_BCast::print_args (void) const
+EC_BCast::print_args () const
 {
   this->EC_Driver::print_args ();
 }
 
 void
-EC_BCast::print_usage (void)
+EC_BCast::print_usage ()
 {
   this->EC_Driver::print_usage ();
 }
@@ -69,7 +69,7 @@ EC_BCast::modify_attributes (TAO_EC_Event_Channel_Attributes&)
 }
 
 void
-EC_BCast::execute_test (void)
+EC_BCast::execute_test ()
 {
   // Subscription determining which EC events will get sent out on the
   // UDP socket.
@@ -123,7 +123,7 @@ EC_BCast::execute_test (void)
 }
 
 void
-EC_BCast::dump_results (void)
+EC_BCast::dump_results ()
 {
   this->EC_Driver::dump_results ();
 }

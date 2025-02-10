@@ -8,7 +8,7 @@
 class ACE_Svc_Export Sema_Test : public Benchmark_Performance
 {
 public:
-  virtual int svc (void);
+  virtual int svc ();
 
 private:
   static ACE_Semaphore sema;
@@ -17,7 +17,7 @@ private:
 ACE_Semaphore Sema_Test::sema (1);
 
 int
-Sema_Test::svc (void)
+Sema_Test::svc ()
 {
   int ni      = this->thr_id ();
   synch_count = 2;

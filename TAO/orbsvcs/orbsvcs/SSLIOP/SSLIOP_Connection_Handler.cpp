@@ -51,7 +51,7 @@ TAO::SSLIOP::Connection_Handler::Connection_Handler (TAO_ORB_Core *orb_core)
   this->transport (specific_transport);
 }
 
-TAO::SSLIOP::Connection_Handler::~Connection_Handler (void)
+TAO::SSLIOP::Connection_Handler::~Connection_Handler ()
 {
   delete this->transport ();
   int const result =
@@ -245,13 +245,13 @@ TAO::SSLIOP::Connection_Handler::open (void *)
 }
 
 int
-TAO::SSLIOP::Connection_Handler::resume_handler (void)
+TAO::SSLIOP::Connection_Handler::resume_handler ()
 {
   return ACE_Event_Handler::ACE_APPLICATION_RESUMES_HANDLER;
 }
 
 int
-TAO::SSLIOP::Connection_Handler::close_connection (void)
+TAO::SSLIOP::Connection_Handler::close_connection ()
 {
   return this->close_connection_eh (this);
 }
@@ -313,7 +313,7 @@ TAO::SSLIOP::Connection_Handler::close (u_long flags)
 }
 
 int
-TAO::SSLIOP::Connection_Handler::release_os_resources (void)
+TAO::SSLIOP::Connection_Handler::release_os_resources ()
 {
   return this->peer().close ();
 }
@@ -326,7 +326,7 @@ TAO::SSLIOP::Connection_Handler::pos_io_hook (int & return_value)
 }
 
 int
-TAO::SSLIOP::Connection_Handler::add_transport_to_cache (void)
+TAO::SSLIOP::Connection_Handler::add_transport_to_cache ()
 {
   ACE_INET_Addr addr;
 
@@ -459,7 +459,7 @@ TAO::SSLIOP::Connection_Handler::handle_write_ready (const ACE_Time_Value *t)
 }
 
 bool
-TAO::SSLIOP::Connection_Handler::check_host (void)
+TAO::SSLIOP::Connection_Handler::check_host ()
 {
   ACE_SSL_Context *ssl_ctx = ACE_SSL_Context::instance ();
   ACE_INET_Addr remote_addr;

@@ -8,7 +8,6 @@
 #define TAO_PERF_RTEC_TASK_ACTIVATOR_H
 
 #include "ace/Task.h"
-#include "ace/Copy_Disabled.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -20,7 +19,7 @@
  * @brief Simplify the activation and destruction of tasks
  */
 template<class Task>
-class Task_Activator : private ACE_Copy_Disabled
+class Task_Activator
 {
 public:
   /// Constructor
@@ -51,6 +50,11 @@ public:
                   int nthreads,
                   Task *task);
 
+  Task_Activator (const Task_Activator &) = delete;
+  Task_Activator (Task_Activator &&) = delete;
+  Task_Activator &operator= (const Task_Activator &) = delete;
+  Task_Activator &operator= (Task_Activator &&) = delete;
+
   /// Destructor
   /**
    * Wait until the task terminates before returning, this is useful
@@ -63,10 +67,10 @@ public:
    * cooperative termination protocol in the destructor of the derived
    * class.
    */
-  ~Task_Activator (void);
+  ~Task_Activator ();
 
   /// Release the task, do not terminate it
-  void release (void);
+  void release ();
 
 protected:
   Task *task_;
@@ -76,8 +80,6 @@ protected:
 #include "Task_Activator.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "Task_Activator.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #endif /* TAO_PERF_RTEC_TASK_ACTIVATOR_H */

@@ -6,13 +6,12 @@
 class SYNCH_Export Synch_i : public POA_Synch
 {
  public:
-
-  Synch_i (void);
+  Synch_i ();
   virtual void go (CORBA::Long base_time);
 
-  int synched (void);
+  int synched ();
 
-  ACE_Time_Value* base_time (void);
+  ACE_Time_Value* base_time ();
 
  private:
   int synched_;

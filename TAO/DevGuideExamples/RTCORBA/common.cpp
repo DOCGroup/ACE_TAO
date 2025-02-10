@@ -3,7 +3,7 @@
 CORBA::ULong
 get_total_lanes()
 {
-#if defined (linux)
+#if defined (ACE_LINUX)
   return 1;
 #elif defined (ACE_CONFIG_WIN32_H)
   return 3;

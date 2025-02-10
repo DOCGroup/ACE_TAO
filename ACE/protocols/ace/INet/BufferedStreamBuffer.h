@@ -15,11 +15,11 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Auto_Ptr.h"
 #include "ace/INet/StreamInterceptor.h"
 #include <streambuf>
 #include <iosfwd>
 #include <ios>
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -80,7 +80,7 @@ namespace ACE
               int flush_buffer ();
 
               std::streamsize bufsize_;
-              ACE_Auto_Array_Ptr<char_type> buffer_;
+              std::unique_ptr<char_type[]> buffer_;
               typename std::basic_ios<ACE_CHAR_T, TR>::openmode mode_;
               interceptor_type* interceptor_;
 
@@ -95,13 +95,7 @@ namespace ACE
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/INet/BufferedStreamBuffer.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("BufferedStreamBuffer.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_IOS_BUFFERED_STREAM_BUFFER_H */

@@ -71,7 +71,7 @@ namespace TAO
     PG_FactoryRegistry (const char * name = "FactoryRegistry");
 
     /// virtual Destructor
-    virtual ~PG_FactoryRegistry (void);
+    virtual ~PG_FactoryRegistry ();
 
     /**
      * Parse command line arguments.
@@ -97,7 +97,7 @@ namespace TAO
      * Prepare to exit.
      * @return zero for success; nonzero is process return code for failure.
      */
-    int fini (void);
+    int fini ();
 
     /**
      * Processing to happen when the ORB's event loop is idle.
@@ -120,7 +120,7 @@ namespace TAO
 
     ////////////////////////////////
     // override servant base methods
-    virtual void _remove_ref (void);
+    virtual void _remove_ref ();
 
     //////////////////
     // CORBA interface
@@ -159,7 +159,6 @@ namespace TAO
     ///////////////
     // Data Members
   private:
-
     /**
      * A human-readable string to distinguish this from other Notifiers.
      */
@@ -217,7 +216,6 @@ namespace TAO
     int linger_;
 
     RegistryType registry_;
-
   };
 } // namespace TAO
 

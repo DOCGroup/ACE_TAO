@@ -20,7 +20,6 @@
 #include "test_config.h"
 
 
-
 /*
  * This is the heart of the test. It sets up the optstring, instantiates
  * ACE_Get_Opt, add long options, processes them in a loop, and prints out

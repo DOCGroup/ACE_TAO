@@ -5,12 +5,12 @@
 #endif /* __ACE_INLINE__ */
 
 void
-Simple_Server_i::test_method (void)
+Simple_Server_i::test_method ()
 {
 }
 
 void
-Simple_Server_i::shutdown (void)
+Simple_Server_i::shutdown ()
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

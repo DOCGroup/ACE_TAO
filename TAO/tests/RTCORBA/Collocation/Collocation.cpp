@@ -31,29 +31,29 @@ public:
           PortableServer::POA_ptr poa,
           Tests &tests);
 
-  void start (void);
+  void start ();
 
-  void method (void);
+  void method ();
 
-  PortableServer::POA_ptr _default_POA (void);
+  PortableServer::POA_ptr _default_POA ();
 
-  int client_propagated (void);
+  int client_propagated ();
 
   void client_propagated (int);
 
-  int server_declared (void);
+  int server_declared ();
 
   void server_declared (int);
 
-  RTCORBA::Priority server_priority (void);
+  RTCORBA::Priority server_priority ();
 
   void server_priority (RTCORBA::Priority);
 
-  int in_lane (void);
+  int in_lane ();
 
   void in_lane (int);
 
-  int serviced_by_rt_tp (void);
+  int serviced_by_rt_tp ();
 
   void serviced_by_rt_tp (int);
 
@@ -66,12 +66,11 @@ public:
 
   void invocation_lane (CORBA::ULong lane);
 
-  RTCORBA::Priority invocation_priority (void);
+  RTCORBA::Priority invocation_priority ();
 
   void invocation_priority (RTCORBA::Priority);
 
 private:
-
   CORBA::ORB_var orb_;
   PortableServer::POA_var poa_;
   Tests &tests_;
@@ -109,7 +108,7 @@ test_i::test_i (CORBA::ORB_ptr orb,
 }
 
 int
-test_i::client_propagated (void)
+test_i::client_propagated ()
 {
   return this->client_propagated_;
 }
@@ -121,7 +120,7 @@ test_i::client_propagated (int client_propagated)
 }
 
 int
-test_i::server_declared (void)
+test_i::server_declared ()
 {
   return this->server_declared_;
 }
@@ -133,7 +132,7 @@ test_i::server_declared (int server_declared)
 }
 
 RTCORBA::Priority
-test_i::server_priority (void)
+test_i::server_priority ()
 {
   return this->server_priority_;
 }
@@ -145,7 +144,7 @@ test_i::server_priority (RTCORBA::Priority server_priority)
 }
 
 int
-test_i::in_lane (void)
+test_i::in_lane ()
 {
   return this->in_lane_;
 }
@@ -157,7 +156,7 @@ test_i::in_lane (int in_lane)
 }
 
 int
-test_i::serviced_by_rt_tp (void)
+test_i::serviced_by_rt_tp ()
 {
   return this->serviced_by_rt_tp_;
 }
@@ -189,7 +188,7 @@ test_i::invocation_lane (CORBA::ULong lane)
 }
 
 RTCORBA::Priority
-test_i::invocation_priority (void)
+test_i::invocation_priority ()
 {
   return this->invocation_priority_;
 }
@@ -201,7 +200,7 @@ test_i::invocation_priority (RTCORBA::Priority invocation_priority)
 }
 
 void
-test_i::start (void)
+test_i::start ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "\n"));
@@ -280,13 +279,13 @@ test_i::thread_info (const char *method_name)
 }
 
 void
-test_i::method (void)
+test_i::method ()
 {
   this->thread_info ("test_i::method");
 }
 
 PortableServer::POA_ptr
-test_i::_default_POA (void)
+test_i::_default_POA ()
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
@@ -373,17 +372,17 @@ class Server
 public:
   Server (CORBA::ORB_ptr orb);
 
-  void create_servant_in_root_poa (void);
+  void create_servant_in_root_poa ();
   void create_poa_and_servant_with_tp_policy (const char *poa_name,
                                               int set_priority_model,
                                               RTCORBA::PriorityModel priority_model);
   void create_poa_and_servant_with_tp_with_lanes_policy (const char *poa_name,
                                                          RTCORBA::PriorityModel priority_model);
-  void test (void);
-  void start_testing (void);
+  void test ();
+  void start_testing ();
 
   //FUZZ: disable check_for_lack_ACE_OS
-  void shutdown (void);
+  void shutdown ();
   //FUZZ: enable check_for_lack_ACE_OS
 
   CORBA::ORB_var orb_;
@@ -441,7 +440,7 @@ Server::Server (CORBA::ORB_ptr orb)
 }
 
 void
-Server::create_servant_in_root_poa (void)
+Server::create_servant_in_root_poa ()
 {
   test_i *servant = 0;
   ACE_NEW_THROW_EX (servant,
@@ -708,7 +707,7 @@ Server::create_poa_and_servant_with_tp_with_lanes_policy (const char *poa_name,
 }
 
 void
-Server::start_testing (void)
+Server::start_testing ()
 {
   Tests::ITERATOR iterator (this->tests_);
   while (!iterator.done ())
@@ -727,7 +726,7 @@ Server::start_testing (void)
 }
 
 void
-Server::test (void)
+Server::test ()
 {
   this->start_testing ();
 
@@ -740,9 +739,9 @@ Server::test (void)
 }
 
 void
-Server::shutdown (void)
+Server::shutdown ()
 {
-  this->orb_->shutdown (1);
+  this->orb_->shutdown (true);
 
   this->orb_->destroy ();
 }
@@ -750,14 +749,12 @@ Server::shutdown (void)
 class Task : public ACE_Task_Base
 {
 public:
-
   Task (ACE_Thread_Manager &thread_manager,
         CORBA::ORB_ptr orb);
 
-  int svc (void);
+  int svc ();
 
   CORBA::ORB_var orb_;
-
 };
 
 Task::Task (ACE_Thread_Manager &thread_manager,
@@ -768,7 +765,7 @@ Task::Task (ACE_Thread_Manager &thread_manager,
 }
 
 int
-Task::svc (void)
+Task::svc ()
 {
   try
     {

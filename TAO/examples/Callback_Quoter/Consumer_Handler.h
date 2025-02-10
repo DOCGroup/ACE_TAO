@@ -1,5 +1,3 @@
-/* -*- C++ -*- */
-
 //=============================================================================
 /**
  *  @file    Consumer_Handler.h
@@ -9,7 +7,6 @@
  *  @author Kirthika Parameswaran <kirthika@cs.wustl.edu>
  */
 //=============================================================================
-
 
 #ifndef CONSUMER_HANDLER_H
 #define CONSUMER_HANDLER_H
@@ -45,16 +42,16 @@ class Consumer_Handler
 {
 public:
   /// Constructor.
-  Consumer_Handler (void);
+  Consumer_Handler ();
 
   /// Destructor.
-  ~Consumer_Handler (void);
+  ~Consumer_Handler ();
 
   /// Initialize the client communication with the server.
   int init (int argc, ACE_TCHAR *argv[]);
 
   /// Start the ORB object.
-  int run (void);
+  int run ();
 
   /// the name of the stock the consumer is interested in.
   ACE_CString stock_name_;
@@ -66,13 +63,13 @@ public:
   Notifier_var server_;
 
   /// The consumer object.
-  Consumer_i *consumer_servant_;
+  Consumer_i *consumer_servant_ {};
 
   /// Pointer to the consumer object registered with the ORB.
   Callback_Quoter::Consumer_var consumer_var_;
 
   /// This method gives the reactor pointer.
-  ACE_Reactor* reactor_used (void) const;
+  ACE_Reactor* reactor_used () const;
 
   /// Flag which notes whether the consumer has got registered with the
   /// Notifier-server.
@@ -83,7 +80,6 @@ public:
   int unregistered_;
 
 private:
-
   /// Our orb.
   CORBA::ORB_var orb_;
 
@@ -92,11 +88,11 @@ private:
 
   /// Parse the command line arguments.  Returns 0 on success, -1 on
   /// error.
-  int parse_args (void);
+  int parse_args ();
 
-  /// This method initialises the naming service and registers the
+  /// This method initializes the naming service and registers the
   /// object with the POA.
-  int via_naming_service (void);
+  int via_naming_service ();
 
   /// # of arguments on the command line.
   int argc_;

@@ -41,9 +41,8 @@ namespace TAO
 
     protected:
       /// Protected destructor to enforce reference counting discipline
-      virtual ~Current_Loader (void);
+      virtual ~Current_Loader ();
     };
-
   }
 }
 
@@ -53,7 +52,7 @@ namespace TAO
 {
   namespace Transport
   {
-    int current_static_initializer (void);
+    int current_static_initializer ();
   }
 }
 

@@ -18,7 +18,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_ALLOC_HOOK_DEFINE_Tca(ACE_Acceptor)
 
 template <typename SVC_HANDLER, typename PEER_ACCEPTOR> void
-ACE_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::dump (void) const
+ACE_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::dump");
@@ -37,7 +37,7 @@ ACE_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::operator PEER_ACCEPTOR & () const
 }
 
 template <typename SVC_HANDLER, typename PEER_ACCEPTOR> PEER_ACCEPTOR &
-ACE_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::acceptor (void) const
+ACE_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::acceptor () const
 {
   ACE_TRACE ("ACE_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::acceptor");
   return const_cast<PEER_ACCEPTOR &> (this->peer_acceptor_);
@@ -46,7 +46,7 @@ ACE_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::acceptor (void) const
 // Returns ACE_HANDLE of the underlying Acceptor_Strategy.
 
 template <typename SVC_HANDLER, typename PEER_ACCEPTOR> ACE_HANDLE
-ACE_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::get_handle (void) const
+ACE_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::get_handle () const
 {
   ACE_TRACE ("ACE_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::get_handle");
   return this->peer_acceptor_.get_handle ();
@@ -136,14 +136,14 @@ ACE_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::ACE_Acceptor
 }
 
 template <typename SVC_HANDLER, typename PEER_ACCEPTOR>
-ACE_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::~ACE_Acceptor (void)
+ACE_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::~ACE_Acceptor ()
 {
   ACE_TRACE ("ACE_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::~ACE_Acceptor");
   this->handle_close ();
 }
 
 template <typename SVC_HANDLER, typename PEER_ACCEPTOR> int
-ACE_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::fini (void)
+ACE_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::fini ()
 {
   ACE_TRACE ("ACE_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::fini");
   return ACE_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::handle_close ();
@@ -163,7 +163,6 @@ ACE_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::info (ACE_TCHAR **strp,
                                                       size_t length) const
 {
   ACE_TRACE ("ACE_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::info");
-  ACE_TCHAR buf[BUFSIZ];
   ACE_TCHAR addr_str[BUFSIZ];
   typename PEER_ACCEPTOR::PEER_ADDR addr;
 
@@ -172,7 +171,17 @@ ACE_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::info (ACE_TCHAR **strp,
   else if (addr.addr_to_string (addr_str, sizeof addr_str) == -1)
     return -1;
 
-  ACE_OS::snprintf (buf, BUFSIZ,
+  //
+  // gcc10 complains that it is possible that buf could be truncated by up to
+  // 35 bytes in this call to snprintf.  Technically, this is possible
+  // (however unlikely that may be).  Since addr_str is defined to be of size
+  // BUFSIZ, gcc assumes that the string could actually be BUFSIZ in length.
+  // That makes the possible total length of the combined string (given the
+  // size of the literal string constants) 3 + 12 + BUFSIZE + 19 + 1.
+  //
+  const size_t additional = 35;
+  ACE_TCHAR buf[BUFSIZ + additional];
+  ACE_OS::snprintf (buf, sizeof buf,
                     ACE_TEXT ("%s\t %s %s"),
                     ACE_TEXT ("ACE_Acceptor"),
                     addr_str,
@@ -186,14 +195,14 @@ ACE_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::info (ACE_TCHAR **strp,
 }
 
 template <typename SVC_HANDLER, typename PEER_ACCEPTOR> int
-ACE_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::suspend (void)
+ACE_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::suspend ()
 {
   ACE_TRACE ("ACE_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::suspend");
   return this->reactor ()->suspend_handler (this);
 }
 
 template <typename SVC_HANDLER, typename PEER_ACCEPTOR> int
-ACE_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::resume (void)
+ACE_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::resume ()
 {
   ACE_TRACE ("ACE_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::resume");
   return this->reactor ()->resume_handler (this);
@@ -203,14 +212,14 @@ ACE_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::resume (void)
 // <reactor>.
 
 template <typename SVC_HANDLER, typename PEER_ACCEPTOR> int
-ACE_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::close (void)
+ACE_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::close ()
 {
   ACE_TRACE ("ACE_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::close");
   return this->handle_close ();
 }
 
 template <typename SVC_HANDLER, typename PEER_ACCEPTOR> int
-ACE_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::handle_accept_error (void)
+ACE_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::handle_accept_error ()
 {
   ACE_TRACE ("ACE_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::handle_accept_error");
   return 0;
@@ -450,7 +459,7 @@ ACE_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::handle_input (ACE_HANDLE listener)
 ACE_ALLOC_HOOK_DEFINE_Tca(ACE_Strategy_Acceptor)
 
 template <typename SVC_HANDLER, typename PEER_ACCEPTOR> int
-ACE_Strategy_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::suspend (void)
+ACE_Strategy_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::suspend ()
 {
   ACE_TRACE ("ACE_Strategy_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::suspend");
 
@@ -462,7 +471,7 @@ ACE_Strategy_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::suspend (void)
 }
 
 template <typename SVC_HANDLER, typename PEER_ACCEPTOR> int
-ACE_Strategy_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::resume (void)
+ACE_Strategy_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::resume ()
 {
   ACE_TRACE ("ACE_Strategy_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::resume");
 
@@ -474,7 +483,7 @@ ACE_Strategy_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::resume (void)
 }
 
 template <typename SVC_HANDLER, typename PEER_ACCEPTOR> void
-ACE_Strategy_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::dump (void) const
+ACE_Strategy_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Strategy_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::dump");
@@ -499,7 +508,7 @@ ACE_Strategy_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::dump (void) const
 }
 
 template <typename SVC_HANDLER, typename PEER_ACCEPTOR> PEER_ACCEPTOR &
-ACE_Strategy_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::acceptor (void) const
+ACE_Strategy_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::acceptor () const
 {
   ACE_TRACE ("ACE_Strategy_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::acceptor");
   return this->accept_strategy_->acceptor ();
@@ -515,7 +524,7 @@ ACE_Strategy_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::operator PEER_ACCEPTOR & () c
 // Returns ACE_HANDLE of the underlying Acceptor_Strategy.
 
 template <typename SVC_HANDLER, typename PEER_ACCEPTOR> ACE_HANDLE
-ACE_Strategy_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::get_handle (void) const
+ACE_Strategy_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::get_handle () const
 {
   ACE_TRACE ("ACE_Strategy_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::get_handle");
   return this->accept_strategy_->get_handle ();
@@ -798,7 +807,7 @@ ACE_Strategy_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::activate_svc_handler
 }
 
 template <typename SVC_HANDLER, typename PEER_ACCEPTOR>
-ACE_Strategy_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::~ACE_Strategy_Acceptor (void)
+ACE_Strategy_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::~ACE_Strategy_Acceptor ()
 {
   ACE_TRACE ("ACE_Strategy_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::~ACE_Strategy_Acceptor");
   ACE_OS::free ((void *) this->service_name_);
@@ -821,7 +830,6 @@ ACE_Strategy_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::info (ACE_TCHAR **strp,
 {
   ACE_TRACE ("ACE_Strategy_Acceptor::info");
 
-  ACE_TCHAR buf[BUFSIZ];
   ACE_TCHAR service_addr_str[BUFSIZ];
   typename PEER_ACCEPTOR::PEER_ADDR addr;
 
@@ -831,8 +839,17 @@ ACE_Strategy_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::info (ACE_TCHAR **strp,
                                 sizeof service_addr_str) == -1)
     return -1;
 
-  // @@ Should add the protocol in...
-  ACE_OS::snprintf (buf, BUFSIZ,
+  //
+  // gcc10 complains that it is possible that buf could be truncated by up to
+  // 6 bytes in this call to snprintf.  Technically, this is possible
+  // (however unlikely that may be).  Since service_addr_str is defined to be
+  // of size BUFSIZ, gcc assumes that the string could actually be BUFSIZ in
+  // length.  That makes the possible total length of the combined string
+  // (given the size of the literal string constants) 5 + BUFSIZE + 1.
+  //
+  const size_t additional = 6;
+  ACE_TCHAR buf[BUFSIZ + additional];
+  ACE_OS::snprintf (buf, sizeof buf,
                     ACE_TEXT ("%s\t %s #%s\n"),
                     this->service_name_ == 0
                     ? ACE_TEXT ("<unknown>")
@@ -850,7 +867,7 @@ ACE_Strategy_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::info (ACE_TCHAR **strp,
 }
 
 template <typename SVC_HANDLER, typename PEER_ACCEPTOR> int
-ACE_Strategy_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::fini (void)
+ACE_Strategy_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::fini ()
 {
   ACE_TRACE ("ACE_Strategy_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::fini");
   return this->ACE_Strategy_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::handle_close ();
@@ -859,7 +876,7 @@ ACE_Strategy_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::fini (void)
 ACE_ALLOC_HOOK_DEFINE_Tca(ACE_Oneshot_Acceptor)
 
 template <typename SVC_HANDLER, typename PEER_ACCEPTOR> void
-ACE_Oneshot_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::dump (void) const
+ACE_Oneshot_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Oneshot_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::dump");
@@ -900,7 +917,7 @@ ACE_Oneshot_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::open
 }
 
 template <typename SVC_HANDLER, typename PEER_ACCEPTOR>
-ACE_Oneshot_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::ACE_Oneshot_Acceptor (void)
+ACE_Oneshot_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::ACE_Oneshot_Acceptor ()
   : svc_handler_ (0),
     restart_ (false),
     concurrency_strategy_ (0),
@@ -928,14 +945,14 @@ ACE_Oneshot_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::ACE_Oneshot_Acceptor
 }
 
 template <typename SVC_HANDLER, typename PEER_ACCEPTOR>
-ACE_Oneshot_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::~ACE_Oneshot_Acceptor (void)
+ACE_Oneshot_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::~ACE_Oneshot_Acceptor ()
 {
   ACE_TRACE ("ACE_Oneshot_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::~ACE_Oneshot_Acceptor");
   this->handle_close ();
 }
 
 template <typename SVC_HANDLER, typename PEER_ACCEPTOR> int
-ACE_Oneshot_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::close (void)
+ACE_Oneshot_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::close ()
 {
   ACE_TRACE ("ACE_Oneshot_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::close");
   return this->handle_close ();
@@ -989,7 +1006,7 @@ ACE_Oneshot_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::handle_timeout
 }
 
 template <typename SVC_HANDLER, typename PEER_ACCEPTOR> int
-ACE_Oneshot_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::cancel (void)
+ACE_Oneshot_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::cancel ()
 {
   ACE_TRACE ("ACE_Oneshot_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::cancel");
   return this->reactor () && this->reactor ()->cancel_timer (this);
@@ -1101,7 +1118,7 @@ ACE_Oneshot_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::accept
   // 0) in this case...
 
   ACE_Time_Value *timeout;
-  int use_reactor = synch_options[ACE_Synch_Options::USE_REACTOR];
+  int const use_reactor = synch_options[ACE_Synch_Options::USE_REACTOR];
 
   if (use_reactor)
     timeout = (ACE_Time_Value *) &ACE_Time_Value::zero;
@@ -1179,7 +1196,7 @@ ACE_Oneshot_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::init (int, ACE_TCHAR *[])
 }
 
 template <typename SVC_HANDLER, typename PEER_ACCEPTOR> int
-ACE_Oneshot_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::fini (void)
+ACE_Oneshot_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::fini ()
 {
   ACE_TRACE ("ACE_Oneshot_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::fini");
   return this->handle_close ();
@@ -1213,14 +1230,14 @@ ACE_Oneshot_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::info (ACE_TCHAR **strp,
 }
 
 template <typename SVC_HANDLER, typename PEER_ACCEPTOR> int
-ACE_Oneshot_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::suspend (void)
+ACE_Oneshot_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::suspend ()
 {
   ACE_TRACE ("ACE_Oneshot_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::suspend");
   return this->reactor () && this->reactor ()->suspend_handler (this);
 }
 
 template <typename SVC_HANDLER, typename PEER_ACCEPTOR> int
-ACE_Oneshot_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::resume (void)
+ACE_Oneshot_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::resume ()
 {
   ACE_TRACE ("ACE_Oneshot_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::resume");
   return this->reactor () && this->reactor ()->resume_handler (this);
@@ -1229,14 +1246,14 @@ ACE_Oneshot_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::resume (void)
 // Returns ACE_HANDLE of the underlying peer_acceptor.
 
 template <typename SVC_HANDLER, typename PEER_ACCEPTOR> ACE_HANDLE
-ACE_Oneshot_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::get_handle (void) const
+ACE_Oneshot_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::get_handle () const
 {
   ACE_TRACE ("ACE_Oneshot_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::get_handle");
   return this->peer_acceptor_.get_handle ();
 }
 
 template <typename SVC_HANDLER, typename PEER_ACCEPTOR> PEER_ACCEPTOR &
-ACE_Oneshot_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::acceptor (void) const
+ACE_Oneshot_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::acceptor () const
 {
   ACE_TRACE ("ACE_Oneshot_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::acceptor");
   return (PEER_ACCEPTOR &) this->peer_acceptor_;

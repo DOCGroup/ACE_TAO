@@ -44,7 +44,7 @@ class TAO_Acceptor;
 class TAO_Export TAO_Acceptor_Filter
 {
 public:
-  virtual ~TAO_Acceptor_Filter (void);
+  virtual ~TAO_Acceptor_Filter ();
 
   /**
    * Populate @a mprofile with profiles. Profiles are created for

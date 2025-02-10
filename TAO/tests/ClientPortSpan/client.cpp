@@ -55,7 +55,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       try
         {
-
           ACE_DEBUG ((LM_DEBUG, "(%P|%t) - calling get_string\n"));
           CORBA::String_var the_string = hello->get_string ();
           ACE_DEBUG ((LM_DEBUG, "(%P|%t) - string returned <%C>\n",

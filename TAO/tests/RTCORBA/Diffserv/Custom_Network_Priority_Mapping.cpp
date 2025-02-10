@@ -78,7 +78,7 @@ static const char *dscp_char[]=
 };
 */
 
-Custom_Network_Priority_Mapping::Custom_Network_Priority_Mapping (void)
+Custom_Network_Priority_Mapping::Custom_Network_Priority_Mapping ()
   : corba_priority_ (RTCORBA::minPriority)
 {
 }

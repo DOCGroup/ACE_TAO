@@ -15,10 +15,10 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
 #if defined(HEAP)
 
   ACE_NEW_RETURN (timer_queue, ACE_Timer_Heap, -1);
-#elsif defined(HASH)
+#elif defined(HASH)
 
   ACE_NEW_RETURN (timer_queue, ACE_Timer_Hash, -1);
-#elsif defined(WHEEL)
+#elif defined(WHEEL)
 
   ACE_NEW_RETURN (timer_queue, ACE_Timer_Wheel, -1);
 #else

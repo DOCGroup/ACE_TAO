@@ -7,7 +7,7 @@ UDP_i::UDP_i (CORBA::ORB_ptr o) :
 }
 
 // Destructor
-UDP_i::~UDP_i (void)
+UDP_i::~UDP_i ()
 {
 }
 
@@ -56,7 +56,7 @@ UDP_i::invoke (const char * client_name,
 // Shutdown.
 
 void
-UDP_i::shutdown (void)
+UDP_i::shutdown ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "UDP_i is shutting down\n"));

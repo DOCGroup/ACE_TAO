@@ -12,7 +12,7 @@ template<typename S_ptr,
          template <typename> class Insert_Policy>
 ACE_INLINE
 S_ptr
-TAO::In_Object_Argument_T<S_ptr,Insert_Policy>::arg (void) const
+TAO::In_Object_Argument_T<S_ptr,Insert_Policy>::arg () const
 {
   return this->x_;
 }
@@ -42,7 +42,7 @@ template<typename S_ptr,
          template <typename> class Insert_Policy>
 ACE_INLINE
 S_ptr &
-TAO::Inout_Object_Argument_T<S_ptr,S_traits,Insert_Policy>::arg (void)
+TAO::Inout_Object_Argument_T<S_ptr,S_traits,Insert_Policy>::arg ()
 {
   return this->x_;
 }
@@ -62,7 +62,7 @@ template<typename S_ptr,
          template <typename> class Insert_Policy>
 ACE_INLINE
 S_out
-TAO::Out_Object_Argument_T<S_ptr,S_out,Insert_Policy>::arg (void)
+TAO::Out_Object_Argument_T<S_ptr,S_out,Insert_Policy>::arg ()
 {
   return this->x_;
 }
@@ -73,7 +73,7 @@ template<typename S_ptr,
          typename S_var,
          template <typename> class Insert_Policy>
 ACE_INLINE
-TAO::Ret_Object_Argument_T<S_ptr,S_var,Insert_Policy>::Ret_Object_Argument_T (void)
+TAO::Ret_Object_Argument_T<S_ptr,S_var,Insert_Policy>::Ret_Object_Argument_T ()
 {}
 
 template<typename S_ptr,
@@ -81,7 +81,7 @@ template<typename S_ptr,
          template <typename> class Insert_Policy>
 ACE_INLINE
 S_ptr &
-TAO::Ret_Object_Argument_T<S_ptr,S_var,Insert_Policy>::arg (void)
+TAO::Ret_Object_Argument_T<S_ptr,S_var,Insert_Policy>::arg ()
 {
   return this->x_.out ();
 }
@@ -91,7 +91,7 @@ template<typename S_ptr,
          template <typename> class Insert_Policy>
 ACE_INLINE
 S_ptr
-TAO::Ret_Object_Argument_T<S_ptr,S_var,Insert_Policy>::excp (void)
+TAO::Ret_Object_Argument_T<S_ptr,S_var,Insert_Policy>::excp ()
 {
   return this->x_.ptr ();
 }
@@ -101,7 +101,7 @@ template<typename S_ptr,
          template <typename> class Insert_Policy>
 ACE_INLINE
 S_ptr
-TAO::Ret_Object_Argument_T<S_ptr,S_var,Insert_Policy>::retn (void)
+TAO::Ret_Object_Argument_T<S_ptr,S_var,Insert_Policy>::retn ()
 {
   return this->x_._retn ();
 }

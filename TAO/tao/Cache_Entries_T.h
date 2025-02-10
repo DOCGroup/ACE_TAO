@@ -65,7 +65,7 @@ namespace TAO
     typedef TRANSPORT_TYPE transport_type;
 
     /// Constructor.
-    Cache_IntId_T (void);
+    Cache_IntId_T ();
 
     /// Constructor.
     Cache_IntId_T (transport_type *transport);
@@ -74,7 +74,7 @@ namespace TAO
     Cache_IntId_T (const Cache_IntId_T & rhs);
 
     /// Destructor.
-    ~Cache_IntId_T (void);
+    ~Cache_IntId_T ();
 
     /// Assignment operator (does copy memory).
     Cache_IntId_T& operator= (const Cache_IntId_T &rhs);
@@ -86,16 +86,16 @@ namespace TAO
     bool operator!= (const Cache_IntId_T &rhs) const;
 
     /// Return the underlying transport
-    transport_type *transport (void);
+    transport_type *transport ();
 
     /// Return the underlying transport
-    const transport_type *transport (void) const;
+    const transport_type *transport () const;
 
     /// Set recycle_state.
     void recycle_state (Cache_Entries_State new_state);
 
     /// Get recycle_state.
-    Cache_Entries_State recycle_state (void) const;
+    Cache_Entries_State recycle_state () const;
 
     /// Relinquish ownership of the TAO_Transport object associated with
     /// this Cache_IntId_T.
@@ -106,10 +106,10 @@ namespace TAO
      *       This method really only exists to get around inadequacies
      *       in the Transport_Cache_Map_Manager interface.
      */
-    transport_type *relinquish_transport (void);
+    transport_type *relinquish_transport ();
 
     /// Get the connected flag
-    bool is_connected (void) const;
+    bool is_connected () const;
 
     /// Set the connected flag
     void is_connected (bool connected);
@@ -144,7 +144,7 @@ namespace TAO
     typedef TRANSPORT_DESCRIPTOR_TYPE transport_descriptor_type;
 
     /// Constructor.
-    Cache_ExtId_T (void);
+    Cache_ExtId_T ();
 
     /// Constructor.
     explicit Cache_ExtId_T (transport_descriptor_type *prop);
@@ -153,7 +153,7 @@ namespace TAO
     Cache_ExtId_T (const Cache_ExtId_T & rhs);
 
     /// Destructor.
-    ~Cache_ExtId_T (void);
+    ~Cache_ExtId_T ();
 
     // = Assignment and comparison operators.
     /// Assignment operator (does copy memory).
@@ -167,24 +167,24 @@ namespace TAO
 
     /// hash function is required in order for this class to be usable by
     /// ACE_Hash_Map_Manager_Ex.
-    u_long hash (void) const;
+    u_long hash () const;
 
     /// Make a deep copy of the underlying pointer
-    void duplicate (void);
+    void duplicate ();
 
     /// Return the index value
-    CORBA::ULong index (void) const;
+    CORBA::ULong index () const;
 
     /// Set the index value. This calls should not be used by any users
     /// but for the TAO_Transport_Cache_Manager class.
     void index (CORBA::ULong index);
 
     /// Increment the index value
-    void incr_index (void);
+    void incr_index ();
 
     // = Accessors
     /// Get the underlying the property pointer
-    transport_descriptor_type *property (void) const;
+    transport_descriptor_type *property () const;
 
   private:
     /// A property object that we represent.
@@ -209,13 +209,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 # include "tao/Cache_Entries_T.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "tao/Cache_Entries_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("tao/Cache_Entries_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 

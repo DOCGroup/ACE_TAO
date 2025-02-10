@@ -40,14 +40,13 @@ $status = 0;
 for ($i = 0; $i <= $#ARGV; $i++) {
     if ($ARGV[$i] eq "-h" || $ARGV[$i] eq "-?") {
       print "Run_Test Perl script for TAO Param Test\n\n";
-      print "run_test [-n num] [-d] [-onewin] [-h] [-t type] [-i (dii|sii)] [-chorus <target>]\n";
+      print "run_test [-n num] [-d] [-h] [-t type] [-i (dii|sii)]\n";
       print "\n";
       print "-n num              -- runs the client num times\n";
       print "-d                  -- runs each in debug mode\n";
       print "-h                  -- prints this information\n";
       print "-t type             -- runs only one type of param test\n";
       print "-i (dii|sii)        -- Changes the type of invocation\n";
-      print "-chorus <target>    -- Run tests on chorus target\n";
       exit 0;
     }
     elsif ($ARGV[$i] eq "-n") {

@@ -40,10 +40,10 @@ class TAO_RTEvent_Serv_Export TAO_EC_Basic_Factory : public TAO_EC_Factory
 {
 public:
   /// Constructor
-  TAO_EC_Basic_Factory (void);
+  TAO_EC_Basic_Factory ();
 
   /// destructor...
-  virtual ~TAO_EC_Basic_Factory (void);
+  virtual ~TAO_EC_Basic_Factory ();
 
   // = The EC_Factory methods
   virtual TAO_EC_Dispatching*
@@ -95,9 +95,9 @@ public:
   virtual void
       destroy_proxy_push_supplier_collection (TAO_EC_ProxyPushSupplier_Collection*);
 
-  virtual ACE_Lock* create_consumer_lock (void);
+  virtual ACE_Lock* create_consumer_lock ();
   virtual void destroy_consumer_lock (ACE_Lock*);
-  virtual ACE_Lock* create_supplier_lock (void);
+  virtual ACE_Lock* create_supplier_lock ();
   virtual void destroy_supplier_lock (ACE_Lock*);
 
   virtual TAO_EC_ConsumerControl*

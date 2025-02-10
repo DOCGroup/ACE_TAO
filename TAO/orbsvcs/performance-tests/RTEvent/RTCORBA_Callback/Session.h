@@ -17,9 +17,9 @@ public:
   // = The skeleton methods
   virtual void sample (Test::Timestamp the_timestamp);
 
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
-  virtual PortableServer::POA_ptr _default_POA (void);
+  virtual PortableServer::POA_ptr _default_POA ();
 
 private:
   Test::Callback_var cb_;

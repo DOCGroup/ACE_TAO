@@ -11,7 +11,6 @@ class ClientInterceptor:
   public virtual PortableInterceptor::ClientRequestInterceptor,
   public virtual ::CORBA::LocalObject
 {
-
  public:
   ClientInterceptor (Messenger_var theMessage,
                      PortableInterceptor::Current_ptr thePic,

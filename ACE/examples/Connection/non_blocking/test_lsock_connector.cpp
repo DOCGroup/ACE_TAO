@@ -18,7 +18,6 @@ ACE_TMAIN (int, ACE_TCHAR *argv[])
 #include "CPP-connector.h"
 
 
-
 typedef Peer_Handler<ACE_LSOCK_STREAM> PEER_HANDLER;
 typedef IPC_Client<PEER_HANDLER, ACE_LSOCK_CONNECTOR> IPC_CLIENT;
 

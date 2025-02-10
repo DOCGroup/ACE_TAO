@@ -12,13 +12,12 @@
 #define TAO_SERVANTRETENTIONSTRATEGY_H
 #include /**/ "ace/pre.h"
 
-#include "tao/PortableServer/Policy_Strategy.h"
+#include "tao/PortableServer/Servant_Location.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/PortableServer/Servant_Location.h"
 #include "tao/PortableServer/Servant_Upcall.h"
 #include "tao/PortableServer/ServantRetentionPolicyC.h"
 #include "tao/PortableServer/PortableServer.h"
@@ -34,15 +33,21 @@ namespace TAO
   namespace Portable_Server
   {
     class ServantRetentionStrategy
-      : public Policy_Strategy
     {
     public:
-      virtual CORBA::ULong waiting_servant_deactivation (void) const = 0;
+      ServantRetentionStrategy ();
+      virtual ~ServantRetentionStrategy () = default;
+
+      virtual void strategy_init (TAO_Root_POA *poa) = 0;
+
+      virtual void strategy_cleanup() = 0;
+
+      virtual CORBA::ULong waiting_servant_deactivation () const = 0;
 
       virtual int is_servant_in_map (PortableServer::Servant servant,
                                      bool &wait_occurred_restart_call) = 0;
 
-      virtual TAO_SERVANT_LOCATION servant_present (
+      virtual TAO_Servant_Location servant_present (
         const PortableServer::ObjectId &system_id,
         PortableServer::Servant &servant) = 0;
 
@@ -81,7 +86,7 @@ namespace TAO
         const PortableServer::ObjectId &id,
         bool indirect) = 0;
 
-      virtual void deactivate_all_objects (void) = 0;
+      virtual void deactivate_all_objects () = 0;
 
       virtual PortableServer::ObjectId *servant_to_user_id (
         PortableServer::Servant servant) = 0;
@@ -115,7 +120,6 @@ namespace TAO
       virtual ::PortableServer::ServantRetentionPolicyValue type() const = 0;
 
       virtual TAO_Active_Object_Map * get_active_object_map() const = 0;
-
     };
   }
 }

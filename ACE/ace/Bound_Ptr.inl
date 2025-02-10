@@ -1,8 +1,5 @@
 /* -*- C++ -*- */
 #include "ace/Guard_T.h"
-#if !defined (ACE_NEW_THROWS_EXCEPTIONS)
-#  include "ace/Log_Category.h"
-#endif /* ACE_NEW_THROWS_EXCEPTIONS */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -17,20 +14,14 @@ ACE_Bound_Ptr_Counter<ACE_LOCK>::internal_create (long init_obj_ref_count)
 }
 
 template <class ACE_LOCK> inline ACE_Bound_Ptr_Counter<ACE_LOCK> *
-ACE_Bound_Ptr_Counter<ACE_LOCK>::create_strong (void)
+ACE_Bound_Ptr_Counter<ACE_LOCK>::create_strong ()
 {
   // Set initial object reference count to 1.
   ACE_Bound_Ptr_Counter<ACE_LOCK> *temp = internal_create (1);
-#if defined (ACE_NEW_THROWS_EXCEPTIONS)
-  if (temp == 0)
-    ACE_throw_bad_alloc;
-#else
-  ACE_ASSERT (temp != 0);
-#endif /* ACE_NEW_THROWS_EXCEPTIONS */
+  if (!temp)
+    throw std::bad_alloc ();
   return temp;
 }
-
-
 
 template <class ACE_LOCK> inline long
 ACE_Bound_Ptr_Counter<ACE_LOCK>::attach_strong (ACE_Bound_Ptr_Counter<ACE_LOCK>* counter)
@@ -41,7 +32,7 @@ ACE_Bound_Ptr_Counter<ACE_LOCK>::attach_strong (ACE_Bound_Ptr_Counter<ACE_LOCK>*
   if (counter->obj_ref_count_ == -1)
     return -1;
 
-  long new_obj_ref_count = ++counter->obj_ref_count_;
+  long const new_obj_ref_count = ++counter->obj_ref_count_;
   ++counter->self_ref_count_;
 
   return new_obj_ref_count;
@@ -77,17 +68,13 @@ ACE_Bound_Ptr_Counter<ACE_LOCK>::detach_strong (ACE_Bound_Ptr_Counter<ACE_LOCK>*
 }
 
 template <class ACE_LOCK> inline ACE_Bound_Ptr_Counter<ACE_LOCK> *
-ACE_Bound_Ptr_Counter<ACE_LOCK>::create_weak (void)
+ACE_Bound_Ptr_Counter<ACE_LOCK>::create_weak ()
 {
   // Set initial object reference count to 0.
 
   ACE_Bound_Ptr_Counter<ACE_LOCK> *temp = internal_create (0);
-#if defined (ACE_NEW_THROWS_EXCEPTIONS)
-  if (temp == 0)
-    ACE_throw_bad_alloc;
-#else
-  ACE_ASSERT (temp != 0);
-#endif /* ACE_NEW_THROWS_EXCEPTIONS */
+  if (!temp)
+    throw std::bad_alloc ();
   return temp;
 }
 
@@ -134,26 +121,12 @@ ACE_Bound_Ptr_Counter<ACE_LOCK>::ACE_Bound_Ptr_Counter (long init_obj_ref_count)
 {
 }
 
-template <class ACE_LOCK> inline
-ACE_Bound_Ptr_Counter<ACE_LOCK>::~ACE_Bound_Ptr_Counter (void)
-{
-}
-
 template <class X, class ACE_LOCK> inline
 ACE_Strong_Bound_Ptr<X, ACE_LOCK>::ACE_Strong_Bound_Ptr (X *p)
   : counter_ (COUNTER::create_strong ()),
     ptr_ (p)
 {
 }
-
-#if !defined (ACE_HAS_CPP11)
-template <class X, class ACE_LOCK> inline
-ACE_Strong_Bound_Ptr<X, ACE_LOCK>::ACE_Strong_Bound_Ptr (auto_ptr<X> p)
-  : counter_ (COUNTER::create_strong ()),
-    ptr_ (p.release())
-{
-}
-#endif /* !ACE_HAS_CPP11 */
 
 template <class X, class ACE_LOCK> inline
 ACE_Strong_Bound_Ptr<X, ACE_LOCK>::ACE_Strong_Bound_Ptr (const ACE_Strong_Bound_Ptr<X, ACE_LOCK> &r)
@@ -180,7 +153,7 @@ ACE_Strong_Bound_Ptr<X, ACE_LOCK>::ACE_Strong_Bound_Ptr (const ACE_Weak_Bound_Pt
 }
 
 template <class X, class ACE_LOCK> inline
-ACE_Strong_Bound_Ptr<X, ACE_LOCK>::~ACE_Strong_Bound_Ptr (void)
+ACE_Strong_Bound_Ptr<X, ACE_LOCK>::~ACE_Strong_Bound_Ptr ()
 {
   if (COUNTER::detach_strong (this->counter_) == 0)
     delete this->ptr_;
@@ -195,7 +168,7 @@ ACE_Strong_Bound_Ptr<X, ACE_LOCK>::operator = (const ACE_Strong_Bound_Ptr<X, ACE
     return;
 
   COUNTER *new_counter = rhs.counter_;
-  X_t *new_ptr = rhs.ptr_;
+  X *new_ptr = rhs.ptr_;
   COUNTER::attach_strong (new_counter);
   if (COUNTER::detach_strong (this->counter_) == 0)
     delete this->ptr_;
@@ -212,7 +185,7 @@ ACE_Strong_Bound_Ptr<X, ACE_LOCK>::operator = (const ACE_Weak_Bound_Ptr<X, ACE_L
     return;
 
   COUNTER *new_counter = rhs.counter_;
-  X_t *new_ptr = rhs.ptr_;
+  X *new_ptr = rhs.ptr_;
 
   // When creating a strong pointer from a weak one we can't assume that the
   // underlying object still exists. Therefore we must check for a return value
@@ -269,7 +242,7 @@ ACE_Strong_Bound_Ptr<X, ACE_LOCK>::operator!= (X *p) const
 }
 
 template <class X, class ACE_LOCK> inline X *
-ACE_Strong_Bound_Ptr<X, ACE_LOCK>::operator-> (void) const
+ACE_Strong_Bound_Ptr<X, ACE_LOCK>::operator-> () const
 {
   return this->ptr_;
 }
@@ -281,13 +254,13 @@ ACE_Strong_Bound_Ptr<X, ACE_LOCK>::operator *() const
 }
 
 template <class X, class ACE_LOCK> inline X*
-ACE_Strong_Bound_Ptr<X, ACE_LOCK>::get (void) const
+ACE_Strong_Bound_Ptr<X, ACE_LOCK>::get () const
 {
   return this->ptr_;
 }
 
 template <class X, class ACE_LOCK> inline bool
-ACE_Strong_Bound_Ptr<X, ACE_LOCK>::null (void) const
+ACE_Strong_Bound_Ptr<X, ACE_LOCK>::null () const
 {
   return this->ptr_ == 0;
 }
@@ -296,25 +269,12 @@ template<class X, class ACE_LOCK> inline void
 ACE_Strong_Bound_Ptr<X, ACE_LOCK>::reset (X *p)
 {
   COUNTER *old_counter = this->counter_;
-  X_t *old_ptr = this->ptr_;
+  X *old_ptr = this->ptr_;
   this->counter_ = COUNTER::create_strong ();
   this->ptr_ = p;
   if (COUNTER::detach_strong (old_counter) == 0)
     delete old_ptr;
 }
-
-#if !defined (ACE_HAS_CPP11)
-template<class X, class ACE_LOCK> inline void
-ACE_Strong_Bound_Ptr<X, ACE_LOCK>::reset (auto_ptr<X> p)
-{
-  COUNTER *old_counter = this->counter_;
-  X_t *old_ptr = this->ptr_;
-  this->counter_ = COUNTER::create_strong ();
-  this->ptr_ = p.release ();
-  if (COUNTER::detach_strong (old_counter) == 0)
-    delete old_ptr;
-}
-#endif /* !ACE_HAS_CPP11 */
 
 template <class X, class ACE_LOCK> inline
 ACE_Weak_Bound_Ptr<X, ACE_LOCK>::ACE_Weak_Bound_Ptr (X *p)
@@ -340,7 +300,7 @@ ACE_Weak_Bound_Ptr<X, ACE_LOCK>::ACE_Weak_Bound_Ptr (const ACE_Strong_Bound_Ptr<
 }
 
 template <class X, class ACE_LOCK> inline
-ACE_Weak_Bound_Ptr<X, ACE_LOCK>::~ACE_Weak_Bound_Ptr (void)
+ACE_Weak_Bound_Ptr<X, ACE_LOCK>::~ACE_Weak_Bound_Ptr ()
 {
   COUNTER::detach_weak (this->counter_);
 }
@@ -434,19 +394,19 @@ ACE_Weak_Bound_Ptr<X, ACE_LOCK>::operator!= (X *p) const
 }
 
 template <class X, class ACE_LOCK> inline ACE_Strong_Bound_Ptr<X, ACE_LOCK>
-ACE_Weak_Bound_Ptr<X, ACE_LOCK>::operator-> (void) const
+ACE_Weak_Bound_Ptr<X, ACE_LOCK>::operator-> () const
 {
   return ACE_Strong_Bound_Ptr<X, ACE_LOCK> (*this);
 }
 
 template <class X, class ACE_LOCK> inline ACE_Strong_Bound_Ptr<X, ACE_LOCK>
-ACE_Weak_Bound_Ptr<X, ACE_LOCK>::strong (void) const
+ACE_Weak_Bound_Ptr<X, ACE_LOCK>::strong () const
 {
   return ACE_Strong_Bound_Ptr<X, ACE_LOCK> (*this);
 }
 
 template <class X, class ACE_LOCK> inline X*
-ACE_Weak_Bound_Ptr<X, ACE_LOCK>::unsafe_get (void) const
+ACE_Weak_Bound_Ptr<X, ACE_LOCK>::unsafe_get () const
 {
   // We do not check if the object has been deleted, since this operation
   // is defined to be unsafe!
@@ -454,7 +414,7 @@ ACE_Weak_Bound_Ptr<X, ACE_LOCK>::unsafe_get (void) const
 }
 
 template <class X, class ACE_LOCK> inline bool
-ACE_Weak_Bound_Ptr<X, ACE_LOCK>::null (void) const
+ACE_Weak_Bound_Ptr<X, ACE_LOCK>::null () const
 {
   // A weak pointer must behave as though it is automatically set to null
   // if the underlying object has been deleted.

@@ -69,7 +69,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         }
       else
       {
-
         CORBA::String_var the_string =
           goodday->get_string ();
 

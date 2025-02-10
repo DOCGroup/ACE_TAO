@@ -39,20 +39,20 @@ public:
   TAO_EnumDef_i (TAO_Repository_i *repo);
 
   /// Destructor
-  virtual ~TAO_EnumDef_i (void);
+  virtual ~TAO_EnumDef_i ();
 
   /// Return our definition kind.
-  virtual CORBA::DefinitionKind def_kind (void);
+  virtual CORBA::DefinitionKind def_kind ();
 
   /// From IDLType_i's pure virtual function.
-  virtual CORBA::TypeCode_ptr type (void);
+  virtual CORBA::TypeCode_ptr type ();
 
   /// From IDLType_i's pure virtual function.
-  virtual CORBA::TypeCode_ptr type_i (void);
+  virtual CORBA::TypeCode_ptr type_i ();
 
-  virtual CORBA::EnumMemberSeq *members (void);
+  virtual CORBA::EnumMemberSeq *members ();
 
-  CORBA::EnumMemberSeq *members_i (void);
+  CORBA::EnumMemberSeq *members_i ();
 
   virtual void members (const CORBA::EnumMemberSeq &members);
 

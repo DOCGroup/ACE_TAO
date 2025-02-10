@@ -12,9 +12,9 @@ my $status = 0;
 my $confmod = "";
 
 my $mode = shift (@ARGV);
-if ( $mode =~ /-dynamic/) {
+if ($mode =~ /-dynamic/) {
 }
-elsif  ( $mode =~ /-static/) {
+elsif ($mode =~ /-static/) {
     $confmod = "-static";
 }
 else {

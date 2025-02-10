@@ -7,7 +7,6 @@
 #include "Peer_Router.h"
 
 
-
 // Send the <ACE_Message_Block> to all the peers.  Note that in a
 // "real" application this logic would most likely be more selective,
 // i.e., it would actually do "routing" based on addressing
@@ -68,13 +67,13 @@ Peer_Router_Context::bind_peer (ROUTING_KEY key,
 }
 
 void
-Peer_Router_Context::duplicate (void)
+Peer_Router_Context::duplicate ()
 {
   this->reference_count_++;
 }
 
 void
-Peer_Router_Context::release (void)
+Peer_Router_Context::release ()
 {
   ACE_ASSERT (this->reference_count_ > 0);
   this->reference_count_--;
@@ -117,7 +116,7 @@ Peer_Router_Context::Peer_Router_Context (u_short port)
     }
 }
 
-Peer_Router_Context::~Peer_Router_Context (void)
+Peer_Router_Context::~Peer_Router_Context ()
 {
   // Free up the handle and close down the listening socket.
   ACE_DEBUG ((LM_DEBUG,
@@ -152,7 +151,7 @@ Peer_Router_Context::~Peer_Router_Context (void)
 }
 
 Peer_Router *
-Peer_Router_Context::peer_router (void)
+Peer_Router_Context::peer_router ()
 {
   return this->peer_router_;
 }
@@ -342,7 +341,7 @@ Peer_Router::Peer_Router (Peer_Router_Context *prc)
 }
 
 Peer_Router_Context *
-Peer_Router::context (void) const
+Peer_Router::context () const
 {
   return this->peer_router_context_;
 }
@@ -377,7 +376,7 @@ Peer_Router::control (ACE_Message_Block *mb)
 // Supplier_Router level in order to get the right level of control
 // for input and output.
 
-Peer_Handler::svc (void)
+Peer_Handler::svc ()
 {
   ACE_Message_Block *db, *hb;
 

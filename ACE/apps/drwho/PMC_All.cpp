@@ -87,13 +87,13 @@ PMC_All::insert_protocol_info (Protocol_Record &protocol_record)
 }
 
 void
-PMC_All::process (void)
+PMC_All::process ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "remote users logged on\n"));
   PM_Client::process ();
 }
 
-PMC_All::PMC_All (void)
+PMC_All::PMC_All ()
 {
 }

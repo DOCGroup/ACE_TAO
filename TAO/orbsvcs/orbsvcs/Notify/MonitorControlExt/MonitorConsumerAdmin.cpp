@@ -51,7 +51,7 @@ private:
   CosNotifyChannelAdmin::AdminID id_;
 };
 
-TAO_MonitorConsumerAdmin::TAO_MonitorConsumerAdmin (void)
+TAO_MonitorConsumerAdmin::TAO_MonitorConsumerAdmin ()
   : stat_name_ (),
     control_name_ (),
     queue_size_ (0),
@@ -59,7 +59,7 @@ TAO_MonitorConsumerAdmin::TAO_MonitorConsumerAdmin (void)
 {
 }
 
-TAO_MonitorConsumerAdmin::~TAO_MonitorConsumerAdmin (void)
+TAO_MonitorConsumerAdmin::~TAO_MonitorConsumerAdmin ()
 {
   this->remove ();
   // The registry also manages this refcount. The pointer itself
@@ -205,7 +205,7 @@ TAO_MonitorConsumerAdmin::count_queue_overflow (
 }
 
 TAO_MonitorEventChannel *
-TAO_MonitorConsumerAdmin::get_ec (void) const
+TAO_MonitorConsumerAdmin::get_ec () const
 {
   TAO_MonitorEventChannel* ec = dynamic_cast<TAO_MonitorEventChannel*> (this->ec_.get ());
   if (ec == 0)
@@ -214,21 +214,21 @@ TAO_MonitorConsumerAdmin::get_ec (void) const
 }
 
 const ACE_CString &
-TAO_MonitorConsumerAdmin::stat_name (void)const
+TAO_MonitorConsumerAdmin::stat_name ()const
 {
   return stat_name_;
 }
 
 
 void
-TAO_MonitorConsumerAdmin::destroy (void)
+TAO_MonitorConsumerAdmin::destroy ()
 {
   this->remove ();
   this->TAO_Notify_ConsumerAdmin::destroy ();
 }
 
 void
-TAO_MonitorConsumerAdmin::remove (void)
+TAO_MonitorConsumerAdmin::remove ()
 {
   // First, make sure we can get down to the real ec type
   TAO_MonitorEventChannel* ec =
@@ -245,7 +245,6 @@ TAO_MonitorConsumerAdmin::remove (void)
 
   // We don't own queue_size_, so we must not delete it
 }
-
 
 
 TAO_END_VERSIONED_NAMESPACE_DECL

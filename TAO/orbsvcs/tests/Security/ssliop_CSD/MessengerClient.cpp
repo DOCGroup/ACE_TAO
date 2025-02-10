@@ -42,24 +42,24 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       return 1;
 
     // Destringify ior
-    CORBA::Object_var obj = orb->string_to_object( ior );
+    CORBA::Object_var obj = orb->string_to_object(ior);
     if (CORBA::is_nil(obj.in())) {
       std::cerr << "Nil Messenger reference" << std::endl;
       return 1;
     }
 
     // Narrow
-    Messenger_var messenger = Messenger::_narrow( obj.in() );
+    Messenger_var messenger = Messenger::_narrow( obj.in());
     if (CORBA::is_nil(messenger.in())) {
       std::cerr << "Argument is not a Messenger reference" << std::endl;
       return 1;
     }
 
     CORBA::String_var message = CORBA::string_dup(
-      "Implementing security policy now!" );
+      "Implementing security policy now!");
     messenger->send_message( "Chief of Security",
                              "New Directive",
-                             message.inout() );
+                             message.inout());
     std::cout << "message was sent" << std::endl;
 
     orb->destroy ();

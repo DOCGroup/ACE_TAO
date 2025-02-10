@@ -20,19 +20,19 @@ class Consumer : public POA_RtecEventComm::PushConsumer
   //   It simply subscribes to one event type.
   //
 public:
-  Consumer (void);
+  Consumer ();
   // Constructor
 
   void connect (RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin);
   // Connect to the Event Channel
 
-  void disconnect (void);
+  void disconnect ();
   // Disconnect from the event channel
 
   // = The RtecEventComm::PushConsumer methods
 
   virtual void push (const RtecEventComm::EventSet& events);
-  virtual void disconnect_push_consumer (void);
+  virtual void disconnect_push_consumer ();
   // The skeleton methods.
 
 private:

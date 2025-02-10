@@ -9,8 +9,8 @@ module Test
 
    interface Foo
    {
-      void op1( in MyStringType s );
-      void op2( in MyOtherStringType s );
+      void op1( in MyStringType s);
+      void op2( in MyOtherStringType s);
    };
 };
 
@@ -22,7 +22,7 @@ module Foo
 
       interface Whatever
       {
-         void someOp( in MyString s );
+         void someOp( in MyString s);
       };
    };
 
@@ -32,7 +32,7 @@ module Foo
 
       interface WhoCares
       {
-         void someOp( in MyString s );
+         void someOp( in MyString s);
       };
    };
 
@@ -42,7 +42,7 @@ module Foo
 
       interface WhoCares
       {
-         void someOp( in MyString s );
+         void someOp( in MyString s);
       };
    };
 };

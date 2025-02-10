@@ -19,7 +19,7 @@ ClientInterceptor (Messenger_var theMessenger,
   this->slot = theSlot;
 }
 
-ClientInterceptor::~ClientInterceptor (void)
+ClientInterceptor::~ClientInterceptor ()
 {
 }
 
@@ -84,7 +84,6 @@ ClientInterceptor::send_request (
   // reset recursion test
   flag <<= 0;
   pic->set_slot(slot,flag);
-
 }
 
 void

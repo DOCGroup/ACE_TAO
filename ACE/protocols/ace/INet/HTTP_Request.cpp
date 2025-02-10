@@ -9,14 +9,12 @@
 #include "ace/INet/INet_Log.h"
 
 
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE
 {
   namespace HTTP
   {
-
     const ACE_CString Request::HTTP_GET      = "GET";
     const ACE_CString Request::HTTP_HEAD     = "HEAD";
     const ACE_CString Request::HTTP_PUT      = "PUT";

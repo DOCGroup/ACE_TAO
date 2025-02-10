@@ -22,7 +22,7 @@ public:
   virtual Test::Timestamp test_method (Test::Timestamp send_time,
                                        Test::number cl_number);
 
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
 private:
   /// Use an ORB reference to convert strings to objects and shutdown

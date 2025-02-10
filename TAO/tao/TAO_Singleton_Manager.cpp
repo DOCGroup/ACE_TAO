@@ -13,7 +13,7 @@
 namespace
 {
   // Singleton instance pointer.
-  TAO_Singleton_Manager * the_instance = 0;
+  TAO_Singleton_Manager * the_instance = nullptr;
 }
 
 #if (defined (ACE_HAS_VERSIONED_NAMESPACE) && ACE_HAS_VERSIONED_NAMESPACE == 1)
@@ -38,9 +38,9 @@ TAO_SINGLETON_MANAGER_CLEANUP_DESTROYER_NAME (void *, void *)
 }
 
 #if (ACE_HAS_GCC_DESTRUCTOR_ATTRIBUTE == 1)
-static void TAO_SINGLETON_MANAGER_FINI_NAME (void) ACE_GCC_DESTRUCTOR_ATTRIBUTE;
+static void TAO_SINGLETON_MANAGER_FINI_NAME () ACE_GCC_DESTRUCTOR_ATTRIBUTE;
 
-void TAO_SINGLETON_MANAGER_FINI_NAME (void)
+void TAO_SINGLETON_MANAGER_FINI_NAME ()
 {
 #if defined (TAO_HAS_VERSIONED_NAMESPACE) \
     && TAO_HAS_VERSIONED_NAMESPACE == 1
@@ -55,13 +55,13 @@ void TAO_SINGLETON_MANAGER_FINI_NAME (void)
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Singleton_Manager::TAO_Singleton_Manager (void)
-  : default_mask_ (0),
-    thread_hook_ (0),
+TAO_Singleton_Manager::TAO_Singleton_Manager ()
+  : default_mask_ (nullptr),
+    thread_hook_ (nullptr),
     exit_info_ (),
     registered_with_object_manager_ (-1)
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-    , internal_lock_ (0)
+    , internal_lock_ (nullptr)
 # endif /* ACE_MT_SAFE */
 {
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
@@ -69,7 +69,7 @@ TAO_Singleton_Manager::TAO_Singleton_Manager (void)
            TAO_SYNCH_RECURSIVE_MUTEX);
 # endif /* ACE_MT_SAFE */
   // Be sure that no further instances are created via instance ().
-  if (the_instance == 0)
+  if (the_instance == nullptr)
     {
       the_instance = this;
     }
@@ -82,25 +82,25 @@ TAO_Singleton_Manager::TAO_Singleton_Manager (void)
   (void) this->init (register_with_object_manager);
 }
 
-TAO_Singleton_Manager::~TAO_Singleton_Manager (void)
+TAO_Singleton_Manager::~TAO_Singleton_Manager ()
 {
   this->dynamically_allocated_ = false;   // Don't delete this again in fini()
   (void) this->fini ();
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   delete this->internal_lock_;
-  this->internal_lock_ = 0;
+  this->internal_lock_ = nullptr;
 #endif /* ACE_MT_SAFE */
 }
 
 sigset_t *
-TAO_Singleton_Manager::default_mask (void)
+TAO_Singleton_Manager::default_mask ()
 {
   return TAO_Singleton_Manager::instance ()->default_mask_;
 }
 
 ACE_Thread_Hook *
-TAO_Singleton_Manager::thread_hook (void)
+TAO_Singleton_Manager::thread_hook ()
 {
   return TAO_Singleton_Manager::instance ()->thread_hook_;
 }
@@ -115,18 +115,18 @@ TAO_Singleton_Manager::thread_hook (ACE_Thread_Hook *new_thread_hook)
 }
 
 TAO_Singleton_Manager *
-TAO_Singleton_Manager::instance (void)
+TAO_Singleton_Manager::instance ()
 {
   // This function should be called during construction of static
   // instances, or before any other threads have been created in the
   // process.  So, it's not thread safe.
-  if (the_instance == 0)
+  if (the_instance == nullptr)
     {
-      TAO_Singleton_Manager *instance_pointer = 0;
+      TAO_Singleton_Manager *instance_pointer = nullptr;
 
       ACE_NEW_RETURN (instance_pointer,
                       TAO_Singleton_Manager,
-                      0);
+                      nullptr);
       ACE_ASSERT (instance_pointer == the_instance);
 
       instance_pointer->dynamically_allocated_ = true;
@@ -140,7 +140,7 @@ TAO_Singleton_Manager::instance (void)
 }
 
 int
-TAO_Singleton_Manager::init (void)
+TAO_Singleton_Manager::init ()
 {
   if (this->registered_with_object_manager_ == -1)
     {
@@ -203,7 +203,7 @@ TAO_Singleton_Manager::init (int register_with_object_manager)
           && ACE_Object_Manager::at_exit (
                this,
                (ACE_CLEANUP_FUNC) TAO_SINGLETON_MANAGER_CLEANUP_DESTROYER_NAME,
-               0,
+               nullptr,
                typeid (*this).name ()) != 0)
         return -1;
 
@@ -219,9 +219,9 @@ TAO_Singleton_Manager::init (int register_with_object_manager)
 // reason.  All objects clean up their per-object information and managed
 // objects, but only The Instance cleans up the static preallocated objects.
 int
-TAO_Singleton_Manager::fini (void)
+TAO_Singleton_Manager::fini ()
 {
-  if (the_instance == 0  ||  this->shutting_down_i ())
+  if (the_instance == nullptr  ||  this->shutting_down_i ())
     {
       // Too late.  Or, maybe too early.  Either fini () has already
       // been called, or init () was never called.
@@ -240,7 +240,7 @@ TAO_Singleton_Manager::fini (void)
   if (this->next_)
     {
       this->next_->fini ();
-      this->next_ = 0;  // Protect against recursive calls.
+      this->next_ = nullptr;  // Protect against recursive calls.
     }
 
   // Call all registered cleanup hooks, in reverse order of
@@ -254,13 +254,13 @@ TAO_Singleton_Manager::fini (void)
     }
 
   delete this->default_mask_;
-  this->default_mask_ = 0;
+  this->default_mask_ = nullptr;
 
   // Indicate that this TAO_Singleton_Manager instance has been shut down.
   this->object_manager_state_ = OBJ_MAN_SHUT_DOWN;
 
   if (this == the_instance)
-    the_instance = 0;
+    the_instance = nullptr;
 
   if (this->dynamically_allocated_)
     {
@@ -271,7 +271,7 @@ TAO_Singleton_Manager::fini (void)
 }
 
 int
-TAO_Singleton_Manager::starting_up (void)
+TAO_Singleton_Manager::starting_up ()
 {
   return
     the_instance
@@ -280,7 +280,7 @@ TAO_Singleton_Manager::starting_up (void)
 }
 
 int
-TAO_Singleton_Manager::shutting_down (void)
+TAO_Singleton_Manager::shutting_down ()
 {
   return
     the_instance

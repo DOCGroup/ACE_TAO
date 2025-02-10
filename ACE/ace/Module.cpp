@@ -22,7 +22,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_ALLOC_HOOK_DEFINE_Tyc(ACE_Module)
 
 template <ACE_SYNCH_DECL, class TIME_POLICY> void
-ACE_Module<ACE_SYNCH_USE, TIME_POLICY>::dump (void) const
+ACE_Module<ACE_SYNCH_USE, TIME_POLICY>::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Module<ACE_SYNCH_USE, TIME_POLICY>::dump");
@@ -159,7 +159,7 @@ ACE_Module<ACE_SYNCH_USE, TIME_POLICY>::sibling (ACE_Task<ACE_SYNCH_USE, TIME_PO
 }
 
 template <ACE_SYNCH_DECL, class TIME_POLICY>
-ACE_Module<ACE_SYNCH_USE, TIME_POLICY>::ACE_Module (void)
+ACE_Module<ACE_SYNCH_USE, TIME_POLICY>::ACE_Module ()
   : next_ (0)
   , arg_ (0)
   , flags_ (M_FLAGS_NOT_SET)
@@ -172,7 +172,7 @@ ACE_Module<ACE_SYNCH_USE, TIME_POLICY>::ACE_Module (void)
 }
 
 template <ACE_SYNCH_DECL, class TIME_POLICY>
-ACE_Module<ACE_SYNCH_USE, TIME_POLICY>::~ACE_Module (void)
+ACE_Module<ACE_SYNCH_USE, TIME_POLICY>::~ACE_Module ()
 {
   ACE_TRACE ("ACE_Module<ACE_SYNCH_USE, TIME_POLICY>::~ACE_Module");
 

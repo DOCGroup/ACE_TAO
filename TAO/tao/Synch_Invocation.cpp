@@ -20,7 +20,7 @@
 # include "tao/PortableInterceptorC.h"
 #endif /*TAO_HAS_INTERCEPTORS */
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/OS_NS_string.h"
 #include "tao/ORB_Time_Policy.h"
 
@@ -35,32 +35,27 @@ namespace
   int
   excep_for_type (const char *tid)
   {
-    if (ACE_OS_String::strcmp (tid, "IDL:omg.org/CORBA/TRANSIENT:1.0") == 0)
+    if (ACE_OS::strcmp (tid, "IDL:omg.org/CORBA/TRANSIENT:1.0") == 0)
       {
         return TAO::FOE_TRANSIENT;
       }
-    else if (ACE_OS_String::strcmp (tid,
-                                    "IDL:omg.org/CORBA/COMM_FAILURE:1.0") == 0)
+    else if (ACE_OS::strcmp (tid, "IDL:omg.org/CORBA/COMM_FAILURE:1.0") == 0)
       {
         return TAO::FOE_COMM_FAILURE;
       }
-    else if (ACE_OS_String::strcmp (tid,
-                                    "IDL:omg.org/CORBA/OBJECT_NOT_EXIST:1.0") == 0)
+    else if (ACE_OS::strcmp (tid, "IDL:omg.org/CORBA/OBJECT_NOT_EXIST:1.0") == 0)
       {
         return TAO::FOE_OBJECT_NOT_EXIST;
       }
-    else if (ACE_OS_String::strcmp (tid,
-                                    "IDL:omg.org/CORBA/INV_OBJREF:1.0") == 0)
+    else if (ACE_OS::strcmp (tid, "IDL:omg.org/CORBA/INV_OBJREF:1.0") == 0)
       {
         return TAO::FOE_INV_OBJREF;
       }
-    else if (ACE_OS_String::strcmp (tid,
-                                    "IDL:omg.org/CORBA/OBJ_ADAPTER:1.0") == 0)
+    else if (ACE_OS::strcmp (tid, "IDL:omg.org/CORBA/OBJ_ADAPTER:1.0") == 0)
       {
         return TAO::FOE_OBJ_ADAPTER;
       }
-    else if (ACE_OS_String::strcmp (tid,
-                                    "IDL:omg.org/CORBA/NO_RESPONSE:1.0") == 0)
+    else if (ACE_OS::strcmp (tid, "IDL:omg.org/CORBA/NO_RESPONSE:1.0") == 0)
       {
         return TAO::FOE_NO_RESPONSE;
       }
@@ -80,7 +75,7 @@ namespace TAO
                          resolver,
                          detail,
                          response_expected)
-    , retry_state_ (0)
+    , retry_state_ (nullptr)
   {
   }
 
@@ -95,9 +90,9 @@ namespace TAO
   {
     TAO::ORB_Countdown_Time countdown (max_wait_time);
 
-    TAO_Synch_Reply_Dispatcher *rd_p = 0;
-    ACE_NEW_NORETURN (rd_p, TAO_Synch_Reply_Dispatcher (this->resolver_.stub ()->orb_core (),
-                                          this->details_.reply_service_info ()));
+    TAO_Synch_Reply_Dispatcher *rd_p =
+      new (std::nothrow) TAO_Synch_Reply_Dispatcher (this->resolver_.stub ()->orb_core (),
+                                                     this->details_.reply_service_info ());
     if (!rd_p)
       {
         throw ::CORBA::NO_MEMORY ();
@@ -399,11 +394,10 @@ namespace TAO
                   this->stub()->orb_core ()->service_raise_comm_failure (
                     this->details_.request_service_context ().service_info (),
                     this->resolver_.profile ());
-
               }
             catch (const ::CORBA::Exception&)
               {
-                if (this->retry_state_ == 0 ||
+                if (this->retry_state_ == nullptr ||
                     !this->retry_state_->forward_on_exception_limit_used ())
                   {
                     this->resolver_.stub ()->reset_profiles ();
@@ -431,7 +425,7 @@ namespace TAO
     TAO_InputCDR &cdr = rd.reply_cdr ();
 
     // Set the translators
-    this->resolver_.transport ()->assign_translators (&cdr, 0);
+    this->resolver_.transport ()->assign_translators (&cdr, nullptr);
 
     // At this point it can be assumed that the GIOP/whatever protocol
     // header and the reply header are already handled.  Further it
@@ -585,11 +579,7 @@ namespace TAO
 
     // We must manage the memory allocated
     // by the call above to alloc().
-#if defined (ACE_HAS_CPP11)
     std::unique_ptr<CORBA::Exception> safety (exception);
-#else
-    auto_ptr<CORBA::Exception> safety (exception);
-#endif /* ACE_HAS_CPP11 */
 
     exception->_raise ();
 
@@ -640,8 +630,8 @@ namespace TAO
       }
     else
       {
-        int foe_kind = orb_params->forward_once_exception();
-        int ex_id = excep_for_type (type_id.in ());
+        int const foe_kind = orb_params->forward_once_exception();
+        int const ex_id = excep_for_type (type_id.in ());
 
         // this logic is a little confusing but prior to  Jul 24 2009, TRANSIENT,
         // OBJ_ADAPTER, NO_RESPONSE, and COMM_FAILURE were always retried if possible.
@@ -723,7 +713,7 @@ namespace TAO
 
     CORBA::SystemException *ex = TAO::create_system_exception (type_id.in ());
 
-    if (ex == 0)
+    if (ex == nullptr)
       {
         // @@ We should raise a CORBA::NO_MEMORY, but we ran out
         //    of memory already. We need a pre-allocated, TSS,
@@ -736,11 +726,7 @@ namespace TAO
     // Without this, the call to create_system_exception() above
     // causes a memory leak. On platforms without native exceptions,
     // the CORBA::Environment class manages the memory.
-#if defined (ACE_HAS_CPP11)
     std::unique_ptr<CORBA::SystemException> safety (ex);
-#else
-    auto_ptr<CORBA::SystemException> safety (ex);
-#endif /* ACE_HAS_CPP11 */
 
     ex->minor (minor);
     ex->completed (CORBA::CompletionStatus (completion));

@@ -38,18 +38,13 @@
 #include "ace/OS_NS_unistd.h"
 
 
-
 const ACE_TCHAR usage[] = ACE_TEXT ("usage: Message_Queue_Test <number of messages>\n");
 
-typedef ACE_Message_Queue<ACE_NULL_SYNCH> QUEUE;
-typedef ACE_Message_Queue_Iterator<ACE_NULL_SYNCH> ITERATOR;
-typedef ACE_Message_Queue_Reverse_Iterator<ACE_NULL_SYNCH> REVERSE_ITERATOR;
+using QUEUE = ACE_Message_Queue<ACE_NULL_SYNCH>;
+using ITERATOR = ACE_Message_Queue_Iterator<ACE_NULL_SYNCH>;
+using REVERSE_ITERATOR = ACE_Message_Queue_Reverse_Iterator<ACE_NULL_SYNCH>;
 
-#if defined (ACE_HAS_WINCE)
-static const int MESSAGE_FACTOR = 10000;
-#else
 static const int MESSAGE_FACTOR = 100000;
-#endif
 static const int MAX_MESSAGES = 10000;
 static const int MAX_MESSAGE_SIZE = 32;
 static const char test_message[] = "ACE_Message_Queue Test Message";
@@ -60,7 +55,7 @@ static int max_messages = MAX_MESSAGES;
 static ACE_High_Res_Timer *timer = 0;
 
 #if defined (ACE_HAS_THREADS)
-typedef ACE_Message_Queue<ACE_MT_SYNCH> SYNCH_QUEUE;
+using SYNCH_QUEUE = ACE_Message_Queue<ACE_MT_SYNCH>;
 
 struct Queue_Wrapper
 {
@@ -77,7 +72,7 @@ struct Queue_Wrapper
   ACE_Message_Block **send_block_;
   // Pointer to messages blocks for sender to send to reciever.
 
-  Queue_Wrapper (void)
+  Queue_Wrapper ()
     : q_ (0), send_block_ (0)
   {
   }
@@ -91,7 +86,7 @@ class Counting_Test_Producer : public ACE_Task<ACE_MT_SYNCH>
 public:
   Counting_Test_Producer (ACE_Message_Queue<ACE_MT_SYNCH> *queue)
     : ACE_Task<ACE_MT_SYNCH> (0, queue), sequence_ (0), produced_ (0) {}
-  virtual int svc (void);
+  int svc () override;
 
   ACE_Atomic_Op<ACE_Thread_Mutex, long> sequence_;
   ACE_Atomic_Op<ACE_Thread_Mutex, long> produced_;
@@ -102,13 +97,13 @@ class Counting_Test_Consumer : public ACE_Task<ACE_MT_SYNCH>
 public:
   Counting_Test_Consumer (ACE_Message_Queue<ACE_MT_SYNCH> *queue)
     : ACE_Task<ACE_MT_SYNCH> (0, queue), consumed_ (0) {}
-  virtual int svc (void);
+  int svc () override;
 
   ACE_Atomic_Op<ACE_Thread_Mutex, long> consumed_;
 };
 
 int
-Counting_Test_Producer::svc (void)
+Counting_Test_Producer::svc ()
 {
   // Going to produce a lot of blocks. Since we don't necessarily want them
   // all consumed, there's no arrangement with the consumer to be sure that
@@ -200,7 +195,7 @@ Counting_Test_Producer::svc (void)
 }
 
 int
-Counting_Test_Consumer::svc (void)
+Counting_Test_Consumer::svc ()
 {
   // Consume lots of blocks and release them. To mimic a thread with work
   // to do, put a small random delay between dequeuing the blocks. Consume
@@ -252,7 +247,7 @@ Counting_Test_Consumer::svc (void)
 }
 
 static int
-counting_test (void)
+counting_test ()
 {
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Starting counting test\n")));
 
@@ -314,7 +309,7 @@ counting_test (void)
 #endif /* ACE_HAS_THREADS */
 
 static int
-iterator_test (void)
+iterator_test ()
 {
   const int ITERATIONS = 5;
   ACE_TCHAR buffer[ITERATIONS][BUFSIZ];
@@ -407,9 +402,8 @@ iterator_test (void)
 #if defined (ACE_HAS_THREADS)
 
 static int
-chained_block_test (void)
+chained_block_test ()
 {
-
   QUEUE q;
   const char * s = "123456789";      // Will be length 10 when copied to block
   const size_t slen = 10;
@@ -768,7 +762,7 @@ performance_test (int queue_type = 0)
 // Ensure that the timedout dequeue_head() sets errno code properly.
 
 static int
-timeout_test (void)
+timeout_test ()
 {
   SYNCH_QUEUE mq;
   int status = 0;
@@ -814,7 +808,7 @@ timeout_test (void)
 // thorough check...
 
 static int
-prio_test (void)
+prio_test ()
 {
   const char S1[] = "first";
   const char S2[] = "second";
@@ -838,8 +832,8 @@ prio_test (void)
               mb1p->rd_ptr (),
               mb2p->rd_ptr ()));
 
-  if (ACE_OS_String::strcmp (mb1p->rd_ptr (), S1) == 0
-      && ACE_OS_String::strcmp (mb2p->rd_ptr (), S2) == 0)
+  if (ACE_OS::strcmp (mb1p->rd_ptr (), S1) == 0
+      && ACE_OS::strcmp (mb2p->rd_ptr (), S2) == 0)
     status = 0;
   else
     status = 1;
@@ -848,7 +842,7 @@ prio_test (void)
 }
 
 static int
-close_test (void)
+close_test ()
 {
   int status = 0;
 
@@ -957,7 +951,6 @@ run_main (int argc, ACE_TCHAR *argv[])
                 ACE_TEXT ("test failed")));
   delete timer;
   timer = 0;
-
 
 
   ACE_END_TEST;

@@ -12,7 +12,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_DynamicAny_Loader::TAO_DynamicAny_Loader (void)
+TAO_DynamicAny_Loader::TAO_DynamicAny_Loader ()
 {
 }
 
@@ -29,7 +29,7 @@ TAO_DynamicAny_Loader::create_object (CORBA::ORB_ptr,
 }
 
 int
-TAO_DynamicAny_Loader::Initializer (void)
+TAO_DynamicAny_Loader::Initializer ()
 {
   return ACE_Service_Config::process_directive (ace_svc_desc_TAO_DynamicAny_Loader);
 }

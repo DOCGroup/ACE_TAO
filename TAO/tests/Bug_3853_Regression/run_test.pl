@@ -13,8 +13,8 @@ my $server1 = PerlACE::TestTarget::create_target (1) || die "Create target 1 fai
 my $server2 = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
 my $client = PerlACE::TestTarget::create_target (3) || die "Create target 2 failed\n";
 
-$port1 = PerlACE::uniqueid () + 10001;  # This can't be 10000 for Chorus 4.0
-$port2 = PerlACE::uniqueid () + 10002;  # This can't be 10000 for Chorus 4.0
+$port1 = PerlACE::uniqueid () + 10001;
+$port2 = PerlACE::uniqueid () + 10002;
 
 my $iorbase1 = "server1.ior";
 my $iorbase2 = "server2.ior";

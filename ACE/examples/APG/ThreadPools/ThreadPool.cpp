@@ -17,7 +17,7 @@ class Worker;
 class IManager
 {
 public:
-  virtual ~IManager (void) { }
+  virtual ~IManager () { }
 
   virtual int return_to_work (Worker *worker) = 0;
 };
@@ -28,7 +28,7 @@ class Worker : public ACE_Task<ACE_MT_SYNCH>
 public:
   Worker (IManager *manager) : manager_(manager) { }
 
-  virtual int svc (void)
+  virtual int svc ()
   {
     ACE_Thread_ID id;
     thread_id_ = id;
@@ -55,7 +55,7 @@ public:
   }
   // Listing 2
 
-  const ACE_Thread_ID& thread_id (void)
+  const ACE_Thread_ID& thread_id ()
   {
     return this->thread_id_;
   }
@@ -93,7 +93,7 @@ public:
     ACE_TRACE ("Manager::Manager");
   }
 
-  int svc (void)
+  int svc ()
   {
     ACE_TRACE ("Manager::svc");
 
@@ -134,7 +134,7 @@ public:
     return 0;
   }
 
-  int shut_down (void);
+  int shut_down ();
 
   const ACE_Thread_ID& thread_id (Worker *worker);
 
@@ -151,7 +151,7 @@ public:
   }
 
 private:
-  int create_worker_pool (void)
+  int create_worker_pool ()
   {
     ACE_GUARD_RETURN (ACE_Thread_Mutex,
                       worker_mon,
@@ -168,7 +168,7 @@ private:
     return 0;
   }
 
-  int done (void);
+  int done ();
 
 private:
   int shutdown_;
@@ -178,13 +178,13 @@ private:
 };
 // Listing 1
 
-int Manager::done (void)
+int Manager::done ()
 {
   return (shutdown_ == 1);
 }
 
 int
-Manager::shut_down (void)
+Manager::shut_down ()
 {
   ACE_TRACE ("Manager::shut_down");
   ACE_Unbounded_Queue<Worker* >::ITERATOR iter =

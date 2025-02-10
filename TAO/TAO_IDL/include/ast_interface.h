@@ -1,4 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
 /*
 
 COPYRIGHT
@@ -85,7 +84,7 @@ public:
                  bool local,
                  bool abstract);
 
-  virtual ~AST_Interface (void);
+  virtual ~AST_Interface ();
 
   // This serves for interfaces, value types, components, and eventtypes.
   static void fwd_redefinition_helper (AST_Interface *&i,
@@ -94,16 +93,16 @@ public:
   // Overridden for valuetypes, components, and eventtypes.
   virtual void redefine (AST_Interface *from);
 
-  AST_Type **inherits (void) const;
+  AST_Type **inherits () const;
 
-  long n_inherits (void) const;
+  long n_inherits () const;
 
-  AST_Interface **inherits_flat (void) const;
+  AST_Interface **inherits_flat () const;
 
-  long n_inherits_flat (void) const;
+  long n_inherits_flat () const;
 
-  ACE_Unbounded_Queue<AST_Type *> &get_insert_queue (void);
-  ACE_Unbounded_Queue<AST_Type *> &get_del_queue (void);
+  ACE_Unbounded_Queue<AST_Type *> &get_insert_queue ();
+  ACE_Unbounded_Queue<AST_Type *> &get_del_queue ();
 
   AST_Operation *be_add_operation (AST_Operation *);
 
@@ -113,18 +112,18 @@ public:
   // Is this interface defined? This predicate returns FALSE when an
   // interface was forward declared but not defined yet, and TRUE in
   // all other cases.
-  bool is_defined (void);
+  bool is_defined ();
 
   // Check if we have redefined any of our parents' operations or attributes,
   // and check if there is such a clash among the parents
-  bool redef_clash (void);
+  bool redef_clash ();
 
   // Accessors for the member.
-  bool home_equiv (void) const;
+  bool home_equiv () const;
   void home_equiv (bool val);
 
   // Accessors for the member.
-  AST_InterfaceFwd *fwd_decl (void) const;
+  AST_InterfaceFwd *fwd_decl () const;
   void fwd_decl (AST_InterfaceFwd *node);
 
   // Look through inherited interfaces.
@@ -135,34 +134,29 @@ public:
                                      bool full_def_only = false);
 
   /// Do we have both abstract and concrete parents?
-  int has_mixed_parentage (void);
+  int has_mixed_parentage ();
 
   /// Compute whether or not we have both abstract and concrete parents,
   /// and make a list of the abstract parents, if any.
-  void analyze_parentage (void);
+  void analyze_parentage ();
 
   // Recursively called on valuetype to check for legal use as
   // a primary key. Overridden for valuetype, struct, sequence,
   // union, array, typedef, and interface.
-  virtual bool legal_for_primary_key (void) const;
+  virtual bool legal_for_primary_key () const;
 
   virtual AST_Decl *special_lookup (UTL_ScopedName *e,
                                     bool full_def_only,
                                     AST_Decl *&final_parent_decl);
 
   /// Accessors for the members.
-  AST_Interface *ami_handler (void) const;
+  AST_Interface *ami_handler () const;
   void ami_handler (AST_Interface *handler);
-  AST_Interface *ami4ccm_uses (void) const;
+  AST_Interface *ami4ccm_uses () const;
   void ami4ccm_uses (AST_Interface *implied);
 
   // Cleanup function.
-  virtual void destroy (void);
-
-  // Narrowing.
-
-  DEF_NARROW_FROM_DECL(AST_Interface);
-  DEF_NARROW_FROM_SCOPE(AST_Interface);
+  virtual void destroy ();
 
   // AST Dumping.
   virtual void dump (ACE_OSTREAM_TYPE &o);
@@ -172,6 +166,8 @@ public:
 
   static AST_Decl::NodeType const NT;
   typedef AST_InterfaceFwd FWD_TYPE;
+
+  virtual bool annotatable () const;
 
 protected:
   // Data.

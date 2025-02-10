@@ -11,7 +11,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Notify_ThreadPool_Task::TAO_Notify_ThreadPool_Task (void)
+TAO_Notify_ThreadPool_Task::TAO_Notify_ThreadPool_Task ()
 : shutdown_ (false)
 {
 }
@@ -27,13 +27,13 @@ TAO_Notify_ThreadPool_Task::init (int argc, ACE_TCHAR **argv)
 }
 
 TAO_Notify_Timer*
-TAO_Notify_ThreadPool_Task::timer (void)
+TAO_Notify_ThreadPool_Task::timer ()
 {
   return this->timer_.get();
 }
 
 TAO_Notify_Buffering_Strategy*
-TAO_Notify_ThreadPool_Task::buffering_strategy (void)
+TAO_Notify_ThreadPool_Task::buffering_strategy ()
 {
   return this->buffering_strategy_.get ();
 }
@@ -116,7 +116,7 @@ TAO_Notify_ThreadPool_Task::execute (TAO_Notify_Method_Request& method_request)
 }
 
 int
-TAO_Notify_ThreadPool_Task::svc (void)
+TAO_Notify_ThreadPool_Task::svc ()
 {
   TAO_Notify_Method_Request_Queueable* method_request = 0;
 
@@ -163,7 +163,7 @@ TAO_Notify_ThreadPool_Task::svc (void)
 }
 
 void
-TAO_Notify_ThreadPool_Task::shutdown (void)
+TAO_Notify_ThreadPool_Task::shutdown ()
 {
   if (this->shutdown_)
     {
@@ -176,7 +176,7 @@ TAO_Notify_ThreadPool_Task::shutdown (void)
 }
 
 void
-TAO_Notify_ThreadPool_Task::release (void)
+TAO_Notify_ThreadPool_Task::release ()
 {
   delete this;
 }

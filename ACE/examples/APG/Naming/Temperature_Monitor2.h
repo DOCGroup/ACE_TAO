@@ -16,12 +16,12 @@ public:
           shared_context_(shared_context)
     { }
 
-  void monitor (void);
+  void monitor ();
 
 protected:
   void record_temperature (float temp);
   void record_history (float temp);
-  void record_failure (void);
+  void record_failure ();
   void reset_device (Name_Binding_Ptr & resetCount);
 
 private:

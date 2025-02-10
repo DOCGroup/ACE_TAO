@@ -1,5 +1,3 @@
-
-
 Description:
 This is a simple test for a RT thread-pool server.  It creates a
 server process with multiple thread pools, POAs, and servants.  The

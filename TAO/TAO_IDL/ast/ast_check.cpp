@@ -71,7 +71,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_scope.h"
 
 // Static storage for remembering nodes.
-static AST_Type  **ast_fwds = 0;
+static AST_Type  **ast_fwds = nullptr;
 static long  ast_n_fwds_used = 0;
 static long  ast_n_fwds_alloc = 0;
 
@@ -82,7 +82,7 @@ static long  ast_n_fwds_alloc = 0;
 void
 AST_record_fwd_decl (AST_Type *n)
 {
-  AST_Type **o_ast_fwds = 0;
+  AST_Type **o_ast_fwds = nullptr;
   long o_ast_n_fwds_alloc = 0;
 
   // Make sure there's space to store one more.
@@ -118,9 +118,9 @@ AST_record_fwd_decl (AST_Type *n)
 
 // Check that all forward declared structs and unions were also defined.
 TAO_IDL_FE_Export void
-AST_check_fwd_decls (void)
+AST_check_fwd_decls ()
 {
-  AST_Type *d = 0;
+  AST_Type *d = nullptr;
 
   for (long i = 0; i < ast_n_fwds_used; ++i)
     {
@@ -137,7 +137,7 @@ AST_check_fwd_decls (void)
             d->defined_in ()->lookup_by_name_local (d->local_name (),
                                                     true);
 
-          if (f == 0)
+          if (f == nullptr)
             {
               idl_global->err ()->fwd_decl_not_defined (d);
             }
@@ -148,7 +148,7 @@ AST_check_fwd_decls (void)
   // in between which the elements of ast_fwds are destroyed,
   // so we have to clean up.
   delete [] ast_fwds;
-  ast_fwds = 0;
+  ast_fwds = nullptr;
   ast_n_fwds_alloc = 0;
   ast_n_fwds_used = 0;
 }

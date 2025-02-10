@@ -14,7 +14,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 //TAO_AV_UDP_MCast_Flow_Handler
 //------------------------------------------------------------
 
-TAO_AV_UDP_MCast_Flow_Handler::TAO_AV_UDP_MCast_Flow_Handler (void)
+TAO_AV_UDP_MCast_Flow_Handler::TAO_AV_UDP_MCast_Flow_Handler ()
 {
   ACE_NEW (transport_,
            TAO_AV_UDP_MCast_Transport (this));
@@ -22,7 +22,7 @@ TAO_AV_UDP_MCast_Flow_Handler::TAO_AV_UDP_MCast_Flow_Handler (void)
            ACE_SOCK_Dgram_Mcast);
 }
 
-TAO_AV_UDP_MCast_Flow_Handler::~TAO_AV_UDP_MCast_Flow_Handler (void)
+TAO_AV_UDP_MCast_Flow_Handler::~TAO_AV_UDP_MCast_Flow_Handler ()
 {
   delete this->transport_;
   delete this->dgram_mcast_;
@@ -44,7 +44,7 @@ TAO_AV_UDP_MCast_Flow_Handler::handle_timeout (const ACE_Time_Value &tv,
 }
 
 ACE_HANDLE
-TAO_AV_UDP_MCast_Flow_Handler::get_handle (void) const
+TAO_AV_UDP_MCast_Flow_Handler::get_handle () const
 {
   if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"TAO_AV_UDP_MCast_Flow_Handler::get_handle "));
   return this->get_mcast_socket ()->get_handle () ;
@@ -60,7 +60,7 @@ TAO_AV_UDP_MCast_Flow_Handler::set_peer_addr (ACE_INET_Addr *peer_addr)
 // TAO_AV_UDP_MCast_Transport
 //------------------------------------------------------------
 
-TAO_AV_UDP_MCast_Transport::TAO_AV_UDP_MCast_Transport (void)
+TAO_AV_UDP_MCast_Transport::TAO_AV_UDP_MCast_Transport ()
   :handler_ (0)
 {
 }
@@ -70,7 +70,7 @@ TAO_AV_UDP_MCast_Transport::TAO_AV_UDP_MCast_Transport (TAO_AV_UDP_MCast_Flow_Ha
 {
 }
 
-TAO_AV_UDP_MCast_Transport::~TAO_AV_UDP_MCast_Transport (void)
+TAO_AV_UDP_MCast_Transport::~TAO_AV_UDP_MCast_Transport ()
 {
 }
 
@@ -81,20 +81,20 @@ TAO_AV_UDP_MCast_Transport::open (ACE_Addr * /*address*/)
 }
 
 int
-TAO_AV_UDP_MCast_Transport::close (void)
+TAO_AV_UDP_MCast_Transport::close ()
 {
   return 0;
 }
 
 
 ACE_Addr*
-TAO_AV_UDP_MCast_Transport::get_peer_addr (void)
+TAO_AV_UDP_MCast_Transport::get_peer_addr ()
 {
   return &this->peer_addr_;
 }
 
 ACE_Addr*
-TAO_AV_UDP_MCast_Transport::get_local_addr (void)
+TAO_AV_UDP_MCast_Transport::get_local_addr ()
 {
   this->handler_->get_mcast_socket ()->get_local_addr (this->local_addr_);
   return &this->local_addr_;
@@ -167,7 +167,6 @@ TAO_AV_UDP_MCast_Transport::send (const char *buf,
 //   if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"to %s\n",addr));
 
   return this->handler_->get_mcast_socket ()->send (buf, len);
-
 }
 
 ssize_t
@@ -178,11 +177,10 @@ TAO_AV_UDP_MCast_Transport::send (const iovec *iov,
   return this->handler_->get_mcast_socket ()->send (iov,
                                                     iovcnt,
                                                     0);
-
 }
 
 int
-TAO_AV_UDP_MCast_Transport::mtu (void)
+TAO_AV_UDP_MCast_Transport::mtu ()
 {
   return ACE_MAX_DGRAM_SIZE;
 }

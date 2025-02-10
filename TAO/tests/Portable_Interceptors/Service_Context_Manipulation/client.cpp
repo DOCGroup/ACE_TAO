@@ -35,7 +35,6 @@ parse_args (int argc, ACE_TCHAR *argv[])
 void
 run_test (Test_Interceptors::Visual_ptr server)
 {
-
   server->normal (10);
 
   ACE_DEBUG ((LM_DEBUG, "\"normal\" operation done\n"));

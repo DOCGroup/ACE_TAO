@@ -14,8 +14,8 @@ class Receiver : public ACE_Service_Handler
   //     connections arrive.  This class will then receive data from
   //     the network connection and dump it to a file.
 public:
-  Receiver (void);
-  ~Receiver (void);
+  Receiver ();
+  ~Receiver ();
 
   virtual void open (ACE_HANDLE handle,
                      ACE_Message_Block &message_block);
@@ -33,7 +33,7 @@ protected:
   // completes.
 
 private:
-  int initiate_read_stream (void);
+  int initiate_read_stream ();
   // Initiate an asynchronous <read> operation on the socket.
 
   ACE_Asynch_Read_Stream rs_;

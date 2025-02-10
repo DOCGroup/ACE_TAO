@@ -17,14 +17,14 @@ class Server : public ACE_Task_Base
   //   Use the ACE_Task_Base class to run the server threads.
   //
 public:
-  Server (void);
+  Server ();
   // ctor
 
   void set (Test_i *server, int priority, int argc, ACE_TCHAR *argv[]);
   // Set the test attributes.
 
   // = The ACE_Task_Base methods....
-  virtual int svc (void);
+  virtual int svc ();
 
 private:
   Test_i *server_;
@@ -86,7 +86,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   int priority =
     ACE_Sched_Params::priority_max (policy);
 
-  // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
+  // Enable FIFO scheduling
   if (ACE_OS::sched_params (ACE_Sched_Params (policy,
                                               priority,
                                               ACE_SCOPE_PROCESS)) != 0)
@@ -168,7 +168,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
 // ****************************************************************
 
-Server::Server (void)
+Server::Server ()
 {
 }
 
@@ -186,7 +186,7 @@ Server::set (Test_i *server,
 }
 
 int
-Server::svc (void)
+Server::svc ()
 {
   ACE_hthread_t current;
   ACE_Thread::self (current);
@@ -253,7 +253,6 @@ Server::svc (void)
       poa_manager->activate ();
 
       orb->run ();
-
     }
   catch (const CORBA::Exception& ex)
     {

@@ -1,6 +1,5 @@
 //
-// Define struct used in test_position_independent_malloc.cpp - needs
-// to be in a separate file for template generation on AIX IBM C++.
+// Define struct used in test_position_independent_malloc.cpp
 
 #ifndef __TEST_POSITION_INDEPENDENT_MALLOC_H
 #define __TEST_POSITION_INDEPENDENT_MALLOC_H

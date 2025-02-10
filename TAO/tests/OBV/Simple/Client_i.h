@@ -31,13 +31,13 @@ class Checkpoint_Client_i
 {
 public:
   /// Constructor
-  Checkpoint_Client_i (void);
+  Checkpoint_Client_i ();
 
   /// Destructor
-  virtual ~Checkpoint_Client_i (void);
+  virtual ~Checkpoint_Client_i ();
 
   /// Execute the methods
-  virtual int run (const char *,int, ACE_TCHAR** );
+  virtual int run (const char *,int, ACE_TCHAR**);
 
 private:
   /// Instantiate the checkpoint object.

@@ -11894,7 +11894,7 @@ Thu Jan 27 20:01:21 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
           Fix for [BUGID 2038]. Please see
 
-          http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=2038
+          http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=2038
 
           for details and thanks to Torsten Kuepper
           <torsten.kuepper@nokia.com> for reporting the problem.
@@ -13754,7 +13754,7 @@ Thu Jan  6 08:24:39 2005  Carlos O'Ryan  <coryan@atdesk.com>
         * orbsvcs/orbsvcs/ESF/ESF_Proxy_List.i:
           Use ACE_Unbounded_Set instead of ACE_Unbounded_Set_Ex.  The
           latter is not thread-safe, and the bugs attributed to the former
-          (see http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1465)
+          (see http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=1465)
           are actually a user-configuration mistake.
 
 Thu Jan  6 12:02:12 UTC 2005  Johnny Willemsen  <jwillemsen@remedy.nl>

@@ -11,7 +11,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<typename T>
 TAO_Var_Base_T<T>::TAO_Var_Base_T (const TAO_Var_Base_T<T> & p)
-  : ptr_ (p.ptr_ ? new T (*p.ptr_) : 0)
+  : ptr_ (p.ptr_ ? new T (*p.ptr_) : nullptr)
 {
 }
 

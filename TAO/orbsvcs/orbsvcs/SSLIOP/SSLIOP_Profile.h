@@ -32,7 +32,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 // {
 //   namespace SSLIOP
 //   {
-
     /**
      * @class Profile
      *
@@ -75,8 +74,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
       // = Please see Profile.h for the documentation of these methods.
       virtual int decode (TAO_InputCDR& cdr);
-      virtual int encode_endpoints (void);
-      virtual TAO_Endpoint *endpoint (void);
+      virtual int encode_endpoints ();
+      virtual TAO_Endpoint *endpoint ();
 
       /**
        * Override parse_string() from the base class to update the SSL
@@ -105,13 +104,12 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
       void remove_generic_endpoint (TAO_Endpoint *ep);
 
     protected:
-
       /// Destructor.
       /**
        * Protected destructor to enforce proper memory management
        * through the reference counting mechanism.
        */
-      ~TAO_SSLIOP_Profile (void);
+      ~TAO_SSLIOP_Profile ();
 
       /// Profile equivalence template method.
       /**
@@ -121,7 +119,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
         const TAO_Profile * other_profile);
 
     private:
-
       /**
        * Helper for @c decode.  Decodes TAO_TAG_SSL_ENDPOINTS from a
        * tagged component. Decode only if RTCORBA is enabled.
@@ -132,7 +129,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
        *       but sadly others pay the price (of footprint) under
        *       normal operations.
        */
-      int decode_tagged_endpoints (void);
+      int decode_tagged_endpoints ();
 
       /**
        * Head of this profile's list of endpoints.  This endpoint is
@@ -171,7 +168,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
        * attributes - port number, for instance.
        */
       int ssl_only_;
-
     };
 
 //   }  // End SSLIOP namespace.

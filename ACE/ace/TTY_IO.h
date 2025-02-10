@@ -34,7 +34,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_TTY_IO : public ACE_DEV_IO
 {
 public:
-  ACE_TTY_IO (void);
+  ACE_TTY_IO ();
 
   enum Control_Mode
   {
@@ -44,7 +44,7 @@ public:
 
   struct ACE_Export Serial_Params
   {
-    Serial_Params (void);
+    Serial_Params ();
 
     /** Specifies the baudrate at which the communication port operates. */
     int baudrate;
@@ -66,6 +66,9 @@ public:
         "odd" parity. Additionally Win32 supports "mark" and "space"
         parity modes. */
     const char *paritymode;
+    /** Enable/disable input parity checking. This option is only applicable
+        on systems which support the POSIX termios API */
+    bool inpckenb;
     /** Enable & set CTS mode. Note that RTS & CTS are enabled/disabled
         together on some systems (RTS/CTS is enabled if either
         <code>ctsenb</code> or <code>rtsenb</code> is set). */
@@ -101,11 +104,6 @@ public:
 
   /** Interface for reading/writing serial device parameters. */
   int control (Control_Mode cmd, Serial_Params *arg) const;
-
-#if defined (ACE_NEEDS_DEV_IO_CONVERSION)
-  /** This is necessary to pass ACE_TTY_IO as parameter to DEV_Connector. */
-  operator ACE_DEV_IO &();
-#endif /* ACE_NEEDS_DEV_IO_CONVERSION */
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

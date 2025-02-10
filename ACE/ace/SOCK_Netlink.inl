@@ -3,13 +3,13 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
-ACE_SOCK_Netlink::ACE_SOCK_Netlink (void)
+ACE_SOCK_Netlink::ACE_SOCK_Netlink ()
 {
   ACE_TRACE ("ACE_SOCK_Netlink::ACE_SOCK_Netlink");
 }
 
 ACE_INLINE
-ACE_SOCK_Netlink::~ACE_SOCK_Netlink (void)
+ACE_SOCK_Netlink::~ACE_SOCK_Netlink ()
 {
   ACE_TRACE ("ACE_SOCK_Netlink::~ACE_SOCK_Netlink");
 }

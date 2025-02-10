@@ -15,7 +15,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
 // ****************************************************************
 
-Consumer::Consumer (void)
+Consumer::Consumer ()
   : event_count_ (0)
 {
 }
@@ -90,21 +90,19 @@ Consumer::run (int argc, ACE_TCHAR* argv[])
 void
 Consumer::push (const CORBA::Any &)
 {
-
   this->event_count_ ++;
 
       ACE_DEBUG ((LM_DEBUG,
                   "Consumer (%P|%t): %d log generated events received\n",
                   this->event_count_));
-
 }
 
 void
-Consumer::disconnect_push_consumer (void)
+Consumer::disconnect_push_consumer ()
 {
   // In this example we shutdown the ORB when we disconnect from the
   // EC (or rather the EC disconnects from us), but this doesn't have
   // to be the case....
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }
 

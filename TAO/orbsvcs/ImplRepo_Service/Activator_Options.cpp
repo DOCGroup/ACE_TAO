@@ -223,14 +223,14 @@ Activator_Options::init (int argc, ACE_TCHAR *argv[])
 }
 
 int
-Activator_Options::init_from_registry (void)
+Activator_Options::init_from_registry ()
 {
   this->load_registry_options();
   return 0;
 }
 
 void
-Activator_Options::print_usage (void) const
+Activator_Options::print_usage () const
 {
   ORBSVCS_ERROR ((LM_ERROR,
               "Usage:\n"
@@ -393,67 +393,67 @@ Activator_Options::load_registry_options ()
 }
 
 bool
-Activator_Options::service (void) const
+Activator_Options::service () const
 {
   return this->service_;
 }
 
 bool
-Activator_Options::notify_imr (void) const
+Activator_Options::notify_imr () const
 {
   return this->notify_imr_;
 }
 
 unsigned int
-Activator_Options::induce_delay (void) const
+Activator_Options::induce_delay () const
 {
   return this->induce_delay_;
 }
 
 unsigned int
-Activator_Options::debug (void) const
+Activator_Options::debug () const
 {
   return this->debug_;
 }
 
 const ACE_TString&
-Activator_Options::ior_filename (void) const
+Activator_Options::ior_filename () const
 {
   return this->ior_output_file_;
 }
 
 Activator_Options::SERVICE_COMMAND
-Activator_Options::service_command (void) const
+Activator_Options::service_command () const
 {
   return this->service_command_;
 }
 
 const char*
-Activator_Options::cmdline (void) const
+Activator_Options::cmdline () const
 {
   return this->cmdline_.c_str ();
 }
 
 const ACE_CString&
-Activator_Options::name (void) const
+Activator_Options::name () const
 {
   return this->name_;
 }
 
 int
-Activator_Options::env_buf_len (void) const
+Activator_Options::env_buf_len () const
 {
   return this->env_buf_len_;
 }
 
 int
-Activator_Options::max_env_vars (void) const
+Activator_Options::max_env_vars () const
 {
   return this->max_env_vars_;
 }
 
 bool
-Activator_Options::detach_child (void) const
+Activator_Options::detach_child () const
 {
   return this->detach_child_;
 }

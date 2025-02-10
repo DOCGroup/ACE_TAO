@@ -39,7 +39,7 @@ Foo_C_cust_op3::~Foo_C_cust_op3()
 
 
 long
-Foo_C_cust_op3::result(void)
+Foo_C_cust_op3::result()
 {
   if (this->cancelled_)
     {

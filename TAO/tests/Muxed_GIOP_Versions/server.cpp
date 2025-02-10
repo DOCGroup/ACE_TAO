@@ -69,10 +69,9 @@ public:
   Worker (CORBA::ORB_ptr orb);
 
   /// The thread entry point.
-  virtual int svc (void);
+  virtual int svc ();
 
 private:
-
   /// The orb
   CORBA::ORB_var orb_;
 };
@@ -90,15 +89,14 @@ public:
   SelfClient (CORBA::ORB_ptr orb, Simple_Server_ptr server, int niterations);
   // ctor
 
-  virtual int svc (void);
+  virtual int svc ();
   // The thread entry point.
 
 private:
-  void validate_connection (void);
+  void validate_connection ();
   // Validate the connection
 
 private:
-
   /// The server.
   Simple_Server_var server_;
 
@@ -210,7 +208,7 @@ Worker::Worker (CORBA::ORB_ptr orb)
 }
 
 int
-Worker::svc (void)
+Worker::svc ()
 {
   try
     {
@@ -234,7 +232,7 @@ SelfClient::SelfClient (CORBA::ORB_ptr orb, Simple_Server_ptr server,
 }
 
 void
-SelfClient::validate_connection (void)
+SelfClient::validate_connection ()
 {
   // Ping the object 100 times, ignoring all exceptions.
   // It would be better to use validate_connection() but the test must
@@ -252,7 +250,7 @@ SelfClient::validate_connection (void)
 }
 
 int
-SelfClient::svc (void)
+SelfClient::svc ()
 {
   try
     {
@@ -280,7 +278,6 @@ SelfClient::svc (void)
                     {
                       ACE_DEBUG ((LM_DEBUG,
                                   "(%P|%t)  Not found it\n"));
-
                     }
                   else
                     {
@@ -297,7 +294,6 @@ SelfClient::svc (void)
 
           // Just make a call
           this->server_->test_method (i);
-
         }
     }
   catch (const CORBA::Exception& ex)

@@ -28,7 +28,7 @@ class TAO_RTScheduler_Export TAO_RTScheduler_Initializer
 {
 public:
   // Constructor.
-  TAO_RTScheduler_Initializer (void);
+  TAO_RTScheduler_Initializer ();
 };
 
 static TAO_RTScheduler_Initializer TAO_RTScheduler_initializer;

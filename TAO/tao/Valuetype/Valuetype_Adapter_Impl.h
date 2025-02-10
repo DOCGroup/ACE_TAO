@@ -39,8 +39,7 @@ class TAO_Valuetype_Export TAO_Valuetype_Adapter_Impl
   : public TAO_Valuetype_Adapter
 {
 public:
-
-  virtual ~TAO_Valuetype_Adapter_Impl (void);
+  virtual ~TAO_Valuetype_Adapter_Impl () = default;
 
   virtual CORBA::Object_ptr abstractbase_to_object (
       CORBA::AbstractBase_ptr);
@@ -51,7 +50,7 @@ public:
       TAO_InputCDR &,
       CORBA::AbstractBase_ptr &);
 
-  virtual CORBA::Long type_info_single (void) const;
+  virtual CORBA::Long type_info_single () const;
 
   virtual CORBA::Boolean is_type_info_implied (CORBA::Long) const;
   virtual CORBA::Boolean is_type_info_single (CORBA::Long) const;

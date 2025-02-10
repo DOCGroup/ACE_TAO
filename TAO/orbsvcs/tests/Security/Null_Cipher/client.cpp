@@ -59,7 +59,6 @@ null_cipher_test (CORBA::ORB_ptr orb,
       ACE_DEBUG ((LM_INFO,
                   "(%P|%t) Received CORBA::NO_PERMISSION from "
                   "server\n"));
-
     }
 }
 

@@ -8,14 +8,14 @@
 
 
 #include "Load_Balancer_i.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/OS_NS_time.h"
 
-Object_Group_Factory_i::Object_Group_Factory_i (void)
+Object_Group_Factory_i::Object_Group_Factory_i ()
 {
 }
 
-Object_Group_Factory_i::~Object_Group_Factory_i (void)
+Object_Group_Factory_i::~Object_Group_Factory_i ()
 {
 }
 
@@ -72,7 +72,7 @@ Object_Group_Factory_i::make_group (int random,
                           CORBA::NO_MEMORY ());
 
       // Temporarily put the servant into the auto_ptr.
-      ACE_Auto_Basic_Ptr<Object_Group_i> temp (group_servant);
+      std::unique_ptr<Object_Group_i> temp (group_servant);
 
       // Register with the poa, begin using ref. counting.
       group = group_servant->_this ();
@@ -157,13 +157,13 @@ Object_Group_Factory_i::list_groups (int random)
 }
 
 Load_Balancer::Group_List *
-Object_Group_Factory_i::round_robin_groups (void)
+Object_Group_Factory_i::round_robin_groups ()
 {
   return list_groups (0);
 }
 
 Load_Balancer::Group_List *
-Object_Group_Factory_i::random_groups (void)
+Object_Group_Factory_i::random_groups ()
 {
   return list_groups (1);
 }
@@ -175,7 +175,7 @@ Object_Group_i::Object_Group_i (const char * id,
 {
 }
 
-Object_Group_i::~Object_Group_i (void)
+Object_Group_i::~Object_Group_i ()
 {
   // Need to delete all the items from the member_id_list, to avoid
   // memory leaks.
@@ -188,7 +188,7 @@ Object_Group_i::~Object_Group_i (void)
 }
 
 char *
-Object_Group_i::id (void)
+Object_Group_i::id ()
 {
   return CORBA::string_dup (id_.c_str ());
 }
@@ -264,7 +264,7 @@ Object_Group_i::resolve_with_id (const char * id)
 }
 
 Load_Balancer::Member_ID_List *
-Object_Group_i::members (void)
+Object_Group_i::members ()
 {
   Load_Balancer::Member_ID_List * list;
 
@@ -291,7 +291,7 @@ Object_Group_i::members (void)
 }
 
 void
-Object_Group_i::destroy (void)
+Object_Group_i::destroy ()
 {
   // Deregister with POA.
   PortableServer::POA_var poa =
@@ -315,12 +315,12 @@ Random_Object_Group::Random_Object_Group (const char *id,
   ACE_OS::srand (static_cast<u_int> (ACE_OS::time ()));
 }
 
-Random_Object_Group::~Random_Object_Group (void)
+Random_Object_Group::~Random_Object_Group ()
 {
 }
 
 void
-Random_Object_Group::destroy (void)
+Random_Object_Group::destroy ()
 {
   //Deregisters this <Object_Group> with its
   // <Object_Group_Factory>.
@@ -330,7 +330,7 @@ Random_Object_Group::destroy (void)
 }
 
 CORBA::Object_ptr
-Random_Object_Group::resolve (void)
+Random_Object_Group::resolve ()
 {
   CORBA::Object_var obj;
 
@@ -361,12 +361,12 @@ RR_Object_Group::RR_Object_Group (const char *id,
 {
 }
 
-RR_Object_Group::~RR_Object_Group (void)
+RR_Object_Group::~RR_Object_Group ()
 {
 }
 
 void
-RR_Object_Group::destroy (void)
+RR_Object_Group::destroy ()
 {
   //Deregisters this <Object_Group> with its
   // <Object_Group_Factory>.
@@ -376,7 +376,7 @@ RR_Object_Group::destroy (void)
 }
 
 CORBA::Object_ptr
-RR_Object_Group::resolve (void)
+RR_Object_Group::resolve ()
 {
   CORBA::Object_var obj;
 

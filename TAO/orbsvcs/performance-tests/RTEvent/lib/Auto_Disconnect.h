@@ -45,8 +45,6 @@ public:
 #include "Auto_Disconnect.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "Auto_Disconnect.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #endif /* TAO_PERF_RTEC_AUTO_DISCONNECT_H */

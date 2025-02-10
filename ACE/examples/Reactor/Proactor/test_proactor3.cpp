@@ -33,7 +33,6 @@
 #include "ace/Task.h"
 
 
-
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)
   // This only works on Win32 platforms and on Unix platforms
   // supporting POSIX aio calls.
@@ -45,14 +44,13 @@
 #elif defined (ACE_HAS_AIO_CALLS)
 
 #include "ace/POSIX_Proactor.h"
-#include "ace/SUN_Proactor.h"
 
 #endif /* ACE_HAS_WIN32_OVERLAPPED_IO */
 
 //  Some debug helper functions
 static int disable_signal (int sigmin, int sigmax);
 #if 0
-static int print_sigmask (void);
+static int print_sigmask ();
 #endif
 
 #define  COUT(X)  cout << X; cout.flush ();
@@ -89,10 +87,10 @@ static u_short port = ACE_DEFAULT_SERVER_PORT;
 class MyTask: public ACE_Task<ACE_MT_SYNCH>
 {
 public:
-  MyTask (void) : threads_ (0), proactor_ (0) {}
+  MyTask () : threads_ (0), proactor_ (0) {}
 
-  int svc (void);
-  void waitready (void) { event_.wait (); }
+  int svc ();
+  void waitready () { event_.wait (); }
 
 private:
   ACE_Recursive_Thread_Mutex mutex_;
@@ -100,12 +98,12 @@ private:
   ACE_Proactor *proactor_;
   ACE_Manual_Event event_;
 
-  void create_proactor (void);
-  void delete_proactor (void);
+  void create_proactor ();
+  void delete_proactor ();
 };
 
 void
-MyTask::create_proactor (void)
+MyTask::create_proactor ()
 {
   ACE_GUARD (ACE_Recursive_Thread_Mutex, locker, mutex_);
 
@@ -129,12 +127,6 @@ MyTask::create_proactor (void)
           proactor = new ACE_POSIX_SIG_Proactor;
           ACE_DEBUG ((LM_DEBUG,"(%t) Create Proactor Type=SIG\n"));
           break;
-#  if defined (sun)
-        case 3:
-          proactor = new ACE_SUN_Proactor (max_aio_operations);
-          ACE_DEBUG ((LM_DEBUG,"(%t) Create Proactor Type=SUN\n"));
-          break;
-#  endif /* sun */
         default:
           proactor = new ACE_POSIX_SIG_Proactor;
           ACE_DEBUG ((LM_DEBUG,"(%t) Create Proactor Type=SIG\n"));
@@ -152,7 +144,7 @@ MyTask::create_proactor (void)
 }
 
 void
-MyTask::delete_proactor (void)
+MyTask::delete_proactor ()
 {
   ACE_GUARD (ACE_Recursive_Thread_Mutex, locker, mutex_);
   if (--threads_ == 0)
@@ -165,7 +157,7 @@ MyTask::delete_proactor (void)
 }
 
 int
-MyTask::svc (void)
+MyTask::svc ()
 {
   ACE_DEBUG ((LM_DEBUG, "(%t) MyTask started\n"));
 
@@ -184,9 +176,8 @@ MyTask::svc (void)
 class Receiver : public ACE_Service_Handler
 {
 public:
-
-  Receiver (void);
-  ~Receiver (void);
+  Receiver ();
+  ~Receiver ();
 
   //FUZZ: disable check_for_lack_ACE_OS
   /// This is called after the new connection has been accepted.
@@ -194,7 +185,7 @@ public:
   virtual void open (ACE_HANDLE handle,
                      ACE_Message_Block &message_block);
 
-  static long get_number_sessions (void) { return sessions_; }
+  static long get_number_sessions () { return sessions_; }
 
 protected:
   // These methods are called by the framework
@@ -208,9 +199,9 @@ protected:
   virtual void handle_write_stream (const ACE_Asynch_Write_Stream::Result &result);
 
 private:
-  int  initiate_read_stream (void);
+  int  initiate_read_stream ();
   int  initiate_write_stream (ACE_Message_Block & mb, int nBytes);
-  int check_destroy (void);
+  int check_destroy ();
 
   ACE_Asynch_Read_Stream rs_;
   ACE_Asynch_Write_Stream ws_;
@@ -222,7 +213,7 @@ private:
 
 long Receiver::sessions_ = 0;
 
-Receiver::Receiver (void)
+Receiver::Receiver ()
   : handle_ (ACE_INVALID_HANDLE),
     io_count_ (0)
 {
@@ -231,7 +222,7 @@ Receiver::Receiver (void)
   ACE_DEBUG ((LM_DEBUG, "Receiver Ctor sessions_=%d\n", sessions_));
 }
 
-Receiver::~Receiver (void)
+Receiver::~Receiver ()
 {
   ACE_GUARD (ACE_Recursive_Thread_Mutex, locker, mutex_);
   sessions_--;
@@ -241,7 +232,7 @@ Receiver::~Receiver (void)
 
 //  return true if we alive, false  we commited suicide
 int
-Receiver::check_destroy (void)
+Receiver::check_destroy ()
 {
   {
     ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, locker, mutex_, -1);
@@ -278,7 +269,7 @@ Receiver::open (ACE_HANDLE handle,
 }
 
 int
-Receiver::initiate_read_stream (void)
+Receiver::initiate_read_stream ()
 {
   ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, locker, mutex_, -1);
 
@@ -422,15 +413,15 @@ Receiver::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
 class Sender : public ACE_Handler
 {
 public:
-  Sender (void);
-  ~Sender (void);
+  Sender ();
+  ~Sender ();
 
   //FUZZ: disable check_for_lack_ACE_OS
   ///FUZZ: enable check_for_lack_ACE_OS
   int open (const ACE_TCHAR *host, u_short port);
-  void close (void);
+  void close ();
 
-  ACE_HANDLE handle (void) const;
+  ACE_HANDLE handle () const;
   virtual void handle (ACE_HANDLE);
 
 protected:
@@ -443,9 +434,8 @@ protected:
   virtual void handle_write_stream (const ACE_Asynch_Write_Stream::Result &result);
 
 private:
-
-  int initiate_read_stream (void);
-  int initiate_write_stream (void);
+  int initiate_read_stream ();
+  int initiate_write_stream ();
 
   /// Network I/O handle
   ACE_SOCK_Stream stream_;
@@ -465,24 +455,24 @@ private:
 
 static const char *data = "Welcome to Irfan World! Irfan RULES here !!\n";
 
-Sender::Sender (void)
+Sender::Sender ()
   : io_count_ (0)
 {
   // Moment of inspiration... :-)
   this->welcome_message_.init (data, ACE_OS::strlen (data));
 }
 
-Sender::~Sender (void)
+Sender::~Sender ()
 {
   this->close ();
 }
 
-void Sender::close (void)
+void Sender::close ()
 {
   this->stream_.close ();
 }
 
-ACE_HANDLE Sender::handle (void) const
+ACE_HANDLE Sender::handle () const
 {
   return this->stream_.get_handle ();
 }
@@ -534,7 +524,7 @@ int Sender::open (const ACE_TCHAR *host, u_short port)
 }
 
 int
-Sender::initiate_write_stream (void)
+Sender::initiate_write_stream ()
 {
   ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, locker, mutex_, -1);
 
@@ -553,7 +543,7 @@ Sender::initiate_write_stream (void)
 }
 
 int
-Sender::initiate_read_stream (void)
+Sender::initiate_read_stream ()
 {
   ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, locker, mutex_, -1);
 
@@ -674,9 +664,6 @@ set_proactor_type (const char *ptype)
     case 'D' :  proactor_type = 0; return true;
     case 'A' :  proactor_type = 1; return true;
     case 'I' :  proactor_type = 2; return true;
-#if defined (sun)
-    case 'S' :  proactor_type = 3; return true;
-#endif /* sun */
     }
   return false;
 }
@@ -740,9 +727,6 @@ parse_args (int argc, ACE_TCHAR *argv[])
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-#if defined (sun)
-  ACE_DEBUG ((LM_DEBUG, "\nSUN defined!\n"));
-#endif
   if (parse_args (argc, argv) == -1)
     return -1;
 
@@ -848,7 +832,7 @@ disable_signal (int sigmin, int sigmax)
 
 #if 0
 static int
-print_sigmask (void)
+print_sigmask ()
 {
 #ifndef ACE_WIN32
   sigset_t  mask;

@@ -64,7 +64,7 @@ public:
   friend class TAO::CSD::FW_Server_Request_Wrapper;
 
   /// Constructor
-  TAO_Service_Context (void);
+  TAO_Service_Context ();
 
   /// = Generic components
 
@@ -118,12 +118,12 @@ public:
   int decode (TAO_InputCDR& cdr);
 
   /// Return the underlying service context list
-  IOP::ServiceContextList &service_info (void);
+  IOP::ServiceContextList &service_info ();
 
   /// @note This method is only for backward comptiblity. We
   /// need to get this removed once RT folks have their service
   /// addition info done through this interface
-  const IOP::ServiceContextList &service_info (void) const;
+  const IOP::ServiceContextList &service_info () const;
 
 private:
   /// Helper methods to implement set_context()

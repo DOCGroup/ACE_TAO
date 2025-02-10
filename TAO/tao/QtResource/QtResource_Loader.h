@@ -52,7 +52,7 @@ namespace TAO
   {
   public:
     QtResource_Loader (QApplication *qapp);
-    virtual ~QtResource_Loader (void);
+    virtual ~QtResource_Loader ();
   };
 }
 

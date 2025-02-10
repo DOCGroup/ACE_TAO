@@ -25,7 +25,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class  TAO_FtNaming_Intf_Export NS_group_svc
 {
 public:
-
   /**
    *  Constructor
    */
@@ -67,7 +66,7 @@ public:
    *
    *  @return 0 on success, -1 on failure, -2 on bad argument.
    */
-  int group_list (void);
+  int group_list ();
 
   /**
    *  The naming service shall provide a command line utility to modify the load
@@ -159,9 +158,8 @@ public:
   int set_name_context( CosNaming::NamingContextExt_ptr value);
 
 private:
-
   /**
-   *  determine stategy based on policy string
+   *  determine strategy based on policy string
    *
    *  @param const ACE_TCHAR *policy ["round"]
    *  @param FT_Naming::LoadBalancingStrategyValue& value
@@ -179,14 +177,12 @@ private:
     const ACE_TCHAR *display_label);
 
 private:
-
   FT_Naming::NamingManager_var naming_manager_;
 
   CosNaming::NamingContextExt_var name_service_;
 
   CORBA::ORB_var orb_;
   bool quiet_;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

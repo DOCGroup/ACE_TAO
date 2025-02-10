@@ -4,8 +4,6 @@
 /**
  *  @file    Barrier.h
  *
- *   Moved from Synch.h.
- *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
 //==========================================================================
@@ -38,15 +36,16 @@ class ACE_Export ACE_Barrier
 {
 public:
   ACE_Barrier (unsigned int, const ACE_TCHAR * = 0, void * = 0) {}
-  ~ACE_Barrier (void) {}
-  int wait (void) { ACE_NOTSUP_RETURN (-1); }
-  void dump (void) const {}
+  ~ACE_Barrier () = default;
+  int wait () { ACE_NOTSUP_RETURN (-1); }
+  void dump () const {}
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #else /* ACE_HAS_THREADS */
 
+#include <atomic>
 #include "ace/Condition_Thread_Mutex.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -59,16 +58,16 @@ struct ACE_Export ACE_Sub_Barrier
                    const ACE_TCHAR *name = 0,
                    void *arg = 0);
 
-  ~ACE_Sub_Barrier (void);
+  ~ACE_Sub_Barrier () = default;
 
   /// True if this generation of the barrier is done.
   ACE_Condition_Thread_Mutex barrier_finished_;
 
   /// Number of threads that are still running.
-  int running_threads_;
+  std::atomic<int> running_threads_;
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -100,7 +99,7 @@ public:
                void *arg = 0);
 
   /// Default destructor.
-  ~ACE_Barrier (void);
+  ~ACE_Barrier () = default;
 
   /// Block the caller until all @c count threads have called @c wait and
   /// then allow all the caller threads to continue in parallel.
@@ -108,7 +107,7 @@ public:
   /// @retval 0 after successfully waiting for all threads to wait.
   /// @retval -1 if an error occurs or the barrier is shut
   /// down (@sa shutdown ()).
-  int wait (void);
+  int wait ();
 
   /// Shut the barrier down, aborting the wait of all waiting threads.
   /// Any threads waiting on the barrier when it is shut down will return with
@@ -117,10 +116,10 @@ public:
   /// @retval 0 for success, -1 if already shut down.
   ///
   /// @since ACE beta 5.4.9.
-  int shutdown (void);
+  int shutdown ();
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -149,9 +148,8 @@ protected:
   ACE_Sub_Barrier *sub_barrier_[2];
 
 private:
-  // = Prevent assignment and initialization.
-  void operator= (const ACE_Barrier &);
-  ACE_Barrier (const ACE_Barrier &);
+  void operator= (const ACE_Barrier &) = delete;
+  ACE_Barrier (const ACE_Barrier &) = delete;
 };
 
 /**
@@ -169,20 +167,16 @@ public:
   ACE_Thread_Barrier (unsigned int count, const ACE_TCHAR *name = 0);
 
   /// Default destructor.
-  ~ACE_Thread_Barrier (void);
+  ~ACE_Thread_Barrier () = default;
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
-
-#if defined (__ACE_INLINE__)
-#include "ace/Barrier.inl"
-#endif /* __ACE_INLINE__ */
 
 #endif /* !ACE_HAS_THREADS */
 

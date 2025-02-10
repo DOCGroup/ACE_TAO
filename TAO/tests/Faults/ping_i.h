@@ -31,10 +31,10 @@ public:
 
   // = The PingObject interface methods
   void ping (PingObject_ptr callback);
-  void pong (void);
-  void shutdown (void);
+  void pong ();
+  void shutdown ();
 
-  PortableServer::POA_ptr _default_POA (void);
+  PortableServer::POA_ptr _default_POA ();
 
 private:
   /// The orb

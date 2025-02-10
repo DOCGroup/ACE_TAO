@@ -226,7 +226,6 @@ postfix_action (TAO_Reconfig_Scheduler_Entry & /* rse */)
 }
 
 
-
 /////////////////////////
 // TAO_RSE_DFS_Visitor //
 /////////////////////////
@@ -337,7 +336,7 @@ TAO_RSE_SCC_Visitor
 
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> int
 TAO_RSE_SCC_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-number_of_cycles (void)
+number_of_cycles ()
 {
   return this->number_of_cycles_;
 }
@@ -348,7 +347,7 @@ number_of_cycles (void)
 
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> int
 TAO_RSE_SCC_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-in_a_cycle (void)
+in_a_cycle ()
 {
   return this->in_a_cycle_;
 }
@@ -554,7 +553,7 @@ TAO_RSE_Forward_Propagation_Visitor
 
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> int
 TAO_RSE_Forward_Propagation_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-unresolved_locals (void)
+unresolved_locals ()
 {
   return this->unresolved_locals_;
 }
@@ -574,7 +573,7 @@ unresolved_locals (int i)
 
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> int
 TAO_RSE_Forward_Propagation_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-unresolved_remotes (void)
+unresolved_remotes ()
 {
   return this->unresolved_remotes_;
 }
@@ -593,7 +592,7 @@ unresolved_remotes (int i)
 
 template <class RECONFIG_SCHED_STRATEGY, class ACE_LOCK> int
 TAO_RSE_Forward_Propagation_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::
-thread_specification_errors (void)
+thread_specification_errors ()
 {
   return this->thread_specification_errors_;
 }

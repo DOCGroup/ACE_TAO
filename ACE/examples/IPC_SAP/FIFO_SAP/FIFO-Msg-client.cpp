@@ -6,7 +6,6 @@
 #include "ace/OS_NS_string.h"
 
 
-
 #if defined (ACE_HAS_STREAM_PIPES)
 
 int

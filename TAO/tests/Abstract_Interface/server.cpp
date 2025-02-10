@@ -129,7 +129,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       orb->run ();
 
       // Destroy the POA, waiting until the destruction terminates
-      root_poa->destroy (1, 1);
+      root_poa->destroy (true, true);
 
       orb->destroy ();
     }

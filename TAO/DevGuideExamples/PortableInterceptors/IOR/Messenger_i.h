@@ -12,14 +12,13 @@ class  Messenger_i : public virtual POA_Messenger
 {
  public:
   //Constructor
-  Messenger_i (void);
+  Messenger_i ();
 
   //Destructor
-  virtual ~Messenger_i (void);
+  virtual ~Messenger_i ();
 
 
   virtual void send_message (const CORBA::OctetSeq & user_name);
-
 };
 
 

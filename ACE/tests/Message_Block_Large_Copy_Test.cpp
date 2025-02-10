@@ -99,12 +99,10 @@ run_clone_test (const size_t msg_block_count,
 int
 run_main (int , ACE_TCHAR *[])
 {
-
   int rc = 0;
 
   ACE_START_TEST (ACE_TEXT ("Message_Block_Large_Copy_Test"));
   {
-
     // Message_Block size() and Length() of 24,000,000
     const size_t MSG_BLOCK_COUNT = 8000;
     const size_t MSG_BLOCK_SIZE  = 3000;

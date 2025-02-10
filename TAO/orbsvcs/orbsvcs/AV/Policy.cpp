@@ -28,23 +28,23 @@ TAO_AV_Payload_Type_Policy::TAO_AV_Payload_Type_Policy (int payload_type)
 }
 
 // TAO_AV_RTP_Sdes_Policy
-TAO_AV_RTCP_Sdes_Policy::TAO_AV_RTCP_Sdes_Policy (void)
+TAO_AV_RTCP_Sdes_Policy::TAO_AV_RTCP_Sdes_Policy ()
   :TAO_AV_Policy (TAO_AV_RTCP_SDES_POLICY)
 {
 }
 
-TAO_AV_SFP_Credit_Policy::TAO_AV_SFP_Credit_Policy (void)
+TAO_AV_SFP_Credit_Policy::TAO_AV_SFP_Credit_Policy ()
   :TAO_AV_Policy (TAO_AV_SFP_CREDIT_POLICY)
 {
 }
 
 // TAO_AV_Callback
-TAO_AV_Callback::TAO_AV_Callback (void)
+TAO_AV_Callback::TAO_AV_Callback ()
    :protocol_object_ (0)
 {
 }
 
-TAO_AV_Callback::~TAO_AV_Callback (void)
+TAO_AV_Callback::~TAO_AV_Callback ()
 {
 }
 
@@ -59,14 +59,14 @@ TAO_AV_Callback::open (TAO_AV_Protocol_Object *object,
 }
 
 int
-TAO_AV_Callback::handle_start (void)
+TAO_AV_Callback::handle_start ()
 {
   if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"TAO_AV_Callback::handle_start\n"));
   return -1;
 }
 
 int
-TAO_AV_Callback::handle_stop (void)
+TAO_AV_Callback::handle_stop ()
 {
   if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"TAO_AV_Callback::handle_stop\n"));
   return -1;
@@ -89,7 +89,7 @@ TAO_AV_Callback::receive_control_frame (ACE_Message_Block *,
 }
 
 int
-TAO_AV_Callback::handle_destroy (void)
+TAO_AV_Callback::handle_destroy ()
 {
   if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"TAO_AV_Callback::handle_end_stream\n"));
   return -1;
@@ -111,14 +111,14 @@ TAO_AV_Callback::handle_timeout (void * /*arg*/)
 }
 
 TAO_AV_PolicyList
-TAO_AV_Callback::get_policies (void)
+TAO_AV_Callback::get_policies ()
 {
   TAO_AV_PolicyList list;
   return list;
 }
 
 // TAO_AV_Transport*
-// TAO_AV_Callback::transport (void)
+// TAO_AV_Callback::transport ()
 // {
 //   return this->transport_;
 // }
@@ -130,7 +130,7 @@ TAO_AV_Callback::get_policies (void)
 // }
 
 TAO_AV_Protocol_Object*
-TAO_AV_Callback::protocol_object (void)
+TAO_AV_Callback::protocol_object ()
 {
   return this->protocol_object_;
 }
@@ -142,7 +142,7 @@ TAO_AV_Callback::protocol_object (void)
 // }
 
 int
-TAO_AV_Callback::schedule_timer (void)
+TAO_AV_Callback::schedule_timer ()
 {
   return this->handler_->schedule_timer ();
 }

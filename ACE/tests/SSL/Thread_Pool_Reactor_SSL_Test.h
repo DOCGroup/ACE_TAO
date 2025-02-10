@@ -3,14 +3,11 @@
 /**
  *  @file    Thread_Pool_Reactor_SSL_Test.h
  *
- *  This class gets its own header file to work around AIX C++
- *  compiler "features" related to template instantiation...  It is
- *  only used by Thread_Pool_Reactor_Test_SSL.cpp.
+ *  It is only used by Thread_Pool_Reactor_Test_SSL.cpp.
  *
  *  @author   Irfan Pyarali <irfan@cs.wustl.edu>   Nanbor Wang <nanbor@cs.wustl.edu>
  */
 //=============================================================================
-
 
 #ifndef ACE_TESTS_THREAD_POOL_REACTOR_TEST_SSL_H
 #define ACE_TESTS_THREAD_POOL_REACTOR_TEST_SSL_H
@@ -23,11 +20,10 @@
 
 #include "ace/Svc_Handler.h"
 
+///   This class is the Svc_Handler used by <Acceptor>.
 class Request_Handler : public ACE_Svc_Handler<ACE_SSL_SOCK_Stream,
                                                ACE_MT_SYNCH>
 {
-  // = TITLE
-  //   This class is the Svc_Handler used by <Acceptor>.
 public:
   /// The default constructor makes sure the right reactor is used.
   Request_Handler (ACE_Thread_Manager *tm = 0);
@@ -37,7 +33,7 @@ protected:
   virtual int handle_close (ACE_HANDLE fd, ACE_Reactor_Mask = 0);
 
 private:
-  size_t  nr_msgs_rcvd_;
+  size_t nr_msgs_rcvd_;
 };
 
 #endif /* ACE_TESTS_THREAD_POOL_REACTOR_TEST_SSL_H */

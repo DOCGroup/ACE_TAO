@@ -11,12 +11,14 @@
 
 #include "test_config.h"
 #include "ace/DLL.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/ACE.h"
 #include "ace/DLL_Manager.h"
 #include "ace/SString.h"
 #include "ace/OS_NS_dlfcn.h"
 #include "DLL_Test.h"
+
+#include <memory>
 
 #if defined (ACE_LD_DECORATOR_STR)
 # define OBJ_SUFFIX ACE_LD_DECORATOR_STR ACE_DLL_SUFFIX
@@ -24,16 +26,15 @@
 # define OBJ_SUFFIX ACE_DLL_SUFFIX
 #endif /* ACE_LD_DECORATOR_STR */
 
-#if defined (ACE_WIN32) || defined (ACE_OPENVMS)
+#if defined (ACE_WIN32)
 #  define OBJ_PREFIX ACE_DLL_PREFIX
 #else
 #  define OBJ_PREFIX ACE_TEXT("./") ACE_DLL_PREFIX
 #endif /* ACE_WIN32 */
 
 // Declare the type of the symbol:
-typedef Hello *(*Hello_Factory)(void);
-
-typedef int ( *PFN )( Parent* );
+using Hello_Factory = Hello *(*)();
+using PFN = int (*)(Parent *);
 
 int handle_test (ACE_DLL &dll)
 {
@@ -56,7 +57,6 @@ int handle_test (ACE_DLL &dll)
 
 int basic_test (ACE_DLL &dll)
 {
-
   ACE_TString dll_file;
   const char *subdir_env = ACE_OS::getenv ("ACE_EXE_SUB_DIR");
   if (subdir_env)
@@ -93,7 +93,7 @@ int basic_test (ACE_DLL &dll)
                        dll.error ()),
                       -1);
 
-  auto_ptr<Hello> my_hello (factory ());
+  std::unique_ptr<Hello> my_hello (factory ());
 
   // Make the method calls, as the object pointer is available.
   my_hello->say_hello ();
@@ -139,7 +139,6 @@ int dynamic_cast_test (ACE_DLL &dll)
   return 0;
 }
 
-
 int
 run_main (int, ACE_TCHAR *[])
 {
@@ -166,7 +165,16 @@ run_main (int, ACE_TCHAR *[])
               ACE_TEXT ("Dynamically Linkable Libraries not supported on this platform\n")));
 #endif /* ACE_HAS_DYNAMIC_LINKING */
 
-  ACE_TEST_ASSERT (ACE_OS::dlsym (ACE_SHLIB_INVALID_HANDLE, ACE_TEXT ("open")));
+  void* invalid_handle = ACE_OS::dlsym (ACE_SHLIB_INVALID_HANDLE, ACE_TEXT ("open"));
+  if (invalid_handle != nullptr)
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("ACE_OS::dlsym using invalid handle should be nullptr and not %@\n")));
+      ++retval;
+    }
+  else
+   {
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("dlsym on invalid handle returned nullptr\n")));
+   }
 
   ACE_END_TEST;
   return retval == 0 ? 0 : 1;

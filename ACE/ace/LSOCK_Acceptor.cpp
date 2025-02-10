@@ -9,14 +9,11 @@
 # include "ace/Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
-
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_LSOCK_Acceptor)
 
 // Return the local endpoint address.
-
 int
 ACE_LSOCK_Acceptor::get_local_addr (ACE_Addr &a) const
 {
@@ -30,7 +27,7 @@ ACE_LSOCK_Acceptor::get_local_addr (ACE_Addr &a) const
 }
 
 void
-ACE_LSOCK_Acceptor::dump (void) const
+ACE_LSOCK_Acceptor::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_LSOCK_Acceptor::dump");
@@ -43,7 +40,7 @@ ACE_LSOCK_Acceptor::dump (void) const
 
 // Do nothing routine for constructor.
 
-ACE_LSOCK_Acceptor::ACE_LSOCK_Acceptor (void)
+ACE_LSOCK_Acceptor::ACE_LSOCK_Acceptor ()
 {
   ACE_TRACE ("ACE_LSOCK_Acceptor::ACE_LSOCK_Acceptor");
 }
@@ -131,7 +128,7 @@ ACE_LSOCK_Acceptor::accept (ACE_LSOCK_Stream &new_stream,
 // from the file system.
 
 int
-ACE_LSOCK_Acceptor::remove (void)
+ACE_LSOCK_Acceptor::remove ()
 {
   ACE_TRACE ("ACE_LSOCK_Acceptor::remove");
   int result = this->close ();

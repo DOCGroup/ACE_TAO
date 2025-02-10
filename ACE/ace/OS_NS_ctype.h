@@ -7,8 +7,6 @@
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  *  @author Jesper S. M|ller<stophph@diku.dk>
  *  @author and a cast of thousands...
- *
- *  Originally in OS.h.
  */
 //=============================================================================
 
@@ -38,7 +36,6 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE_OS {
-
   // these are non-standard names...
 
   /** @name Functions from <cctype>
@@ -50,7 +47,6 @@ namespace ACE_OS {
    *  here.  Instead, we change by prepending "ace_".
    */
   //@{
-
   /// Returns true if the character is an alphanumeric character.
   ACE_NAMESPACE_INLINE_FUNCTION
   int ace_isalnum (ACE_TCHAR c);

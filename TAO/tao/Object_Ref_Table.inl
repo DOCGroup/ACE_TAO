@@ -2,7 +2,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
-TAO_Object_Ref_Table::TAO_Object_Ref_Table (void)
+TAO_Object_Ref_Table::TAO_Object_Ref_Table ()
   : table_ (TAO_DEFAULT_OBJECT_REF_TABLE_SIZE)
   , lock_ ()
 {
@@ -21,7 +21,7 @@ TAO_Object_Ref_Table::find_i (const char *id)
 }
 
 ACE_INLINE void
-TAO_Object_Ref_Table::destroy (void)
+TAO_Object_Ref_Table::destroy ()
 {
   Table tmp;
 
@@ -33,19 +33,19 @@ TAO_Object_Ref_Table::destroy (void)
 }
 
 ACE_INLINE TAO_Object_Ref_Table::iterator
-TAO_Object_Ref_Table::begin (void)
+TAO_Object_Ref_Table::begin ()
 {
   return this->table_.begin ();
 }
 
 ACE_INLINE TAO_Object_Ref_Table::iterator
-TAO_Object_Ref_Table::end (void)
+TAO_Object_Ref_Table::end ()
 {
   return this->table_.end ();
 }
 
 ACE_INLINE size_t
-TAO_Object_Ref_Table::current_size (void) const
+TAO_Object_Ref_Table::current_size () const
 {
   return this->table_.size ();
 }

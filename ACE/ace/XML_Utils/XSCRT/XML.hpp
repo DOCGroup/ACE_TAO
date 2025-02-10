@@ -460,15 +460,11 @@ namespace XSCRT
     {
       string xns (ns);
 
-#if defined(XERCES_VERSION_MAJOR) && XERCES_VERSION_MAJOR > 2
       XMLCh const* p (e.dom_element ()->lookupPrefix (xns.c_str ()));
-#else
-      XMLCh const* p (e.dom_element ()->lookupNamespacePrefix (xns.c_str (), false));
-#endif
 
       if (p == 0)
       {
-        bool r (e.dom_element ()->isDefaultNamespace (xns.c_str ()));
+        bool const r (e.dom_element ()->isDefaultNamespace (xns.c_str ()));
 
         if (r)
         {

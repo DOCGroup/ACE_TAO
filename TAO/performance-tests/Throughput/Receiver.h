@@ -17,12 +17,12 @@ class Receiver
 {
 public:
   /// Constructor
-  Receiver (void);
+  Receiver ();
 
   // = The skeleton methods
   virtual void receive_data (const Test::Message &message);
 
-  virtual void done (void);
+  virtual void done ();
 
 private:
   /// The timestamp for the first message

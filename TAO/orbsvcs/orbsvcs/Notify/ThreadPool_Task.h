@@ -21,7 +21,7 @@
 #include "ace/Message_Queue.h"
 #include "ace/Reactor.h"
 #include "ace/Null_Condition.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -44,7 +44,7 @@ class TAO_Notify_Serv_Export TAO_Notify_ThreadPool_Task
 
 public:
   /// Constructor
-  TAO_Notify_ThreadPool_Task (void);
+  TAO_Notify_ThreadPool_Task ();
 
   /// Destructor
   virtual ~TAO_Notify_ThreadPool_Task ();
@@ -68,21 +68,21 @@ public:
   virtual void update_qos_properties (const TAO_Notify_QoSProperties& qos_properties);
 
   /// The object used by clients to register timers.
-  virtual TAO_Notify_Timer* timer (void);
+  virtual TAO_Notify_Timer* timer ();
 
   /// Provide access to the underlying buffering strategy
-  TAO_Notify_Buffering_Strategy* buffering_strategy (void);
+  TAO_Notify_Buffering_Strategy* buffering_strategy ();
 
 protected:
   /// Task svc
-  virtual int svc (void);
+  virtual int svc ();
 
 private:
   /// Release
-  virtual void release (void);
+  virtual void release ();
 
   /// The buffering strategy to use.
-  ACE_Auto_Ptr< TAO_Notify_Buffering_Strategy > buffering_strategy_;
+  std::unique_ptr<TAO_Notify_Buffering_Strategy> buffering_strategy_;
 
   /// Shutdown
   bool shutdown_;

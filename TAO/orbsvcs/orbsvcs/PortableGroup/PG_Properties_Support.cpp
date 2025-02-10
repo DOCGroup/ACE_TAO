@@ -16,7 +16,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::PG_Properties_Support::PG_Properties_Support ()
 {
-  TAO::PG_Property_Set *props;
+  TAO::PG_Property_Set *props = nullptr;
   ACE_NEW_THROW_EX (props,
                     TAO::PG_Property_Set (),
                     CORBA::NO_MEMORY());

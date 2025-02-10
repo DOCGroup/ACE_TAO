@@ -34,7 +34,6 @@ class LiveCheck;
 class Locator_Export Options
 {
 public:
-
   enum SERVICE_COMMAND {
     SC_NONE,
     SC_INSTALL,
@@ -49,30 +48,30 @@ public:
   int init_from_registry();
 
   /// Service Mode
-  bool service (void) const;
+  bool service () const;
 
   /// Debug level for the Implementation Repository.
-  unsigned int debug (void) const;
+  unsigned int debug () const;
 
   /// Returns the file where the IOR should be stored.
-  const ACE_TString& ior_filename (void) const;
+  const ACE_TString& ior_filename () const;
 
   /// Will we listen for multicast location requests?
-  bool multicast (void) const;
+  bool multicast () const;
 
   /// The nt service command to run (install/remove)
-  SERVICE_COMMAND service_command(void) const;
+  SERVICE_COMMAND service_command() const;
 
   int save_registry_options();
 
-  const char* cmdline(void) const;
+  const char* cmdline() const;
 
   /// File that contains the activator related information
   /// that the persistent locator has to save.
-  const ACE_TString& persist_file_name(void) const;
+  const ACE_TString& persist_file_name() const;
 
   /// Do we allow modifications to the servers?
-  bool readonly (void) const;
+  bool readonly () const;
 
   /// Which type of repository is to be used?
   enum RepoMode {
@@ -82,13 +81,13 @@ public:
     REPO_HEAP_FILE,
     REPO_REGISTRY
   };
-  RepoMode repository_mode (void) const;
+  RepoMode repository_mode () const;
 
   /// Do we wish to clear out the repository
-  bool repository_erase (void) const;
+  bool repository_erase () const;
 
   /// Returns the timeout value for program starting.
-  ACE_Time_Value startup_timeout (void) const;
+  ACE_Time_Value startup_timeout () const;
 
   /// Servers may be started externally to the ImR but register with it
   /// so that clients may still be forwarded to it. Traditionally, such
@@ -99,39 +98,39 @@ public:
   /// active servers, so enabling the ping_external_ option will override
   /// the assumption of liveness and actively ping, based on the existing
   /// rules, all registered servers.
-  bool ping_external (void) const;
+  bool ping_external () const;
 
   /// If the server hasn't been verified for a while, then we'll
   /// ping it. Note : No timers are currently used. We simply ping()
   /// during indirect invocations, if this interval has elapsed.
-  ACE_Time_Value ping_interval (void) const;
+  ACE_Time_Value ping_interval () const;
 
   /// When pinging, this is the timeout
-  ACE_Time_Value ping_timeout (void) const;
+  ACE_Time_Value ping_timeout () const;
 
-  LiveCheck *pinger (void) const;
+  LiveCheck *pinger () const;
   void pinger (LiveCheck *);
 
-  bool unregister_if_address_reused (void) const;
+  bool unregister_if_address_reused () const;
 
-  bool lockout (void) const;
+  bool lockout () const;
 
-  bool throw_shutdown_exceptions (void) const;
+  bool throw_shutdown_exceptions () const;
 
   /// Indicate what type of ImR Locator this is.
   enum ImrType { BACKUP_IMR, PRIMARY_IMR, STANDALONE_IMR };
-  ImrType imr_type(void) const;
+  ImrType imr_type() const;
 
-  const ACE_CString &ft_endpoint (void) const;
+  const ACE_CString &ft_endpoint () const;
 
-  ACE_Time_Value ft_update_delay (void) const;
+  ACE_Time_Value ft_update_delay () const;
 
 private:
   /// Parses and pulls out arguments for the ImR
   int parse_args (int &argc, ACE_TCHAR *argv[]);
 
   /// Print the usage information.
-  void print_usage (void) const;
+  void print_usage () const;
 
   /// Run a service command.
   int run_service_command (const ACE_TString& cmdline);

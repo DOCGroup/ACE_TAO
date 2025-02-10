@@ -1,8 +1,6 @@
 #include "ace/Msg_WFMO_Reactor.h"
 
-
-
-#if defined (ACE_WIN32) && !defined (ACE_LACKS_MSG_WFMO)
+#if defined (ACE_WIN32)
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Msg_WFMO_Reactor.inl"
@@ -24,10 +22,6 @@ ACE_Msg_WFMO_Reactor::ACE_Msg_WFMO_Reactor (size_t size,
 {
 }
 
-ACE_Msg_WFMO_Reactor::~ACE_Msg_WFMO_Reactor (void)
-{
-}
-
 DWORD
 ACE_Msg_WFMO_Reactor::wait_for_multiple_events (int timeout,
                                                 int alertable)
@@ -45,7 +39,7 @@ ACE_Msg_WFMO_Reactor::wait_for_multiple_events (int timeout,
 }
 
 int
-ACE_Msg_WFMO_Reactor::dispatch_window_messages (void)
+ACE_Msg_WFMO_Reactor::dispatch_window_messages ()
 {
   int number_of_messages = 0;
   MSG msg;
@@ -80,4 +74,4 @@ ACE_Msg_WFMO_Reactor::poll_remaining_handles (DWORD slot)
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#endif /* ACE_WIN32 && !ACE_LACKS_MSG_WFMO */
+#endif /* ACE_WIN32 */

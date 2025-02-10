@@ -37,7 +37,6 @@ struct snmp_pdu;
 class ASNMP_Export wpdu
 {
 public:
-
   /// construct CMU data from HP SNMP++ objects
   /// construct HP SNMP++ objects from raw buffer via CMU SNMP datatypes
   wpdu(const Pdu& pdu, const UdpTarget& target);

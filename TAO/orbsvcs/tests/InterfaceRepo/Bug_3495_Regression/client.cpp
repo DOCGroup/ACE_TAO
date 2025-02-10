@@ -6,7 +6,6 @@
 
 
 
-
 const ACE_TCHAR *ior = ACE_TEXT ("file://test.ior");
 
 int
@@ -40,7 +39,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv);
 

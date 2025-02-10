@@ -13,7 +13,6 @@
 #include "ace/SString.inl"
 #endif /* __ACE_INLINE__ */
 
-
 // ************************************************************
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -22,7 +21,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_OSTREAM_TYPE &
 operator<< (ACE_OSTREAM_TYPE &os, const ACE_CString &cs)
 {
-  if (cs.fast_rep () != 0)
+  if (cs.fast_rep ())
     os << cs.fast_rep ();
   return os;
 }
@@ -44,8 +43,10 @@ operator<< (ACE_OSTREAM_TYPE &os, const ACE_WString &ws)
 ACE_OSTREAM_TYPE &
 operator<< (ACE_OSTREAM_TYPE &os, const ACE_SString &ss)
 {
-  if (ss.fast_rep () != 0)
+  if (ss.fast_rep ())
+  {
     os << ss.fast_rep ();
+  }
   return os;
 }
 #endif /* !ACE_LACKS_IOSTREAM_TOTALLY */
@@ -53,23 +54,23 @@ operator<< (ACE_OSTREAM_TYPE &os, const ACE_SString &ss)
 // *****************************************************************
 
 char *
-ACE_NS_WString::char_rep (void) const
+ACE_NS_WString::char_rep () const
 {
   ACE_TRACE ("ACE_NS_WString::char_rep");
   if (this->len_ == 0)
-    return 0;
+    return nullptr;
   else
     {
-      char *t = 0;
+      char *t = nullptr;
 
 #if defined (ACE_HAS_ALLOC_HOOKS)
       ACE_ALLOCATOR_RETURN (t,
                             static_cast<char*>(ACE_Allocator::instance()->malloc (sizeof (char) * (this->len_ + 1))),
-                            0);
+                            nullptr);
 #else
       ACE_NEW_RETURN (t,
                       char[this->len_ + 1],
-                      0);
+                      nullptr);
 #endif
 
       for (size_type i = 0; i < this->len_; ++i)
@@ -83,23 +84,23 @@ ACE_NS_WString::char_rep (void) const
 }
 
 ACE_UINT16 *
-ACE_NS_WString::ushort_rep (void) const
+ACE_NS_WString::ushort_rep () const
 {
   ACE_TRACE ("ACE_NS_WString::ushort_rep");
   if (this->len_ <= 0)
-    return 0;
+    return nullptr;
   else
     {
-      ACE_UINT16 *t = 0;
+      ACE_UINT16 *t = nullptr;
 
 #if defined (ACE_HAS_ALLOC_HOOKS)
       ACE_ALLOCATOR_RETURN (t,
                             static_cast<ACE_UINT16*> (ACE_Allocator::instance()->malloc(sizeof(ACE_UINT16) * (this->len_ + 1))),
-                            0);
+                            nullptr);
 #else
       ACE_NEW_RETURN (t,
                       ACE_UINT16[this->len_ + 1],
-                      0);
+                      nullptr);
 #endif
 
       for (size_type i = 0; i < this->len_; ++i)
@@ -116,7 +117,7 @@ ACE_NS_WString::ACE_NS_WString (const char *s,
                                 ACE_Allocator *alloc)
   : ACE_WString (alloc)
 {
-  if (s == 0)
+  if (s == nullptr)
     return;
 
   this->len_ = this->buf_len_ = ACE_OS::strlen (s);
@@ -139,7 +140,7 @@ ACE_NS_WString::ACE_NS_WString (const ACE_UINT16 *s,
                                 ACE_Allocator *alloc)
   : ACE_WString (alloc)
 {
-  if (s == 0)
+  if (s == nullptr)
     return;
 
   this->buf_len_ = len;
@@ -165,7 +166,7 @@ ACE_SString::size_type const ACE_SString::npos =
 ACE_ALLOC_HOOK_DEFINE(ACE_SString)
 
 void
-ACE_SString::dump (void) const
+ACE_SString::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_SString::dump");
@@ -180,7 +181,7 @@ ACE_SString::ACE_SString (const ACE_SString &s)
 {
   ACE_TRACE ("ACE_SString::ACE_SString");
 
-  if (this->allocator_ == 0)
+  if (this->allocator_ == nullptr)
     this->allocator_ = ACE_Allocator::instance ();
 
   this->rep_ = (char *) this->allocator_->malloc (s.len_ + 1);
@@ -195,12 +196,12 @@ ACE_SString::ACE_SString (const ACE_SString &s)
 ACE_SString::ACE_SString (ACE_Allocator *alloc)
   : allocator_ (alloc),
     len_ (0),
-    rep_ (0)
+    rep_ (nullptr)
 
 {
   ACE_TRACE ("ACE_SString::ACE_SString");
 
-  if (this->allocator_ == 0)
+  if (this->allocator_ == nullptr)
     this->allocator_ = ACE_Allocator::instance ();
 
   this->len_ = 0;
@@ -209,7 +210,6 @@ ACE_SString::ACE_SString (ACE_Allocator *alloc)
 }
 
 // Set the underlying pointer (does not copy memory).
-
 void
 ACE_SString::rep (char *s)
 {
@@ -217,7 +217,7 @@ ACE_SString::rep (char *s)
 
   this->rep_ = s;
 
-  if (s == 0)
+  if (s == nullptr)
     this->len_ = 0;
   else
     this->len_ = ACE_OS::strlen (s);
@@ -231,10 +231,10 @@ ACE_SString::ACE_SString (const char *s,
 {
   ACE_TRACE ("ACE_SString::ACE_SString");
 
-  if (this->allocator_ == 0)
+  if (this->allocator_ == nullptr)
     this->allocator_ = ACE_Allocator::instance ();
 
-  if (s == 0)
+  if (s == nullptr)
     {
       this->len_ = 0;
       this->rep_ = (char *) this->allocator_->malloc (this->len_ + 1);
@@ -254,7 +254,7 @@ ACE_SString::ACE_SString (char c,
 {
   ACE_TRACE ("ACE_SString::ACE_SString");
 
-  if (this->allocator_ == 0)
+  if (this->allocator_ == nullptr)
     this->allocator_ = ACE_Allocator::instance ();
 
   this->len_ = 1;
@@ -272,7 +272,7 @@ ACE_SString::ACE_SString (const char *s,
 {
   ACE_TRACE ("ACE_SString::ACE_SString");
 
-  if (this->allocator_ == 0)
+  if (this->allocator_ == nullptr)
     this->allocator_ = ACE_Allocator::instance ();
 
   if (s == 0)
@@ -298,7 +298,7 @@ ACE_SString::operator= (const ACE_SString &s)
   ACE_TRACE ("ACE_SString::operator=");
   // Check for identify.
 
-  if (this != &s)
+  if (this != std::addressof(s))
     {
       // Only reallocate if we don't have enough space...
       if (this->len_ < s.len_)

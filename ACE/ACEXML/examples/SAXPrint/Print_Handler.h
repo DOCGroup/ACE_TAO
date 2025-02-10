@@ -30,7 +30,7 @@ public:
   /*
    * Default destructor.
    */
-  virtual ~ACEXML_Print_Handler (void);
+  virtual ~ACEXML_Print_Handler ();
 
   // Methods inherited from ACEXML_ContentHandler.
 
@@ -44,7 +44,7 @@ public:
   /*
    * Receive notification of the end of a document.
    */
-  virtual void endDocument (void);
+  virtual void endDocument ();
 
   /*
    * Receive notification of the end of an element.
@@ -84,7 +84,7 @@ public:
   /*
    * Receive notification of the beginning of a document.
    */
-  virtual void startDocument (void);
+  virtual void startDocument ();
 
   /*
    * Receive notification of the beginning of an element.

@@ -14,13 +14,13 @@
 
 #include "orbsvcs/LifeCycleServiceC.h"
 
-Quoter_Generic_Factory_Server::Quoter_Generic_Factory_Server (void)
+Quoter_Generic_Factory_Server::Quoter_Generic_Factory_Server ()
 : use_LifeCycle_Service_ (0),
   debug_level_ (1)
 {
 }
 
-Quoter_Generic_Factory_Server::~Quoter_Generic_Factory_Server (void)
+Quoter_Generic_Factory_Server::~Quoter_Generic_Factory_Server ()
 {
   try
     {
@@ -195,7 +195,7 @@ Quoter_Generic_Factory_Server::init (int argc,
 }
 
 int
-Quoter_Generic_Factory_Server::run (void)
+Quoter_Generic_Factory_Server::run ()
 {
   if (this->debug_level_ >= 1)
     ACE_DEBUG ((LM_DEBUG,
@@ -209,7 +209,7 @@ Quoter_Generic_Factory_Server::run (void)
 // Function get_options.
 
 u_int
-Quoter_Generic_Factory_Server::parse_args (void)
+Quoter_Generic_Factory_Server::parse_args ()
 {
   ACE_Get_Opt get_opt (this->argc_, this->argv_, ACE_TEXT("l?d:"));
   int opt;
@@ -229,6 +229,7 @@ Quoter_Generic_Factory_Server::parse_args (void)
         ACE_ERROR ((LM_ERROR,
                     "%s: unknown arg, -%c\n",
                     this->argv_[0], char(opt)));
+        ACE_FALLTHROUGH;
       case '?':
         ACE_DEBUG ((LM_DEBUG,
                     "usage:  %s"

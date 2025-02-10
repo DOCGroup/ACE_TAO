@@ -35,7 +35,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   try {
     // Initialize orb
-    CORBA::ORB_var orb = CORBA::ORB_init( argc, argv );
+    CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
 
       if (parse_args (argc, argv) != 0)
         return 1;
@@ -44,8 +44,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     CORBA::Object_var obj = orb->string_to_object(ior);
 
     // Narrow
-    Messenger_var messenger = Messenger::_narrow( obj.in() );
-    if(CORBA::is_nil( messenger.in() ) ) {
+    Messenger_var messenger = Messenger::_narrow( obj.in());
+    if(CORBA::is_nil( messenger.in())) {
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Panic: nil reference\n"),
                           1);
@@ -82,11 +82,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
     orb->destroy ();
   }
-  catch( const CORBA::SystemException &ex ) {
+  catch( const CORBA::SystemException &ex) {
     ex._tao_print_exception ("Caught CORBA exception: ");
     return 1;
   }
-  catch( ... ) {
+  catch( ...) {
     return 1;
   }
 

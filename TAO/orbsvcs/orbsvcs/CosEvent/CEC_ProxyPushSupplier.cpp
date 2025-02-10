@@ -31,21 +31,19 @@ typedef ACE_Reverse_Lock<ACE_Lock> TAO_CEC_Unlock;
 
 // TAO_CEC_ProxyPushSupplier Constructure (Un-typed EC)
 TAO_CEC_ProxyPushSupplier::
-TAO_CEC_ProxyPushSupplier (TAO_CEC_EventChannel* ec,
-                           const ACE_Time_Value &timeout)
+TAO_CEC_ProxyPushSupplier (TAO_CEC_EventChannel* ec, const ACE_Time_Value &timeout)
   : event_channel_ (ec),
     timeout_ (timeout),
     refcount_ (1)
 {
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
-  typed_event_channel_ = 0;
+  typed_event_channel_ = nullptr;
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
   this->lock_ =
     this->event_channel_->create_supplier_lock ();
 
-  this->default_POA_ =
-    this->event_channel_->supplier_poa ();
+  this->default_POA_ = this->event_channel_->supplier_poa ();
 
   this->event_channel_->get_servant_retry_map ().bind (this, 0);
 }
@@ -61,17 +59,15 @@ TAO_CEC_ProxyPushSupplier (TAO_CEC_TypedEventChannel* ec,
 {
   event_channel_ = 0;
 
-  this->lock_ =
-    this->typed_event_channel_->create_supplier_lock ();
+  this->lock_ = this->typed_event_channel_->create_supplier_lock ();
 
-  this->default_POA_ =
-    this->typed_event_channel_->typed_supplier_poa ();
+  this->default_POA_ = this->typed_event_channel_->typed_supplier_poa ();
 
   this->typed_event_channel_->get_servant_retry_map ().bind (this, 0);
 }
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
-TAO_CEC_ProxyPushSupplier::~TAO_CEC_ProxyPushSupplier (void)
+TAO_CEC_ProxyPushSupplier::~TAO_CEC_ProxyPushSupplier ()
 {
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
   if (this->is_typed_ec () )
@@ -107,7 +103,7 @@ TAO_CEC_ProxyPushSupplier::activate (
 }
 
 void
-TAO_CEC_ProxyPushSupplier::deactivate (void)
+TAO_CEC_ProxyPushSupplier::deactivate ()
 {
   try
     {
@@ -127,7 +123,7 @@ TAO_CEC_ProxyPushSupplier::deactivate (void)
 }
 
 void
-TAO_CEC_ProxyPushSupplier::shutdown (void)
+TAO_CEC_ProxyPushSupplier::shutdown ()
 {
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
   if (this->is_typed_ec () )
@@ -228,11 +224,8 @@ typedef TAO_ESF_Proxy_RefCount_Guard<TAO_CEC_TypedEventChannel,TAO_CEC_ProxyPush
 void
 TAO_CEC_ProxyPushSupplier::invoke (const TAO_CEC_TypedEvent& typed_event)
 {
-  Destroy_Guard_Typed auto_destroy (this->refcount_,
-                                    this->typed_event_channel_,
-                                    this);
+  Destroy_Guard_Typed auto_destroy (this->refcount_, this->typed_event_channel_, this);
   {
-
     ACE_GUARD (ACE_Lock, ace_mon, *this->lock_);
 
     if (!this->is_connected_i ())
@@ -244,8 +237,7 @@ TAO_CEC_ProxyPushSupplier::invoke (const TAO_CEC_TypedEvent& typed_event)
       TAO_CEC_Unlock reverse_lock (*this->lock_);
 
       ACE_GUARD (TAO_CEC_Unlock, ace_mon, reverse_lock);
-      this->typed_event_channel_->dispatching ()->invoke (this,
-                                                          typed_event);
+      this->typed_event_channel_->dispatching ()->invoke (this, typed_event);
     }
   }
 }
@@ -254,9 +246,7 @@ TAO_CEC_ProxyPushSupplier::invoke (const TAO_CEC_TypedEvent& typed_event)
 void
 TAO_CEC_ProxyPushSupplier::push_nocopy (CORBA::Any &event)
 {
-  Destroy_Guard auto_destroy (this->refcount_,
-                              this->event_channel_,
-                              this);
+  Destroy_Guard auto_destroy (this->refcount_, this->event_channel_, this);
 
   {
     ACE_GUARD (ACE_Lock, ace_mon, *this->lock_);
@@ -270,14 +260,13 @@ TAO_CEC_ProxyPushSupplier::push_nocopy (CORBA::Any &event)
       TAO_CEC_Unlock reverse_lock (*this->lock_);
 
       ACE_GUARD (TAO_CEC_Unlock, ace_mon, reverse_lock);
-      this->event_channel_->dispatching ()->push_nocopy (this,
-                                                         event);
+      this->event_channel_->dispatching ()->push_nocopy (this, event);
     }
   }
 }
 
 void
-TAO_CEC_ProxyPushSupplier::cleanup_i (void)
+TAO_CEC_ProxyPushSupplier::cleanup_i ()
 {
   this->consumer_ =
     CosEventComm::PushConsumer::_nil ();
@@ -288,14 +277,14 @@ TAO_CEC_ProxyPushSupplier::cleanup_i (void)
 }
 
 CORBA::ULong
-TAO_CEC_ProxyPushSupplier::_incr_refcnt (void)
+TAO_CEC_ProxyPushSupplier::_incr_refcnt ()
 {
   ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->lock_, 0);
   return this->refcount_++;
 }
 
 CORBA::ULong
-TAO_CEC_ProxyPushSupplier::_decr_refcnt (void)
+TAO_CEC_ProxyPushSupplier::_decr_refcnt ()
 {
   {
     ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->lock_, 0);
@@ -329,7 +318,6 @@ TAO_CEC_ProxyPushSupplier::connect_push_consumer (
     throw CORBA::BAD_PARAM ();
 
   {
-
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
     // Check if we have a typed event channel
     if (this->is_typed_ec () )
@@ -379,7 +367,6 @@ TAO_CEC_ProxyPushSupplier::connect_push_consumer (
                 this->typed_event_channel_->reconnected (this);
               }
               return;
-
             }
 
           this->typed_consumer_ = apply_policy (local_typed_consumer.in () );
@@ -391,7 +378,6 @@ TAO_CEC_ProxyPushSupplier::connect_push_consumer (
 
         // Notify the event channel...
         this->typed_event_channel_->connected (this);
-
       } /* this->is_typed_ec */
     else
       {
@@ -405,7 +391,6 @@ TAO_CEC_ProxyPushSupplier::connect_push_consumer (
           }
 
         {
-
     ACE_GUARD_THROW_EX (
         ACE_Lock, ace_mon, *this->lock_,
         CORBA::INTERNAL ());
@@ -492,8 +477,7 @@ TAO_CEC_ProxyPushSupplier::apply_policy (CosEventComm::PushConsumer_ptr pre)
 
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
 CosTypedEventComm::TypedPushConsumer_ptr
-TAO_CEC_ProxyPushSupplier::apply_policy
-  (CosTypedEventComm::TypedPushConsumer_ptr pre)
+TAO_CEC_ProxyPushSupplier::apply_policy (CosTypedEventComm::TypedPushConsumer_ptr pre)
 {
   this->nopolicy_typed_consumer_ =
     CosTypedEventComm::TypedPushConsumer::_duplicate (pre);
@@ -876,19 +860,19 @@ TAO_CEC_ProxyPushSupplier::consumer_non_existent (
 }
 
 PortableServer::POA_ptr
-TAO_CEC_ProxyPushSupplier::_default_POA (void)
+TAO_CEC_ProxyPushSupplier::_default_POA ()
 {
   return PortableServer::POA::_duplicate (this->default_POA_.in ());
 }
 
 void
-TAO_CEC_ProxyPushSupplier::_add_ref (void)
+TAO_CEC_ProxyPushSupplier::_add_ref ()
 {
   this->_incr_refcnt ();
 }
 
 void
-TAO_CEC_ProxyPushSupplier::_remove_ref (void)
+TAO_CEC_ProxyPushSupplier::_remove_ref ()
 {
   this->_decr_refcnt ();
 }

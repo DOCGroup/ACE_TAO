@@ -1,15 +1,15 @@
 #include "NestedValueImpl.h"
 
-Demo_NestedValueImpl::Demo_NestedValueImpl (void)
+Demo_NestedValueImpl::Demo_NestedValueImpl ()
 {
 }
 
-Demo_NestedValueImpl::~Demo_NestedValueImpl (void)
+Demo_NestedValueImpl::~Demo_NestedValueImpl ()
 {
 }
 
 CORBA::ValueBase*
-Demo_NestedValueImpl::_copy_value (void)
+Demo_NestedValueImpl::_copy_value ()
 {
   Demo_NestedValueImpl *nestedValueImpl = new Demo_NestedValueImpl();
   nestedValueImpl->foo1 (foo1 ());

@@ -5,13 +5,10 @@
 #include "ace/Handle_Set.h"
 #include "ace/Profile_Timer.h"
 #include "ace/OS_NS_sys_select.h"
-
 #include "ace/SSL/SSL_SOCK_Acceptor.h"
 
-
-
 // Are we running verbosely?
-static int verbose = 1;
+static bool verbose = true;
 
 // Function entry point into the twoway server task.
 

@@ -31,7 +31,6 @@ namespace TAO
 {
   namespace SSLIOP
   {
-
     /**
      * @class CredentialsAcquirerFactory
      *
@@ -44,14 +43,11 @@ namespace TAO
       : public virtual TAO::SL3::CredentialsAcquirerFactory
     {
     public:
-
       /// Create a TAO::SSLIOP::CredentialsAcquirerFactory.
       virtual SecurityLevel3::CredentialsAcquirer_ptr make (
         TAO::SL3::CredentialsCurator_ptr curator,
         const CORBA::Any & acquisition_arguments);
-
     };
-
   } // End SSLIOP namespace
 }  // End TAO namespace
 

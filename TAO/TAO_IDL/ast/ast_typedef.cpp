@@ -97,22 +97,22 @@ AST_Typedef::AST_Typedef (AST_Type *bt,
 {
 }
 
-AST_Typedef::~AST_Typedef (void)
+AST_Typedef::~AST_Typedef ()
 {
 }
 
 // Given a typedef node, traverse the chain of base types until they are no
 // more typedefs, and return that most primitive base type.
 AST_Type *
-AST_Typedef::primitive_base_type (void) const
+AST_Typedef::primitive_base_type () const
 {
   AST_Type *d = const_cast<AST_Typedef *> (this);
-  AST_Typedef *temp = 0;
+  AST_Typedef *temp = nullptr;
 
   while (d && d->node_type () == AST_Decl::NT_typedef)
     {
-      temp = AST_Typedef::narrow_from_decl (d);
-      d = AST_Type::narrow_from_decl (temp->base_type ());
+      temp = dynamic_cast<AST_Typedef*> (d);
+      d = dynamic_cast<AST_Type*> (temp->base_type ());
     }
 
   return d;
@@ -121,25 +121,25 @@ AST_Typedef::primitive_base_type (void) const
 // Redefinition of inherited virtual operations.
 
 AST_Type *
-AST_Typedef::base_type (void) const
+AST_Typedef::base_type () const
 {
   return this->ref_type_;
 }
 
 bool
-AST_Typedef::legal_for_primary_key (void) const
+AST_Typedef::legal_for_primary_key () const
 {
   return this->primitive_base_type ()->legal_for_primary_key ();
 }
 
 bool
-AST_Typedef::is_local (void)
+AST_Typedef::is_local ()
 {
   return this->ref_type_->is_local ();
 }
 
 bool
-AST_Typedef::owns_base_type (void) const
+AST_Typedef::owns_base_type () const
 {
   return this->owns_base_type_;
 }
@@ -162,11 +162,11 @@ AST_Typedef::dump (ACE_OSTREAM_TYPE &o)
 
 // Compute the size type of the node in question.
 int
-AST_Typedef::compute_size_type (void)
+AST_Typedef::compute_size_type ()
 {
   AST_Type *type = this->ref_type_;
 
-  if (type == 0)
+  if (type == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_typedef::compute_size_type - "
@@ -190,13 +190,11 @@ AST_Typedef::ast_accept (ast_visitor *visitor)
 }
 
 void
-AST_Typedef::destroy (void)
+AST_Typedef::destroy ()
 {
   this->AST_Field::destroy ();
   this->AST_Type::destroy ();
 }
-
-IMPL_NARROW_FROM_DECL(AST_Typedef)
 
 AST_Annotation_Appls &
 AST_Typedef::annotations ()

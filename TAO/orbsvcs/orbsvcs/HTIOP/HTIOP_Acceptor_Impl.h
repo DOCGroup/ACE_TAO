@@ -102,19 +102,12 @@ namespace TAO
       /// Pointer to the ORB Core.
       TAO_ORB_Core *orb_core_;
     };
-
   }
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "orbsvcs/HTIOP/HTIOP_Acceptor_Impl.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("HTIOP_Acceptor_Impl.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 #endif /* HTIOP_AccePTOR_IMPL_H */

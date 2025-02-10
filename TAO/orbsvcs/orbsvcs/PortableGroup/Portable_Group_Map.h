@@ -40,7 +40,6 @@ class TAO_ServerRequest;
 class TAO_PortableGroup_Export TAO_GroupId_Hash
 {
 public:
-
   /// Returns hash value.
   u_long operator () (const PortableGroup::TagGroupTaggedComponent *id) const;
 };
@@ -55,7 +54,6 @@ public:
 class TAO_PortableGroup_Export TAO_GroupId_Equal_To
 {
 public:
-
   /// Returns 1 if equal.
   int operator () (const PortableGroup::TagGroupTaggedComponent *lhs,
                    const PortableGroup::TagGroupTaggedComponent *rhs) const;
@@ -69,7 +67,6 @@ public:
 class TAO_PortableGroup_Export TAO_Portable_Group_Map
 {
 public:
-
   /**
    * @struct Map_Entry
    *
@@ -85,10 +82,10 @@ public:
   };
 
   /// Constructor.
-  TAO_Portable_Group_Map ();
+  TAO_Portable_Group_Map () = default;
 
   /// Destructor.
-  ~TAO_Portable_Group_Map (void);
+  ~TAO_Portable_Group_Map ();
 
   /// Add a GroupId->ObjectKey mapping to the map.
   /// This function takes ownership of the memory pointed to be group_id

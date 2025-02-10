@@ -23,7 +23,7 @@ AST_StructureFwd::AST_StructureFwd (AST_Structure *full_defn,
 {
 }
 
-AST_StructureFwd::~AST_StructureFwd (void)
+AST_StructureFwd::~AST_StructureFwd ()
 {
 }
 
@@ -46,7 +46,7 @@ AST_StructureFwd::ast_accept (ast_visitor *visitor)
 // Data accessors.
 
 AST_Structure *
-AST_StructureFwd::full_definition (void)
+AST_StructureFwd::full_definition ()
 {
   return this->pd_full_definition;
 }
@@ -63,32 +63,32 @@ AST_StructureFwd::set_full_definition (AST_Structure *nfd)
 }
 
 bool
-AST_StructureFwd::is_defined (void)
+AST_StructureFwd::is_defined ()
 {
   return this->is_defined_;
 }
 
 void
-AST_StructureFwd::set_as_defined (void)
+AST_StructureFwd::set_as_defined ()
 {
   this->is_defined_ = true;
 }
 
 void
-AST_StructureFwd::destroy (void)
+AST_StructureFwd::destroy ()
 {
-  if (!this->is_defined_ && 0 != this->pd_full_definition)
+  if (!this->is_defined_ && nullptr != this->pd_full_definition)
     {
       this->pd_full_definition->destroy ();
       delete this->pd_full_definition;
-      this->pd_full_definition = 0;
+      this->pd_full_definition = nullptr;
     }
 
   this->AST_Type::destroy ();
 }
 
 bool
-AST_StructureFwd::is_fwd (void)
+AST_StructureFwd::is_fwd ()
 {
   return true; // This is a fwd declared type
 }
@@ -104,10 +104,8 @@ AST_StructureFwd::adjust_found (
   if (ignore_fwd)
     {
       AST_Structure *s = this->full_definition ();
-      return (full_def_only && !s->is_defined () ? 0 : s);
+      return (full_def_only && !s->is_defined () ? nullptr : s);
     }
 
   return this;
 }
-
-IMPL_NARROW_FROM_DECL (AST_StructureFwd)

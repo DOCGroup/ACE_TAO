@@ -29,10 +29,10 @@ class Persistent_Client_i
 {
 public:
   /// Constructor
-  Persistent_Client_i (void);
+  Persistent_Client_i ();
 
   /// Destructor
-  virtual ~Persistent_Client_i (void);
+  virtual ~Persistent_Client_i ();
 
   /// Execute the methods.
   virtual int run (const char *, int, ACE_TCHAR *[]);

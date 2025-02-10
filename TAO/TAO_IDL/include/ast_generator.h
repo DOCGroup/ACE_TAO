@@ -1,4 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
 /*
 
 COPYRIGHT
@@ -88,6 +87,7 @@ class AST_Publishes;
 class AST_Emits;
 class AST_Consumes;
 class AST_Template_Module;
+class AST_Map;
 class AST_Template_Module_Inst;
 class AST_Template_Module_Ref;
 class AST_Param_Holder;
@@ -103,9 +103,9 @@ class AST_Annotation_Member;
 class TAO_IDL_FE_Export AST_Generator
 {
 public:
-  AST_Generator (void) {}
+  AST_Generator () {}
 
-  virtual ~AST_Generator (void) {}
+  virtual ~AST_Generator () {}
 
   // Operations.
 
@@ -328,6 +328,14 @@ public:
                                          UTL_ScopedName *n,
                                          bool is_local,
                                          bool is_abstract);
+
+  // Create a node representing a map type.
+  virtual AST_Map *create_map (AST_Expression *v,
+                              AST_Type *key_bt,
+                              AST_Type *val_bt,
+                              UTL_ScopedName *n,
+                              bool is_local,
+                              bool is_abstract);
 
   // Create a node representing a string type.
   virtual AST_String *create_string (AST_Expression *v);

@@ -2,7 +2,7 @@
 #include "HTTPU/parse_http_request.h"
 
 void
-HTTP_Request::parse_line (void)
+HTTP_Request::parse_line ()
 {
   this->status_ = STATUS_OK;
 
@@ -24,7 +24,7 @@ HTTP_Request::parse_line (void)
 }
 
 int
-HTTP_Request::espouse_line (void)
+HTTP_Request::espouse_line ()
 {
   int count;
 
@@ -71,7 +71,7 @@ HTTP_Request::espouse_line (void)
 }
 
 void
-HTTP_Request::dump (void)
+HTTP_Request::dump ()
 {
   ACE_DEBUG ((LM_DEBUG, "===== BEGIN entera_HTTP_Request::dump =====\n"));
   HTTP_Base::dump ();

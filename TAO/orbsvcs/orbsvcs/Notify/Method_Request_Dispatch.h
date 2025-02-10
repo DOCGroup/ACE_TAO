@@ -74,7 +74,7 @@ public:
 
 protected:
   /// Execute the dispatch operation.
-  int execute_i (void);
+  int execute_i ();
 
 protected:
   /// The Proxy
@@ -115,7 +115,7 @@ public:
   virtual ~TAO_Notify_Method_Request_Dispatch_Queueable ();
 
   /// Execute the Request
-  virtual int execute (void);
+  virtual int execute ();
 
 private:
   TAO_Notify_Event::Ptr event_var_;
@@ -144,10 +144,10 @@ public:
   virtual ~TAO_Notify_Method_Request_Dispatch_No_Copy ();
 
   /// Execute the Request
-  virtual int execute (void);
+  virtual int execute ();
 
   /// Create a copy of this method request
-  virtual TAO_Notify_Method_Request_Queueable* copy (void);
+  virtual TAO_Notify_Method_Request_Queueable* copy ();
 };
 
 /*****************************************************************************/

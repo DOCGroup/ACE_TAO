@@ -32,9 +32,7 @@
 #include "tao/Intrusive_Ref_Count_Handle_T.h"
 #include "ace/OS_NS_strings.h"
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
 
 class TAO_DTP_POA_Strategy;
 typedef TAO_Intrusive_Ref_Count_Handle<TAO_DTP_POA_Strategy>
@@ -58,7 +56,6 @@ class TAO_Dynamic_TP_Export TAO_DTP_POA_Strategy:
   public TAO::CSD::Strategy_Base
 {
  public:
-
   /// Constructors.
   /// This constructor supports situations where dynamic instantiation
   /// of a thread pool for POAs is initiated from a svc.conf file.
@@ -110,9 +107,7 @@ class TAO_Dynamic_TP_Export TAO_DTP_POA_Strategy:
   /// This is requested on the user application level.
   void cancel_requests(PortableServer::Servant servant);
 
-
  protected:
-
   /// Handle the dispatching of a remote request.
   ///
   /// This will cause a new "request" object to be created and pushed
@@ -158,8 +153,6 @@ class TAO_Dynamic_TP_Export TAO_DTP_POA_Strategy:
      const PortableServer::ObjectId& oid);
 
  private:
-
-
   /**
    * Helper method that is responsible for looking up the servant
    * state object in the servant state map *if* the "serialize
@@ -202,13 +195,10 @@ class TAO_Dynamic_TP_Export TAO_DTP_POA_Strategy:
   /// been sent in from an application or, if false, needs to be
   /// looked up from a Dynamic TP Config repo. It works in conjunction with
   /// dynamic_tp_config_name_ above.
-
   bool config_initialized_;
-
 
   void set_dtp_config(TAO_DTP_Definition &tp_config);
 };
-
 
 
 TAO_END_VERSIONED_NAMESPACE_DECL

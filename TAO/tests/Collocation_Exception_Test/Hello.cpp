@@ -11,31 +11,31 @@
 }
 
 void
-Hello::system_exception_test (void)
+Hello::system_exception_test ()
 {
   throw CORBA::INTERNAL ();
 }
 
 void
-Hello::user_exception_expected (void)
+Hello::user_exception_expected ()
 {
   throw ::Test::Hello::A ();
 }
 
 void
-Hello::user_exception_not_expected (void)
+Hello::user_exception_not_expected ()
 {
   this->throw_internal_b ();
 }
 
 void
-Hello::throw_internal_b (void)
+Hello::throw_internal_b ()
 {
   throw ::Test::Hello::B ();
 }
 
 char *
-Hello::get_string (void)
+Hello::get_string ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) Upcall in process ..\n"));
@@ -62,7 +62,7 @@ Hello::get_string (void)
             TAO::ORB_Table::instance ();
 
           TAO_ORB_Core_Auto_Ptr tmp (orb_table->find ("server_orb"));
-          if (tmp.get () == 0)
+          if (tmp.get () == nullptr)
             {
               // We are running on a single ORB and this is an error.
               ACE_ERROR ((LM_ERROR,
@@ -78,7 +78,7 @@ Hello::get_string (void)
 }
 
 void
-Hello::shutdown (void)
+Hello::shutdown ()
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

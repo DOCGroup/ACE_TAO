@@ -32,7 +32,7 @@ public:
 class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_PushConsumer_Traits
 {
 public:
-  TAO_Notify_Tests_PushConsumer_Traits (void);
+  TAO_Notify_Tests_PushConsumer_Traits ();
 
   typedef CosNotifyComm::PushConsumer INTERFACE;
   typedef CosNotifyComm::PushConsumer_ptr PTR;
@@ -62,7 +62,7 @@ class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_PushConsumer : public TAO_Notify_T
 
 public:
   /// Constructor
-  TAO_Notify_Tests_PushConsumer (void);
+  TAO_Notify_Tests_PushConsumer ();
 
   /// Destructor
   virtual ~TAO_Notify_Tests_PushConsumer ();
@@ -72,10 +72,10 @@ protected:
   virtual void connect_to_peer (Proxy_Traits::PTR proxy_ptr, Peer_Traits::PTR peer_ptr);
 
   /// Disconnect from proxy.
-  virtual void disconnect_from_proxy (void);
+  virtual void disconnect_from_proxy ();
 
   // = PushConsumer methods
-  virtual void disconnect_push_consumer (void);
+  virtual void disconnect_push_consumer ();
 
   /// Default does nothing.
   void push (const CORBA::Any & data);

@@ -6,14 +6,11 @@
  */
 //=============================================================================
 
-
 #include "ace/ACE.h"
-
 #include "Supplier_Timer_Handler.h"
 
 // The supplier refernce is got so that the mathods in the supplier
 // can be accessed.
-
 Supplier_Timer_Handler:: Supplier_Timer_Handler (Supplier *supplier,
                                                  ACE_Reactor *reactor,
                                                  FILE *file_ptr)
@@ -21,23 +18,13 @@ Supplier_Timer_Handler:: Supplier_Timer_Handler (Supplier *supplier,
      reactor_ (reactor),
      file_ptr_ (file_ptr)
 {
-  // No-op.
-}
-
-// Destructor.
-
- Supplier_Timer_Handler::~Supplier_Timer_Handler (void)
-{
-  // No-op.
 }
 
 // Method which will be called by the reactor on timeout.
-
 int
 Supplier_Timer_Handler:: handle_timeout (const ACE_Time_Value & /* tv */,
                                          const void * /* arg */)
 {
-
   ACE_DEBUG ((LM_DEBUG,
               "Sending Stock Market Information to Notifier...\n"));
 
@@ -62,9 +49,8 @@ Supplier_Timer_Handler:: handle_timeout (const ACE_Time_Value & /* tv */,
 }
 
 // Get the stock information from a file.
-
 int
-Supplier_Timer_Handler::get_stock_information (void)
+Supplier_Timer_Handler::get_stock_information ()
 {
   // Scan the file and obtain the stock information.
   if (fscanf (file_ptr_,
@@ -85,4 +71,3 @@ Supplier_Timer_Handler::get_stock_information (void)
       return -1;
     }
 }
-

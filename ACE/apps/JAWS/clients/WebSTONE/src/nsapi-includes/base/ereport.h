@@ -83,7 +83,6 @@
 #define ERRORS_TO_SYSLOG -1
 
 
-
 /* ------------------------------ Prototypes ------------------------------ */
 
 
@@ -111,9 +110,9 @@ char *ereport_init(char *err_fn, char *email, struct passwd *pw);
 /*
  * log_terminate closes the error and common log file descriptors.
  */
-void ereport_terminate(void);
+void ereport_terminate();
 
 /* For restarts */
-SYS_FILE ereport_getfd(void);
+SYS_FILE ereport_getfd();
 
 #endif

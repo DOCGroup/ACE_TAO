@@ -167,7 +167,6 @@ public:
                                        Config_Info* &config_info) = 0;
 
 
-
   // = Computes the schedule.
   /// This actually generates the files.
   virtual status_t

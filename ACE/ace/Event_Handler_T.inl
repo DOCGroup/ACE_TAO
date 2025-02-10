@@ -11,14 +11,14 @@ ACE_Event_Handler_T<T>::op_handler (T *op)
 }
 
 template<class T> ACE_INLINE T *
-ACE_Event_Handler_T<T>::op_handler (void)
+ACE_Event_Handler_T<T>::op_handler ()
 {
   ACE_TRACE ("ACE_Event_Handler_T<T>::op_handler");
   return this->op_handler_;
 }
 
 template<class T> ACE_INLINE typename ACE_Event_Handler_T<T>::GET_HANDLE
-ACE_Event_Handler_T<T>::handle_get (void)
+ACE_Event_Handler_T<T>::handle_get ()
 {
   ACE_TRACE ("ACE_Event_Handler_T<T>::handle_get");
   return this->get_handle_;
@@ -32,7 +32,7 @@ ACE_Event_Handler_T<T>::handle_get (typename ACE_Event_Handler_T<T>::GET_HANDLE 
 }
 
 template<class T> ACE_INLINE typename ACE_Event_Handler_T<T>::SET_HANDLE
-ACE_Event_Handler_T<T>::handle_set (void)
+ACE_Event_Handler_T<T>::handle_set ()
 {
   ACE_TRACE ("ACE_Event_Handler_T<T>::handle_set");
   return this->set_handle_;
@@ -46,7 +46,7 @@ ACE_Event_Handler_T<T>::handle_set (typename ACE_Event_Handler_T<T>::SET_HANDLE 
 }
 
 template<class T> ACE_INLINE typename ACE_Event_Handler_T<T>::IO_HANDLER
-ACE_Event_Handler_T<T>::input_handler (void)
+ACE_Event_Handler_T<T>::input_handler ()
 {
   ACE_TRACE ("ACE_Event_Handler_T<T>::input_handler");
   return this->input_handler_;
@@ -60,7 +60,7 @@ ACE_Event_Handler_T<T>::input_handler (typename ACE_Event_Handler_T<T>::IO_HANDL
 }
 
 template<class T> ACE_INLINE typename ACE_Event_Handler_T<T>::IO_HANDLER
-ACE_Event_Handler_T<T>::output_handler (void)
+ACE_Event_Handler_T<T>::output_handler ()
 {
   ACE_TRACE ("ACE_Event_Handler_T<T>::output_handler");
   return this->output_handler_;
@@ -74,7 +74,7 @@ ACE_Event_Handler_T<T>::output_handler (typename ACE_Event_Handler_T<T>::IO_HAND
 }
 
 template<class T> ACE_INLINE typename ACE_Event_Handler_T<T>::IO_HANDLER
-ACE_Event_Handler_T<T>::except_handler (void)
+ACE_Event_Handler_T<T>::except_handler ()
 {
   ACE_TRACE ("ACE_Event_Handler_T<T>::except_handler");
   return this->except_handler_;
@@ -88,7 +88,7 @@ ACE_Event_Handler_T<T>::except_handler (typename ACE_Event_Handler_T<T>::IO_HAND
 }
 
 template<class T> ACE_INLINE typename ACE_Event_Handler_T<T>::TO_HANDLER
-ACE_Event_Handler_T<T>::to_handler (void)
+ACE_Event_Handler_T<T>::to_handler ()
 {
   ACE_TRACE ("ACE_Event_Handler_T<T>::to_handler");
   return this->to_handler_;
@@ -102,7 +102,7 @@ ACE_Event_Handler_T<T>::to_handler (typename ACE_Event_Handler_T<T>::TO_HANDLER 
 }
 
 template<class T> ACE_INLINE typename ACE_Event_Handler_T<T>::CL_HANDLER
-ACE_Event_Handler_T<T>::cl_handler (void)
+ACE_Event_Handler_T<T>::cl_handler ()
 {
   ACE_TRACE ("ACE_Event_Handler_T<T>::cl_handler");
   return this->cl_handler_;
@@ -116,7 +116,7 @@ ACE_Event_Handler_T<T>::cl_handler (typename ACE_Event_Handler_T<T>::CL_HANDLER 
 }
 
 template<class T> ACE_INLINE typename ACE_Event_Handler_T<T>::SIG_HANDLER
-ACE_Event_Handler_T<T>::sig_handler (void)
+ACE_Event_Handler_T<T>::sig_handler ()
 {
   ACE_TRACE ("ACE_Event_Handler_T<T>::sig_handler");
   return this->sig_handler_;

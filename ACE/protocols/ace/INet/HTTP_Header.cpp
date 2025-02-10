@@ -7,14 +7,12 @@
 #endif
 
 
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE
 {
   namespace HTTP
   {
-
     const ACE_CString Header::HTTP_1_0                   = "HTTP/1.0";
     const ACE_CString Header::HTTP_1_1                   = "HTTP/1.1";
     const ACE_CString Header::CHUNKED_TRANSFER_ENCODING  = "chunked";

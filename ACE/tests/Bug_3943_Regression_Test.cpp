@@ -53,7 +53,7 @@
      typedef ACE_Null_Mutex ACCEPTOR_LOCKING;
 #  else
 #    include "ace/Process_Mutex.h"
-     typedef ACE_Process_Mutex ACCEPTOR_LOCKING;
+     using ACCEPTOR_LOCKING = ACE_Process_Mutex;
 #    define CLEANUP_PROCESS_MUTEX
 #  endif /* ACE_HAS_THREAD_SAFE_ACCEPT */
 #endif /* ACE_LACKS_FORK */
@@ -67,7 +67,6 @@
 #define REFCOUNTED_HASH_RECYCLABLE_ADDR ACE_Refcounted_Hash_Recyclable<ACE_INET_Addr>
 
 namespace {
-
   const char FINISHED_CHAR = '%';
   const char RESTART_CHAR = '&';
   const char START_CHAR = '0';
@@ -88,7 +87,7 @@ namespace {
 #if defined (ACE_LACKS_IOVEC)
   typedef u_long buffer_len;
 #else
-  typedef size_t buffer_len;
+  using buffer_len = size_t;
 #endif /* ACE_LACKS_IOVEC */
 
 #if defined (ACE_WIN32)
@@ -96,7 +95,6 @@ namespace {
                     const DWORD minorVersion,
                     const BYTE productType)
   {
-#if !defined(ACE_HAS_WINCE)
     OSVERSIONINFOEX versioninfo;
     versioninfo.dwOSVersionInfoSize = sizeof (OSVERSIONINFOEX);
     versioninfo.dwMajorVersion = majorVersion;
@@ -171,27 +169,19 @@ namespace {
       }
 
     return 0;
-#else // defined(ACE_HAS_WINCE)
-    // no version testing of WinCE has been performed
-    ACE_UNUSED_ARG (majorVersion);
-    ACE_UNUSED_ARG (minorVersion);
-    ACE_UNUSED_ARG (productType);
-    return -1;
-#endif /* ACE_HAS_WINCE */
   }
 #endif /* ACE_WIN32 */
 
   int processENOBUFS()
   {
-#if defined (ACE_WIN32) && !defined(ACE_HAS_WINCE)
+#if defined (ACE_WIN32)
     // it has been identified that Windows7 does not have the ENOBUFS issue
     // but testing has not been performed on Server 2008 or Vista to identify
-    // wether the issue exists or not
+    // whether the issue exists or not
     return beforeVersion(6, 1, VER_NT_WORKSTATION);
-#else // defined(ACE_HAS_WINCE)
-    // currently, no versions of WINCE identified to not have the ENOBUFS error
+#else
     return 0;
-#endif /* ACE_WIN32 && !ACE_HAS_WINCE */
+#endif /* ACE_WIN32 */
   }
 
   struct IovecGuard
@@ -206,31 +196,27 @@ namespace {
     static const int ALL_SLOTS = -1;
   };
 
+  /*
+   * This class is the product created by both ACE_Connector
+   * and ACE_Acceptor objects.
+   */
   class Svc_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
   {
-    // = TITLE
-    //      This class is the product created by both <ACE_Connector>
-    //      and <ACE_Acceptor> objects.
-    //
-    // = DESCRIPTION
-    //    This class gets its own header file to work around AIX C++
-    //    compiler "features" related to template instantiation...  It is
-    //    only used by Conn_Test.cpp.
   public:
-    Svc_Handler (ACE_Thread_Manager * = 0);
     // Do-nothing constructor.
+    Svc_Handler (ACE_Thread_Manager * = nullptr);
 
-    virtual int open (void *);
     // Initialization hook.
+    int open (void *) override;
 
-    void send_data (void);
     // Send data to server.
+    void send_data ();
 
-    void recv_data (void);
     // Recv data from client.
+    void recv_data ();
 
-    int close (u_long = 0);
     // Shutdown the <Svc_Handler>.
+    int close (u_long = 0) override;
 
   private:
     enum Direction { READX, WRITEX }; // VxWorks defines READ and WRITE
@@ -244,14 +230,11 @@ namespace {
     ssize_t send (char send_char, const ACE_TCHAR * const send_desc);
 
     const ACE_Time_Value DEFAULT_TIME_VALUE;
-
   };
 } // namespace ""
 
-typedef ACE_Oneshot_Acceptor<Svc_Handler,
-                             LOCK_SOCK_ACCEPTOR> ACCEPTOR;
-typedef ACE_Connector<Svc_Handler,
-                      ACE_SOCK_CONNECTOR> CONNECTOR;
+using ACCEPTOR = ACE_Oneshot_Acceptor<Svc_Handler, ACE_LOCK_SOCK_Acceptor<ACCEPTOR_LOCKING>>;
+using CONNECTOR = ACE_Connector<Svc_Handler, ACE_SOCK_Connector>;
 
 
 IovecGuard::IovecGuard(const int count, const int slot, const buffer_len max)
@@ -320,7 +303,7 @@ Svc_Handler::open (void *)
 }
 
 void
-Svc_Handler::send_data (void)
+Svc_Handler::send_data ()
 {
   bool successful = true;
   bool win32_test = false;
@@ -780,7 +763,7 @@ Svc_Handler::send (char send_char, const ACE_TCHAR * const send_desc)
 }
 
 void
-Svc_Handler::recv_data (void)
+Svc_Handler::recv_data ()
 {
   ACE_SOCK_Stream &new_stream = this->peer ();
 
@@ -976,7 +959,6 @@ client (void *arg)
     {
       // Send the data to the server.
       svc_handler->send_data ();
-
     }
   return 0;
 }

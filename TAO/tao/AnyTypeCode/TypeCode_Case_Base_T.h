@@ -30,7 +30,6 @@ namespace TAO
 {
   namespace TypeCode
   {
-
     /**
      * @class Case
      *
@@ -49,7 +48,6 @@ namespace TAO
     class Case
     {
     public:
-
       /// Constructor.
       /**
        * Constructor used when creating static @c union @c TypeCodes.
@@ -60,20 +58,20 @@ namespace TAO
       /**
        * Constructor used when creating dynamic @c union @c TypeCodes.
        */
-      Case (void);
+      Case ();
 
       /// Destructor.
-      virtual ~Case (void);
+      virtual ~Case ();
 
       /// Cloning/copying operation.
-      virtual Case * clone (void) const = 0;
+      virtual Case * clone () const = 0;
 
       /// Return the IDL @c union case label value embedded within a
       /// @c CORBA::Any.
-      virtual CORBA::Any * label (void) const = 0;
+      virtual CORBA::Any * label () const = 0;
 
       /// Get the name of the @c union case/member.
-      char const * name (void) const;
+      char const * name () const;
 
       /// Set the name of the @c union case/member.
       void name (char const * the_name);
@@ -83,7 +81,7 @@ namespace TAO
        * @note The reference count is not manipulated by this method,
        *       i.e., ownership is retained by this class.
        */
-      CORBA::TypeCode_ptr type (void) const;
+      CORBA::TypeCode_ptr type () const;
 
       /// Set the @c CORBA::TypeCode of the @c union case/member.
       /**
@@ -107,7 +105,6 @@ namespace TAO
       bool equivalent (CORBA::ULong index, CORBA::TypeCode_ptr tc) const;
 
     protected:
-
       /// Marshal the IDL @c union @c case label value into the given
       /// output CDR stream.
       virtual bool marshal_label (TAO_OutputCDR & cdr) const = 0;
@@ -130,7 +127,6 @@ namespace TAO
                                 CORBA::TypeCode_ptr tc) const = 0;
 
     private:
-
       /// The name of the case.
       StringType name_;
 
@@ -146,11 +142,9 @@ namespace TAO
        *       @c Case.
        */
       TypeCodeType type_;
-
     };
 
     typedef Case<CORBA::String_var, CORBA::TypeCode_var> Case_Dynamic;
-
   }  // End namespace TypeCode
 }  // End namespace TAO
 
@@ -173,7 +167,6 @@ namespace ACE
       return p->clone ();
     }
   };
-
 } // End namespace ACE.
 
 ACE_END_VERSIONED_NAMESPACE_DECL
@@ -183,13 +176,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 # include "tao/AnyTypeCode/TypeCode_Case_Base_T.inl"
 #endif /* __ACE_INLINE__ */
 
-#ifdef ACE_TEMPLATES_REQUIRE_SOURCE
-# include "tao/AnyTypeCode/TypeCode_Case_Base_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#ifdef ACE_TEMPLATES_REQUIRE_PRAGMA
-# pragma implementation ("TypeCode_Case_Base_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
+#include "tao/AnyTypeCode/TypeCode_Case_Base_T.cpp"
 
 #include /**/ "ace/post.h"
 

@@ -11,7 +11,7 @@ Quoter_Task::Quoter_Task (int argc, ACE_TCHAR **argv)
 }
 
 int
-Quoter_Task::svc (void)
+Quoter_Task::svc ()
 {
   if (this->quoter_client.init (this->argc_, this->argv_) == -1)
     return 1;
@@ -20,7 +20,7 @@ Quoter_Task::svc (void)
 }
 
 // Constructor.
-Quoter_Client::Quoter_Client (void)
+Quoter_Client::Quoter_Client ()
   : quoter_factory_key_ (0),
     quoter_key_ (ACE_OS::strdup ("key0")),
     shutdown_ (0),
@@ -34,7 +34,7 @@ Quoter_Client::Quoter_Client (void)
 // Parses the command line arguments and returns an error status.
 
 int
-Quoter_Client::parse_args (void)
+Quoter_Client::parse_args ()
 {
   ACE_Get_Opt get_opts (argc_, argv_, ACE_TEXT("n:d:lx"));
   int opt;
@@ -60,7 +60,7 @@ Quoter_Client::parse_args (void)
         ACE_ERROR ((LM_ERROR,
                     "%s: unknown arg, -%c\n",
                     this->argv_[0], char(opt)));
-        // fallthrough
+        ACE_FALLTHROUGH;
       case '?':
         ACE_DEBUG ((LM_DEBUG,
                     "usage:  %s"
@@ -78,7 +78,7 @@ Quoter_Client::parse_args (void)
 }
 
 int
-Quoter_Client::run (void)
+Quoter_Client::run ()
 {
   if (this->debug_level_ >= 1)
     ACE_DEBUG ((LM_DEBUG,
@@ -124,7 +124,6 @@ Quoter_Client::run (void)
 
       if (this->debug_level_ >= 1)
         ACE_DEBUG ((LM_DEBUG, "Quoter Client: Copied object: ACE Hardware = %i\n", q));
-
     }
   catch (const CORBA::Exception& ex)
     {
@@ -136,7 +135,7 @@ Quoter_Client::run (void)
   return 0;
 }
 
-Quoter_Client::~Quoter_Client (void)
+Quoter_Client::~Quoter_Client ()
 {
   // Free resources
   // Close the ior files
@@ -147,7 +146,7 @@ Quoter_Client::~Quoter_Client (void)
 }
 
 int
-Quoter_Client::init_naming_service (void)
+Quoter_Client::init_naming_service ()
 {
   const char *exception_message = "Null Message";
 

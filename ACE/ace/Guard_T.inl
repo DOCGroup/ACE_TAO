@@ -6,19 +6,19 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class ACE_LOCK> ACE_INLINE int
-ACE_Guard<ACE_LOCK>::acquire (void)
+ACE_Guard<ACE_LOCK>::acquire ()
 {
   return this->owner_ = this->lock_->acquire ();
 }
 
 template <class ACE_LOCK> ACE_INLINE int
-ACE_Guard<ACE_LOCK>::tryacquire (void)
+ACE_Guard<ACE_LOCK>::tryacquire ()
 {
   return this->owner_ = this->lock_->tryacquire ();
 }
 
 template <class ACE_LOCK> ACE_INLINE int
-ACE_Guard<ACE_LOCK>::release (void)
+ACE_Guard<ACE_LOCK>::release ()
 {
   if (this->owner_ == -1)
     return -1;
@@ -59,25 +59,25 @@ ACE_Guard<ACE_LOCK>::ACE_Guard (ACE_LOCK &l, bool /* block */, int become_owner)
 // lock.
 
 template <class ACE_LOCK> ACE_INLINE
-ACE_Guard<ACE_LOCK>::~ACE_Guard (void)
+ACE_Guard<ACE_LOCK>::~ACE_Guard ()
 {
   this->release ();
 }
 
 template <class ACE_LOCK> ACE_INLINE bool
-ACE_Guard<ACE_LOCK>::locked (void) const
+ACE_Guard<ACE_LOCK>::locked () const
 {
   return this->owner_ != -1;
 }
 
 template <class ACE_LOCK> ACE_INLINE int
-ACE_Guard<ACE_LOCK>::remove (void)
+ACE_Guard<ACE_LOCK>::remove ()
 {
   return this->lock_->remove ();
 }
 
 template <class ACE_LOCK> ACE_INLINE void
-ACE_Guard<ACE_LOCK>::disown (void)
+ACE_Guard<ACE_LOCK>::disown ()
 {
   this->owner_ = -1;
 }
@@ -90,25 +90,25 @@ ACE_Write_Guard<ACE_LOCK>::ACE_Write_Guard (ACE_LOCK &m)
 }
 
 template <class ACE_LOCK> ACE_INLINE int
-ACE_Write_Guard<ACE_LOCK>::acquire_write (void)
+ACE_Write_Guard<ACE_LOCK>::acquire_write ()
 {
   return this->owner_ = this->lock_->acquire_write ();
 }
 
 template <class ACE_LOCK> ACE_INLINE int
-ACE_Write_Guard<ACE_LOCK>::acquire (void)
+ACE_Write_Guard<ACE_LOCK>::acquire ()
 {
   return this->owner_ = this->lock_->acquire_write ();
 }
 
 template <class ACE_LOCK> ACE_INLINE int
-ACE_Write_Guard<ACE_LOCK>::tryacquire_write (void)
+ACE_Write_Guard<ACE_LOCK>::tryacquire_write ()
 {
   return this->owner_ = this->lock_->tryacquire_write ();
 }
 
 template <class ACE_LOCK> ACE_INLINE int
-ACE_Write_Guard<ACE_LOCK>::tryacquire (void)
+ACE_Write_Guard<ACE_LOCK>::tryacquire ()
 {
   return this->owner_ = this->lock_->tryacquire_write ();
 }
@@ -125,25 +125,25 @@ ACE_Write_Guard<ACE_LOCK>::ACE_Write_Guard (ACE_LOCK &m,
 }
 
 template <class ACE_LOCK> ACE_INLINE int
-ACE_Read_Guard<ACE_LOCK>::acquire_read (void)
+ACE_Read_Guard<ACE_LOCK>::acquire_read ()
 {
   return this->owner_ = this->lock_->acquire_read ();
 }
 
 template <class ACE_LOCK> ACE_INLINE int
-ACE_Read_Guard<ACE_LOCK>::acquire (void)
+ACE_Read_Guard<ACE_LOCK>::acquire ()
 {
   return this->owner_ = this->lock_->acquire_read ();
 }
 
 template <class ACE_LOCK> ACE_INLINE int
-ACE_Read_Guard<ACE_LOCK>::tryacquire_read (void)
+ACE_Read_Guard<ACE_LOCK>::tryacquire_read ()
 {
   return this->owner_ = this->lock_->tryacquire_read ();
 }
 
 template <class ACE_LOCK> ACE_INLINE int
-ACE_Read_Guard<ACE_LOCK>::tryacquire (void)
+ACE_Read_Guard<ACE_LOCK>::tryacquire ()
 {
   return this->owner_ = this->lock_->tryacquire_read ();
 }

@@ -52,7 +52,7 @@ Supplier::connect (RtecEventChannelAdmin::EventChannel_ptr ec)
 }
 
 void
-Supplier::disconnect (void)
+Supplier::disconnect ()
 {
   RtecEventChannelAdmin::ProxyPushConsumer_var proxy;
   {
@@ -88,7 +88,7 @@ Supplier::push (const RtecEventComm::EventSet &events)
 }
 
 void
-Supplier::disconnect_push_supplier (void)
+Supplier::disconnect_push_supplier ()
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
   this->proxy_consumer_ =
@@ -96,7 +96,7 @@ Supplier::disconnect_push_supplier (void)
 }
 
 PortableServer::POA_ptr
-Supplier::_default_POA (void)
+Supplier::_default_POA ()
 {
   return PortableServer::POA::_duplicate (this->default_POA_.in ());
 }

@@ -14,8 +14,11 @@
 #include "be_predefined_type.h"
 #include "be_visitor.h"
 #include "be_helper.h"
-#include "utl_identifier.h"
+
 #include "global_extern.h"
+
+#include "utl_identifier.h"
+#include "utl_err.h"
 
 #include "ace/Log_Msg.h"
 #include "ace/ACE.h"
@@ -107,6 +110,14 @@ be_predefined_type::gen_member_ostream_operator (TAO_OutStream *os,
         *os << "ACE_OutputCDR::from_wchar (" << instance_name
             << (accessor ? " ()" : "") << ")";
         break;
+      case AST_PredefinedType::PT_uint8:
+        *os << "ACE_OutputCDR::from_uint8 (" << instance_name
+            << (accessor ? " ()" : "") << ")";
+        break;
+      case AST_PredefinedType::PT_int8:
+        *os << "ACE_OutputCDR::from_int8 (" << instance_name
+            << (accessor ? " ()" : "") << ")";
+        break;
       case AST_PredefinedType::PT_object:
       case AST_PredefinedType::PT_abstract:
       case AST_PredefinedType::PT_pseudo:
@@ -123,19 +134,19 @@ be_predefined_type::gen_member_ostream_operator (TAO_OutStream *os,
 
 // Overriden method.
 void
-be_predefined_type::compute_tc_name (void)
+be_predefined_type::compute_tc_name ()
 {
   // Start with the head as the CORBA namespace.
-  Identifier *corba_id = 0;
+  Identifier *corba_id = nullptr;
   ACE_NEW (corba_id,
            Identifier ("CORBA"));
 
   ACE_NEW (this->tc_name_,
            UTL_ScopedName (corba_id,
-                           0));
+                           nullptr));
 
-  Identifier *id = 0;
-  UTL_ScopedName *conc_name = 0;
+  Identifier *id = nullptr;
+  UTL_ScopedName *conc_name = nullptr;
 
   switch (this->pt ())
     {
@@ -198,19 +209,19 @@ be_predefined_type::compute_tc_name (void)
     case AST_PredefinedType::PT_any:
       ACE_NEW (id,
                Identifier ("_tc_any"));
-    break;
+      break;
     case AST_PredefinedType::PT_object:
       ACE_NEW (id,
                Identifier ("_tc_Object"));
-    break;
+      break;
     case AST_PredefinedType::PT_value:
       ACE_NEW (id,
                Identifier ("_tc_ValueBase"));
-    break;
+      break;
     case AST_PredefinedType::PT_abstract:
       ACE_NEW (id,
                Identifier ("_tc_AbstractBase"));
-    break;
+      break;
     case AST_PredefinedType::PT_pseudo:
       {
         char tcname [100];
@@ -222,20 +233,28 @@ be_predefined_type::compute_tc_name (void)
                  Identifier (tcname));
         break;
       }
-    default:
-      ACE_ERROR ((LM_WARNING, "Unknown or invalid predefined type"));
+    case AST_PredefinedType::PT_uint8:
+      ACE_NEW (id, Identifier ("_tc_uint8"));
       break;
+    case AST_PredefinedType::PT_int8:
+      ACE_NEW (id, Identifier ("_tc_int8"));
+      break;
+    default:
+      idl_global->err ()->misc_error (
+        "be_predefined_type::compute_tc_name: Unknown or invalid predefined type", this);
+      // Nothing else to do. We will segfault if we continue, return, or throw Bailout
+      ACE_OS::abort ();
     }
 
   ACE_NEW (conc_name,
            UTL_ScopedName (id,
-                           0));
+                           nullptr));
 
   this->tc_name_->nconc (conc_name);
 }
 
 void
-be_predefined_type::compute_repoID (void)
+be_predefined_type::compute_repoID ()
 {
   switch (this->pt ())
     {
@@ -256,12 +275,8 @@ be_predefined_type::accept (be_visitor *visitor)
 }
 
 void
-be_predefined_type::destroy (void)
+be_predefined_type::destroy ()
 {
   this->AST_PredefinedType::destroy ();
   this->be_type::destroy ();
 }
-
-
-
-IMPL_NARROW_FROM_DECL (be_predefined_type)

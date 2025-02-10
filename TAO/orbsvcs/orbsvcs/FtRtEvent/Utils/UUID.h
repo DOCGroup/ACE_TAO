@@ -37,20 +37,20 @@ class TAO_FtRtEvent_Export  UUID
   public:
     enum
     {
-      BINRARY_LENGTH= 16,
+      BINARY_LENGTH= 16,
 
       // the required length for the string representation including the termination '\0'
       STRING_LENGTH = 37
     };
 
     /* Construct an Global Unique Identifier. */
-    UUID(void);
+    UUID();
 
     /* This is used to create an uninitialized UUID. */
     UUID(int);
 
     /*
-     * Construct an UUID from the binary represetation. If you want to avoid a memory
+     * Construct an UUID from the binary representation. If you want to avoid a memory
      * copy operation for this constructor. You can safely reinterpret_cast the 16
      * bytes buffer into the UUID object and use all the member functions provided in
      * this class except is_valid() which is only useful if a UUID object is
@@ -75,7 +75,7 @@ class TAO_FtRtEvent_Export  UUID
      * representation. This is done by testing whether the time_hi and time_mid fields
      * of the timestamp are 0. By current time, those two field shouldn't be 0 at all.
      */
-    bool is_valid(void) const;
+    bool is_valid() const;
 
     /*
      * convert to a string representation the buffer size provided must be at least
@@ -87,7 +87,7 @@ class TAO_FtRtEvent_Export  UUID
 
     /*
      * convert to a string representation the buffer size provided must be at least
-     * BINRARY_LENGTH
+     * BINARY_LENGTH
      */
     void to_binary(unsigned char *binary_rep) const;
 
@@ -101,7 +101,7 @@ class TAO_FtRtEvent_Export  UUID
         ACE_UINT32  low;
         ACE_UINT32  hi;
       } timestamp;
-      unsigned char uuid[BINRARY_LENGTH];
+      unsigned char uuid[BINARY_LENGTH];
     } rep_;
 };
 }

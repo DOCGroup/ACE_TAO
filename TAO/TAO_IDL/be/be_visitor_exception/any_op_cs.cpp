@@ -18,7 +18,7 @@ be_visitor_exception_any_op_cs::be_visitor_exception_any_op_cs (
 {
 }
 
-be_visitor_exception_any_op_cs::~be_visitor_exception_any_op_cs (void)
+be_visitor_exception_any_op_cs::~be_visitor_exception_any_op_cs ()
 {
 }
 
@@ -33,9 +33,7 @@ be_visitor_exception_any_op_cs::visit_exception (be_exception *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2
-      << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (os);
 
   *os << be_global->core_versioning_begin () << be_nl;
 
@@ -103,94 +101,7 @@ be_visitor_exception_any_op_cs::visit_exception (be_exception *node)
 
   *os << be_global->core_versioning_end () << be_nl;
 
-  be_module *module = 0;
-  if (node->is_nested ())
-    {
-      AST_Decl *d = node;
-      AST_Decl::NodeType nt = d->node_type ();
-
-      while (nt != AST_Decl::NT_root)
-        {
-          if (nt == AST_Decl::NT_module)
-            {
-              module = be_module::narrow_from_decl (d);
-              break;
-            }
-          else
-            {
-              d = ScopeAsDecl (d->defined_in ());
-              nt = d->node_type ();
-            }
-        }
-
-      if (module != 0)
-        {
-          // Some compilers handle "any" operators in a namespace corresponding
-          // to their module, others do not.
-          *os << "\n\n#if defined (ACE_ANY_OPS_USE_NAMESPACE)\n";
-
-          be_util::gen_nested_namespace_begin (os, module);
-
-          // Copying insertion operator.
-
-          *os << be_nl_2
-              << "/// Copying insertion." << be_nl
-              << "void operator<<= (" << be_idt_nl
-              << "::CORBA::Any &_tao_any," << be_nl
-              << "const ::" << node->name () << " &_tao_elem)"
-              << be_uidt_nl
-              << "{" << be_idt_nl
-              << "TAO::Any_Dual_Impl_T< ::" << node->name () << ">::insert_copy ("
-              << be_idt_nl
-              << "_tao_any," << be_nl
-              << "::" << node->name () << "::_tao_any_destructor," << be_nl
-              << "::" << node->tc_name () << "," << be_nl
-              << "_tao_elem);" << be_uidt
-              << be_uidt_nl
-              << "}" << be_nl_2;
-
-          // Non-copying insertion operator."
-          *os << "/// Non-copying insertion." << be_nl
-              << "void operator<<= (" << be_idt_nl
-              << "::CORBA::Any &_tao_any," << be_nl
-              << "::" << node->name () << " *_tao_elem)"
-              << be_uidt_nl
-              << "{" << be_idt_nl
-              << "TAO::Any_Dual_Impl_T< ::" << node->name () << ">::insert ("
-              << be_idt_nl
-              << "_tao_any," << be_nl
-              << "::" << node->name () << "::_tao_any_destructor," << be_nl
-              << "::" << node->tc_name () << "," << be_nl
-              << "_tao_elem);" << be_uidt
-              << be_uidt_nl
-              << "}" << be_nl_2;
-
-          // Extraction to const pointer operator.
-          *os << "/// Extraction to const pointer." << be_nl
-              << "::CORBA::Boolean operator>>= (" << be_idt_nl
-              << "const ::CORBA::Any &_tao_any," << be_nl
-              << "const ::" << node->name () << " *&_tao_elem)"
-              << be_uidt_nl
-              << "{" << be_idt_nl
-              << "return TAO::Any_Dual_Impl_T< ::" << node->name () << ">::extract ("
-              << be_idt_nl
-              << "_tao_any," << be_nl
-              << "::" << node->name () << "::_tao_any_destructor," << be_nl
-              << "::" << node->tc_name () << "," << be_nl
-              << "_tao_elem);" << be_uidt
-              << be_uidt_nl
-              << "}";
-
-          be_util::gen_nested_namespace_end (os, module);
-
-          // Emit #else.
-          *os << be_nl_2
-              << "#else\n";
-        }
-    }
-
-
-  *os << be_global->core_versioning_begin () << be_nl;
+  *os << be_global->anyops_versioning_begin () << be_nl;
 
   // Copying insertion operator.
 
@@ -242,12 +153,7 @@ be_visitor_exception_any_op_cs::visit_exception (be_exception *node)
       << be_uidt_nl
       << "}";
 
-  *os << be_global->core_versioning_end () << be_nl;
-
-  if (module != 0)
-    {
-      *os << "\n\n#endif";
-    }
+  *os << be_global->anyops_versioning_end () << be_nl;
 
   // all we have to do is to visit the scope and generate code
   if (this->visit_scope (node) == -1)
@@ -258,7 +164,7 @@ be_visitor_exception_any_op_cs::visit_exception (be_exception *node)
                         -1);
     }
 
-  node->cli_stub_any_op_gen (1);
+  node->cli_stub_any_op_gen (true);
   return 0;
 }
 
@@ -266,7 +172,7 @@ int
 be_visitor_exception_any_op_cs::visit_field (be_field *node)
 {
   // First generate the type information.
-  be_type *bt = be_type::narrow_from_decl (node->field_type ());
+  be_type *bt = dynamic_cast<be_type*> (node->field_type ());
 
   if (!bt)
     {

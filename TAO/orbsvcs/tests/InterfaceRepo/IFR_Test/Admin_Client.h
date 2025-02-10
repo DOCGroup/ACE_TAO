@@ -33,38 +33,38 @@ class Admin_Client
 {
 public:
   /// Constructor
-  Admin_Client (void);
+  Admin_Client ();
 
   /// Destructor
-  ~Admin_Client (void);
+  ~Admin_Client ();
 
   /// Initialize the ORB and get the IFR object reference.
   int init (int argc,
             ACE_TCHAR *argv[]);
 
   /// Execute test code.
-  int run (void);
+  int run ();
 
 private:
   /// The various IFR tests.
-  void array_test (void);
-  void enum_test (void);
-  void alias_test (void);
-  void native_test (void);
-  void struct_test (void);
-  void union_test (void);
-  void exception_test (void);
-  void constant_test (void);
-  void interface_test (void);
-  void move_test (void);
-  void module_test (void);
+  void array_test ();
+  void enum_test ();
+  void alias_test ();
+  void native_test ();
+  void struct_test ();
+  void union_test ();
+  void exception_test ();
+  void constant_test ();
+  void interface_test ();
+  void move_test ();
+  void module_test ();
 
   /// Process the command line arguments.
   int parse_args (int argc,
                   ACE_TCHAR *argv[]);
 
   /// Array of pointers to the test functions.
-  void (Admin_Client::*test_array_[NUMBER_OF_TESTS])(void);
+  void (Admin_Client::*test_array_[NUMBER_OF_TESTS])();
 
   /// Array of test names used in selection of one test.
   static const char *test_names_[];

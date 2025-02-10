@@ -41,7 +41,7 @@ public:
   /**
    * Default constructor.  Create with no parent.
    */
-  ACEXML_XMLFilterImpl (void);
+  ACEXML_XMLFilterImpl ();
 
   /**
    * Construct an XML filter with the specified parent.
@@ -51,7 +51,7 @@ public:
   /**
    * Destructor.
    */
-  virtual ~ACEXML_XMLFilterImpl (void);
+  virtual ~ACEXML_XMLFilterImpl ();
 
   /*
    * Look up the value of a feature.
@@ -86,7 +86,7 @@ public:
   /*
    * Get the parent reader.
    */
-  virtual ACEXML_XMLReader *getParent (void) const;
+  virtual ACEXML_XMLReader *getParent () const;
 
   /*
    * Set the parent reader.
@@ -96,22 +96,22 @@ public:
   /*
    * Get the current DTD event handler.
    */
-  virtual ACEXML_DTDHandler *getDTDHandler (void) const;
+  virtual ACEXML_DTDHandler *getDTDHandler () const;
 
   /*
    * Get the current content event handler.
    */
-  virtual ACEXML_ContentHandler *getContentHandler (void) const;
+  virtual ACEXML_ContentHandler *getContentHandler () const;
 
   /*
    * Get the current entity resolver.
    */
-  virtual ACEXML_EntityResolver *getEntityResolver (void) const;
+  virtual ACEXML_EntityResolver *getEntityResolver () const;
 
   /*
    * Get the current error event handler.
    */
-  virtual ACEXML_ErrorHandler *getErrorHandler (void) const;
+  virtual ACEXML_ErrorHandler *getErrorHandler () const;
 
   /*
    * Set the DTD event handler.
@@ -143,7 +143,7 @@ public:
   /*
    * Receive notification of the end of a document.
    */
-  virtual void endDocument (void);
+  virtual void endDocument ();
 
   /*
    * Receive notification of the end of an element.
@@ -183,7 +183,7 @@ public:
   /*
    * Receive notification of the beginning of a document.
    */
-  virtual void startDocument (void);
+  virtual void startDocument ();
 
   /*
    * Receive notification of the beginning of an element.
@@ -241,7 +241,7 @@ public:
    */
   virtual void warning (ACEXML_SAXParseException &exception);
 protected:
-  int setupParser (void);
+  int setupParser ();
   // Set up the event handlers of parent parser to this.
   // Returns -1 if no valid parent is set.
 

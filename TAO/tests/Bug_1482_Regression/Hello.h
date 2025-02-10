@@ -14,7 +14,7 @@ public:
   Hello (CORBA::ORB_ptr orb);
 
   // = The skeleton methods
-  virtual CORBA::ULong next_prime (void);
+  virtual CORBA::ULong next_prime ();
 
 private:
   /// Use an ORB reference to convert strings to objects and shutdown

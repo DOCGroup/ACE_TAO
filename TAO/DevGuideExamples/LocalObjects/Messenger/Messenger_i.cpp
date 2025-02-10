@@ -2,12 +2,12 @@
 #include <iostream>
 
 // Implementation skeleton constructor
-Messenger_i::Messenger_i (void)
+Messenger_i::Messenger_i ()
 {
 }
 
 // Implementation skeleton destructor
-Messenger_i::~Messenger_i (void)
+Messenger_i::~Messenger_i ()
 {
 }
 
@@ -22,6 +22,5 @@ CORBA::Boolean Messenger_i::send_message (
   CORBA::string_free(message);
   message = CORBA::string_dup("Thanks for the message.");
   return true;
-
 }
 

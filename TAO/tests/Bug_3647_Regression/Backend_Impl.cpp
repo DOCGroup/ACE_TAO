@@ -10,11 +10,6 @@ Backend_Impl(CORBA::ORB_ptr orb, bool verbose)
 {
 }
 
-Bug_3647_Regression::Backend_Impl::
-~Backend_Impl()
-{
-}
-
 void Bug_3647_Regression::Backend_Impl::
 startup_test()
 {

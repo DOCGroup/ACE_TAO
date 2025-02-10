@@ -16,10 +16,9 @@ public:
   // = The skeleton methods
   virtual ::CORBA::ULong SendSequenceOf10Long (
     ::CORBA::ULong LengthSent,
-    const ::Test::BoundSequences::SequenceOf10Long &inSeq
-  );
+    const ::Test::BoundSequences::SequenceOf10Long &inSeq);
 
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
 private:
   /// Use an ORB reference to convert strings to objects and shutdown

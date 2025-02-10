@@ -35,18 +35,19 @@ be_type::be_type (AST_Decl::NodeType nt,
               n),
     be_decl (nt,
              n),
-    tc_name_ (0),
+    tc_name_ (nullptr),
     common_varout_gen_ (false),
     seen_in_sequence_ (false),
+    seen_in_map_(false),
     seen_in_operation_ (false)
 {
-  if (n != 0)
+  if (n != nullptr)
     {
       this->gen_fwd_helper_name ();
     }
 }
 
-be_type::~be_type (void)
+be_type::~be_type ()
 {
 }
 
@@ -56,37 +57,37 @@ be_type::~be_type (void)
 // predefined types.
 
 void
-be_type::compute_tc_name (void)
+be_type::compute_tc_name ()
 {
   static char namebuf [NAMEBUFSIZE];
   UTL_ScopedName *n = this->name ();
 
-  if (this->tc_name_ != 0)
+  if (this->tc_name_ != nullptr)
     {
       this->tc_name_->destroy ();
       delete this->tc_name_;
-      this->tc_name_ = 0;
+      this->tc_name_ = nullptr;
     }
 
   ACE_OS::memset (namebuf,
                   '\0',
                   NAMEBUFSIZE);
 
-  while (n->tail () != 0)
+  while (n->tail () != nullptr)
     {
       // Does not exist.
-      if (this->tc_name_ == 0)
+      if (this->tc_name_ == nullptr)
         {
           ACE_NEW (this->tc_name_,
                    UTL_ScopedName (n->head ()->copy (),
-                                   0));
+                                   nullptr));
         }
       else
         {
-          UTL_ScopedName *conc_name = 0;
+          UTL_ScopedName *conc_name = nullptr;
           ACE_NEW (conc_name,
                    UTL_ScopedName (n->head ()->copy (),
-                                   0));
+                                   nullptr));
 
           this->tc_name_->nconc (conc_name);
         }
@@ -98,23 +99,23 @@ be_type::compute_tc_name (void)
                    "_tc_%s",
                    n->last_component ()->get_string ());
 
-  Identifier *id = 0;
+  Identifier *id = nullptr;
   ACE_NEW (id,
            Identifier (namebuf));
 
   // Does not exist.
-  if (this->tc_name_ == 0)
+  if (this->tc_name_ == nullptr)
     {
       ACE_NEW (this->tc_name_,
                UTL_ScopedName (id,
-                               0));
+                               nullptr));
     }
   else
     {
-      UTL_ScopedName *conc_name = 0;
+      UTL_ScopedName *conc_name = nullptr;
       ACE_NEW (conc_name,
                UTL_ScopedName (id,
-                               0));
+                               nullptr));
 
       this->tc_name_->nconc (conc_name);
     }
@@ -122,10 +123,10 @@ be_type::compute_tc_name (void)
 
 // Retrieve typecode name.
 UTL_ScopedName *
-be_type::tc_name (void)
+be_type::tc_name ()
 {
   // Compute and init the member.
-  if (this->tc_name_ == 0)
+  if (this->tc_name_ == nullptr)
     {
       this->compute_tc_name ();
     }
@@ -145,7 +146,7 @@ be_type::nested_sp_type_name (be_decl *use_scope,
                               const char *prefix)
 {
   // Our defining scope.
-  be_decl *fu_scope = 0;
+  be_decl *fu_scope = nullptr;
 
   char fu_name [NAMEBUFSIZE];
   char fl_name [NAMEBUFSIZE];
@@ -159,11 +160,11 @@ be_type::nested_sp_type_name (be_decl *use_scope,
                   NAMEBUFSIZE);
 
   fu_scope = this->defined_in ()
-               ? be_scope::narrow_from_scope (this->defined_in ())->decl ()
-               : 0;
+               ? dynamic_cast<be_scope*> (this->defined_in ())->decl ()
+               : nullptr;
 
   ACE_OS::strcat (fu_name,
-                  (fu_scope != 0 ? fu_scope->full_name () : ""));
+                  (fu_scope != nullptr ? fu_scope->full_name () : ""));
 
   ACE_OS::strcat (fu_name,
                   "::TAO_");
@@ -185,14 +186,14 @@ be_type::nested_sp_type_name (be_decl *use_scope,
 }
 
 void
-be_type::gen_fwd_helper_name (void)
+be_type::gen_fwd_helper_name ()
 {
   AST_Decl *parent = ScopeAsDecl (this->defined_in ());
-  Identifier *segment = 0;
-  char *tmp = 0;
+  Identifier *segment = nullptr;
+  char *tmp = nullptr;
   this->fwd_helper_name_.clear (true);
 
-  if (parent != 0 && parent->node_type () != AST_Decl::NT_root)
+  if (parent != nullptr && parent->node_type () != AST_Decl::NT_root)
     {
       for (UTL_IdListActiveIterator i (parent->name ());
            !i.is_done ();
@@ -235,7 +236,7 @@ be_type::gen_member_ostream_operator (TAO_OutStream *os,
 }
 
 const char *
-be_type::fwd_helper_name (void) const
+be_type::fwd_helper_name () const
 {
   return this->fwd_helper_name_.fast_rep ();
 }
@@ -254,8 +255,7 @@ be_type::gen_common_varout (TAO_OutStream *os)
       return;
     }
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (os);
 
   AST_Type::SIZE_TYPE st = this->size_type ();
 
@@ -264,28 +264,23 @@ be_type::gen_common_varout (TAO_OutStream *os)
                                                     : "class ")
       << this->local_name () << ";";
 
-  *os << be_nl_2
-      << "typedef" << be_idt_nl
+  *os << be_nl
+      << "using " << this->local_name () << "_var = "
       << (st == AST_Type::FIXED ? "::TAO_Fixed_Var_T<"
                                 : "::TAO_Var_Var_T<")
-      << be_idt << be_idt_nl
-      << this->local_name () << be_uidt_nl
-      << ">" << be_uidt_nl
-      << this->local_name () << "_var;" << be_uidt << be_nl_2;
+      << this->local_name () << ">;" << be_nl;
 
   if (st == AST_Type::FIXED)
     {
-      *os << "typedef" << be_idt_nl
-          << this->local_name () << " &" << be_nl
-          << this->local_name () << "_out;" << be_uidt;
+      *os << "using " << this->local_name () << "_out = "
+          << this->local_name () << "&;";
     }
   else
     {
-      *os << "typedef" << be_idt_nl
-          << "::TAO_Out_T<" << be_idt << be_idt_nl
-          << this->local_name () << be_uidt_nl
-          << ">" << be_uidt_nl
-          << this->local_name () << "_out;" << be_uidt;
+      *os << "using " << this->local_name ()
+          << "_out = ::TAO_Out_T<"
+          << this->local_name ()
+          << ">;";
     }
 
   this->common_varout_gen_ = true;
@@ -299,23 +294,21 @@ be_type::gen_stub_decls (TAO_OutStream *os)
       return;
     }
 
-  *os << be_nl_2
-      << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
-  AST_Interface *i = AST_Interface::narrow_from_decl (this);
-  AST_ValueType *v = AST_ValueType::narrow_from_decl (this);
+  AST_Interface *i = dynamic_cast<AST_Interface*> (this);
+  AST_ValueType *v = dynamic_cast<AST_ValueType*> (this);
 
-  if (i != 0)
+  if (i != nullptr)
     {
-      *os << "typedef " << this->local_name ()
-          << (v == 0 ? "_ptr" : " *") << " _ptr_type;";
+      *os << "using _ptr_type = " << this->local_name ()
+          << (v == nullptr ? "_ptr" : "*") << ";";
     }
 
   bool skip_varout = false;
-  AST_Sequence *s = AST_Sequence::narrow_from_decl (this);
+  AST_Sequence *s = dynamic_cast<AST_Sequence*> (this);
 
-  if (s != 0)
+  if (s != nullptr)
     {
       // _vars and _outs not supported yet by alt mapping.
       if (be_global->alt_mapping () && s->unbounded ())
@@ -327,10 +320,8 @@ be_type::gen_stub_decls (TAO_OutStream *os)
   if (!skip_varout)
     {
       *os << be_nl
-          << "typedef " << this->local_name ()
-          << "_var _var_type;" << be_nl
-          << "typedef " << this->local_name ()
-          << "_out _out_type;";
+          << "using _var_type = " << this->local_name () << "_var;" << be_nl
+          << "using _out_type = " << this->local_name () << "_out;";
     }
 
   bool gen_any_destructor =
@@ -346,7 +337,7 @@ be_type::gen_stub_decls (TAO_OutStream *os)
 }
 
 bool
-be_type::seen_in_sequence (void) const
+be_type::seen_in_sequence () const
 {
   return this->seen_in_sequence_;
 }
@@ -358,7 +349,19 @@ be_type::seen_in_sequence (bool val)
 }
 
 bool
-be_type::seen_in_operation (void) const
+be_type::seen_in_map () const
+{
+  return this->seen_in_map_;
+}
+
+void
+be_type::seen_in_map (bool val)
+{
+  this->seen_in_map_ = val;
+}
+
+bool
+be_type::seen_in_operation () const
 {
   return this->seen_in_operation_;
 }
@@ -370,20 +373,20 @@ be_type::seen_in_operation (bool val)
 }
 
 AST_Decl::NodeType
-be_type::base_node_type (void) const
+be_type::base_node_type () const
 {
   return const_cast<be_type*> (this)->node_type ();
 }
 
 // Cleanup method
 void
-be_type::destroy (void)
+be_type::destroy ()
 {
-  if (this->tc_name_ != 0)
+  if (this->tc_name_ != nullptr)
     {
       this->tc_name_->destroy ();
       delete this->tc_name_;
-      this->tc_name_ = 0;
+      this->tc_name_ = nullptr;
     }
 
   this->be_decl::destroy ();
@@ -394,7 +397,3 @@ be_type::accept (be_visitor *visitor)
 {
   return visitor->visit_type (this);
 }
-
-
-
-IMPL_NARROW_FROM_DECL (be_type)

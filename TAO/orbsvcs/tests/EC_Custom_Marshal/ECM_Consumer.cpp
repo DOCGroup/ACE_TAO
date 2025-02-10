@@ -11,7 +11,7 @@
 #include "tao/CDR.h"
 
 #include "ace/Get_Opt.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/Sched_Params.h"
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_unistd.h"
@@ -25,7 +25,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
 // ****************************************************************
 
-Driver::Driver (void)
+Driver::Driver ()
   : n_consumers_ (1),
     event_count_ (100),
     event_a_ (ACE_ES_EVENT_UNDEFINED),
@@ -75,7 +75,7 @@ Driver::run (int argc, ACE_TCHAR* argv[])
                   this->event_a_,
                   this->event_b_,
 
-                  this->pid_file_name_?this->pid_file_name_:ACE_TEXT("nil")) );
+                  this->pid_file_name_?this->pid_file_name_:ACE_TEXT("nil")));
 
       if (this->pid_file_name_ != 0)
         {
@@ -90,7 +90,7 @@ Driver::run (int argc, ACE_TCHAR* argv[])
 
       int min_priority =
         ACE_Sched_Params::priority_min (ACE_SCHED_FIFO);
-        // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
+      // Enable FIFO scheduling
 
       if (ACE_OS::sched_params (ACE_Sched_Params (ACE_SCHED_FIFO,
                                                   min_priority,
@@ -274,7 +274,7 @@ Driver::connect_consumers (RtecEventChannelAdmin::EventChannel_ptr channel)
 }
 
 void
-Driver::disconnect_consumers (void)
+Driver::disconnect_consumers ()
 {
   for (int i = 0; i < this->n_consumers_; ++i)
     {
@@ -380,11 +380,10 @@ Test_Consumer::connect (int event_a,
 
   this->supplier_proxy_->connect_push_consumer (objref.in (),
                                                 qos.get_ConsumerQOS ());
-
 }
 
 void
-Test_Consumer::disconnect (void)
+Test_Consumer::disconnect ()
 {
   if (CORBA::is_nil (this->supplier_proxy_.in ()))
     return;
@@ -403,6 +402,6 @@ Test_Consumer::push (const RtecEventComm::EventSet& events)
 }
 
 void
-Test_Consumer::disconnect_push_consumer (void)
+Test_Consumer::disconnect_push_consumer ()
 {
 }

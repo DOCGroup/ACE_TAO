@@ -6,7 +6,7 @@
 #include "Name.h"
 #include "ace/Barrier.h"
 
-TAO_Notify_Tests_Activation_Manager::TAO_Notify_Tests_Activation_Manager (void)
+TAO_Notify_Tests_Activation_Manager::TAO_Notify_Tests_Activation_Manager ()
   : barrier_ (0)
   , active_suppliers_ (0)
   , active_consumers_ (0)
@@ -67,7 +67,7 @@ TAO_Notify_Tests_Activation_Manager::done (TAO_Notify_Tests_Periodic_Consumer* /
 }
 
 void
-TAO_Notify_Tests_Activation_Manager::wait_for_completion (void)
+TAO_Notify_Tests_Activation_Manager::wait_for_completion ()
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, mon, this->lock_);
 
@@ -76,13 +76,13 @@ TAO_Notify_Tests_Activation_Manager::wait_for_completion (void)
 }
 
 int
-TAO_Notify_Tests_Activation_Manager::supplier_count (void)
+TAO_Notify_Tests_Activation_Manager::supplier_count ()
 {
   return ACE_Utils::truncate_cast<int> (this->supplier_map_.current_size ());
 }
 
 int
-TAO_Notify_Tests_Activation_Manager::consumer_count (void)
+TAO_Notify_Tests_Activation_Manager::consumer_count ()
 {
   return ACE_Utils::truncate_cast<int> (this->consumer_map_.current_size ());
 }
@@ -144,7 +144,7 @@ TAO_Notify_Tests_Activation_Manager::resolve (TAO_Notify_Tests_Periodic_Consumer
 }
 
 int
-TAO_Notify_Tests_Activation_Manager::activate_suppliers (void)
+TAO_Notify_Tests_Activation_Manager::activate_suppliers ()
 {
   TAO_Notify_Tests_PeriodicSupplier_Iterator iter(this->supplier_map_);
 
@@ -218,7 +218,7 @@ TAO_Notify_Tests_Activation_Manager::dump_stats (int dump_samples)
 }
 
 void
-TAO_Notify_Tests_Activation_Manager::write_ior (void)
+TAO_Notify_Tests_Activation_Manager::write_ior ()
 {
   PortableServer::ServantBase_var servant_var (this);
 
@@ -242,7 +242,7 @@ TAO_Notify_Tests_Activation_Manager::write_ior (void)
 }
 
 void
-TAO_Notify_Tests_Activation_Manager::wait_for_start_signal (void)
+TAO_Notify_Tests_Activation_Manager::wait_for_start_signal ()
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, mon, this->lock_);
 
@@ -251,7 +251,7 @@ TAO_Notify_Tests_Activation_Manager::wait_for_start_signal (void)
 }
 
 void
-TAO_Notify_Tests_Activation_Manager::start (void)
+TAO_Notify_Tests_Activation_Manager::start ()
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, mon, this->lock_);
 
@@ -261,7 +261,7 @@ TAO_Notify_Tests_Activation_Manager::start (void)
 }
 
 void
-TAO_Notify_Tests_Activation_Manager::signal_peer (void)
+TAO_Notify_Tests_Activation_Manager::signal_peer ()
 {
   CORBA::ORB_var orb;
   LOOKUP_MANAGER->resolve (orb);

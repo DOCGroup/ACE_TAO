@@ -59,7 +59,6 @@ class TestConsumer : public POA_CosEventComm::PushConsumer
   PortableServer::POA_ptr poa_;
   CORBA::ORB_ptr orb_;
 public:
-
   TestConsumer(int evts,
                CosNotifyChannelAdmin::EventChannelFactory_ptr ecf,
                PortableServer::POA_ptr poa,
@@ -153,11 +152,9 @@ public:
 
   void disconnect_self() {
   }
-
 };
 
 int ACE_TMAIN (int ac, ACE_TCHAR* av[]) {
-
   int num_events = 0;
 
   try {
@@ -202,7 +199,6 @@ int ACE_TMAIN (int ac, ACE_TCHAR* av[]) {
     orb->destroy();
 
     return 0;
-
   } catch(const CORBA::Exception& e) {
     std::cerr << "Consumer: main() exception: " << e << std::endl;
   } catch(const std::invalid_argument& e) {

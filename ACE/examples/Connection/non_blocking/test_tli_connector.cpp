@@ -5,7 +5,6 @@
 #include "CPP-connector.h"
 
 
-
 #if defined (ACE_HAS_TLI)
 
 typedef Peer_Handler<ACE_TLI_STREAM> PEER_HANDLER;

@@ -54,20 +54,20 @@ namespace
 // read(2)) for the open()ed /dev/zero device.  Reading through the
 // /dev/zero file descriptor simply returns zero, as /dev/zero was
 // designed to do.  So unfortunate. :)
-TAO_MMAP_Allocator::TAO_MMAP_Allocator (void)
-  : TAO_MMAP_Allocator_Base ((char const *) 0 /* pool name */,
-                             0,  // No need to explicitly name the lock.
+TAO_MMAP_Allocator::TAO_MMAP_Allocator ()
+  : TAO_MMAP_Allocator_Base ((char const *) nullptr /* pool name */,
+                             nullptr,  // No need to explicitly name the lock.
                              &the_pool_options)
 {
 }
 
-TAO_MMAP_Allocator::~TAO_MMAP_Allocator (void)
+TAO_MMAP_Allocator::~TAO_MMAP_Allocator ()
 {
 }
 
 // @@ Should be const but underlying allocator methods are not!
 ACE_HANDLE
-TAO_MMAP_Allocator::handle (void)
+TAO_MMAP_Allocator::handle ()
 {
   return this->alloc ().memory_pool ().mmap ().handle ();
 }

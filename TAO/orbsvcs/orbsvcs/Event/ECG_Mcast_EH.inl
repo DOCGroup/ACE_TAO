@@ -3,7 +3,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 TAO_ECG_Mcast_EH::
-Observer_Disconnect_Command::Observer_Disconnect_Command (void)
+Observer_Disconnect_Command::Observer_Disconnect_Command ()
   : handle_ ()
   , ec_ ()
 {
@@ -42,7 +42,7 @@ Observer_Disconnect_Command::operator= (
 
 ACE_INLINE void
 TAO_ECG_Mcast_EH::
-Observer_Disconnect_Command::execute (void)
+Observer_Disconnect_Command::execute ()
 {
   if (CORBA::is_nil (this->ec_.in ()))
     // We are not connected.

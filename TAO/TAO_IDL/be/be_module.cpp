@@ -24,7 +24,7 @@ be_module::be_module (UTL_ScopedName *n, AST_Module *previous)
 }
 
 void
-be_module::destroy (void)
+be_module::destroy ()
 {
   // Call the destroy methods of our base classes.
   this->be_scope::destroy ();
@@ -37,6 +37,3 @@ be_module::accept (be_visitor *visitor)
 {
   return visitor->visit_module (this);
 }
-
-IMPL_NARROW_FROM_DECL (be_module)
-IMPL_NARROW_FROM_SCOPE (be_module)

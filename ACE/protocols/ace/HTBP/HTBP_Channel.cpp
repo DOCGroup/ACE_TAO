@@ -16,7 +16,7 @@
 #include "HTBP_Session.h"
 #include "HTBP_Filter_Factory.h"
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/Message_Block.h"
 #include "ace/Reactor.h"
 #include "ace/os_include/netinet/os_tcp.h"
@@ -95,7 +95,7 @@ ACE::HTBP::Channel::Channel (ACE_HANDLE h)
 }
 
 /// Destructor.
-ACE::HTBP::Channel::~Channel (void)
+ACE::HTBP::Channel::~Channel ()
 {
   delete this->notifier_;
   delete this->filter_;
@@ -103,12 +103,12 @@ ACE::HTBP::Channel::~Channel (void)
 
   /// Dump the state of an object.
 void
-ACE::HTBP::Channel::dump (void) const
+ACE::HTBP::Channel::dump () const
 {
 }
 
 unsigned long
-ACE::HTBP::Channel::request_count (void)
+ACE::HTBP::Channel::request_count ()
 {
   return this->request_count_++;
 }
@@ -135,13 +135,13 @@ ACE::HTBP::Channel::register_notifier (ACE_Reactor *r)
 }
 
 ACE::HTBP::Notifier *
-ACE::HTBP::Channel::notifier (void)
+ACE::HTBP::Channel::notifier ()
 {
   return this->notifier_;
 }
 
 ACE_HANDLE
-ACE::HTBP::Channel::get_handle (void) const
+ACE::HTBP::Channel::get_handle () const
 {
   return this->ace_stream_.get_handle ();
 }
@@ -158,7 +158,7 @@ ACE::HTBP::Channel::data_consumed (size_t n)
 }
 
 int
-ACE::HTBP::Channel::load_buffer (void)
+ACE::HTBP::Channel::load_buffer ()
 {
   this->leftovers_.crunch();
   if (this->state() == Detached ||
@@ -203,7 +203,7 @@ ACE::HTBP::Channel::load_buffer (void)
 }
 
 int
-ACE::HTBP::Channel::flush_buffer (void)
+ACE::HTBP::Channel::flush_buffer ()
 {
   if (this->session_)
     return this->session_->flush_outbound_queue();
@@ -211,13 +211,13 @@ ACE::HTBP::Channel::flush_buffer (void)
 }
 
 int
-ACE::HTBP::Channel::send_ack (void)
+ACE::HTBP::Channel::send_ack ()
 {
   return this->filter_->send_ack(this);
 }
 
 int
-ACE::HTBP::Channel::recv_ack (void)
+ACE::HTBP::Channel::recv_ack ()
 {
   if (load_buffer() == -1)
     return -1;
@@ -236,7 +236,7 @@ ACE::HTBP::Channel::state (ACE::HTBP::Channel::State s)
 }
 
 int
-ACE::HTBP::Channel::consume_error (void)
+ACE::HTBP::Channel::consume_error ()
 {
   if (error_buffer_ == 0)
     {
@@ -293,7 +293,7 @@ ACE::HTBP::Channel::consume_error (void)
 /// one direction on one stream.
 
 int
-ACE::HTBP::Channel::pre_recv(void)
+ACE::HTBP::Channel::pre_recv()
 {
   if (ACE::debug())
     ACE_DEBUG ((LM_DEBUG,
@@ -415,7 +415,7 @@ ACE::HTBP::Channel::recvv (iovec iov[],
     {
       int ndx = 0;
       iovec *iov2 = new iovec[iovcnt];
-      ACE_Auto_Array_Ptr<iovec> guard (iov2);
+      std::unique_ptr<iovec[]> guard (iov2);
       for (int i = 0; i < iovcnt; i++)
         {
           size_t n = ACE_MIN ((size_t) iov[i].iov_len ,

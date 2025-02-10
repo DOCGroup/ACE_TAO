@@ -84,7 +84,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         }
 
         ACE_hthread_t threadHandle;
-        if ( ACE_Thread::spawn(run_test,
+        if (ACE_Thread::spawn(run_test,
                                static_cast<void*>(server.in()),
                                THR_NEW_LWP | THR_JOINABLE ,
                                0,

@@ -16,7 +16,7 @@ Messenger_i::Messenger_i (CORBA::ORB_ptr orb)
 }
 
 // Implementation skeleton destructor
-Messenger_i::~Messenger_i (void)
+Messenger_i::~Messenger_i ()
 {
 }
 

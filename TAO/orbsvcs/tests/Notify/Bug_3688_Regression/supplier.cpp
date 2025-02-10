@@ -11,7 +11,6 @@ namespace CosNotifyCommImpl{
     void subscription_change( const CosNotification::EventTypeSeq&,
       const CosNotification::EventTypeSeq&)
     {};
-
   };
 }
 

@@ -8,10 +8,10 @@
 #include "ace/LOCK_SOCK_Acceptor.h"
 #include "ace/Proactor.h"
 #include "ace/Signal.h"
-#include "ace/Auto_Ptr.h"
 
 #include "JAWS_IO.h"
 #include "HTTP_Server.h"
+#include <memory>
 
 // class is overkill
 class JAWS
@@ -154,7 +154,7 @@ HTTP_Server::init (int argc, ACE_TCHAR *argv[])
   //NOTE: At this point f better not be a NULL pointer,
   //so please do not change the ACE_NEW_RETURN macros unless
   //you know what you are doing
-  ACE_Auto_Ptr<HTTP_Handler_Factory> factory (f);
+  std::unique_ptr<HTTP_Handler_Factory> factory (f);
 
   // Choose what concurrency strategy to run.
   switch (this->strategy_)
@@ -174,7 +174,7 @@ HTTP_Server::init (int argc, ACE_TCHAR *argv[])
 }
 
 int
-HTTP_Server::fini (void)
+HTTP_Server::fini ()
 {
   this->tm_.close ();
   return 0;
@@ -211,7 +211,7 @@ Synch_Thread_Pool_Task::Synch_Thread_Pool_Task (HTTP_Acceptor &acceptor,
 }
 
 int
-Synch_Thread_Pool_Task::svc (void)
+Synch_Thread_Pool_Task::svc ()
 {
   // Creates a factory of HTTP_Handlers binding to synchronous I/O strategy
   //Synch_HTTP_Handler_Factory factory;
@@ -329,7 +329,7 @@ Thread_Per_Request_Task::open (void *)
 }
 
 int
-Thread_Per_Request_Task::svc (void)
+Thread_Per_Request_Task::svc ()
 {
   ACE_Message_Block *mb = 0;
   ACE_NEW_RETURN (mb, ACE_Message_Block (HTTP_Handler::MAX_REQUEST_SIZE + 1),
@@ -367,7 +367,7 @@ Thread_Per_Request_Task::close (u_long)
 //     ACT.
 
 int
-HTTP_Server::asynch_thread_pool (void)
+HTTP_Server::asynch_thread_pool ()
 {
 // This only works on Win32
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO)
@@ -409,7 +409,7 @@ Asynch_Thread_Pool_Task::Asynch_Thread_Pool_Task (ACE_Proactor &proactor,
 }
 
 int
-Asynch_Thread_Pool_Task::svc (void)
+Asynch_Thread_Pool_Task::svc ()
 {
   for (;;)
     if (this->proactor_.handle_events () == -1)

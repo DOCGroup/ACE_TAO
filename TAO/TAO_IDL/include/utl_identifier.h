@@ -72,7 +72,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 class TAO_IDL_FE_Export Identifier
 {
 public:
-  Identifier (void);
+  Identifier ();
   // Default Constructor.
 
   Identifier (const char *s);
@@ -80,7 +80,7 @@ public:
 
   Identifier (const Identifier &other);
 
-  virtual ~Identifier (void);
+  virtual ~Identifier ();
   // Destructor.
 
   // Operations
@@ -89,7 +89,7 @@ public:
    * Get the underlying string.
    */
   ///{
-  char *get_string (void);
+  char *get_string ();
   const char *get_string () const;
   ///}
 
@@ -107,16 +107,16 @@ public:
   bool case_compare_quiet (Identifier *other);
   // Like the above but suppressing error or warning I/O
 
-  Identifier *copy (void);
+  Identifier *copy ();
   // Create a deep copy.
 
-  bool escaped (void) const;
+  bool escaped () const;
   // Accessor for the member.
 
   virtual void dump (ACE_OSTREAM_TYPE &o);
   // Dump to an ostream.
 
-  virtual void destroy (void);
+  virtual void destroy ();
   // Cleanup function.
 
   bool operator== (const Identifier &other) const;

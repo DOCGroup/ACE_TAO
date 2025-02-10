@@ -12,14 +12,11 @@
 #define TAO_ID_UNIQUENESSSTRATEGYUNIQUE_H
 #include /**/ "ace/pre.h"
 
-#include "tao/PortableServer/portableserver_export.h"
+#include "tao/PortableServer/IdUniquenessStrategy.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#include "tao/PortableServer/IdUniquenessStrategy.h"
-#include "ace/Service_Config.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -27,33 +24,24 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    class TAO_PortableServer_Export IdUniquenessStrategyUnique
-      : public IdUniquenessStrategy
+    class IdUniquenessStrategyUnique : public IdUniquenessStrategy
     {
     public:
-      IdUniquenessStrategyUnique (void);
+      IdUniquenessStrategyUnique () = default;
 
-      virtual void strategy_init (TAO_Root_POA *poa);
+      void strategy_init (TAO_Root_POA *poa) override;
 
-      virtual void strategy_cleanup (void);
+      void strategy_cleanup () override;
 
-      virtual bool is_servant_activation_allowed (
-        PortableServer::Servant servant,
-        bool &wait_occurred_restart_call);
+      bool is_servant_activation_allowed (PortableServer::Servant servant, bool &wait_occurred_restart_call) override;
 
-      virtual bool allow_multiple_activations (void) const;
-
-      virtual ::PortableServer::IdUniquenessPolicyValue type() const;
+      bool allow_multiple_activations () const override;
 
     private:
-      TAO_Root_POA* poa_;
+      TAO_Root_POA* poa_ {};
     };
-
   }
 }
-
-ACE_STATIC_SVC_DECLARE_EXPORT (TAO_PortableServer, IdUniquenessStrategyUnique)
-ACE_FACTORY_DECLARE (TAO_PortableServer, IdUniquenessStrategyUnique)
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

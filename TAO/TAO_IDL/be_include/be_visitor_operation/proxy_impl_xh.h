@@ -28,7 +28,7 @@ public:
   be_visitor_operation_proxy_impl_xh (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_operation_proxy_impl_xh (void);
+  ~be_visitor_operation_proxy_impl_xh ();
 
   /// visit operation.
   virtual int visit_operation (be_operation *node);

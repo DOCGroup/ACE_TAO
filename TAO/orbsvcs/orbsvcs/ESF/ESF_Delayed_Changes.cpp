@@ -21,7 +21,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<class PROXY, class COLLECTION, class ITERATOR, ACE_SYNCH_DECL>
 TAO_ESF_Delayed_Changes<PROXY,COLLECTION,ITERATOR,ACE_SYNCH_USE>::
-    TAO_ESF_Delayed_Changes (void)
+    TAO_ESF_Delayed_Changes ()
       :  lock_ (this),
          busy_cond_ (busy_lock_),
          busy_count_ (0),
@@ -55,13 +55,12 @@ TAO_ESF_Delayed_Changes<PROXY,COLLECTION,ITERATOR,ACE_SYNCH_USE>::
   for (ITERATOR i = this->collection_.begin (); i != end; ++i)
     {
       worker->work (*i);
-
   }
 }
 
 template<class PROXY, class COLLECTION, class ITERATOR, ACE_SYNCH_DECL> int
 TAO_ESF_Delayed_Changes<PROXY,COLLECTION,ITERATOR,ACE_SYNCH_USE>::
-    busy (void)
+    busy ()
 {
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->busy_lock_, -1);
 
@@ -75,7 +74,7 @@ TAO_ESF_Delayed_Changes<PROXY,COLLECTION,ITERATOR,ACE_SYNCH_USE>::
 
 template<class PROXY, class COLLECTION, class ITERATOR, ACE_SYNCH_DECL> int
 TAO_ESF_Delayed_Changes<PROXY,COLLECTION,ITERATOR,ACE_SYNCH_USE>::
-    idle (void)
+    idle ()
 {
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX_T, ace_mon, this->busy_lock_, -1);
 
@@ -91,7 +90,7 @@ TAO_ESF_Delayed_Changes<PROXY,COLLECTION,ITERATOR,ACE_SYNCH_USE>::
 
 template<class PROXY, class COLLECTION, class ITERATOR, ACE_SYNCH_DECL> int
 TAO_ESF_Delayed_Changes<PROXY,COLLECTION,ITERATOR,ACE_SYNCH_USE>::
-    execute_delayed_operations (void)
+    execute_delayed_operations ()
 {
   while (!this->command_queue_.is_empty ())
     {
@@ -177,7 +176,7 @@ TAO_ESF_Delayed_Changes<PROXY,C,I,ACE_SYNCH_USE>::
 }
 
 template<class PROXY, class C, class I,ACE_SYNCH_DECL> void
-TAO_ESF_Delayed_Changes<PROXY,C,I,ACE_SYNCH_USE>::shutdown (void)
+TAO_ESF_Delayed_Changes<PROXY,C,I,ACE_SYNCH_USE>::shutdown ()
 {
   ACE_GUARD_THROW_EX (ACE_SYNCH_MUTEX_T, ace_mon, this->busy_lock_,
       CORBA::INTERNAL ());

@@ -45,12 +45,11 @@ class TAO_FT_Naming_Manager;
 class TAO_FtNaming_Export TAO_FT_Random
 {
 public:
-
   /// Constructor.
-  TAO_FT_Random (void);
+  TAO_FT_Random () = default;
 
   /// Destructor
-  virtual ~TAO_FT_Random (void);
+  virtual ~TAO_FT_Random () = default;
 
   /// This function obtains the next object's location as it is bound
   /// within the object group.
@@ -65,7 +64,6 @@ public:
       PortableGroup::ObjectGroup_ptr object_group,
       TAO_FT_Naming_Manager *naming_manager,
       PortableGroup::Location& location);
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -20,7 +20,7 @@ be_visitor_structure_ch::be_visitor_structure_ch (be_visitor_context *ctx)
 {
 }
 
-be_visitor_structure_ch::~be_visitor_structure_ch (void)
+be_visitor_structure_ch::~be_visitor_structure_ch ()
 {
 }
 
@@ -44,8 +44,7 @@ int be_visitor_structure_ch::visit_structure (be_structure *node)
 
   *os << be_nl_2;
 
-  *os << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (os);
 
   *os << be_nl_2
       << "struct " << be_global->stub_export_macro () << " "

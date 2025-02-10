@@ -190,7 +190,6 @@ struct Netlink_Request
 };
 
 
-
 /**
  * The handler first is trying to delete an ip-address, further
  * to add the ip and, if successful to cleanup the address.
@@ -198,12 +197,11 @@ struct Netlink_Request
 class Secondary_Ipaddr_Handler : public ACE_Event_Handler
 {
 public:
-
   // Default constructor
-  Secondary_Ipaddr_Handler (void);
+  Secondary_Ipaddr_Handler ();
 
   // Destructor
-  virtual ~Secondary_Ipaddr_Handler (void);
+  ~Secondary_Ipaddr_Handler () override;
 
   //FUZZ: disable check_for_lack_ACE_OS
   // Initialization. Schedules a timer to run start the business.
@@ -214,21 +212,21 @@ public:
             const char *const if_name);
 
   // Returns reference to netlink socket. Necessary for reactor.
-  virtual ACE_HANDLE get_handle (void) const;
+  ACE_HANDLE get_handle () const override;
 
   /**
    * Takes care of the input. Reads the incoming messages,
    * makes their processing.
    */
-  virtual int handle_input (ACE_HANDLE handle);
+  int handle_input (ACE_HANDLE handle) override;
 
   // Makes clean-up
-  virtual int handle_close (ACE_HANDLE handle,
-                            ACE_Reactor_Mask close_mask);
+  int handle_close (ACE_HANDLE handle,
+                            ACE_Reactor_Mask close_mask) override;
 
   // Runs a state machine. Controls adding/deleting of ip-address.
   int handle_timeout (ACE_Time_Value const & tv,
-                      void const * arg = 0);
+                      void const * arg = 0) override;
 
   // Sends to kernel a request to add secondary ip/mask to an
   // interface.
@@ -260,7 +258,6 @@ public:
   int get_state () const { return this->state_;}
 
 protected:
-
   //FUZZ: disable check_for_lack_ACE_OS
   // De-registers the handler from the reactor,
   // other cleanup jobs
@@ -270,7 +267,6 @@ protected:
   ACE_SOCK_Netlink& socket ();
 
 private:
-
   // Schedule two sec timer.
   int schedule_one_sec_timer ();
 
@@ -418,7 +414,7 @@ Secondary_Ipaddr_Handler::open (ACE_Reactor *const reactor,
 }
 
 ACE_HANDLE
-Secondary_Ipaddr_Handler::get_handle (void) const
+Secondary_Ipaddr_Handler::get_handle () const
 {
   return this->socket_.get_handle ();
 }

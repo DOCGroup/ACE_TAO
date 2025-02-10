@@ -10,12 +10,10 @@ TAO::CSD::TP_Synch_Helper::TP_Synch_Helper()
 {
 }
 
-
 ACE_INLINE
 TAO::CSD::TP_Synch_Helper::~TP_Synch_Helper()
 {
 }
-
 
 ACE_INLINE
 bool
@@ -31,7 +29,6 @@ TAO::CSD::TP_Synch_Helper::wait_while_pending()
   return (this->state_ == DISPATCHED);
 }
 
-
 ACE_INLINE
 void
 TAO::CSD::TP_Synch_Helper::dispatched()
@@ -40,7 +37,6 @@ TAO::CSD::TP_Synch_Helper::dispatched()
   this->state_ = DISPATCHED;
   this->condition_.signal();
 }
-
 
 ACE_INLINE
 void

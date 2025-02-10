@@ -20,13 +20,13 @@ public:
   Sender_i (CORBA::ULong no_clients,
             ACE_Manual_Event &event);
 
-  virtual ~Sender_i (void);
+  virtual ~Sender_i ();
 
   // = The skeleton methods
   virtual CORBA::Long receiver_object (Receiver *recv);
 
   /// Public method defined locally
-  void send_message (void);
+  void send_message ();
 
 private:
   /// Synchronizing acces to this class

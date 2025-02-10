@@ -27,9 +27,6 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
-#ifdef SUNOS
-#include <unistd.h>
-#endif
 #include <ctype.h>
 
 #ifdef WIN32

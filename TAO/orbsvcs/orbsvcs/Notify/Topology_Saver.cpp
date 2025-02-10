@@ -7,7 +7,7 @@ TAO_Notify::Topology_Saver::~Topology_Saver ()
 }
 
 void
-TAO_Notify::Topology_Saver::close (void)
+TAO_Notify::Topology_Saver::close ()
 {
 }
 

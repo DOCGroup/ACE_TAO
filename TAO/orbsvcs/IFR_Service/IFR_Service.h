@@ -28,25 +28,24 @@
 class IFR_Service
 {
 public:
-
   /// Default constructor.
-  IFR_Service (void);
+  IFR_Service ();
 
   /// Destructor
-  ~IFR_Service (void);
+  ~IFR_Service ();
 
   /// Initialize the IFR service.
   int init (int argc,
             ACE_TCHAR *argv[]);
 
   /// Shut down the IFR Service.
-  int fini (void);
+  int fini ();
 
   /// Run the IFR service.
-  int run (void);
+  int run ();
 
   /// Shutdown the Service.
-  void shutdown (void);
+  void shutdown ();
 
 protected:
   /// Reference to our ORB.

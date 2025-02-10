@@ -134,7 +134,6 @@ static void TestOctet()
    ACE_ASSERT(o3 <= o3);
    ACE_ASSERT(o3 == o3);
    ACE_ASSERT(!(o3 != o3));
-
 }
 
 int

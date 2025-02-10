@@ -7,7 +7,7 @@
 //
 // Stock::Priority_Mapping
 //
-Stock::Priority_Mapping::Priority_Mapping (void)
+Stock::Priority_Mapping::Priority_Mapping ()
   : TAO_Linear_Priority_Mapping (ACE_SCHED_OTHER)
 {
 }
@@ -15,7 +15,7 @@ Stock::Priority_Mapping::Priority_Mapping (void)
 //
 // ~Stock::Priority_Mapping
 //
-Stock::Priority_Mapping::~Priority_Mapping (void)
+Stock::Priority_Mapping::~Priority_Mapping ()
 {
 }
 

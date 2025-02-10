@@ -18,19 +18,14 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    RequestProcessingStrategyDefaultServant::RequestProcessingStrategyDefaultServant (void)
-      : default_servant_ (0)
-    {
-    }
-
     void
-    RequestProcessingStrategyDefaultServant::strategy_cleanup(void)
+    RequestProcessingStrategyDefaultServant::strategy_cleanup()
     {
-      this->default_servant_ = 0;
+      this->default_servant_ = nullptr;
     }
 
     PortableServer::ServantManager_ptr
-    RequestProcessingStrategyDefaultServant::get_servant_manager (void)
+    RequestProcessingStrategyDefaultServant::get_servant_manager ()
     {
       throw PortableServer::POA::WrongPolicy ();
     }
@@ -43,7 +38,7 @@ namespace TAO
     }
 
     PortableServer::Servant
-    RequestProcessingStrategyDefaultServant::get_servant (void)
+    RequestProcessingStrategyDefaultServant::get_servant ()
     {
       // This operation returns the default servant associated with the
       // POA.
@@ -63,7 +58,7 @@ namespace TAO
       // once on the Servant argument before returning. When the POA no
       // longer needs the Servant, it will invoke _remove_ref on it the
       // same number of times.
-      if (servant != 0)
+      if (servant)
         {
           // A recursive thread lock without using a recursive thread
           // lock.  Non_Servant_Upcall has a magic constructor and
@@ -80,21 +75,20 @@ namespace TAO
         }
     }
 
-    TAO_SERVANT_LOCATION
+    TAO_Servant_Location
     RequestProcessingStrategyDefaultServant::locate_servant (
       const PortableServer::ObjectId & system_id,
-      PortableServer::Servant & servant
-      )
+      PortableServer::Servant & servant)
     {
-      TAO_SERVANT_LOCATION location = TAO_SERVANT_NOT_FOUND;
+      TAO_Servant_Location location = TAO_Servant_Location::Not_Found;
 
       location = this->poa_->servant_present (system_id, servant);
 
-      if (location == TAO_SERVANT_NOT_FOUND)
+      if (location == TAO_Servant_Location::Not_Found)
         {
-          if (this->default_servant_.in () != 0)
+          if (this->default_servant_.in ())
             {
-              location = TAO_DEFAULT_SERVANT;
+              location = TAO_Servant_Location::Default_Servant;
             }
         }
 
@@ -109,13 +103,13 @@ namespace TAO
       TAO::Portable_Server::POA_Current_Impl &poa_current_impl,
       bool & /*wait_occurred_restart_call*/)
     {
-      PortableServer::Servant servant = 0;
+      PortableServer::Servant servant = nullptr;
 
       servant = this->poa_->find_servant (system_id,
                                           servant_upcall,
                                           poa_current_impl);
 
-      if (servant == 0)
+      if (!servant)
         {
           // If the POA has the USE_DEFAULT_SERVANT policy, a default servant
           // has been associated with the POA so the POA will invoke the
@@ -123,7 +117,7 @@ namespace TAO
           // associated with the POA, the POA raises the OBJ_ADAPTER system
           // exception.
           PortableServer::Servant default_servant = this->default_servant_.in ();
-          if (default_servant == 0)
+          if (!default_servant)
             {
               throw ::CORBA::OBJ_ADAPTER (
                 CORBA::OMGVMCID | 3,
@@ -145,7 +139,7 @@ namespace TAO
     {
       PortableServer::Servant servant = this->default_servant_.in ();
 
-      if (servant == 0)
+      if (!servant)
         {
           servant = this->poa_->find_servant (system_id);
         }
@@ -159,7 +153,7 @@ namespace TAO
     {
       PortableServer::Servant servant = this->default_servant_.in ();
 
-      if (servant == 0)
+      if (!servant)
         {
           /*
            * If using default servant request processing strategy but
@@ -214,7 +208,7 @@ namespace TAO
     {
       PortableServer::Servant default_servant = this->default_servant_.in ();
 
-      if (default_servant != 0 &&
+      if (default_servant != nullptr &&
           default_servant == servant)
         {
           // If they are the same servant, then check if we are in an
@@ -224,7 +218,7 @@ namespace TAO
                         (TAO_TSS_Resources::instance ()->poa_current_impl_);
           // If we are in an upcall on the default servant, return the
           // ObjectId associated with the current invocation.
-          if (poa_current_impl != 0 &&
+          if (poa_current_impl != nullptr &&
               servant == poa_current_impl->servant ())
             {
               return poa_current_impl->get_object_id ();
@@ -239,12 +233,6 @@ namespace TAO
       const PortableServer::ObjectId &/*system_id*/,
       const TAO::Portable_Server::Servant_Upcall &/*servant_upcall*/)
     {
-    }
-
-    ::PortableServer::RequestProcessingPolicyValue
-    RequestProcessingStrategyDefaultServant::type() const
-    {
-      return ::PortableServer::USE_DEFAULT_SERVANT;
     }
   }
 }

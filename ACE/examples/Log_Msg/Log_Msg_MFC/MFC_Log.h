@@ -38,7 +38,6 @@ public:
 
   /// destructor
   virtual ~MFC_Log();
-
 };
 
 #endif /* MFC_LOG_H */

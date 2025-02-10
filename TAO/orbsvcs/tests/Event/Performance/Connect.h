@@ -38,17 +38,17 @@ class EC_Connect : public EC_Driver
 {
 public:
   /// Constructor
-  EC_Connect (void);
+  EC_Connect ();
 
   // = The EC_Driver methods
   virtual int parse_args (int& argc, ACE_TCHAR* argv[]);
-  virtual void print_usage (void);
-  virtual void print_args (void) const;
+  virtual void print_usage ();
+  virtual void print_args () const;
 
   /// Don't run the suppliers, just test connect and disconnect calls.
-  void execute_test (void);
+  void execute_test ();
 
-  virtual void dump_results (void);
+  virtual void dump_results ();
 
   virtual void connect_consumer (
     RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin,
@@ -56,14 +56,14 @@ public:
   virtual void connect_supplier (
     RtecEventChannelAdmin::SupplierAdmin_ptr supplier_admin,
     int i);
-  virtual void disconnect_consumers (void);
-  virtual void disconnect_suppliers (void);
+  virtual void disconnect_consumers ();
+  virtual void disconnect_suppliers ();
 
   virtual EC_Consumer* allocate_consumer (int i);
   virtual EC_Supplier* allocate_supplier (int i);
 
-  virtual void connect_clients (void);
-  virtual void disconnect_clients (void);
+  virtual void connect_clients ();
+  virtual void disconnect_clients ();
 
 private:
   ACE_hrtime_t start_time_;

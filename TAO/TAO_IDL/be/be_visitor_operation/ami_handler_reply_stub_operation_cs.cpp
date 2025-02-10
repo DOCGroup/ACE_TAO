@@ -19,7 +19,7 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs (
 }
 
 be_visitor_operation_ami_handler_reply_stub_operation_cs::
-~be_visitor_operation_ami_handler_reply_stub_operation_cs (void)
+~be_visitor_operation_ami_handler_reply_stub_operation_cs ()
 {
 }
 
@@ -44,14 +44,14 @@ int
 be_visitor_operation_ami_handler_reply_stub_operation_cs::visit_operation (
   be_operation *node)
 {
-  be_type *bt = 0;
+  be_type *bt = nullptr;
   be_visitor_context ctx;
 
   TAO_OutStream *os = this->ctx_->stream ();
   this->ctx_->node (node);
 
   // Initialize the return type variable.
-  bt = be_type::narrow_from_decl (node->return_type ());
+  bt = dynamic_cast<be_type*> (node->return_type ());
 
   if (!bt)
     {
@@ -74,7 +74,7 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::visit_operation (
 
   // Get the scope name.
   be_decl *parent =
-    be_scope::narrow_from_scope (node->defined_in ())->decl ();
+    dynamic_cast<be_scope*> (node->defined_in ())->decl ();
 
   if (!parent)
     {
@@ -145,17 +145,17 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::visit_operation (
       << "const ACE_Message_Block* cdr = _tao_in.start ();" << be_nl ;
 
   const char *exception_data_arg = "0";
-  const char *exception_count_arg = "0";
+  int excep_count = 0;
 
   // Don't do anything if the exception list is empty.
   if (node->exceptions ())
     {
+      excep_count = node->exceptions ()->length ();
+
       *os << be_nl << "static TAO::Exception_Data " << "exceptions_data [] =" << be_nl;
       *os << "{" << be_idt_nl;
 
-      int excep_count = 0;
-
-      be_exception *ex = 0;
+      be_exception *ex = nullptr;
 
       // Initialize an iterator to iterate thru the exception list.
       // Continue until each element is visited.
@@ -163,7 +163,7 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::visit_operation (
       for (UTL_ExceptlistActiveIterator ei (node->exceptions ());
            !ei.is_done ();)
         {
-          ex = be_exception::narrow_from_decl (ei.item ());
+          ex = dynamic_cast<be_exception*> (ei.item ());
 
           *os << "{" << be_idt_nl
               << "\"" << ex->repoID () << "\"," << be_nl;
@@ -177,13 +177,12 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::visit_operation (
             }
           else
             {
-              *os << ", 0";
+              *os << ", nullptr";
             }
 
           *os << "\n#endif /* TAO_HAS_INTERCEPTORS */" << be_uidt_nl
               << "}";
 
-          ++excep_count;
           ei.next ();
 
           if (!ei.is_done ())
@@ -195,11 +194,7 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::visit_operation (
 
       *os << be_uidt_nl << "};" << be_nl_2;
 
-      *os << "::CORBA::ULong const exceptions_count = "
-          << excep_count << ";" << be_nl;
-
       exception_data_arg = "exceptions_data";
-      exception_count_arg = "exceptions_count";
     }
 
   *os << "::CORBA::OctetSeq "
@@ -210,7 +205,7 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::visit_operation (
       << "0);" << be_uidt
       << be_uidt_nl;
 
- *os  << "::Messaging::ExceptionHolder* exception_holder_ptr = 0;" << be_nl
+ *os  << "::Messaging::ExceptionHolder* exception_holder_ptr {};" << be_nl
       << "ACE_NEW (" << be_idt << be_idt_nl
       << "exception_holder_ptr," << be_nl
       << "::TAO::ExceptionHolder (" << be_idt_nl
@@ -218,7 +213,7 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::visit_operation (
       << "_tao_in.byte_order ()," << be_nl
       << "_tao_marshaled_exception," << be_nl
       << exception_data_arg << "," << be_nl
-      << exception_count_arg  << "," << be_nl
+      << excep_count  << "," << be_nl
       << "_tao_in.char_translator ()," << be_nl
       << "_tao_in.wchar_translator ()" << "));" << be_uidt
       << be_uidt_nl << be_uidt_nl;
@@ -231,7 +226,6 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::visit_operation (
       << "exception_holder_var);";
 
   *os << be_uidt << be_uidt_nl;
-
   *os << "break;" << be_uidt_nl
       << "}" << be_nl;
 
@@ -252,10 +246,10 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::visit_argument (
   )
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  be_type *bt = 0;
+  be_type *bt = nullptr;
 
   // Retrieve the type for this argument.
-  bt = be_type::narrow_from_decl (node->field_type ());
+  bt = dynamic_cast<be_type*> (node->field_type ());
 
   if (!bt)
     {

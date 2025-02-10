@@ -112,7 +112,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-Manager::Manager (void)
+Manager::Manager ()
 {
   //no-op
 }
@@ -139,7 +139,7 @@ Manager::init (int& argc,
 }
 
 int
-Manager::make_merged_iors (void)
+Manager::make_merged_iors ()
 {
   // Get an object reference for the ORBs IORManipultion object!
   CORBA::Object_var IORM =
@@ -260,7 +260,7 @@ Manager::set_properties (TAO_IOP::TAO_IOR_Manipulation_ptr iorm,
 }
 
 int
-Manager::run (void)
+Manager::run ()
 {
   try
     {
@@ -308,7 +308,7 @@ Manager::write_to_file (CORBA::Object_ptr ior, const ACE_TCHAR *ior_output_file)
 }
 
 CORBA::ORB_ptr
-Manager::orb (void)
+Manager::orb ()
 {
   return this->orb_.in ();
 }
@@ -448,7 +448,7 @@ int run_test (Simple_Server_ptr server)
 }
 
 int
-Client_i::init (void)
+Client_i::init ()
 {
   char iogrstr[1024];
   ACE_OS::sprintf (iogrstr, "file://%s", ACE_TEXT_ALWAYS_CHAR (first_iogr_file));

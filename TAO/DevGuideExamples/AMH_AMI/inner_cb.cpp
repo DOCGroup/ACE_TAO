@@ -10,10 +10,9 @@ Inner_callback_i::Inner_callback_i (PortableServer::POA_ptr p,
 }
 
 // Implementation skeleton destructor
-Inner_callback_i::~Inner_callback_i (void)
+Inner_callback_i::~Inner_callback_i ()
 {
   std::cout << "Inner_callback_i destroying" << std::endl;
-
 }
 
 void

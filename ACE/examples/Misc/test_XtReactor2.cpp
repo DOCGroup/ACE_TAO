@@ -13,7 +13,7 @@
 class Stdin : public ACE_Event_Handler
 {
 public:
-  ACE_HANDLE get_handle (void) const { return ACE_STDIN; }
+  ACE_HANDLE get_handle () const { return ACE_STDIN; }
 
   int handle_input (ACE_HANDLE)
   {

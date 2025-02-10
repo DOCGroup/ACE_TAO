@@ -5,8 +5,6 @@
 
 #include "DllORB.h"
 
-char const * const scpc_orbId = "testDllOrb";
-
 ACE_TCHAR const * const scpc_loadOrb = ACE_DYNAMIC_VERSIONED_SERVICE_DIRECTIVE(
   "testDllOrb",
   "bug3663",

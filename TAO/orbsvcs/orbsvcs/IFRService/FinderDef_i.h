@@ -44,7 +44,7 @@ public:
   TAO_FinderDef_i (TAO_Repository_i *repo);
 
   /// Destructor
-  virtual ~TAO_FinderDef_i (void);
+  virtual ~TAO_FinderDef_i ();
 
   /// Return our definition kind.
   virtual CORBA::DefinitionKind def_kind ();

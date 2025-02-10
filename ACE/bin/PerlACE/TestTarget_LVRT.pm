@@ -1,4 +1,4 @@
-#! /usr/bin/perl
+#!/usr/bin/env perl
 #
 # TestTarget_LVRT - how to manage the test environment on a LabVIEW RT target.
 #

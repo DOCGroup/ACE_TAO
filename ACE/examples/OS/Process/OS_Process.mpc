@@ -6,7 +6,6 @@ project(*imore) : aceexe, avoids_ace_for_tao {
   }
 }
 project(*process) : aceexe {
-  avoids += wince
   exename = process
   Source_Files {
     process.cpp

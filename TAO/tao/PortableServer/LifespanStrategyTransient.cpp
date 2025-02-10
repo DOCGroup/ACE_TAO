@@ -19,17 +19,17 @@ namespace TAO
     }
 
     void
-    LifespanStrategyTransient::notify_startup (void)
+    LifespanStrategyTransient::notify_startup ()
     {
     }
 
     void
-    LifespanStrategyTransient::notify_shutdown (void)
+    LifespanStrategyTransient::notify_shutdown ()
     {
     }
 
     CORBA::Boolean
-    LifespanStrategyTransient::is_persistent (void) const
+    LifespanStrategyTransient::is_persistent () const
     {
       return false;
     }
@@ -44,7 +44,7 @@ namespace TAO
     }
 
     CORBA::ULong
-    LifespanStrategyTransient::key_length (void) const
+    LifespanStrategyTransient::key_length () const
     {
       CORBA::ULong keylength = sizeof (char);
 
@@ -77,13 +77,13 @@ namespace TAO
     }
 
     char
-    LifespanStrategyTransient::key_type (void) const
+    LifespanStrategyTransient::key_type () const
     {
       return 'T';
     }
 
     void
-    LifespanStrategyTransient::check_state (void)
+    LifespanStrategyTransient::check_state ()
     {
       if (this->poa_->tao_poa_manager ().get_state_i () ==
         PortableServer::POAManager::INACTIVE)
@@ -107,12 +107,6 @@ namespace TAO
                                                   const char *) const
     {
       return CORBA::Object::_nil();
-    }
-
-    ::PortableServer::LifespanPolicyValue
-    LifespanStrategyTransient::type () const
-    {
-      return ::PortableServer::TRANSIENT;
     }
   } /* namespace Portable_Server */
 } /* namespace TAO */

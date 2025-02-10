@@ -6,10 +6,10 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_QOS_MANAGER)
 
-ACE_QoS_Manager::ACE_QoS_Manager (void)
+ACE_QoS_Manager::ACE_QoS_Manager ()
 {}
 
-ACE_QoS_Manager::~ACE_QoS_Manager (void)
+ACE_QoS_Manager::~ACE_QoS_Manager ()
 {}
 
 // Adds the given session to the list of session objects joined by
@@ -29,7 +29,7 @@ ACE_QoS_Manager::join_qos_session (ACE_QoS_Session *qos_session)
 // Returns the QoS session set for this socket.
 
 ACE_Unbounded_Set <ACE_QoS_Session *>
-ACE_QoS_Manager::qos_session_set (void)
+ACE_QoS_Manager::qos_session_set ()
 {
   return this->qos_session_set_;
 }

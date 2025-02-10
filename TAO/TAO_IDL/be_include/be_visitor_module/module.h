@@ -24,11 +24,10 @@
  */
 class be_visitor_module : public be_visitor_scope
 {
-
 public:
   be_visitor_module (be_visitor_context *ctx);
 
-  ~be_visitor_module (void);
+  ~be_visitor_module ();
 
   virtual int visit_constant (be_constant *node);
   virtual int visit_enum (be_enum *node);

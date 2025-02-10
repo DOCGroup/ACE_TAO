@@ -31,7 +31,7 @@ public:
   //@{
   /** @name The Federated_Test::Loopback methods
    */
-  virtual void disconnect (void);
+  virtual void disconnect ();
   //@}
 
 private:

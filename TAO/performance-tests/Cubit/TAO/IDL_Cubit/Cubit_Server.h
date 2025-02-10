@@ -39,21 +39,21 @@ class Cubit_Server
 {
 public:
   /// Default constructor
-  Cubit_Server (void);
+  Cubit_Server ();
 
   /// Destructor
-  ~Cubit_Server (void);
+  ~Cubit_Server ();
 
   /// Initialize the Cubit_Server state - parsing arguments and ...
   int init (int argc,
             ACE_TCHAR **argv);
 
   /// Run the orb
-  int run (void);
+  int run ();
 
 private:
   /// Parses the commandline arguments.
-  int parse_args (void);
+  int parse_args ();
 
   /// File to output the cubit factory IOR.
   FILE* ior_output_file_;

@@ -35,10 +35,10 @@ public:
   RND_Consumer (RND_Driver *driver);
 
   void push (const CORBA::Any &event);
-  void disconnect_push_consumer (void);
+  void disconnect_push_consumer ();
 
   void connect (CosEventChannelAdmin::ConsumerAdmin_ptr admin);
-  void disconnect (void);
+  void disconnect ();
 
 protected:
   /// The driver
@@ -68,19 +68,19 @@ class RND_Supplier
 {
 public:
   /// Constructor
-  RND_Supplier (void);
+  RND_Supplier ();
 
   void connect (CosEventChannelAdmin::SupplierAdmin_ptr admin);
-  void disconnect (void);
+  void disconnect ();
 
   /// Push a single event...
-  void push_new_event (void);
+  void push_new_event ();
   void push (CORBA::Any &event);
 
-  virtual void disconnect_push_supplier (void);
+  virtual void disconnect_push_supplier ();
 
   /// Active method
-  virtual int svc (void);
+  virtual int svc ();
 
 private:
   /// The supplier.
@@ -91,7 +91,7 @@ private:
 };
 
 inline
-RND_Supplier::RND_Supplier (void)
+RND_Supplier::RND_Supplier ()
 {
 }
 
@@ -100,7 +100,7 @@ RND_Supplier::RND_Supplier (void)
 class RND_Driver
 {
 public:
-  RND_Driver (void);
+  RND_Driver ();
 
   /// Run the test
   int run (int argc, ACE_TCHAR *argv[]);

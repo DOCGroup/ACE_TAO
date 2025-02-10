@@ -32,7 +32,7 @@
 #include "ace/OS_NS_stdio.h"
 
 void ace_cc_yyerror (const char* s);
-int ace_cc_yylex(void);
+int ace_cc_yylex();
 
 extern int line_no;
 extern char line_buf[500];
@@ -52,7 +52,6 @@ typedef union {
 #define const
 #endif
 #endif
-
 
 
 #define ACE_CC_YYFINAL    66
@@ -257,13 +256,6 @@ static const short ace_cc_yycheck[] = {     4,
  #pragma alloca
 #define ACE_CC_YYSTACK_USE_ALLOCA
 #else /* not MSDOS, or __TURBOC__, or _AIX */
-#if 0
-#ifdef __hpux /* haible@ilog.fr says this works for HPUX 9.05 and up,
-     and on HPUX 10.  Eventually we can turn this on.  */
-#define ACE_CC_YYSTACK_USE_ALLOCA
-#define alloca __builtin_alloca
-#endif /* __hpux */
-#endif
 #endif /* not _AIX */
 #endif /* not MSDOS, or __TURBOC__ */
 #endif /* not sparc */
@@ -386,9 +378,9 @@ __ace_cc_yy_memcpy (to, from, count)
      char *from;
      unsigned int count;
 {
-  register char *f = from;
-  register char *t = to;
-  register int i = count;
+  char *f = from;
+  char *t = to;
+  int i = count;
 
   while (i-- > 0)
     *t++ = *f++;
@@ -401,9 +393,9 @@ __ace_cc_yy_memcpy (to, from, count)
 static void
 __ace_cc_yy_memcpy (char *to, char *from, unsigned int count)
 {
-  register char *t = to;
-  register char *f = from;
-  register int i = count;
+  char *t = to;
+  char *f = from;
+  int i = count;
 
   while (i-- > 0)
     *t++ = *f++;
@@ -411,7 +403,6 @@ __ace_cc_yy_memcpy (char *to, char *from, unsigned int count)
 
 #endif
 #endif
-
 
 
 /* The user can define ACE_CC_YYPARSE_PARAM as the name of an argument to be passed
@@ -438,7 +429,7 @@ __ace_cc_yy_memcpy (char *to, char *from, unsigned int count)
 #ifdef ACE_CC_YYPARSE_PARAM
 int ace_cc_yyparse (void *);
 #else
-int ace_cc_yyparse (void);
+int ace_cc_yyparse ();
 #endif
 #endif
 
@@ -446,10 +437,10 @@ int
 ace_cc_yyparse(ACE_CC_YYPARSE_PARAM_ARG)
      ACE_CC_YYPARSE_PARAM_DECL
 {
-  register int ace_cc_yystate;
-  register int ace_cc_yyn;
-  register short *ace_cc_yyssp;
-  register ACE_CC_YYSTYPE *ace_cc_yyvsp;
+  int ace_cc_yystate;
+  int ace_cc_yyn;
+  short *ace_cc_yyssp;
+  ACE_CC_YYSTYPE *ace_cc_yyvsp;
   int ace_cc_yyerrstatus; /*  number of tokens to shift before error messages enabled */
   int ace_cc_yychar1 = 0;   /*  lookahead token as an internal (translated) token number */
 
@@ -739,7 +730,6 @@ ace_cc_yyreduce:
 
 
   switch (ace_cc_yyn) {
-
 case 2:
 { cmdlist->add(new CC_Sleep_Cmd(0));
          /* dummy to check exeption in the last command */
@@ -804,7 +794,7 @@ case 20:
     break;}
 case 21:
 { cmdlist->setrepeat(ace_cc_yyvsp[-1].num);
-                          ace_cc_yyval.command = new CC_Dummy_Cmd();;
+                          ace_cc_yyval.command = new CC_Dummy_Cmd();
     break;}
 case 22:
 { ace_cc_yyval.command = new CC_Excep_Cmd(ace_cc_yyvsp[-1].id); ;

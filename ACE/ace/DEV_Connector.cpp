@@ -14,14 +14,14 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_ALLOC_HOOK_DEFINE(ACE_DEV_Connector)
 
 void
-ACE_DEV_Connector::dump (void) const
+ACE_DEV_Connector::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_DEV_Connector::dump");
 #endif /* ACE_HAS_DUMP */
 }
 
-ACE_DEV_Connector::ACE_DEV_Connector (void)
+ACE_DEV_Connector::ACE_DEV_Connector ()
 {
   ACE_TRACE ("ACE_DEV_Connector::ACE_DEV_Connector");
 }

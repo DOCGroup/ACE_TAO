@@ -20,30 +20,24 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-
-class  TX_Object_i : public virtual POA_TX_Object
+class TX_Object_i : public virtual POA_TX_Object
 {
 public:
-
   // Constructor
   TX_Object_i (CORBA::ORB_ptr orb);
 
   // Destructor
-  virtual ~TX_Object_i (void);
+  ~TX_Object_i () override = default;
 
-  virtual void send (const DataSeq & data);
+  void send (const DataSeq & data) override;
 
-  virtual void recv (DataSeq_out data);
+  void recv (DataSeq_out data) override;
 
-  virtual void shutdown (void);
+  void shutdown () override;
 
 private:
-
   CORBA::ORB_var orb_;
-
   DataSeq data_;
-
 };
-
 
 #endif  /* TX_OBJECT_I_H */

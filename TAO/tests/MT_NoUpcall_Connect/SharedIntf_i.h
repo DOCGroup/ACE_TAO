@@ -10,14 +10,13 @@
 class  Test_Idl_SharedIntf_i : public virtual POA_Test_Idl::SharedIntf
 {
 public:
-
   Test_Idl_SharedIntf_i (CORBA::ORB_ptr orb);
-  virtual ~Test_Idl_SharedIntf_i (void);
+  virtual ~Test_Idl_SharedIntf_i ();
   void set_upper (const char * ior);
 
-  virtual void do_upcall (void);
-  virtual void ping (void);
-  virtual void farewell (void);
+  virtual void do_upcall ();
+  virtual void ping ();
+  virtual void farewell ();
 private:
   CORBA::String_var upper_ior;
   CORBA::ORB_ptr orb_;

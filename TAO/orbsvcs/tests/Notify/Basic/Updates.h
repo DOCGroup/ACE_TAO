@@ -53,8 +53,7 @@ public:
   /// Subscription change is conveyed here.
   virtual void subscription_change (
       const CosNotification::EventTypeSeq & added,
-      const CosNotification::EventTypeSeq & removed
-    );
+      const CosNotification::EventTypeSeq & removed);
 
 protected:
   Updates* test_client_;
@@ -66,14 +65,14 @@ class Updates : public Notify_Test_Client
 {
 public:
   // Initialization and termination code
-  Updates (void);
+  Updates ();
   virtual ~Updates ();
 
   /// initialization.
   int init (int argc, ACE_TCHAR *argv []);
 
   /// Run the test.
-  void run_test (void);
+  void run_test ();
 
   /// print_event_types
   void print_event_types (const CosNotification::EventTypeSeq &types);
@@ -86,19 +85,19 @@ public:
 
 protected:
   /// Create EC
-  void create_EC (void);
+  void create_EC ();
 
   /// Helper to add types.
   void add_type (CosNotification::EventTypeSeq& type_seq, const char* type);
 
   // test subscription_change
-  void test_subscription_change (void);
+  void test_subscription_change ();
 
   // test offer_change
-  void test_offer_change (void);
+  void test_offer_change ();
 
   /// Reset the counts.
-  void reset_counts (void);
+  void reset_counts ();
 
   /// Lock to serialize internal state.
   TAO_SYNCH_MUTEX lock_;

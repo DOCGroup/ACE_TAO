@@ -14,18 +14,18 @@ TAO_ValueMemberDef_i::TAO_ValueMemberDef_i (TAO_Repository_i *repo)
 {
 }
 
-TAO_ValueMemberDef_i::~TAO_ValueMemberDef_i (void)
+TAO_ValueMemberDef_i::~TAO_ValueMemberDef_i ()
 {
 }
 
 CORBA::DefinitionKind
-TAO_ValueMemberDef_i::def_kind (void)
+TAO_ValueMemberDef_i::def_kind ()
 {
   return CORBA::dk_ValueMember;
 }
 
 CORBA::Contained::Description *
-TAO_ValueMemberDef_i::describe (void)
+TAO_ValueMemberDef_i::describe ()
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
@@ -35,7 +35,7 @@ TAO_ValueMemberDef_i::describe (void)
 }
 
 CORBA::Contained::Description *
-TAO_ValueMemberDef_i::describe_i (void)
+TAO_ValueMemberDef_i::describe_i ()
 {
   CORBA::ValueMember vm;
   TAO_IFR_Desc_Utils<CORBA::ValueMember,
@@ -74,7 +74,7 @@ TAO_ValueMemberDef_i::describe_i (void)
 }
 
 CORBA::TypeCode_ptr
-TAO_ValueMemberDef_i::type (void)
+TAO_ValueMemberDef_i::type ()
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::TypeCode::_nil ());
 
@@ -84,7 +84,7 @@ TAO_ValueMemberDef_i::type (void)
 }
 
 CORBA::TypeCode_ptr
-TAO_ValueMemberDef_i::type_i (void)
+TAO_ValueMemberDef_i::type_i ()
 {
   ACE_TString holder;
   this->repo_->config ()->get_string_value (this->section_key_,
@@ -97,7 +97,7 @@ TAO_ValueMemberDef_i::type_i (void)
 }
 
 CORBA::IDLType_ptr
-TAO_ValueMemberDef_i::type_def (void)
+TAO_ValueMemberDef_i::type_def ()
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::IDLType::_nil ());
 
@@ -107,7 +107,7 @@ TAO_ValueMemberDef_i::type_def (void)
 }
 
 CORBA::IDLType_ptr
-TAO_ValueMemberDef_i::type_def_i (void)
+TAO_ValueMemberDef_i::type_def_i ()
 {
   ACE_TString holder;
   this->repo_->config ()->get_string_value (this->section_key_,
@@ -140,7 +140,7 @@ TAO_ValueMemberDef_i::type_def_i (CORBA::IDLType_ptr type_def)
 }
 
 CORBA::Visibility
-TAO_ValueMemberDef_i::access (void)
+TAO_ValueMemberDef_i::access ()
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
@@ -150,7 +150,7 @@ TAO_ValueMemberDef_i::access (void)
 }
 
 CORBA::Visibility
-TAO_ValueMemberDef_i::access_i (void)
+TAO_ValueMemberDef_i::access_i ()
 {
   CORBA::ULong val = 0;
   this->repo_->config ()->get_integer_value (this->section_key_,

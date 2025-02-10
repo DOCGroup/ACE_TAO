@@ -2,11 +2,11 @@
 
 #include "ACEXML/common/DefaultHandler.h"
 
-ACEXML_DefaultHandler::ACEXML_DefaultHandler (void)
+ACEXML_DefaultHandler::ACEXML_DefaultHandler ()
 {
 }
 
-ACEXML_DefaultHandler::~ACEXML_DefaultHandler (void)
+ACEXML_DefaultHandler::~ACEXML_DefaultHandler ()
 {
 }
 
@@ -18,7 +18,7 @@ ACEXML_DefaultHandler::characters (const ACEXML_Char *,
 }
 
 void
-ACEXML_DefaultHandler::endDocument (void)
+ACEXML_DefaultHandler::endDocument ()
 {
 }
 
@@ -63,7 +63,7 @@ ACEXML_DefaultHandler::skippedEntity (const ACEXML_Char *)
 }
 
 void
-ACEXML_DefaultHandler::startDocument (void)
+ACEXML_DefaultHandler::startDocument ()
 {
   // No-op.
 }

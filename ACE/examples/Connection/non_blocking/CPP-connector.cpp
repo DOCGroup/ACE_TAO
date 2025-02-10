@@ -58,14 +58,14 @@ Peer_Handler<PEER_STREAM>::close (u_long)
 }
 
 template <typename PEER_STREAM> int
-Peer_Handler<PEER_STREAM>::uninitialized (void)
+Peer_Handler<PEER_STREAM>::uninitialized ()
 {
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("uninitialized!\n")));
   return 0;
 }
 
 template <typename PEER_STREAM> int
-Peer_Handler<PEER_STREAM>::connected (void)
+Peer_Handler<PEER_STREAM>::connected ()
 {
   char buf[BUFSIZ];
 
@@ -96,7 +96,7 @@ Peer_Handler<PEER_STREAM>::connected (void)
 }
 
 template <typename PEER_STREAM> int
-Peer_Handler<PEER_STREAM>::stdio (void)
+Peer_Handler<PEER_STREAM>::stdio ()
 {
   char buf[BUFSIZ];
 
@@ -137,9 +137,7 @@ Peer_Handler<PEER_STREAM>::handle_output (ACE_HANDLE)
 }
 
 template <typename PEER_STREAM> int
-Peer_Handler<PEER_STREAM>::handle_signal (int,
-                                          siginfo_t *,
-                                          ucontext_t *)
+Peer_Handler<PEER_STREAM>::handle_signal (int, siginfo_t *, ucontext_t *)
 {
   // @@ Note that this code is not portable to all OS platforms since
   // it uses print statements within signal handler context.
@@ -198,7 +196,7 @@ Peer_Handler<PEER_STREAM>::handle_close (ACE_HANDLE h,
 }
 
 template <typename SVC_HANDLER, typename PEER_CONNECTOR> int
-IPC_Client<SVC_HANDLER, PEER_CONNECTOR>::svc (void)
+IPC_Client<SVC_HANDLER, PEER_CONNECTOR>::svc ()
 {
   if (this->reactor ())
     this->reactor ()->run_reactor_event_loop ();
@@ -207,13 +205,13 @@ IPC_Client<SVC_HANDLER, PEER_CONNECTOR>::svc (void)
 }
 
 template <typename SVC_HANDLER, typename PEER_CONNECTOR> int
-IPC_Client<SVC_HANDLER, PEER_CONNECTOR>::fini (void)
+IPC_Client<SVC_HANDLER, PEER_CONNECTOR>::fini ()
 {
   return 0;
 }
 
 template <typename SVC_HANDLER, typename PEER_CONNECTOR>
-IPC_Client<SVC_HANDLER, PEER_CONNECTOR>::IPC_Client (void)
+IPC_Client<SVC_HANDLER, PEER_CONNECTOR>::IPC_Client ()
   : done_handler_ (ACE_Sig_Handler_Ex (ACE_Reactor::end_event_loop))
 {
 }
@@ -263,7 +261,7 @@ IPC_Client<SVC_HANDLER, PEER_CONNECTOR>::init (int argc, ACE_TCHAR *argv[])
 }
 
 template <typename SVC_HANDLER, typename PEER_CONNECTOR>
-IPC_Client<SVC_HANDLER, PEER_CONNECTOR>::~IPC_Client (void)
+IPC_Client<SVC_HANDLER, PEER_CONNECTOR>::~IPC_Client ()
 {
 }
 

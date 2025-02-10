@@ -9,7 +9,7 @@ TAO_Event_LogConsumer::TAO_Event_LogConsumer (TAO_EventLog_i *log)
 {
 }
 
-TAO_Event_LogConsumer::~TAO_Event_LogConsumer (void)
+TAO_Event_LogConsumer::~TAO_Event_LogConsumer ()
 {
 }
 
@@ -79,7 +79,7 @@ TAO_Event_LogConsumer::push (const CORBA::Any& data)
 }
 
 void
-TAO_Event_LogConsumer::disconnect_push_consumer (void)
+TAO_Event_LogConsumer::disconnect_push_consumer ()
 {
   this->supplier_proxy_->disconnect_push_supplier ();
 }

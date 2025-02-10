@@ -1,10 +1,4 @@
 // -*- C++ -*-
-/*
- * Add all include files within the following
- * two markers.
- */
-//@@ TAO_ENDPOINT_SPL_COPY_HOOK_START
-
 #include "tao/IIOP_Endpoint.h"
 
 #if defined (TAO_HAS_IIOP) && (TAO_HAS_IIOP != 0)
@@ -30,12 +24,10 @@
 #include "ace/ACE.h"
 #include "ace/INET_Addr.h"
 #include "ace/Sock_Connect.h"
-
-//@@ TAO_ENDPOINT_SPL_COPY_HOOK_END
+#include <cstring>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-//@@ TAO_ENDPOINT_SPL_COPY_HOOK_START
 TAO_IIOP_Endpoint::TAO_IIOP_Endpoint (const ACE_INET_Addr &addr,
                                       int use_dotted_decimal_addresses)
   : TAO_Endpoint (IOP::TAG_INTERNET_IOP)
@@ -48,7 +40,7 @@ TAO_IIOP_Endpoint::TAO_IIOP_Endpoint (const ACE_INET_Addr &addr,
   , object_addr_set_ (false)
   , object_addr_ (addr)
   , preferred_path_ ()
-  , next_ (0)
+  , next_ (nullptr)
 {
   this->set (addr, use_dotted_decimal_addresses);
 }
@@ -67,12 +59,12 @@ TAO_IIOP_Endpoint::TAO_IIOP_Endpoint (const char *host,
   , object_addr_set_ (false)
   , object_addr_ (addr)
   , preferred_path_ ()
-  , next_ (0)
+  , next_ (nullptr)
 {
   this->host(host); // With IPv6 performs check for decimal address
 }
 
-TAO_IIOP_Endpoint::TAO_IIOP_Endpoint (void)
+TAO_IIOP_Endpoint::TAO_IIOP_Endpoint ()
   : TAO_Endpoint (IOP::TAG_INTERNET_IOP)
   , host_ ()
   , port_ (683)  // default port (IANA assigned)
@@ -83,7 +75,7 @@ TAO_IIOP_Endpoint::TAO_IIOP_Endpoint (void)
   , object_addr_set_ (false)
   , object_addr_ ()
   , preferred_path_ ()
-  , next_ (0)
+  , next_ (nullptr)
 {
 }
 
@@ -100,17 +92,15 @@ TAO_IIOP_Endpoint::TAO_IIOP_Endpoint (const char *host,
   , object_addr_set_ (false)
   , object_addr_ ()
   , preferred_path_ ()
-  , next_ (0)
+  , next_ (nullptr)
 {
   this->host(host); // With IPv6 performs check for decimal address
 }
-//@@ TAO_ENDPOINT_SPL_COPY_HOOK_END
-
 
 TAO_IIOP_Endpoint &
 TAO_IIOP_Endpoint::operator= (const TAO_IIOP_Endpoint &other)
 {
-  if (this != &other)
+  if (this != std::addressof(other))
     {
       this->host_ = other.host_;
       this->port_ = other.port_;
@@ -121,16 +111,10 @@ TAO_IIOP_Endpoint::operator= (const TAO_IIOP_Endpoint &other)
       this->object_addr_set_ = other.object_addr_set_;
       this->object_addr_ = other.object_addr_;
       this->preferred_path_ = other.preferred_path_;
-      this->next_ = 0; // do not copy list membership, since we are only cloning the values
+      this->next_ = nullptr; // do not copy list membership, since we are only cloning the values
     }
   return *this;
 }
-
-TAO_IIOP_Endpoint::~TAO_IIOP_Endpoint (void)
-{
-}
-
-//@@ TAO_ENDPOINT_SPL_COPY_HOOK_START
 
 TAO_IIOP_Endpoint::TAO_IIOP_Endpoint (const TAO_IIOP_Endpoint &rhs)
   : TAO_Endpoint (rhs.tag_, rhs.priority_)
@@ -143,7 +127,7 @@ TAO_IIOP_Endpoint::TAO_IIOP_Endpoint (const TAO_IIOP_Endpoint &rhs)
   , object_addr_set_ (rhs.object_addr_set_)
   , object_addr_ (rhs.object_addr_)
   , preferred_path_  (rhs.preferred_path_)
-  , next_ (0)
+  , next_ (nullptr)
 {
 }
 
@@ -169,7 +153,7 @@ TAO_IIOP_Endpoint::set (const ACE_INET_Addr &addr,
         }
 
       const char *tmp = addr.get_host_addr ();
-      if (tmp == 0)
+      if (tmp == nullptr)
         {
           if (TAO_debug_level > 0)
             {
@@ -203,7 +187,7 @@ TAO_IIOP_Endpoint::addr_to_string (char *buffer, size_t length)
   size_t actual_len =
     ACE_OS::strlen (this->host_.in ()) // chars in host name
     + sizeof (':')                     // delimiter
-    + ACE_OS::strlen ("65536")         // max port
+    + std::strlen ("65536")         // max port
     + sizeof ('\0');
 
 #if defined (ACE_HAS_IPV6)
@@ -231,7 +215,7 @@ TAO_IIOP_Endpoint::host (const char *h)
 {
   this->host_ = h;
 #if defined (ACE_HAS_IPV6)
-  if (ACE_OS::strchr (h, ':') != 0)
+  if (std::strchr (h, ':') != 0)
     this->is_ipv6_decimal_ = true;
 #endif /* ACE_HAS_IPV6 */
 
@@ -239,7 +223,7 @@ TAO_IIOP_Endpoint::host (const char *h)
 }
 
 TAO_Endpoint *
-TAO_IIOP_Endpoint::next (void)
+TAO_IIOP_Endpoint::next ()
 {
   return this->next_;
 }
@@ -273,8 +257,8 @@ TAO_IIOP_Endpoint::next_filtered_i (TAO_IIOP_Endpoint *root,
   // the candidate is nominally the next entry in the list, but since
   // the list may loop back on itself, the root of the list needs to be
   // initialized.
-  TAO_IIOP_Endpoint *candidate = (root == 0) ? this : next_;
-  if (root == 0)
+  TAO_IIOP_Endpoint *candidate = (root == nullptr) ? this : next_;
+  if (root == nullptr)
     root = this;
 
 #if defined (ACE_HAS_IPV6)
@@ -314,18 +298,18 @@ TAO_IIOP_Endpoint::next_filtered_i (TAO_IIOP_Endpoint *root,
 }
 
 TAO_Endpoint *
-TAO_IIOP_Endpoint::duplicate (void)
+TAO_IIOP_Endpoint::duplicate ()
 {
-  TAO_IIOP_Endpoint *endpoint = 0;
+  TAO_IIOP_Endpoint *endpoint = nullptr;
 
   // @@ NOTE: Not exception safe..
-  ACE_NEW_RETURN (endpoint, TAO_IIOP_Endpoint (*this), 0);
+  ACE_NEW_RETURN (endpoint, TAO_IIOP_Endpoint (*this), nullptr);
 
   return endpoint;
 }
 
 const ACE_INET_Addr &
-TAO_IIOP_Endpoint::object_addr (void) const
+TAO_IIOP_Endpoint::object_addr () const
 {
   // The object_addr_ is initialized here, rather than at IOR decode
   // time for several reasons:
@@ -351,7 +335,7 @@ TAO_IIOP_Endpoint::object_addr (void) const
 }
 
 void
-TAO_IIOP_Endpoint::object_addr_i (void) const
+TAO_IIOP_Endpoint::object_addr_i () const
 {
   // We should have already held the lock
 
@@ -360,7 +344,7 @@ TAO_IIOP_Endpoint::object_addr_i (void) const
   if (!this->is_ipv6_decimal_)
     is_ipv4_decimal_ =
       ACE_OS::strspn (this->host_.in (), ".0123456789") ==
-                              ACE_OS::strlen (this->host_.in ());
+                              std::strlen (this->host_.in ());
 
   // If this is *not* an IPv4 decimal address at first try to
   // resolve the address as an IPv6 address; if that fails
@@ -414,9 +398,9 @@ TAO_IIOP_Endpoint::add_local_endpoint (TAO_IIOP_Endpoint *ep,
 static void
 TAO_IIOP_Endpoint_get_ip_interfaces (ACE_Vector<ACE_CString> &local_ips)
 {
-  ACE_INET_Addr* tmp = 0;
+  ACE_INET_Addr* tmp = nullptr;
   size_t cnt = 0u;
-  int err = ACE::get_ip_interfaces (cnt, tmp);
+  int const err = ACE::get_ip_interfaces (cnt, tmp);
   if (err != 0)
     return;
 #if defined (ACE_HAS_IPV6)
@@ -427,7 +411,7 @@ TAO_IIOP_Endpoint_get_ip_interfaces (ACE_Vector<ACE_CString> &local_ips)
   for (size_t i = 0u; i < cnt; ++i)
   {
     const char *s_if = tmp[i].get_host_addr (buf, sizeof (buf));
-    ACE_ASSERT (s_if != 0);
+    ACE_ASSERT (s_if != nullptr);
     ACE_CString tmp (s_if);
     local_ips.push_back (tmp);
   }
@@ -462,10 +446,18 @@ TAO_IIOP_Endpoint::find_preferred_interfaces (
   const ACE_CString &csvPreferred,
   ACE_Vector<ACE_CString> &preferred)
 {
+  // When no preferred interfaces directives are given we can directly return
+  if(csvPreferred.length() == 0)
+    {
+      return;
+    }
+
   ACE_Vector<ACE_CString> local_ips;
   TAO_IIOP_Endpoint_get_ip_interfaces (local_ips);
   if (local_ips.size () == 0)
-    return;
+    {
+      return;
+    }
 
   // The outer loop steps through each preferred interface directive
   // and chains a new endpoint if the remote interface matches the
@@ -503,7 +495,7 @@ TAO_IIOP_Endpoint::find_preferred_interfaces (
           // If it's a match, then it means we need to use any/all
           // local interface(s) that matches wild_local.
           const char *const wild_local_cstr =  wild_local.c_str ();
-          bool found= false;
+          bool found = false;
           for (size_t i = 0u; i < local_ips.size (); ++i)
             {
               ACE_CString &ret = local_ips[i];
@@ -548,7 +540,7 @@ TAO_IIOP_Endpoint::preferred_interfaces (const char *csv,
   find_preferred_interfaces(this->host_.in(), csv, preferred);
   CORBA::ULong count = static_cast<CORBA::ULong> (preferred.size());
   size_t i = 0;
-  while (i < count && ACE_OS::strstr (preferred[i].c_str(), "if=") != 0)
+  while (i < count && ACE_OS::strstr (preferred[i].c_str(), "if=") != nullptr)
     {
       // For now we disregard these with IIOP
       ++i;
@@ -560,7 +552,7 @@ TAO_IIOP_Endpoint::preferred_interfaces (const char *csv,
     TAO_IIOP_Endpoint* ep = this;
     for (++i; i < count; ++i)
     {
-      if (ACE_OS::strstr (preferred[i].c_str(), "if=") == 0)
+      if (ACE_OS::strstr (preferred[i].c_str(), "if=") == nullptr)
         ep = add_local_endpoint (ep, preferred[i].c_str(), profile);
     }
 
@@ -584,15 +576,15 @@ TAO_IIOP_Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint)
   const TAO_IIOP_Endpoint *endpoint =
     dynamic_cast<const TAO_IIOP_Endpoint *> (other_endpoint);
 
-  if (endpoint == 0)
-    return 0;
+  if (endpoint == nullptr)
+    return false;
 
   return (this->port_ == endpoint->port_
           && (ACE_OS::strcmp (this->host (), endpoint->host ()) == 0));
 }
 
 CORBA::ULong
-TAO_IIOP_Endpoint::hash (void)
+TAO_IIOP_Endpoint::hash ()
 {
   if (this->hash_val_ != 0)
     return this->hash_val_;
@@ -622,19 +614,17 @@ TAO_IIOP_Endpoint::hash (void)
 }
 
 bool
-TAO_IIOP_Endpoint::is_preferred_network (void) const
+TAO_IIOP_Endpoint::is_preferred_network () const
 {
-  return (this->preferred_path_.host.in () != 0 &&
+  return (this->preferred_path_.host.in () != nullptr &&
           this->preferred_path_.host.in ()[0] != 0);
 }
 
 const char *
-TAO_IIOP_Endpoint::preferred_network (void) const
+TAO_IIOP_Endpoint::preferred_network () const
 {
   return this->preferred_path_.host.in ();
 }
-
-//@@ TAO_ENDPOINT_SPL_COPY_HOOK_END
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

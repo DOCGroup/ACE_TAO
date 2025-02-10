@@ -9,7 +9,6 @@
 #endif /* USE_ZZIP */
 
 
-
 ACEXML_CharStream*
 ACEXML_StreamFactory::create_stream (const ACEXML_Char* uri)
 {

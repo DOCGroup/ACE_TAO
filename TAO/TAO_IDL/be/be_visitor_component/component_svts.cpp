@@ -26,7 +26,7 @@ be_visitor_component_svts::be_visitor_component_svts (be_visitor_context *ctx)
     }
 }
 
-be_visitor_component_svts::~be_visitor_component_svts (void)
+be_visitor_component_svts::~be_visitor_component_svts ()
 {
 }
 
@@ -38,8 +38,7 @@ be_visitor_component_svts::visit_component (be_component *node)
       return 0;
     }
 
-  /// CIDL-generated namespace used 'CIDL_' + composition name.
-  /// Now we use 'CIAO_' + component's flat name.
+  /// Use 'CIAO_' + component's flat name.
   os_ << be_nl_2
       << "namespace CIAO_" << node->flat_name ()
       << "_Impl" << be_nl

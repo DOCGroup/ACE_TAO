@@ -25,19 +25,19 @@ public:
 
   //FUZZ: disable check_for_lack_ACE_OS
   ///FUZZ: enable check_for_lack_ACE_OS
-  virtual int open (const ACE_TCHAR *logger_key);
+  int open (const ACE_TCHAR *logger_key) override;
 
-  virtual int reset (void);
+  int reset () override;
 
   //FUZZ: disable check_for_lack_ACE_OS
   ///FUZZ: enable check_for_lack_ACE_OS
-  virtual int close (void);
+  int close () override;
 
-  virtual ssize_t log (ACE_Log_Record &log_record);
+  ssize_t log (ACE_Log_Record &log_record) override;
 
   // Test probes to see if things worked as specified.
-  bool hooks_ok (void) const;
-  unsigned int log_count (void) const { return this->log_count_; }
+  bool hooks_ok () const;
+  unsigned int log_count () const { return this->log_count_; }
 
 private:
   bool reset_;
@@ -54,14 +54,14 @@ Backend::open (const ACE_TCHAR *)
 }
 
 int
-Backend::reset (void)
+Backend::reset ()
 {
   this->reset_ = true;
   return 0;
 }
 
 int
-Backend::close (void)
+Backend::close ()
 {
   return 0;
 }
@@ -75,7 +75,7 @@ Backend::log (ACE_Log_Record &)
 
 // Test probes to see if things worked as specified.
 bool
-Backend::hooks_ok (void) const
+Backend::hooks_ok () const
 {
   // Close should not have been called yet.
   const ACE_TCHAR *yes = ACE_TEXT ("yes");

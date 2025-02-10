@@ -35,7 +35,7 @@ class TAO_Notify_Serv_Export TAO_Notify_Find_Worker_T : public TAO_ESF_Worker<TY
 
 public:
   /// Constructor
-  TAO_Notify_Find_Worker_T (void);
+  TAO_Notify_Find_Worker_T ();
 
   /// Find the Type.
   TYPE* find (const TAO_Notify_Object::ID id, CONTAINER& container);
@@ -60,13 +60,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #include "orbsvcs/Notify/Find_Worker_T.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "orbsvcs/Notify/Find_Worker_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Find_Worker_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 #endif /* TAO_Notify_FIND_WORKER_T_H */

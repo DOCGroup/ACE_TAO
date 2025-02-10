@@ -23,7 +23,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 // ACE_ALLOC_HOOK_DEFINE(ACE_Guard)
 
 template <class ACE_LOCK> void
-ACE_Guard<ACE_LOCK>::dump (void) const
+ACE_Guard<ACE_LOCK>::dump () const
 {
 #if defined (ACE_HAS_DUMP)
 // ACE_TRACE ("ACE_Guard<ACE_LOCK>::dump");
@@ -38,7 +38,7 @@ ACE_Guard<ACE_LOCK>::dump (void) const
 // ACE_ALLOC_HOOK_DEFINE(ACE_Write_Guard)
 
 template <class ACE_LOCK> void
-ACE_Write_Guard<ACE_LOCK>::dump (void) const
+ACE_Write_Guard<ACE_LOCK>::dump () const
 {
 #if defined (ACE_HAS_DUMP)
 // ACE_TRACE ("ACE_Write_Guard<ACE_LOCK>::dump");
@@ -49,7 +49,7 @@ ACE_Write_Guard<ACE_LOCK>::dump (void) const
 // ACE_ALLOC_HOOK_DEFINE(ACE_Read_Guard)
 
 template <class ACE_LOCK> void
-ACE_Read_Guard<ACE_LOCK>::dump (void) const
+ACE_Read_Guard<ACE_LOCK>::dump () const
 {
 // ACE_TRACE ("ACE_Read_Guard<ACE_LOCK>::dump");
   ACE_Guard<ACE_LOCK>::dump ();

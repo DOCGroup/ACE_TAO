@@ -3,8 +3,7 @@
 /**
  *  @file    Framework_Component_Test.h
  *
- *  Define class needed for generating templates. IBM C++ requires this to
- *  be in its own file for auto template instantiation.
+ *  Define class needed for generating templates.
  *
  *  @author Don Hinton <dhinton@ieee.org>
  */
@@ -20,11 +19,11 @@
 class Simple_Service
 {
 public:
-  Simple_Service (void)
+  Simple_Service ()
     {
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Simple_Service::Simple_Service\n")));
     }
-  virtual ~Simple_Service (void)
+  virtual ~Simple_Service ()
     {
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Simple_Service::~Simple_Service\n")));
     }

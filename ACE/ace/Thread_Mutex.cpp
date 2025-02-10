@@ -1,8 +1,6 @@
 /**
  * @file Thread_Mutex.cpp
  *
- * Originally in Synch.cpp
- *
  * @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
 
@@ -17,14 +15,12 @@
 #include "ace/Log_Category.h"
 #include "ace/Malloc_T.h"
 
-
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Thread_Mutex)
 
 void
-ACE_Thread_Mutex::dump (void) const
+ACE_Thread_Mutex::dump () const
 {
 #if defined (ACE_HAS_DUMP)
 // ACE_TRACE ("ACE_Thread_Mutex::dump");
@@ -35,7 +31,7 @@ ACE_Thread_Mutex::dump (void) const
 #endif /* ACE_HAS_DUMP */
 }
 
-ACE_Thread_Mutex::~ACE_Thread_Mutex (void)
+ACE_Thread_Mutex::~ACE_Thread_Mutex ()
 {
 // ACE_TRACE ("ACE_Thread_Mutex::~ACE_Thread_Mutex");
   this->remove ();

@@ -21,14 +21,14 @@ class JAWS_Export JAWS_Data_Block : public ACE_Message_Block
 //   Defines the communication unit between pipeline components
 {
 public:
-  JAWS_Data_Block (void);
+  JAWS_Data_Block ();
   JAWS_Data_Block (JAWS_Data_Block &db);
-  ~JAWS_Data_Block (void);
+  ~JAWS_Data_Block ();
 
-  JAWS_Pipeline_Handler *task (void);
-  JAWS_IO_Handler *io_handler (void);
-  JAWS_Dispatch_Policy *policy (void);
-  void *payload (void);
+  JAWS_Pipeline_Handler *task ();
+  JAWS_IO_Handler *io_handler ();
+  JAWS_Dispatch_Policy *policy ();
+  void *payload ();
 
   void task (JAWS_Pipeline_Handler *taskp);
   void io_handler (JAWS_IO_Handler *handlerp);

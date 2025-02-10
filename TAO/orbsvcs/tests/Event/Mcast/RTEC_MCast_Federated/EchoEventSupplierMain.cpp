@@ -20,7 +20,7 @@
 #include "tao/ORB_Core.h"
 #include "ace/OS_NS_strings.h"
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include <fstream>
 
 const RtecEventComm::EventSourceID MY_SOURCE_ID  = ACE_ES_EVENT_SOURCE_ANY + 1;
@@ -153,8 +153,8 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     TAO_ECG_UDP_Out_Endpoint endpoint;
     // need to be explicit about the address type when built with
     // IPv6 support, otherwise SOCK_DGram::open defaults to ipv6 when
-    // given a sap_any address. This causes trouble on at least solaris
-    // and windows, or at most on not-linux.
+    // given a sap_any address. This causes trouble on at least windows,
+    // or at most on not-linux.
     if (endpoint.dgram ().open (ACE_Addr::sap_any,
                                 send_addr.get_type()) == -1)
       {
@@ -193,22 +193,20 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     receiver->connect (pub);
 
     // Create the appropriate event handler and register it with the reactor
-    auto_ptr<ACE_Event_Handler> eh;
+    std::unique_ptr<ACE_Event_Handler> eh;
     if (mcast) {
-      auto_ptr<TAO_ECG_Mcast_EH> mcast_eh(new TAO_ECG_Mcast_EH (receiver.in()));
+      std::unique_ptr<TAO_ECG_Mcast_EH> mcast_eh(new TAO_ECG_Mcast_EH (receiver.in()));
       mcast_eh->reactor (orb->orb_core ()->reactor ());
       mcast_eh->open (ec.in());
-      ACE_auto_ptr_reset(eh,mcast_eh.release());
-      //eh.reset(mcast_eh.release());
+      eh.reset (mcast_eh.release());
     } else {
-      auto_ptr<TAO_ECG_UDP_EH> udp_eh (new TAO_ECG_UDP_EH (receiver.in()));
+      std::unique_ptr<TAO_ECG_UDP_EH> udp_eh (new TAO_ECG_UDP_EH (receiver.in()));
       udp_eh->reactor (orb->orb_core ()->reactor ());
       ACE_INET_Addr local_addr (listenport);
       if (udp_eh->open (local_addr) == -1)
         ACE_ERROR ((LM_ERROR,"Cannot open EH\n"));
 
-      ACE_auto_ptr_reset(eh,udp_eh.release());
-      //eh.reset(udp_eh.release());
+      eh.reset(udp_eh.release());
     }
 
     // Create an event (just a string in this case).
@@ -239,8 +237,8 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 #endif  /* !TAO_LACKS_EVENT_CHANNEL_ANY */
 
     if (iorfile != 0) {
-      CORBA::String_var str = orb->object_to_string( ec.in() );
-      std::ofstream iorFile( ACE_TEXT_ALWAYS_CHAR(iorfile) );
+      CORBA::String_var str = orb->object_to_string( ec.in());
+      std::ofstream iorFile( ACE_TEXT_ALWAYS_CHAR(iorfile));
       iorFile << str.in() << std::endl;
       iorFile.close();
     }

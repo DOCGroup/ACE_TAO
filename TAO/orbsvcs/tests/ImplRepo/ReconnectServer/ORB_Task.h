@@ -13,7 +13,7 @@ class ORB_Task : public ACE_Task_Base
 public:
   ORB_Task (CORBA::ORB_ptr orb);
 
-  virtual int svc (void);
+  virtual int svc ();
 
 private:
   CORBA::ORB_var orb_;

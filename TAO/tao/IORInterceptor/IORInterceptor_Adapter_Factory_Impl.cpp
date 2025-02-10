@@ -7,12 +7,12 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_IORInterceptor_Adapter_Factory_Impl::~
-  TAO_IORInterceptor_Adapter_Factory_Impl (void)
+  TAO_IORInterceptor_Adapter_Factory_Impl ()
 {
 }
 
 TAO_IORInterceptor_Adapter *
-TAO_IORInterceptor_Adapter_Factory_Impl::create (void)
+TAO_IORInterceptor_Adapter_Factory_Impl::create ()
 {
   TAO_IORInterceptor_Adapter_Impl *nia = 0;
   ACE_NEW_THROW_EX (nia,
@@ -28,7 +28,7 @@ TAO_IORInterceptor_Adapter_Factory_Impl::create (void)
 // Initialization and registration of dynamic service object.
 
 int
-TAO_IORInterceptor_Adapter_Factory_Impl::Initializer (void)
+TAO_IORInterceptor_Adapter_Factory_Impl::Initializer ()
 {
   TAO_ORB_Core::iorinterceptor_adapter_factory_name (
     "Concrete_IORInterceptor_Adapter_Factory");

@@ -15,7 +15,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 // This one is used during static initialization while the other is used
 // when PI is a shared library.
 int
-TAO_PI_Init::Initializer (void)
+TAO_PI_Init::Initializer ()
 {
 #if TAO_HAS_INTERCEPTORS == 1
   ACE_Service_Config::process_directive (ace_svc_desc_TAO_ClientRequestInterceptor_Adapter_Factory_Impl);

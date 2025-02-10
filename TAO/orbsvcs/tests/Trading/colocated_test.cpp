@@ -1,4 +1,3 @@
-#include "ace/Auto_Ptr.h"
 #include "ace/Get_Opt.h"
 #include "tao/Utils/ORB_Manager.h"
 #include "Offer_Exporter.h"
@@ -6,6 +5,7 @@
 #include "Service_Type_Exporter.h"
 #include "orbsvcs/Trader/Trader.h"
 #include "orbsvcs/Trader/Service_Type_Repository.h"
+#include <memory>
 
 int
 parse_args (int argc, ACE_TCHAR *argv[],
@@ -65,7 +65,7 @@ int failure = 0;
       // Start of Trading service scope.
       {
         TAO_Service_Type_Repository type_repos;
-        auto_ptr<TAO_Trader_Factory::TAO_TRADER> trader (TAO_Trader_Factory::create_trader (argc, argv));
+        std::unique_ptr<TAO_Trader_Factory::TAO_TRADER> trader (TAO_Trader_Factory::create_trader (argc, argv));
         TAO_Support_Attributes_i& sup_attr = trader->support_attributes ();
         TAO_Trading_Components_i& trd_comp = trader->trading_components ();
 
@@ -121,7 +121,6 @@ int failure = 0;
         TAO_Offer_Importer offer_importer(lookup_if.in(), verbose);
 
         offer_importer.perform_queries ();
-
       }; // End of Trading service scope.
       //-----------------------------------------------------------------------
       ACE_DEBUG ((LM_DEBUG, "*** Shutting down.\n"));

@@ -31,7 +31,7 @@ public:
   be_visitor_valuebox_union_member_ci (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_valuebox_union_member_ci (void);
+  ~be_visitor_valuebox_union_member_ci ();
 
   /// visit the field node
   virtual int visit_union_member (be_union_branch *node);

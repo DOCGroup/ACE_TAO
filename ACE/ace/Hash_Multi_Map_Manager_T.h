@@ -63,13 +63,13 @@ public:
                             ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *prev);
 
   /// Destructor.
-  ~ACE_Hash_Multi_Map_Entry (void);
+  ~ACE_Hash_Multi_Map_Entry () = default;
 
   /// Key accessor.
-  EXT_ID& key (void);
+  EXT_ID& key ();
 
   /// Item accessor.
-  ACE_Unbounded_Set<INT_ID>& item (void);
+  ACE_Unbounded_Set<INT_ID>& item ();
 
 public:
   /// Key used to look up an entry.
@@ -87,7 +87,7 @@ public:
   ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *prev_;
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 };
 
 // Forward decl.
@@ -222,13 +222,13 @@ public:
 
   /// Close down a Hash_Multi_Map_Manager and release dynamically allocated
   /// resources.
-  int close (void);
+  int close ();
 
   /// Removes all the entries in Hash_Multi_Map_Manager.
-  int unbind_all (void);
+  int unbind_all ();
 
   /// Cleanup the Hash_Multi_Map_Manager.
-  ~ACE_Hash_Multi_Map_Manager (void);
+  ~ACE_Hash_Multi_Map_Manager ();
 
   /**
    * Associate @a ext_id with @a int_id.  If @a ext_id and @a int_id is already
@@ -392,11 +392,11 @@ public:
 
   /// Returns the current number of @c ACE_Hash_Multi_Map_Entry objects in the
   /// hash table.
-  size_t current_size (void) const;
+  size_t current_size () const;
 
   /// Return the size of the array that's used to point to the
   /// linked lists of @c ACE_Hash_Multi_Map_Entry objects in the hash table.
-  size_t total_size (void) const;
+  size_t total_size () const;
 
   /**
    * Returns a reference to the underlying @c ACE_LOCK.  This makes it
@@ -406,20 +406,20 @@ public:
    * guard the state of an iterator.
    * @note The right name would be lock, but HP/C++ will choke on that!
    */
-  ACE_LOCK &mutex (void);
+  ACE_LOCK &mutex ();
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   // = STL styled iterator factory functions.
 
   /// Return forward iterator.
-  ACE_Hash_Multi_Map_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> begin (void);
-  ACE_Hash_Multi_Map_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> end (void);
+  ACE_Hash_Multi_Map_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> begin ();
+  ACE_Hash_Multi_Map_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> end ();
 
   /// Return reverse iterator.
-  ACE_Hash_Multi_Map_Reverse_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> rbegin (void);
-  ACE_Hash_Multi_Map_Reverse_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> rend (void);
+  ACE_Hash_Multi_Map_Reverse_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> rbegin ();
+  ACE_Hash_Multi_Map_Reverse_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> rend ();
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -539,11 +539,11 @@ protected:
 
   /// Close down a Map_Manager.  Must be called with
   /// locks held.
-  int close_i (void);
+  int close_i ();
 
   /// Removes all the entries in Map_Manager.  Must be called with
   /// locks held.
-  int unbind_all_i (void);
+  int unbind_all_i ();
 
   /// Pointer to a memory allocator used for table_, so it should
   /// supply size*sizeof (@c ACE_Hash_Multi_Map_Entry<@c EXT_ID, @c INT_ID>),
@@ -572,10 +572,10 @@ protected:
                    size_t &loc);
 
   /// Accessor of the underlying table
-  ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *table (void);
+  ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *table ();
 
   /// Accessor of the current size attribute
-  size_t cur_size (void) const;
+  size_t cur_size () const;
 
 private:
   /**
@@ -594,8 +594,8 @@ private:
   size_t cur_size_;
 
   // = Disallow these operations.
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Hash_Multi_Map_Manager (const ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &))
+  void operator= (const ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &) = delete;
+  ACE_Hash_Multi_Map_Manager (const ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &) = delete;
 };
 
 /**
@@ -622,17 +622,17 @@ public:
   int next (ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *&next_entry) const;
 
   /// Returns 1 when all items have been seen, else 0.
-  int done (void) const;
+  int done () const;
 
   /// Returns a reference to the interal element this object is pointing to.
-  ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID>& operator* (void) const;
+  ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID>& operator* () const;
 
   /// Returns a pointer to the interal element this object is pointing to.
-  ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID>* operator-> (void) const;
+  ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID>* operator-> () const;
 
   /// Returns reference the @c Hash_Multi_Map_Manager that is being iterated
   /// over.
-  ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>& map (void);
+  ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>& map ();
 
   /// Check if two iterators point to the same position
   bool operator== (const ACE_Hash_Multi_Map_Iterator_Base<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &) const;
@@ -644,14 +644,14 @@ public:
 protected:
   /// Move forward by one element in the set.  Returns 0 when there's
   /// no more item in the set after the current items, else 1.
-  int forward_i (void);
+  int forward_i ();
 
   /// Move backward by one element in the set.  Returns 0 when there's
   /// no more item in the set before the current item, else 1.
-  int reverse_i (void);
+  int reverse_i ();
 
   /// Dump the state of an object.
-  void dump_i (void) const;
+  void dump_i () const;
 
   /// Map we are iterating over.
   ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> *map_man_;
@@ -688,17 +688,17 @@ public:
   int next (ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *&next_entry) const;
 
   /// Returns 1 when all items have been seen, else 0.
-  int done (void) const;
+  int done () const;
 
   /// Returns a reference to the interal element this object is pointing to.
-  ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID>& operator* (void) const;
+  ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID>& operator* () const;
 
   /// Returns a pointer to the interal element this object is pointing to.
-  ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID>* operator-> (void) const;
+  ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID>* operator-> () const;
 
   /// Returns reference the @c Hash_Multi_Map_Manager that is being iterated
   /// over.
-  const ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>& map (void);
+  const ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>& map ();
 
   /// Check if two iterators point to the same position
   bool operator== (const ACE_Hash_Multi_Map_Const_Iterator_Base<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &) const;
@@ -710,14 +710,14 @@ public:
 protected:
   /// Move forward by one element in the set.  Returns 0 when there's
   /// no more item in the set after the current items, else 1.
-  int forward_i (void);
+  int forward_i ();
 
   /// Move backward by one element in the set.  Returns 0 when there's
   /// no more item in the set before the current item, else 1.
-  int reverse_i (void);
+  int reverse_i ();
 
   /// Dump the state of an object.
-  void dump_i (void) const;
+  void dump_i () const;
 
   /// Map we are iterating over.
   const ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> *map_man_;
@@ -752,21 +752,21 @@ public:
   // = Iteration methods.
   /// Move forward by one element in the set.  Returns 0 when all the
   /// items in the set have been seen, else 1.
-  int advance (void);
+  int advance ();
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   // = STL styled iteration, compare, and reference functions.
 
   /// Prefix advance.
-  ACE_Hash_Multi_Map_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &operator++ (void);
+  ACE_Hash_Multi_Map_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &operator++ ();
 
   /// Postfix advance.
   ACE_Hash_Multi_Map_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> operator++ (int);
 
   /// Prefix reverse.
-  ACE_Hash_Multi_Map_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &operator-- (void);
+  ACE_Hash_Multi_Map_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &operator-- ();
 
   /// Postfix reverse.
   ACE_Hash_Multi_Map_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> operator-- (int);
@@ -797,21 +797,21 @@ public:
   // = Iteration methods.
   /// Move forward by one element in the set.  Returns 0 when all the
   /// items in the set have been seen, else 1.
-  int advance (void);
+  int advance ();
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   // = STL styled iteration, compare, and reference functions.
 
   /// Prefix advance.
-  ACE_Hash_Multi_Map_Const_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &operator++ (void);
+  ACE_Hash_Multi_Map_Const_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &operator++ ();
 
   /// Postfix advance.
   ACE_Hash_Multi_Map_Const_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> operator++ (int);
 
   /// Prefix reverse.
-  ACE_Hash_Multi_Map_Const_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &operator-- (void);
+  ACE_Hash_Multi_Map_Const_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &operator-- ();
 
   /// Postfix reverse.
   ACE_Hash_Multi_Map_Const_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> operator-- (int);
@@ -850,26 +850,26 @@ public:
   // = STL styled iteration, compare, and reference functions.
 
   /// Prefix advance.
-  ACE_Hash_Multi_Map_Bucket_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &operator++ (void);
+  ACE_Hash_Multi_Map_Bucket_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &operator++ ();
 
   /// Postfix advance.
   ACE_Hash_Multi_Map_Bucket_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> operator++ (int);
 
   /// Prefix reverse.
-  ACE_Hash_Multi_Map_Bucket_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &operator-- (void);
+  ACE_Hash_Multi_Map_Bucket_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &operator-- ();
 
   /// Postfix reverse.
   ACE_Hash_Multi_Map_Bucket_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> operator-- (int);
 
   /// Returns a reference to the interal element this object is pointing to.
-  ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID>& operator* (void) const;
+  ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID>& operator* () const;
 
   /// Returns a pointer to the interal element this object is pointing to.
-  ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID>* operator-> (void) const;
+  ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID>* operator-> () const;
 
   /// Returns reference the Hash_Multi_Map_Manager that is being iterated
   /// over.
-  ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>& map (void);
+  ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>& map ();
 
   /// Check if two iterators point to the same position
   bool operator== (const ACE_Hash_Multi_Map_Bucket_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &) const;
@@ -878,11 +878,11 @@ public:
 protected:
   /// Move forward by one element in the set.  Returns 0 when there's
   /// no more item in the set after the current items, else 1.
-  int forward_i (void);
+  int forward_i ();
 
   /// Move backward by one element in the set.  Returns 0 when there's
   /// no more item in the set before the current item, else 1.
-  int reverse_i (void);
+  int reverse_i ();
 
   /// Map we are iterating over.
   ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> *map_man_;
@@ -917,21 +917,21 @@ public:
   // = Iteration methods.
   /// Move forward by one element in the set.  Returns 0 when all the
   /// items in the set have been seen, else 1.
-  int advance (void);
+  int advance ();
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   // = STL styled iteration, compare, and reference functions.
 
   /// Prefix reverse.
-  ACE_Hash_Multi_Map_Reverse_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &operator++ (void);
+  ACE_Hash_Multi_Map_Reverse_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &operator++ ();
 
   /// Postfix reverse.
   ACE_Hash_Multi_Map_Reverse_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> operator++ (int);
 
   /// Prefix advance.
-  ACE_Hash_Multi_Map_Reverse_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &operator-- (void);
+  ACE_Hash_Multi_Map_Reverse_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &operator-- ();
 
   /// Postfix advance.
   ACE_Hash_Multi_Map_Reverse_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> operator-- (int);
@@ -946,13 +946,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #  include "ace/Hash_Multi_Map_Manager_T.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Hash_Multi_Map_Manager_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Hash_Multi_Map_Manager_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_HASH_MULTI_MAP_MANAGER_T_H */

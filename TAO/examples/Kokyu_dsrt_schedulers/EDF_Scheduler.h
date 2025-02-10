@@ -48,8 +48,7 @@ public EDF_Scheduling::SchedulingParameterPolicy,
        public ::CORBA::LocalObject
 {
  public:
-
-    EDF_Scheduling::SchedulingParameter value (void);
+    EDF_Scheduling::SchedulingParameter value ();
 
     void value (const EDF_Scheduling::SchedulingParameter & value);
 
@@ -62,19 +61,18 @@ public EDF_Scheduling::Scheduler,
 public ::CORBA::LocalObject
 {
  public:
-
   EDF_Scheduler (CORBA::ORB_ptr orb,
                  Kokyu::DSRT_Dispatcher_Impl_t,
                  int ace_sched_policy,
                  int ace_sched_scope);
 
-  ~EDF_Scheduler (void);
+  ~EDF_Scheduler ();
 
 
   virtual EDF_Scheduling::SchedulingParameterPolicy_ptr
     create_scheduling_parameter (const EDF_Scheduling::SchedulingParameter & value);
 
-  void shutdown (void);
+  void shutdown ();
 
   virtual void begin_new_scheduling_segment (const RTScheduling::Current::IdType & guid,
                                              const char * name,
@@ -122,13 +120,13 @@ public ::CORBA::LocalObject
 
   virtual void cancel (const RTScheduling::Current::IdType & guid);
 
-  virtual CORBA::PolicyList * scheduling_policies (void);
+  virtual CORBA::PolicyList * scheduling_policies ();
 
   virtual void scheduling_policies (const CORBA::PolicyList & scheduling_policies);
 
-  virtual CORBA::PolicyList * poa_policies (void);
+  virtual CORBA::PolicyList * poa_policies ();
 
-  virtual char * scheduling_discipline_name (void);
+  virtual char * scheduling_discipline_name ();
 
   virtual RTScheduling::ResourceManager_ptr create_resource_manager (const char * name,
                                                                      CORBA::Policy_ptr scheduling_parameter);

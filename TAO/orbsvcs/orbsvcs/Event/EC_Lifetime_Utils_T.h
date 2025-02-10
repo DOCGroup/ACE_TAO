@@ -45,7 +45,7 @@ void activate (T & obj_ref,
  *
  * Template argument requirements:
  *
- * Has void execute (void); method which
+ * Has void execute (); method which
  * can throw ONLY CORBA exceptions.
  * Has default and copy constructors.
  */
@@ -53,22 +53,21 @@ template <class T>
 class TAO_EC_Auto_Command
 {
 public:
-  TAO_EC_Auto_Command (void);
+  TAO_EC_Auto_Command ();
   TAO_EC_Auto_Command (const T & command);
-  ~TAO_EC_Auto_Command (void);
+  ~TAO_EC_Auto_Command ();
   void set_command (const T & command);
   void set_command (TAO_EC_Auto_Command<T> & auto_command);
-  void execute (void);
-  void allow_command (void);
-  void disallow_command (void);
+  void execute ();
+  void allow_command ();
+  void disallow_command ();
 
 private:
-
   TAO_EC_Auto_Command (const TAO_EC_Auto_Command &);
   TAO_EC_Auto_Command & operator=  (const TAO_EC_Auto_Command &);
 
   T command_;
-  int allow_command_;
+  bool allow_command_;
 };
 
 
@@ -78,12 +77,11 @@ template <class T>
 class TAO_EC_Shutdown_Command
 {
 public:
-  TAO_EC_Shutdown_Command (void);
+  TAO_EC_Shutdown_Command ();
   TAO_EC_Shutdown_Command (T target);
-  void execute (void);
+  void execute ();
 
 private:
-
   T target_;
 };
 
@@ -93,12 +91,6 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #include "orbsvcs/Event/EC_Lifetime_Utils_T.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "orbsvcs/Event/EC_Lifetime_Utils_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("EC_Lifetime_Utils_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #endif /* EC_LIFETIME_UTILS_T_H */

@@ -4,8 +4,6 @@
 /**
  *  @file    TSS_T.h
  *
- *   Moved from Synch.h.
- *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
 //==========================================================================
@@ -34,7 +32,6 @@
 # endif /* ACE_HAS_THREADS && (ACE_HAS_THREAD_SPECIFIC_STORAGE || ACE_HAS_TSS_EMULATION) */
 
 #include "ace/Thread_Mutex.h"
-#include "ace/Copy_Disabled.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -74,7 +71,7 @@ class ACE_TSS_Adapter;
  * limits its lifetime appropriately.
  */
 template <class TYPE>
-class ACE_TSS : private ACE_Copy_Disabled
+class ACE_TSS
 {
 public:
   /**
@@ -90,11 +87,16 @@ public:
    *                 threads use the ts_object (TYPE *) method to set
    *                 a specific value.
    */
-  ACE_TSS (TYPE *ts_obj = 0);
+  ACE_TSS (TYPE *ts_obj = nullptr);
+
+  ACE_TSS (const ACE_TSS &) = delete;
+  ACE_TSS (ACE_TSS &&) = delete;
+  ACE_TSS &operator= (const ACE_TSS &) = delete;
+  ACE_TSS &operator= (ACE_TSS &&) = delete;
 
   /// Deregister this object from thread-specific storage administration.
   /// Will cause all threads' copies of TYPE to be destroyed.
-  virtual ~ACE_TSS (void);
+  virtual ~ACE_TSS ();
 
   /**
    * Set the thread-specific object for the calling thread.
@@ -129,7 +131,7 @@ public:
    *          may be 0 under odd error conditions; check errno for further
    *          information.
    */
-  TYPE *ts_object (void) const;
+  TYPE *ts_object () const;
 
   /**
    * Use a "smart pointer" to get the thread-specific data associated
@@ -156,17 +158,17 @@ public:
    *          may be 0 under odd error conditions; check errno for further
    *          information.
    */
-  operator TYPE *(void) const;
+  operator TYPE *() const;
 
   //@}
 
   /// Hook for construction parameters.
-  virtual TYPE *make_TSS_TYPE (void) const;
+  virtual TYPE *make_TSS_TYPE () const;
 
   // = Utility methods.
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -174,11 +176,11 @@ public:
 protected:
   /// Actually implements the code that retrieves the object from
   /// thread-specific storage.
-  TYPE *ts_get (void) const;
+  TYPE *ts_get () const;
 
   /// Factors out common code for initializing TSS.  This must NOT be
   /// called with the lock held...
-  int ts_init (void);
+  int ts_init ();
 
 #if !(defined (ACE_HAS_THREADS) && (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION)))
   /// This implementation only works for non-threading systems...
@@ -198,9 +200,9 @@ protected:
 
   /// Obtains a plain value stored in the thread-specific storage.
 # if defined (ACE_HAS_THR_C_DEST)
-  ACE_TSS_Adapter *ts_value (void) const;
+  ACE_TSS_Adapter *ts_value () const;
 # else
-  TYPE *ts_value (void) const;
+  TYPE *ts_value () const;
 # endif /* ACE_HAS_THR_C_DEST */
 
   /// Stores a new plain value in the thread-specific storage.
@@ -237,11 +239,11 @@ public:
 
   /// TYPE conversion.  Inlined here so that it should _always_ be
   /// inlined.
-  operator TYPE () const { return value_; };
+  operator TYPE () const { return value_; }
 
   /// TYPE & conversion.  Inlined here so that it should _always_ be
   /// inlined.
-  operator TYPE &() { return value_; };
+  operator TYPE &() { return value_; }
 
 private:
   /// The wrapped value.
@@ -254,13 +256,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #include "ace/TSS_T.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/TSS_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("TSS_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_TSS_T_H */

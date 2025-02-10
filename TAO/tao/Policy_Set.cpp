@@ -14,10 +14,10 @@ TAO_Policy_Set::TAO_Policy_Set (TAO_Policy_Scope scope)
   : scope_ (scope)
 {
   for (unsigned int i = 0; i < TAO_CACHED_POLICY_MAX_CACHED; ++i)
-    this->cached_policies_[i] = 0;
+    this->cached_policies_[i] = nullptr;
 }
 
-TAO_Policy_Set::~TAO_Policy_Set (void)
+TAO_Policy_Set::~TAO_Policy_Set ()
 {
   try
     {
@@ -35,7 +35,7 @@ TAO_Policy_Set::TAO_Policy_Set (const TAO_Policy_Set &rhs)
   // Initialize the cache.
   for (int i = 0; i < TAO_CACHED_POLICY_MAX_CACHED; ++i)
     {
-      this->cached_policies_[i] = 0;
+      this->cached_policies_[i] = nullptr;
     }
 
   // Copy over the policy list.
@@ -78,7 +78,7 @@ TAO_Policy_Set::TAO_Policy_Set (const TAO_Policy_Set &rhs)
 void
 TAO_Policy_Set::copy_from (TAO_Policy_Set *source)
 {
-  if (source == 0)
+  if (source == nullptr)
     {
       return;
     }
@@ -119,7 +119,7 @@ TAO_Policy_Set::copy_from (TAO_Policy_Set *source)
 }
 
 void
-TAO_Policy_Set::cleanup_i (void)
+TAO_Policy_Set::cleanup_i ()
 {
   CORBA::ULong const len = this->policy_list_.length ();
   // Cleanup the policy list.
@@ -134,7 +134,7 @@ TAO_Policy_Set::cleanup_i (void)
   // Cleanup the cache.
   for (CORBA::ULong j = 0; j < TAO_CACHED_POLICY_MAX_CACHED; ++j)
     {
-      this->cached_policies_[j] = 0;
+      this->cached_policies_[j] = nullptr;
     }
 }
 
@@ -247,7 +247,7 @@ CORBA::PolicyList *
 TAO_Policy_Set::get_policy_overrides (const CORBA::PolicyTypeSeq &types)
 {
   CORBA::ULong const slots = types.length ();
-  CORBA::PolicyList *policy_list_ptr = 0;
+  CORBA::PolicyList *policy_list_ptr = nullptr;
 
   if (slots == 0)
     {

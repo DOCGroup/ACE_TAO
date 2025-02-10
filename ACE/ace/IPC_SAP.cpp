@@ -13,14 +13,12 @@
 #include "ace/IPC_SAP.inl"
 #endif /* __ACE_INLINE__ */
 
-
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_IPC_SAP)
 
 void
-ACE_IPC_SAP::dump (void) const
+ACE_IPC_SAP::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_IPC_SAP::dump");
@@ -34,7 +32,7 @@ ACE_IPC_SAP::dump (void) const
 // This is the do-nothing constructor.  It does not perform a
 // ACE_OS::socket system call.
 
-ACE_IPC_SAP::ACE_IPC_SAP (void)
+ACE_IPC_SAP::ACE_IPC_SAP ()
   : handle_ (ACE_INVALID_HANDLE)
 {
   // ACE_TRACE ("ACE_IPC_SAP::ACE_IPC_SAP");

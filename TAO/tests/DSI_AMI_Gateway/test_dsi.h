@@ -50,7 +50,7 @@ public:
       const PortableServer::ObjectId &oid,
       PortableServer::POA_ptr poa);
 
-  virtual PortableServer::POA_ptr _default_POA (void);
+  virtual PortableServer::POA_ptr _default_POA ();
 
 private:
   /// The ORB

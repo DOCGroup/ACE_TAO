@@ -1836,7 +1836,7 @@ Sun Jun 13 07:56:20 2004  Phil Mesnier  <mesnier_p@ociweb.com>
 Sun Jun 14 11:36:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Operation_Table.cpp:
-          Also on AIX we must explictly instantiate static template members.
+          Also on AIX we must explicitly instantiate static template members.
           To make things easier to maintenance use the new
           ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION macro to check
           whether we need to do this. This macro is set for the GNU compiler for
@@ -3619,7 +3619,7 @@ Tue Apr 27 06:55:46 2004  Chad Elliott  <elliott_c@ociweb.com>
 Mon Apr 26 13:52:49 2004  Carlos O'Ryan  <coryan@atdesk.com>
 
         * Fixes for:
-            http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1779
+            http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=1779
 
         * tao/params.i:
           The sock_{snd,rcv}buf_size were silently truncated to
@@ -7985,7 +7985,7 @@ Fri Feb 13 17:47:10 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
           Added a mutex around refcounting to address problems as outlined
           in
 
-          http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1728
+          http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=1728
 
           Thanks to Torsten Kuepper for reporting the problem.
 
@@ -8244,7 +8244,7 @@ Wed Feb 11 13:17:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 Wed Feb 11 11:28:56 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Simple/chat/chat.mpc:
-          Added idl files explictly so that the order in which the idl files
+          Added idl files explicitly so that the order in which the idl files
           are compiled is fixed and correct.
 
 Wed Feb 11 10:22:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
@@ -8479,7 +8479,7 @@ Sat Feb  7 20:32:06 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
           Fix for BUGID 1734. Please see
 
-          http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1734
+          http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=1734
 
           for details.
 

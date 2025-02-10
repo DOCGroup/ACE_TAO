@@ -36,7 +36,6 @@ class TAO_Notify_Method_Request_Queueable;
 
 namespace TAO_Notify
 {
-
 class Routing_Slip_Persistence_Manager;
 
 // Forward declarations of TAO_Notify classes/pointers/collections
@@ -77,7 +76,7 @@ public:
 
   void set_rspm (Routing_Slip_Persistence_Manager * rspm);
 
-  void reconnect (void);
+  void reconnect ();
 
   /// Destructor (should be private but that inspires compiler wars)
   virtual ~Routing_Slip ();
@@ -232,7 +231,6 @@ private:
 
   static Routing_Slip_Queue persistent_queue_;
 };
-
 } // namespace
 
 TAO_END_VERSIONED_NAMESPACE_DECL

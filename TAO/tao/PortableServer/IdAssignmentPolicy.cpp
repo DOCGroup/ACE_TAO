@@ -18,9 +18,9 @@ namespace TAO
     }
 
     CORBA::Policy_ptr
-    IdAssignmentPolicy::copy (void)
+    IdAssignmentPolicy::copy ()
     {
-      IdAssignmentPolicy *copy = 0;
+      IdAssignmentPolicy *copy {};
       ACE_NEW_THROW_EX (copy,
                         IdAssignmentPolicy (this->value_),
                         CORBA::NO_MEMORY ());
@@ -29,30 +29,30 @@ namespace TAO
     }
 
     void
-    IdAssignmentPolicy::destroy (void)
+    IdAssignmentPolicy::destroy ()
     {
     }
 
     ::PortableServer::IdAssignmentPolicyValue
-    IdAssignmentPolicy::value (void)
+    IdAssignmentPolicy::value ()
     {
       return value_;
     }
 
     CORBA::PolicyType
-    IdAssignmentPolicy::policy_type (void)
+    IdAssignmentPolicy::policy_type ()
     {
       return ::PortableServer::ID_ASSIGNMENT_POLICY_ID;
     }
 
     TAO_Cached_Policy_Type
-    IdAssignmentPolicy::_tao_cached_type (void) const
+    IdAssignmentPolicy::_tao_cached_type () const
     {
       return TAO_CACHED_POLICY_ID_ASSIGNMENT;
     }
 
     TAO_Policy_Scope
-    IdAssignmentPolicy::_tao_scope (void) const
+    IdAssignmentPolicy::_tao_scope () const
     {
       return TAO_POLICY_POA_SCOPE;
     }

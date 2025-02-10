@@ -15,7 +15,6 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-#include "ace/Copy_Disabled.h"
 #include "Kokyu_dsrt.h"
 #include "DSRT_Sched_Queue_T.h"
 #include "DSRT_Dispatcher_Impl_T.h"
@@ -25,8 +24,7 @@ namespace Kokyu
   template<class DSRT_Scheduler_Traits>
   class DSRT_Direct_Dispatcher_Impl :
     public ACE_Task_Base,
-    public DSRT_Dispatcher_Impl<DSRT_Scheduler_Traits>,
-    public ACE_Copy_Disabled
+    public DSRT_Dispatcher_Impl<DSRT_Scheduler_Traits>
   {
   public:
     typedef typename
@@ -37,6 +35,11 @@ namespace Kokyu
 
     DSRT_Direct_Dispatcher_Impl (ACE_Sched_Params::Policy sched_policy,
                                  int sched_scope);
+
+    DSRT_Direct_Dispatcher_Impl (const DSRT_Direct_Dispatcher_Impl &) = delete;
+    DSRT_Direct_Dispatcher_Impl (DSRT_Direct_Dispatcher_Impl &&) = delete;
+    DSRT_Direct_Dispatcher_Impl &operator= (const DSRT_Direct_Dispatcher_Impl &) = delete;
+    DSRT_Direct_Dispatcher_Impl &operator= (DSRT_Direct_Dispatcher_Impl &&) = delete;
 
     int init_i (const DSRT_ConfigInfo&);
 
@@ -68,22 +71,11 @@ namespace Kokyu
     cond_t sched_queue_modified_cond_;
 
   private:
-    int svc (void);
+    int svc ();
   };
-
 }
 
-#if !defined (__ACE_INLINE__)
-//#include "DSRT_Direct_Dispatcher_Impl_T.i"
-#endif /* __ACE_INLINE__ */
-
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "DSRT_Direct_Dispatcher_Impl_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("DSRT_Direct_Dispatcher_Impl_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 #endif /* DSRT_DIRECT_DISPATCHER_IMPL_T_H */

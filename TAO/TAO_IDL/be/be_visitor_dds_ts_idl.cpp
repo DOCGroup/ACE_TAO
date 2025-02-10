@@ -28,11 +28,11 @@
 be_visitor_dds_ts_idl::be_visitor_dds_ts_idl (
       be_visitor_context *ctx)
   : be_visitor_scope (ctx),
-    os_ptr_ (0)
+    os_ptr_ (nullptr)
 {
 }
 
-be_visitor_dds_ts_idl::~be_visitor_dds_ts_idl (void)
+be_visitor_dds_ts_idl::~be_visitor_dds_ts_idl ()
 {
 }
 
@@ -317,7 +317,7 @@ be_visitor_dds_ts_idl::gen_datareader (be_type *node)
 }
 
 int
-be_visitor_dds_ts_idl::init_file (void)
+be_visitor_dds_ts_idl::init_file ()
 {
   /// Open an IDL file for writing.
   ACE_CString orig (
@@ -358,12 +358,12 @@ be_visitor_dds_ts_idl::init_file (void)
 }
 
 void
-be_visitor_dds_ts_idl::fini_file (void)
+be_visitor_dds_ts_idl::fini_file ()
 {
   *this->os_ptr_ << be_nl_2
                  << "#endif /* ifndef */\n"
                  << "\n";
 
   delete this->os_ptr_;
-  this->os_ptr_ = 0;
+  this->os_ptr_ = nullptr;
 }

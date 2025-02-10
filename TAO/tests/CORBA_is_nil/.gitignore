@@ -1,0 +1,7 @@
+.obj
+.depend.CORBA_Is_Nil_Client
+.depend.CORBA_Is_Nil_Server
+.depend.CORBA_Is_Nil_idl
+.depend.CORBA_Is_Nil_idl_Idl1
+client
+server

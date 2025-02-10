@@ -488,7 +488,7 @@ macros discussed here.
   </li>
 
   <li><p>Instead of depending on <code>ACE_CATCHALL</code>, use
-      <code>auto_ptr</code> style mechanism to prevent memory leaks
+      <code>std::unique_ptr</code> style mechanism to prevent memory leaks
       from exceptions.
       </p>
   </li>
@@ -520,7 +520,7 @@ macros discussed here.
   </li>
 
   <li><p>Make sure an exception doesn't cause resource leak (memory,
-      socket, ...) (hint: Use auto_ptr to avoid memory leak,
+      socket, ...) (hint: Use std::unique_ptr to avoid memory leak,
       and ACE_Guard for locks.)
       </p>
   </li>

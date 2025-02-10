@@ -13,12 +13,12 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Notify_EventType
-TAO_Notify_EventType::special (void)
+TAO_Notify_EventType::special ()
 {
   return TAO_Notify_EventType ("*", "%ALL");
 }
 
-TAO_Notify_EventType::TAO_Notify_EventType (void)
+TAO_Notify_EventType::TAO_Notify_EventType ()
 {
 }
 
@@ -55,7 +55,7 @@ TAO_Notify_EventType::~TAO_Notify_EventType ()
 }
 
 void
-TAO_Notify_EventType::recompute_hash (void)
+TAO_Notify_EventType::recompute_hash ()
 {
   // @@ Pradeep: this code is bound to crash someday if the strings
   // are too long....  See if the hash_pjw () function can be modified
@@ -112,14 +112,14 @@ TAO_Notify_EventType::operator!=(const TAO_Notify_EventType& event_type) const
 }
 
 CORBA::Boolean
-TAO_Notify_EventType::is_special (void) const
+TAO_Notify_EventType::is_special () const
 {
   return (this->domain_is_wildcard (this->event_type_.domain_name) &&
           this->type_is_wildcard (this->event_type_.type_name));
 }
 
 void
-TAO_Notify_EventType::dump (void) const
+TAO_Notify_EventType::dump () const
 {
   ORBSVCS_DEBUG ((LM_DEBUG,
               "(%s,%s)",
@@ -140,7 +140,6 @@ bool TAO_Notify_EventType::init(const TAO_Notify::NVPList& attrs)
     result = true;
   }
   return result;
-
 }
 
   // TAO_Notify::Topology_Object

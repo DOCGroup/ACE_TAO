@@ -9,18 +9,18 @@
 #include "tao/OctetSeqC.h"
 #include "ace/OS_NS_string.h"
 
-Echo_Server_Request_Interceptor::Echo_Server_Request_Interceptor (void)
+Echo_Server_Request_Interceptor::Echo_Server_Request_Interceptor ()
 {
 }
 
 char *
-Echo_Server_Request_Interceptor::name (void)
+Echo_Server_Request_Interceptor::name ()
 {
   return CORBA::string_dup ("Echo_Server_Interceptor");
 }
 
 void
-Echo_Server_Request_Interceptor::destroy (void)
+Echo_Server_Request_Interceptor::destroy ()
 {
 }
 

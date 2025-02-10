@@ -58,19 +58,19 @@ TAO_Notify_Consumer::~TAO_Notify_Consumer ()
 }
 
 CORBA::ULong
-TAO_Notify_Consumer::_incr_refcnt (void)
+TAO_Notify_Consumer::_incr_refcnt ()
 {
   return this->add_reference();
 }
 
 CORBA::ULong
-TAO_Notify_Consumer::_decr_refcnt (void)
+TAO_Notify_Consumer::_decr_refcnt ()
 {
   return this->remove_reference();
 }
 
 TAO_Notify_Proxy*
-TAO_Notify_Consumer::proxy (void)
+TAO_Notify_Consumer::proxy ()
 {
   return this->proxy_supplier ();
 }
@@ -82,7 +82,7 @@ TAO_Notify_Consumer::qos_changed (const TAO_Notify_QoSProperties& qos_properties
 }
 
 void
-TAO_Notify_Consumer::resume (void)
+TAO_Notify_Consumer::resume ()
 {
   this->is_suspended_ = 0;
 
@@ -468,7 +468,7 @@ TAO_Notify_Consumer::dispatch_batch (const CosNotification::EventBatch& batch)
 }
 
 void
-TAO_Notify_Consumer::dispatch_pending (void)
+TAO_Notify_Consumer::dispatch_pending ()
 {
   if (DEBUG_LEVEL  > 5)
     ORBSVCS_DEBUG ((LM_DEBUG,
@@ -642,7 +642,7 @@ TAO_Notify_Consumer::schedule_timer (bool is_error)
 }
 
 void
-TAO_Notify_Consumer::cancel_timer (void)
+TAO_Notify_Consumer::cancel_timer ()
 {
   if (this->timer_.isSet() && this->timer_id_ != -1)
     {
@@ -677,7 +677,7 @@ TAO_Notify_Consumer::handle_timeout (const ACE_Time_Value&, const void*)
 }
 
 void
-TAO_Notify_Consumer::shutdown (void)
+TAO_Notify_Consumer::shutdown ()
 {
   this->suspend();
   if (this->timer_.isSet ())
@@ -701,13 +701,13 @@ TAO_Notify_Consumer::dispatch_updates_i (const CosNotification::EventTypeSeq& ad
 }
 
 TAO_SYNCH_MUTEX*
-TAO_Notify_Consumer::proxy_lock (void)
+TAO_Notify_Consumer::proxy_lock ()
 {
   return &this->proxy_->lock_;
 }
 
 TAO_Notify_ProxySupplier*
-TAO_Notify_Consumer::proxy_supplier (void)
+TAO_Notify_Consumer::proxy_supplier ()
 {
   return this->proxy_;
 }

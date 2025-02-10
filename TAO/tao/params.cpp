@@ -16,7 +16,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_ORB_Parameters::TAO_ORB_Parameters (void)
+TAO_ORB_Parameters::TAO_ORB_Parameters ()
   : endpoints_map_ (10)
   , mcast_discovery_endpoint_ ()
   , default_init_ref_ (TAO_DEFAULT_INIT_REFERENCE_INITIALIZER)
@@ -291,7 +291,7 @@ TAO_ORB_Parameters::preferred_interfaces (const char *s)
 }
 
 const char *
-TAO_ORB_Parameters::preferred_interfaces (void) const
+TAO_ORB_Parameters::preferred_interfaces () const
 {
   return this->pref_network_.c_str ();
 }
@@ -303,7 +303,7 @@ TAO_ORB_Parameters::enforce_pref_interfaces (bool p)
 }
 
 bool
-TAO_ORB_Parameters::enforce_pref_interfaces (void) const
+TAO_ORB_Parameters::enforce_pref_interfaces () const
 {
   return this->enforce_preferred_interfaces_;
 }
@@ -316,7 +316,7 @@ TAO_ORB_Parameters::prefer_ipv6_interfaces (bool p)
 }
 
 bool
-TAO_ORB_Parameters::prefer_ipv6_interfaces (void) const
+TAO_ORB_Parameters::prefer_ipv6_interfaces () const
 {
   return this->prefer_ipv6_interfaces_;
 }
@@ -328,7 +328,7 @@ TAO_ORB_Parameters::connect_ipv6_only (bool p)
 }
 
 bool
-TAO_ORB_Parameters::connect_ipv6_only (void) const
+TAO_ORB_Parameters::connect_ipv6_only () const
 {
   return this->connect_ipv6_only_;
 }
@@ -340,7 +340,7 @@ TAO_ORB_Parameters::use_ipv6_link_local (bool p)
 }
 
 bool
-TAO_ORB_Parameters::use_ipv6_link_local (void) const
+TAO_ORB_Parameters::use_ipv6_link_local () const
 {
   return this->use_ipv6_link_local_;
 }
@@ -353,7 +353,7 @@ TAO_ORB_Parameters::protocols_hooks_name (const char *s)
 }
 
 const char *
-TAO_ORB_Parameters::protocols_hooks_name (void) const
+TAO_ORB_Parameters::protocols_hooks_name () const
 {
   return this->protocols_hooks_name_.c_str ();
 }
@@ -365,7 +365,7 @@ TAO_ORB_Parameters::thread_lane_resources_manager_factory_name (const char *s)
 }
 
 const char *
-TAO_ORB_Parameters::thread_lane_resources_manager_factory_name (void) const
+TAO_ORB_Parameters::thread_lane_resources_manager_factory_name () const
 {
   return this->thread_lane_resources_manager_factory_name_.c_str ();
 }
@@ -377,7 +377,7 @@ TAO_ORB_Parameters::dynamic_thread_pool_config_name (const char *s)
 }
 
 const char *
-TAO_ORB_Parameters::dynamic_thread_pool_config_name (void) const
+TAO_ORB_Parameters::dynamic_thread_pool_config_name () const
 {
   return this->dynamic_thread_pool_config_name_.c_str ();
 }
@@ -389,7 +389,7 @@ TAO_ORB_Parameters::stub_factory_name (const char *s)
 }
 
 const char *
-TAO_ORB_Parameters::stub_factory_name (void) const
+TAO_ORB_Parameters::stub_factory_name () const
 {
   return this->stub_factory_name_.c_str ();
 }
@@ -401,7 +401,7 @@ TAO_ORB_Parameters::poa_factory_name (const char *s)
 }
 
 const char *
-TAO_ORB_Parameters::poa_factory_name (void) const
+TAO_ORB_Parameters::poa_factory_name () const
 {
   return this->poa_factory_name_.c_str ();
 }
@@ -413,7 +413,7 @@ TAO_ORB_Parameters::poa_factory_directive (const ACE_TCHAR *s)
 }
 
 const ACE_TCHAR *
-TAO_ORB_Parameters::poa_factory_directive (void) const
+TAO_ORB_Parameters::poa_factory_directive () const
 {
   return this->poa_factory_directive_.c_str ();
 }
@@ -425,19 +425,19 @@ TAO_ORB_Parameters::endpoint_selector_factory_name (const char *s)
 }
 
 const char *
-TAO_ORB_Parameters::endpoint_selector_factory_name (void) const
+TAO_ORB_Parameters::endpoint_selector_factory_name () const
 {
   return this->endpoint_selector_factory_name_.c_str ();
 }
 
 const TAO::Invocation_Retry_Params &
-TAO_ORB_Parameters::invocation_retry_params (void) const
+TAO_ORB_Parameters::invocation_retry_params () const
 {
   return this->invocation_retry_params_;
 }
 
 TAO::Invocation_Retry_Params &
-TAO_ORB_Parameters::invocation_retry_params (void)
+TAO_ORB_Parameters::invocation_retry_params ()
 {
   return this->invocation_retry_params_;
 }

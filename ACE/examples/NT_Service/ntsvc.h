@@ -27,9 +27,9 @@
 class Service : public ACE_NT_Service
 {
 public:
-  Service (void);
+  Service ();
 
-  ~Service (void);
+  ~Service ();
 
   /// We override <handle_control> because it handles stop requests
   /// privately.
@@ -40,7 +40,7 @@ public:
   virtual int  handle_exception (ACE_HANDLE h);
 
   /// This is a virtual method inherited from ACE_NT_Service.
-  virtual int svc (void);
+  virtual int svc ();
 
   /// Where the real work is done:
   virtual int handle_timeout (const ACE_Time_Value& tv,

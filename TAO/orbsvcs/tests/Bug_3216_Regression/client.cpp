@@ -6,7 +6,6 @@
 #include "Hello.h"
 
 
-
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 
 int
@@ -46,7 +45,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       char *argv1[] = { CLIENT, 0 };
 
       CORBA::ORB_var orb1 =
-      CORBA::ORB_init (one, argv1, "orb1" );
+      CORBA::ORB_init (one, argv1, "orb1");
 
       int three = 3;
       char OPTION[] = "-ORBFTSendFullGroupTC"; // Copy const into non-const storage.
@@ -57,7 +56,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       try
         {
           orb2 =
-            CORBA::ORB_init (three, argv2, "orb2" );
+            CORBA::ORB_init (three, argv2, "orb2");
         }
       catch (const CORBA::BAD_PARAM&)
         {
@@ -69,10 +68,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         return 1;
 
       CORBA::Object_var tmp =
-        orb1->string_to_object (ior );
+        orb1->string_to_object (ior);
 
       Test::Hello_var hello =
-        Test::Hello::_narrow(tmp.in () );
+        Test::Hello::_narrow(tmp.in ());
 
       if (CORBA::is_nil (hello.in ()))
         {
@@ -94,10 +93,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
 
       tmp =
-        orb2->string_to_object (ior );
+        orb2->string_to_object (ior);
 
       hello =
-        Test::Hello::_narrow(tmp.in () );
+        Test::Hello::_narrow(tmp.in ());
 
       if (CORBA::is_nil (hello.in ()))
         {

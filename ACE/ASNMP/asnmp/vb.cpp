@@ -37,10 +37,10 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_Memory.h"
 
-//---------------[ Vb::Vb( void) ]--------------------------------------
+//---------------[ Vb::Vb() ]--------------------------------------
 // constructor with no arguments
 // makes an vb, unitialized
-Vb::Vb( void): output_(0), iv_vb_value_(0),
+Vb::Vb(): output_(0), iv_vb_value_(0),
     exception_status_(SNMP_CLASS_SUCCESS)
 {
 }
@@ -323,7 +323,6 @@ int Vb::get_value( SnmpSyntax &val)
     return SNMP_CLASS_INVALID;
   }
 }
-
 
 
 //-----[ misc]--------------------------------------------------------

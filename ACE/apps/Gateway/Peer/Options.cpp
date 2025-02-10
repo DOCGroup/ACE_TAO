@@ -12,14 +12,14 @@
 Options *Options::instance_ = 0;
 
 void
-Options::print_usage_and_die (void)
+Options::print_usage_and_die ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("%n [-a {C|S}:acceptor-port] [-c {C|S}:connector-port] [-C connection-id] [-h gateway-host] [-q max-queue-size] [-t timeout] [-v]\n")));
   ACE_OS::exit (1);
 }
 
-Options::Options (void)
+Options::Options ()
   : options_ (0),
     supplier_acceptor_port_ (DEFAULT_PEER_SUPPLIER_PORT),
     consumer_acceptor_port_ (DEFAULT_PEER_CONSUMER_PORT),
@@ -39,7 +39,7 @@ Options::Options (void)
 }
 
 Options *
-Options::instance (void)
+Options::instance ()
 {
   if (Options::instance_ == 0)
     ACE_NEW_RETURN (Options::instance_, Options, 0);
@@ -48,49 +48,49 @@ Options::instance (void)
 }
 
 long
-Options::timeout (void) const
+Options::timeout () const
 {
   return this->timeout_;
 }
 
 CONNECTION_ID &
-Options::connection_id (void)
+Options::connection_id ()
 {
   return this->connection_id_;
 }
 
 long
-Options::max_queue_size (void) const
+Options::max_queue_size () const
 {
   return this->max_queue_size_;
 }
 
 u_short
-Options::consumer_acceptor_port (void) const
+Options::consumer_acceptor_port () const
 {
   return this->consumer_acceptor_port_;
 }
 
 u_short
-Options::supplier_acceptor_port (void) const
+Options::supplier_acceptor_port () const
 {
   return this->supplier_acceptor_port_;
 }
 
 u_short
-Options::consumer_connector_port (void) const
+Options::consumer_connector_port () const
 {
   return this->consumer_connector_port_;
 }
 
 u_short
-Options::supplier_connector_port (void) const
+Options::supplier_connector_port () const
 {
   return this->supplier_connector_port_;
 }
 
 const ACE_TCHAR *
-Options::connector_host (void) const
+Options::connector_host () const
 {
   return this->connector_host_;
 }

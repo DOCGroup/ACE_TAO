@@ -17,7 +17,7 @@ Simple_Server_i::test_raise (CORBA::Long)
 }
 
 void
-Simple_Server_i::shutdown (void)
+Simple_Server_i::shutdown ()
 {
   this->orb_->shutdown ();
 }

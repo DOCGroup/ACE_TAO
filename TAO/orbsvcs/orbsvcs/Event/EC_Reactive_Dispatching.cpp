@@ -2,21 +2,20 @@
 #include "orbsvcs/Event/EC_ProxySupplier.h"
 
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_EC_Reactive_Dispatching::TAO_EC_Reactive_Dispatching (void)
+TAO_EC_Reactive_Dispatching::TAO_EC_Reactive_Dispatching ()
   : TAO_EC_Dispatching ()
 {
 }
 
 void
-TAO_EC_Reactive_Dispatching::activate (void)
+TAO_EC_Reactive_Dispatching::activate ()
 {
 }
 
 void
-TAO_EC_Reactive_Dispatching::shutdown (void)
+TAO_EC_Reactive_Dispatching::shutdown ()
 {
 }
 

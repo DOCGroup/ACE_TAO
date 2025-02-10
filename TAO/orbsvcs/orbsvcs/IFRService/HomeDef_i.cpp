@@ -23,18 +23,18 @@ TAO_HomeDef_i::TAO_HomeDef_i (TAO_Repository_i *repo)
 {
 }
 
-TAO_HomeDef_i::~TAO_HomeDef_i (void)
+TAO_HomeDef_i::~TAO_HomeDef_i ()
 {
 }
 
 CORBA::DefinitionKind
-TAO_HomeDef_i::def_kind (void)
+TAO_HomeDef_i::def_kind ()
 {
   return CORBA::dk_Home;
 }
 
 void
-TAO_HomeDef_i::destroy (void)
+TAO_HomeDef_i::destroy ()
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -44,7 +44,7 @@ TAO_HomeDef_i::destroy (void)
 }
 
 void
-TAO_HomeDef_i::destroy_i (void)
+TAO_HomeDef_i::destroy_i ()
 {
   // Destroy our special subsections first, then call destroy_i
   // on our base class.
@@ -65,7 +65,7 @@ TAO_HomeDef_i::destroy_i (void)
 }
 
 CORBA::Contained::Description *
-TAO_HomeDef_i::describe (void)
+TAO_HomeDef_i::describe ()
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
@@ -75,7 +75,7 @@ TAO_HomeDef_i::describe (void)
 }
 
 CORBA::Contained::Description *
-TAO_HomeDef_i::describe_i (void)
+TAO_HomeDef_i::describe_i ()
 {
   CORBA::ComponentIR::HomeDescription home_desc;
 
@@ -150,7 +150,7 @@ TAO_HomeDef_i::describe_i (void)
 }
 
 CORBA::TypeCode_ptr
-TAO_HomeDef_i::type (void)
+TAO_HomeDef_i::type ()
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::TypeCode::_nil ());
 
@@ -160,7 +160,7 @@ TAO_HomeDef_i::type (void)
 }
 
 CORBA::TypeCode_ptr
-TAO_HomeDef_i::type_i (void)
+TAO_HomeDef_i::type_i ()
 {
   ACE_TString id;
   this->repo_->config ()->get_string_value (this->section_key_,
@@ -177,7 +177,7 @@ TAO_HomeDef_i::type_i (void)
 }
 
 CORBA::ComponentIR::HomeDef_ptr
-TAO_HomeDef_i::base_home (void)
+TAO_HomeDef_i::base_home ()
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::ComponentIR::HomeDef::_nil ());
 
@@ -187,7 +187,7 @@ TAO_HomeDef_i::base_home (void)
 }
 
 CORBA::ComponentIR::HomeDef_ptr
-TAO_HomeDef_i::base_home_i (void)
+TAO_HomeDef_i::base_home_i ()
 {
   ACE_TString path;
   int status =
@@ -336,7 +336,7 @@ TAO_HomeDef_i::supported_interfaces_i (
 }
 
 CORBA::ComponentIR::ComponentDef_ptr
-TAO_HomeDef_i::managed_component (void)
+TAO_HomeDef_i::managed_component ()
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::ComponentIR::ComponentDef::_nil ());
 
@@ -346,7 +346,7 @@ TAO_HomeDef_i::managed_component (void)
 }
 
 CORBA::ComponentIR::ComponentDef_ptr
-TAO_HomeDef_i::managed_component_i (void)
+TAO_HomeDef_i::managed_component_i ()
 {
   ACE_TString path;
   this->repo_->config ()->get_string_value (this->section_key_,
@@ -383,7 +383,7 @@ TAO_HomeDef_i::managed_component_i (
 }
 
 CORBA::ValueDef_ptr
-TAO_HomeDef_i::primary_key (void)
+TAO_HomeDef_i::primary_key ()
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::ValueDef::_nil ());
 
@@ -393,7 +393,7 @@ TAO_HomeDef_i::primary_key (void)
 }
 
 CORBA::ValueDef_ptr
-TAO_HomeDef_i::primary_key_i (void)
+TAO_HomeDef_i::primary_key_i ()
 {
   ACE_TString path;
   int status =

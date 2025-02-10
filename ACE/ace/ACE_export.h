@@ -42,12 +42,7 @@
 #  define ACE_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK)
 #endif     /* ACE_HAS_DLL */
 
-// Added by hand to help with ACE_OS namespace
-#if defined (__TANDEM) && defined (USE_EXPLICIT_EXPORT)
-#define ACE_NAMESPACE_STORAGE_CLASS ACE_EXPORT_MACRO extern
-#else
 #define ACE_NAMESPACE_STORAGE_CLASS extern ACE_EXPORT_MACRO
-#endif
 
 #if defined (__ACE_INLINE__)
 #  define ACE_NAMESPACE_INLINE_FUNCTION inline

@@ -62,7 +62,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       PortableServer::POA_var root_poa = PortableServer::POA::_narrow (obj.in ());
 
       PortableServer::POAManager_var mgr = root_poa->the_POAManager ();
-      PortableServer::POA_var test_poa = createPOA (root_poa.in(), poa_name );
+      PortableServer::POA_var test_poa = createPOA (root_poa.in(), poa_name);
 
       Test_i *impl = new Test_i ();
       PortableServer::Servant_var<Test_i> test_servant = impl;

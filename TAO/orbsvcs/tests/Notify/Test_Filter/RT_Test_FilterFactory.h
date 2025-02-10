@@ -34,7 +34,7 @@ class TAO_RT_Test_Filter_Export TAO_Notify_Tests_RT_Test_FilterFactory
 {
 public:
   /// Constructor
-  TAO_Notify_Tests_RT_Test_FilterFactory (void);
+  TAO_Notify_Tests_RT_Test_FilterFactory ();
 
   /// Destructor
   ~TAO_Notify_Tests_RT_Test_FilterFactory ();
@@ -42,7 +42,7 @@ public:
   ///= TAO_Notify_Tests_FilterFactory methods.
 
   virtual CosNotifyFilter::FilterFactory_ptr create (PortableServer::POA_ptr filter_poa);
-  virtual void destroy (void);
+  virtual void destroy ();
 
   ///= CosNotifyFilter::FilterFactory methods
 
@@ -57,7 +57,7 @@ public:
 
 protected:
   /// Release this object.
-  virtual void release (void);
+  virtual void release ();
 
   /// The POA in which to activate the Filters.
   PortableServer::POA_var filter_poa_;

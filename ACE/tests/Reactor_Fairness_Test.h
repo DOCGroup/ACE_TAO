@@ -4,9 +4,7 @@
  *  @file    Reactor_Fairness_Test.h
  *
  *  This file includes template class definitions for the
- *  Reactor_Fairness_Test.cpp program.  This class gets its own
- *  header file to work around AIX C++ compiler "features" related
- *  to template instantiation...
+ *  Reactor_Fairness_Test.cpp program.
  *
  *  @author Steve Huston <shuston@riverace.com>
  */

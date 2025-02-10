@@ -30,17 +30,17 @@ class Grid_Factory_i : public POA_Grid_Factory
 {
 public:
   /// Constructor.
-  Grid_Factory_i (void);
+  Grid_Factory_i ();
 
   /// Destructor.
-  ~Grid_Factory_i (void);
+  ~Grid_Factory_i ();
 
   /// This function creates and returns a <Grid>.
   virtual Grid_ptr make_grid (CORBA::Short,
                               CORBA::Short);
 
   /// Shutdown the server.
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
   /// Do a clean up of the memory map
   virtual void cleanup ( );
@@ -76,19 +76,19 @@ class Grid_i: public POA_Grid
 {
 public:
   /// Constructor
-  Grid_i (void);
+  Grid_i ();
 
   /// Constructor.
   Grid_i (CORBA::Short, CORBA::Short, pool_t *);
 
   /// Destructor
-  ~Grid_i (void);
+  ~Grid_i ();
 
   /// Returns the width of the grid
-  virtual CORBA::Short width (void);
+  virtual CORBA::Short width ();
 
   /// Returns the height of the grid
-  virtual CORBA::Short height (void);
+  virtual CORBA::Short height ();
 
   /// Sets the width of the grid.
   virtual void width (CORBA::Short);
@@ -106,7 +106,7 @@ public:
                            CORBA::Short);
 
   /// Destroy the grid.
-  virtual void destroy (void);
+  virtual void destroy ();
 
   /// Set a pointer to the pool
   void set_pool (pool_t *);

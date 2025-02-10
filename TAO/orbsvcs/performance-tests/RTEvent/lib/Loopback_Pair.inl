@@ -5,18 +5,18 @@
  */
 
 ACE_INLINE
-Loopback_Pair::Loopback_Pair (void)
+Loopback_Pair::Loopback_Pair ()
 {
 }
 
 ACE_INLINE Loopback_Supplier *
-Loopback_Pair::loopback_supplier (void) const
+Loopback_Pair::loopback_supplier () const
 {
   return this->loopback_supplier_.in ();
 }
 
 ACE_INLINE Loopback_Consumer *
-Loopback_Pair::loopback_consumer (void) const
+Loopback_Pair::loopback_consumer () const
 {
   return this->loopback_consumer_.in ();
 }

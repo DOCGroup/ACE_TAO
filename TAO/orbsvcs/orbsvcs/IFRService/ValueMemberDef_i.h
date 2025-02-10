@@ -43,7 +43,7 @@ public:
   TAO_ValueMemberDef_i (TAO_Repository_i *repoy);
 
   /// Destructor
-  virtual ~TAO_ValueMemberDef_i (void);
+  virtual ~TAO_ValueMemberDef_i ();
 
   /// Return our definition kind.
   virtual CORBA::DefinitionKind def_kind ();

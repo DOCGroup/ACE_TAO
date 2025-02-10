@@ -2,7 +2,6 @@
 ** Copyright 2001 Addison Wesley. All Rights Reserved.
 */
 
-#include "ace/Auto_Ptr.h"
 #include "ace/FILE_IO.h"
 #include "ace/Log_Msg.h"
 #include "ace/Signal.h"
@@ -12,6 +11,7 @@
 #include "Logging_Handler.h"
 
 #include <errno.h>
+#include <memory>
 
 namespace {
   extern "C" void sigterm_handler (int /* signum */) { /* No-op. */ }
@@ -20,7 +20,7 @@ namespace {
 
 ACE_THR_FUNC_RETURN Thread_Per_Connection_Logging_Server::run_svc (void *arg)
 {
-  auto_ptr<Thread_Args> thread_args (static_cast<Thread_Args *> (arg));
+  std::unique_ptr<Thread_Args> thread_args (static_cast<Thread_Args *> (arg));
 
   thread_args->this_->handle_data (&thread_args->logging_peer_);
   thread_args->logging_peer_.close ();
@@ -31,7 +31,7 @@ ACE_THR_FUNC_RETURN Thread_Per_Connection_Logging_Server::run_svc (void *arg)
 int
 Thread_Per_Connection_Logging_Server::handle_connections ()
 {
-  auto_ptr<Thread_Args> thread_args (new Thread_Args (this));
+  std::unique_ptr<Thread_Args> thread_args (new Thread_Args (this));
 
   if (acceptor ().accept (thread_args->logging_peer_) == -1)
     return -1;

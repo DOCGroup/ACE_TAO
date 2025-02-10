@@ -18,19 +18,18 @@
 #include "ace/SString.h"
 
 // Constructor
-IOR_corbaname_Client_i::IOR_corbaname_Client_i (void)
+IOR_corbaname_Client_i::IOR_corbaname_Client_i ()
 {
 }
 
 // Destructor
-IOR_corbaname_Client_i::~IOR_corbaname_Client_i (void)
+IOR_corbaname_Client_i::~IOR_corbaname_Client_i ()
 {
 }
 
 int
-IOR_corbaname_Client_i::run (void)
+IOR_corbaname_Client_i::run ()
 {
-
   try
     {
       CosNaming::Name name (1);
@@ -116,7 +115,6 @@ IOR_corbaname_Client_i::init (int argc, ACE_TCHAR **argv)
                            "%s: Address of naming context not specified\n",
                            this->argv_[0]),
                            -1);
-
     }
   catch (const CORBA::Exception& ex)
     {

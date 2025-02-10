@@ -17,7 +17,7 @@
 
 <h3>Implementation of StockBrokerHome interface</h3>
 
-This interface is used to register the necessary factories and mappings with the specified orb and 
+This interface is used to register the necessary factories and mappings with the specified orb and
 create StockBroker objects. <P>
 
 The Stock_StockBrokerHome_i class is generated automatically by the IDL compiler (using the -GI flag),
@@ -47,14 +47,14 @@ The main steps of this function are described as follows: <P>
 
 <PRE>
     if (orb_->orb_core ()->reactor ()->register_handler (SIGINT, this) == -1)
-      ACE_DEBUG ((LM_DEBUG, "ERROR: Failed to register as a signal handler: %p\n", 
+      ACE_DEBUG ((LM_DEBUG, "ERROR: Failed to register as a signal handler: %p\n",
                   "register_handler\n"));
 </PRE>
 
 <h4>Implementing the create () member function</h4>
 
-<li>If there is no instance of the StockBroker object in the StockBrokerHome object then create one. 
-The "orb_", "dist", and "stock_name" are in the arguments of the create () function. 
+<li>If there is no instance of the StockBroker object in the StockBrokerHome object then create one.
+The "orb_", "dist", and "stock_name" are in the arguments of the create () function.
 Since the broker has nothing to do with any of the RTCORBA mechanisms, we can activate it under the
 default_POA, which is the RootPOA. </li>
 
@@ -76,8 +76,8 @@ default_POA, which is the RootPOA. </li>
 
 <PRE>
     this->broker_->shutdown ();
-    
-    this->orb_->shutdown (0);
+
+    this->orb_->shutdown (false);
 </PRE>
 
 <hr><h3>Implementation of StockBroker interface</h3>
@@ -98,9 +98,9 @@ which is a subclass of POA_Stock::StockBroker class. <P>
         distributor_ (Stock::StockDistributor::_duplicate (dist))
 </PRE>
 
-The "quoter_", "consumer_", and "distributor_" are four private members of the Stock_StockBroker_i class. 
-They stand for the StockQuoter object that is used to get detailed stock information, the StockNameConsumer 
-object that is used to get notification of updates, and the StockDistributor object that the StockBroker object 
+The "quoter_", "consumer_", and "distributor_" are four private members of the Stock_StockBroker_i class.
+They stand for the StockQuoter object that is used to get detailed stock information, the StockNameConsumer
+object that is used to get notification of updates, and the StockDistributor object that the StockBroker object
 is used to unsubscribe to. <P>
 
 The main steps of this function are described as follows: <P>
@@ -113,30 +113,30 @@ The main steps of this function are described as follows: <P>
 
 <li>Create a child POA using the former CORBA::PolicyList and narrow it to RTPOA.</li>
 
-<li>Create a new instance of the StockNameConsumer object with the specified name and activate it 
+<li>Create a new instance of the StockNameConsumer object with the specified name and activate it
 under the former RTPOA.</li>
 
 <PRE>
     CORBA::Object_var obj = orb->resolve_initial_references ("RTORB");
     RTCORBA::RTORB_var rt_orb = RTCORBA::RTORB::_narrow (obj.in ());
-    
+
     TAO::Utils::PolicyList_Destroyer consumer_policies (1);
     consumer_policies.length (1);
-    
+
     consumer_policies[0]
       = rt_orb->create_priority_model_policy (RTCORBA::CLIENT_PROPAGATED,
                                               Stock::Priority_Mapping::MEDIUM);
-    
+
     PortableServer::POA_var poa = this->_default_POA ();
     PortableServer::POAManager_var poa_mgr = poa->the_POAManager ();
-    
+
     PortableServer::POA_var child_poa
       = poa->create_POA ("StockNameConsumer_POA",
                          poa_mgr.in (),
                          consumer_policies);
-    
+
     RTPortableServer::POA_var rt_poa = RTPortableServer::POA::_narrow (child_poa.in ());
-    
+
     this->consumer_ = new Stock_StockNameConsumer_i (*this, stock_name);
     PortableServer::ServantBase_var nameconsumer_owner_transfer = this->consumer_;
     rt_poa->activate_object (this->consumer_);
@@ -187,11 +187,11 @@ under the former RTPOA.</li>
 
 <li>Deactivate the StockBroker object.</li>
 
-<PRE>  
+<PRE>
     ::Stock::StockBroker_var broker = this->_this ();
     PortableServer::ObjectId_var oid = this->_default_POA ()->reference_to_id (broker.in ());
-  
-    this->_default_POA ()->deactivate_object (oid.in ()); 
+
+    this->_default_POA ()->deactivate_object (oid.in ());
 </PRE>
 
 <hr><b>Email: </b><a href="mailto:"</a<ADDRESS>shanshan.jiang@vanderbilt.edu</ADDRESS>

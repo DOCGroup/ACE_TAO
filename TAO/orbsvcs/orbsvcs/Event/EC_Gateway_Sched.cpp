@@ -3,12 +3,12 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_EC_Gateway_Sched::TAO_EC_Gateway_Sched (void)
+TAO_EC_Gateway_Sched::TAO_EC_Gateway_Sched ()
   :  TAO_EC_Gateway_IIOP ()
 {
 }
 
-TAO_EC_Gateway_Sched::~TAO_EC_Gateway_Sched (void)
+TAO_EC_Gateway_Sched::~TAO_EC_Gateway_Sched ()
 {
 }
 

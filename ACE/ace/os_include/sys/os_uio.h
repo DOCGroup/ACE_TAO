@@ -47,7 +47,7 @@ extern "C"
 
      // WSABUF is a Winsock2-only type.
 #  if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
-     operator WSABUF &(void) { return *((WSABUF *) this); }
+     operator WSABUF &() { return *((WSABUF *) this); }
 #  endif /* defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0) */
    };
 #endif /* ACE_LACKS_IOVEC */

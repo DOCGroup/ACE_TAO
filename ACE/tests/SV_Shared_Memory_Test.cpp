@@ -22,19 +22,15 @@
 #include "ace/SV_Semaphore_Complex.h"
 #include "ace/OS_NS_unistd.h"
 
-
-
-
 #if defined (ACE_HAS_SYSV_IPC) && !defined(ACE_LACKS_SYSV_SHMEM)
 
 // The shared memory allocator, which uses up the ACE_DEFAULT_SEM_KEY.
 // We hide the allocator inside this function so that it doesn't get
 // constructed until after the ACE_Object_Manager gets constructed,
 // even with ACE_HAS_NONSTATIC_OBJECT_MANAGER.
-
 static
 ACE_Malloc<ACE_SHARED_MEMORY_POOL, ACE_SV_Semaphore_Simple> &
-myallocator (void)
+myallocator ()
 {
   static ACE_Malloc<ACE_SHARED_MEMORY_POOL,
                     ACE_SV_Semaphore_Simple> myallocator;

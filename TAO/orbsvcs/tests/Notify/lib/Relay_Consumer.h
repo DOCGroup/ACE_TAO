@@ -32,10 +32,9 @@ public:
   ~TAO_Notify_Tests_Relay_Consumer ();
 
   /// Connect using options parsed and set initial QoS.
-  virtual void connect (void);
+  virtual void connect ();
 
-  void push_structured_event (const CosNotification::StructuredEvent &/*notification*/
-                              );
+  void push_structured_event (const CosNotification::StructuredEvent &/*notification*/);
 
 protected:
   /// Destination object.

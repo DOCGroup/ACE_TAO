@@ -122,7 +122,7 @@
       PortableServer::ServantBase_var servant =
         new Quoter_Stock_i (symbol, full_name, price);
 </PRE>
-    <P>The <CODE>ServantBase_var</CODE> acts like an auto pointer and
+    <P>The <CODE>ServantBase_var</CODE> acts like an unique pointer and
       will take care of deallocation in case there is an exception.
       This time we cannot use <CODE>_this()</CODE> to activate the servant
       though, because we want to create our own ids:

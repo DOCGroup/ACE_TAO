@@ -28,7 +28,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-
   /**
    * @class ORB_Time_Policy
    *
@@ -43,7 +42,7 @@ namespace TAO
     ACE_Time_Value operator() () const;
 
     static void set_time_policy (ACE_Dynamic_Time_Policy_Base const * pol);
-    static void reset_time_policy (void);
+    static void reset_time_policy ();
 
   private:
     static ACE_Time_Policy_T<ACE_Default_Time_Policy> default_policy_;
@@ -52,7 +51,6 @@ namespace TAO
 
   // Declare a countdown timer type based on ORB time policy
   typedef ACE_Countdown_Time_T<ORB_Time_Policy> ORB_Countdown_Time;
-
 } // TAO
 
 TAO_END_VERSIONED_NAMESPACE_DECL

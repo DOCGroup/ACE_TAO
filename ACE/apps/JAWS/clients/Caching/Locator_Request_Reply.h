@@ -28,10 +28,10 @@ class ACE_Svc_Export ACE_URL_Locator_Request
 {
 public:
   /// Default ctor.
-  ACE_URL_Locator_Request (void);
+  ACE_URL_Locator_Request ();
 
   /// Default dtor.
-  ~ACE_URL_Locator_Request (void);
+  ~ACE_URL_Locator_Request ();
 
   /**
    * Query the locator for HTTP with designate properties (none, some,
@@ -66,7 +66,7 @@ public:
 
   /// Encode request for network communication.  If succeed,
   /// returns the size of the buffer, otherwise, return 0.
-  size_t encode (void);
+  size_t encode ();
 
   /**
    * Restore from network data.  Returns size of the buffer
@@ -77,24 +77,24 @@ public:
   size_t decode (void *buffer);
 
   /// A bunch of methods to access internal data.
-  const int how (void) const;
-  const int how_many (void) const;
-  const u_int opcode (void) const;
-  const ACE_URL_Property_Seq *seq (void) const;
-  const ACE_URL_Property_Seq *del (void) const;
-  const ACE_URL_Property_Seq *modify (void) const;
-  const ACE_URL_Offer *offer (void) const;
-  const ACE_WString &id (void) const;
-  const ACE_WString &url (void) const;
-  const char *buffer (void) const;
+  const int how () const;
+  const int how_many () const;
+  const u_int opcode () const;
+  const ACE_URL_Property_Seq *seq () const;
+  const ACE_URL_Property_Seq *del () const;
+  const ACE_URL_Property_Seq *modify () const;
+  const ACE_URL_Offer *offer () const;
+  const ACE_WString &id () const;
+  const ACE_WString &url () const;
+  const char *buffer () const;
 
   /// Print out this object.
-  void dump (void) const;
+  void dump () const;
 
 protected:
   /// Return the size of the buffer required to encode
   /// this request.
-  size_t size (void);
+  size_t size ();
 
   enum {
     VALID_SEQ1 = 0x1,
@@ -147,10 +147,10 @@ class ACE_Svc_Export ACE_URL_Locator_Reply
 {
 public:
   /// Default ctor.
-  ACE_URL_Locator_Reply (void);
+  ACE_URL_Locator_Reply ();
 
   /// Default dtor.
-  ~ACE_URL_Locator_Reply (void);
+  ~ACE_URL_Locator_Reply ();
 
   /// Setup a reply message for EXPORT, WITHDRAW, or MODIFY operations.
   int status_reply (u_int op, int result);
@@ -165,7 +165,7 @@ public:
 
   /// Encode request for network communication.  If succeed,
   /// returns the size of the buffer, otherwise, return 0.
-  size_t encode (void);
+  size_t encode ();
 
   /**
    * Restore from network data.  Returns size of the buffer
@@ -176,20 +176,20 @@ public:
   size_t decode (void *buffer);
 
   // Accessor function.
-  const size_t num_offers (void) const;
-  const ACE_URL_Offer *offer (void) const;
-  const ACE_URL_Offer_Seq *offers (void) const;
-  const u_int opcode (void) const;
-  const u_int status (void) const;
-  const char *buffer (void) const ;
+  const size_t num_offers () const;
+  const ACE_URL_Offer *offer () const;
+  const ACE_URL_Offer_Seq *offers () const;
+  const u_int opcode () const;
+  const u_int status () const;
+  const char *buffer () const ;
 
   /// Print out this object.
-  void dump (void) const ;
+  void dump () const ;
 
 protected:
   /// Return the size of the buffer required to encode
   /// this request.
-  size_t size (void);
+  size_t size ();
 
   enum {
     VALID_OFFER = 0x1,

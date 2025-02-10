@@ -34,8 +34,8 @@ class TAO_NT_Notify_Service : public ACE_NT_Service
 public:
   typedef TAO_SYNCH_RECURSIVE_MUTEX MUTEX;
 
-  TAO_NT_Notify_Service (void);
-  virtual ~TAO_NT_Notify_Service (void);
+  TAO_NT_Notify_Service ();
+  virtual ~TAO_NT_Notify_Service ();
 
   /// We override <handle_control> because it handles stop requests
   /// privately.
@@ -46,7 +46,7 @@ public:
   virtual int handle_exception (ACE_HANDLE h);
 
   /// This is a virtual method inherited from ACE_NT_Service.
-  virtual int svc (void);
+  virtual int svc ();
 
   /// Initialize the objects argc_ and argv_ attributes values.
   virtual int init (int argc,

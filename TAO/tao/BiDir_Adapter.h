@@ -35,9 +35,8 @@ class TAO_Policy_Validator;
 class TAO_Export TAO_BiDir_Adapter : public ACE_Service_Object
 {
 public:
-
   /// The virtual destructor
-  virtual ~TAO_BiDir_Adapter (void);
+  virtual ~TAO_BiDir_Adapter ();
 
   virtual void load_policy_validators (TAO_Policy_Validator &validator) = 0;
 };

@@ -15,7 +15,6 @@
 #include "ace/streams.h"
 
 
-
 // Indentation while printing names
 static const u_long INDENTATION_LEVEL = 3;
 

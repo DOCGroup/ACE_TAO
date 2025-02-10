@@ -18,7 +18,6 @@
 // TAO_debug_level > 6: detailed cache operations (LM_DEBUG)
 // TAO_debug_level > 8: for debugging the cache itself (LM_DEBUG)
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
@@ -74,7 +73,7 @@ namespace TAO
   }
 
   template <typename TT, typename TRDT, typename PSTRAT>
-  Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::~Transport_Cache_Manager_T (void)
+  Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::~Transport_Cache_Manager_T ()
   {
     delete this->cache_lock_;
     this->cache_lock_ = 0;
@@ -210,8 +209,7 @@ namespace TAO
               int_id.transport ()->id (),
               ext_id.hash (),
               ext_id.index (),
-              this->current_size ()
-              ));
+              this->current_size ()));
           }
       }
 
@@ -306,11 +304,10 @@ namespace TAO
                   {
                     TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T::find_i, ")
-                      ACE_TEXT ("Found available Transport[%d] @hash:index {%d:%d}\n"),
+                      ACE_TEXT ("found available Transport[%d] @hash:index {%d:%d}\n"),
                       entry->item ().transport ()->id (),
                       entry->ext_id_.hash (),
-                      entry->ext_id_.index ()
-                      ));
+                      entry->ext_id_.index ()));
                   }
               }
             else if (this->is_entry_connecting_i (*entry))
@@ -319,11 +316,10 @@ namespace TAO
                   {
                     TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T::find_i, ")
-                      ACE_TEXT ("Found connecting Transport[%d] @hash:index {%d:%d}\n"),
+                      ACE_TEXT ("found connecting Transport[%d] @hash:index {%d:%d}\n"),
                       entry->item ().transport ()->id (),
                       entry->ext_id_.hash (),
-                      entry->ext_id_.index ()
-                      ));
+                      entry->ext_id_.index ()));
                   }
                 // if this is the first interesting entry
                 if (found != CACHE_FOUND_CONNECTING)
@@ -345,7 +341,7 @@ namespace TAO
                   {
                     TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T::find_i, ")
-                      ACE_TEXT ("Found busy Transport[%d] @hash:index {%d:%d}\n"),
+                      ACE_TEXT ("found busy Transport[%d] @hash:index {%d:%d}\n"),
                       entry->item ().transport ()->id (),
                       entry->ext_id_.hash (),
                       entry->ext_id_.index ()
@@ -453,7 +449,7 @@ namespace TAO
   Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::purge_entry_i (HASH_MAP_ENTRY *entry)
   {
     // Remove the entry from the Map
-    int retval = this->cache_map_.unbind (entry);
+    int const retval = this->cache_map_.unbind (entry);
 
 #if defined (TAO_HAS_MONITOR_POINTS) && (TAO_HAS_MONITOR_POINTS == 1)
     this->size_monitor_->receive (this->current_size ());
@@ -492,11 +488,11 @@ namespace TAO
   bool
   Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::is_entry_purgable_i (HASH_MAP_ENTRY &entry)
   {
-    Cache_Entries_State entry_state = entry.int_id_.recycle_state ();
+    Cache_Entries_State const entry_state = entry.int_id_.recycle_state ();
     transport_type* transport = entry.int_id_.transport ();
-    bool result = (entry_state == ENTRY_IDLE_AND_PURGABLE ||
-                   entry_state == ENTRY_PURGABLE_BUT_NOT_IDLE)
-                   && transport->can_be_purged ();
+    bool const result = (entry_state == ENTRY_IDLE_AND_PURGABLE ||
+                         entry_state == ENTRY_PURGABLE_BUT_NOT_IDLE)
+                         && transport->can_be_purged ();
 
     if (TAO_debug_level > 8)
       {
@@ -562,7 +558,7 @@ namespace TAO
 
   template <typename TT, typename TRDT, typename PSTRAT>
   int
-  Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::purge (void)
+  Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::purge ()
   {
     typedef ACE_Unbounded_Set<transport_type*> transport_set_type;
     transport_set_type transports_to_be_closed;
@@ -661,8 +657,7 @@ namespace TAO
         TAOLIB_DEBUG ((LM_INFO,
           ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T::purge, ")
           ACE_TEXT ("Cache size after purging is [%d]\n"),
-          this->current_size ()
-          ));
+          this->current_size ()));
       }
 
 #if defined (TAO_HAS_MONITOR_POINTS) && (TAO_HAS_MONITOR_POINTS == 1)

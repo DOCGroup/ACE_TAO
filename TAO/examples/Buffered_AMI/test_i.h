@@ -28,7 +28,7 @@ public:
   void method (CORBA::ULong request_number,
                CORBA::ULong_out reply_number);
 
-  void shutdown (void);
+  void shutdown ();
 
 private:
   /// The ORB.

@@ -44,7 +44,7 @@ End Comment added August 14, 2007 <wilsond@ociweb.com>
       A stress test for the stack recursion outlined in the bugzilla
 under id 1125. Here is the link for the bug
 
-http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1125
+http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=1125
 
 This test is designed to show the bug. The test has a server running 4
 threads and clients running 16 threads requesting around 30 MB of

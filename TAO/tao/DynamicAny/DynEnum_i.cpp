@@ -16,12 +16,12 @@ TAO_DynEnum_i::TAO_DynEnum_i (CORBA::Boolean allow_truncation)
 {
 }
 
-TAO_DynEnum_i::~TAO_DynEnum_i (void)
+TAO_DynEnum_i::~TAO_DynEnum_i ()
 {
 }
 
 void
-TAO_DynEnum_i::init_common (void)
+TAO_DynEnum_i::init_common ()
 {
   this->ref_to_component_ = false;
   this->container_is_destroying_ = false;
@@ -103,7 +103,7 @@ TAO_DynEnum_i::_narrow (CORBA::Object_ptr _tao_objref)
 // ****************************************************************
 
 char *
-TAO_DynEnum_i::get_as_string (void)
+TAO_DynEnum_i::get_as_string ()
 {
   CORBA::TypeCode_var ct = TAO_DynAnyFactory::strip_alias (this->type_.in ());
 
@@ -143,7 +143,7 @@ TAO_DynEnum_i::set_as_string (const char *value_as_string)
 }
 
 CORBA::ULong
-TAO_DynEnum_i::get_as_ulong (void)
+TAO_DynEnum_i::get_as_ulong ()
 {
   return this->value_;
 }
@@ -205,7 +205,7 @@ TAO_DynEnum_i::from_any (const CORBA::Any& any)
 }
 
 CORBA::Any_ptr
-TAO_DynEnum_i::to_any (void)
+TAO_DynEnum_i::to_any ()
 {
   TAO_OutputCDR out_cdr;
 
@@ -269,7 +269,7 @@ TAO_DynEnum_i::equal (DynamicAny::DynAny_ptr rhs)
 }
 
 void
-TAO_DynEnum_i::destroy (void)
+TAO_DynEnum_i::destroy ()
 {
   if (this->destroyed_)
     {
@@ -283,7 +283,7 @@ TAO_DynEnum_i::destroy (void)
 }
 
 DynamicAny::DynAny_ptr
-TAO_DynEnum_i::current_component (void)
+TAO_DynEnum_i::current_component ()
 {
   if (this->destroyed_)
     {

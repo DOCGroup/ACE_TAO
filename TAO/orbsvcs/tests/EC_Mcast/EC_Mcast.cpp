@@ -10,7 +10,7 @@
 #include "tao/ORB_Core.h"
 
 #include "ace/Get_Opt.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/Sched_Params.h"
 #include "ace/Read_Buffer.h"
 #include "ace/OS_NS_sys_time.h"
@@ -21,7 +21,7 @@
 #include "EC_Mcast.inl"
 #endif /* __ACE_INLINE__ */
 
-ECM_Driver::ECM_Driver (void)
+ECM_Driver::ECM_Driver ()
   : event_period_ (250000),
     event_count_ (100),
     config_filename_ (0),
@@ -70,7 +70,7 @@ ECM_Driver::run (int argc, ACE_TCHAR* argv[])
                   this->event_count_,
 
                   this->config_filename_?this->config_filename_:ACE_TEXT("nil"),
-                  this->pid_filename_?this->pid_filename_:ACE_TEXT("nil")) );
+                  this->pid_filename_?this->pid_filename_:ACE_TEXT("nil")));
 
       int i;
       for (i = 0; i < this->local_federations_count_; ++i)
@@ -86,7 +86,6 @@ ECM_Driver::run (int argc, ACE_TCHAR* argv[])
                j < this->local_federations_[i]->supplier_types ();
                ++j)
             {
-
               ACE_DEBUG ((LM_DEBUG,
                           "    name = <%s>\n"
                           "    ipadd = <%x>\n",
@@ -172,7 +171,6 @@ ECM_Driver::run (int argc, ACE_TCHAR* argv[])
       ACE_DEBUG ((LM_DEBUG, "EC_Mcast: shutdown the EC\n"));
 
       ec_impl.shutdown ();
-
     }
   catch (const CORBA::SystemException& sys_ex)
     {
@@ -216,7 +214,7 @@ ECM_Driver::activate_federations (RtecEventChannelAdmin::EventChannel_ptr ec)
 }
 
 void
-ECM_Driver::close_federations (void)
+ECM_Driver::close_federations ()
 {
   for (int i = 0; i < this->local_federations_count_; ++i)
     {
@@ -253,7 +251,7 @@ ECM_Driver::open_senders (RtecEventChannelAdmin::EventChannel_ptr ec)
 }
 
 void
-ECM_Driver::close_senders (void)
+ECM_Driver::close_senders ()
 {
   for (int i = 0; i < this->all_federations_count_; ++i)
     {
@@ -279,7 +277,7 @@ ECM_Driver::open_receivers (RtecEventChannelAdmin::EventChannel_ptr ec)
 }
 
 void
-ECM_Driver::close_receivers (void)
+ECM_Driver::close_receivers ()
 {
   for (int i = 0; i < this->local_federations_count_; ++i)
     {
@@ -288,7 +286,7 @@ ECM_Driver::close_receivers (void)
 }
 
 void
-ECM_Driver::dump_results (void)
+ECM_Driver::dump_results ()
 {
   for (int i = 0; i < this->local_federations_count_; ++i)
     {
@@ -371,7 +369,7 @@ ECM_Driver::parse_args (int argc, ACE_TCHAR *argv [])
 }
 
 int
-ECM_Driver::parse_config_file (void)
+ECM_Driver::parse_config_file ()
 {
   FILE* cfg = 0;
   if (this->config_filename_ != 0)
@@ -568,7 +566,7 @@ ECM_Federation::ECM_Federation (char* name,
     }
 }
 
-ECM_Federation::~ECM_Federation (void)
+ECM_Federation::~ECM_Federation ()
 {
   delete[] this->consumer_ipaddr_;
   delete[] this->supplier_ipaddr_;
@@ -607,13 +605,13 @@ ECM_Federation::open (TAO_ECG_UDP_Out_Endpoint *endpoint,
 }
 
 void
-ECM_Federation::close (void)
+ECM_Federation::close ()
 {
   this->sender_->shutdown ();
 }
 
 RtecUDPAdmin::AddrServer_ptr
-ECM_Federation::addr_server (void)
+ECM_Federation::addr_server ()
 {
   return this->addr_server_._this ();
 }
@@ -658,7 +656,7 @@ ECM_Supplier::open (const char* name,
 }
 
 void
-ECM_Supplier::close (void)
+ECM_Supplier::close ()
 {
   if (CORBA::is_nil (this->consumer_proxy_.in ()))
     return;
@@ -693,7 +691,7 @@ ECM_Supplier::activate (RtecEventChannelAdmin::EventChannel_ptr ec,
 }
 
 int
-ECM_Supplier::supplier_id (void) const
+ECM_Supplier::supplier_id () const
 {
   return this->supplier_id_;
 }
@@ -712,13 +710,13 @@ ECM_Supplier::push (const RtecEventComm::EventSet& events)
 }
 
 void
-ECM_Supplier::disconnect_push_supplier (void)
+ECM_Supplier::disconnect_push_supplier ()
 {
   // this->supplier_proxy_->disconnect_push_supplier ();
 }
 
 void
-ECM_Supplier::disconnect_push_consumer (void)
+ECM_Supplier::disconnect_push_consumer ()
 {
 }
 
@@ -788,7 +786,7 @@ ECM_Consumer::connect (unsigned int *seed)
 }
 
 void
-ECM_Consumer::disconnect (void)
+ECM_Consumer::disconnect ()
 {
   if (CORBA::is_nil (this->supplier_proxy_.in ())
       || CORBA::is_nil (this->consumer_admin_.in ()))
@@ -801,7 +799,7 @@ ECM_Consumer::disconnect (void)
 }
 
 void
-ECM_Consumer::close (void)
+ECM_Consumer::close ()
 {
   try
     {
@@ -825,7 +823,7 @@ ECM_Consumer::push (const RtecEventComm::EventSet& events)
 }
 
 void
-ECM_Consumer::disconnect_push_consumer (void)
+ECM_Consumer::disconnect_push_consumer ()
 {
 }
 
@@ -857,7 +855,7 @@ ECM_Local_Federation::ECM_Local_Federation (ECM_Federation *federation,
            CORBA::Boolean[this->consumer_types ()]);
 }
 
-ECM_Local_Federation::~ECM_Local_Federation (void)
+ECM_Local_Federation::~ECM_Local_Federation ()
 {
   delete mcast_eh_;
   delete[] this->subscription_subset_;
@@ -884,7 +882,7 @@ ECM_Local_Federation::open (int event_count,
 }
 
 void
-ECM_Local_Federation::close (void)
+ECM_Local_Federation::close ()
 {
   this->consumer_.close ();
 
@@ -1013,18 +1011,17 @@ ECM_Local_Federation::open_receiver (RtecEventChannelAdmin::EventChannel_ptr ec,
     qos.get_SupplierQOS ();
   this->receiver_->connect (qos_copy);
 
-
 }
 
 void
-ECM_Local_Federation::close_receiver (void)
+ECM_Local_Federation::close_receiver ()
 {
   this->receiver_->shutdown ();
   this->mcast_eh_->shutdown ();
 }
 
 void
-ECM_Local_Federation::dump_results (void) const
+ECM_Local_Federation::dump_results () const
 {
   double unfiltered_ratio = 0;
   if (this->recv_count_ != 0)

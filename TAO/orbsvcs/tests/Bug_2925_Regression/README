@@ -1,6 +1,6 @@
 
 
-Read http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=2925 for
+Read http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=2925 for
 more details.
 
 This test uses dscp over both IPv4 and IPv6 and basically there is

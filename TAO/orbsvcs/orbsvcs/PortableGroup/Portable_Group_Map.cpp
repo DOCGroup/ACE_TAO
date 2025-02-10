@@ -5,13 +5,8 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-/// Constructor.
-TAO_Portable_Group_Map::TAO_Portable_Group_Map ()
-{
-}
-
 /// Destructor.
-TAO_Portable_Group_Map::~TAO_Portable_Group_Map (void)
+TAO_Portable_Group_Map::~TAO_Portable_Group_Map ()
 {
   for (Iterator i = this->map_.begin ();
        i != this->map_.end ();
@@ -36,8 +31,7 @@ TAO_Portable_Group_Map::~TAO_Portable_Group_Map (void)
 void
 TAO_Portable_Group_Map::add_groupid_objectkey_pair (
     PortableGroup::TagGroupTaggedComponent *group_id,
-    const TAO::ObjectKey &key
-  )
+    const TAO::ObjectKey &key)
 {
   ACE_WRITE_GUARD (TAO_SYNCH_RW_MUTEX,
                    guard,

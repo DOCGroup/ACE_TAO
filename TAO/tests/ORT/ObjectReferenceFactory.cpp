@@ -10,18 +10,17 @@ ObjectReferenceFactory::ObjectReferenceFactory (
 }
 
 ::CORBA::ValueBase *
-ObjectReferenceFactory::_copy_value (void)
+ObjectReferenceFactory::_copy_value ()
 {
   ::CORBA::ValueBase *ret_val= 0;
   ACE_NEW_THROW_EX (
     ret_val,
     ObjectReferenceFactory (old_orf_.inout ()),
-    ::CORBA::NO_MEMORY ()
-  );
+    ::CORBA::NO_MEMORY ());
   return ret_val;
 }
 
-ObjectReferenceFactory::~ObjectReferenceFactory (void)
+ObjectReferenceFactory::~ObjectReferenceFactory ()
 {
   // No need to call CORBA::remove_ref() on this->old_orf_.  It is a
   // "_var" object, meaning that will be done automatically.

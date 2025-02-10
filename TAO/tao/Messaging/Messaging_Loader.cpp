@@ -8,18 +8,17 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Messaging_Loader::TAO_Messaging_Loader (void)
+TAO_Messaging_Loader::TAO_Messaging_Loader ()
   : initialized_ (false)
 {
 }
 
-TAO_Messaging_Loader::~TAO_Messaging_Loader (void)
+TAO_Messaging_Loader::~TAO_Messaging_Loader ()
 {
 }
 
 int
-TAO_Messaging_Loader::init (int,
-                            ACE_TCHAR* [])
+TAO_Messaging_Loader::init (int, ACE_TCHAR* [])
 {
   ACE_TRACE ("TAO_Messaging_Loader::init");
 

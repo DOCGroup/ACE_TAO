@@ -28,7 +28,7 @@ TAO::Objref_Traits <TAO_IOR_Table_Impl>::release (TAO_IOR_Table_Impl_ptr p)
 }
 
 TAO_IOR_Table_Impl_ptr
-TAO::Objref_Traits <TAO_IOR_Table_Impl>::nil (void)
+TAO::Objref_Traits <TAO_IOR_Table_Impl>::nil ()
 {
   return TAO_IOR_Table_Impl::_nil ();
 }
@@ -40,7 +40,7 @@ TAO::Objref_Traits <TAO_IOR_Table_Impl>::marshal (const TAO_IOR_Table_Impl_ptr,
   return false;
 }
 
-TAO_IOR_Table_Impl::TAO_IOR_Table_Impl (void)
+TAO_IOR_Table_Impl::TAO_IOR_Table_Impl ()
 {
 }
 

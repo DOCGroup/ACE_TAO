@@ -185,9 +185,12 @@ error_string (UTL_Error::ErrorCode c)
     case UTL_Error::EIDL_KEYWORD_WARNING:
       return "Warning - spelling differs from IDL keyword only in case: ";
     case UTL_Error::EIDL_ANONYMOUS_ERROR:
-      return "Error: anonymous types are deprecated by OMG spec";
+      return "anonymous types require the IDL version to be 4 or later or must "
+        "be explicitly enabled using -as";
     case UTL_Error::EIDL_ANONYMOUS_WARNING:
-      return "Warning - anonymous types are deprecated by OMG spec";
+      return "anonymous type found";
+    case UTL_Error::EIDL_ANONYMOUS_EXPLICIT_ERROR:
+      return "anonymous types have been disabled";
     case UTL_Error::EIDL_ENUM_VAL_EXPECTED:
       return "enumerator expected: ";
     case UTL_Error::EIDL_ENUM_VAL_NOT_FOUND:
@@ -256,7 +259,7 @@ error_string (UTL_Error::ErrorCode c)
  * Get filename from node or from idl_global if node is null.
  */
 static const char *
-get_filename (AST_Decl *node = 0)
+get_filename (AST_Decl *node = nullptr)
 {
   return node ? node->file_name ().c_str ()
     : idl_global->filename ()->get_string ();
@@ -266,7 +269,7 @@ get_filename (AST_Decl *node = 0)
  * Get line number from node or from idl_global if node is null.
  */
 static long
-get_lineno (AST_Decl *node = 0)
+get_lineno (AST_Decl *node = nullptr)
 {
   return node ? node->line () : idl_global->lineno ();
 }
@@ -279,16 +282,18 @@ static void
 idl_error_header (UTL_Error::ErrorCode c, long lineno, ACE_CString s)
 {
   idl_global->err ()->last_error = c;
+  const long line_number = lineno == -1 ? idl_global->lineno () : lineno;
+  idl_global->err ()->last_error_lineno = line_number;
   ACE_ERROR ((LM_ERROR,
               "Error - %C: \"%C\", line %d: %C",
               idl_global->prog_name (),
               s.c_str (),
-              lineno == -1 ? idl_global->lineno () : lineno,
+              line_number,
               error_string (c)));
   idl_global->set_err_count (idl_global->err_count () + 1);
 }
 static void
-idl_error_header (UTL_Error::ErrorCode c, AST_Decl *node = 0)
+idl_error_header (UTL_Error::ErrorCode c, AST_Decl *node = nullptr)
 {
   idl_error_header (c, get_lineno (node), get_filename (node));
 }
@@ -302,15 +307,17 @@ static void
 idl_warning_header (UTL_Error::ErrorCode c, long lineno, ACE_CString s)
 {
   idl_global->err ()->last_warning = c;
+  const long line_number = lineno == -1 ? idl_global->lineno () : lineno;
+  idl_global->err ()->last_warning_lineno = lineno;
   ACE_ERROR ((LM_WARNING,
               "Warning - %C: \"%C\", line %d: %C",
               idl_global->prog_name (),
               s.c_str (),
-              lineno == -1 ? idl_global->lineno () : lineno,
+              line_number,
               error_string (c)));
 }
 static void
-idl_warning_header (UTL_Error::ErrorCode c, AST_Decl *node = 0)
+idl_warning_header (UTL_Error::ErrorCode c, AST_Decl *node = nullptr)
 {
   idl_warning_header (c, get_lineno (node), get_filename (node));
 }
@@ -712,7 +719,9 @@ parse_state_to_error_message (IDL_GlobalData::ParseState ps)
 
 UTL_Error::UTL_Error ()
   : last_error (EIDL_OK),
-    last_warning (EIDL_OK)
+    last_error_lineno (-1),
+    last_warning (EIDL_OK),
+    last_warning_lineno (-1)
 {
 }
 
@@ -750,7 +759,7 @@ UTL_Error::error1 (UTL_Error::ErrorCode c,
 {
   idl_error_header (c);
   ACE_ERROR ((LM_ERROR, " - "));
-  d->name ()->dump (*ACE_DEFAULT_LOG_STREAM);;
+  d->name ()->dump (*ACE_DEFAULT_LOG_STREAM);
   ACE_ERROR ((LM_ERROR,
               "\n"));
 }
@@ -761,10 +770,10 @@ UTL_Error::error2 (UTL_Error::ErrorCode c,
                    AST_Decl *d2)
 {
   idl_error_header (c);
-  d1->name ()->dump (*ACE_DEFAULT_LOG_STREAM);;
+  d1->name ()->dump (*ACE_DEFAULT_LOG_STREAM);
   ACE_ERROR ((LM_ERROR,
               ", "));
-  d2->name ()->dump (*ACE_DEFAULT_LOG_STREAM);;
+  d2->name ()->dump (*ACE_DEFAULT_LOG_STREAM);
   ACE_ERROR ((LM_ERROR,
               "\n"));
 }
@@ -776,13 +785,13 @@ UTL_Error::error3 (UTL_Error::ErrorCode c,
                    AST_Decl *d3)
 {
   idl_error_header (c);
-  d1->name ()->dump (*ACE_DEFAULT_LOG_STREAM);;
+  d1->name ()->dump (*ACE_DEFAULT_LOG_STREAM);
   ACE_ERROR ((LM_ERROR,
               ", "));
-  d2->name ()->dump (*ACE_DEFAULT_LOG_STREAM);;
+  d2->name ()->dump (*ACE_DEFAULT_LOG_STREAM);
   ACE_ERROR ((LM_ERROR,
               ", "));
-  d3->name ()->dump (*ACE_DEFAULT_LOG_STREAM);;
+  d3->name ()->dump (*ACE_DEFAULT_LOG_STREAM);
   ACE_ERROR ((LM_ERROR,
               "\n"));
 }
@@ -869,7 +878,7 @@ UTL_Error::lookup_error (UTL_ScopedName *n)
 {
   if (idl_global->ignore_lookup_errors_) return;
   idl_error_header (EIDL_LOOKUP_ERROR);
-  n->dump (*ACE_DEFAULT_LOG_STREAM);;
+  n->dump (*ACE_DEFAULT_LOG_STREAM);
   ACE_ERROR ((LM_ERROR,
               "\n"));
 }
@@ -880,7 +889,7 @@ UTL_Error::lookup_warning (UTL_ScopedName *n)
   if (idl_global->print_warnings ())
     {
       idl_warning_header (EIDL_LOOKUP_ERROR);
-      n->dump (*ACE_DEFAULT_LOG_STREAM);;
+      n->dump (*ACE_DEFAULT_LOG_STREAM);
       ACE_ERROR ((LM_ERROR, "\n"));
     }
 }
@@ -906,7 +915,7 @@ UTL_Error::version_syntax_error (const char *msg)
 
 // Report an attempt to set the version a second time.
 void
-UTL_Error::version_reset_error (void)
+UTL_Error::version_reset_error ()
 {
   idl_error_header (EIDL_VERSION_RESET);
   ACE_ERROR ((LM_ERROR,
@@ -953,7 +962,7 @@ UTL_Error::inheritance_error (UTL_ScopedName *n,
                               AST_Decl *d)
 {
   idl_error_header (EIDL_CANT_INHERIT);
-  n->dump (*ACE_DEFAULT_LOG_STREAM);;
+  n->dump (*ACE_DEFAULT_LOG_STREAM);
   ACE_ERROR ((LM_ERROR,
               " attempts to inherit from "));
   d->name ()->dump (*ACE_DEFAULT_LOG_STREAM);
@@ -987,7 +996,7 @@ UTL_Error::supports_error (UTL_ScopedName *n,
   n->dump (*ACE_DEFAULT_LOG_STREAM);
   ACE_ERROR ((LM_ERROR,
               " attempts to support "));
-  d->name ()->dump (*ACE_DEFAULT_LOG_STREAM);;
+  d->name ()->dump (*ACE_DEFAULT_LOG_STREAM);
   ACE_ERROR ((LM_ERROR,
               "\n"));
 }
@@ -1087,7 +1096,7 @@ UTL_Error::incompatible_disc_error (AST_Decl *d,
   d->name ()->dump (*ACE_DEFAULT_LOG_STREAM);
   ACE_ERROR ((LM_ERROR, " does not contain "));
   UTL_ScopedName *sn = e->n ();
-  (sn != 0
+  (sn != nullptr
     ? sn->dump (*ACE_DEFAULT_LOG_STREAM)
     : e->dump (*ACE_DEFAULT_LOG_STREAM));
   ACE_ERROR ((LM_ERROR, "\n"));
@@ -1324,7 +1333,7 @@ UTL_Error::fwd_decl_lookup (AST_Interface *d,
   idl_error_header (EIDL_FWD_DECL_LOOKUP);
   ACE_ERROR ((LM_ERROR,
               "trying to look up "));
-  n->dump (*ACE_DEFAULT_LOG_STREAM);;
+  n->dump (*ACE_DEFAULT_LOG_STREAM);
   ACE_ERROR ((LM_ERROR,
               " in undefined forward declared interface "));
   d->local_name ()->dump (*ACE_DEFAULT_LOG_STREAM);
@@ -1351,14 +1360,14 @@ void
 UTL_Error::not_a_type (AST_Decl *d)
 {
   idl_error_header (EIDL_NOT_A_TYPE);
-  if (d == 0 || d->name () == 0)
+  if (d == nullptr || d->name () == nullptr)
     {
       ACE_ERROR ((LM_ERROR,
                   "unknown symbol"));
     }
   else
     {
-      d->name ()->dump (*ACE_DEFAULT_LOG_STREAM);;
+      d->name ()->dump (*ACE_DEFAULT_LOG_STREAM);
     }
 
   ACE_ERROR ((LM_ERROR,
@@ -1384,7 +1393,7 @@ UTL_Error::back_end (long lineno,
 }
 
 void
-UTL_Error::illegal_infix (void)
+UTL_Error::illegal_infix ()
 {
   idl_error_header (EIDL_ILLEGAL_INFIX);
   ACE_ERROR ((LM_ERROR,
@@ -1502,9 +1511,9 @@ UTL_Error::scope_masking_error (AST_Decl *masked,
 }
 
 void
-UTL_Error::anonymous_type_diagnostic (void)
+UTL_Error::anonymous_type_diagnostic ()
 {
-  if (idl_global->anon_silent ())
+  if (idl_global->anon_silent () || idl_global->in_typedef ())
     {
       return;
     }
@@ -1519,7 +1528,8 @@ UTL_Error::anonymous_type_diagnostic (void)
     }
   else
     {
-      idl_error_header (EIDL_ANONYMOUS_ERROR);
+      idl_error_header (idl_global->explicit_anon_type_diagnostic () ?
+        EIDL_ANONYMOUS_EXPLICIT_ERROR : EIDL_ANONYMOUS_ERROR);
       ACE_ERROR ((LM_ERROR, "\n"));
     }
 }
@@ -1586,10 +1596,10 @@ UTL_Error::invalid_annotation_param_error (
   bool is_builtin = decl->builtin ();
   idl_error_header (EIDL_ANNOTATION_PARAM_ERROR,
     static_cast<AST_Decl*>(appl));
-  invalid_id->dump (*ACE_DEFAULT_LOG_STREAM);;
+  invalid_id->dump (*ACE_DEFAULT_LOG_STREAM);
   ACE_ERROR ((LM_ERROR, ACE_TEXT (" is not a member of %Cannotation "),
     is_builtin ? "builtin " : ""));
-  decl->name ()->dump (*ACE_DEFAULT_LOG_STREAM);;
+  decl->name ()->dump (*ACE_DEFAULT_LOG_STREAM);
   if (!is_builtin)
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT (" declared in \"%C\" on line %d"),
@@ -1618,7 +1628,7 @@ UTL_Error::invalid_annotation_param_type (
         get_filename (member), get_lineno (member)));
     }
   ACE_ERROR ((LM_ERROR, ACE_TEXT (" can not be set to ")));
-  offending_value->dump (*ACE_DEFAULT_LOG_STREAM);;
+  offending_value->dump (*ACE_DEFAULT_LOG_STREAM);
   ACE_ERROR ((LM_ERROR, ACE_TEXT (" because the types are incompatible!\n")));
 }
 
@@ -1643,4 +1653,31 @@ UTL_Error::annotation_param_missing_error (
   ACE_ERROR ((LM_ERROR,
     ACE_TEXT (" needs to be defined because it does not have a default value!\n"),
     get_filename (member), get_lineno (member)));
+}
+
+void
+UTL_Error::direct_error (
+  const char *reason, const ACE_CString &filename, long lineno, UTL_Error::ErrorCode error_code)
+{
+  idl_error_header (error_code, lineno, filename);
+  ACE_ERROR ((LM_ERROR, ACE_TEXT ("%C\n"), reason));
+}
+
+void
+UTL_Error::direct_warning (
+  const char *reason, const ACE_CString &filename, long lineno, UTL_Error::ErrorCode error_code)
+{
+  if (idl_global->print_warnings ())
+    {
+      idl_warning_header (error_code, lineno, filename);
+      ACE_ERROR ((LM_WARNING, ACE_TEXT ("%C\n"), reason));
+    }
+}
+
+void UTL_Error::reset_last_error_and_warning ()
+{
+  last_error = EIDL_OK;
+  last_error_lineno = -1;
+  last_warning = EIDL_OK;
+  last_warning_lineno = -1;
 }

@@ -30,7 +30,7 @@ public:
   be_visitor_amh_interface_ch (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_amh_interface_ch (void);
+  ~be_visitor_amh_interface_ch ();
 
   /// set the right context and make a visitor
   virtual int visit_interface (be_interface *node);

@@ -30,17 +30,7 @@
 #include "tao/Object_Argument_T.h"
 #include "tao/Arg_Traits_T.h"
 #include "tao/Any_Insert_Policy_T.h"
-#if defined (ACE_HAS_CPP11)
-# include <atomic>
-#else
-# include "ace/Atomic_Op.h"
-#endif /* ACE_HAS_CPP11 */
-
-#if defined (HPUX) && defined (IOR)
-   /* HP-UX 11.11 defines IOR in /usr/include/pa/inline.h
-      and we don't want that definition.  See IOP_IORC.h. */
-# undef IOR
-#endif /* HPUX && IOR */
+#include <atomic>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -101,9 +91,8 @@ namespace CORBA
   class TAO_Export Object
   {
   public:
-
     /// Destructor.
-    virtual ~Object (void);
+    virtual ~Object ();
 
     /**
      * @name Spec defined methods
@@ -116,7 +105,7 @@ namespace CORBA
     static CORBA::Object_ptr _duplicate (CORBA::Object_ptr obj);
 
     /// Return a NULL object.
-    static CORBA::Object_ptr _nil (void);
+    static CORBA::Object_ptr _nil ();
 
     /// No-op it is just here to simplify some templates.
     static CORBA::Object_ptr _narrow (CORBA::Object_ptr obj);
@@ -132,7 +121,7 @@ namespace CORBA
 
     /// The repository ID for the most derived class, this is an
     /// implementation method and does no remote invocations!
-    virtual const char* _interface_repository_id (void) const;
+    virtual const char* _interface_repository_id () const;
 
     /**
      * Return a (potentially non-unique) hash value for this object.
@@ -153,18 +142,18 @@ namespace CORBA
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
 
-    virtual CORBA::Boolean _non_existent (void);
+    virtual CORBA::Boolean _non_existent ();
 
 #if ! defined (CORBA_E_COMPACT) && ! defined (CORBA_E_MICRO)
     /// Get info about the object from the Interface Repository.
-    virtual InterfaceDef_ptr _get_interface (void);
+    virtual InterfaceDef_ptr _get_interface ();
 
     /// Get info about the object from the Interface Repository.
-    virtual CORBA::Object_ptr _get_component (void);
+    virtual CORBA::Object_ptr _get_component ();
 #endif
 
     /// Get the repository id.
-    virtual char * _repository_id (void);
+    virtual char * _repository_id ();
 
 #if ! defined (CORBA_E_COMPACT) && ! defined (CORBA_E_MICRO)
     // DII operations to create a request.
@@ -218,7 +207,7 @@ namespace CORBA
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
-    virtual CORBA::ORB_ptr _get_orb (void);
+    virtual CORBA::ORB_ptr _get_orb ();
 
     /**
      * @name Reference Count Management
@@ -228,13 +217,13 @@ namespace CORBA
      */
     //@{
     /// Increment the reference count.
-    virtual void _add_ref (void);
+    virtual void _add_ref ();
 
     /// Decrement the reference count.
-    virtual void _remove_ref (void);
+    virtual void _remove_ref ();
 
     /// Get the refcount
-    virtual CORBA::ULong _refcount_value (void) const;
+    virtual CORBA::ULong _refcount_value () const;
     //@}
 
     // Useful for template programming.
@@ -252,15 +241,15 @@ namespace CORBA
 
     /// Accessor for the cached servant reference held on the stub
     /// if this object is collocated
-    virtual TAO_Abstract_ServantBase *_servant (void) const;
+    virtual TAO_Abstract_ServantBase *_servant () const;
 
     /// Is this object collocated with the servant?
     /// Note this does not return this->is_collocated_ but will instead
     /// query the underlying stub for its collocation status
-    virtual CORBA::Boolean _is_collocated (void) const;
+    virtual CORBA::Boolean _is_collocated () const;
 
     /// Is this a local object?
-    virtual CORBA::Boolean _is_local (void) const;
+    virtual CORBA::Boolean _is_local () const;
 
     /// Used in the implementation of CORBA::Any
     static void _tao_any_destructor (void*);
@@ -273,7 +262,7 @@ namespace CORBA
 
     /// Return the object key as an out parameter.  Caller should release
     /// return value when finished with it.
-    virtual TAO::ObjectKey *_key (void);
+    virtual TAO::ObjectKey *_key ();
 
     /// Constructor
     Object (TAO_Stub *p,
@@ -284,14 +273,13 @@ namespace CORBA
     Object (IOP::IOR *ior, TAO_ORB_Core *orb_core);
 
     /// Get the underlying stub object.
-    virtual TAO_Stub *_stubobj (void) const;
-    virtual TAO_Stub *_stubobj (void);
+    virtual TAO_Stub *_stubobj () const;
+    virtual TAO_Stub *_stubobj ();
 
     /// Set the proxy broker.
     virtual void _proxy_broker (TAO::Object_Proxy_Broker *proxy_broker);
 
   public:
-
     /// Allows us to forbid marshaling of local interfaces.
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
 
@@ -306,10 +294,10 @@ namespace CORBA
 #endif /* GEN_OSTREAM_OPS */
 
     /// Accessor to the flag..
-    CORBA::Boolean is_evaluated (void) const;
+    CORBA::Boolean is_evaluated () const;
 
     /// Accessor for the ORB_Core..
-    TAO_ORB_Core *orb_core (void) const;
+    TAO_ORB_Core *orb_core () const;
 
     /// Accessors for the underlying IOP::IOR's.
     /**
@@ -317,14 +305,14 @@ namespace CORBA
      * the IOR. This is useful for cases when one wants to initialize
      * a new CORBA Object
      */
-    IOP::IOR *steal_ior (void);
+    IOP::IOR *steal_ior ();
 
-    const IOP::IOR &ior (void) const;
+    const IOP::IOR &ior () const;
 
     //@} End of TAO-specific methods..
 
     /// Can this object be stringified?
-    virtual bool can_convert_to_ior (void) const;
+    virtual bool can_convert_to_ior () const;
 
     /// A hook to allow users to provide custom object stringification.
     /// @note This method is intended to be used by classes that
@@ -333,7 +321,7 @@ namespace CORBA
                                   const char* ior_prefix) const;
 
     /// Wrapper for _remove_ref(), naming convention for templatizing.
-    void _decr_refcount (void);
+    void _decr_refcount ();
 
   protected:
     /// Initializing a local object.
@@ -344,18 +332,12 @@ namespace CORBA
     TAO::Object_Proxy_Broker *proxy_broker () const;
 
     /// Number of outstanding references to this object.
-#if defined (ACE_HAS_CPP11)
 # define TAO_OBJECT_USES_STD_ATOMIC_REFCOUNT
     std::atomic<uint32_t> refcount_;
-#else
-    ACE_Atomic_Op<TAO_SYNCH_MUTEX, unsigned long> refcount_;
-#endif /* ACE_HAS_CPP11 */
 
   private:
-
-    // = Unimplemented methods
-    ACE_UNIMPLEMENTED_FUNC (Object (const Object &))
-    ACE_UNIMPLEMENTED_FUNC (Object &operator = (const Object &))
+    Object (const Object &) = delete;
+    Object &operator = (const Object &) = delete;
 
   private:
     /// Specify whether this is a local object or not.
@@ -419,7 +401,7 @@ namespace TAO
   {
     static CORBA::Object_ptr duplicate (CORBA::Object_ptr);
     static void release (CORBA::Object_ptr);
-    static CORBA::Object_ptr nil (void);
+    static CORBA::Object_ptr nil ();
     static CORBA::Boolean marshal (const CORBA::Object_ptr p,
                                    TAO_OutputCDR & cdr);
   };
@@ -436,7 +418,7 @@ namespace TAO
 /// library is present.
 extern
   TAO_Export TAO::Object_Proxy_Broker *
-  (*_TAO_Object_Proxy_Broker_Factory_function_pointer) (void);
+  (*_TAO_Object_Proxy_Broker_Factory_function_pointer) ();
 
 TAO_Export CORBA::Boolean
 operator<< (TAO_OutputCDR&, const CORBA::Object*);

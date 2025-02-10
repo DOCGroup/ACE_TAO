@@ -103,7 +103,7 @@ PP_Test_Client::read_ior (ACE_TCHAR *filename)
 // Parses the command line arguments and returns an error status.
 
 int
-PP_Test_Client::parse_args (void)
+PP_Test_Client::parse_args ()
 {
   ACE_Get_Opt get_opts (argc_, argv_, ACE_TEXT("ovdn:f:k:x"));
   int c;
@@ -164,9 +164,8 @@ PP_Test_Client::parse_args (void)
 // Oneway test.
 
 void
-PP_Test_Client::send_oneway (void)
+PP_Test_Client::send_oneway ()
 {
-
   try
     {
       ACE_FUNCTION_TIMEPROBE (PP_TEST_CLIENT_SEND_ONEWAY_START);
@@ -184,9 +183,8 @@ PP_Test_Client::send_oneway (void)
 // Twoway test.
 
 void
-PP_Test_Client::send_void (void)
+PP_Test_Client::send_void ()
 {
-
   try
     {
       ACE_FUNCTION_TIMEPROBE (PP_TEST_CLIENT_SEND_VOID_START);
@@ -250,7 +248,6 @@ PP_Test_Client::run ()
 int
 PP_Test_Client::shutdown_server (int do_shutdown)
 {
-
   try
     {
       if (do_shutdown)
@@ -275,9 +272,8 @@ PP_Test_Client::shutdown_server (int do_shutdown)
 }
 
 int
-PP_Test_Client::run_oneway (void)
+PP_Test_Client::run_oneway ()
 {
-
   try
     {
       CORBA::ULong i;
@@ -314,9 +310,8 @@ PP_Test_Client::run_oneway (void)
 }
 
 int
-PP_Test_Client::run_void (void)
+PP_Test_Client::run_void ()
 {
-
   try
     {
       CORBA::ULong i;
@@ -352,7 +347,7 @@ PP_Test_Client::run_void (void)
   return this->error_count_ == 0 ? 0 : 1;
 }
 
-PP_Test_Client::~PP_Test_Client (void)
+PP_Test_Client::~PP_Test_Client ()
 {
   // Free resources and close the IOR files.
   if (this->factory_ior_file_)

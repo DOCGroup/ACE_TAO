@@ -5,7 +5,7 @@ ACE_INLINE
 CORBA::Context_ptr
 CORBA::Context::_duplicate (CORBA::Context_ptr x)
 {
-  if (x != 0)
+  if (x)
     {
       x->_incr_refcount ();
     }
@@ -15,9 +15,9 @@ CORBA::Context::_duplicate (CORBA::Context_ptr x)
 
 ACE_INLINE
 CORBA::Context_ptr
-CORBA::Context::_nil (void)
+CORBA::Context::_nil ()
 {
-  return (CORBA::Context_ptr)0;
+  return nullptr;
 }
 
 // *************************************************************
@@ -25,29 +25,24 @@ CORBA::Context::_nil (void)
 // *************************************************************
 
 ACE_INLINE
-CORBA::ContextList::ContextList (void)
-{
-}
-
-ACE_INLINE
 CORBA::ULong
-CORBA::ContextList::count (void)
+CORBA::ContextList::count ()
 {
   return (CORBA::ULong) this->ctx_list_.size ();
 }
 
 ACE_INLINE
 CORBA::ContextList_ptr
-CORBA::ContextList::_nil (void)
+CORBA::ContextList::_nil ()
 {
-  return (CORBA::ContextList_ptr)0;
+  return nullptr;
 }
 
 ACE_INLINE
 CORBA::ContextList_ptr
 CORBA::ContextList::_duplicate (CORBA::ContextList_ptr x)
 {
-  if (x != 0)
+  if (x)
     {
       x->_incr_refcount ();
     }

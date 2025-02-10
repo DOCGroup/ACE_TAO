@@ -11,13 +11,12 @@
 #include "SPIPE-connector.h"
 
 
-
 Peer_Handler::Peer_Handler (int iterations)
   : iterations_ (iterations)
 {
 }
 
-Peer_Handler::~Peer_Handler (void)
+Peer_Handler::~Peer_Handler ()
 {
 }
 
@@ -117,25 +116,25 @@ Peer_Handler::handle_close (ACE_HANDLE,
 }
 
 ACE_HANDLE
-Peer_Handler::get_handle (void) const
+Peer_Handler::get_handle () const
 {
   return this->peer ().get_handle ();
 }
 
 void
-Peer_Handler::display_menu (void)
+Peer_Handler::display_menu ()
 {
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\nplease enter input..: ")));
 }
 
-IPC_Client::IPC_Client (void)
+IPC_Client::IPC_Client ()
   : iterations_ (0),
     done_handler_ (ACE_Sig_Handler_Ex (ACE_Reactor::end_event_loop))
 {
   ACE_OS::strcpy (rendezvous_, ACE_TEXT ("acepipe"));
 }
 
-IPC_Client::~IPC_Client (void)
+IPC_Client::~IPC_Client ()
 {
 }
 
@@ -177,13 +176,13 @@ IPC_Client::init (int argc, ACE_TCHAR *argv[])
 }
 
 int
-IPC_Client::fini (void)
+IPC_Client::fini ()
 {
   return 0;
 }
 
 int
-IPC_Client::svc (void)
+IPC_Client::svc ()
 {
   ACE_Reactor::instance ()->run_reactor_event_loop ();
   return 0;

@@ -111,7 +111,7 @@ namespace TAO
                         TAO::Invocation_Mode mode = TAO_SYNCHRONOUS_INVOCATION,
                         bool has_in_args = true);
 
-    virtual ~Invocation_Adapter (void);
+    virtual ~Invocation_Adapter ();
 
     /// Invoke the target, and used by the generated code.
     /**
@@ -140,7 +140,6 @@ namespace TAO
     int _tao_byte_order ();
 
   protected:
-
     /**
      * The stub pointer passed to this call has all the details about
      * the object to which the invocation needs to be routed to. The
@@ -159,7 +158,6 @@ namespace TAO
      * methods to get the right behavior at their level.
      */
     //@{
-
     /// Helper method that prepares the necessary stuff for a remote
     /// invocation.
 
@@ -232,7 +230,7 @@ namespace TAO
     bool get_timeout (TAO_Stub *stub, ACE_Time_Value &val);
 
     /// Helper method that extracts TAO_Stub from the target object.
-    TAO_Stub *get_stub (void) const;
+    TAO_Stub *get_stub () const;
 
     /// Helper method that takes care of setting the profiles within
     /// the stub object if the target gets forwarded
@@ -245,12 +243,9 @@ namespace TAO
                              TAO_Operation_Details &details);
 
   private:
-    /// Don't allow default initializations
-    Invocation_Adapter (void);
-
-    // Prevent copying
-    Invocation_Adapter (Invocation_Adapter const &);
-    Invocation_Adapter & operator= (const Invocation_Adapter &);
+    Invocation_Adapter () = delete;
+    Invocation_Adapter (Invocation_Adapter const &) = delete;
+    Invocation_Adapter & operator= (const Invocation_Adapter &) = delete;
 
     /**
     * This method returns the right collocation strategy, if any,

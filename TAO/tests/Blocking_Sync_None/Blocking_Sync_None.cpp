@@ -15,7 +15,7 @@ Blocking_Sync_None::slow_operation (const Test::Payload &,
 }
 
 void
-Blocking_Sync_None::shutdown (void)
+Blocking_Sync_None::shutdown ()
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

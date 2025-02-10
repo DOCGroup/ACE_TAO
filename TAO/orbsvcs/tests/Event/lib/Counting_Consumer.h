@@ -36,8 +36,8 @@ public:
   /// Simple connect/disconnect methods..
   void connect (RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin,
                 const RtecEventChannelAdmin::ConsumerQOS &qos);
-  void disconnect (void);
-  void deactivate (void);
+  void disconnect ();
+  void deactivate ();
 
   /// Print out an error message if the event count is too far from the
   /// expected count.
@@ -47,7 +47,7 @@ public:
 
   /// The skeleton methods.
   virtual void push (const RtecEventComm::EventSet& events);
-  virtual void disconnect_push_consumer (void);
+  virtual void disconnect_push_consumer ();
 
   /// Keep track of the number of events received.
   CORBA::ULong event_count;

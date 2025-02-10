@@ -125,7 +125,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // Testing over. Shut down Server ORB.
       server1->shutdown ();
-
     }
   catch (const CORBA::Exception& ex)
     {

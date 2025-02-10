@@ -10,7 +10,6 @@ namespace ACE
 {
   namespace IOS
   {
-
     template <ACE_SYNCH_DECL>
     SSLSock_StreamBufferBase<ACE_SYNCH_USE>::SSLSock_StreamBufferBase (stream_type* stream)
       : BidirStreamBuffer<StreamHandler<ACE_SSL_SOCK_Stream, ACE_SYNCH_USE> > (

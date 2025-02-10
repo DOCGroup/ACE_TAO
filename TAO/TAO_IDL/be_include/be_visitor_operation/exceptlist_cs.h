@@ -33,7 +33,7 @@ public:
   be_visitor_operation_exceptlist_cs (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_operation_exceptlist_cs (void);
+  ~be_visitor_operation_exceptlist_cs ();
 
   /// visit the operation
   int visit_operation (be_operation *node);

@@ -40,12 +40,12 @@ class JAWS_IO_Handler;
 class JAWS_IO
 {
 public:
-  JAWS_IO (void);
-  virtual ~JAWS_IO (void);
+  JAWS_IO ();
+  virtual ~JAWS_IO ();
   void handler (JAWS_IO_Handler *handler);
 
   virtual void handle (ACE_HANDLE h) = 0;
-  virtual ACE_HANDLE handle (void) const = 0;
+  virtual ACE_HANDLE handle () const = 0;
 
   // James, please add documentation here.
 
@@ -84,9 +84,8 @@ protected:
 class JAWS_IO_Handler
 {
 public:
-
   /// Destructor.
-  virtual ~JAWS_IO_Handler (void);
+  virtual ~JAWS_IO_Handler ();
 
   /// This method is called by the IO class when new client data shows
   /// up.
@@ -94,11 +93,11 @@ public:
 
   /// This method is called by the IO class when there was an error in
   /// reading new data from the client.
-  virtual void read_error (void) = 0;
+  virtual void read_error () = 0;
 
   /// This method is called by the IO class when the requested file has
   /// been successfully transmitted to the client.
-  virtual void transmit_file_complete (void) = 0;
+  virtual void transmit_file_complete () = 0;
 
   /// This method is called by the IO class when there was an error in
   /// transmitting the requested file to the client.
@@ -106,7 +105,7 @@ public:
 
   /// This method is called by the IO class when the requested file has
   /// been successfully received from the client.
-  virtual void receive_file_complete (void) = 0;
+  virtual void receive_file_complete () = 0;
 
   /// This method is called by the IO class when there was an error in
   /// receiving the requested file from the client.
@@ -114,16 +113,15 @@ public:
 
   /// This method is called by the IO class when there was an error in
   /// writing data to the client.
-  virtual void write_error (void) = 0;
+  virtual void write_error () = 0;
 
   /// This method is called by the IO class when the confirmation
   /// message has been delivered to the client.
-  virtual void confirmation_message_complete (void) = 0;
+  virtual void confirmation_message_complete () = 0;
 
   /// This method is called by the IO class when the error message has
   /// been delivered to the client.
-  virtual void error_message_complete (void) = 0;
-
+  virtual void error_message_complete () = 0;
 };
 
 /**
@@ -134,12 +132,12 @@ public:
 class JAWS_Synch_IO : public JAWS_IO
 {
 public:
-  JAWS_Synch_IO (void);
+  JAWS_Synch_IO ();
 
-  ~JAWS_Synch_IO (void);
+  ~JAWS_Synch_IO ();
 
   virtual void handle (ACE_HANDLE h);
-  virtual ACE_HANDLE handle (void) const;
+  virtual ACE_HANDLE handle () const;
 
   void read (ACE_Message_Block& mb, int size);
 
@@ -178,12 +176,12 @@ protected:
 class JAWS_Asynch_IO : public JAWS_IO, public ACE_Handler
 {
 public:
-  JAWS_Asynch_IO (void);
+  JAWS_Asynch_IO ();
 
-  ~JAWS_Asynch_IO (void);
+  ~JAWS_Asynch_IO ();
 
   virtual void handle (ACE_HANDLE h) { ACE_Handler::handle (h); };
-  virtual ACE_HANDLE handle (void) const { return ACE_Handler::handle (); };
+  virtual ACE_HANDLE handle () const { return ACE_Handler::handle (); };
 
   void read (ACE_Message_Block& mb, int size);
 
@@ -250,12 +248,12 @@ protected:
 class JAWS_Synch_IO_No_Cache : public JAWS_IO
 {
 public:
-  JAWS_Synch_IO_No_Cache (void);
+  JAWS_Synch_IO_No_Cache ();
 
-  ~JAWS_Synch_IO_No_Cache (void);
+  ~JAWS_Synch_IO_No_Cache ();
 
   virtual void handle (ACE_HANDLE h);
-  virtual ACE_HANDLE handle (void) const;
+  virtual ACE_HANDLE handle () const;
 
   void read (ACE_Message_Block& mb, int size);
 

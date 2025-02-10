@@ -4,7 +4,7 @@
 
 #include "ace/config-all.h"
 
-#if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) || (defined (ACE_HAS_AIO_CALLS))
+#if defined (ACE_WIN32) || (defined (ACE_HAS_AIO_CALLS))
 
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_sys_socket.h"
@@ -35,7 +35,7 @@ class AIO_CLD_Acceptor
 public:
   //FUZZ: disable check_for_lack_ACE_OS
   // Cancel accept and close all clients.
-  void close (void);
+  void close ();
   //FUZZ: enable check_for_lack_ACE_OS
 
   // Remove handler from client set.
@@ -44,7 +44,7 @@ public:
 
 protected:
   // Service handler factory method.
-  virtual AIO_Input_Handler *make_handler (void);
+  virtual AIO_Input_Handler *make_handler ();
 
   // Set of all connected clients
   ACE_Unbounded_Set<AIO_Input_Handler *> clients_;
@@ -63,7 +63,7 @@ public:
   // Service Configurator hook methods.
   virtual int init (int argc, ACE_TCHAR *argv[]);
   virtual int fini ();
-  virtual int svc (void);
+  virtual int svc ();
 };
 
 /******************************************************/
@@ -192,7 +192,7 @@ void AIO_Input_Handler::handle_read_stream
 
 /********************************************************/
 
-void AIO_CLD_Acceptor::close (void) {
+void AIO_CLD_Acceptor::close () {
   ACE_Unbounded_Set_Iterator<AIO_Input_Handler *>
     iter (clients_.begin ());
   AIO_Input_Handler **ih;
@@ -200,7 +200,7 @@ void AIO_CLD_Acceptor::close (void) {
     delete *ih;
 }
 
-AIO_Input_Handler * AIO_CLD_Acceptor::make_handler (void) {
+AIO_Input_Handler * AIO_CLD_Acceptor::make_handler () {
   AIO_Input_Handler *ih;
   ACE_NEW_RETURN (ih, AIO_Input_Handler (this), 0);
   if (clients_.insert (ih) == -1)
@@ -221,7 +221,6 @@ AIO_Input_Handler * AIO_CLD_Acceptor::make_handler (void) {
 int AIO_CLD_Connector::validate_connection
   (const ACE_Asynch_Connect::Result& result,
    const ACE_INET_Addr &remote, const ACE_INET_Addr&) {
-
   remote_addr_ = remote;
   if (!result.success ()) {
     ACE_Time_Value delay (retry_delay_);
@@ -319,7 +318,7 @@ int AIO_Client_Logging_Daemon::fini () {
   return 0;
 }
 
-int AIO_Client_Logging_Daemon::svc (void) {
+int AIO_Client_Logging_Daemon::svc () {
   if (acceptor_.open (cld_addr_) == -1) return -1;
   if (CLD_CONNECTOR::instance ()->connect (sld_addr_) == 0)
     ACE_Proactor::instance ()->proactor_run_event_loop ();
@@ -344,7 +343,6 @@ public:
 };
 
 int AIO_Client_Logging_Daemon::init (int, ACE_TCHAR *[]) {
-
   ACE_ERROR_RETURN
     ((LM_ERROR, ACE_TEXT ("This service requires AIO support\n")), -1);
 }
@@ -353,7 +351,7 @@ int AIO_Client_Logging_Daemon::fini () {
   return 0;
 }
 
-#endif /* (ACE_WIN32 && !ACE_HAS_WINCE) || ACE_HAS_AIO_CALLS */
+#endif /* ACE_WIN32 || ACE_HAS_AIO_CALLS */
 
 ACE_FACTORY_DEFINE (AIO_CLD, AIO_Client_Logging_Daemon)
 

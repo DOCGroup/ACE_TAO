@@ -21,10 +21,6 @@
 #include "tao/Codeset/codeset_export.h"
 #include "tao/Versioned_Namespace.h"
 #include "ace/CDR_Stream.h"
-
-
-// ****************************************************************
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
@@ -45,7 +41,7 @@ public:
   TAO_UTF16_BOM_Translator (bool forceBE);
 
   /// Virtual destruction
-  virtual ~TAO_UTF16_BOM_Translator (void);
+  virtual ~TAO_UTF16_BOM_Translator () = default;
 
   // = Documented in $ACE_ROOT/ace/CDR_Stream.h
   virtual ACE_CDR::Boolean read_wchar (ACE_InputCDR &,
@@ -92,7 +88,6 @@ private:
 private:
   /// if this flag is true, force wchar's to big endian order
   bool forceBE_;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

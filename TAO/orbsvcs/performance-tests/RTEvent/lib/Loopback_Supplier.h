@@ -37,15 +37,15 @@ public:
   void connect (RtecEventChannelAdmin::EventChannel_ptr ec);
 
   /// Disconnect from the event channel
-  void disconnect (void);
+  void disconnect ();
 
   void push (const RtecEventComm::EventSet &events);
 
   //@{
   /** @name The RtecEventComm::PushSupplier methods
    */
-  virtual void disconnect_push_supplier (void);
-  virtual PortableServer::POA_ptr _default_POA (void);
+  virtual void disconnect_push_supplier ();
+  virtual PortableServer::POA_ptr _default_POA ();
   //@}
 
 private:

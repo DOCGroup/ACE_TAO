@@ -30,7 +30,7 @@ public:
   {
   }
 
-  virtual void update (void)
+  virtual void update ()
   {
     if (this->type () == Monitor_Control_Types::MC_LIST)
       {
@@ -151,7 +151,7 @@ TAO_MonitorEventChannelFactory::TAO_MonitorEventChannelFactory (
     }
 }
 
-TAO_MonitorEventChannelFactory::~TAO_MonitorEventChannelFactory (void)
+TAO_MonitorEventChannelFactory::~TAO_MonitorEventChannelFactory ()
 {
   Monitor_Point_Registry* instance = Monitor_Point_Registry::instance ();
   size_t size = this->stat_names_.size ();
@@ -418,7 +418,7 @@ TAO_MonitorEventChannelFactory::Unbinder::Unbinder (
 {
 }
 
-TAO_MonitorEventChannelFactory::Unbinder::~Unbinder (void)
+TAO_MonitorEventChannelFactory::Unbinder::~Unbinder ()
 {
   if (!this->released_)
     {
@@ -427,7 +427,7 @@ TAO_MonitorEventChannelFactory::Unbinder::~Unbinder (void)
 }
 
 void
-TAO_MonitorEventChannelFactory::Unbinder::release (void)
+TAO_MonitorEventChannelFactory::Unbinder::release ()
 {
   this->released_ = true;
 }

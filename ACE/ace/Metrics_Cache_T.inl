@@ -229,7 +229,7 @@ ACE_Metrics_Cache<ACE_LOCK, ALLOCATOR>::metrics_enabled(int enabled)
 
 template <class ACE_LOCK, class ALLOCATOR>
 ACE_INLINE int
-ACE_Metrics_Cache<ACE_LOCK, ALLOCATOR>::metrics_enabled(void) const
+ACE_Metrics_Cache<ACE_LOCK, ALLOCATOR>::metrics_enabled() const
 {
    return metrics_enabled_;
 }

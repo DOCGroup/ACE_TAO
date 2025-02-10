@@ -1,5 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
-
 //=============================================================================
 /**
  *  @file    OrbShutdownTask.cpp
@@ -12,23 +10,15 @@
 #include "ace/CORBA_macros.h"
 #include "ace/OS_NS_unistd.h"
 
-
 OrbShutdownTask::OrbShutdownTask()
 {
 }
-
-
-OrbShutdownTask::~OrbShutdownTask()
-{
-}
-
 
 void
 OrbShutdownTask::orb(CORBA::ORB_ptr orb)
 {
   this->orb_ = CORBA::ORB::_duplicate (orb);
 }
-
 
 int
 OrbShutdownTask::open(void*)

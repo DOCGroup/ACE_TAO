@@ -14,14 +14,6 @@ namespace ACE
 {
   namespace Monitor_Control
   {
-    Constraint_Interpreter::Constraint_Interpreter (void)
-    {
-    }
-
-    Constraint_Interpreter::~Constraint_Interpreter (void)
-    {
-    }
-
     int
     Constraint_Interpreter::build_tree (const char *constraints)
     {

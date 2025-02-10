@@ -15,11 +15,6 @@ static const char file_prefix[] = "file:";
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_FILE_Parser::~TAO_FILE_Parser (void)
-{
-}
-
-
 bool
 TAO_FILE_Parser::match_prefix (const char *ior_string) const
 {
@@ -39,14 +34,14 @@ TAO_FILE_Parser::parse_string (const char *ior, CORBA::ORB_ptr orb)
   FILE* file = ACE_OS::fopen (ACE_TEXT_CHAR_TO_TCHAR (filename),
                               ACE_TEXT("r"));
 
-  if (file == 0)
+  if (file == nullptr)
     return CORBA::Object::_nil ();
 
   ACE_Read_Buffer reader (file, true);
 
   char* string = reader.read ();
 
-  if (string == 0)
+  if (string == nullptr)
     return CORBA::Object::_nil ();
 
   CORBA::Object_ptr object = CORBA::Object::_nil ();

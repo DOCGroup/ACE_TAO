@@ -24,9 +24,8 @@
 #include "ace/OS_NS_fcntl.h"
 
 
-
 // Constructor.
-CC_Client::CC_Client (void)
+CC_Client::CC_Client ()
   : naming_service_ (0),
     cc_factory_ior_file_ (0),
     cc_factory_key_ (0),
@@ -40,7 +39,7 @@ CC_Client::CC_Client (void)
 {
 }
 
-CC_Client::~CC_Client (void)
+CC_Client::~CC_Client ()
 {
   // Free resources and close the ior files.
   if (this->cc_factory_ior_file_)
@@ -82,7 +81,7 @@ CC_Client::read_ior (ACE_TCHAR *filename)
 // Parses the command line arguments and returns an error status.
 
 int
-CC_Client::parse_args (void)
+CC_Client::parse_args ()
 {
   ACE_Get_Opt get_opts (argc_, argv_, ACE_TEXT("dc:sf:k:xbhe:"));
   int c;
@@ -142,7 +141,7 @@ CC_Client::parse_args (void)
 // Execute client example code.
 
 int
-CC_Client::run (void)
+CC_Client::run ()
 {
   int tests_run = 0;
   // Tells whether any tests have been run
@@ -205,7 +204,7 @@ CC_Client::run (void)
 // This function runs basic tests concerned with only one lock set
 
 int
-CC_Client::run_basic_tests (void)
+CC_Client::run_basic_tests ()
 {
   Test_Single_Lock_With_Mode t1 (naming_service_,
                                  CosConcurrencyControl::read);
@@ -338,7 +337,7 @@ CC_Client::run_extended_tests (ACE_TCHAR *params)
 }
 
 void
-CC_Client::print_usage (void)
+CC_Client::print_usage ()
 {
   ACE_ERROR ((LM_ERROR,
               "usage:  %s"
@@ -354,7 +353,7 @@ CC_Client::print_usage (void)
 }
 
 int
-CC_Client::init_naming_service (void)
+CC_Client::init_naming_service ()
 {
   try
     {
@@ -423,7 +422,6 @@ CC_Client::init (int argc, ACE_TCHAR **argv)
 
       ACE_DEBUG ((LM_DEBUG,
                   "Factory received OK\n"));
-
     }
   catch (const CORBA::Exception& ex)
     {

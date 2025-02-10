@@ -31,18 +31,18 @@ TAO_Synch_Reply_Dispatcher::TAO_Synch_Reply_Dispatcher (
 }
 
 // Destructor.
-TAO_Synch_Reply_Dispatcher::~TAO_Synch_Reply_Dispatcher (void)
+TAO_Synch_Reply_Dispatcher::~TAO_Synch_Reply_Dispatcher ()
 {
 }
 
 TAO_InputCDR &
-TAO_Synch_Reply_Dispatcher::reply_cdr (void)
+TAO_Synch_Reply_Dispatcher::reply_cdr ()
 {
   return this->reply_cdr_;
 }
 
 void
-TAO_Synch_Reply_Dispatcher::reply_timed_out (void)
+TAO_Synch_Reply_Dispatcher::reply_timed_out ()
 {
   // noop
 }
@@ -51,7 +51,7 @@ int
 TAO_Synch_Reply_Dispatcher::dispatch_reply (
     TAO_Pluggable_Reply_Params &params)
 {
-  if (params.input_cdr_ == 0)
+  if (params.input_cdr_ == nullptr)
     return -1;
 
   this->reply_status_ = params.reply_status ();
@@ -67,7 +67,7 @@ TAO_Synch_Reply_Dispatcher::dispatch_reply (
   if (this->reply_service_info_.length() > 0)
     {
       orb_core_->service_context_registry ().
-        process_service_contexts (this->reply_service_info_, *(params.transport_), 0);
+        process_service_contexts (this->reply_service_info_, *(params.transport_), nullptr);
     }
 
   // Must reset the message state, it is possible that the same reply
@@ -86,7 +86,7 @@ TAO_Synch_Reply_Dispatcher::dispatch_reply (
   {
     ACE_Data_Block *db = this->reply_cdr_.clone_from (*params.input_cdr_);
 
-    if (db == 0)
+    if (db == nullptr)
       {
         if (TAO_debug_level > 2)
           {
@@ -116,7 +116,7 @@ TAO_Synch_Reply_Dispatcher::dispatch_reply (
 }
 
 void
-TAO_Synch_Reply_Dispatcher::connection_closed (void)
+TAO_Synch_Reply_Dispatcher::connection_closed ()
 {
   this->state_changed (TAO_LF_Event::LFS_CONNECTION_CLOSED,
                        this->orb_core_->leader_follower ());

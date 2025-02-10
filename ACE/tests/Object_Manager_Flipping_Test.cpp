@@ -15,7 +15,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/Object_Manager.h"
 #include "ace/OS_Memory.h"
@@ -23,29 +22,18 @@
 #include "ace/Service_Config.h"
 #include "ace/Intrusive_Auto_Ptr.h"
 
-
-
 static u_int *ip;
-
-static const bool is_static_object_manager =
-#if defined (ACE_HAS_STATIC_OBJECT_MANAGER)
-    true;
-#else
-    false;
-#endif
 
 extern "C"
 void
-hook1 (void)
+hook1 ()
 {
   delete ip;
   ip = 0;
 }
 
-
 int run_main (int, ACE_TCHAR *[])
 {
-
   // Causing the creation of a SC instance and the corresponding TSS
   // key.  It is not registered with the Object Manager, but beware -
   // OM finalization will destroy it too.
@@ -57,7 +45,6 @@ int run_main (int, ACE_TCHAR *[])
   {
     ACE::init ();
     ACE_START_TEST (ACE_TEXT ("Object_Manager_Flipping_Test"));
-
 
     // If hook1 never gets called, this will show up as a memory leak.
     ACE_NEW_RETURN (ip,
@@ -118,5 +105,4 @@ int run_main (int, ACE_TCHAR *[])
   }
 
   return errors == 0 ? 0 : 1;
-
 }

@@ -9,11 +9,11 @@
 
 #include "orbsvcs/Naming/Hash_Naming_Context.h"
 #include "orbsvcs/Naming/nsconf.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Bindings_Map::~TAO_Bindings_Map (void)
+TAO_Bindings_Map::~TAO_Bindings_Map ()
 {
 }
 
@@ -33,19 +33,19 @@ TAO_Hash_Naming_Context::interface (TAO_Naming_Context *i)
   this->interface_ = i;
 }
 
-TAO_Hash_Naming_Context::~TAO_Hash_Naming_Context (void)
+TAO_Hash_Naming_Context::~TAO_Hash_Naming_Context ()
 {
   delete context_;
 }
 
 TAO_SYNCH_RW_MUTEX&
-TAO_Hash_Naming_Context::lock (void)
+TAO_Hash_Naming_Context::lock ()
 {
   return this->lock_;
 }
 
 PortableServer::POA_ptr
-TAO_Hash_Naming_Context::_default_POA (void)
+TAO_Hash_Naming_Context::_default_POA ()
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
@@ -546,7 +546,7 @@ TAO_Hash_Naming_Context::bind_new_context (const CosNaming::Name& n)
 }
 
 void
-TAO_Hash_Naming_Context::destroy (void)
+TAO_Hash_Naming_Context::destroy ()
 {
   // Check to make sure this object didn't have <destroy> method
   // invoked on it.
@@ -579,20 +579,20 @@ TAO_Hash_Naming_Context::destroy (void)
 }
 
 int
-TAO_Hash_Naming_Context::root (void)
+TAO_Hash_Naming_Context::root ()
 {
   return (ACE_OS::strcmp (this->poa_id_.fast_rep (),
                           TAO_ROOT_NAMING_CONTEXT) == 0);
 }
 
 int
-TAO_Hash_Naming_Context::destroyed (void)
+TAO_Hash_Naming_Context::destroyed ()
 {
   return this->destroyed_;
 }
 
 TAO_Naming_Context *
-TAO_Hash_Naming_Context::interface (void)
+TAO_Hash_Naming_Context::interface ()
 {
   return this->interface_;
 }

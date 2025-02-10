@@ -5,7 +5,7 @@
 #include "tao/ORB_Core.h"
 #include "tao/PI/ORBInitInfo.h"
 
-Server_ORBInitializer::Server_ORBInitializer (void)
+Server_ORBInitializer::Server_ORBInitializer ()
 {
 }
 

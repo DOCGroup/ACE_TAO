@@ -43,13 +43,13 @@ protected:
   ~ScopeGuardImplBase()
   {
   }
-  ScopeGuardImplBase(const ScopeGuardImplBase& other) throw()
+  ScopeGuardImplBase(const ScopeGuardImplBase& other) noexcept
     : dismissed_(other.dismissed_)
   {
     other.Dismiss();
   }
   template <typename J>
-  static void SafeExecute(J& j) throw()
+  static void SafeExecute(J& j) noexcept
   {
     if (!j.dismissed_)
       try
@@ -63,10 +63,10 @@ protected:
 
   mutable bool dismissed_;
 public:
-  ScopeGuardImplBase() throw() : dismissed_(false)
+  ScopeGuardImplBase() noexcept : dismissed_(false)
   {
   }
-  void Dismiss() const throw()
+  void Dismiss() const noexcept
   {
     dismissed_ = true;
   }
@@ -82,7 +82,7 @@ public:
   {
     return ScopeGuardImpl0<F>(fun);
   }
-  ~ScopeGuardImpl0() throw()
+  ~ScopeGuardImpl0() noexcept
   {
     SafeExecute(*this);
   }
@@ -111,7 +111,7 @@ public:
   {
     return ScopeGuardImpl1<F, P1>(fun, p1);
   }
-  ~ScopeGuardImpl1() throw()
+  ~ScopeGuardImpl1() noexcept
   {
     SafeExecute(*this);
   }
@@ -141,7 +141,7 @@ public:
   {
     return ScopeGuardImpl2<F, P1, P2>(fun, p1, p2);
   }
-  ~ScopeGuardImpl2() throw()
+  ~ScopeGuardImpl2() noexcept
   {
     SafeExecute(*this);
   }
@@ -172,7 +172,7 @@ public:
   {
     return ScopeGuardImpl3<F, P1, P2, P3>(fun, p1, p2, p3);
   }
-  ~ScopeGuardImpl3() throw()
+  ~ScopeGuardImpl3() noexcept
   {
     SafeExecute(*this);
   }
@@ -206,7 +206,7 @@ public:
   {
     return ObjScopeGuardImpl0<Obj, MemFun>(obj, memFun);
   }
-  ~ObjScopeGuardImpl0() throw()
+  ~ObjScopeGuardImpl0() noexcept
   {
     SafeExecute(*this);
   }
@@ -235,7 +235,7 @@ public:
   {
     return ObjScopeGuardImpl1<Obj, MemFun, P1>(obj, memFun, p1);
   }
-  ~ObjScopeGuardImpl1() throw()
+  ~ObjScopeGuardImpl1() noexcept
   {
     SafeExecute(*this);
   }
@@ -265,7 +265,7 @@ public:
   {
     return ObjScopeGuardImpl2<Obj, MemFun, P1, P2>(obj, memFun, p1, p2);
   }
-  ~ObjScopeGuardImpl2() throw()
+  ~ObjScopeGuardImpl2() noexcept
   {
     SafeExecute(*this);
   }

@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #include "ami_test_i.h"
 #include "tao/debug.h"
 #include "ace/OS_NS_stdio.h"
@@ -28,15 +27,15 @@ int nthreads = 5;
 class Worker : public ACE_Task_Base
 {
 public:
-  Worker (CORBA::ORB_ptr orb);
   // ctor
+  Worker (CORBA::ORB_ptr orb);
 
-  virtual int svc (void);
   // The thread entry point.
+  virtual int svc ();
 
 private:
-  CORBA::ORB_var orb_;
   // The orb
+  CORBA::ORB_var orb_;
 };
 
 int
@@ -131,8 +130,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       worker.thr_mgr ()->wait ();
 
-      root_poa->destroy (1,  // ethernalize objects
-                         0); // wait for completion
+      root_poa->destroy (true,  // ethernalize objects
+                         false); // wait for completion
 
       orb->destroy ();
 
@@ -153,7 +152,7 @@ Worker::Worker (CORBA::ORB_ptr orb)
 }
 
 int
-Worker::svc (void)
+Worker::svc ()
 {
   try
     {

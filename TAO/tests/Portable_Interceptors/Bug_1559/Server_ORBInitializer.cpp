@@ -1,7 +1,7 @@
 // -*- C++ -*-
 #include "Server_ORBInitializer.h"
 
-Server_ORBInitializer::Server_ORBInitializer (void)
+Server_ORBInitializer::Server_ORBInitializer ()
 {
 }
 
@@ -27,7 +27,7 @@ Server_ORBInitializer::post_init (
 }
 
 Echo_Server_Request_Interceptor *
-Server_ORBInitializer::server_interceptor (void)
+Server_ORBInitializer::server_interceptor ()
 {
   return this->server_interceptor_;
 }

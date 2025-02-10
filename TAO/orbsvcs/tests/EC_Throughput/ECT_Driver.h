@@ -31,7 +31,7 @@ class ECT_Driver
   // = DESCRIPTION
   //
 public:
-  virtual ~ECT_Driver (void);
+  virtual ~ECT_Driver ();
 
   virtual void shutdown_consumer (void* consumer_cookie) = 0;
   // Callback method for consumers, each consumer will call this

@@ -99,5 +99,5 @@ Notes:
    UNIXserver.conf and UNIXclerk.conf (and for Win32, Win32server.conf
    and Win32clerk.conf).
 
-If you have any questions/suggestions, please send email to
-ace-users@list.isis.vanderbilt.edu.
+If you have any questions/suggestions, please open an issue or discussion
+at https://github.com/DOCGroup/ACE_TAO.

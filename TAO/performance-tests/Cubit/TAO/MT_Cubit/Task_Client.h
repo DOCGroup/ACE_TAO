@@ -99,13 +99,13 @@ class Task_State
 {
 public:
   /// Constructor.
-  Task_State (void);
+  Task_State ();
 
   /// parses the arguments with the provided argc and argv.
   int parse_args (int argc,ACE_TCHAR **argv);
 
   /// Destructor
-  ~Task_State (void);
+  ~Task_State ();
 
   /// Barrier for the multiple clients to synchronize after binding to
   /// the servants.
@@ -249,24 +249,24 @@ public:
           u_int id);
 
   /// destructor.
-  ~Client (void);
+  ~Client ();
 
   /// The thread function.
-  virtual int svc (void);
+  virtual int svc ();
 
   /// Returns the latency of the high priority thread in usecs.
-  ACE_timer_t get_high_priority_latency (void);
+  ACE_timer_t get_high_priority_latency ();
 
   /// Returns the average latency found for the low
   /// priority threads in usecs.
-  ACE_timer_t get_low_priority_latency (void);
+  ACE_timer_t get_low_priority_latency ();
 
   /// Returns the high priority jitter in usecs.
-  ACE_timer_t get_high_priority_jitter (void);
+  ACE_timer_t get_high_priority_jitter ();
 
   /// Returns the jitter for all the low priority
   /// thread request in usecs.
-  ACE_timer_t get_low_priority_jitter (void);
+  ACE_timer_t get_low_priority_jitter ();
 
   /// gets the average latency for that thread.
   ACE_timer_t get_latency (u_int thread_id);
@@ -280,37 +280,37 @@ public:
 
 private:
   /// initialize the ORB.
-  CORBA::ORB_ptr init_orb (void);
+  CORBA::ORB_ptr init_orb ();
 
   /// reads the cubit ior from a file.
-  void read_ior (void);
+  void read_ior ();
 
   /// gets the cubit object.
   int get_cubit (CORBA::ORB_ptr orb);
 
   /// Run the various tests.
-  int run_tests (void);
+  int run_tests ();
 
   /// make a CORBA request depending on the datatype.
-  int make_request (void);
+  int make_request ();
 
   /// makes the corba requests.
-  int do_test (void);
+  int do_test ();
 
   /// call cube_octet method on the cubit object.
-  int cube_octet (void);
+  int cube_octet ();
 
   /// call cube short on the cubit object.
-  int cube_short (void);
+  int cube_short ();
 
   /// call cube long on the cubit object.
-  int cube_long (void);
+  int cube_long ();
 
   /// call cube struct on the cubit object.
-  int cube_struct (void);
+  int cube_struct ();
 
   /// prints the latency stats.
-  void print_stats (void);
+  void print_stats ();
 
   /// Records the latencies in the <Task_State>.
   void put_latency (JITTER_ARRAY *jitter,
@@ -323,7 +323,7 @@ private:
 
   /// determines the frequency at which to make calls depending on the
   /// id of the thread.
-  void find_frequency (void);
+  void find_frequency ();
 
   /// calculate the delta value.
   ACE_timer_t calc_delta (ACE_timer_t real_time,
@@ -354,7 +354,7 @@ private:
   /// requests of this thread.
   JITTER_ARRAY *my_jitter_array_;
 
-  /// Timer using pccTimer for chorus and ACE_Timer for other platforms.
+  /// Timer using ACE_Timer
   MT_Cubit_Timer *timer_;
 
   /// frequency of CORBA requests.

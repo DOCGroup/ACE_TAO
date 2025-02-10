@@ -12,7 +12,7 @@
 #include "ImR_ResponseHandler.h"
 #include "Locator_Options.h"
 #include "UpdateableServerInfo.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "AsyncAccessManager.h"
 #include "tao/IORTable/IORTable.h"
 
@@ -38,7 +38,7 @@ class Locator_Export ImR_Locator_i :
 public:
   ImR_Locator_i();
 
-  ~ImR_Locator_i (void);
+  ~ImR_Locator_i ();
 
   /// Initialize the service, creating its own orb, poa, etc.
   int init (Options& opts);
@@ -47,21 +47,21 @@ public:
   int init_with_orb (CORBA::ORB_ptr orb); //, Options& opts);
 
   /// Cleans up any state created by init*.
-  int fini (void);
+  int fini ();
 
   /// Run using the orb reference created during init()
-  int run (void);
+  int run ();
 
   /// Called by the signal handler to notify of shutdown request
-  void signal_shutdown (void);
+  void signal_shutdown ();
 
   /// Shutdown the orb.
   void shutdown (bool wait_for_completion);
 
   /// Access the options
-  const Options *opts (void) const;
+  const Options *opts () const;
 
-  static int debug (void);
+  static int debug ();
   // Note : See the IDL for descriptions of the operations.
 
   // Activator->Locator
@@ -160,8 +160,8 @@ public:
 
   // interfaces to aid with collaboration
 
-  LiveCheck &pinger (void);
-  PortableServer::POA_ptr root_poa (void);
+  LiveCheck &pinger ();
+  PortableServer::POA_ptr root_poa ();
   Activator_Info_Ptr get_activator (const ACE_CString& name);
 
   void remove_server_i (const Server_Info_Ptr &si);
@@ -192,7 +192,7 @@ private:
 
   void connect_activator (Activator_Info& info);
 
-  void auto_start_servers (void);
+  void auto_start_servers ();
 
   void connect_server (UpdateableServerInfo& info);
 
@@ -258,7 +258,7 @@ class SyncListener : public LiveListener
 
   virtual ~SyncListener ();
 
-  bool is_alive (void);
+  bool is_alive ();
 
   bool status_changed (LiveStatus status);
 
@@ -281,12 +281,12 @@ class ImR_SyncResponseHandler : public ImR_ResponseHandler
 {
 public:
   ImR_SyncResponseHandler (const char *key, CORBA::ORB_ptr orb);
-  virtual ~ImR_SyncResponseHandler (void);
+  virtual ~ImR_SyncResponseHandler ();
 
   virtual void send_ior (const char *pior);
   virtual void send_exception (CORBA::Exception *ex);
 
-  char *wait_for_result (void);
+  char *wait_for_result ();
 
 private:
   CORBA::String_var result_;
@@ -320,7 +320,7 @@ public:
                            ImplementationRepository::AMH_AdministrationResponseHandler_ptr rh);
   ImR_Loc_ResponseHandler (Loc_Operation_Id opid,
                            ImplementationRepository::AMH_AdministrationExtResponseHandler_ptr rh);
-  virtual ~ImR_Loc_ResponseHandler (void);
+  virtual ~ImR_Loc_ResponseHandler ();
 
   virtual void send_ior (const char *pior);
   virtual void send_exception (CORBA::Exception *ex);

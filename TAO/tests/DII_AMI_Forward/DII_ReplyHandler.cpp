@@ -118,6 +118,4 @@ DII_ReplyHandler::handle_location_forward (TAO_InputCDR &incoming,
   req->add_in_arg ("text") <<= CORBA::Any::from_string(test_string.in(),30);
   req->sendc(this);
 
-
-
 }

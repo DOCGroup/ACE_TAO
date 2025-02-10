@@ -8,7 +8,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_FTEC_Basic_Factory::TAO_FTEC_Basic_Factory (void)
+TAO_FTEC_Basic_Factory::TAO_FTEC_Basic_Factory ()
 {
 }
 

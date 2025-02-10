@@ -37,9 +37,9 @@ public:
 
   bool operator == (const TAO_ESF_Proxy_RB_Tree_Iterator<PROXY> &rhs) const;
   bool operator != (const TAO_ESF_Proxy_RB_Tree_Iterator<PROXY> &rhs) const;
-  TAO_ESF_Proxy_RB_Tree_Iterator<PROXY>& operator++ (void);
+  TAO_ESF_Proxy_RB_Tree_Iterator<PROXY>& operator++ ();
   TAO_ESF_Proxy_RB_Tree_Iterator<PROXY> operator++ (int);
-  PROXY *operator *(void);
+  PROXY *operator *();
 
 private:
   Implementation impl_;
@@ -66,17 +66,17 @@ public:
   typedef TAO_ESF_Proxy_RB_Tree_Iterator<PROXY> Iterator;
 
   /// Constructor
-  TAO_ESF_Proxy_RB_Tree (void);
+  TAO_ESF_Proxy_RB_Tree ();
 
   /// Return the first element in the collection, or end() if there
   /// are none
-  TAO_ESF_Proxy_RB_Tree_Iterator<PROXY> begin (void);
+  TAO_ESF_Proxy_RB_Tree_Iterator<PROXY> begin ();
 
   /// Return one past the last element in the collection
-  TAO_ESF_Proxy_RB_Tree_Iterator<PROXY> end (void);
+  TAO_ESF_Proxy_RB_Tree_Iterator<PROXY> end ();
 
   /// Return the number of elements in the collection
-  size_t size (void) const;
+  size_t size () const;
 
   /// Insert a new element to the collection
   void connected (PROXY *);
@@ -88,7 +88,7 @@ public:
 
   /// Shutdown the collection, i.e. remove all elements and release
   /// resources
-  void shutdown (void);
+  void shutdown ();
 
 private:
   /// The underlying implementation object
@@ -101,12 +101,6 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #include "orbsvcs/ESF/ESF_Proxy_RB_Tree.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "orbsvcs/ESF/ESF_Proxy_RB_Tree.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("ESF_Proxy_RB_Tree.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #endif /* TAO_ESF_PROXY_RB_TREE_H */

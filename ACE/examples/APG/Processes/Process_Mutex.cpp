@@ -12,7 +12,7 @@ public:
     ACE_TRACE ("GResourceUser::GResourceUser");
   }
 
-  void run (void)
+  void run ()
   {
     ACE_TRACE ("GResourceUser::run");
 

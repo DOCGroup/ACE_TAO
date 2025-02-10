@@ -28,12 +28,10 @@
 
 #include <openssl/opensslconf.h>
 
-
 #if defined(_MSC_VER)
 #pragma warning(push)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
-
 
 /// Forward declarations for OpenSSL data structures.
 extern "C"
@@ -61,7 +59,6 @@ namespace TAO
         public virtual ::CORBA::LocalObject
     {
     public:
-
       /// Constructor
       CredentialsAcquirer (TAO::SL3::CredentialsCurator_ptr curator,
                            const CORBA::Any & acquisition_arguments);
@@ -73,13 +70,13 @@ namespace TAO
        * interface.
        */
       //@{
-      virtual char * acquisition_method (void);
+      virtual char * acquisition_method ();
 
       virtual SecurityLevel3::AcquisitionStatus current_status ();
 
-      virtual CORBA::ULong nth_iteration (void);
+      virtual CORBA::ULong nth_iteration ();
 
-      virtual CORBA::Any * get_continuation_data (void);
+      virtual CORBA::Any * get_continuation_data ();
 
       virtual SecurityLevel3::AcquisitionStatus continue_acquisition (
           const CORBA::Any & acquisition_arguments);
@@ -87,23 +84,21 @@ namespace TAO
       virtual SecurityLevel3::OwnCredentials_ptr get_credentials (
           CORBA::Boolean on_list);
 
-      virtual void destroy (void);
+      virtual void destroy ();
       //@}
 
     protected:
-
       /// Destructor
       /**
        * Protected destructor to enforce proper memory management
        * through the reference counting mechanism.
        */
-      ~CredentialsAcquirer (void);
+      ~CredentialsAcquirer ();
 
     private:
-
       /// Verify that this CredentialsAcquirer object is still valid,
       /// i.e. hasn't been destroyed.
-      void check_validity (void);
+      void check_validity ();
 
       /// Create an OpenSSL X.509 certificate data structure.
       static ::X509 * make_X509 (const ::SSLIOP::File &certificate);
@@ -112,7 +107,6 @@ namespace TAO
       static ::EVP_PKEY * make_EVP_PKEY (const ::SSLIOP::File &key);
 
     private:
-
       /// Lock used for synchronization.
       TAO_SYNCH_MUTEX lock_;
 
@@ -125,9 +119,7 @@ namespace TAO
       /// Has this CredentialsAcquirer object completed credentials
       /// acquisition or been explicitly destroyed?
       bool destroyed_;
-
     };
-
   } // End SSLIOP namespace
 }  // End TAO namespace
 

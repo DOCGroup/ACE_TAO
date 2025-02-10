@@ -35,7 +35,7 @@
  *      int parse_args (int argc, ACE_TCHAR * argv[]);
  *      int init (CORBA::ORB_ptr orb );
  *      int idle(int &result);
- *      int fini (void);
+ *      int fini ();
  *      const char * identity () const;
  *
  *      parse_args, self_register, self_unregister return 0 if ok, nonzero for error.
@@ -56,7 +56,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/orbconf.h"
-#include "ace/Copy_Disabled.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -65,10 +64,14 @@ namespace TAO
   namespace Utils
   {
     template <typename SERVANT>
-    class Server_Main : private ACE_Copy_Disabled
+    class Server_Main
     {
     public:
       Server_Main(const char * name);
+      Server_Main (const Server_Main &) = delete;
+      Server_Main (Server_Main &&) = delete;
+      Server_Main &operator= (const Server_Main &) = delete;
+      Server_Main &operator= (Server_Main &&) = delete;
       ~Server_Main();
 
       int run (int argc, ACE_TCHAR *argv[]);
@@ -81,13 +84,7 @@ namespace TAO
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-# include "tao/Utils/Server_Main.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-# pragma implementation "Server_Main.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
+#include "tao/Utils/Server_Main.cpp"
 
 #include /**/ "ace/post.h"
 

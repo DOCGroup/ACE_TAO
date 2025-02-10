@@ -18,7 +18,7 @@ Binary_Search::name_compare (const void *s1, const void *s2)
 // interface to include an "initialize" and "next" function!
 
 Protocol_Record *
-Binary_Search::get_next_entry (void)
+Binary_Search::get_next_entry ()
 {
   // Reset the iterator if we are starting from the beginning.
 
@@ -43,7 +43,7 @@ Binary_Search::get_next_entry (void)
 // skip over entries that don't have any hosts associated with them.
 
 Protocol_Record *
-Binary_Search::get_each_entry (void)
+Binary_Search::get_each_entry ()
 {
   // Reset the iterator if we are starting from the beginning.
 
@@ -63,7 +63,7 @@ Binary_Search::get_each_entry (void)
   return 0;
 }
 
-Binary_Search::~Binary_Search (void)
+Binary_Search::~Binary_Search ()
 {
   if (Options::get_opt (Options::DEBUGGING))
     ACE_DEBUG ((LM_DEBUG,
@@ -72,7 +72,7 @@ Binary_Search::~Binary_Search (void)
 
 // Used to initialize the values for the iterators...
 
-Binary_Search::Binary_Search (void)
+Binary_Search::Binary_Search ()
   : current_ptr_ (0),
     current_index_ (0)
 {

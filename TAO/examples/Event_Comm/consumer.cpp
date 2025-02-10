@@ -10,20 +10,20 @@
 class Consumer : public ACE_Event_Handler, public ShutdownCallback
 {
 public:
-  Consumer (void);
+  Consumer () = default;
   // Constructor.
 
-  ~Consumer (void);
+  ~Consumer () = default;
   // Destructor.
 
   int initialize (int argc, ACE_TCHAR *argv[]);
   // Initialization method.
 
-  int run (void);
+  int run ();
   // Execute the consumer;
 
   //FUZZ: disable check_for_lack_ACE_OS
-  virtual void close (void);
+  virtual void close ();
   // Shutdown the consumer.
   //FUZZ: enable check_for_lack_ACE_OS
 
@@ -37,16 +37,6 @@ private:
   Consumer_Handler ch_;
   // Handler for CORBA Consumer.
 };
-
-Consumer::Consumer (void)
-{
-  // No-Op.
-}
-
-Consumer::~Consumer (void)
-{
-  // No-Op.
-}
 
 int
 Consumer::handle_signal (int signum,
@@ -66,7 +56,7 @@ Consumer::handle_signal (int signum,
 }
 
 void
-Consumer::close (void)
+Consumer::close ()
 {
   // clean up the input handler.
   ih_.close ();
@@ -75,7 +65,7 @@ Consumer::close (void)
 }
 
 int
-Consumer::run (void)
+Consumer::run ()
 {
   // Run the <Consumer_Handler>'s ORB.
   return ch_.run ();

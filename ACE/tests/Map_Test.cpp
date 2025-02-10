@@ -17,7 +17,6 @@
 #include "ace/Profile_Timer.h"
 
 
-
 #undef THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL
 #define THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL(X) \
   ((X)                                                          \
@@ -25,19 +24,19 @@
    : ACE_VERSIONED_NAMESPACE_NAME::__ace_assert(__FILE__, __LINE__, ACE_TEXT_CHAR_TO_TCHAR (#X)))
 
 // Value type.
-typedef size_t VALUE;
+using VALUE = size_t;
 
 // Generic map type.
-typedef ACE_Map<KEY, VALUE> TEST_MAP;
+using TEST_MAP = ACE_Map<KEY, VALUE>;
 
 // Manager Manager adapter.
-typedef ACE_Map_Manager_Adapter<KEY, VALUE, Key_Generator> MAP_MANAGER_ADAPTER;
+using MAP_MANAGER_ADAPTER = ACE_Map_Manager_Adapter<KEY, VALUE, Key_Generator>;
 
 // Hash Manager Manager adapter.
-typedef ACE_Hash_Map_Manager_Ex_Adapter<KEY, VALUE, Hash_Key, ACE_Equal_To<KEY>, Key_Generator> HASH_MAP_MANAGER_ADAPTER;
+using HASH_MAP_MANAGER_ADAPTER = ACE_Hash_Map_Manager_Ex_Adapter<KEY, VALUE, Hash_Key, ACE_Equal_To<KEY>, Key_Generator>;
 
 // Active Manager Manager adapter.
-typedef ACE_Active_Map_Manager_Adapter<KEY, VALUE, Key_Adapter> ACTIVE_MAP_MANAGER_ADAPTER;
+using ACTIVE_MAP_MANAGER_ADAPTER = ACE_Active_Map_Manager_Adapter<KEY, VALUE, Key_Adapter>;
 
 static void
 functionality_test (TEST_MAP &map,

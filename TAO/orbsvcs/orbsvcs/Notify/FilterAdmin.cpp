@@ -15,13 +15,13 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Implementation skeleton constructor
-TAO_Notify_FilterAdmin::TAO_Notify_FilterAdmin (void)
+TAO_Notify_FilterAdmin::TAO_Notify_FilterAdmin ()
 {
 }
 
 
 // Implementation skeleton destructor
-TAO_Notify_FilterAdmin::~TAO_Notify_FilterAdmin (void)
+TAO_Notify_FilterAdmin::~TAO_Notify_FilterAdmin ()
 {
 }
 
@@ -71,7 +71,7 @@ TAO_Notify_FilterAdmin::get_filter (CosNotifyFilter::FilterID filter_id)
 }
 
 CosNotifyFilter::FilterIDSeq*
-TAO_Notify_FilterAdmin::get_all_filters (void)
+TAO_Notify_FilterAdmin::get_all_filters ()
 {
   ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,
                       CORBA::INTERNAL ());
@@ -104,7 +104,7 @@ TAO_Notify_FilterAdmin::get_all_filters (void)
 }
 
 void
-TAO_Notify_FilterAdmin::remove_all_filters (void)
+TAO_Notify_FilterAdmin::remove_all_filters ()
 {
   ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,
                       CORBA::INTERNAL ());
@@ -174,7 +174,7 @@ TAO_Notify_FilterAdmin::load_child (const ACE_CString &type, CORBA::Long id,
 }
 
 void
-TAO_Notify_FilterAdmin::release (void)
+TAO_Notify_FilterAdmin::release ()
 {
   delete this;
 }

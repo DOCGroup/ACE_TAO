@@ -5,7 +5,7 @@
 
 #include "Task_Stats.h"
 
-Periodic_Task::Periodic_Task (void)
+Periodic_Task::Periodic_Task ()
   :barrier_ (0),
    task_priority_ (0),
    period_ (0),
@@ -86,7 +86,7 @@ Periodic_Task::init_task (ACE_Arg_Shifter& arg_shifter)
 }
 
 const char*
-Periodic_Task::job (void)
+Periodic_Task::job ()
 {
   return name_.c_str ();
 }

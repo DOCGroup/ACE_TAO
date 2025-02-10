@@ -25,7 +25,7 @@ class HA_Status : public ACE_Service_Object
 {
   public:
     virtual int init (int argc, ACE_TCHAR *argv[]);
-    virtual int fini (void);
+    virtual int fini ();
     virtual int info (ACE_TCHAR **str, size_t len) const;
 
   private:

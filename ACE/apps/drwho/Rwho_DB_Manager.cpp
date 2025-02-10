@@ -12,7 +12,7 @@
 // files in the directory, which are assumed to be "." and ".." (this
 // function needs to be changed if this assumption does not hold!)
 
-RWho_DB_Manager::RWho_DB_Manager (void)
+RWho_DB_Manager::RWho_DB_Manager ()
   : number_of_users (0),
     current_user (0),
     WHOD_HEADER_SIZE (sizeof host_data - sizeof host_data.wd_we),
@@ -41,7 +41,7 @@ RWho_DB_Manager::RWho_DB_Manager (void)
 
 // The destructor cleans up the RWHOD_DIR handle.
 
-RWho_DB_Manager::~RWho_DB_Manager (void)
+RWho_DB_Manager::~RWho_DB_Manager ()
 {
   if (ACE_OS::chdir (this->original_pathname) < 0)
     ACE_ERROR ((LM_ERROR,
@@ -64,7 +64,7 @@ RWho_DB_Manager::~RWho_DB_Manager (void)
 //  Are there any more hosts? */
 
 int
-RWho_DB_Manager::get_next_host (void)
+RWho_DB_Manager::get_next_host ()
 {
   time_t current_time;
 

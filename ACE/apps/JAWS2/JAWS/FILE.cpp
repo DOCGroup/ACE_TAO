@@ -3,12 +3,12 @@
 #include "JAWS/FILE.h"
 
 
-JAWS_FILE::JAWS_FILE (void)
+JAWS_FILE::JAWS_FILE ()
   : map_ (0)
 {
 }
 
-JAWS_FILE::~JAWS_FILE (void)
+JAWS_FILE::~JAWS_FILE ()
 {
   delete this->map_;
   this->map_ = 0;
@@ -60,12 +60,11 @@ JAWS_FILE::mem_map (int length,
     }
 
   return this->map_;
-
 }
 
 
 ACE_Mem_Map *
-JAWS_FILE::map (void) const
+JAWS_FILE::map () const
 {
   return this->map_;
 }

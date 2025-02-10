@@ -5,12 +5,12 @@
 #include "Task_Stats.inl"
 #endif /* __ACE_INLINE__ */
 
-Base_Time::Base_Time (void)
+Base_Time::Base_Time ()
 {
   base_time_ = ACE_OS::gethrtime ();
 }
 
-Task_Stats::Task_Stats (void)
+Task_Stats::Task_Stats ()
   : base_time_(0),
     end_time_ (0),
     max_samples_ (0),
@@ -26,7 +26,7 @@ Task_Stats::Task_Stats (void)
 {
 }
 
-Task_Stats::~Task_Stats (void)
+Task_Stats::~Task_Stats ()
 {
   delete[] this->thr_run_time_;
   delete[] this->thr_count_;

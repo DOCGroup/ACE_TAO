@@ -44,7 +44,6 @@ public:
   virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info);
 
 private:
-
   /// Register DiffServ policy factories.
   void register_policy_factories (PortableInterceptor::ORBInitInfo_ptr info);
 

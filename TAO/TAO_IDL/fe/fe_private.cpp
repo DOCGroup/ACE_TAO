@@ -65,4 +65,4 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "fe_private.h"
 #include "utl_strlist.h"
 
-UTL_StrList *DRV_global_pragmas = 0;
+UTL_StrList *DRV_global_pragmas = nullptr;

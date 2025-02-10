@@ -31,10 +31,9 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Notify_Serv_Export TAO_Notify_Default_Collection_Factory
 {
 public:
-
   /// Helper function to register the default factory into the service
   /// configurator.
-  static int init_svc (void);
+  static int init_svc ();
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

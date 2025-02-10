@@ -26,77 +26,77 @@ ACE_Array_Map<Key, Value, EqualTo, Alloc>::operator= (
 
 template<typename Key, typename Value, class EqualTo, class Alloc>
 ACE_INLINE typename ACE_Array_Map<Key, Value, EqualTo, Alloc>::iterator
-ACE_Array_Map<Key, Value, EqualTo, Alloc>::begin (void)
+ACE_Array_Map<Key, Value, EqualTo, Alloc>::begin ()
 {
   return this->nodes_;
 }
 
 template<typename Key, typename Value, class EqualTo, class Alloc>
 ACE_INLINE typename ACE_Array_Map<Key, Value, EqualTo, Alloc>::iterator
-ACE_Array_Map<Key, Value, EqualTo, Alloc>::end (void)
+ACE_Array_Map<Key, Value, EqualTo, Alloc>::end ()
 {
   return this->nodes_ + this->size_;
 }
 
 template<typename Key, typename Value, class EqualTo, class Alloc>
 ACE_INLINE typename ACE_Array_Map<Key, Value, EqualTo, Alloc>::const_iterator
-ACE_Array_Map<Key, Value, EqualTo, Alloc>::begin (void) const
+ACE_Array_Map<Key, Value, EqualTo, Alloc>::begin () const
 {
   return this->nodes_;
 }
 
 template<typename Key, typename Value, class EqualTo, class Alloc>
 ACE_INLINE typename ACE_Array_Map<Key, Value, EqualTo, Alloc>::const_iterator
-ACE_Array_Map<Key, Value, EqualTo, Alloc>::end (void) const
+ACE_Array_Map<Key, Value, EqualTo, Alloc>::end () const
 {
   return this->nodes_ + this->size_;
 }
 
 template<typename Key, typename Value, class EqualTo, class Alloc>
 ACE_INLINE typename ACE_Array_Map<Key, Value, EqualTo, Alloc>::reverse_iterator
-ACE_Array_Map<Key, Value, EqualTo, Alloc>::rbegin (void)
+ACE_Array_Map<Key, Value, EqualTo, Alloc>::rbegin ()
 {
   return reverse_iterator (this->end ());
 }
 
 template<typename Key, typename Value, class EqualTo, class Alloc>
 ACE_INLINE typename ACE_Array_Map<Key, Value, EqualTo, Alloc>::reverse_iterator
-ACE_Array_Map<Key, Value, EqualTo, Alloc>::rend (void)
+ACE_Array_Map<Key, Value, EqualTo, Alloc>::rend ()
 {
   return reverse_iterator (this->begin ());
 }
 
 template<typename Key, typename Value, class EqualTo, class Alloc>
 ACE_INLINE typename ACE_Array_Map<Key, Value, EqualTo, Alloc>::const_reverse_iterator
-ACE_Array_Map<Key, Value, EqualTo, Alloc>::rbegin (void) const
+ACE_Array_Map<Key, Value, EqualTo, Alloc>::rbegin () const
 {
   return const_reverse_iterator (this->end ());
 }
 
 template<typename Key, typename Value, class EqualTo, class Alloc>
 ACE_INLINE typename ACE_Array_Map<Key, Value, EqualTo, Alloc>::const_reverse_iterator
-ACE_Array_Map<Key, Value, EqualTo, Alloc>::rend (void) const
+ACE_Array_Map<Key, Value, EqualTo, Alloc>::rend () const
 {
   return const_reverse_iterator (this->begin ());
 }
 
 template<typename Key, typename Value, class EqualTo, class Alloc>
 ACE_INLINE typename ACE_Array_Map<Key, Value, EqualTo, Alloc>::size_type
-ACE_Array_Map<Key, Value, EqualTo, Alloc>::size (void) const
+ACE_Array_Map<Key, Value, EqualTo, Alloc>::size () const
 {
   return this->size_;
 }
 
 template<typename Key, typename Value, class EqualTo, class Alloc>
 ACE_INLINE typename ACE_Array_Map<Key, Value, EqualTo, Alloc>::size_type
-ACE_Array_Map<Key, Value, EqualTo, Alloc>::max_size (void) const
+ACE_Array_Map<Key, Value, EqualTo, Alloc>::max_size () const
 {
   return size_type (-1) / sizeof (value_type);
 }
 
 template<typename Key, typename Value, class EqualTo, class Alloc>
 ACE_INLINE bool
-ACE_Array_Map<Key, Value, EqualTo, Alloc>::is_empty (void) const
+ACE_Array_Map<Key, Value, EqualTo, Alloc>::is_empty () const
 {
   return this->size_ == 0;
 }
@@ -105,7 +105,7 @@ ACE_Array_Map<Key, Value, EqualTo, Alloc>::is_empty (void) const
 
 template<typename Key, typename Value, class EqualTo, class Alloc>
 ACE_INLINE bool
-ACE_Array_Map<Key, Value, EqualTo, Alloc>::empty (void) const
+ACE_Array_Map<Key, Value, EqualTo, Alloc>::empty () const
 {
   return this->is_empty ();
 }

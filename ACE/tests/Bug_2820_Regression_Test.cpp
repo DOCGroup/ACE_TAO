@@ -14,7 +14,7 @@
  */
 
 #include "test_config.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/Reactor.h"
 #include "ace/Select_Reactor.h"
 
@@ -30,10 +30,10 @@ public:
   Simple_Handler(ACE_Reactor * reactor);
 
   /// Destructor
-  ~Simple_Handler();
+  ~Simple_Handler() override;
 
   /// Receive (and ignore) the notifications
-  virtual int handle_exception(ACE_HANDLE);
+  int handle_exception(ACE_HANDLE) override;
 };
 
 int
@@ -43,16 +43,9 @@ run_main (int, ACE_TCHAR *[])
 
   int result = 0;
 
-  auto_ptr<ACE_Reactor> reactor(
-      new ACE_Reactor(new ACE_Select_Reactor, 1));
-
-#if defined ACE_HAS_CPP11
+  std::unique_ptr<ACE_Reactor> reactor(new ACE_Reactor(new ACE_Select_Reactor, 1));
   ACE_Event_Handler_var v =
     ACE::make_event_handler<Simple_Handler> (reactor.get());
-#else
-  ACE_Event_Handler_var v(
-      new Simple_Handler(reactor.get()));
-#endif
 
   ACE_Event_Handler::Reference_Count pre_notify_count =
     v->add_reference();
@@ -75,7 +68,7 @@ run_main (int, ACE_TCHAR *[])
                  notify_count, pre_notify_count, pos_notify_count));
     }
 
-  ACE_auto_ptr_reset(reactor, (ACE_Reactor*)0);
+  reactor.reset ();
 
   // Reset the reactor in the event handler, since it is gone.p
   v->reactor(0);

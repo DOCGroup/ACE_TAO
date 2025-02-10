@@ -11,7 +11,7 @@ class JAWS_IO_Handler_Factory;
 class JAWS_Export JAWS_Server
 {
 public:
-  JAWS_Server (void);
+  JAWS_Server ();
   JAWS_Server (int argc, char *argv[]);
 
   void init (int argc, char *argv[]);

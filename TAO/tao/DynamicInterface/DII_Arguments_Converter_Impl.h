@@ -57,7 +57,7 @@ public:
                                        CORBA::Exception *exception);
 
   // Used to force the initialization of the ORB code.
-  static int Initializer (void);
+  static int Initializer ();
 };
 
 static int

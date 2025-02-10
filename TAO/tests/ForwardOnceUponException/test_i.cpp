@@ -39,7 +39,7 @@ Simple_Server_i::test_is_a (const char * /* type */)
 }
 
 void
-Simple_Server_i::shutdown (void)
+Simple_Server_i::shutdown ()
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

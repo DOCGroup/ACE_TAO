@@ -4,9 +4,8 @@
 /**
  *  @file    Asynch_IO.h
  *
- *  This works on Win32 (defined (ACE_WIN32) && !defined
- *  (ACE_HAS_WINCE)) platforms and on POSIX4 platforms with {aio_*}
- *  routines (defined (ACE_HAS_AIO_CALLS))
+ *  This works on Win32 (defined (ACE_WIN32)) platforms and on
+ *  POSIX4 platforms with {aio_*} routines (defined (ACE_HAS_AIO_CALLS))
  *
  *  On Win32 platforms, the implementation of
  *  {ACE_Asynch_Transmit_File} and {ACE_Asynch_Accept} are only
@@ -101,16 +100,15 @@ class ACE_Time_Value;
  */
 class ACE_Export ACE_Asynch_Result
 {
-
 public:
   /// Number of bytes transferred by the operation.
-  size_t bytes_transferred (void) const;
+  size_t bytes_transferred () const;
 
   /// ACT associated with the operation.
-  const void *act (void) const;
+  const void *act () const;
 
   /// Did the operation succeed?
-  int success (void) const;
+  int success () const;
 
   /**
    * This is the ACT associated with the handle on which the
@@ -121,10 +119,10 @@ public:
    *
    * @@ This is not implemented for POSIX4 platforms. Returns 0.
    */
-  const void *completion_key (void) const;
+  const void *completion_key () const;
 
   /// Error value if the operation fails.
-  unsigned long error (void) const;
+  unsigned long error () const;
 
   /**
    * On WIN32, this returns the event associated with the OVERLAPPED
@@ -132,7 +130,7 @@ public:
    *
    * This returns ACE_INVALID_HANDLE on POSIX4-Unix platforms.
    */
-  ACE_HANDLE event (void) const;
+  ACE_HANDLE event () const;
 
   /**
    * This really makes sense only when doing file I/O.
@@ -142,8 +140,8 @@ public:
    * @@ On POSIX4-Unix, offset_high should be supported using
    *    aiocb64.
    */
-  unsigned long offset (void) const;
-  unsigned long offset_high (void) const;
+  unsigned long offset () const;
+  unsigned long offset_high () const;
 
   /**
    * Priority of the operation.
@@ -155,7 +153,7 @@ public:
    *
    * On Win32, this is a no-op.
    */
-  int priority (void) const;
+  int priority () const;
 
   /**
    * POSIX4 real-time signal number to be used for the
@@ -163,11 +161,11 @@ public:
    * default, ACE_SIGRTMIN is used to issue {aio_} calls. This is a no-op
    * on non-POSIX4 systems and returns 0.
    */
-  int signal_number (void) const;
+  int signal_number () const;
 
 
   /// Destructor.
-  virtual ~ACE_Asynch_Result (void);
+  virtual ~ACE_Asynch_Result ();
 
 protected:
   /// Constructor. This implementation will not be deleted.  The
@@ -175,7 +173,7 @@ protected:
   ACE_Asynch_Result (ACE_Asynch_Result_Impl *implementation);
 
   /// Get the implementation class.
-  ACE_Asynch_Result_Impl *implementation (void) const;
+  ACE_Asynch_Result_Impl *implementation () const;
 
   /// Implementation class.
   ACE_Asynch_Result_Impl *implementation_;
@@ -198,7 +196,6 @@ class ACE_Asynch_Operation_Impl;
  */
 class ACE_Export ACE_Asynch_Operation
 {
-
 public:
   /**
    * Initializes the factory with information which will be used with
@@ -246,23 +243,23 @@ public:
    *   For requested operations that are successfully canceled, the
    *   associated  error  status is set to ECANCELED.
    */
-  int cancel (void);
+  int cancel ();
 
 
   // = Access methods.
 
   /// Return the underlying proactor.
-  ACE_Proactor* proactor (void) const;
+  ACE_Proactor* proactor () const;
 
   /// Destructor.
-  virtual ~ACE_Asynch_Operation (void);
+  virtual ~ACE_Asynch_Operation () = default;
 
 protected:
   /// Constructor.
-  ACE_Asynch_Operation (void);
+  ACE_Asynch_Operation () = default;
 
   /// Return the underlying implementation class.
-  virtual ACE_Asynch_Operation_Impl *implementation (void) const = 0;
+  virtual ACE_Asynch_Operation_Impl *implementation () const = 0;
 
   /// Get a proactor for/from the user
   ACE_Proactor *get_proactor (ACE_Proactor *user_proactor,
@@ -288,13 +285,12 @@ class ACE_Asynch_Read_Stream_Impl;
  */
 class ACE_Export ACE_Asynch_Read_Stream : public ACE_Asynch_Operation
 {
-
 public:
   /// A do nothing constructor.
-  ACE_Asynch_Read_Stream (void);
+  ACE_Asynch_Read_Stream ();
 
   /// Destructor
-  virtual ~ACE_Asynch_Read_Stream (void);
+  virtual ~ACE_Asynch_Read_Stream ();
 
   /**
    * Initializes the factory with information which will be used with
@@ -359,7 +355,7 @@ public:
 
   /// Return the underlying implementation class.
   //  (this should be protected...)
-  virtual ACE_Asynch_Operation_Impl *implementation (void) const;
+  virtual ACE_Asynch_Operation_Impl *implementation () const;
 
 protected:
   /// Implementation class that all methods will be forwarded to.
@@ -379,7 +375,6 @@ public:
  */
   class ACE_Export Result : public ACE_Asynch_Result
   {
-
     /// The concrete implementation result classes only construct this
     /// class.
     friend class ACE_POSIX_Asynch_Read_Stream_Result;
@@ -388,30 +383,30 @@ public:
   public:
     /// The number of bytes which were requested at the start of the
     /// asynchronous read.
-    size_t bytes_to_read (void) const;
+    size_t bytes_to_read () const;
 
     /// Message block which contains the read data.
-    ACE_Message_Block &message_block (void) const;
+    ACE_Message_Block &message_block () const;
 
     /// I/O handle used for reading.
-    ACE_HANDLE handle (void) const;
+    ACE_HANDLE handle () const;
 
     /// Get the implementation class.
-    ACE_Asynch_Read_Stream_Result_Impl *implementation (void) const;
+    ACE_Asynch_Read_Stream_Result_Impl *implementation () const;
 
   protected:
     /// Constructor.
     Result (ACE_Asynch_Read_Stream_Result_Impl *implementation);
 
     /// Destructor.
-    virtual ~Result (void);
+    virtual ~Result ();
 
     /// The implementation class.
     ACE_Asynch_Read_Stream_Result_Impl *implementation_;
   };
 private:
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Asynch_Read_Stream &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Asynch_Read_Stream (const ACE_Asynch_Read_Stream &))
+  void operator= (const ACE_Asynch_Read_Stream &) = delete;
+  ACE_Asynch_Read_Stream (const ACE_Asynch_Read_Stream &) = delete;
 };
 
 // Forward declarations
@@ -432,13 +427,12 @@ class ACE_Asynch_Write_Stream_Result_Impl;
  */
 class ACE_Export ACE_Asynch_Write_Stream : public ACE_Asynch_Operation
 {
-
 public:
   /// A do nothing constructor.
-  ACE_Asynch_Write_Stream (void);
+  ACE_Asynch_Write_Stream ();
 
   /// Destructor.
-  virtual ~ACE_Asynch_Write_Stream (void);
+  virtual ~ACE_Asynch_Write_Stream ();
 
   /**
    * Initializes the factory with information which will be used with
@@ -515,7 +509,7 @@ public:
 
   /// Return the underlying implementation class.
   /// @todo (this should be protected...)
-  virtual ACE_Asynch_Operation_Impl *implementation (void) const;
+  virtual ACE_Asynch_Operation_Impl *implementation () const;
 
 protected:
   /// Implementation class that all methods will be forwarded to.
@@ -535,7 +529,6 @@ public:
  */
   class ACE_Export Result : public ACE_Asynch_Result
   {
-
     /// The concrete implementation result classes only construct this
     /// class.
     friend class ACE_POSIX_Asynch_Write_Stream_Result;
@@ -544,30 +537,30 @@ public:
   public:
     /// The number of bytes which were requested at the start of the
     /// asynchronous write.
-    size_t bytes_to_write (void) const;
+    size_t bytes_to_write () const;
 
     /// Message block that contains the data to be written.
-    ACE_Message_Block &message_block (void) const;
+    ACE_Message_Block &message_block () const;
 
     /// I/O handle used for writing.
-    ACE_HANDLE handle (void) const;
+    ACE_HANDLE handle () const;
 
     /// Get the implementation class.
-    ACE_Asynch_Write_Stream_Result_Impl *implementation (void) const;
+    ACE_Asynch_Write_Stream_Result_Impl *implementation () const;
 
   protected:
     /// Constructor.
     Result (ACE_Asynch_Write_Stream_Result_Impl *implementation);
 
     /// Destructor.
-    virtual ~Result (void);
+    virtual ~Result ();
 
     /// Implementation class.
     ACE_Asynch_Write_Stream_Result_Impl *implementation_;
   };
 private:
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Asynch_Write_Stream &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Asynch_Write_Stream (const ACE_Asynch_Write_Stream &))
+  void operator= (const ACE_Asynch_Write_Stream &) = delete;
+  ACE_Asynch_Write_Stream (const ACE_Asynch_Write_Stream &) = delete;
 };
 
 // Forward declarations
@@ -591,13 +584,12 @@ class ACE_Asynch_Read_File_Result_Impl;
  */
 class ACE_Export ACE_Asynch_Read_File : public ACE_Asynch_Read_Stream
 {
-
 public:
   /// A do nothing constructor.
-  ACE_Asynch_Read_File (void);
+  ACE_Asynch_Read_File ();
 
   /// Destructor.
-  virtual ~ACE_Asynch_Read_File (void);
+  virtual ~ACE_Asynch_Read_File ();
 
   /**
    * Initializes the factory with information which will be used with
@@ -646,7 +638,7 @@ public:
             int priority = 0,
             int signal_number = ACE_SIGRTMIN);
 
-#if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE))
+#if defined (ACE_WIN32)
   /**
   * Same as above but with scatter support, through chaining of composite
   * message blocks using the continuation field.
@@ -660,11 +652,11 @@ public:
              const void *act = 0,
              int priority = 0,
              int signal_number = ACE_SIGRTMIN);
-#endif /* (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) */
+#endif /* defined (ACE_WIN32) */
 
   /// Return the underlying implementation class.
   //  (this should be protected...)
-  virtual ACE_Asynch_Operation_Impl *implementation (void) const;
+  virtual ACE_Asynch_Operation_Impl *implementation () const;
 
 protected:
   /// Delegation/implementation class that all methods will be
@@ -691,7 +683,6 @@ public:
  */
   class ACE_Export Result : public ACE_Asynch_Read_Stream::Result
   {
-
     /// The concrete implementation result classes only construct this
     /// class.
     friend class ACE_POSIX_Asynch_Read_File_Result;
@@ -699,26 +690,26 @@ public:
 
   public:
     /// Get the implementation class.
-    ACE_Asynch_Read_File_Result_Impl *implementation (void) const;
+    ACE_Asynch_Read_File_Result_Impl *implementation () const;
 
   protected:
     /// Constructor. This implementation will not be deleted.
     Result (ACE_Asynch_Read_File_Result_Impl *implementation);
 
     /// Destructor.
-    virtual ~Result (void);
+    virtual ~Result ();
 
     /// The implementation class.
     ACE_Asynch_Read_File_Result_Impl *implementation_;
 
   private:
-    /// Here just to provide an dummpy implementation, since the
+    /// Here just to provide an dummy implementation, since the
     /// one auto generated by MSVC is flagged as infinitely recursive
     void operator= (Result &) {}
   };
 private:
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Asynch_Read_File &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Asynch_Read_File (const ACE_Asynch_Read_File &))
+  void operator= (const ACE_Asynch_Read_File &) = delete;
+  ACE_Asynch_Read_File (const ACE_Asynch_Read_File &) = delete;
 };
 
 // Forward declarations
@@ -742,13 +733,12 @@ class ACE_Asynch_Write_File_Result_Impl;
  */
 class ACE_Export ACE_Asynch_Write_File : public ACE_Asynch_Write_Stream
 {
-
 public:
   /// A do nothing constructor.
-  ACE_Asynch_Write_File (void);
+  ACE_Asynch_Write_File ();
 
   /// Destructor.
-  virtual ~ACE_Asynch_Write_File (void);
+  virtual ~ACE_Asynch_Write_File ();
 
   /**
    * Initializes the factory with information which will be used with
@@ -783,7 +773,7 @@ public:
              int priority = 0,
              int signal_number = ACE_SIGRTMIN);
 
-#if (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE))
+#if defined (ACE_WIN32)
   /**
   * Same as above but with gather support, through chaining of composite
   * message blocks using the continuation field.
@@ -797,11 +787,11 @@ public:
               const void *act = 0,
               int priority = 0,
               int signal_number = ACE_SIGRTMIN);
-#endif /* (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) */
+#endif /* defined (ACE_WIN32) */
 
   /// Return the underlying implementation class.
   //  (this should be protected...)
-  virtual ACE_Asynch_Operation_Impl *implementation (void) const;
+  virtual ACE_Asynch_Operation_Impl *implementation () const;
 
 protected:
   /// Implementation object.
@@ -827,7 +817,6 @@ public:
  */
   class ACE_Export Result : public ACE_Asynch_Write_Stream::Result
   {
-
     /// The concrete implementation result classes only construct this
     /// class.
     friend class ACE_POSIX_Asynch_Write_File_Result;
@@ -835,26 +824,26 @@ public:
 
   public:
     ///  Get the implementation class.
-    ACE_Asynch_Write_File_Result_Impl *implementation (void) const;
+    ACE_Asynch_Write_File_Result_Impl *implementation () const;
 
   protected:
     /// Constructor. This implementation will not be deleted.
     Result (ACE_Asynch_Write_File_Result_Impl *implementation);
 
     /// Destructor.
-    virtual ~Result (void);
+    virtual ~Result ();
 
     /// The implementation class.
     ACE_Asynch_Write_File_Result_Impl *implementation_;
 
   private:
-    /// Here just to provide an dummpy implementation, since the
+    /// Here just to provide an dummy implementation, since the
     /// one auto generated by MSVC is flagged as infinitely recursive
-    void operator= (Result &) {};
+    void operator= (Result &) {}
   };
 private:
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Asynch_Write_File &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Asynch_Write_File (const ACE_Asynch_Write_File &))
+  void operator= (const ACE_Asynch_Write_File &) = delete;
+  ACE_Asynch_Write_File (const ACE_Asynch_Write_File &) = delete;
 };
 
 // Forward declarations
@@ -876,13 +865,12 @@ class ACE_Asynch_Accept_Impl;
  */
 class ACE_Export ACE_Asynch_Accept : public ACE_Asynch_Operation
 {
-
 public:
   /// A do nothing constructor.
-  ACE_Asynch_Accept (void);
+  ACE_Asynch_Accept ();
 
   /// Destructor.
-  virtual ~ACE_Asynch_Accept (void);
+  virtual ~ACE_Asynch_Accept ();
 
   /**
    * Initializes the factory with information which will be used with
@@ -939,7 +927,7 @@ public:
 
   /// Return the underlying implementation class.
   //  (this should be protected...)
-  virtual ACE_Asynch_Operation_Impl *implementation (void) const;
+  virtual ACE_Asynch_Operation_Impl *implementation () const;
 
 protected:
   /// Delegation/implementation class that all methods will be
@@ -959,7 +947,6 @@ public:
  */
   class ACE_Export Result : public ACE_Asynch_Result
   {
-
     /// The concrete implementation result classes only construct this
     /// class.
     friend class ACE_POSIX_Asynch_Accept_Result;
@@ -968,33 +955,33 @@ public:
   public:
     /// The number of bytes which were requested at the start of the
     /// asynchronous accept.
-    size_t bytes_to_read (void) const;
+    size_t bytes_to_read () const;
 
     /// Message block which contains the read data.
-    ACE_Message_Block &message_block (void) const;
+    ACE_Message_Block &message_block () const;
 
     /// I/O handle used for accepting new connections.
-    ACE_HANDLE listen_handle (void) const;
+    ACE_HANDLE listen_handle () const;
 
     /// I/O handle for the new connection.
-    ACE_HANDLE accept_handle (void) const;
+    ACE_HANDLE accept_handle () const;
 
     /// Get the implementation.
-    ACE_Asynch_Accept_Result_Impl *implementation (void) const;
+    ACE_Asynch_Accept_Result_Impl *implementation () const;
 
   protected:
     /// Constructor. Implementation will not be deleted.
     Result (ACE_Asynch_Accept_Result_Impl *implementation);
 
     /// Destructor.
-    virtual ~Result (void);
+    virtual ~Result ();
 
     /// Implementation class.
     ACE_Asynch_Accept_Result_Impl *implementation_;
   };
 private:
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Asynch_Accept &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Asynch_Accept (const ACE_Asynch_Accept &))
+  void operator= (const ACE_Asynch_Accept &) = delete;
+  ACE_Asynch_Accept (const ACE_Asynch_Accept &) = delete;
 };
 // Forward declarations
 class ACE_Asynch_Connect_Result_Impl;
@@ -1013,13 +1000,12 @@ class ACE_Asynch_Connect_Impl;
  */
 class ACE_Export ACE_Asynch_Connect : public ACE_Asynch_Operation
 {
-
 public:
   /// A do nothing constructor.
-  ACE_Asynch_Connect (void);
+  ACE_Asynch_Connect ();
 
   /// Destructor.
-  virtual ~ACE_Asynch_Connect (void);
+  virtual ~ACE_Asynch_Connect ();
 
   /**
    * Initializes the factory with information which will be used with
@@ -1045,7 +1031,7 @@ public:
 
   /// Return the underlying implementation class.
   //  (this should be protected...)
-  virtual ACE_Asynch_Operation_Impl *implementation (void) const;
+  virtual ACE_Asynch_Operation_Impl *implementation () const;
 
 protected:
   /// Delegation/implementation class that all methods will be
@@ -1065,33 +1051,31 @@ public:
  */
   class ACE_Export Result : public ACE_Asynch_Result
   {
-
     /// The concrete implementation result classes only construct this
     /// class.
     friend class ACE_POSIX_Asynch_Connect_Result;
     friend class ACE_WIN32_Asynch_Connect_Result;
 
   public:
-
     /// I/O handle for the  connection.
-    ACE_HANDLE connect_handle (void) const;
+    ACE_HANDLE connect_handle () const;
 
     /// Get the implementation.
-    ACE_Asynch_Connect_Result_Impl *implementation (void) const;
+    ACE_Asynch_Connect_Result_Impl *implementation () const;
 
   protected:
     /// Constructor. Implementation will not be deleted.
     Result (ACE_Asynch_Connect_Result_Impl *implementation);
 
     /// Destructor.
-    virtual ~Result (void);
+    virtual ~Result ();
 
     /// Implementation class.
     ACE_Asynch_Connect_Result_Impl *implementation_;
   };
 private:
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Asynch_Connect &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Asynch_Connect (const ACE_Asynch_Connect &))
+  void operator= (const ACE_Asynch_Connect &) = delete;
+  ACE_Asynch_Connect (const ACE_Asynch_Connect &) = delete;
 };
 
 // Forward declarations
@@ -1118,16 +1102,15 @@ class ACE_Asynch_Transmit_File_Impl;
  */
 class ACE_Export ACE_Asynch_Transmit_File : public ACE_Asynch_Operation
 {
-
 public:
   // Forward declarations
   class Header_And_Trailer;
 
   /// A do nothing constructor.
-  ACE_Asynch_Transmit_File (void);
+  ACE_Asynch_Transmit_File ();
 
   /// Destructor.
-  virtual ~ACE_Asynch_Transmit_File (void);
+  virtual ~ACE_Asynch_Transmit_File ();
 
   /**
    * Initializes the factory with information which will be used with
@@ -1172,7 +1155,7 @@ public:
 
   /// Return the underlying implementation class.
   //  (this should be protected...)
-  virtual ACE_Asynch_Operation_Impl *implementation (void) const;
+  virtual ACE_Asynch_Operation_Impl *implementation () const;
 
 protected:
   /// The implementation class.
@@ -1191,7 +1174,6 @@ public:
  */
   class ACE_Export Result : public ACE_Asynch_Result
   {
-
     /// The concrete implementation result classes only construct this
     /// class.
     friend class ACE_POSIX_Asynch_Transmit_File_Result;
@@ -1199,34 +1181,34 @@ public:
 
   public:
     /// Socket used for transmitting the file.
-    ACE_HANDLE socket (void) const;
+    ACE_HANDLE socket () const;
 
     /// File from which the data is read.
-    ACE_HANDLE file (void) const;
+    ACE_HANDLE file () const;
 
     /// Header and trailer data associated with this transmit file.
-    Header_And_Trailer *header_and_trailer (void) const;
+    Header_And_Trailer *header_and_trailer () const;
 
     /// The number of bytes which were requested at the start of the
     /// asynchronous transmit file.
-    size_t bytes_to_write (void) const;
+    size_t bytes_to_write () const;
 
     /// Number of bytes per send requested at the start of the transmit
     /// file.
-    size_t bytes_per_send (void) const;
+    size_t bytes_per_send () const;
 
     /// Flags which were passed into transmit file.
-    unsigned long flags (void) const;
+    unsigned long flags () const;
 
     /// Get the implementation class.
-    ACE_Asynch_Transmit_File_Result_Impl *implementation (void) const;
+    ACE_Asynch_Transmit_File_Result_Impl *implementation () const;
 
   protected:
     /// Constructor.
     Result (ACE_Asynch_Transmit_File_Result_Impl *implementation);
 
     /// Destructor.
-    virtual ~Result (void);
+    virtual ~Result ();
 
     /// The implementation class.
     ACE_Asynch_Transmit_File_Result_Impl *implementation_;
@@ -1243,7 +1225,6 @@ public:
  */
   class ACE_Export Header_And_Trailer
   {
-
   public:
     /// Constructor.
     Header_And_Trailer (ACE_Message_Block *header = 0,
@@ -1252,7 +1233,7 @@ public:
                         size_t trailer_bytes = 0);
 
     /// Destructor
-    virtual ~Header_And_Trailer (void);
+    virtual ~Header_And_Trailer ();
 
     /// This method allows all the member to be set in one fell swoop.
     void header_and_trailer (ACE_Message_Block *header = 0,
@@ -1261,31 +1242,31 @@ public:
                              size_t trailer_bytes = 0);
 
     /// Get header which goes before the file data.
-    ACE_Message_Block *header (void) const;
+    ACE_Message_Block *header () const;
 
     /// Set header which goes before the file data.
     void header (ACE_Message_Block *message_block);
 
     /// Get size of the header data.
-    size_t header_bytes (void) const;
+    size_t header_bytes () const;
 
     /// Set size of the header data.
     void header_bytes (size_t bytes);
 
     /// Get trailer which goes after the file data.
-    ACE_Message_Block *trailer (void) const;
+    ACE_Message_Block *trailer () const;
 
     /// Set trailer which goes after the file data.
     void trailer (ACE_Message_Block *message_block);
 
     /// Get size of the trailer data.
-    size_t trailer_bytes (void) const;
+    size_t trailer_bytes () const;
 
     /// Set size of the trailer data.
     void trailer_bytes (size_t bytes);
 
     /// Conversion routine.
-    ACE_LPTRANSMIT_FILE_BUFFERS transmit_buffers (void);
+    ACE_LPTRANSMIT_FILE_BUFFERS transmit_buffers ();
 
   protected:
     /// Header data.
@@ -1304,8 +1285,8 @@ public:
     ACE_TRANSMIT_FILE_BUFFERS transmit_buffers_;
   };
 private:
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Asynch_Transmit_File &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Asynch_Transmit_File (const ACE_Asynch_Transmit_File &))
+  void operator= (const ACE_Asynch_Transmit_File &) = delete;
+  ACE_Asynch_Transmit_File (const ACE_Asynch_Transmit_File &) = delete;
 };
 
 
@@ -1329,13 +1310,12 @@ class ACE_Addr;
  */
 class ACE_Export ACE_Asynch_Read_Dgram : public ACE_Asynch_Operation
 {
-
 public:
   /// A do nothing constructor.
-  ACE_Asynch_Read_Dgram (void);
+  ACE_Asynch_Read_Dgram ();
 
   /// Destructor
-  virtual ~ACE_Asynch_Read_Dgram (void);
+  virtual ~ACE_Asynch_Read_Dgram ();
 
   /**
    * Initializes the factory with information which will be used with
@@ -1384,7 +1364,7 @@ public:
 
   /// Return the underlying implementation class.
   //  (this should be protected...)
-  virtual ACE_Asynch_Operation_Impl *implementation (void) const;
+  virtual ACE_Asynch_Operation_Impl *implementation () const;
 
 protected:
   /// Implementation class that all methods will be forwarded to.
@@ -1404,46 +1384,44 @@ public:
  */
   class ACE_Export Result : public ACE_Asynch_Result
   {
-
     /// The concrete implementation result classes only construct this
     /// class.
     friend class ACE_POSIX_Asynch_Read_Dgram_Result;
     friend class ACE_WIN32_Asynch_Read_Dgram_Result;
 
   public:
-
     /// The number of bytes which were requested at the start of the
     /// asynchronous read.
-    size_t bytes_to_read (void) const;
+    size_t bytes_to_read () const;
 
     /// Message block which contains the read data
-    ACE_Message_Block *message_block (void) const;
+    ACE_Message_Block *message_block () const;
 
     /// The flags used in the read
-    int flags (void) const;
+    int flags () const;
 
     /// The address of where the packet came from
     int remote_address (ACE_Addr& addr) const;
 
     /// I/O handle used for reading.
-    ACE_HANDLE handle (void) const;
+    ACE_HANDLE handle () const;
 
     /// Get the implementation class.
-    ACE_Asynch_Read_Dgram_Result_Impl *implementation (void) const;
+    ACE_Asynch_Read_Dgram_Result_Impl *implementation () const;
 
   protected:
     /// Constructor.
     Result (ACE_Asynch_Read_Dgram_Result_Impl *implementation);
 
     /// Destructor.
-    virtual ~Result (void);
+    virtual ~Result ();
 
     /// The implementation class.
     ACE_Asynch_Read_Dgram_Result_Impl *implementation_;
   };
 private:
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Asynch_Read_Dgram &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Asynch_Read_Dgram (const ACE_Asynch_Read_Dgram &))
+  void operator= (const ACE_Asynch_Read_Dgram &) = delete;
+  ACE_Asynch_Read_Dgram (const ACE_Asynch_Read_Dgram &) = delete;
 };
 
 // Forward declarations
@@ -1465,13 +1443,12 @@ class ACE_Asynch_Write_Dgram_Result_Impl;
  */
 class ACE_Export ACE_Asynch_Write_Dgram : public ACE_Asynch_Operation
 {
-
 public:
   /// A do nothing constructor.
-  ACE_Asynch_Write_Dgram (void);
+  ACE_Asynch_Write_Dgram ();
 
   /// Destructor.
-  virtual ~ACE_Asynch_Write_Dgram (void);
+  virtual ~ACE_Asynch_Write_Dgram ();
 
   /**
    * Initializes the factory with information which will be used with
@@ -1520,7 +1497,7 @@ public:
 
   /// Return the underlying implementation class.
   //  (this should be protected...)
-  virtual ACE_Asynch_Operation_Impl *implementation (void) const;
+  virtual ACE_Asynch_Operation_Impl *implementation () const;
 
 protected:
   /// Implementation class that all methods will be forwarded to.
@@ -1540,45 +1517,42 @@ public:
  */
   class ACE_Export Result : public ACE_Asynch_Result
   {
-
     /// The concrete implementation result classes only construct this
     /// class.
     friend class ACE_POSIX_Asynch_Write_Dgram_Result;
     friend class ACE_WIN32_Asynch_Write_Dgram_Result;
 
   public:
-
     /// The number of bytes which were requested at the start of the
     /// asynchronous write.
-    size_t bytes_to_write (void) const;
+    size_t bytes_to_write () const;
 
     /// Message block which contains the sent data
-    ACE_Message_Block *message_block (void) const;
+    ACE_Message_Block *message_block () const;
 
     /// The flags using in the write
-    int flags (void) const;
+    int flags () const;
 
     /// I/O handle used for writing.
-    ACE_HANDLE handle (void) const;
+    ACE_HANDLE handle () const;
 
     /// Get the implementation class.
-    ACE_Asynch_Write_Dgram_Result_Impl *implementation (void) const;
+    ACE_Asynch_Write_Dgram_Result_Impl *implementation () const;
 
   protected:
     /// Constructor.
     Result (ACE_Asynch_Write_Dgram_Result_Impl *implementation);
 
     /// Destructor.
-    virtual ~Result (void);
+    virtual ~Result ();
 
     /// Implementation class.
     ACE_Asynch_Write_Dgram_Result_Impl *implementation_;
   };
 private:
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Asynch_Write_Dgram &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Asynch_Write_Dgram (const ACE_Asynch_Write_Dgram &))
+  void operator= (const ACE_Asynch_Write_Dgram &) = delete;
+  ACE_Asynch_Write_Dgram (const ACE_Asynch_Write_Dgram &) = delete;
 };
-
 
 /**
  * @class ACE_Handler
@@ -1592,13 +1566,13 @@ class ACE_Export ACE_Handler
 {
 public:
   /// A do nothing constructor.
-  ACE_Handler (void);
+  ACE_Handler ();
 
   /// A do nothing constructor which allows proactor to be set to \<p\>.
   ACE_Handler (ACE_Proactor *p);
 
   /// Virtual destruction.
-  virtual ~ACE_Handler (void);
+  virtual ~ACE_Handler ();
 
   /// This method will be called when an asynchronous read completes on
   /// a stream.
@@ -1644,10 +1618,10 @@ public:
    * ACE_Proactor. A special {Wake_Up_Completion} is used to wake up
    * all the threads that are blocking for completions.
    */
-  virtual void handle_wakeup (void);
+  virtual void handle_wakeup ();
 
   /// Get the proactor associated with this handler.
-  ACE_Proactor *proactor (void);
+  ACE_Proactor *proactor ();
 
   /// Set the proactor.
   void proactor (ACE_Proactor *p);
@@ -1657,7 +1631,7 @@ public:
    * called by the ACE_Asynch_* classes when an ACE_INVALID_HANDLE is
    * passed to {open}.
    */
-  virtual ACE_HANDLE handle (void) const;
+  virtual ACE_HANDLE handle () const;
 
   /// Set the ACE_HANDLE value for this Handler.
   virtual void handle (ACE_HANDLE);
@@ -1674,16 +1648,15 @@ public:
   class ACE_Export Proxy
   {
   public:
-    Proxy (ACE_Handler *handler) : handler_ (handler) {};
-    void reset (void) { this->handler_ = 0; };
-    ACE_Handler *handler (void) { return this->handler_; };
+    Proxy (ACE_Handler *handler) : handler_ (handler) {}
+    void reset () { this->handler_ = 0; }
+    ACE_Handler *handler () { return this->handler_; }
   private:
     ACE_Handler *handler_;
   };
-  typedef ACE_Refcounted_Auto_Ptr<Proxy, ACE_SYNCH_MUTEX>
-    Proxy_Ptr;
+  typedef ACE_Refcounted_Auto_Ptr<Proxy, ACE_SYNCH_MUTEX> Proxy_Ptr;
 
-  Proxy_Ptr &proxy (void);
+  Proxy_Ptr &proxy ();
 
 protected:
   /// The proactor associated with this handler.
@@ -1696,8 +1669,8 @@ protected:
   ACE_Refcounted_Auto_Ptr<Proxy, ACE_SYNCH_MUTEX> proxy_;
 
 private:
-  ACE_UNIMPLEMENTED_FUNC (ACE_Handler (const ACE_Handler &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Handler operator= (const ACE_Handler &))
+  ACE_Handler (const ACE_Handler &) = delete;
+  ACE_Handler operator= (const ACE_Handler &) = delete;
 };
 
 // Forward declarations
@@ -1719,17 +1692,16 @@ class ACE_Asynch_Acceptor;
  */
 class ACE_Export ACE_Service_Handler : public ACE_Handler
 {
-
   /// The Acceptor is the factory and therefore should have special
   /// privileges.
   friend class ACE_Asynch_Acceptor<ACE_Service_Handler>;
 
 public:
   /// A do nothing constructor.
-  ACE_Service_Handler (void);
+  ACE_Service_Handler ();
 
   /// Virtual destruction.
-  virtual ~ACE_Service_Handler (void);
+  virtual ~ACE_Service_Handler ();
 
   /**
    * {open} is called by ACE_Asynch_Acceptor to initialize a new

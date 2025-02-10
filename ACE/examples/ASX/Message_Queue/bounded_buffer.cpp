@@ -9,7 +9,6 @@
 #include "ace/OS_NS_unistd.h"
 
 
-
 #if defined (ACE_HAS_THREADS)
 
 // The producer reads data from the stdin stream, creates a message,

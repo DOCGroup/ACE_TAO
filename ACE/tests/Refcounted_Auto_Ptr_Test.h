@@ -20,9 +20,9 @@
 struct Printer
 {
   Printer (const char *message);
-  ~Printer (void) ;
+  ~Printer ();
 
-  void print (void);
+  void print ();
 
   const char *message_;
   unsigned int which_;

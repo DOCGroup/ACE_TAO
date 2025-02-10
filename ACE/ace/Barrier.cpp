@@ -2,10 +2,6 @@
 
 #if defined (ACE_HAS_THREADS)
 
-#if !defined (__ACE_INLINE__)
-#include "ace/Barrier.inl"
-#endif /* __ACE_INLINE__ */
-
 #include "ace/Guard_T.h"
 #include "ace/OS_NS_errno.h"
 
@@ -22,7 +18,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_ALLOC_HOOK_DEFINE(ACE_Sub_Barrier)
 
 void
-ACE_Sub_Barrier::dump (void) const
+ACE_Sub_Barrier::dump () const
 {
 #if defined (ACE_HAS_DUMP)
 // ACE_TRACE ("ACE_Sub_Barrier::dump");
@@ -47,7 +43,7 @@ ACE_Sub_Barrier::ACE_Sub_Barrier (unsigned int count,
 ACE_ALLOC_HOOK_DEFINE(ACE_Barrier)
 
 void
-ACE_Barrier::dump (void) const
+ACE_Barrier::dump () const
 {
 #if defined (ACE_HAS_DUMP)
 // ACE_TRACE ("ACE_Barrier::dump");
@@ -77,16 +73,15 @@ ACE_Barrier::ACE_Barrier (unsigned int count,
 }
 
 int
-ACE_Barrier::wait (void)
+ACE_Barrier::wait ()
 {
   ACE_TRACE ("ACE_Barrier::wait");
   ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1);
 
-  ACE_Sub_Barrier *sbp =
-    this->sub_barrier_[this->current_generation_];
+  ACE_Sub_Barrier *sbp = this->sub_barrier_[this->current_generation_];
 
   // Check for shutdown...
-  if (sbp == 0)
+  if (sbp == nullptr)
     {
       errno = ESHUTDOWN;
       return -1;
@@ -126,24 +121,23 @@ ACE_Barrier::wait (void)
 }
 
 int
-ACE_Barrier::shutdown (void)
+ACE_Barrier::shutdown ()
 {
   ACE_TRACE ("ACE_Barrier::shutdown");
   ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1);
 
-  ACE_Sub_Barrier *sbp =
-    this->sub_barrier_[this->current_generation_];
+  ACE_Sub_Barrier *sbp = this->sub_barrier_[this->current_generation_];
 
   // Check for shutdown...
-  if (sbp == 0)
+  if (sbp == nullptr)
     {
       errno = ESHUTDOWN;
       return -1;
     }
 
   // Flag the shutdown
-  this->sub_barrier_[0] = 0;
-  this->sub_barrier_[1] = 0;
+  this->sub_barrier_[0] = nullptr;
+  this->sub_barrier_[1] = nullptr;
   // Tell all the threads waiting on the barrier to continue on their way.
   sbp->running_threads_ = this->count_;
   sbp->barrier_finished_.broadcast ();
@@ -161,7 +155,7 @@ ACE_Thread_Barrier::ACE_Thread_Barrier (unsigned int count,
 }
 
 void
-ACE_Thread_Barrier::dump (void) const
+ACE_Thread_Barrier::dump () const
 {
 #if defined (ACE_HAS_DUMP)
 // ACE_TRACE ("ACE_Thread_Barrier::dump");

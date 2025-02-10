@@ -1,19 +1,17 @@
 #include "ACEXML/common/URL_Addr.h"
 
-
-
 #if !defined (__ACEXML_INLINE__)
 #include "ACEXML/common/URL_Addr.inl"
 #endif /* __ACEXML_INLINE__ */
 
 #include "ace/Log_Msg.h"
-#include "ace/Auto_Ptr.h"
 #include "ace/OS_Memory.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_stdlib.h"
 #include "ace/OS_NS_string.h"
+#include <memory>
 
-ACEXML_URL_Addr::ACEXML_URL_Addr (void)
+ACEXML_URL_Addr::ACEXML_URL_Addr ()
   : path_name_ (0),
     addr_string_ (0),
     addr_string_len_ (0)
@@ -96,7 +94,7 @@ ACEXML_URL_Addr::string_to_addr (const ACEXML_Char* s,
   ACE_NEW_RETURN (host_name, ACEXML_Char[host_len + 1], -1);
   ACE_OS::strncpy (host_name, s + http_len, host_len);
   host_name[host_len] = '\0';
-  ACE_Auto_Basic_Array_Ptr<ACEXML_Char> cleanup_host_name (host_name);
+  std::unique_ptr<ACEXML_Char[]> cleanup_host_name (host_name);
 
   // Get the port number (if any)
   unsigned short port = ACE_DEFAULT_HTTP_PORT;
@@ -168,7 +166,7 @@ ACEXML_URL_Addr::ACEXML_URL_Addr (const ACEXML_Char *host_name,
 {
 }
 
-ACEXML_URL_Addr::~ACEXML_URL_Addr (void)
+ACEXML_URL_Addr::~ACEXML_URL_Addr ()
 {
   ACE_OS::free (this->path_name_);
   ACE_OS::free (this->addr_string_);

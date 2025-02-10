@@ -20,7 +20,7 @@ bool TAO::Storable_Base::use_backup_default = false;
 bool TAO::Storable_Base::retry_on_ebadf_default = false;
 
 void
-TAO::Storable_Base::remove (void)
+TAO::Storable_Base::remove ()
 {
   if (this->use_backup_)
     {

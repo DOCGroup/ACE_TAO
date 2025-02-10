@@ -40,7 +40,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     {
       ACE_TString env (ACE_TEXT("SSL_CERT_FILE="));
       env += cert_file;
-      ACE_OS::putenv ( ACE_TEXT_ALWAYS_CHAR(env.c_str ()) );
+      ACE_OS::putenv ( ACE_TEXT_ALWAYS_CHAR(env.c_str ()));
 
       //
       // Initialize the ORB
@@ -101,7 +101,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->run ();
 
-      poa->destroy (1, 1);
+      poa->destroy (true, true);
 
       orb->destroy ();
     }

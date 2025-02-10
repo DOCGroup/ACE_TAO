@@ -78,7 +78,6 @@ JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
                              KEY, HASH_FUNC, EQ_FUNC);
 
 
-
       this->hash_ = 0;
       this->hashsize_ = 0;
     }
@@ -150,7 +149,6 @@ JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
                              KEY, HASH_FUNC, EQ_FUNC);
 
 
-
       this->hash_ = 0;
       this->hashsize_ = 0;
 
@@ -162,24 +160,22 @@ JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
 }
 
 template <class KEY, class FACTORY, class HASH_FUNC, class EQ_FUNC>
-JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>::~JAWS_Cache_Manager (void)
+JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>::~JAWS_Cache_Manager ()
 {
   this->close ();
 }
 
 template <class KEY, class FACTORY, class HASH_FUNC, class EQ_FUNC> int
-JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>::close (void)
+JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>::close ()
 {
   while (this->waterlevel_ > 0)
     this->FLUSH_i ();
 
   if (this->hash_)
     {
-
       ACE_DES_FREE_TEMPLATE3(this->hash_, this->allocator_->free,
                              JAWS_Cache_Hash,
                              KEY, HASH_FUNC, EQ_FUNC);
-
 
 
       this->hash_ = 0;
@@ -187,11 +183,9 @@ JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>::close (void)
 
   if (this->heap_)
     {
-
       ACE_DES_FREE_TEMPLATE4(this->heap_, this->allocator_->free,
                              JAWS_Cache_List,
                              KEY, FACTORY, HASH_FUNC, EQ_FUNC);
-
 
 
       this->heap_ = 0;
@@ -302,7 +296,7 @@ JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
 
 template <class KEY, class FACTORY, class HASH_FUNC, class EQ_FUNC> int
 JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
-::FLUSH_i (void)
+::FLUSH_i ()
 {
   KEY temp_key;
   JAWS_Cache_Object *temp_object;
@@ -475,7 +469,7 @@ JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
 
 template <class KEY, class FACTORY, class HASH_FUNC, class EQ_FUNC> int
 JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
-::FLUSH (void)
+::FLUSH ()
 {
   ACE_WRITE_GUARD_RETURN (ACE_SYNCH_RW_MUTEX, g, this->lock_, -1);
 
@@ -513,7 +507,7 @@ JAWS_Cache_Proxy<KEY, DATA, CACHE_MANAGER>
 }
 
 template <class KEY, class DATA, class CACHE_MANAGER>
-JAWS_Cache_Proxy<KEY, DATA, CACHE_MANAGER>::~JAWS_Cache_Proxy (void)
+JAWS_Cache_Proxy<KEY, DATA, CACHE_MANAGER>::~JAWS_Cache_Proxy ()
 {
   DATA *data = this->data ();
   this->manager_->DROP (this->object_);
@@ -522,13 +516,13 @@ JAWS_Cache_Proxy<KEY, DATA, CACHE_MANAGER>::~JAWS_Cache_Proxy (void)
 }
 
 template <class KEY, class DATA, class CACHE_MANAGER> DATA *
-JAWS_Cache_Proxy<KEY, DATA, CACHE_MANAGER>::data (void) const
+JAWS_Cache_Proxy<KEY, DATA, CACHE_MANAGER>::data () const
 {
   return this->object_ ? (DATA *) this->object_->data () : 0;
 }
 
 template <class KEY, class DATA, class CACHE_MANAGER>
-JAWS_Cache_Proxy<KEY, DATA, CACHE_MANAGER>::operator DATA * (void) const
+JAWS_Cache_Proxy<KEY, DATA, CACHE_MANAGER>::operator DATA * () const
 {
   return this->data ();
 }

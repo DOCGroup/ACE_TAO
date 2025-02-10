@@ -39,7 +39,6 @@ class TAO_FT_ServerPolicyFactory
   , public ::CORBA::LocalObject
 {
 public:
-
   virtual CORBA::Policy_ptr create_policy (CORBA::PolicyType type,
                                            const CORBA::Any &value);
 };

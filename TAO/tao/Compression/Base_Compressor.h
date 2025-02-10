@@ -43,15 +43,15 @@ namespace TAO
     virtual void decompress (const ::Compression::Buffer &source,
                              ::Compression::Buffer &target) = 0;
 
-    virtual ::Compression::CompressorFactory_ptr compressor_factory (void);
+    virtual ::Compression::CompressorFactory_ptr compressor_factory ();
 
-    virtual ::Compression::CompressionLevel compression_level (void);
+    virtual ::Compression::CompressionLevel compression_level ();
 
-    virtual ::CORBA::ULongLong compressed_bytes (void);
+    virtual ::CORBA::ULongLong compressed_bytes ();
 
-    virtual ::CORBA::ULongLong uncompressed_bytes (void);
+    virtual ::CORBA::ULongLong uncompressed_bytes ();
 
-    virtual ::Compression::CompressionRatio compression_ratio (void);
+    virtual ::Compression::CompressionRatio compression_ratio ();
 
   protected:
     void update_stats (::CORBA::ULongLong uncompressed_bytes,

@@ -1,0 +1,7 @@
+usr/include/ACEXML
+usr/lib/libACEXML.so usr/lib/@DEB_HOST_MULTIARCH@/
+usr/lib/libACEXML_Parser.so usr/lib/@DEB_HOST_MULTIARCH@/
+usr/lib/libACEXML_XML_Svc_Conf_Parser.so usr/lib/@DEB_HOST_MULTIARCH@/
+usr/lib/pkgconfig/ACEXML.pc usr/lib/@DEB_HOST_MULTIARCH@/pkgconfig/
+usr/lib/pkgconfig/ACEXML_XML_Svc_Conf_Parser.pc usr/lib/@DEB_HOST_MULTIARCH@/pkgconfig/
+usr/lib/pkgconfig/ACEXML_Parser.pc usr/lib/@DEB_HOST_MULTIARCH@/pkgconfig/

@@ -24,7 +24,7 @@ TAO::TypeCode::Indirected_Type::tao_marshal (TAO_OutputCDR & cdr,
 }
 
 void
-TAO::TypeCode::Indirected_Type::tao_duplicate (void)
+TAO::TypeCode::Indirected_Type::tao_duplicate ()
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
 
@@ -39,7 +39,7 @@ TAO::TypeCode::Indirected_Type::tao_duplicate (void)
 }
 
 void
-TAO::TypeCode::Indirected_Type::tao_release (void)
+TAO::TypeCode::Indirected_Type::tao_release ()
 {
   unsigned long newcount;
   CORBA::TypeCode_ptr curmaster;
@@ -103,25 +103,25 @@ TAO::TypeCode::Indirected_Type::equivalent_i (
 }
 
 CORBA::TypeCode_ptr
-TAO::TypeCode::Indirected_Type::get_compact_typecode_i (void) const
+TAO::TypeCode::Indirected_Type::get_compact_typecode_i () const
 {
   return this->recursive_tc_ ? this->recursive_tc_->get_compact_typecode () : 0;
 }
 
 char const *
-TAO::TypeCode::Indirected_Type::id_i (void) const
+TAO::TypeCode::Indirected_Type::id_i () const
 {
   return this->id_.in ();
 }
 
 char const *
-TAO::TypeCode::Indirected_Type::name_i (void) const
+TAO::TypeCode::Indirected_Type::name_i () const
 {
   return this->recursive_tc_ ? this->recursive_tc_->name () : 0;
 }
 
 CORBA::ULong
-TAO::TypeCode::Indirected_Type::member_count_i (void) const
+TAO::TypeCode::Indirected_Type::member_count_i () const
 {
   return this->recursive_tc_ ? this->recursive_tc_->member_count () : 0;
 }
@@ -147,13 +147,13 @@ TAO::TypeCode::Indirected_Type::member_visibility_i (CORBA::ULong index) const
 }
 
 CORBA::ValueModifier
-TAO::TypeCode::Indirected_Type::type_modifier_i (void) const
+TAO::TypeCode::Indirected_Type::type_modifier_i () const
 {
   return this->recursive_tc_ ? this->recursive_tc_->type_modifier () : 0;
 }
 
 CORBA::TypeCode_ptr
-TAO::TypeCode::Indirected_Type::concrete_base_type_i (void) const
+TAO::TypeCode::Indirected_Type::concrete_base_type_i () const
 {
   return this->recursive_tc_ ? this->recursive_tc_->concrete_base_type () : 0;
 }
@@ -165,13 +165,13 @@ TAO::TypeCode::Indirected_Type::member_label_i (CORBA::ULong index) const
 }
 
 CORBA::TypeCode_ptr
-TAO::TypeCode::Indirected_Type::discriminator_type_i (void) const
+TAO::TypeCode::Indirected_Type::discriminator_type_i () const
 {
   return this->recursive_tc_ ? this->recursive_tc_->discriminator_type () : 0;
 }
 
 CORBA::Long
-TAO::TypeCode::Indirected_Type::default_index_i (void) const
+TAO::TypeCode::Indirected_Type::default_index_i () const
 {
   return this->recursive_tc_ ? this->recursive_tc_->default_index () : 0;
 }

@@ -136,7 +136,7 @@ parent (void * = 0)
 }
 
 static int
-spawn (void)
+spawn ()
 {
   // Create the synchronizer before spawning the child process/thread,
   // to avoid race condition between the creation in the parent and

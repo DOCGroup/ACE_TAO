@@ -17,7 +17,7 @@ namespace
 
     char *tmp = 0;
     ACE_NEW_THROW_EX (tmp, char [size], CORBA::NO_MEMORY ());
-    ACE_Auto_Basic_Array_Ptr<char> buf (tmp);
+    std::unique_ptr<char[]> buf (tmp);
     stream.read (size, buf.get ());
 
     TAO_InputCDR cdr (buf.get (), size);
@@ -37,11 +37,9 @@ namespace
 
 namespace TAO
 {
-
   class Object_Group_File_Guard : public TAO::Storable_File_Guard
   {
   public:
-
     Object_Group_File_Guard ( TAO::PG_Object_Group_Storable & object_group,
                               Method_Type method_type);
 
@@ -67,10 +65,8 @@ namespace TAO
     virtual TAO::Storable_Base * create_stream (const char * mode);
 
   private:
-
     TAO::PG_Object_Group_Storable & object_group_;
   };
-
 }
 
 TAO::Object_Group_File_Guard::Object_Group_File_Guard (
@@ -153,7 +149,6 @@ TAO::Object_Group_File_Guard::~Object_Group_File_Guard ()
       // Notify if persistent store was updated.
       if (object_group_.write_occurred_)
         object_group_.state_written ();
-
     }
   catch (const TAO::Storable_Exception &se)
     {
@@ -251,8 +246,7 @@ TAO::PG_Object_Group_Storable::PG_Object_Group_Storable (
   // version already exists.
   bool stream_exists = false;
   {
-    ACE_Auto_Ptr<TAO::Storable_Base> stream (
-      this->create_stream ("r"));
+    std::unique_ptr<TAO::Storable_Base> stream (this->create_stream ("r"));
 
     if (stream->exists ())
       stream_exists = true;
@@ -290,8 +284,7 @@ TAO::PG_Object_Group_Storable::PG_Object_Group_Storable (
   // version already exists.
   bool stream_exists = false;
   {
-    ACE_Auto_Ptr<TAO::Storable_Base> stream (
-      this->create_stream ("r"));
+    std::unique_ptr<TAO::Storable_Base> stream (this->create_stream ("r"));
 
     if (stream->exists ())
       stream_exists = true;
@@ -307,20 +300,17 @@ TAO::PG_Object_Group_Storable::PG_Object_Group_Storable (
     }
 }
 
-TAO::PG_Object_Group_Storable::~PG_Object_Group_Storable (void)
+TAO::PG_Object_Group_Storable::~PG_Object_Group_Storable ()
 {
   if (destroyed_)
     {
-      ACE_Auto_Ptr<TAO::Storable_Base> stream (
-        this->create_stream ("r"));
+      std::unique_ptr<TAO::Storable_Base> stream (this->create_stream ("r"));
 
       if (stream->exists ())
         {
           stream->remove ();
         }
-
     }
-
 }
 
 void
@@ -330,7 +320,7 @@ TAO::PG_Object_Group_Storable::set_destroyed (bool destroyed)
 }
 
 const PortableGroup::Location &
-TAO::PG_Object_Group_Storable::get_primary_location (void)
+TAO::PG_Object_Group_Storable::get_primary_location ()
 {
   Object_Group_File_Guard fg (*this, SFG::ACCESSOR);
   return TAO::PG_Object_Group::get_primary_location ();
@@ -369,7 +359,7 @@ TAO::PG_Object_Group_Storable::remove_member (
 
 
 PortableGroup::Locations *
-TAO::PG_Object_Group_Storable::locations_of_members (void)
+TAO::PG_Object_Group_Storable::locations_of_members ()
 {
   Object_Group_File_Guard fg (*this, SFG::ACCESSOR);
   return PG_Object_Group::locations_of_members ();
@@ -397,14 +387,14 @@ TAO::PG_Object_Group_Storable::set_name (const char* group_name)
 }
 
 const char*
-TAO::PG_Object_Group_Storable::get_name (void)
+TAO::PG_Object_Group_Storable::get_name ()
 {
   Object_Group_File_Guard fg (*this, SFG::ACCESSOR);
   return PG_Object_Group::get_name ();
 }
 
 void
-TAO::PG_Object_Group_Storable::initial_populate (void)
+TAO::PG_Object_Group_Storable::initial_populate ()
 {
   Object_Group_File_Guard fg (*this, SFG::MUTATOR);
   PG_Object_Group::initial_populate ();
@@ -412,7 +402,7 @@ TAO::PG_Object_Group_Storable::initial_populate (void)
 }
 
 void
-TAO::PG_Object_Group_Storable::minimum_populate (void)
+TAO::PG_Object_Group_Storable::minimum_populate ()
 {
   Object_Group_File_Guard fg (*this, SFG::MUTATOR);
   PG_Object_Group::minimum_populate ();
@@ -602,7 +592,7 @@ TAO::PG_Object_Group_Storable::write (TAO::Storable_Base & stream)
 
   ///// members_ /////
   size_t const num_members = this->members_.current_size  ();
-  stream << num_members;
+  stream << static_cast<ACE_UINT64> (num_members);
   for (MemberMap_Iterator it = this->members_.begin ();
        it != this->members_.end ();
        ++it)
@@ -650,7 +640,7 @@ TAO::PG_Object_Group_Storable::stale ()
 }
 
 void
-TAO::PG_Object_Group_Storable::state_written (void)
+TAO::PG_Object_Group_Storable::state_written ()
 {
   // No-op. Overridden by derived class.
 }

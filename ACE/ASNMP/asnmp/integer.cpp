@@ -58,7 +58,7 @@ SmiUINT32 SnmpUInt32::get_syntax()
 }
 
 // object validity
-int SnmpUInt32::valid( void) const
+int SnmpUInt32::valid() const
 {
  return valid_flag;
 }
@@ -155,7 +155,7 @@ SmiUINT32 SnmpInt32::get_syntax()
 }
 
 // object validity
-int SnmpInt32::valid( void) const
+int SnmpInt32::valid() const
 {
   return valid_flag;
 }

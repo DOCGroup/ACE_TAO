@@ -1511,12 +1511,11 @@ int main (int argc, char *argv[])
       CosNaming::NamingContext_var naming_context =
         CosNaming::NamingContext::_narrow (naming_obj.in ());
 
-      // Notice the use of auto_ptr<> to automagically manage the
-      // destruction of the servant.  When the auto_ptr goes out
+      // Notice the use of unique_ptr<> to automagically manage the
+      // destruction of the servant.  When the unique_ptr goes out
       // of scope, its destructor is called, which in turn destroys
       // the servant.
-
-      auto_ptr<POA_RtecScheduler::Scheduler> scheduler_impl;
+      std::unique_ptr<POA_RtecScheduler::Scheduler> scheduler_impl;
       RtecScheduler::Scheduler_var scheduler;
 
 
@@ -1534,7 +1533,7 @@ int main (int argc, char *argv[])
       if (global_scheduler == 0)
         {
           scheduler_impl =
-            auto_ptr<POA_RtecScheduler::Scheduler>(new ACE_Config_Scheduler);
+            std::unique_ptr<POA_RtecScheduler::Scheduler>(new ACE_Config_Scheduler);
           if (scheduler_impl.get () == 0)
             return 1;
           scheduler = scheduler_impl->_this ();

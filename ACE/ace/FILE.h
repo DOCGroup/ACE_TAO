@@ -50,14 +50,14 @@ class ACE_Export ACE_FILE : public ACE_IO_SAP
 public:
   /// Close the ACE_FILE handle without removing the ACE_FILE from
   /// the file system.
-  int close (void);
+  int close ();
 
   /// Close and remove the ACE_FILE from the file system.
-  int remove (void);
+  int remove ();
 
   /// Remove the ACE_FILE from the file system without closing the
   /// ACE_FILE handle.
-  int unlink (void);
+  int unlink ();
 
   /// Get information on this ACE_FILE.
   int get_info (ACE_FILE_Info *finfo);
@@ -83,7 +83,7 @@ public:
                   int whence = SEEK_CUR);
 
   /// Return an offset for the file handle.
-  ACE_OFF_T tell (void);
+  ACE_OFF_T tell ();
 
   /**
    * Disable signal @a signum
@@ -100,7 +100,7 @@ public:
   int get_remote_addr (ACE_Addr &) const;
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -108,7 +108,7 @@ public:
 protected:
   /// Ensure that this class is only created by the
   /// ACE_FILE_Connector.
-  ACE_FILE (void);
+  ACE_FILE ();
 
   /// File we are "connected" with...
   ACE_FILE_Addr addr_;

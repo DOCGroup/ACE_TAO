@@ -30,19 +30,18 @@
 class Load_Balancing_Service
 {
 public:
-
   /// Default constructor.
-  Load_Balancing_Service (void);
+  Load_Balancing_Service ();
 
   /// Destructor.
-  ~Load_Balancing_Service (void);
+  ~Load_Balancing_Service ();
 
   /// Initialize the <Load_Balancing_Service>: initializes the ORB, parses
   /// arguments, creates a servant ...
   int init (int argc, ACE_TCHAR *argv[]);
 
   /// Run the server.
-  int run (void);
+  int run ();
 
 private:
   /// Parses the commandline arguments.

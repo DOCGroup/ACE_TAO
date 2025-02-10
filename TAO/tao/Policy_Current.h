@@ -37,7 +37,7 @@ class TAO_Policy_Current
 {
 public:
   /// Constructor
-  TAO_Policy_Current (void);
+  TAO_Policy_Current ();
 
   /// Obtain a single policy.
   CORBA::Policy_ptr get_policy (CORBA::PolicyType policy);
@@ -55,7 +55,7 @@ public:
         CORBA::SetOverrideType set_add);
 
   // = Set and get the implementation.
-  TAO_Policy_Current_Impl &implementation (void) const;
+  TAO_Policy_Current_Impl &implementation () const;
   TAO_Policy_Current_Impl &implementation (TAO_Policy_Current_Impl &);
 };
 

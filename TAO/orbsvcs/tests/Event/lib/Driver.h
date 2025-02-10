@@ -51,13 +51,13 @@ class EC_Test_Export EC_Driver
 {
 public:
   /// Constructor
-  EC_Driver (void);
+  EC_Driver ();
 
   /// Destructor
-  virtual ~EC_Driver (void);
+  virtual ~EC_Driver ();
 
   /// Flag to indicate in the test should be verbose.
-  int verbose (void) const;
+  int verbose () const;
 
   /// Execute the test.
   virtual int run (int argc, ACE_TCHAR* argv[]);
@@ -66,7 +66,7 @@ public:
   virtual void run_init (int& argc, ACE_TCHAR* argv[]);
 
   /// The cleanup section
-  virtual void run_cleanup (void);
+  virtual void run_cleanup ();
 
   /// Initialize the ORB and obtain the RootPOA object
   virtual void initialize_orb_and_poa (int& argc, ACE_TCHAR* argv[]);
@@ -75,33 +75,33 @@ public:
   virtual int parse_args (int& argc, ACE_TCHAR* argv[]);
 
   /// Print the usage method
-  virtual void print_usage (void);
+  virtual void print_usage ();
 
   /// Print out the arguments
-  virtual void print_args (void) const;
+  virtual void print_args () const;
 
   /// Run the test in the real-time class, return -1 on error.
-  virtual int move_to_rt_class (void);
+  virtual int move_to_rt_class ();
 
   /// Construct the EC and its helper objects, also activates the EC in
   /// the RootPOA.
-  virtual void initialize_ec_impl (void);
+  virtual void initialize_ec_impl ();
 
   /// By default connect the consumers and then the suppliers, other
   /// orders should work too.
-  virtual void connect_clients (void);
+  virtual void connect_clients ();
 
   /// By default disconnect the suppliers and then the consumers, other
   /// orders should work too.
-  virtual void disconnect_clients (void);
+  virtual void disconnect_clients ();
 
   /// By default deactivate the suppliers and then the consumers, other
   /// orders should work too.
-  virtual void shutdown_clients (void);
+  virtual void shutdown_clients ();
 
   /// Connect all the consumers, by default it lets each consumer
   /// connect itself.
-  virtual void connect_consumers (void);
+  virtual void connect_consumers ();
 
   /// Connect consumer number <i> using the consumer_admin provided.
   virtual void connect_consumer (
@@ -116,7 +116,7 @@ public:
 
   /// Connect all the suppliers, by default it lets each supplier
   /// connect itself.
-  virtual void connect_suppliers (void);
+  virtual void connect_suppliers ();
 
   /// Connect supplier number <i> using the supplier_admin provided.
   virtual void connect_supplier (
@@ -130,38 +130,38 @@ public:
       int& shutdown_event_type);
 
   /// Execute the test, by default simply call activate_suppliers()
-  virtual void execute_test (void);
+  virtual void execute_test ();
 
   /**
    * Dump the results, i.e. invoke dump_results on all the suppliers
    * and consumers, collect the latency and throughput results for
    * each and print the totals too.
    */
-  virtual void dump_results (void);
+  virtual void dump_results ();
 
   /// Disconnect all the consumers.
-  virtual void disconnect_consumers (void);
+  virtual void disconnect_consumers ();
 
   /// Disconnect all the suppliers.
-  virtual void disconnect_suppliers (void);
+  virtual void disconnect_suppliers ();
 
   /// Deactivate all the consumers.
-  virtual void shutdown_consumers (void);
+  virtual void shutdown_consumers ();
 
   /// Deactivate all the suppliers.
-  virtual void shutdown_suppliers (void);
+  virtual void shutdown_suppliers ();
 
   /// Call EC->destroy
-  virtual void destroy_ec (void);
+  virtual void destroy_ec ();
 
   /// De-activate the EC (and its helper classes).
-  virtual void deactivate_ec (void);
+  virtual void deactivate_ec ();
 
   /// Cleanup the resources
-  virtual void cleanup_ec (void);
-  virtual void cleanup_tasks (void);
-  virtual void cleanup_consumers (void);
-  virtual void cleanup_suppliers (void);
+  virtual void cleanup_ec ();
+  virtual void cleanup_tasks ();
+  virtual void cleanup_consumers ();
+  virtual void cleanup_suppliers ();
 
   /// Allow modifications of the default EC attributes
   virtual void modify_attributes (TAO_EC_Event_Channel_Attributes& attr);
@@ -187,30 +187,30 @@ public:
 
 #if !defined(EC_DISABLE_REMOTE_EC)
   /// Obtain the EC from the Naming service
-  virtual void obtain_remote_ec (void);
+  virtual void obtain_remote_ec ();
 
   virtual CosNaming::NamingContext_ptr
-       get_naming_context (void);
+       get_naming_context ();
 #endif
 
   /// Initialize the EC using the new implementation
-  virtual void initialize_new_ec (void);
+  virtual void initialize_new_ec ();
 
   /// Allocate the suppliers and the consumers
-  virtual int allocate_consumers (void);
-  virtual int allocate_suppliers (void);
+  virtual int allocate_consumers ();
+  virtual int allocate_suppliers ();
 
   /// Allocate one consumer or supplier
   virtual EC_Consumer* allocate_consumer (int i);
   virtual EC_Supplier* allocate_supplier (int i);
 
   /// Allocate one task for supplier number <i>
-  virtual int allocate_tasks (void);
+  virtual int allocate_tasks ();
   virtual ACE_Task_Base* allocate_task (int i);
 
   /// Activate all the tasks, by default runs each supplier on its
   /// own thread.
-  virtual void activate_tasks (void);
+  virtual void activate_tasks ();
 
 protected:
   /// The ORB
@@ -308,7 +308,6 @@ protected:
 
   /// The event channel object reference
   RtecEventChannelAdmin::EventChannel_var event_channel_;
-
 };
 
 #if defined (__ACE_INLINE__)

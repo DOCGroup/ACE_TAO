@@ -17,7 +17,7 @@ public:
   virtual Test::Timestamp test_method (Test::Timestamp send_time,
                                        CORBA::Long workload_in_usecs);
 
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
 private:
   /// Use an ORB reference to convert strings to objects and shutdown

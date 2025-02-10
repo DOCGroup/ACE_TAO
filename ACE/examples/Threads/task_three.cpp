@@ -22,7 +22,6 @@
 #include "ace/Signal.h"
 
 
-
 #if defined (ACE_HAS_THREADS)
 
 static ACE_OSTREAM_TYPE *out_stream = 0;
@@ -33,15 +32,15 @@ static const size_t TASK_COUNT = 130;
 class Test_Task : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
-  Test_Task (void);
-  ~Test_Task (void);
+  Test_Task ();
+  ~Test_Task ();
 
   //FUZZ: disable check_for_lack_ACE_OS
   virtual int open (void *args = 0);
   virtual int close (u_long flags = 0);
   //FUZZ: enable check_for_lack_ACE_OS
 
-  virtual int svc (void);
+  virtual int svc ();
 
   virtual int handle_input (ACE_HANDLE fd);
 
@@ -56,7 +55,7 @@ size_t Test_Task::done_cnt_ = 0;
 
 static ACE_Thread_Mutex Lock;
 
-Test_Task::Test_Task (void)
+Test_Task::Test_Task ()
 {
   ACE_GUARD (ACE_Thread_Mutex, ace_mon, Lock);
 
@@ -67,7 +66,7 @@ Test_Task::Test_Task (void)
               Test_Task::current_count_));
 }
 
-Test_Task::~Test_Task (void)
+Test_Task::~Test_Task ()
 {
   ACE_GUARD (ACE_Thread_Mutex, ace_mon, Lock);
 
@@ -96,7 +95,7 @@ Test_Task::close (u_long)
 }
 
 int
-Test_Task::svc (void)
+Test_Task::svc ()
 {
   // Every thread must register the same stream to write to file.
   if (out_stream)

@@ -25,7 +25,7 @@
 
 #include "orbsvcs/CosNotifyChannelAdminS.h"
 #include "orbsvcs/NotifyExtS.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -55,7 +55,7 @@ public:
   typedef TAO_Notify_Refcountable_Guard_T< TAO_Notify_EventChannelFactory > Ptr;
 
   /// Constructor
-  TAO_Notify_EventChannelFactory (void);
+  TAO_Notify_EventChannelFactory ();
 
   /// Init the factory
   void init (PortableServer::POA_ptr poa);
@@ -64,8 +64,8 @@ public:
   virtual ~TAO_Notify_EventChannelFactory ();
 
   /// = ServantBase  Methods
-  virtual void _add_ref (void);
-  virtual void _remove_ref (void);
+  virtual void _add_ref ();
+  virtual void _remove_ref ();
 
   /// Remove @a channel from the <ec_container_>
   virtual void remove (TAO_Notify_EventChannel* channel);
@@ -85,7 +85,7 @@ public:
   /// Use the registered Topology_Factory to create a loader, and
   /// load the topology. If no Topology_Factory is registered
   /// then nothing will be loaded.
-  void load_topology (void);
+  void load_topology ();
 
   /// Use the passed in saver factory to generate topology saver objects.
   /// Does not take ownership.
@@ -93,41 +93,40 @@ public:
 
   //-- Topology_Parent
 
-  virtual bool is_persistent (void) const;
+  virtual bool is_persistent () const;
 
   virtual void save_persistent (TAO_Notify::Topology_Saver& saver);
-  virtual bool change_to_parent (void);
+  virtual bool change_to_parent ();
   virtual TAO_Notify::Topology_Object* load_child (const ACE_CString &type,
                                                    CORBA::Long id,
                                                    const TAO_Notify::NVPList& attrs);
-  CosNotifyChannelAdmin::EventChannelFactory_ptr activate_self (void);
-  virtual void reconnect (void);
+  CosNotifyChannelAdmin::EventChannelFactory_ptr activate_self ();
+  virtual void reconnect ();
   virtual void validate ();
 
   /// at shutdown time, this causes the validator thread to exit.
-  void stop_validator (void);
+  void stop_validator ();
 
   /// Handle change notifications
-  bool handle_change (void);
+  bool handle_change ();
 
-  void load_event_persistence (void);
+  void load_event_persistence ();
 
-  virtual void save_topology (void);
+  virtual void save_topology ();
 
   TAO_Notify_ProxyConsumer * find_proxy_consumer (TAO_Notify::IdVec & id_path, size_t position);
   TAO_Notify_ProxySupplier * find_proxy_supplier (TAO_Notify::IdVec & id_path, size_t position);
   TAO_Notify_Object * follow_id_path (TAO_Notify::IdVec & id_path, size_t position);
-  virtual TAO_Notify_Object::ID get_id (void) const;
+  virtual TAO_Notify_Object::ID get_id () const;
 
 private:
-
   /// = Data Members
 
   /// = NotifyExt methods
-  virtual void destroy (void);
+  virtual void destroy ();
 
   /// shutdown
-  virtual int shutdown (void);
+  virtual int shutdown ();
 
   virtual
   NotifyExt::ReconnectionRegistry::ReconnectionID register_callback (
@@ -136,7 +135,7 @@ private:
   virtual void unregister_callback (
       NotifyExt::ReconnectionRegistry::ReconnectionID id);
 
-  virtual CORBA::Boolean is_alive (void);
+  virtual CORBA::Boolean is_alive ();
 
 protected:
   /// = CosNotifyChannelAdmin Methods
@@ -145,7 +144,7 @@ protected:
       const CosNotification::AdminProperties & initial_admin,
       CosNotifyChannelAdmin::ChannelID_out id);
 
-  virtual ::CosNotifyChannelAdmin::ChannelIDSeq * get_all_channels (void);
+  virtual ::CosNotifyChannelAdmin::ChannelIDSeq * get_all_channels ();
 
   virtual ::CosNotifyChannelAdmin::EventChannel_ptr get_event_channel (
       CosNotifyChannelAdmin::ChannelID id);
@@ -156,7 +155,7 @@ private:
   TAO_Notify_EventChannel_Container& ec_container();
 
   /// Container for Event Channels.
-  ACE_Auto_Ptr< TAO_Notify_EventChannel_Container > ec_container_;
+  std::unique_ptr< TAO_Notify_EventChannel_Container > ec_container_;
 
   TAO_SYNCH_MUTEX topology_save_lock_;
 
@@ -171,9 +170,9 @@ private:
   Routing_Slip_Set routing_slip_restart_set_;
 
   /// Release this object.
-  virtual void release (void);
+  virtual void release ();
 
-  ACE_Auto_Ptr <TAO_Notify_validate_client_Task> validate_client_task_;
+  std::unique_ptr <TAO_Notify_validate_client_Task> validate_client_task_;
 
   PortableServer::POA_var poa_;
 };

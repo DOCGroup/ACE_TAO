@@ -10,7 +10,7 @@ Single_Lookup::Single_Lookup (const char *usr_name)
            Protocol_Record (ACE::strnew (usr_name)));
 }
 
-Single_Lookup::~Single_Lookup (void)
+Single_Lookup::~Single_Lookup ()
 {
   if (Options::get_opt (Options::DEBUGGING))
     ACE_DEBUG ((LM_DEBUG,
@@ -18,13 +18,13 @@ Single_Lookup::~Single_Lookup (void)
 }
 
 Protocol_Record *
-Single_Lookup::get_each_entry (void)
+Single_Lookup::get_each_entry ()
 {
   return this->prp_;
 }
 
 Protocol_Record *
-Single_Lookup::get_next_entry (void)
+Single_Lookup::get_next_entry ()
 {
   return this->get_each_entry ();
 }

@@ -9,7 +9,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int
-TAO_DiffServPolicy_Initializer::static_init (void)
+TAO_DiffServPolicy_Initializer::static_init ()
 {
   TAO_ORB_Core::set_network_priority_protocols_hooks (
     "DS_Network_Priority_Protocols_Hooks");

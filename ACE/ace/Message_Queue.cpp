@@ -7,12 +7,8 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_Message_Queue_Base::~ACE_Message_Queue_Base (void)
-{
-}
-
 int
-ACE_Message_Queue_Base::state (void)
+ACE_Message_Queue_Base::state ()
 {
   ACE_TRACE ("ACE_Message_Queue_Base::state");
 

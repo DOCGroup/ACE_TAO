@@ -33,7 +33,7 @@ class TAO_Notify_Serv_Export TAO_Notify_EventTypeSeq
 
 public:
   /// Constructor
-  TAO_Notify_EventTypeSeq (void);
+  TAO_Notify_EventTypeSeq ();
   TAO_Notify_EventTypeSeq (const CosNotification::EventTypeSeq& event_type_seq);
   TAO_Notify_EventTypeSeq (const TAO_Notify_EventTypeSeq & rhs);
   TAO_Notify_EventTypeSeq & operator = (const TAO_Notify_EventTypeSeq & rhs);
@@ -64,7 +64,7 @@ public:
   void populate_no_special (CosNotification::EventTypeSeq& event_type) const;
 
   /// Print the contents.
-  void dump (void) const;
+  void dump () const;
 
   // TAO_Notify::Topology_Object
 
@@ -73,8 +73,7 @@ public:
     const TAO_Notify::NVPList& attrs);
 
 private:
-
-  virtual void release (void);
+  virtual void release ();
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

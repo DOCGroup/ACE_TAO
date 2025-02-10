@@ -28,7 +28,7 @@ namespace ACE
     {
     }
 
-    Monitor_Base::~Monitor_Base (void)
+    Monitor_Base::~Monitor_Base ()
     {
       ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
 
@@ -46,7 +46,7 @@ namespace ACE
     }
 
     void
-    Monitor_Base::update (void)
+    Monitor_Base::update ()
     {
       /// Overridden in derived classes.
     }
@@ -190,7 +190,7 @@ namespace ACE
     }
 
     void
-    Monitor_Base::clear (void)
+    Monitor_Base::clear ()
     {
       ACE_GUARD (ACE_SYNCH_MUTEX, guard, this->mutex_);
 
@@ -221,7 +221,7 @@ namespace ACE
     }
 
     void
-    Monitor_Base::remove_from_registry (void)
+    Monitor_Base::remove_from_registry ()
     {
       if (!Monitor_Point_Registry::instance ()->remove (this->name ()))
         {
@@ -238,7 +238,7 @@ namespace ACE
     }
 
     double
-    Monitor_Base::average (void) const
+    Monitor_Base::average () const
     {
       if (this->data_.type_ == Monitor_Control_Types::MC_COUNTER
           || this->data_.type_ == Monitor_Control_Types::MC_GROUP
@@ -258,7 +258,7 @@ namespace ACE
     }
 
     double
-    Monitor_Base::sum_of_squares (void) const
+    Monitor_Base::sum_of_squares () const
     {
       if (this->data_.type_ == Monitor_Control_Types::MC_COUNTER
           || this->data_.type_ == Monitor_Control_Types::MC_GROUP
@@ -277,7 +277,7 @@ namespace ACE
     }
 
     size_t
-    Monitor_Base::count (void) const
+    Monitor_Base::count () const
     {
       if (this->data_.type_ == Monitor_Control_Types::MC_GROUP)
         {
@@ -295,7 +295,7 @@ namespace ACE
     }
 
     double
-    Monitor_Base::minimum_sample (void) const
+    Monitor_Base::minimum_sample () const
     {
       if (this->data_.type_ == Monitor_Control_Types::MC_GROUP
           || this->data_.type_ == Monitor_Control_Types::MC_LIST)
@@ -313,7 +313,7 @@ namespace ACE
     }
 
     double
-    Monitor_Base::maximum_sample (void) const
+    Monitor_Base::maximum_sample () const
     {
       if (this->data_.type_ == Monitor_Control_Types::MC_GROUP
           || this->data_.type_ == Monitor_Control_Types::MC_LIST)
@@ -331,7 +331,7 @@ namespace ACE
     }
 
     double
-    Monitor_Base::last_sample (void) const
+    Monitor_Base::last_sample () const
     {
       if (this->data_.type_ == Monitor_Control_Types::MC_GROUP
           || this->data_.type_ == Monitor_Control_Types::MC_LIST)
@@ -349,7 +349,7 @@ namespace ACE
     }
 
     Monitor_Control_Types::NameList
-    Monitor_Base::get_list (void) const
+    Monitor_Base::get_list () const
     {
       Monitor_Control_Types::NameList retval;
 
@@ -374,7 +374,7 @@ namespace ACE
     }
 
     void
-    Monitor_Base::clear_i (void)
+    Monitor_Base::clear_i ()
     {
       if (this->data_.type_ == Monitor_Control_Types::MC_LIST)
         {

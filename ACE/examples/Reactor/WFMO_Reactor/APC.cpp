@@ -10,26 +10,20 @@
  */
 //=============================================================================
 
-
 #include "ace/OS_main.h"
 
-#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
+#if defined (ACE_WIN32) && _WIN32_WINNT >= 0x400
 
 #include "ace/Reactor.h"
 #include "ace/Auto_Event.h"
 #include "ace/Log_Msg.h"
 
-
-
 class Event_Handler : public ACE_Event_Handler
 {
 public:
-  int handle_signal (int signum,
-                     siginfo_t * = 0,
-                     ucontext_t * = 0);
+  int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0);
 
-  int handle_timeout (const ACE_Time_Value &tv,
-                      const void *arg = 0);
+  int handle_timeout (const ACE_Time_Value &tv, const void *arg = 0);
 
   ACE_Auto_Event handle_;
   int iterations_;
@@ -47,7 +41,7 @@ apc_callback (DWORD)
 }
 
 void
-queue_apc (void)
+queue_apc ()
 {
   DWORD result = ::QueueUserAPC (reinterpret_cast<PAPCFUNC> (&apc_callback),
                                                          // pointer to APC function
@@ -58,9 +52,7 @@ queue_apc (void)
 }
 
 int
-Event_Handler::handle_signal (int,
-                              siginfo_t *,
-                              ucontext_t *)
+Event_Handler::handle_signal (int, siginfo_t *, ucontext_t *)
 {
   --this->iterations_;
 

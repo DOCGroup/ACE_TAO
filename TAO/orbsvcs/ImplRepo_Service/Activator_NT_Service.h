@@ -49,7 +49,7 @@ public:
   virtual int handle_exception (ACE_HANDLE h);
 
   /// This is a virtual method inherited from ACE_NT_Service.
-  virtual int svc (void);
+  virtual int svc ();
 private:
   friend class ACE_Singleton<Activator_NT_Service, MUTEX>;
 };

@@ -29,27 +29,26 @@
  */
 class Consumer : public POA_CosEventComm::PushConsumer
 {
-
 public:
   /// This method connects the consumer to the EC.
   void open (CosEventChannelAdmin::EventChannel_ptr event_channel,
              CORBA::ORB_ptr orb);
 
   /// Disconnect from the EC.
-  void close (void);
+  void close ();
 
   /// Connect the Consumer to the EventChannel.
-  void connect (void);
+  void connect ();
 
   /// Disconnect from the supplier, but do not forget about it or close
   /// it.
-  void disconnect (void);
+  void disconnect ();
 
   /// push the event to the consumer.
   virtual void push (const CORBA::Any &data);
 
   /// disconnect the consumer from the EC.
-  virtual void disconnect_push_consumer (void);
+  virtual void disconnect_push_consumer ();
 
 private:
   /// The orb that we as using.

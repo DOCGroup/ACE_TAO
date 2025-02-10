@@ -22,7 +22,7 @@ public:
 
   virtual void pass_nil (base_out outarg);
 
-  virtual void shutdown (void);
+  virtual void shutdown ();
 private:
   CORBA::ORB_var orb_;
   PortableServer::POA_var poa_;

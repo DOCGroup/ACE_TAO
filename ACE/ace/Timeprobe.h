@@ -143,7 +143,6 @@ typedef ACE_Timeprobe_Ex<ACE_TIMEPROBE_MUTEX, ACE_TIMEPROBE_ALLOCATOR>
 // in thread specific storage.  This allows multiple threads to use
 // their own instance of ACE_Timerprobe, without interfering with each
 // other.
-
 #  if defined (ACE_TSS_TIMEPROBES)
 #    define ACE_TIMEPROBE_SINGLETON_TYPE ACE_TSS_Singleton
 #    define ACE_TIMEPROBE_SINGLETON_LOCK_TYPE ACE_SYNCH_NULL_MUTEX

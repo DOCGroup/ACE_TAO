@@ -1,6 +1,4 @@
-
-
-        This test ilustrates how to connect multiple ECs; it has many
+        This test illustrates how to connect multiple ECs; it has many
 options and can be configured to run a single EC, two ECs connected
 through a Gateway, short-circuit the EC, use a global, local or
 precomputed schedule, etc.

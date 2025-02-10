@@ -47,7 +47,6 @@ class TAO_Log_Serv_Export TAO_Log_Constraint_Visitor :
   public ETCL_Constraint_Visitor
 {
 public:
-
   /// Constructor.
   TAO_Log_Constraint_Visitor (const DsLogAdmin::LogRecord &rec);
 

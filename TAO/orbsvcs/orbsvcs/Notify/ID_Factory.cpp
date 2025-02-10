@@ -6,7 +6,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Notify_ID_Factory::TAO_Notify_ID_Factory (void)
+TAO_Notify_ID_Factory::TAO_Notify_ID_Factory ()
   : seed_ (0)
 {
 }

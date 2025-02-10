@@ -121,10 +121,10 @@ AST_Interface::AST_Interface (UTL_ScopedName *n,
     pd_inherits_flat (ih_flat),
     pd_n_inherits_flat (nih_flat),
     home_equiv_ (false),
-    fwd_decl_ (0),
+    fwd_decl_ (nullptr),
     has_mixed_parentage_ (-1),
-    ami_handler_ (0),
-    ami4ccm_uses_ (0)
+    ami_handler_ (nullptr),
+    ami4ccm_uses_ (nullptr)
 {
   this->size_type (AST_Type::VARIABLE); // always the case
   this->has_constructor (true);      // always the case
@@ -145,7 +145,7 @@ AST_Interface::AST_Interface (UTL_ScopedName *n,
     }
 }
 
-AST_Interface::~AST_Interface (void)
+AST_Interface::~AST_Interface ()
 {
 }
 
@@ -167,7 +167,7 @@ AST_Interface::be_add_operation (AST_Operation *op)
 }
 
 bool
-AST_Interface::is_defined (void)
+AST_Interface::is_defined ()
 {
   // Each instance of a forward declared interface no
   // longer has a redefined full definition, so we
@@ -176,7 +176,7 @@ AST_Interface::is_defined (void)
   // is found, then we are defined for code generation
   // purposes. See AST_InterfaceFwd::destroy() to
   // see the difference for cleanup purposes.
-  return (0 == this->fwd_decl_
+  return (nullptr == this->fwd_decl_
           ? this->pd_n_inherits >= 0
           : this->fwd_decl_->is_defined ());
 }
@@ -184,33 +184,25 @@ AST_Interface::is_defined (void)
 AST_Constant *
 AST_Interface::fe_add_constant (AST_Constant *t)
 {
-  return
-    AST_Constant::narrow_from_decl (
-      this->fe_add_decl (t));
+  return dynamic_cast<AST_Constant*> (this->fe_add_decl (t));
 }
 
 AST_Exception *
 AST_Interface::fe_add_exception (AST_Exception *t)
 {
-  return
-    AST_Exception::narrow_from_decl (
-      this->fe_add_decl (t));
+  return dynamic_cast<AST_Exception*> (this->fe_add_decl (t));
 }
 
 AST_Attribute *
 AST_Interface::fe_add_attribute (AST_Attribute *t)
 {
-  return
-    AST_Attribute::narrow_from_decl (
-      this->fe_add_decl (t));
+  return dynamic_cast<AST_Attribute*> (this->fe_add_decl (t));
 }
 
 AST_Operation *
 AST_Interface::fe_add_operation (AST_Operation *t)
 {
-  return
-    AST_Operation::narrow_from_decl (
-      this->fe_add_decl (t));
+  return dynamic_cast<AST_Operation*> (this->fe_add_decl (t));
 }
 
 AST_Structure *
@@ -228,25 +220,19 @@ AST_Interface::fe_add_structure_fwd (AST_StructureFwd *t)
 AST_Enum *
 AST_Interface::fe_add_enum (AST_Enum *t)
 {
-  return
-    AST_Enum::narrow_from_decl (
-      this->fe_add_decl (t));
+  return dynamic_cast<AST_Enum*> (this->fe_add_decl (t));
 }
 
 AST_Union *
 AST_Interface::fe_add_union (AST_Union *t)
 {
-  return
-    AST_Union::narrow_from_decl (
-      this->fe_add_full_struct_type (t));
+  return dynamic_cast<AST_Union*> (this->fe_add_full_struct_type (t));
 }
 
 AST_UnionFwd *
 AST_Interface::fe_add_union_fwd (AST_UnionFwd *t)
 {
-  return
-    AST_UnionFwd::narrow_from_decl (
-      this->fe_add_fwd_struct_type (t));
+  return dynamic_cast<AST_UnionFwd*> (this->fe_add_fwd_struct_type (t));
 }
 
 // Add an AST_EnumVal node (an enumerator) to this scope.
@@ -256,26 +242,20 @@ AST_Interface::fe_add_union_fwd (AST_UnionFwd *t)
 AST_EnumVal *
 AST_Interface::fe_add_enum_val (AST_EnumVal *t)
 {
-  return
-    AST_EnumVal::narrow_from_decl (
-      this->fe_add_decl (t));
+  return dynamic_cast<AST_EnumVal*> (this->fe_add_decl (t));
 }
 
 // Add an AST_Typedef (a typedef) to the current scope.
 AST_Typedef *
 AST_Interface::fe_add_typedef (AST_Typedef *t)
 {
-  return
-    AST_Typedef::narrow_from_decl (
-      this->fe_add_ref_decl (t));
+  return dynamic_cast<AST_Typedef*> (this->fe_add_ref_decl (t));
 }
 
 AST_Native *
 AST_Interface::fe_add_native (AST_Native *t)
 {
-  return
-    AST_Native::narrow_from_decl (
-      this->fe_add_decl (t));
+  return dynamic_cast<AST_Native*> (this->fe_add_decl (t));
 }
 
 // Dump this AST_Interface node to the ostream o.
@@ -324,22 +304,22 @@ void
 AST_Interface::fwd_redefinition_helper (AST_Interface *&i,
                                         UTL_Scope *s)
 {
-  if (i == 0)
+  if (i == nullptr)
     {
       return;
     }
 
   UTL_Scope *scope = i->defined_in ();
-  const char *prefix_holder = 0;
+  const char *prefix_holder = nullptr;
 
   // If our prefix is empty, we check to see if an ancestor has one.
-  while (ACE_OS::strcmp (i->prefix (), "") == 0 && scope != 0)
+  while (ACE_OS::strcmp (i->prefix (), "") == 0 && scope != nullptr)
     {
       AST_Decl *parent = ScopeAsDecl (scope);
       prefix_holder = parent->prefix ();
 
       // We have reached global scope.
-      if (prefix_holder == 0)
+      if (prefix_holder == nullptr)
         {
           break;
         }
@@ -350,23 +330,19 @@ AST_Interface::fwd_redefinition_helper (AST_Interface *&i,
 
   // Fwd redefinition should be in the same scope, so local
   // lookup is all that's needed.
-  AST_Decl *d = s->lookup_by_name_local (i->local_name (),
-                                         false);
-
-  AST_Interface *fd = 0;
-
-  if (d != 0)
+  AST_Decl *d = s->lookup_by_name_local (i->local_name (), false);
+  if (d != nullptr)
     {
       scope = d->defined_in ();
 
       // If the lookup prefix is empty, we check to see if an ancestor has one.
-      while (ACE_OS::strcmp (d->prefix (), "") == 0 && scope != 0)
+      while (ACE_OS::strcmp (d->prefix (), "") == 0 && scope != nullptr)
         {
           AST_Decl *parent = ScopeAsDecl (scope);
           prefix_holder = parent->prefix ();
 
           // We have reached global scope.
-          if (prefix_holder == 0)
+          if (prefix_holder == nullptr)
             {
               break;
             }
@@ -375,10 +351,8 @@ AST_Interface::fwd_redefinition_helper (AST_Interface *&i,
           scope = parent->defined_in ();
         }
 
-      fd = AST_Interface::narrow_from_decl (d);
-
-      // Successful?
-      if (fd == 0)
+      AST_Interface *fd = dynamic_cast<AST_Interface *> (d);
+      if (fd == nullptr)
         {
           AST_Decl::NodeType nt = d->node_type ();
 
@@ -421,8 +395,7 @@ AST_Interface::fwd_redefinition_helper (AST_Interface *&i,
               fd->redefine (i);
 
               AST_InterfaceFwd *fwd = fd->fwd_decl ();
-
-              if (fwd != 0)
+              if (fwd != nullptr)
                 {
                   fwd->set_as_defined ();
                 }
@@ -439,7 +412,7 @@ AST_Interface::fwd_redefinition_helper (AST_Interface *&i,
 void
 AST_Interface::redef_clash_populate_r (AST_Type *t)
 {
-  if (this->insert_non_dup (t, 0) == 0)
+  if (this->insert_non_dup (t, false) == 0)
     {
       return;
     }
@@ -449,8 +422,7 @@ AST_Interface::redef_clash_populate_r (AST_Type *t)
 
   if (nt != AST_Decl::NT_param_holder)
     {
-      AST_Interface *i =
-        AST_Interface::narrow_from_decl (t);
+      AST_Interface *i = dynamic_cast<AST_Interface*> (t);
 
       AST_Type **parents = i->inherits ();
       long n_parents = i->n_inherits ();
@@ -463,7 +435,7 @@ AST_Interface::redef_clash_populate_r (AST_Type *t)
 
   if (nt == AST_Decl::NT_valuetype || nt == AST_Decl::NT_eventtype)
     {
-      AST_ValueType *v = AST_ValueType::narrow_from_decl (t);
+      AST_ValueType *v = dynamic_cast<AST_ValueType*> (t);
       AST_Type **supports = v->supports ();
       long n_supports = v->n_supports ();
 
@@ -474,7 +446,7 @@ AST_Interface::redef_clash_populate_r (AST_Type *t)
     }
   else if (nt == AST_Decl::NT_component)
     {
-      AST_Component *c = AST_Component::narrow_from_decl (t);
+      AST_Component *c = dynamic_cast<AST_Component*> (t);
       AST_Type **supports = c->supports ();
       long n_supports = c->n_supports ();
 
@@ -486,7 +458,7 @@ AST_Interface::redef_clash_populate_r (AST_Type *t)
 }
 
 bool
-AST_Interface::home_equiv (void) const
+AST_Interface::home_equiv () const
 {
   return this->home_equiv_;
 }
@@ -498,7 +470,7 @@ AST_Interface::home_equiv (bool val)
 }
 
 AST_InterfaceFwd *
-AST_Interface::fwd_decl (void) const
+AST_Interface::fwd_decl () const
 {
   return this->fwd_decl_;
 }
@@ -513,14 +485,13 @@ int
 AST_Interface::insert_non_dup (AST_Type *t,
                                bool abstract_paths_only)
 {
-  AST_Interface *f =
-    AST_Interface::narrow_from_decl (t);
+  AST_Interface *f = dynamic_cast<AST_Interface*> (t);
 
   // Now check if the dequeued element has any ancestors. If yes, insert
   // them inside the queue making sure that there are no duplicates.
   // If we are doing a component, the inheritance list is actually a
   // supports list.
-  if (f != 0)
+  if (f != nullptr)
     {
       for (long i = 0; i < f->n_inherits (); ++i)
         {
@@ -548,7 +519,7 @@ AST_Interface::insert_non_dup (AST_Type *t,
        (void) q_iter.advance ())
     {
       // Queue element.
-      AST_Type **temp = 0;
+      AST_Type **temp = nullptr;
 
       (void) q_iter.next (temp);
 
@@ -568,7 +539,7 @@ AST_Interface::insert_non_dup (AST_Type *t,
        (void) del_q_iter.advance ())
     {
       // Queue element.
-      AST_Type **temp = 0;
+      AST_Type **temp = nullptr;
 
       (void) del_q_iter.next (temp);
 
@@ -636,57 +607,56 @@ AST_Interface::redefine (AST_Interface *from)
   this->set_file_name (idl_global->filename ()->get_string ());
   this->ifr_added_ = from->ifr_added_;
   this->ifr_fwd_added_ = from->ifr_fwd_added_;
-  this->fwd_decl_->set_as_defined ();
 }
 
 // Data accessors.
 
 AST_Type **
-AST_Interface::inherits (void) const
+AST_Interface::inherits () const
 {
   return this->pd_inherits;
 }
 
 long
-AST_Interface::n_inherits (void) const
+AST_Interface::n_inherits () const
 {
   return this->pd_n_inherits;
 }
 
 AST_Interface **
-AST_Interface::inherits_flat (void) const
+AST_Interface::inherits_flat () const
 {
   return this->pd_inherits_flat;
 }
 
 long
-AST_Interface::n_inherits_flat (void) const
+AST_Interface::n_inherits_flat () const
 {
   return pd_n_inherits_flat;
 }
 
 ACE_Unbounded_Queue<AST_Type *> &
-AST_Interface::get_insert_queue (void)
+AST_Interface::get_insert_queue ()
 {
   return this->insert_queue;
 }
 
 ACE_Unbounded_Queue<AST_Type *> &
-AST_Interface::get_del_queue (void)
+AST_Interface::get_del_queue ()
 {
   return this->del_queue;
 }
 
 bool
-AST_Interface::redef_clash (void)
+AST_Interface::redef_clash ()
 {
   this->insert_queue.reset ();
   this->redef_clash_populate_r (this);
 
-  AST_Type **group1_member = 0;
-  AST_Type **group2_member = 0;
-  AST_Decl *group1_member_item = 0;
-  AST_Decl *group2_member_item = 0;
+  AST_Type **group1_member = nullptr;
+  AST_Type **group2_member = nullptr;
+  AST_Decl *group1_member_item = nullptr;
+  AST_Decl *group2_member_item = nullptr;
 
   int i = 1;
 
@@ -701,7 +671,7 @@ AST_Interface::redef_clash (void)
       (void) group1_iter.next (group1_member);
       UTL_Scope *s = DeclAsScope (*group1_member);
 
-      if (s != 0)
+      if (s != nullptr)
         {
           for (UTL_ScopeActiveIterator group1_member_items (
                  s,
@@ -745,7 +715,7 @@ AST_Interface::redef_clash (void)
                   (void) group2_iter.next (group2_member);
                   UTL_Scope *ss = DeclAsScope (*group2_member);
 
-                  if (ss != 0)
+                  if (ss != nullptr)
                     {
                       for (UTL_ScopeActiveIterator group2_member_items (
                              ss,
@@ -816,15 +786,15 @@ AST_Decl *
 AST_Interface::look_in_inherited (UTL_ScopedName *e,
                                   bool full_def_only)
 {
-  AST_Decl *d = 0;
-  AST_Decl *d_before = 0;
-  AST_Type **is = 0;
+  AST_Decl *d = nullptr;
+  AST_Decl *d_before = nullptr;
+  AST_Type **is = nullptr;
   long nis = -1;
 
   // Can't look in an interface which was not yet defined.
   if (!this->is_defined ())
     {
-      return 0;
+      return nullptr;
     }
 
   // OK, loop through inherited interfaces.
@@ -836,18 +806,17 @@ AST_Interface::look_in_inherited (UTL_ScopedName *e,
        nis > 0;
        nis--, is++)
     {
-      AST_Interface *i =
-        AST_Interface::narrow_from_decl (*is);
+      AST_Interface *i = dynamic_cast<AST_Interface*> (*is);
 
-      if (i == 0)
+      if (i == nullptr)
         {
           continue;
         }
 
       d = (i)->lookup_by_name_r (e, full_def_only);
-      if (d != 0)
+      if (d != nullptr)
         {
-          if (d_before == 0)
+          if (d_before == nullptr)
             {
               // First result found.
               d_before = d;
@@ -892,11 +861,11 @@ AST_Interface::look_in_inherited_local (Identifier *e,
   // Can't look in an interface which was not yet defined.
   if (!this->is_defined ())
     {
-      return 0;
+      return nullptr;
     }
 
-  AST_Decl *d = 0;
-  AST_Type **is = 0;
+  AST_Decl *d = nullptr;
+  AST_Type **is = nullptr;
   long nis = -1;
 
   /// OK, loop through inherited interfaces.
@@ -904,17 +873,16 @@ AST_Interface::look_in_inherited_local (Identifier *e,
        nis > 0;
        nis--, is++)
     {
-      AST_Interface *i =
-        AST_Interface::narrow_from_decl (*is);
+      AST_Interface *i = dynamic_cast<AST_Interface*> (*is);
 
-      if (i == 0)
+      if (i == nullptr)
         {
           continue;
         }
 
       d = i->lookup_by_name_local (e, full_def_only);
 
-      if (d != 0)
+      if (d != nullptr)
         {
           break;
         }
@@ -926,25 +894,25 @@ AST_Interface::look_in_inherited_local (Identifier *e,
 AST_Decl *
 AST_Interface::lookup_for_add (AST_Decl *d)
 {
-  if (d == 0)
+  if (d == nullptr)
     {
-      return 0;
+      return nullptr;
     }
 
   Identifier *id = d->local_name ();
-  AST_Decl *prev = 0;
+  AST_Decl *prev = nullptr;
   AST_Decl::NodeType nt = NT_root;
   long nis = -1;
-  AST_Interface **is = 0;
+  AST_Interface **is = nullptr;
 
   if (this->idl_keyword_clash (id) != 0)
     {
-      return 0;
+      return nullptr;
     }
 
   prev = this->lookup_by_name_local (id, false);
 
-  if (prev != 0)
+  if (prev != nullptr)
     {
       nt = prev->node_type ();
 
@@ -960,7 +928,7 @@ AST_Interface::lookup_for_add (AST_Decl *d)
     {
       prev = (*is)->lookup_by_name_local (id, false);
 
-      if (prev != 0)
+      if (prev != nullptr)
         {
           nt = prev->node_type ();
 
@@ -971,11 +939,11 @@ AST_Interface::lookup_for_add (AST_Decl *d)
         }
     }
 
-  return 0;
+  return nullptr;
 }
 
 int
-AST_Interface::has_mixed_parentage (void)
+AST_Interface::has_mixed_parentage ()
 {
   if (this->is_abstract_)
     {
@@ -1000,7 +968,7 @@ AST_Interface::has_mixed_parentage (void)
 }
 
 void
-AST_Interface::analyze_parentage (void)
+AST_Interface::analyze_parentage ()
 {
   if (this->has_mixed_parentage_ != -1)
     {
@@ -1017,10 +985,9 @@ AST_Interface::analyze_parentage (void)
 
   for (long i = 0; i < this->pd_n_inherits; ++i)
     {
-      AST_Interface *parent =
-         AST_Interface::narrow_from_decl (this->pd_inherits[i]);
+      AST_Interface *parent = dynamic_cast<AST_Interface*> (this->pd_inherits[i]);
 
-      if (parent == 0)
+      if (parent == nullptr)
         {
           // The item is a template param holder.
           continue;
@@ -1040,12 +1007,11 @@ AST_Interface::analyze_parentage (void)
   bool in_tmpl_module = false;
   UTL_Scope *s = this->defined_in ();
 
-  while (s != 0)
+  while (s != nullptr)
     {
-      AST_Template_Module *m =
-        AST_Template_Module::narrow_from_scope (s);
+      AST_Template_Module *m = dynamic_cast<AST_Template_Module*> (s);
 
-      if (m != 0)
+      if (m != nullptr)
         {
           in_tmpl_module = true;
           break;
@@ -1064,7 +1030,7 @@ AST_Interface::analyze_parentage (void)
 }
 
 bool
-AST_Interface::legal_for_primary_key (void) const
+AST_Interface::legal_for_primary_key () const
 {
   return false;
 }
@@ -1077,22 +1043,22 @@ AST_Interface::special_lookup (UTL_ScopedName *e,
   AST_Decl *d = this->look_in_inherited_local (e->head (),
                                                full_def_only);
 
-  if (d != 0)
+  if (d != nullptr)
     {
       UTL_Scope *s = DeclAsScope (d);
       UTL_ScopedName *sn =
         static_cast<UTL_ScopedName *> (e->tail ());
 
-      return (s != 0 && sn != 0
+      return (s != nullptr && sn != nullptr
                 ? s->lookup_by_name_r (sn, full_def_only, final_parent_decl)
                 : d);
     }
 
-  return 0;
+  return nullptr;
 }
 
 AST_Interface *
-AST_Interface::ami_handler (void) const
+AST_Interface::ami_handler () const
 {
   return this->ami_handler_;
 }
@@ -1104,7 +1070,7 @@ AST_Interface::ami_handler (AST_Interface *handler)
 }
 
 AST_Interface *
-AST_Interface::ami4ccm_uses (void) const
+AST_Interface::ami4ccm_uses () const
 {
   return this->ami4ccm_uses_;
 }
@@ -1116,19 +1082,19 @@ AST_Interface::ami4ccm_uses (AST_Interface *implied)
 }
 
 void
-AST_Interface::destroy (void)
+AST_Interface::destroy ()
 {
   for (ACE_Unbounded_Queue_Iterator<AST_Type *> i (
          this->param_holders_);
        !i.done ();
        (void) i.advance ())
     {
-      AST_Type **tt = 0;
+      AST_Type **tt = nullptr;
       i.next (tt);
       AST_Type *t = *tt;
       t->destroy ();
       delete t;
-      t = 0;
+      t = nullptr;
     }
 
   // The destroy() we are in gets called twice if we start from
@@ -1137,11 +1103,11 @@ AST_Interface::destroy (void)
   this->param_holders_.reset ();
 
   delete [] this->pd_inherits;
-  this->pd_inherits = 0;
+  this->pd_inherits = nullptr;
   this->pd_n_inherits = 0;
 
   delete [] this->pd_inherits_flat;
-  this->pd_inherits_flat = 0;
+  this->pd_inherits_flat = nullptr;
   this->pd_n_inherits_flat = 0;
 
   this->UTL_Scope::destroy ();
@@ -1154,5 +1120,8 @@ AST_Interface::ast_accept (ast_visitor *visitor)
   return visitor->visit_interface (this);
 }
 
-IMPL_NARROW_FROM_DECL(AST_Interface)
-IMPL_NARROW_FROM_SCOPE(AST_Interface)
+bool
+AST_Interface::annotatable () const
+{
+  return true;
+}

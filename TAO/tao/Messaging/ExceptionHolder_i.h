@@ -45,7 +45,7 @@ namespace TAO
       public virtual ::CORBA::DefaultValueRefCountBase
   {
   public:
-    ExceptionHolder (void);
+    ExceptionHolder ();
 
     ExceptionHolder (
       ::CORBA::Boolean is_system_exception,
@@ -59,16 +59,15 @@ namespace TAO
     void set_exception_data (::TAO::Exception_Data* data,
                              ::CORBA::ULong exceptions_count);
 
-    virtual void raise_exception (void);
+    virtual void raise_exception ();
 
     virtual void raise_exception_with_list (
         const ::Dynamic::ExceptionList & exc_list);
 
-    virtual CORBA::ValueBase* _copy_value (void);
+    virtual CORBA::ValueBase* _copy_value ();
 
   protected:
-
-    virtual ~ExceptionHolder (void);
+    virtual ~ExceptionHolder ();
 
   private:
     TAO::Exception_Data* data_;
@@ -88,9 +87,8 @@ namespace TAO
     public virtual CORBA::ValueFactoryBase
   {
   public:
-    virtual CORBA::ValueBase * create_for_unmarshal (void);
+    virtual CORBA::ValueBase * create_for_unmarshal ();
   };
-
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

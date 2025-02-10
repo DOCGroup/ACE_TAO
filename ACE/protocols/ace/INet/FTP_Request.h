@@ -20,7 +20,6 @@ namespace ACE
   {
     namespace FTP
       {
-
         /**
         * @class ACE_FTP_Request
         *
@@ -101,7 +100,6 @@ namespace ACE
               ACE_CString command_;
               ACE_CString args_;
           };
-
       }
   }
 

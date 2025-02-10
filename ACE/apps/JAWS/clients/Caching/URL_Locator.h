@@ -73,7 +73,7 @@ public:
   static const char * const err_name[];
 
   /// Default destructor.
-  virtual ~ACE_URL_Locator (void) = 0;
+  virtual ~ACE_URL_Locator () = 0;
 
   /**
    * Query the locator for HTTP with designate properties (none, some,
@@ -105,7 +105,7 @@ public:
                             const ACE_URL_Property_Seq *modify = 0) = 0;
 
   /// Provide a human readable error status.
-  virtual const char *error_status (void);
+  virtual const char *error_status ();
 };
 
 #endif /* ACE_WEB_LOCATOR_H */

@@ -1,4 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
 /*
 
 COPYRIGHT
@@ -84,13 +83,13 @@ public:
                    AST_Type *ft,
                    UTL_ScopedName *n);
 
-  virtual ~AST_UnionBranch (void);
+  virtual ~AST_UnionBranch ();
 
-  UTL_LabelList *labels (void) const;
+  UTL_LabelList *labels () const;
 
   AST_UnionLabel *label (unsigned long index = 0);
 
-  unsigned long label_list_length (void);
+  unsigned long label_list_length ();
 
   // Called if our labels are enum values - adds them to the
   // enclosing scope's name_referenced list.
@@ -103,10 +102,6 @@ public:
   // we call this at the end of fe_add_union_branch.
   void coerce_labels (AST_Union *u);
 
-  // Narrowing.
-
-  DEF_NARROW_FROM_DECL (AST_UnionBranch);
-
   // AST Dumping.
   virtual void dump (ACE_OSTREAM_TYPE &o);
 
@@ -114,7 +109,7 @@ public:
   virtual int ast_accept (ast_visitor *visitor);
 
   // Cleanup.
-  virtual void destroy (void);
+  virtual void destroy ();
 
   static AST_Decl::NodeType const NT;
 

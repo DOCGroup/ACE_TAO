@@ -2,7 +2,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE ACE_event_t
-ACE_Event_Base::handle (void) const
+ACE_Event_Base::handle () const
 {
   return this->handle_;
 }

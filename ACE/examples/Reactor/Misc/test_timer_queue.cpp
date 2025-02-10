@@ -10,7 +10,7 @@
 class Example_Handler : public ACE_Event_Handler
 {
 public:
-  Example_Handler (void)
+  Example_Handler ()
     : count_ (1)
   {}
 

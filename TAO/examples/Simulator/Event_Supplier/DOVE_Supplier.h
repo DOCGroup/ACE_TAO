@@ -30,15 +30,14 @@
 class DOVE_Supplier
 {
 public:
-
   /// Constructor.
   DOVE_Supplier ();
 
   /// Destructor.
-  ~DOVE_Supplier (void);
+  ~DOVE_Supplier ();
 
   /// Initialize the ORB and the connection to the Name Service
-  int init (void);
+  int init ();
 
   /// Connect to the event service.
   int connect (const char * MIB_name = 0,
@@ -62,7 +61,6 @@ public:
   void use_prev_connection ();
 
 private:
-
   // The following Supplier is needed because DOVE_Supplier has not
   // inherited from PushSupplier.
 
@@ -71,20 +69,17 @@ private:
     friend class DOVE_Supplier;
 
   public:
-
-    virtual void disconnect_push_supplier (void)
+    virtual void disconnect_push_supplier ()
     {
     }
 
   private:
-
     Internal_DOVE_Supplier (DOVE_Supplier* impl_ptr);
 
     DOVE_Supplier* impl_ptr_;
   };
 
 private:
-
   struct Connection_Params
   {
     const char * es_name_;

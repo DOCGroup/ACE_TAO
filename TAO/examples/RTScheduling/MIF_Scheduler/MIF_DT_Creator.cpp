@@ -2,7 +2,7 @@
 #include "test.h"
 #include "MIF_Task.h"
 
-MIF_DT_Creator::MIF_DT_Creator (void)
+MIF_DT_Creator::MIF_DT_Creator ()
 {
   DT_TEST::instance ()->dt_creator (this);
 }
@@ -49,7 +49,6 @@ MIF_DT_Creator::yield (time_t suspend_time,
       ACE_Time_Value now (ACE_OS::gettimeofday ());
       while (((now - *base_time_) < sus_time_value) || (suspend_time == 1))
         {
-
           ACE_OS::sleep (1);
           CORBA::Policy_var sched_param;
           sched_param = this->sched_param (100);
@@ -69,13 +68,13 @@ MIF_DT_Creator::yield (time_t suspend_time,
 }
 
 int
-MIF_DT_Creator::total_load (void)
+MIF_DT_Creator::total_load ()
 {
   return 1000;
 }
 
 void
-MIF_DT_Creator::wait (void)
+MIF_DT_Creator::wait ()
 {
   while (active_dt_count_ > 0 || active_job_count_ > 0)
     {

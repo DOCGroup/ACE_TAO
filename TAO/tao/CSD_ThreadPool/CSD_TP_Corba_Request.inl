@@ -26,7 +26,7 @@ TAO::CSD::TP_Corba_Request::do_clone()
 
 ACE_INLINE
 void
-TAO::CSD::TP_Corba_Request::do_dispatch(void)
+TAO::CSD::TP_Corba_Request::do_dispatch()
 {
   // Pass 0 for the upcall wrapper. If we have it here, we can change the
   // upcall wrapper to a reference in the full TAO Core

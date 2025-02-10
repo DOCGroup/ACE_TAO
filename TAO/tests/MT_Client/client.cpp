@@ -56,11 +56,11 @@ public:
   Client (Simple_Server_ptr server, int niterations);
   // ctor
 
-  virtual int svc (void);
+  virtual int svc ();
   // The thread entry point.
 
 private:
-  void validate_connection (void);
+  void validate_connection ();
   // Validate the connection
 
 private:
@@ -133,7 +133,7 @@ Client::Client (Simple_Server_ptr server,
 }
 
 void
-Client::validate_connection (void)
+Client::validate_connection ()
 {
   // Ping the object 100 times, ignoring all exceptions.
   // It would be better to use validate_connection() but the test must
@@ -149,7 +149,7 @@ Client::validate_connection (void)
 }
 
 int
-Client::svc (void)
+Client::svc ()
 {
   try
     {

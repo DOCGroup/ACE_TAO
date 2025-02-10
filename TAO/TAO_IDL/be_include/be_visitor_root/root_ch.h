@@ -28,21 +28,21 @@ class be_visitor_root_ch : public be_visitor_root
 public:
   be_visitor_root_ch (be_visitor_context *ctx);
 
-  ~be_visitor_root_ch (void);
+  ~be_visitor_root_ch ();
 
   virtual int visit_root (be_root *node);
 
 private:
   /// Open file and initialize stream.
-  int init (void);
+  int init ();
 
   /// Encapsulating various bits of code generation peculiar
   /// to the client header file, done either before or after
   /// the main scope traversal.
   int gen_arg_traits (be_root *node);
-  void gen_fwd_decls (void);
-  void gen_ref_counting_overrides (void);
-  void gen_static_corba_overrides (void);
+  void gen_fwd_decls ();
+  void gen_ref_counting_overrides ();
+  void gen_static_corba_overrides ();
   int gen_obv_decls (be_root *node);
   int gen_object_traits (be_root *node);
   int gen_template_exports (be_root *node);

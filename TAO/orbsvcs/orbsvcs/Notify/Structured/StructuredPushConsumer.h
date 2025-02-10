@@ -52,7 +52,7 @@ public:
   virtual void push (const CosNotification::EventBatch& event);
 
   /// Retrieve the ior of this peer
-  virtual ACE_CString get_ior (void) const;
+  virtual ACE_CString get_ior () const;
 
   /// on reconnect we need to move events from the old consumer
   /// to the new one
@@ -61,15 +61,14 @@ public:
 
 
 protected:
-
-  virtual CORBA::Object_ptr get_consumer (void);
+  virtual CORBA::Object_ptr get_consumer ();
 
   /// The Consumer
   CosNotifyComm::StructuredPushConsumer_var push_consumer_;
 
 private:
   /// Release
-  virtual void release (void);
+  virtual void release ();
 
   /// Connection valid flag
   int connection_valid;

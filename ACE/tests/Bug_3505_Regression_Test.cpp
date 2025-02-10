@@ -14,8 +14,6 @@
 #include "ace/Service_Gestalt.h"
 #include "test_config.h"
 
-
-
 int
 run_main (int, ACE_TCHAR *[])
 {

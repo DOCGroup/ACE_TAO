@@ -5,7 +5,7 @@ TAO_Notify_Lanes_Consumer::TAO_Notify_Lanes_Consumer (TAO_Notify_ORB_Objects& or
 {
 }
 
-TAO_Notify_Lanes_Consumer::~TAO_Notify_Lanes_Consumer (void)
+TAO_Notify_Lanes_Consumer::~TAO_Notify_Lanes_Consumer ()
 {
 }
 
@@ -20,19 +20,19 @@ TAO_Notify_Lanes_Consumer::init (PortableServer::POA_var& poa, CosNotifyChannelA
 }
 
 PortableServer::POA_ptr
-TAO_Notify_Lanes_Consumer::_default_POA (void)
+TAO_Notify_Lanes_Consumer::_default_POA ()
 {
   return PortableServer::POA::_duplicate (this->default_POA_.in ());
 }
 
 void
-TAO_Notify_Lanes_Consumer::run (void)
+TAO_Notify_Lanes_Consumer::run ()
 {
   // Nothing to do.
 }
 
 void
-TAO_Notify_Lanes_Consumer::connect (void)
+TAO_Notify_Lanes_Consumer::connect ()
 {
   // Activate the consumer with the default_POA_
   CosNotifyComm::StructuredPushConsumer_var objref = this->_this ();
@@ -63,7 +63,7 @@ TAO_Notify_Lanes_Consumer::connect (void)
 }
 
 void
-TAO_Notify_Lanes_Consumer::disconnect (void)
+TAO_Notify_Lanes_Consumer::disconnect ()
 {
   this->proxy_supplier_->disconnect_structured_push_supplier();
 }
@@ -109,7 +109,7 @@ TAO_Notify_Lanes_Consumer::push_structured_event (const CosNotification::Structu
       this->deactivate ();
 
       // We received the event, shutdown the ORB.
-      this->orb_objects_.orb_->shutdown (1);
+      this->orb_objects_.orb_->shutdown (true);
     }
   catch (const CORBA::Exception& ex)
     {
@@ -120,7 +120,7 @@ TAO_Notify_Lanes_Consumer::push_structured_event (const CosNotification::Structu
 }
 
 void
-TAO_Notify_Lanes_Consumer::deactivate (void)
+TAO_Notify_Lanes_Consumer::deactivate ()
 {
   PortableServer::POA_var poa (this->_default_POA ());
 
@@ -130,7 +130,7 @@ TAO_Notify_Lanes_Consumer::deactivate (void)
 }
 
 void
-TAO_Notify_Lanes_Consumer::disconnect_structured_push_consumer (void)
+TAO_Notify_Lanes_Consumer::disconnect_structured_push_consumer ()
 {
   this->deactivate ();
 }

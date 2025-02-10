@@ -17,7 +17,7 @@ ACE_Framework_Component_T<Concrete>::ACE_Framework_Component_T (Concrete *concre
 }
 
 template <class Concrete>
-ACE_Framework_Component_T<Concrete>::~ACE_Framework_Component_T (void)
+ACE_Framework_Component_T<Concrete>::~ACE_Framework_Component_T ()
 {
   ACE_TRACE ("ACE_Framework_Component_T<Concrete>::~ACE_Framework_Component_T");
   Concrete::close_singleton ();
@@ -26,7 +26,7 @@ ACE_Framework_Component_T<Concrete>::~ACE_Framework_Component_T (void)
 ACE_ALLOC_HOOK_DEFINE_Tt(ACE_Framework_Component_T)
 
 template <class Concrete> void
-ACE_Framework_Component_T<Concrete>::close_singleton (void)
+ACE_Framework_Component_T<Concrete>::close_singleton ()
 {
   ACE_TRACE ("ACE_Framework_Component_T<Concrete>::close_singleton");
   Concrete::close_singleton ();

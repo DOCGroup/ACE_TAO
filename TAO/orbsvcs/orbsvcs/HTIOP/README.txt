@@ -1,5 +1,3 @@
-
-
       HTTP Tunneling Inter-ORB Protocol
 
 Introduction
@@ -8,8 +6,6 @@ HTTP Tunneling Protocol
 HTTP Tunneling Inter-ORB Protocol
 
 Introduction
-
-
 
 1.Terminology
 

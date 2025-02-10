@@ -19,17 +19,17 @@ AST_Connector::AST_Connector (
               n),
     UTL_Scope (AST_Decl::NT_connector),
     AST_Interface (n,
+                   nullptr,
                    0,
-                   0,
-                   0,
+                   nullptr,
                    0,
                    false,
                    false),
     AST_Component (n,
                    base_connector,
+                   nullptr,
                    0,
-                   0,
-                   0,
+                   nullptr,
                    0)
 {
   if (!this->imported ())
@@ -38,18 +38,18 @@ AST_Connector::AST_Connector (
     }
 }
 
-AST_Connector::~AST_Connector (void)
+AST_Connector::~AST_Connector ()
 {
 }
 
 AST_Connector *
-AST_Connector::base_connector (void) const
+AST_Connector::base_connector () const
 {
-  return AST_Connector::narrow_from_decl (this->pd_base_component);
+  return dynamic_cast<AST_Connector*> (this->pd_base_component);
 }
 
 void
-AST_Connector::destroy (void)
+AST_Connector::destroy ()
 {
   this->AST_Component::destroy ();
 }
@@ -63,7 +63,7 @@ AST_Connector::dump (ACE_OSTREAM_TYPE &o)
 
   this->dump_i (o, " ");
 
-  if (this->pd_base_component != 0)
+  if (this->pd_base_component != nullptr)
     {
       this->dump_i (o, ": ");
       this->pd_base_component->local_name ()->dump (o);
@@ -82,6 +82,3 @@ AST_Connector::ast_accept (ast_visitor *visitor)
 {
   return visitor->visit_connector (this);
 }
-
-IMPL_NARROW_FROM_DECL (AST_Connector)
-IMPL_NARROW_FROM_SCOPE (AST_Connector)

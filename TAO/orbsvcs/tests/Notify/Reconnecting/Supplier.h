@@ -26,7 +26,7 @@ class StructuredPushSupplier_i : public virtual POA_CosNotifyComm::StructuredPus
       const CosNotification::EventTypeSeq & added,
       const CosNotification::EventTypeSeq & removed);
 
-  virtual void disconnect_structured_push_supplier (void);
+  virtual void disconnect_structured_push_supplier ();
 };
 
 class SequencePushSupplier_i : public virtual POA_CosNotifyComm::SequencePushSupplier
@@ -35,7 +35,7 @@ class SequencePushSupplier_i : public virtual POA_CosNotifyComm::SequencePushSup
       const CosNotification::EventTypeSeq & added,
       const CosNotification::EventTypeSeq & removed);
 
-  virtual void disconnect_sequence_push_supplier (void);
+  virtual void disconnect_sequence_push_supplier ();
 };
 
 class AnyPushSupplier_i : public virtual POA_CosNotifyComm::PushSupplier
@@ -44,7 +44,7 @@ class AnyPushSupplier_i : public virtual POA_CosNotifyComm::PushSupplier
       const CosNotification::EventTypeSeq & added,
       const CosNotification::EventTypeSeq & removed);
 
-  virtual void disconnect_push_supplier (void);
+  virtual void disconnect_push_supplier ();
 };
 
 class ReconnectionCallback_i : public virtual POA_NotifyExt::ReconnectionCallback
@@ -58,13 +58,13 @@ public:
     PortableServer::POA_ptr poa,
     CosNotifyChannelAdmin::EventChannelFactory_ptr ecf_);
 
-  void fini (void);
+  void fini ();
 
   size_t reconnect_count () const;
 
   virtual void reconnect (CORBA::Object_ptr reconnection);
 
-  virtual CORBA::Boolean is_alive (void);
+  virtual CORBA::Boolean is_alive ();
 
 private:
   Supplier_Main & supplier_main_;
@@ -84,8 +84,8 @@ class Supplier_Main
   int parse_single_arg (int argc, ACE_TCHAR *argv[]);
 
   int init (int argc, ACE_TCHAR *argv[]);
-  int run (void);
-  int fini (void);
+  int run ();
+  int fini ();
   void usage (FILE * log) const;
 
   void reconnect (
@@ -93,24 +93,24 @@ class Supplier_Main
 
  private:
   /// Find naming service.
-  int resolve_naming_service (void);
+  int resolve_naming_service ();
 
   /// Resolve the Notify factory from the Naming service.
-  int find_notify_factory (void);
+  int find_notify_factory ();
 
   /// Resolve the Notify factory using resolve_initial_reference ("NotifyEventChannelFactory")
-  int resolve_notify_factory (void);
+  int resolve_notify_factory ();
 
-  void init_event_channel (void);
-  void init_supplier_admin (void);
-  void init_structured_proxy_consumer (void);
-  void init_sequence_proxy_consumer (void);
-  void init_any_proxy_consumer (void);
+  void init_event_channel ();
+  void init_supplier_admin ();
+  void init_structured_proxy_consumer ();
+  void init_sequence_proxy_consumer ();
+  void init_any_proxy_consumer ();
 
   /// send events.
-  void send_structured_event (void);
-  void send_sequence_event (void);
-  void send_any_event (void);
+  void send_structured_event ();
+  void send_sequence_event ();
+  void send_any_event ();
 
   void save_ids();
   bool load_ids();
@@ -124,7 +124,6 @@ class Supplier_Main
   ////////////////
   // Data members
  private:
-
   // set by command line parameters
   bool verbose_;             // -v make a glorious noise
   enum Mode_T {
@@ -169,7 +168,6 @@ class Supplier_Main
 
   bool reconnecting_;
 };
-
 
 
 #endif /* RECONNECTNG_SUPPLIER_H */

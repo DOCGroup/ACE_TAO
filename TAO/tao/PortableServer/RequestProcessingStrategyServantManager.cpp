@@ -14,12 +14,8 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    RequestProcessingStrategyServantManager::RequestProcessingStrategyServantManager (void)
-    {
-    }
-
     PortableServer::Servant
-    RequestProcessingStrategyServantManager::get_servant (void)
+    RequestProcessingStrategyServantManager::get_servant ()
     {
       throw PortableServer::POA::WrongPolicy ();
     }
@@ -62,12 +58,6 @@ namespace TAO
       const PortableServer::ObjectId &id)
     {
       return this->poa_->user_id_to_servant_i (id);
-    }
-
-    ::PortableServer::RequestProcessingPolicyValue
-    RequestProcessingStrategyServantManager::type() const
-    {
-      return ::PortableServer::USE_SERVANT_MANAGER;
     }
   }
 }

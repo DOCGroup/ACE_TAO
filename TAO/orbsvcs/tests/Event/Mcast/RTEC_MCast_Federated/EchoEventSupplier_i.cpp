@@ -8,7 +8,6 @@
 EchoEventSupplier_i::EchoEventSupplier_i(CORBA::ORB_ptr orb)
   : orb_(CORBA::ORB::_duplicate(orb))
 {
-  // Nothing to do.
 }
 
 // Override the disconnect_push_Supplier() operation.

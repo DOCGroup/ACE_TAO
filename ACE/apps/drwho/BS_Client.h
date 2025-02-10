@@ -24,7 +24,7 @@ class BS_Client : public Binary_Search
 public:
   // = Initialization.
   /// Constructor.
-  BS_Client (void);
+  BS_Client ();
 
   /**
    * This function is used to merge the <key_name> from server
@@ -42,7 +42,7 @@ public:
    * we skip over entries that don't have any hosts associated with
    * them.
    */
-  virtual Protocol_Record *get_each_entry (void);
+  virtual Protocol_Record *get_each_entry ();
 };
 
 #endif /* _BS_CLIENT_H */

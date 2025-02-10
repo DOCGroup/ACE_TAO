@@ -23,7 +23,7 @@ class be_visitor_executor_exs
 public:
   be_visitor_executor_exs (be_visitor_context *ctx);
 
-  ~be_visitor_executor_exs (void);
+  ~be_visitor_executor_exs () = default;
 
   virtual int visit_operation (be_operation *node);
   virtual int visit_attribute (be_attribute *node);

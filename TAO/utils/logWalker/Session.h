@@ -24,15 +24,15 @@ class Session
 public:
   Session ();
 
-  ~Session (void);
+  ~Session ();
 
   void add_process (HostProcess *proc);
   HostProcess *find_process (long pid);
   HostProcess *find_host (const Endpoint &endpoint, bool server);
-  void reconcile (void);
+  void reconcile ();
 
   static bool set_tao_version (ACE_TCHAR *str);
-  static long tao_version (void);
+  static long tao_version ();
   static void alternate_address (const char *string);
   static bool is_equivalent (const ACE_CString &primary,
                              const ACE_CString &alternate);
@@ -41,8 +41,8 @@ public:
   void make_dir (const char * ,bool );
   void outfile (const char * );
 
-  bool has_dir (void);
-  bool has_outfile (void);
+  bool has_dir ();
+  bool has_outfile ();
 
   void dump ();
   ostream * stream_for (ostream *old,

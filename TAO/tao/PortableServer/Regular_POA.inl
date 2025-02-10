@@ -4,7 +4,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE PortableServer::POA_ptr
-TAO_Regular_POA::the_parent (void)
+TAO_Regular_POA::the_parent ()
 {
   return PortableServer::POA::_duplicate (this->parent_);
 }

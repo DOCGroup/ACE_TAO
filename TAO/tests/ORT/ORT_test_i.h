@@ -21,17 +21,14 @@
 class ORT_test_i : public virtual POA_ObjectReferenceTemplate::ORT_test
 {
 public:
-
   ORT_test_i (CORBA::ORB_ptr orb);
 
-  virtual CORBA::Boolean request_server (void);
+  virtual CORBA::Boolean request_server ();
 
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
 private:
-
   CORBA::ORB_var orb_;
-
 };
 
 

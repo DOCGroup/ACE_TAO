@@ -11,7 +11,7 @@ class Startup_Callback
 {
 public:
   /// Constructor
-  Startup_Callback (void);
+  Startup_Callback ();
 
   /// Return 1 if the process has started already
   /**

@@ -34,6 +34,7 @@
 #include "ace/Truncate.h"
 #include "ace/OS_NS_string.h"
 #include "ace/os_include/os_ctype.h"
+#include <cstring>
 
 // TAO_IDL - Generated from
 // be\be_visitor_arg_traits.cpp:70
@@ -52,7 +53,7 @@ namespace TAO
 #if !defined (_TAO_OBJECTKEY_CS_)
 #define _TAO_OBJECTKEY_CS_
 
-TAO::ObjectKey::ObjectKey (void)
+TAO::ObjectKey::ObjectKey ()
 {}
 
 TAO::ObjectKey::ObjectKey (
@@ -76,16 +77,7 @@ TAO::ObjectKey::ObjectKey (
     (max, length, buffer, release)
 {}
 
-TAO::ObjectKey::ObjectKey (
-    const ObjectKey &seq
-  )
-  : TAO::unbounded_value_sequence<
-        CORBA::Octet
-      >
-    (seq)
-{}
-
-TAO::ObjectKey::~ObjectKey (void)
+TAO::ObjectKey::~ObjectKey ()
 {}
 
 // Hand crafted.
@@ -152,13 +144,13 @@ TAO::ObjectKey::decode_string_to_sequence (
   TAO::unbounded_value_sequence<CORBA::Octet> & seq,
   char const * str)
 {
-  if (str == 0)
+  if (str == nullptr)
     {
       seq.length (0);
       return;
     }
 
-  size_t const str_len = ACE_OS::strlen (str);
+  size_t const str_len = std::strlen (str);
 
   // Ensure sequence length value does not exceed maximum value for
   // sequence index type (CORBA::ULong).  This is mostly an issue for

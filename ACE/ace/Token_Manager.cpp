@@ -37,7 +37,7 @@ ACE_Token_Manager::~ACE_Token_Manager ()
 }
 
 ACE_Token_Manager *
-ACE_Token_Manager::instance (void)
+ACE_Token_Manager::instance ()
 {
   ACE_TRACE ("ACE_Token_Manager::instance");
 
@@ -251,7 +251,7 @@ ACE_Token_Manager::release_token (ACE_Tokens *&token)
 }
 
 void
-ACE_Token_Manager::dump (void) const
+ACE_Token_Manager::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Token_Manager::dump");

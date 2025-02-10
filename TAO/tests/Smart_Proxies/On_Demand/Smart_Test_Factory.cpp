@@ -1,7 +1,7 @@
 #define ACE_BUILD_SVC_DLL
 #include "Smart_Test_Factory.h"
 
-Smart_Test_Factory::Smart_Test_Factory (void)
+Smart_Test_Factory::Smart_Test_Factory ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "Smart_Test_Factory\n"));
@@ -17,7 +17,6 @@ Smart_Test_Factory::create_proxy (Test_ptr proxy)
      ACE_NEW_RETURN (proxy, Smart_Test_Proxy (proxy), 0);
 
    return proxy;
-
  }
 
 // The following Factory is used by the <ACE_Service_Config> to

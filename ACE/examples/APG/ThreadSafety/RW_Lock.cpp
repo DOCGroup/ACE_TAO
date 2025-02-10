@@ -94,7 +94,7 @@ public:
   Runner(HA_DiscoveryAgent &agent) : agent_(agent)
   { }
 
-  virtual int svc (void)
+  virtual int svc ()
   {
     ACE_ASSERT(agent_.contains_device(devices[9]) == 1);
     agent_.remove_device (devices[9]);

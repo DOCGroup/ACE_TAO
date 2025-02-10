@@ -149,7 +149,6 @@ test_no_implicit_activation (
       // Implicit activation should fail
       Test_var myservant =
           myhello._this ();
-
     }
   catch (const PortableServer::POA::WrongPolicy& )
     {

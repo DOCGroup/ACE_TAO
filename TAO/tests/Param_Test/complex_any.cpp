@@ -25,21 +25,21 @@ const int LEVEL_3_LENGTH = 3;
 
 size_t Test_Complex_Any::counter = 0;
 
-Test_Complex_Any::Test_Complex_Any (void)
+Test_Complex_Any::Test_Complex_Any ()
   : opname_ (CORBA::string_dup ("test_complex_any")),
     out_ (new CORBA::Any),
     ret_ (new CORBA::Any)
 {
 }
 
-Test_Complex_Any::~Test_Complex_Any (void)
+Test_Complex_Any::~Test_Complex_Any ()
 {
   CORBA::string_free (this->opname_);
   this->opname_ = 0;
 }
 
 const char *
-Test_Complex_Any::opname (void) const
+Test_Complex_Any::opname () const
 {
   return this->opname_;
 }
@@ -84,7 +84,7 @@ Test_Complex_Any::init_parameters (Param_Test_ptr)
 //                                                                  <- boolean
 //                                                                  <- short
 int
-Test_Complex_Any::reset_parameters (void)
+Test_Complex_Any::reset_parameters ()
 {
   Generator *gen = GENERATOR::instance (); // value generator
 
@@ -102,7 +102,7 @@ Test_Complex_Any::reset_parameters (void)
 
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG,
-                        "setting level 5 string = %s\n",
+                        "setting level 5 string = %C\n",
                         l5_str));
 
           level4_struct.level5_string = l5_str;
@@ -115,7 +115,7 @@ Test_Complex_Any::reset_parameters (void)
 
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG,
-                        "setting level 9 string = %s\n",
+                        "setting level 9 string = %C\n",
                         l9_str));
 
           level8_struct.level9_string = l9_str;
@@ -172,7 +172,7 @@ Test_Complex_Any::run_sii_test (Param_Test_ptr objref)
 }
 
 CORBA::Boolean
-Test_Complex_Any::check_validity (void)
+Test_Complex_Any::check_validity ()
 {
   const CORBA::AnySeq *level2_in_seq = 0;
   const CORBA::AnySeq *level2_test_seq = 0;
@@ -306,6 +306,6 @@ Test_Complex_Any::check_validity (CORBA::Request_ptr /*req*/)
 }
 
 void
-Test_Complex_Any::print_values (void)
+Test_Complex_Any::print_values ()
 {
 }

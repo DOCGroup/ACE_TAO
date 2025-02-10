@@ -1,11 +1,7 @@
 #include "ServerInterceptor.h"
 #include "tao/PI_Server/ServerRequestInfoA.h"
 #include "ace/OS_NS_string.h"
-#if defined (ACE_HAS_STANDARD_CPP_LIBRARY) && (ACE_HAS_STANDARD_CPP_LIBRARY == 1)
 #include <iostream>
-#else
-#include <iostream.h>
-#endif
 
 const IOP::ServiceId service_id = 0xdeed;
 const unsigned int num_allowed_users = 4;
@@ -13,7 +9,7 @@ static const char* allowed_users[num_allowed_users+1] =
   {"Ron Klein", "Scott Case", "Mark Hodge", "Greg Black", 0};
 const char* restricted_interfaces[1] = {"IDL:Messenger:1.0"};
 
-ServerInterceptor::ServerInterceptor (void)
+ServerInterceptor::ServerInterceptor ()
   : myname_ ("Server_Authentication_Interceptor")
 {
   std::cout << "Calling ServerInterceptor constructor." << std::endl;

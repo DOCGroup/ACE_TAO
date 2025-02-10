@@ -2,7 +2,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_IORInterceptor_Adapter_Factory::~TAO_IORInterceptor_Adapter_Factory (void)
+TAO_IORInterceptor_Adapter_Factory::~TAO_IORInterceptor_Adapter_Factory ()
 {
 }
 

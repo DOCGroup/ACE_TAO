@@ -26,16 +26,13 @@ class client_i
   : public virtual POA_client
 {
 public:
-
   client_i (server_ptr s);
-  virtual ~client_i (void);
+  virtual ~client_i ();
 
   virtual void test_reply (const char *msg);
 
 private:
-
   server_var server_;
-
 };
 
 #endif  /* CLIENT_I_H */

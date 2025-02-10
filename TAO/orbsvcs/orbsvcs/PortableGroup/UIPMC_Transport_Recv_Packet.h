@@ -26,7 +26,6 @@ class TAO_UIPMC_Mcast_Transport;
 
 namespace TAO_PG
 {
-
   /**
    * @class UIPMC_Recv_Packet_Cleanup_Guard
    *
@@ -37,7 +36,7 @@ namespace TAO_PG
   public:
     UIPMC_Recv_Packet_Cleanup_Guard (TAO_UIPMC_Mcast_Transport *transport);
 
-    ~UIPMC_Recv_Packet_Cleanup_Guard (void);
+    ~UIPMC_Recv_Packet_Cleanup_Guard ();
 
   private:
     TAO_UIPMC_Mcast_Transport *transport_;
@@ -52,9 +51,9 @@ namespace TAO_PG
   {
   public:
     /// Constructs a new recv packet.
-    UIPMC_Recv_Packet (void);
+    UIPMC_Recv_Packet ();
 
-    ~UIPMC_Recv_Packet (void);
+    ~UIPMC_Recv_Packet ();
 
     /// Adds a new fragment to the packet and if it fails marks the packet
     /// as broken.
@@ -67,9 +66,9 @@ namespace TAO_PG
     /// Returns the time when the first fragment was received or
     /// ACE_Time_Value::zero if the whole packet was not able to
     /// reconstruct for some reason.
-    ACE_Time_Value const &started (void) const;
+    ACE_Time_Value const &started () const;
 
-    CORBA::ULong data_length (void) const;
+    CORBA::ULong data_length () const;
 
     /// Copies fragments to buf. Caller ensures that the buf is big enough
     /// for all fragments.
@@ -97,7 +96,6 @@ namespace TAO_PG
                                  ACE_SYNCH_NULL_MUTEX> Fragments_Map;
     Fragments_Map fragments_;
   };
-
 } // namespace TAO_PG
 
 TAO_END_VERSIONED_NAMESPACE_DECL

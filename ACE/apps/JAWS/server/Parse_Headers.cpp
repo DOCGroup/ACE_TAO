@@ -8,11 +8,11 @@
 
 // Implementation of class Headers
 
-Headers::Headers (void) : done_(0)
+Headers::Headers () : done_(0)
 {
 }
 
-Headers::~Headers (void)
+Headers::~Headers ()
 {
 }
 
@@ -120,7 +120,7 @@ Headers::complete_header_line (char *const header_line)
 }
 
 int
-Headers::end_of_headers (void) const
+Headers::end_of_headers () const
 {
   return this->done_;
 }
@@ -162,29 +162,29 @@ Headers::end_of_line (char *&line, int &offset) const
 
 // Implementation of class Headers_Map
 
-Headers_Map::Headers_Map (void)
+Headers_Map::Headers_Map ()
   : num_headers_(0)
 {
 }
 
-Headers_Map::~Headers_Map (void)
+Headers_Map::~Headers_Map ()
 {
 }
 
-Headers_Map_Item::Headers_Map_Item (void)
+Headers_Map_Item::Headers_Map_Item ()
   : header_(0),
     value_(0)
 {
 }
 
-Headers_Map_Item::~Headers_Map_Item (void)
+Headers_Map_Item::~Headers_Map_Item ()
 {
   ACE_OS::free ((void *) this->header_);
   ACE_OS::free ((void *) this->value_);
   this->header_ = this->value_ = 0;
 }
 
-// Headers_Map_Item::operator const char * (void) const
+// Headers_Map_Item::operator const char * () const
 // {
 //   return this->value_ == 0 ? this->no_value_ : this->value_;
 // }
@@ -216,13 +216,13 @@ Headers_Map_Item::operator= (const Headers_Map_Item & mi)
 }
 
 const char *
-Headers_Map_Item::header (void) const
+Headers_Map_Item::header () const
 {
   return this->header_;
 }
 
 const char *
-Headers_Map_Item::value (void) const
+Headers_Map_Item::value () const
 {
   return this->value_;
 }

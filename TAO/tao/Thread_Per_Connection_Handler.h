@@ -44,13 +44,13 @@ public:
   TAO_Thread_Per_Connection_Handler (TAO_Connection_Handler *ch,
                                      TAO_ORB_Core *oc);
 
-  ~TAO_Thread_Per_Connection_Handler (void);
+  ~TAO_Thread_Per_Connection_Handler ();
 
   /// Template hook method that the thread uses...
   /**
    * Please see the documentation in ace/Task.h for details.
    */
-  virtual int svc (void);
+  virtual int svc ();
   virtual int open (void *);
   virtual int close (u_long);
 

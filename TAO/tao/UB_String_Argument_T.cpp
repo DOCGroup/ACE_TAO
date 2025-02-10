@@ -34,7 +34,7 @@ TAO::In_UB_String_Argument_T<S_var,Insert_Policy>::interceptor_value (
 
 template<typename S_var,
          template <typename> class Insert_Policy>
-TAO::In_UB_String_Clonable_Argument_T<S_var,Insert_Policy>::~In_UB_String_Clonable_Argument_T (void)
+TAO::In_UB_String_Clonable_Argument_T<S_var,Insert_Policy>::~In_UB_String_Clonable_Argument_T ()
 {
   if (this->is_clone_)
     {

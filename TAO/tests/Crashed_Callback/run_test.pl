@@ -53,7 +53,7 @@ if ($client->PutFile ($iorbase) == -1) {
     exit 1;
 }
 
-$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval() + 45);
+$client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval() + 45, {self_crash => 1});
 
 # The client crashes, therefore it normally exists with status != 0,
 # but a status of -1 would be a serious error.

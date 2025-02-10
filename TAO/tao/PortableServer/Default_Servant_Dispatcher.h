@@ -8,8 +8,8 @@
  */
 //=============================================================================
 
-#ifndef TAO_DEFAULT_SERVANT_DISPATCHER_H
-#define TAO_DEFAULT_SERVANT_DISPATCHER_H
+#ifndef Default_Servant_DISPATCHER_H
+#define Default_Servant_DISPATCHER_H
 #include /**/ "ace/pre.h"
 
 #include "tao/PortableServer/portableserver_export.h"
@@ -34,7 +34,7 @@ class TAO_PortableServer_Export TAO_Default_Servant_Dispatcher
   : public TAO_Servant_Dispatcher
 {
 public:
-  virtual ~TAO_Default_Servant_Dispatcher (void);
+  virtual ~TAO_Default_Servant_Dispatcher () = default;
 
   /// Pre_invoke remote request.
   void pre_invoke_remote_request (
@@ -68,4 +68,4 @@ public:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
-#endif /* TAO_DEFAULT_SERVANT_DISPATCHER_H */
+#endif /* Default_Servant_DISPATCHER_H */

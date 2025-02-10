@@ -10,7 +10,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
 
-Server_i::Server_i (void)
+Server_i::Server_i ()
   : argc_ (0),
     argv_ (0),
     orb_ (),
@@ -20,7 +20,7 @@ Server_i::Server_i (void)
 {
 }
 
-Server_i::~Server_i (void)
+Server_i::~Server_i ()
 {
   delete this->ior_multicast_;
 }
@@ -94,7 +94,7 @@ Server_i::init (int &argc,
       this->orb_->run ();
 
       //Destroy the POA, waiting until the destruction terminates.
-      poa->destroy (1, 1);
+      poa->destroy (true, true);
       this->orb_->destroy ();
     }
   catch (const CORBA::Exception& ex)

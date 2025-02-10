@@ -8,8 +8,8 @@
  */
 //=============================================================================
 
-#ifndef TAO_SERVANT_LOCATION_H
-#define TAO_SERVANT_LOCATION_H
+#ifndef TAO_Servant_Location_H
+#define TAO_Servant_Location_H
 
 #include /**/ "ace/pre.h"
 
@@ -23,16 +23,16 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-enum TAO_SERVANT_LOCATION
+enum class TAO_Servant_Location
 {
-  TAO_SERVANT_FOUND,
-  TAO_DEFAULT_SERVANT,
-  TAO_SERVANT_MANAGER,
-  TAO_SERVANT_NOT_FOUND
+  Found,
+  Default_Servant,
+  Servant_Manager,
+  Not_Found
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 
-#endif /* TAO_SERVANT_LOCATION_H */
+#endif /* TAO_Servant_Location_H */

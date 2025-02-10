@@ -42,7 +42,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_SFP_Fragment_Node
 {
 public:
-  TAO_SFP_Fragment_Node (void) : data_ (0) {}
+  TAO_SFP_Fragment_Node () : data_ (0) {}
   flowProtocol::fragment fragment_info_;
   ACE_Message_Block *data_;
   friend bool operator< (const TAO_SFP_Fragment_Node& left,
@@ -56,7 +56,7 @@ public:
 class TAO_SFP_Fragment_Table_Entry
 {
 public:
-  TAO_SFP_Fragment_Table_Entry (void)
+  TAO_SFP_Fragment_Table_Entry ()
     :last_received_ (0),
      num_fragments_ (0)
     {}
@@ -77,10 +77,10 @@ typedef ACE_Hash_Map_Manager<CORBA::ULong,TAO_SFP_Fragment_Table*,ACE_Null_Mutex
 class TAO_AV_Export TAO_SFP_Frame_State
 {
 public:
-  TAO_SFP_Frame_State (void);
-  CORBA::Boolean is_complete (void);
+  TAO_SFP_Frame_State ();
+  CORBA::Boolean is_complete ();
 
-  int reset (void);
+  int reset ();
 
   TAO_InputCDR cdr;
   // This is the InputCDR that will be used to decode the message.
@@ -138,7 +138,7 @@ public:
     START_RECEIVED
   };
 
-  TAO_SFP_Base (void);
+  TAO_SFP_Base ();
   static CORBA::Boolean start_frame (CORBA::Octet flags,
                                      flowProtocol::MsgType type,
                                      TAO_OutputCDR &msg);
@@ -217,10 +217,10 @@ public:
                   TAO_AV_Transport *transport);
   // We should add a sfp options parameter.
 
-  virtual ~TAO_SFP_Object (void);
+  virtual ~TAO_SFP_Object ();
   // Dtor
 
-  virtual int handle_input (void) = 0;
+  virtual int handle_input () = 0;
   virtual int send_frame (ACE_Message_Block *frame,
                           TAO_AV_frame_info *frame_info = 0);
 
@@ -231,7 +231,7 @@ public:
   virtual int send_frame (const char*buf,
                           size_t len);
 
-  virtual int destroy (void);
+  virtual int destroy ();
   virtual int set_policies (const TAO_AV_PolicyList &policies);
 
 protected:
@@ -256,7 +256,7 @@ public:
   TAO_SFP_Producer_Object (TAO_AV_Callback *callback,
                            TAO_AV_Transport *transport,
                            const char *flow_options);
-  virtual int handle_input (void);
+  virtual int handle_input ();
 protected:
   CORBA::ULong credit_sequence_num_;
 };
@@ -271,7 +271,7 @@ public:
   TAO_SFP_Consumer_Object (TAO_AV_Callback *callback,
                            TAO_AV_Transport *transport,
                            ACE_CString& flow_options);
-  virtual int handle_input (void);
+  virtual int handle_input ();
 };
 
 /**
@@ -281,8 +281,8 @@ public:
 class TAO_AV_Export TAO_AV_SFP_Factory : public TAO_AV_Flow_Protocol_Factory
 {
 public:
-  TAO_AV_SFP_Factory (void);
-  virtual ~TAO_AV_SFP_Factory (void);
+  TAO_AV_SFP_Factory ();
+  virtual ~TAO_AV_SFP_Factory ();
   virtual int init (int argc, ACE_TCHAR *argv[]);
   // Initialization hook.
   virtual int match_protocol (const char *flow_string);

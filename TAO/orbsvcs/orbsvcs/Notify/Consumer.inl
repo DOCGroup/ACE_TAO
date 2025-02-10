@@ -10,19 +10,19 @@ TAO_Notify_Consumer::pending_events()
 }
 
 ACE_INLINE CORBA::Boolean
-TAO_Notify_Consumer::is_suspended (void)
+TAO_Notify_Consumer::is_suspended ()
 {
   return this->is_suspended_;
 }
 
 ACE_INLINE void
-TAO_Notify_Consumer::suspend (void)
+TAO_Notify_Consumer::suspend ()
 {
   this->is_suspended_ = 1;
 }
 
 ACE_INLINE size_t
-TAO_Notify_Consumer::pending_count (void)
+TAO_Notify_Consumer::pending_count ()
 {
   return this->pending_events_->size();
 }

@@ -6,12 +6,12 @@
 #include "ace/OS_NS_unistd.h"
 
 ACE_INLINE
-Handle_Broadcast::~Handle_Broadcast (void)
+Handle_Broadcast::~Handle_Broadcast ()
 {
 }
 
 ACE_INLINE
-Handle_Broadcast::Handle_Broadcast (void)
+Handle_Broadcast::Handle_Broadcast ()
 {
 }
 
@@ -78,14 +78,14 @@ Handle_Broadcast::init (int argc, ACE_TCHAR *argv[])
 }
 
 ACE_INLINE int
-Handle_Broadcast::fini (void)
+Handle_Broadcast::fini ()
 {
   return ACE_Reactor::instance ()->remove_handler
     (this, ACE_Event_Handler::ACCEPT_MASK);
 }
 
 ACE_INLINE ACE_HANDLE
-Handle_Broadcast::get_handle (void) const
+Handle_Broadcast::get_handle () const
 {
   return this->ACE_SOCK_Dgram::get_handle ();
 }

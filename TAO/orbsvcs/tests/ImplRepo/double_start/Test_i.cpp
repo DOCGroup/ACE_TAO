@@ -15,13 +15,13 @@ Test_i::~Test_i ()
 }
 
 void
-Test_i::arm (void)
+Test_i::arm ()
 {
   this->armed_ = true;
 }
 
 void
-Test_i::trigger (void)
+Test_i::trigger ()
 {
   if (this->armed_)
     {
@@ -38,7 +38,7 @@ Test_i::trigger (void)
 }
 
 int
-Test_i::exit_code (void) const
+Test_i::exit_code () const
 {
   return exit_code_;
 }

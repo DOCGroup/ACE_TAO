@@ -9,10 +9,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Valuetype_Adapter_Impl::~TAO_Valuetype_Adapter_Impl (void)
-{
-}
-
 CORBA::Object_ptr
 TAO_Valuetype_Adapter_Impl::abstractbase_to_object (
     CORBA::AbstractBase_ptr p)
@@ -36,7 +32,7 @@ TAO_Valuetype_Adapter_Impl::stream_to_abstract_base (
 }
 
 CORBA::Long
-TAO_Valuetype_Adapter_Impl::type_info_single (void) const
+TAO_Valuetype_Adapter_Impl::type_info_single () const
 {
   return TAO_OBV_GIOP_Flags::Type_info_single;
 }

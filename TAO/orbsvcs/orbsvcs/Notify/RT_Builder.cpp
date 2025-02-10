@@ -1,16 +1,15 @@
 #include "orbsvcs/Notify/RT_Builder.h"
-
-#include "ace/Auto_Ptr.h"
-#include "ace/Dynamic_Service.h"
 #include "orbsvcs/Notify/ETCL_FilterFactory.h"
 #include "orbsvcs/Notify/RT_POA_Helper.h"
 #include "orbsvcs/Notify/Properties.h"
 #include "orbsvcs/NotifyExtC.h"
 #include "orbsvcs/Notify/Object.h"
+#include "ace/Dynamic_Service.h"
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Notify_RT_Builder::TAO_Notify_RT_Builder (void)
+TAO_Notify_RT_Builder::TAO_Notify_RT_Builder ()
 {
 }
 
@@ -29,7 +28,7 @@ TAO_Notify_RT_Builder::apply_thread_pool_concurrency (TAO_Notify_Object& object
                     TAO_Notify_RT_POA_Helper (),
                     CORBA::NO_MEMORY ());
 
-  ACE_Auto_Ptr<TAO_Notify_POA_Helper> auto_proxy_poa (proxy_poa);
+  std::unique_ptr<TAO_Notify_POA_Helper> auto_proxy_poa (proxy_poa);
 
   PortableServer::POA_var default_poa = TAO_Notify_PROPERTIES::instance ()->default_poa ();
 
@@ -50,7 +49,7 @@ TAO_Notify_RT_Builder::apply_lane_concurrency (TAO_Notify_Object& object
                     TAO_Notify_RT_POA_Helper (),
                     CORBA::NO_MEMORY ());
 
-  ACE_Auto_Ptr<TAO_Notify_POA_Helper> auto_proxy_poa (proxy_poa);
+  std::unique_ptr<TAO_Notify_POA_Helper> auto_proxy_poa (proxy_poa);
 
   PortableServer::POA_var default_poa = TAO_Notify_PROPERTIES::instance ()->default_poa ();
 

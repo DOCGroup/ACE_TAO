@@ -1,6 +1,6 @@
 #include "ace/Log_Msg.h"
 
-void foo (void);
+void foo ();
 
 int ACE_TMAIN (int, ACE_TCHAR *argv[])
 {
@@ -22,7 +22,7 @@ int ACE_TMAIN (int, ACE_TCHAR *argv[])
   return 0;
 }
 
-void foo (void)
+void foo ()
 {
   ACE_TRACE ("foo");
 

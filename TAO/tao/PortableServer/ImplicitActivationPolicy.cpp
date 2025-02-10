@@ -17,9 +17,9 @@ namespace TAO
     }
 
     CORBA::Policy_ptr
-    ImplicitActivationPolicy::copy (void)
+    ImplicitActivationPolicy::copy ()
     {
-      ImplicitActivationPolicy *copy = 0;
+      ImplicitActivationPolicy *copy {};
       ACE_NEW_THROW_EX (copy,
                         ImplicitActivationPolicy (this->value_),
                         CORBA::NO_MEMORY ());
@@ -28,30 +28,30 @@ namespace TAO
     }
 
     void
-    ImplicitActivationPolicy::destroy (void)
+    ImplicitActivationPolicy::destroy ()
     {
     }
 
     ::PortableServer::ImplicitActivationPolicyValue
-    ImplicitActivationPolicy::value (void)
+    ImplicitActivationPolicy::value ()
     {
       return value_;
     }
 
     CORBA::PolicyType
-    ImplicitActivationPolicy::policy_type (void)
+    ImplicitActivationPolicy::policy_type ()
     {
       return ::PortableServer::IMPLICIT_ACTIVATION_POLICY_ID;
     }
 
     TAO_Cached_Policy_Type
-    ImplicitActivationPolicy::_tao_cached_type (void) const
+    ImplicitActivationPolicy::_tao_cached_type () const
     {
       return TAO_CACHED_POLICY_IMPLICIT_ACTIVATION;
     }
 
     TAO_Policy_Scope
-    ImplicitActivationPolicy::_tao_scope (void) const
+    ImplicitActivationPolicy::_tao_scope () const
     {
       return TAO_POLICY_POA_SCOPE;
     }

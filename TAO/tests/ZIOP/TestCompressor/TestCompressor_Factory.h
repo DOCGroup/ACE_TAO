@@ -32,7 +32,7 @@ namespace TAO
       public ::TAO::CompressorFactory
     {
       public:
-        Test_CompressorFactory (void);
+        Test_CompressorFactory ();
 
         virtual ::Compression::Compressor_ptr get_compressor (
             ::Compression::CompressionLevel compression_level);

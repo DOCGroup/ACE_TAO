@@ -19,7 +19,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_ALLOC_HOOK_DEFINE_Tyc(ACE_Task)
 
 template <ACE_SYNCH_DECL, class TIME_POLICY> void
-ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::dump (void) const
+ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::dump");
@@ -66,7 +66,7 @@ ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::ACE_Task (ACE_Thread_Manager *thr_man,
 }
 
 template<ACE_SYNCH_DECL, class TIME_POLICY>
-ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::~ACE_Task (void)
+ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::~ACE_Task ()
 {
   ACE_TRACE ("ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::~ACE_Task");
   if (this->delete_msg_queue_)
@@ -78,7 +78,7 @@ ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::~ACE_Task (void)
 }
 
 template<ACE_SYNCH_DECL, class TIME_POLICY> ACE_Task<ACE_SYNCH_USE, TIME_POLICY> *
-ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::sibling (void)
+ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::sibling ()
 {
   ACE_TRACE ("ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::sibling");
   if (this->mod_ == 0)
@@ -88,7 +88,7 @@ ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::sibling (void)
 }
 
 template<ACE_SYNCH_DECL, class TIME_POLICY> const ACE_TCHAR *
-ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::name (void) const
+ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::name () const
 {
   ACE_TRACE ("ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::name");
   if (this->mod_ == 0)
@@ -98,7 +98,7 @@ ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::name (void) const
 }
 
 template<ACE_SYNCH_DECL, class TIME_POLICY> ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *
-ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::module (void) const
+ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::module () const
 {
   ACE_TRACE ("ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::module");
   return this->mod_;

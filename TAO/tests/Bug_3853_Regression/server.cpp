@@ -59,15 +59,15 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     policies.length (5);
     // Lifespan policy
     policies[0] =
-      rootPOA->create_lifespan_policy (PortableServer::PERSISTENT );
+      rootPOA->create_lifespan_policy (PortableServer::PERSISTENT);
 
     // Servant Retention Policy
     policies[1] =
-      rootPOA->create_servant_retention_policy (PortableServer::RETAIN );
+      rootPOA->create_servant_retention_policy (PortableServer::RETAIN);
 
     // ID Assignment Policy
     policies[2] =
-      rootPOA->create_id_assignment_policy (PortableServer::USER_ID );
+      rootPOA->create_id_assignment_policy (PortableServer::USER_ID);
 
     // Request Processing Policy
     policies[3] =

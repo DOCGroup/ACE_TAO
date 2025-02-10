@@ -1,7 +1,7 @@
 #include "tao/Messaging/Messaging.h"
 #include "tao/AnyTypeCode/Any.h"
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/Get_Opt.h"
 #include "ace/Time_Value.h"
 #include "ace/OS_NS_unistd.h"
@@ -21,7 +21,7 @@ Client::Client (int argc, ACE_TCHAR* argv[])
 Client::~Client ()
 {
   if (!CORBA::is_nil (orb_.in())) {
-    orb_->shutdown (1);
+    orb_->shutdown (true);
     orb_->destroy ();
     orb_ = CORBA::ORB::_nil();
   }
@@ -65,7 +65,6 @@ Client::init (int argc, ACE_TCHAR* argv[])
       (policy_list, CORBA::SET_OVERRIDE);
     test_obj_transport_timeout_ = Test::_narrow (obj.in ());
     policy_list[1]->destroy ();
-
 
 
     // Timeout with SYNC_SCOPE SYNC_NONE
@@ -132,7 +131,6 @@ Client::init (int argc, ACE_TCHAR* argv[])
     policy_list[0]->destroy ();
     policy_list[1]->destroy ();
     policy_list.length(0);
-
   }
   catch( CORBA::Exception& ex) {
     ACE_ERROR ((LM_ERROR, "(%P|%t) Client::Init> Caught CORBA::Exception %s"
@@ -243,7 +241,7 @@ Client::test_oneway_timeout (bool flood)
 {
   bool status = true;
 
-  ACE_Auto_Array_Ptr<char> tmp (new char [6000000]);
+  std::unique_ptr<char[]> tmp (new char [6000000]);
   char* msg = tmp.get();
 
   ACE_OS::memset (msg,'A',5999999);
@@ -515,7 +513,7 @@ Client::flood_connection (ACE_Time_Value& tv)
   policy_list[0]->destroy ();
   policy_list.length(0);
 
-  ACE_Auto_Array_Ptr<char> tmp (new char [2000000]);
+  std::unique_ptr<char[]> tmp (new char [2000000]);
   char* msg = tmp.get();
 
   ACE_OS::memset (msg,'A',1999999);

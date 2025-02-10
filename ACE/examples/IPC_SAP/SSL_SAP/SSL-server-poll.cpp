@@ -40,7 +40,7 @@ static struct pollfd poll_array[MAX_HANDLES];
 static Buffer_Info buffer_array[MAX_HANDLES];
 
 static void
-init_poll_array (void)
+init_poll_array ()
 {
   int i;
 

@@ -1,7 +1,7 @@
 #include "Trace.h"
 
 // Listing 1 code/ch03
-void foo (void);
+void foo ();
 
 int ACE_TMAIN (int, ACE_TCHAR *[])
 {
@@ -14,7 +14,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   TRACE_RETURN (0);
 }
 
-void foo (void)
+void foo ()
 {
   TRACE ("foo");
   MY_DEBUG (ACE_TEXT ("Howdy Pardner\n"));

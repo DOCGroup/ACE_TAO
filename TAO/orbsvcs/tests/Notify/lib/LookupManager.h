@@ -36,7 +36,7 @@ class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_LookupManager
 {
 public:
   /// Constructor
-  TAO_Notify_Tests_LookupManager (void);
+  TAO_Notify_Tests_LookupManager ();
 
   /// Destructor
   ~TAO_Notify_Tests_LookupManager ();

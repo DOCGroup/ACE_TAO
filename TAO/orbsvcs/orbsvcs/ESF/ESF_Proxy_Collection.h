@@ -125,7 +125,7 @@ class TAO_ESF_Proxy_Collection
 {
 public:
   /// destructor
-  virtual ~TAO_ESF_Proxy_Collection (void);
+  virtual ~TAO_ESF_Proxy_Collection ();
 
   /**
    * Iterate over the collection and invoke worker->work() for each
@@ -151,20 +151,12 @@ public:
   virtual void disconnected (PROXY *proxy) = 0;
 
   /// The EC is shutting down, must release all the elements.
-  virtual void shutdown (void) = 0;
+  virtual void shutdown () = 0;
 };
-
-// ****************************************************************
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "orbsvcs/ESF/ESF_Proxy_Collection.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("ESF_Proxy_Collection.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 #endif /* TAO_ESF_PROXY_COLLECTION_H */

@@ -10,7 +10,6 @@ template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 TAO_Trader<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>::
 TAO_Trader (TAO_Trader_Base::Trader_Components components)
 {
-
   // @@ Seth, we need a way to propagate the exception out.  This will
   // not work on platforms using environment variable.
   for (int i = LOOKUP_IF; i <= LINK_IF; i++)
@@ -79,7 +78,7 @@ TAO_Trader (TAO_Trader_Base::Trader_Components components)
 }
 
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
-TAO_Trader<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>::~TAO_Trader (void)
+TAO_Trader<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>::~TAO_Trader ()
 {
   // Remove Trading Components from POA
 
@@ -109,13 +108,13 @@ TAO_Trader<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>::~TAO_Trader (void)
 
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 TAO_Offer_Database<MAP_LOCK_TYPE>&
-TAO_Trader<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>::offer_database (void)
+TAO_Trader<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>::offer_database ()
 {
   return this->offer_database_;
 }
 
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE> ACE_Lock &
-TAO_Trader<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>::lock (void)
+TAO_Trader<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>::lock ()
 {
   return this->lock_;
 }
@@ -128,31 +127,31 @@ TAO_Trader_Components (const TAO_Trading_Components_i& comps)
 }
 
 template <class IF> CosTrading::Lookup_ptr
-TAO_Trader_Components<IF>::lookup_if (void)
+TAO_Trader_Components<IF>::lookup_if ()
 {
   return CosTrading::Lookup::_duplicate (this->comps_.lookup_if ());
 }
 
 template <class IF> CosTrading::Register_ptr
-TAO_Trader_Components<IF>::register_if (void)
+TAO_Trader_Components<IF>::register_if ()
 {
   return CosTrading::Register::_duplicate (this->comps_.register_if ());
 }
 
 template <class IF> CosTrading::Admin_ptr
-TAO_Trader_Components<IF>::admin_if (void)
+TAO_Trader_Components<IF>::admin_if ()
 {
   return CosTrading::Admin::_duplicate (this->comps_.admin_if ());
 }
 
 template <class IF> CosTrading::Proxy_ptr
-TAO_Trader_Components<IF>::proxy_if (void)
+TAO_Trader_Components<IF>::proxy_if ()
 {
   return CosTrading::Proxy::_duplicate (this->comps_.proxy_if ());
 }
 
 template <class IF> CosTrading::Link_ptr
-TAO_Trader_Components<IF>::link_if (void)
+TAO_Trader_Components<IF>::link_if ()
 {
   return CosTrading::Link::_duplicate (this->comps_.link_if ());
 }
@@ -164,19 +163,19 @@ TAO_Support_Attributes (const TAO_Support_Attributes_i& attrs)
 }
 
 template <class IF> CORBA::Boolean
-TAO_Support_Attributes<IF>::supports_modifiable_properties (void)
+TAO_Support_Attributes<IF>::supports_modifiable_properties ()
 {
   return this->attrs_.supports_modifiable_properties ();
 }
 
 template <class IF> CORBA::Boolean
-TAO_Support_Attributes<IF>::supports_dynamic_properties (void)
+TAO_Support_Attributes<IF>::supports_dynamic_properties ()
 {
   return this->attrs_.supports_dynamic_properties ();
 }
 
 template <class IF> CORBA::Boolean
-TAO_Support_Attributes<IF>::supports_proxy_offers (void)
+TAO_Support_Attributes<IF>::supports_proxy_offers ()
 {
   return this->attrs_.supports_proxy_offers ();
 }
@@ -195,67 +194,67 @@ TAO_Import_Attributes (const TAO_Import_Attributes_i& attrs)
 }
 
 template <class IF> CORBA::ULong
-TAO_Import_Attributes<IF>::def_search_card (void)
+TAO_Import_Attributes<IF>::def_search_card ()
 {
   return this->attrs_.def_search_card ();
 }
 
 template <class IF> CORBA::ULong
-TAO_Import_Attributes<IF>::max_search_card (void)
+TAO_Import_Attributes<IF>::max_search_card ()
 {
   return this->attrs_.max_search_card ();
 }
 
 template <class IF> CORBA::ULong
-TAO_Import_Attributes<IF>::def_match_card (void)
+TAO_Import_Attributes<IF>::def_match_card ()
 {
   return this->attrs_.def_match_card ();
 }
 
 template <class IF> CORBA::ULong
-TAO_Import_Attributes<IF>::max_match_card (void)
+TAO_Import_Attributes<IF>::max_match_card ()
 {
   return this->attrs_.max_match_card ();
 }
 
 template <class IF> CORBA::ULong
-TAO_Import_Attributes<IF>::def_return_card (void)
+TAO_Import_Attributes<IF>::def_return_card ()
 {
   return this->attrs_.def_return_card ();
 }
 
 template <class IF> CORBA::ULong
-TAO_Import_Attributes<IF>::max_return_card (void)
+TAO_Import_Attributes<IF>::max_return_card ()
 {
   return this->attrs_.max_return_card ();
 }
 
 template <class IF> CORBA::ULong
-TAO_Import_Attributes<IF>::max_list (void)
+TAO_Import_Attributes<IF>::max_list ()
 {
   return this->attrs_.max_list ();
 }
 
 template <class IF> CORBA::ULong
-TAO_Import_Attributes<IF>::def_hop_count (void)
+TAO_Import_Attributes<IF>::def_hop_count ()
 {
   return this->attrs_.def_hop_count ();
 }
 
 template <class IF> CORBA::ULong
-TAO_Import_Attributes<IF>::max_hop_count (void)
+TAO_Import_Attributes<IF>::max_hop_count ()
 {
   return this->attrs_.max_hop_count ();
 }
 
 template <class IF> CosTrading::FollowOption
-TAO_Import_Attributes<IF>::def_follow_policy (void)
+TAO_Import_Attributes<IF>::def_follow_policy ()
 {
   return this->attrs_.def_follow_policy ();
 }
 
 template <class IF> CosTrading::FollowOption
-TAO_Import_Attributes<IF>::max_follow_policy (void)
+TAO_Import_Attributes<IF>::max_follow_policy ()
 {
   return this->attrs_.max_follow_policy ();
 }
@@ -268,7 +267,7 @@ TAO_Link_Attributes (const TAO_Link_Attributes_i& attrs)
 }
 
 template <class IF> CosTrading::FollowOption
-TAO_Link_Attributes<IF>::max_link_follow_policy (void)
+TAO_Link_Attributes<IF>::max_link_follow_policy ()
 {
   return this->attrs_.max_link_follow_policy ();
 }

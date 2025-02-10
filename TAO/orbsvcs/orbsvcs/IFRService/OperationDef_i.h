@@ -44,7 +44,7 @@ public:
   TAO_OperationDef_i (TAO_Repository_i *repo);
 
   /// Destructor
-  virtual ~TAO_OperationDef_i (void);
+  virtual ~TAO_OperationDef_i ();
 
   /// Return our definition kind.
   virtual CORBA::DefinitionKind def_kind ();
@@ -104,7 +104,7 @@ public:
 
   void make_description (CORBA::OperationDescription &desc);
 
-  CORBA::TypeCode_ptr type_i (void);
+  CORBA::TypeCode_ptr type_i ();
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

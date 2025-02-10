@@ -9,7 +9,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_ECG_UDP_Receiver::~TAO_ECG_UDP_Receiver (void)
+TAO_ECG_UDP_Receiver::~TAO_ECG_UDP_Receiver ()
 {
   this->consumer_proxy_ =
     RtecEventChannelAdmin::ProxyPushConsumer::_nil ();
@@ -127,7 +127,7 @@ TAO_ECG_UDP_Receiver::reconnect (const RtecEventChannelAdmin::SupplierQOS& pub)
 }
 
 void
-TAO_ECG_UDP_Receiver::disconnect_push_supplier (void)
+TAO_ECG_UDP_Receiver::disconnect_push_supplier ()
 {
   // Prevent attempts to disconnect.
   this->auto_proxy_disconnect_.disallow_command ();
@@ -136,7 +136,7 @@ TAO_ECG_UDP_Receiver::disconnect_push_supplier (void)
 }
 
 void
-TAO_ECG_UDP_Receiver::shutdown (void)
+TAO_ECG_UDP_Receiver::shutdown ()
 {
   if (this->handler_rptr_.get ())
     this->handler_rptr_->shutdown ();

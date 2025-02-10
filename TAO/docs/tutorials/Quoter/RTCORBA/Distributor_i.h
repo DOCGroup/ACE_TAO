@@ -43,7 +43,7 @@ public:
   StockDistributor_i (RTPortableServer::POA_ptr poa);
 
   /// Destructor
-  virtual ~StockDistributor_i (void);
+  virtual ~StockDistributor_i ();
 
   /**
    * Insert StockNameConsumer object and its priority into the StockDistributor
@@ -90,19 +90,19 @@ public:
    * Set the active state of the StockDistributor object to true and create a thread
    * to publish the stock information to the Stock Broker clients.
    */
-  virtual void start (void);
+  virtual void start ();
 
   /**
    * Set the active state of StockDistributor object to false.
    */
-  virtual void stop (void);
+  virtual void stop ();
 
   virtual void shutdown ();
 
   /// Callback for stock database.
   void operator () (std::vector <std::string> &stocks);
 
-  int svn (void);
+  int svn ();
 
   /// The map that stores the subscribed StockNameConsumer object.
   typedef std::map <std::string,
@@ -137,10 +137,10 @@ class  StockQuoter_i
 {
 public:
   /// Constructor.
-  StockQuoter_i (void);
+  StockQuoter_i ();
 
   /// Destructor.
-  virtual ~StockQuoter_i (void);
+  virtual ~StockQuoter_i ();
 
   /**
    * Get detailed stock information.
@@ -170,7 +170,7 @@ public:
   StockDistributorHome_i (CORBA::ORB_ptr orb);
 
   /// Destructor
-  virtual ~StockDistributorHome_i (void);
+  virtual ~StockDistributorHome_i ();
 
   /**
    * Return the StockDistributor object created by the Constructor.
@@ -183,7 +183,7 @@ public:
                              siginfo_t * = 0,
                              ucontext_t * = 0);
 private:
-  void create_distributor (void);
+  void create_distributor ();
 
   /// Cached ORB used to shut down the system
   CORBA::ORB_var orb_;

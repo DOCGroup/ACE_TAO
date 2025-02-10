@@ -43,12 +43,11 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  */
 class ACE_FlReactor_Export ACE_FlReactor : public ACE_Select_Reactor
 {
-
 public:
   ACE_FlReactor (size_t size = DEFAULT_SIZE,
                  bool restart = false,
                  ACE_Sig_Handler * = 0);
-  virtual ~ACE_FlReactor (void);
+  virtual ~ACE_FlReactor ();
 
   // = Timer operations.
   virtual long schedule_timer (ACE_Event_Handler *event_handler,
@@ -90,7 +89,7 @@ protected:
 private:
   /// This method ensures there's an Fl timeout for the first timeout
   /// in the Reactor's Timer_Queue.
-  void reset_timeout (void);
+  void reset_timeout ();
 
   // = Integrate with the FL callback function mechanism.
   static void fl_io_proc (int fd, void*);

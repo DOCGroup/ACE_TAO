@@ -19,7 +19,7 @@ AMH_Servant::AMH_Servant (CORBA::ORB_ptr orb)
   this->reactor_ = orb->orb_core ()->reactor ();
 }
 
-AMH_Servant::~AMH_Servant (void)
+AMH_Servant::~AMH_Servant ()
 {
 }
 

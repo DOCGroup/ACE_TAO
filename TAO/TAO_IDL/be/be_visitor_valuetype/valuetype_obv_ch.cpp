@@ -24,7 +24,7 @@ be_visitor_valuetype_obv_ch::be_visitor_valuetype_obv_ch (
 {
 }
 
-be_visitor_valuetype_obv_ch::~be_visitor_valuetype_obv_ch (void)
+be_visitor_valuetype_obv_ch::~be_visitor_valuetype_obv_ch ()
 {
 }
 
@@ -40,8 +40,7 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ ;
+  TAO_INSERT_COMMENT (os);
 
   // OBV_ class maps only to a typedef if we are optimizing accessors.
   if (node->opt_accessor ())
@@ -92,7 +91,7 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
       //
 
       int i = 0;
-      AST_Type *inherited = 0;
+      AST_Type *inherited = nullptr;
 
       for (; i < node->n_inherits (); ++i)
         {
@@ -142,11 +141,10 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
       // to avoid ambiguity.
       if (node->n_supports () > 0)
         {
-          *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-              << "// " << __FILE__ << ":" << __LINE__ ;
+          TAO_INSERT_COMMENT (os);
 
-          *os << be_nl_2 << "virtual void _add_ref (void);" << be_nl;
-          *os << "virtual void _remove_ref (void);";
+          *os << be_nl_2 << "virtual void _add_ref ();" << be_nl;
+          *os << "virtual void _remove_ref ();";
         }
 
       if (node->have_operation ())
@@ -166,7 +164,7 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
           *os << "OBV_";
         }
 
-      *os << node->local_name () << " (void);";
+      *os << node->local_name () << " () = default;";
 
       // Initializing constructor.
       if (node->has_member ())
@@ -193,7 +191,7 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
         {
           *os << "OBV_";
         }
-      *os << node->local_name () << " (void);";
+      *os << node->local_name () << " ();";
 
       // Virtual _copy_value() only provided in OBV_* class when
       // ::CORBA::DefaultValueRefCountBase has been included.
@@ -205,39 +203,46 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
       if (this->obv_need_ref_counter (node))
         {
           *os << be_uidt_nl << be_nl << "public:" << be_idt_nl
-              << "virtual ::CORBA::ValueBase *_copy_value (void);";
+              << "virtual ::CORBA::ValueBase *_copy_value ();";
         }
 
       // Map fields to private data.
       if (!node->opt_accessor ())
         {
-          *os << be_nl << be_uidt_nl << "protected:" << be_idt_nl;
+          if (be_global->cdr_support ())
+            {
+              *os << be_nl << be_uidt_nl << "protected:" << be_idt_nl;
 
-          *os << "virtual ::CORBA::Boolean" << be_nl
-              << "_tao_marshal__" << node->flat_name ()
-              << " (TAO_OutputCDR &, TAO_ChunkInfo &) const;" << be_nl_2;
+              *os << "virtual ::CORBA::Boolean" << be_nl
+                  << "_tao_marshal__" << node->flat_name()
+                  << " (TAO_OutputCDR &, TAO_ChunkInfo &) const;" << be_nl_2;
 
-          *os << "virtual ::CORBA::Boolean" << be_nl
-              << "_tao_unmarshal__" << node->flat_name ()
-              << " (TAO_InputCDR &, TAO_ChunkInfo &);" << be_nl_2;
+              *os << "virtual ::CORBA::Boolean" << be_nl
+                  << "_tao_unmarshal__" << node->flat_name()
+                  << " (TAO_InputCDR &, TAO_ChunkInfo &);" << be_nl_2;
 
-          *os << "::CORBA::Boolean "
-              << "_tao_marshal_state (TAO_OutputCDR &, TAO_ChunkInfo &) const;"
-              << be_nl
-              << "::CORBA::Boolean "
-              << "_tao_unmarshal_state (TAO_InputCDR &, TAO_ChunkInfo &);"
-              << be_nl
-              << "virtual void "
-              << "truncation_hook (void);"
-              << be_uidt_nl << be_nl;
+              *os << "::CORBA::Boolean "
+                  << "_tao_marshal_state (TAO_OutputCDR &, TAO_ChunkInfo &) const;"
+                  << be_nl
+                  << "::CORBA::Boolean "
+                  << "_tao_unmarshal_state (TAO_InputCDR &, TAO_ChunkInfo &);"
+                  << be_nl
+                  << "virtual void "
+                  << "truncation_hook ();"
+                  << be_uidt_nl << be_nl;
+            }
 
           *os << "private:" << be_idt;
 
           this->gen_pd (node);
         }
 
-      *os << be_nl
-          << "CORBA::Boolean require_truncation_;" << be_uidt_nl
+      if (be_global->cdr_support ())
+        {
+          *os << be_nl
+              << "CORBA::Boolean require_truncation_ {false};";
+        }
+      *os << be_uidt_nl
           << "};";
     }
 
@@ -253,7 +258,7 @@ be_visitor_valuetype_obv_ch::visit_eventtype (be_eventtype *node)
 int
 be_visitor_valuetype_obv_ch::visit_field (be_field *node)
 {
-  be_valuetype *vt = be_valuetype::narrow_from_scope (node->defined_in ());
+  be_valuetype *vt = dynamic_cast<be_valuetype*> (node->defined_in ());
 
   if (!vt)
     {
@@ -281,7 +286,7 @@ be_visitor_valuetype_obv_ch::visit_field (be_field *node)
 }
 
 void
-be_visitor_valuetype_obv_ch::begin_public (void)
+be_visitor_valuetype_obv_ch::begin_public ()
 {
   AST_Decl::NodeType nt = this->ctx_->node ()->node_type ();
 
@@ -297,7 +302,7 @@ be_visitor_valuetype_obv_ch::begin_public (void)
 }
 
 void
-be_visitor_valuetype_obv_ch::begin_private (void)
+be_visitor_valuetype_obv_ch::begin_private ()
 {
   TAO_OutStream *os = this->ctx_->stream ();
   *os << be_uidt_nl << be_nl

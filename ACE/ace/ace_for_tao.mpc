@@ -37,7 +37,6 @@ project(ACE_FOR_TAO) : acedefaults, install, svcconf, uuid, versioned_namespace,
     Condition_Attributes.cpp
     Condition_Recursive_Thread_Mutex.cpp
     Condition_Thread_Mutex.cpp
-    Copy_Disabled.cpp
     DLL_Manager.cpp
     Dirent.cpp // Required by TAO_IDL
     Dirent_Selector.cpp
@@ -69,8 +68,6 @@ project(ACE_FOR_TAO) : acedefaults, install, svcconf, uuid, versioned_namespace,
     Lock.cpp
     Log_Category.cpp
     Log_Msg.cpp
-    Log_Msg_Backend.cpp
-    Log_Msg_Callback.cpp
     Log_Msg_IPC.cpp
     Log_Msg_NT_Event_Log.cpp
     Log_Msg_UNIX_Syslog.cpp
@@ -150,7 +147,6 @@ project(ACE_FOR_TAO) : acedefaults, install, svcconf, uuid, versioned_namespace,
     Reactor_Timer_Interface.cpp
     Read_Buffer.cpp
     Recursive_Thread_Mutex.cpp
-    Rtems_init.c
     RW_Mutex.cpp
     RW_Thread_Mutex.cpp
     Sched_Params.cpp
@@ -219,7 +215,6 @@ project(ACE_FOR_TAO) : acedefaults, install, svcconf, uuid, versioned_namespace,
     Auto_Event.cpp
     Auto_Functor.cpp
     Auto_IncDec_T.cpp
-    Auto_Ptr.cpp
     Based_Pointer_T.cpp
     Cache_Map_Manager_T.cpp
     Cached_Connect_Strategy_T.cpp
@@ -296,7 +291,6 @@ project(ACE_FOR_TAO) : acedefaults, install, svcconf, uuid, versioned_namespace,
     Guard_T.inl
     Handle_Gobbler.inl
     Lock_Adapter_T.inl
-    OS_Memory.inl
     Refcounted_Auto_Ptr.inl
     Reverse_Lock_T.inl
     TSS_T.inl
@@ -312,16 +306,18 @@ project(ACE_FOR_TAO) : acedefaults, install, svcconf, uuid, versioned_namespace,
     Bound_Ptr.h
     CORBA_macros.h
     Condition_T.h
+    Copy_Disabled.h
     Countdown_Time.h
     Default_Constants.h
     Event_Base.h
-    Exception_Macros.h
     Global_Macros.h
     Guard_T.h
     Handle_Gobbler.h
     If_Then_Else.h
     IO_Cntl_Msg.h
     Lock_Adapter_T.h
+    Log_Msg_Backend.h
+    Log_Msg_Callback.h
     Log_Priority.h
     Malloc_Base.h
     MMAP_Memory_Pool.h
@@ -361,15 +357,10 @@ project(ACE_FOR_TAO) : acedefaults, install, svcconf, uuid, versioned_namespace,
     Value_Ptr.h
     Version.h
     ace_wchar.h
-    checked_iterator.h
-    config-WinCE.h
     config-all.h
-    config-borland-common.h
     config-lite.h
-    config-minimal.h
     config-win32-borland.h
     config-win32-common.h
-    config-win32-msvc-7.h
     config-win32-msvc.h
     config-win32.h
     config.h
@@ -387,10 +378,10 @@ project(ACE_FOR_TAO) : acedefaults, install, svcconf, uuid, versioned_namespace,
 
   Documentation_Files {
     README
-    ../VERSION
+    ../VERSION.txt
   }
 
   Pkgconfig_Files {
-     ACE_FOR_TAO.pc.in
+    ACE_FOR_TAO.pc.in
   }
 }

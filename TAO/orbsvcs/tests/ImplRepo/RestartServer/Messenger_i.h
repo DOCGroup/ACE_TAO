@@ -19,7 +19,7 @@ public:
   Messenger_i (CORBA::ORB_ptr orb, Terminator &terminator);
 
   //Destructor
-  virtual ~Messenger_i (void);
+  virtual ~Messenger_i ();
 
   virtual CORBA::Boolean send_message (
     const char * user_name,
@@ -28,7 +28,7 @@ public:
 
   virtual void abort (CORBA::Short delay_secs);
 
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
 private:
   /// Use an ORB reference to shutdown the application.

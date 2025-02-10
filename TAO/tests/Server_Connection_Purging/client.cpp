@@ -116,7 +116,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // ACE_Time_Value tv (1);
 
       // while (singleton->handle_events (&tv) >= 1);
-
     }
 
   // Handle events moved to here to prevent this test taking best part

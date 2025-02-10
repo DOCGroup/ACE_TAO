@@ -18,9 +18,9 @@
 class test_i : public POA_test
 {
 public:
-  void deactivate_self (void);
+  void deactivate_self ();
 
-  PortableServer::POA_ptr _default_POA (void);
+  PortableServer::POA_ptr _default_POA ();
 
   PortableServer::POA_var poa_;
 
@@ -28,13 +28,13 @@ public:
 };
 
 PortableServer::POA_ptr
-test_i::_default_POA ( /**/)
+test_i::_default_POA ()
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
 
 void
-test_i::deactivate_self (void)
+test_i::deactivate_self ()
 {
   this->poa_->deactivate_object (this->id_);
 
@@ -94,7 +94,6 @@ test_object_deactivation (PortableServer::POA_ptr poa,
   ACE_ASSERT (expected_exception_raised);
 
 
-
   poa->activate_object_with_id (id,
                                 &servant);
 
@@ -140,13 +139,11 @@ test_object_deactivation (PortableServer::POA_ptr poa,
 
   // ACE_ASSERT dissappears in non-debug builds
   ACE_UNUSED_ARG (expected_exception_raised);
-
 }
 
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-
   try
     {
       // Initialize the ORB first.

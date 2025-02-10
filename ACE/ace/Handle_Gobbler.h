@@ -34,13 +34,12 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Handle_Gobbler
 {
 public:
-
   /// Destructor.  Cleans up any remaining handles.
-  inline ~ACE_Handle_Gobbler (void);
+  inline ~ACE_Handle_Gobbler ();
 
   /**
-   * Handles are opened continously until the process runs out of
-   * them, and then <n_handles_to_keep_available> handles are closed
+   * Handles are opened continuously until the process runs out of
+   * them, and then @a n_handles_to_keep_available handles are closed
    * (freed) thereby making them usable in the future.
    */
   inline int consume_handles (size_t n_handles_to_keep_available);
@@ -49,7 +48,7 @@ public:
   inline int free_handles (size_t n_handles);
 
   /// All remaining handles are closed.
-  inline void close_remaining_handles (void);
+  inline void close_remaining_handles ();
 
 private:
   typedef ACE_Handle_Set HANDLE_SET;

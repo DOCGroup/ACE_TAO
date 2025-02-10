@@ -25,10 +25,10 @@ class Binary_Search : public Search_Struct
 {
 public:
   /// Initialize the values for the iterators...
-  Binary_Search (void);
+  Binary_Search ();
 
   /// Destructor.
-  virtual ~Binary_Search (void);
+  virtual ~Binary_Search ();
 
   /**
    * Returns the next friend in the sequence of sorted friends.  Note
@@ -36,7 +36,7 @@ public:
    * iterator interface to include an "initialize" and "next"
    * function!
    */
-  virtual Protocol_Record *get_next_entry (void);
+  virtual Protocol_Record *get_next_entry ();
 
   /**
    * An iterator, similar to Binary_Search::get_next_friend, though in
@@ -45,7 +45,7 @@ public:
    * we skip over entries that don't have any hosts associated with
    * them.
    */
-  virtual Protocol_Record *get_each_entry (void);
+  virtual Protocol_Record *get_each_entry ();
 
   /**
    * This function is used to merge the <key_name> from server

@@ -30,7 +30,6 @@
 class Activator_Export Activator_Options
 {
 public:
-
   enum SERVICE_COMMAND {
     SC_NONE,
     SC_INSTALL,
@@ -54,50 +53,49 @@ public:
   int init_from_registry();
 
   /// Service Mode
-  bool service (void) const;
+  bool service () const;
 
   /// Notify the ImR when server processes die.
   /// @note Currently this only works on Unix.
-  bool notify_imr (void) const;
+  bool notify_imr () const;
 
   /// When notifying of child death, pause this number of milliseconds
   /// to simulate a heavily loaded server.
-  unsigned int induce_delay (void) const;
+  unsigned int induce_delay () const;
 
   /// Debug level for the Implementation Repository.
-  unsigned int debug (void) const;
+  unsigned int debug () const;
 
   /// Returns the file where the IOR should be stored.
-  const ACE_TString& ior_filename (void) const;
+  const ACE_TString& ior_filename () const;
 
   /// The nt service command to run (install/remove)
-  SERVICE_COMMAND service_command(void) const;
+  SERVICE_COMMAND service_command() const;
 
   /// Save the command line arguments as registry settings. (Windows only)
   int save_registry_options ();
 
-  const char* cmdline(void) const;
+  const char* cmdline() const;
 
-  const ACE_CString& name(void) const;
+  const ACE_CString& name() const;
 
-  int env_buf_len (void) const;
+  int env_buf_len () const;
 
-  int max_env_vars (void) const;
+  int max_env_vars () const;
 
-  bool detach_child (void) const;
+  bool detach_child () const;
 
 private:
   /// Parses and pulls out arguments for the ImR
   int parse_args (int &argc, ACE_TCHAR *argv[]);
 
   /// Print the usage information.
-  void print_usage (void) const;
+  void print_usage () const;
 
   /// Loads options from the registry
   int load_registry_options ();
 
 private:
-
   /// Our extra command line arguments
   ACE_CString cmdline_;
 

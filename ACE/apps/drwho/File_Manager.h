@@ -31,7 +31,7 @@ class File_Manager
 {
 public:
   /// Constructor.
-  File_Manager (void);
+  File_Manager ();
 
   int open_file (const char *filename);
   void get_login_and_real_name (const char *&login_name,
@@ -45,7 +45,7 @@ private:
   int buffer_size;
 
   int open_friends_file (const char *filename);
-  int open_passwd_file (void);
+  int open_passwd_file ();
 
   ACE_Mem_Map mmap_;
 };

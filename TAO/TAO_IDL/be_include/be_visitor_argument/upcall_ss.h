@@ -14,10 +14,6 @@
 #ifndef _BE_VISITOR_ARGUMENT_UPCALL_SS_H_
 #define _BE_VISITOR_ARGUMENT_UPCALL_SS_H_
 
-// ************************************************************
-// class be_visitor_args_upcall_ss
-// ************************************************************
-
 /**
  * @class be_visitor_args_upcall_ss
  *
@@ -32,7 +28,7 @@ public:
   be_visitor_args_upcall_ss (be_visitor_context *ctx);
 
   /// destructor
-  virtual ~be_visitor_args_upcall_ss (void);
+  virtual ~be_visitor_args_upcall_ss ();
 
   /// visit the argument node
   virtual int visit_argument (be_argument *node);
@@ -91,7 +87,7 @@ public:
   virtual int visit_eventtype_fwd (be_eventtype_fwd *node);
 
  private:
-  int emit_common (void);
+  int emit_common ();
   int emit_common2 (be_type *node);
 };
 

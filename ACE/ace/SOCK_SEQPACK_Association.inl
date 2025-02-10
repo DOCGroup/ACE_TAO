@@ -5,7 +5,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
-ACE_SOCK_SEQPACK_Association::ACE_SOCK_SEQPACK_Association (void)
+ACE_SOCK_SEQPACK_Association::ACE_SOCK_SEQPACK_Association ()
 {
   // ACE_TRACE ("ACE_SOCK_SEQPACK_Association::ACE_SOCK_SEQPACK_Association");
 }
@@ -18,13 +18,13 @@ ACE_SOCK_SEQPACK_Association::ACE_SOCK_SEQPACK_Association (ACE_HANDLE h)
 }
 
 ACE_INLINE
-ACE_SOCK_SEQPACK_Association::~ACE_SOCK_SEQPACK_Association (void)
+ACE_SOCK_SEQPACK_Association::~ACE_SOCK_SEQPACK_Association ()
 {
   // ACE_TRACE ("ACE_SOCK_SEQPACK_Association::~ACE_SOCK_SEQPACK_Association");
 }
 
 ACE_INLINE int
-ACE_SOCK_SEQPACK_Association::close_reader (void)
+ACE_SOCK_SEQPACK_Association::close_reader ()
 {
   ACE_TRACE ("ACE_SOCK_SEQPACK_Association::close_reader");
   if (this->get_handle () != ACE_INVALID_HANDLE)
@@ -36,7 +36,7 @@ ACE_SOCK_SEQPACK_Association::close_reader (void)
 // Shut down just the writing end of a ACE_SOCK.
 
 ACE_INLINE int
-ACE_SOCK_SEQPACK_Association::close_writer (void)
+ACE_SOCK_SEQPACK_Association::close_writer ()
 {
   ACE_TRACE ("ACE_SOCK_SEQPACK_Association::close_writer");
   if (this->get_handle () != ACE_INVALID_HANDLE)

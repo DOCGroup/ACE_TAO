@@ -47,13 +47,10 @@ namespace TAO
      *
      * @brief SSLIOP-specific implementation of PP Framework Endpoint
      *        interface.
-     *
-     *
      */
     class TAO_SSLIOP_Export TAO_SSLIOP_Endpoint : public TAO_Endpoint
     {
     public:
-
       friend class TAO_SSLIOP_Profile;
 
       /// Constructor
@@ -61,8 +58,7 @@ namespace TAO
                 TAO_IIOP_Endpoint *iiop_endp);
 
       /// Destructor.
-      virtual ~TAO_SSLIOP_Endpoint (void);
-
+      virtual ~TAO_SSLIOP_Endpoint ();
 
       /// Need to have an assignment operator since the SSLIOP_Profile class
       /// may have to reorder its list of endpoints based on filtering by
@@ -75,7 +71,7 @@ namespace TAO
        * See Endpoint.h for their documentation.
        */
       //@{
-      virtual TAO_Endpoint *next (void);
+      virtual TAO_Endpoint *next ();
       virtual int addr_to_string (char *buffer, size_t length);
 
       /// Return true if this endpoint is equivalent to @a
@@ -88,7 +84,7 @@ namespace TAO
 
       /// Return a copy of the corresponding endpoints by allocating
       /// memory.
-      virtual TAO_Endpoint *duplicate (void);
+      virtual TAO_Endpoint *duplicate ();
 
       /// Return a hash value for this object.  Note that only the IP
       /// address and port are used to generate the hash value. This may
@@ -100,7 +96,7 @@ namespace TAO
       /// be used as keys in the cache manager and match other fully
       /// qualified endpoint. (which were  used earlier to cache a
       /// particular transport)
-      virtual CORBA::ULong hash (void);
+      virtual CORBA::ULong hash ();
       //@}
 
       /**
@@ -108,10 +104,10 @@ namespace TAO
        */
       //@{
       /// Return SSL component corresponding to this endpoint.
-      const ::SSLIOP::SSL &ssl_component (void) const;
+      const ::SSLIOP::SSL &ssl_component () const;
 
       /// Accessor to our IIOP counterpart.
-      TAO_IIOP_Endpoint *iiop_endpoint (void) const;
+      TAO_IIOP_Endpoint *iiop_endpoint () const;
 
       /// Mutator to our IIOP counterpart.
       /**
@@ -123,7 +119,7 @@ namespace TAO
       void iiop_endpoint (TAO_IIOP_Endpoint *endpoint, bool destroy);
 
       /// Return the SSLIOP-specific ACE_INET_Addr.
-      const ACE_INET_Addr &object_addr (void) const;
+      const ACE_INET_Addr &object_addr () const;
 
       /// Set the Quality-of-Protection, establishment of trust, and
       /// credentials for this endpoint. This is all done in one function
@@ -133,10 +129,10 @@ namespace TAO
                           const TAO::SSLIOP::OwnCredentials_ptr creds);
 
       /// Get the Quality-of-Protection settings for this endpoint.
-      ::Security::QOP qop (void) const;
+      ::Security::QOP qop () const;
 
       /// Get the establishment of trust settings for this endpoint.
-      ::Security::EstablishTrust trust (void) const;
+      ::Security::EstablishTrust trust () const;
 
       /// Get the credentials for this endpoint.
       /**
@@ -146,9 +142,8 @@ namespace TAO
        *       that no additional locks occur when checking the
        *       transport cache.
        */
-      TAO::SSLIOP::OwnCredentials * credentials (void) const;
+      TAO::SSLIOP::OwnCredentials * credentials () const;
       //@}
-
 
       /// Credentials are not supplied by the constructor, and it is
       /// valid to have a nil credential, for instance if the
@@ -156,16 +151,14 @@ namespace TAO
       /// necessary to have a new method to distinguish between a
       /// credential that is nil because it has not been set, vs one
       /// that was set to nil explicitly.
-      int credentials_set (void) const;
+      int credentials_set () const;
 
     protected:
-
       /// Cache the SSL tagged component in a decoded format. Notice
       /// that we do not need to marshal this object!
       ::SSLIOP::SSL ssl_component_;
 
     private:
-
       /// Cached instance of ACE_INET_Addr for use in making invocations,
       /// etc.
       mutable ACE_INET_Addr object_addr_;
@@ -222,16 +215,14 @@ namespace TAO
     class TAO_SSLIOP_Export TAO_SSLIOP_Synthetic_Endpoint : public TAO_SSLIOP_Endpoint
     {
     public:
-
       /// Constructor
       TAO_SSLIOP_Synthetic_Endpoint (TAO_IIOP_Endpoint *iiop_endp);
 
       /// Destructor.
-      virtual ~TAO_SSLIOP_Synthetic_Endpoint (void);
+      virtual ~TAO_SSLIOP_Synthetic_Endpoint ();
 
       /**
-       * Return true if this endpoint is equivalent to @param
-       * other_endpoint.
+       * Return true if this endpoint is equivalent to @p other_endpoint.
        * Two synthetic endpoints are equivalent if their iiop counterparts are
        * equivalent, and, if both have non-zero ssl ports, their ssl
        * ports are the same.
@@ -240,13 +231,11 @@ namespace TAO
 
       /// Return a copy of the corresponding endpoints by allocating
       /// memory.
-      virtual TAO_Endpoint *duplicate (void);
+      virtual TAO_Endpoint *duplicate ();
 
     private:
       TAO_SSLIOP_Synthetic_Endpoint (const ::SSLIOP::SSL *ssl);
-
     };
-
 //   }  // End SSLIOP namespace.
 // }  // End TAO namespace.
 

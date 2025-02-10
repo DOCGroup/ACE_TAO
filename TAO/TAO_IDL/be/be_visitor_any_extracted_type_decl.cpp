@@ -29,7 +29,7 @@ be_visitor_any_extracted_type_decl::be_visitor_any_extracted_type_decl (
 }
 
 be_visitor_any_extracted_type_decl::~be_visitor_any_extracted_type_decl (
-  void)
+  )
 {
 }
 
@@ -59,7 +59,7 @@ int
 be_visitor_any_extracted_type_decl::visit_eventtype (
   be_eventtype *node)
 {
-  os_ << node->full_name () << " * " << var_name_ << " = 0;";
+  os_ << node->full_name () << " * " << var_name_ << " = nullptr;";
   return 0;
 }
 
@@ -108,27 +108,23 @@ be_visitor_any_extracted_type_decl::visit_predefined_type (
             << "::CORBA::Any::to_wchar " << var_name_
             << " (" << tmp_name_ << ");";
         break;
+      case AST_PredefinedType::PT_uint8:
+        os_ << tmp_name_ << " = 0;" << be_nl
+            << "::CORBA::Any::to_uint8 " << var_name_
+            << " (" << tmp_name_ << ");";
+        break;
+      case AST_PredefinedType::PT_int8:
+        os_ << tmp_name_ << " = 0;" << be_nl
+            << "::CORBA::Any::to_int8 " << var_name_
+            << " (" << tmp_name_ << ");";
+        break;
       case AST_PredefinedType::PT_short:
-        os_ << var_name_ << " = 0;";
-        break;
       case AST_PredefinedType::PT_ushort:
-        os_ << var_name_ << " = 0;";
-        break;
       case AST_PredefinedType::PT_long:
-        os_ << var_name_ << " = 0;";
-        break;
       case AST_PredefinedType::PT_ulong:
-        os_ << var_name_ << " = 0;";
-        break;
       case AST_PredefinedType::PT_longlong:
-        os_ << var_name_ << " = ACE_CDR_LONGLONG_INITIALIZER;";
-        break;
       case AST_PredefinedType::PT_ulonglong:
-        os_ << var_name_ << " = 0;";
-        break;
       case AST_PredefinedType::PT_float:
-        os_ << var_name_ << " = 0;";
-        break;
       case AST_PredefinedType::PT_double:
         os_ << var_name_ << " = 0;";
         break;
@@ -171,7 +167,7 @@ be_visitor_any_extracted_type_decl::visit_sequence (be_sequence *node)
 {
   be_type *bt = this->ctx_->alias ();
 
-  if (bt == 0)
+  if (bt == nullptr)
     {
       bt = node;
     }
@@ -217,7 +213,7 @@ be_visitor_any_extracted_type_decl::visit_typedef (be_typedef *node)
                         -1);
     }
 
-  this->ctx_->alias (0);
+  this->ctx_->alias (nullptr);
   return 0;
 }
 

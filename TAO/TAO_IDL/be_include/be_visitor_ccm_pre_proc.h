@@ -36,7 +36,7 @@ class be_visitor_ccm_pre_proc : public be_visitor_component_scope
 public:
   be_visitor_ccm_pre_proc (be_visitor_context *ctx);
 
-  virtual ~be_visitor_ccm_pre_proc (void);
+  virtual ~be_visitor_ccm_pre_proc ();
 
   virtual int visit_root (be_root *node);
   virtual int visit_module (be_module *node);
@@ -83,8 +83,8 @@ protected:
   // Utility functions to create and destroy the various things
   // needed by operations generated from CCM-related declarations.
 
-  int lookup_cookie (void);
-  int lookup_exceptions (void);
+  int lookup_cookie ();
+  int lookup_exceptions ();
   int lookup_one_exception (const char *name,
                             be_exception *&result);
 
@@ -130,7 +130,7 @@ protected:
 
 private:
   /// Generate a sendc_* receptacle for AMI4CCM.
-  int generate_ami4ccm_uses (void);
+  int generate_ami4ccm_uses ();
 };
 
 #endif // TAO_BE_VISITOR_CCM_PRE_PROC_H

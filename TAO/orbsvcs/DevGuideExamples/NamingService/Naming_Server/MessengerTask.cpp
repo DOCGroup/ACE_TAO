@@ -19,7 +19,6 @@ void MessengerTask::end()
 
 int MessengerTask::svc()
 {
-
   try {
     // Get reference to Root POA
     CORBA::Object_var obj = orb_->resolve_initial_references("RootPOA");

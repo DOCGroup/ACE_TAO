@@ -12,13 +12,13 @@ int buffer;
 /* static */
 sig_atomic_t Benchmark_Performance::done_ = 0;
 
-Benchmark_Performance_Test_Base::Benchmark_Performance_Test_Base (void)
+Benchmark_Performance_Test_Base::Benchmark_Performance_Test_Base ()
   : Benchmark_Base (Benchmark_Base::PERFORMANCE)
 {
 }
 
 sig_atomic_t
-Benchmark_Performance::done (void)
+Benchmark_Performance::done ()
 {
   return Benchmark_Performance::done_;
 }
@@ -42,7 +42,7 @@ Benchmark_Performance::info (ACE_TCHAR **, size_t) const
 }
 
 int
-Benchmark_Performance::fini (void)
+Benchmark_Performance::fini ()
 {
   return -1;
 }

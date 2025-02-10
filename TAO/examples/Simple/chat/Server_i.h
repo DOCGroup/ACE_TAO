@@ -26,20 +26,19 @@
  */
 class Server_i
 {
-
 public:
   /// Constructor.
-  Server_i (void);
+  Server_i ();
 
   /// Destructor.
-  ~Server_i (void);
+  ~Server_i ();
 
   /// Initialize the server.
   int init (int argc,
             ACE_TCHAR *argv[]);
 
   /// Run the ORB.
-  int run (void);
+  int run ();
 
 private:
   /// Parses the command line arguments.

@@ -33,7 +33,7 @@ Test_Unbounded_Struct_Sequence::~Test_Unbounded_Struct_Sequence (
 }
 
 const char *
-Test_Unbounded_Struct_Sequence::opname (void) const
+Test_Unbounded_Struct_Sequence::opname () const
 {
   return this->opname_;
 }
@@ -63,7 +63,7 @@ Test_Unbounded_Struct_Sequence::init_parameters (Alt_Mapping_ptr)
 }
 
 int
-Test_Unbounded_Struct_Sequence::reset_parameters (void)
+Test_Unbounded_Struct_Sequence::reset_parameters ()
 {
   this->inout_.clear ();
   this->out_.clear ();
@@ -87,13 +87,12 @@ Test_Unbounded_Struct_Sequence::run_sii_test (
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("Test_Struct_Sequence::run_sii_test\n");
-
     }
   return -1;
 }
 
 CORBA::Boolean
-Test_Unbounded_Struct_Sequence::check_validity (void)
+Test_Unbounded_Struct_Sequence::check_validity ()
 {
   return (this->compare (this->in_, this->inout_)
           && this->compare (this->in_, this->out_)
@@ -101,7 +100,7 @@ Test_Unbounded_Struct_Sequence::check_validity (void)
 }
 
 void
-Test_Unbounded_Struct_Sequence::print_values (void)
+Test_Unbounded_Struct_Sequence::print_values ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*\n"

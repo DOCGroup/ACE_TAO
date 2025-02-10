@@ -20,7 +20,7 @@ public:
     (const ACE_TCHAR *prog_name = ACE_TEXT (""));
   void redirectToOStream (ACE_OSTREAM_TYPE *output);
   void redirectToFile (const char *filename);
-  void redirectToStderr (void);
+  void redirectToStderr ();
   ACE_Log_Msg_Callback * redirectToCallback
     (ACE_Log_Msg_Callback *callback);
 
@@ -71,7 +71,7 @@ void LogManager::redirectToFile (const char *filename)
   this->redirectToOStream ((ACE_OSTREAM_TYPE *)log_stream_);
 }
 
-void LogManager::redirectToStderr (void)
+void LogManager::redirectToStderr ()
 {
   ACE_LOG_MSG->clr_flags
     (ACE_Log_Msg::OSTREAM | ACE_Log_Msg::LOGGER);

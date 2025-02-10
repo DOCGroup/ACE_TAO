@@ -1,5 +1,4 @@
 // -*- C++ -*-
-//
 //=============================================================================
 /**
  *  @file    Synch_Invocation.h
@@ -87,7 +86,6 @@ namespace TAO
     void set_retry_state (Invocation_Retry_State *retry_state);
 
   protected:
-
     /**
      * This method is selectively made virtual, so that inherited
      * classes can overload the  user exception handling type. For
@@ -114,14 +112,12 @@ namespace TAO
     Invocation_Retry_State *retry_state_;
 
   private:
-
     /// Helper method that checks the reply status of the
     /// replies and takes appropriate action.
     /**
      * This method returns an exception when there is an error.
      */
     Invocation_Status check_reply_status (TAO_Synch_Reply_Dispatcher &rd);
-
   };
 
   /**
@@ -139,7 +135,6 @@ namespace TAO
    * - For some SYNC_SCOPE policies namely SYNC_WITH_TARGET and
    *   SYNC_WITH_SERVER the invocation classes have to treat the
    *   invocation as a twoway invocation (more or less)
-   *
    */
   class TAO_Export Synch_Oneway_Invocation
     : public Synch_Twoway_Invocation
@@ -173,27 +168,23 @@ namespace TAO
   class TAO_Export Reply_Guard
   {
   public:
-
     Reply_Guard (Invocation_Base *s, Invocation_Status is);
 
     /// The destructor calls Invocation_Base::invoke_status with the
     /// right invoke status, which is useful for PI's.
-    ~Reply_Guard (void);
+    ~Reply_Guard ();
 
     /// Mutator to set the invocation status.
     void set_status (Invocation_Status s);
 
   private:
-
     Reply_Guard (Reply_Guard const &);
     Reply_Guard & operator= (Reply_Guard const &);
 
   private:
-
     Invocation_Base * const invocation_;
     Invocation_Status status_;
   };
-
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

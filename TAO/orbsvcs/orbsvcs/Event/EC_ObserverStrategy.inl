@@ -2,14 +2,14 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
-TAO_EC_Null_ObserverStrategy::TAO_EC_Null_ObserverStrategy (void)
+TAO_EC_Null_ObserverStrategy::TAO_EC_Null_ObserverStrategy ()
 {
 }
 
 // ****************************************************************
 
 ACE_INLINE
-TAO_EC_Basic_ObserverStrategy::Observer_Entry::Observer_Entry (void)
+TAO_EC_Basic_ObserverStrategy::Observer_Entry::Observer_Entry ()
   :  handle (0)
 {
 }

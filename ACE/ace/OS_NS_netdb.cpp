@@ -5,10 +5,6 @@
 # include "ace/OS_NS_netdb.inl"
 #endif /* ACE_HAS_INLINED_OSCALLS */
 
-#if defined (ACE_WIN32) && defined (ACE_HAS_PHARLAP)
-# include "ace/OS_NS_stdio.h"
-#endif
-
 #include "ace/os_include/net/os_if.h"
 #include "ace/Global_Macros.h"
 #include "ace/OS_NS_arpa_inet.h"
@@ -34,12 +30,6 @@
 # include "ace/Malloc_Base.h"
 #endif
 
-// Include if_arp so that getmacaddr can use the
-// arp structure.
-#if defined (sun)
-# include /**/ <net/if_arp.h>
-#endif
-
 #include <algorithm>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -49,8 +39,7 @@ ACE_OS::getmacaddress (struct macaddr_node_t *node)
 {
   ACE_OS_TRACE ("ACE_OS::getmacaddress");
 
-#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
-# if !defined (ACE_HAS_PHARLAP)
+#if defined (ACE_WIN32)
     /** Define a structure for use with the netbios routine */
     struct ADAPTERSTAT
     {
@@ -102,87 +91,6 @@ ACE_OS::getmacaddress (struct macaddr_node_t *node)
         }
       }
     return 0;
-# else
-#   if defined (ACE_HAS_PHARLAP_RT)
-      DEVHANDLE ip_dev = (DEVHANDLE)0;
-      EK_TCPIPCFG *devp = 0;
-      size_t i;
-      ACE_TCHAR dev_name[16];
-
-      for (i = 0; i < 10; i++)
-        {
-          // Ethernet.
-          ACE_OS::snprintf (dev_name, 16, "ether%d", i);
-          ip_dev = EtsTCPGetDeviceHandle (dev_name);
-          if (ip_dev != 0)
-            break;
-        }
-      if (ip_dev == 0)
-        return -1;
-      devp = EtsTCPGetDeviceCfg (ip_dev);
-      if (devp == 0)
-        return -1;
-      ACE_OS::memcpy (node->node,
-            &devp->EthernetAddress[0],
-            6);
-      return 0;
-#   else
-      ACE_UNUSED_ARG (node);
-      ACE_NOTSUP_RETURN (-1);
-#   endif /* ACE_HAS_PHARLAP_RT */
-# endif /* ACE_HAS_PHARLAP */
-#elif defined (sun)
-
-  /** obtain the local host name */
-  char hostname [MAXHOSTNAMELEN];
-  ACE_OS::hostname (hostname, sizeof (hostname));
-
-  /** Get the hostent to use with ioctl */
-  struct hostent *phost =
-    ACE_OS::gethostbyname (hostname);
-
-  if (phost == 0)
-    return -1;
-
-  ACE_HANDLE handle =
-    ACE_OS::socket (PF_INET, SOCK_DGRAM, IPPROTO_UDP);
-
-  if (handle == ACE_INVALID_HANDLE)
-    return -1;
-
-  char **paddrs = phost->h_addr_list;
-
-  struct arpreq ar;
-
-  struct sockaddr_in *psa =
-    (struct sockaddr_in *)&(ar.arp_pa);
-
-  ACE_OS::memset (&ar,
-                  0,
-                  sizeof (struct arpreq));
-
-  psa->sin_family = AF_INET;
-
-  ACE_OS::memcpy (&(psa->sin_addr),
-                  *paddrs,
-                  sizeof (struct in_addr));
-
-  if (ACE_OS::ioctl (handle,
-                     SIOCGARP,
-                     &ar) == -1)
-    {
-      ACE_OS::close (handle);
-      return -1;
-    }
-
-  ACE_OS::close (handle);
-
-  ACE_OS::memcpy (node->node,
-                  ar.arp_ha.sa_data,
-                  6);
-
-  return 0;
-
 #elif defined (ACE_LINUX) && !defined (ACE_LACKS_NETWORKING)
 
   // It's easiest to know the first MAC-using interface. Use the BSD
@@ -563,7 +471,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int
-ACE_OS::netdb_acquire (void)
+ACE_OS::netdb_acquire ()
 {
   return ACE_OS::thread_mutex_lock ((ACE_thread_mutex_t *)
     ACE_OS_Object_Manager::preallocated_object[
@@ -571,7 +479,7 @@ ACE_OS::netdb_acquire (void)
 }
 
 int
-ACE_OS::netdb_release (void)
+ACE_OS::netdb_release ()
 {
   return ACE_OS::thread_mutex_unlock ((ACE_thread_mutex_t *)
     ACE_OS_Object_Manager::preallocated_object[

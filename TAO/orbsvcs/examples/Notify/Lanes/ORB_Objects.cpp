@@ -1,8 +1,7 @@
 #include "ORB_Objects.h"
 
 
-
-TAO_Notify_ORB_Objects::TAO_Notify_ORB_Objects (void)
+TAO_Notify_ORB_Objects::TAO_Notify_ORB_Objects ()
 {
 }
 
@@ -36,7 +35,7 @@ TAO_Notify_ORB_Objects::~TAO_Notify_ORB_Objects ()
 }
 
 CosNotifyChannelAdmin::EventChannelFactory_ptr
-TAO_Notify_ORB_Objects::notify_factory (void)
+TAO_Notify_ORB_Objects::notify_factory ()
 {
   CosNotifyChannelAdmin::EventChannelFactory_var ecf;
 

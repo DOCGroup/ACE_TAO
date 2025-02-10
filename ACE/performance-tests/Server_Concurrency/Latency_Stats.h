@@ -1,7 +1,7 @@
 class Latency_Stats
 {
 public:
-  Latency_Stats (void);
+  Latency_Stats ();
 
   void dump_results (const ACE_TCHAR* test_name,
                      const ACE_TCHAR* sub_test);
@@ -20,7 +20,7 @@ private:
 };
 
 inline
-Latency_Stats::Latency_Stats (void)
+Latency_Stats::Latency_Stats ()
   :  n_ (0),
      sum_ (0),
      sum2_ (0),
@@ -98,12 +98,12 @@ Latency_Stats::accumulate (const Latency_Stats& rhs)
 class Throughput_Stats
 {
 public:
-  Throughput_Stats (void);
+  Throughput_Stats ();
 
   void dump_results (const ACE_TCHAR* test_name,
                      const ACE_TCHAR* sub_test);
 
-  void sample (void);
+  void sample ();
   // An event has been received
 
   void accumulate (const Throughput_Stats& stats);
@@ -166,7 +166,7 @@ Throughput_Stats::dump_results (const ACE_TCHAR *test_name,
 }
 
 inline
-Throughput_Stats::Throughput_Stats (void)
+Throughput_Stats::Throughput_Stats ()
   : n_ (0),
     start_ (),
     stop_ ()
@@ -174,7 +174,7 @@ Throughput_Stats::Throughput_Stats (void)
 }
 
 inline void
-Throughput_Stats::sample (void)
+Throughput_Stats::sample ()
 {
   if (this->n_ == 0)
     {
@@ -185,9 +185,9 @@ Throughput_Stats::sample (void)
 }
 
 inline void
-move_to_rt_class (void)
+move_to_rt_class ()
 {
-  // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
+  // Enable FIFO scheduling
   int priority =
     (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO)
      + ACE_Sched_Params::priority_max (ACE_SCHED_FIFO)) / 2;

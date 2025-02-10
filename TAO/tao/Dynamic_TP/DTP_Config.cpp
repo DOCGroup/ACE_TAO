@@ -10,17 +10,17 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_DTP_Config_Registry_Installer::TAO_DTP_Config_Registry_Installer (void)
+TAO_DTP_Config_Registry_Installer::TAO_DTP_Config_Registry_Installer ()
 {
   ACE_Service_Config::process_directive (ace_svc_desc_TAO_DTP_Config_Registry);
 }
 
 
-TAO_DTP_Config_Registry::TAO_DTP_Config_Registry (void)
+TAO_DTP_Config_Registry::TAO_DTP_Config_Registry ()
 {
 }
 
-TAO_DTP_Config_Registry::~TAO_DTP_Config_Registry (void)
+TAO_DTP_Config_Registry::~TAO_DTP_Config_Registry ()
 {
 }
 
@@ -53,11 +53,11 @@ TAO_DTP_Config_Registry::rebind (const ACE_CString& name,
 
 //-------------------------------------------------------------------------
 
-TAO_DTP_Config::TAO_DTP_Config (void)
+TAO_DTP_Config::TAO_DTP_Config ()
 {
 }
 
-TAO_DTP_Config::~TAO_DTP_Config (void)
+TAO_DTP_Config::~TAO_DTP_Config ()
 {
 }
 

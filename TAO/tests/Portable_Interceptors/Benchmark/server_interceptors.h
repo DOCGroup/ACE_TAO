@@ -23,15 +23,15 @@ class Vault_Server_Request_Interceptor
 {
   // = Server-side Vault interceptor.  For checking interceptor visually only.
 public:
-  Vault_Server_Request_Interceptor (void);
+  Vault_Server_Request_Interceptor ();
   // cotr.
   ~Vault_Server_Request_Interceptor ();
   // dotr.
 
-  virtual char * name (void);
+  virtual char * name ();
   // Canonical name of the interceptor.
 
-  virtual void destroy (void);
+  virtual void destroy ();
 
   virtual void receive_request (PortableInterceptor::ServerRequestInfo_ptr ri);
 
@@ -54,15 +54,15 @@ class Vault_Server_Request_Context_Interceptor
 {
   // = Server-side Vault interceptor.  For checking interceptor visually only.
 public:
-  Vault_Server_Request_Context_Interceptor (void);
+  Vault_Server_Request_Context_Interceptor ();
   // cotr.
   ~Vault_Server_Request_Context_Interceptor ();
   // dotr.
 
-  virtual char * name (void);
+  virtual char * name ();
   // Canonical name of the interceptor.
 
-  virtual void destroy (void);
+  virtual void destroy ();
 
   virtual void receive_request (PortableInterceptor::ServerRequestInfo_ptr ri);
 
@@ -85,15 +85,15 @@ class Vault_Server_Request_Dynamic_Interceptor
 {
   // = Server-side Vault interceptor.  For checking interceptor visually only.
 public:
-  Vault_Server_Request_Dynamic_Interceptor (void);
+  Vault_Server_Request_Dynamic_Interceptor ();
   // cotr.
   ~Vault_Server_Request_Dynamic_Interceptor ();
   // dotr.
 
-  virtual char * name (void);
+  virtual char * name ();
   // Canonical name of the interceptor.
 
-  virtual void destroy (void);
+  virtual void destroy ();
 
   virtual void receive_request (PortableInterceptor::ServerRequestInfo_ptr ri);
 
@@ -116,15 +116,15 @@ class Vault_Server_Request_NOOP_Interceptor
 {
   // = Server-side Vault interceptor.  For checking interceptor visually only.
 public:
-  Vault_Server_Request_NOOP_Interceptor (void);
+  Vault_Server_Request_NOOP_Interceptor ();
   // cotr.
   ~Vault_Server_Request_NOOP_Interceptor ();
   // dotr.
 
-  virtual char * name (void);
+  virtual char * name ();
   // Canonical name of the interceptor.
 
-  virtual void destroy (void);
+  virtual void destroy ();
 
   virtual void receive_request (PortableInterceptor::ServerRequestInfo_ptr ri);
 

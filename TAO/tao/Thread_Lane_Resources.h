@@ -55,7 +55,7 @@ public:
       TAO_New_Leader_Generator *new_leader_generator = 0);
 
   /// Destructor.
-  ~TAO_Thread_Lane_Resources (void);
+  ~TAO_Thread_Lane_Resources ();
 
   /// Does @a mprofile belong to us?
   int is_collocated (const TAO_MProfile &mprofile);
@@ -65,94 +65,92 @@ public:
                               bool ignore_address);
 
   /// Finalize resources.
-  void finalize (void);
+  void finalize ();
 
   /// Shutdown the reactor.
-  void shutdown_reactor (void);
+  void shutdown_reactor ();
 
   /// Certain ORB policies such as dropping replies on shutdown
   /// would need cleanup of transports to wake threads up.
-  void close_all_transports (void);
+  void close_all_transports ();
 
   /// @name Accessors
   //@{
-
-  TAO_Acceptor_Registry &acceptor_registry (void);
+  TAO_Acceptor_Registry &acceptor_registry ();
 
   /**
    * @note Returning a pointer helps to return 0 in case of
    * exceptions.
    */
-  TAO_Connector_Registry *connector_registry (void);
+  TAO_Connector_Registry *connector_registry ();
 
   /// Get the transport cache
-  TAO::Transport_Cache_Manager &transport_cache (void);
+  TAO::Transport_Cache_Manager &transport_cache ();
 
-  TAO_Leader_Follower &leader_follower (void);
+  TAO_Leader_Follower &leader_follower ();
 
   /**
    * Allocator is intended for allocating the ACE_Data_Blocks used in
    * incoming CDR streams.  This allocator has locks.
    */
-  ACE_Allocator *input_cdr_dblock_allocator (void);
+  ACE_Allocator *input_cdr_dblock_allocator ();
 
   /**
    * Allocator is intended for allocating the buffers in the incoming
    * CDR streams.  This allocator has locks.
    */
-  ACE_Allocator *input_cdr_buffer_allocator (void);
+  ACE_Allocator *input_cdr_buffer_allocator ();
 
   /**
    * Allocator is intended for allocating the ACE_Message_Blocks used
    * in incoming CDR streams.  This allocator is global, and has locks.
    */
-  ACE_Allocator *input_cdr_msgblock_allocator (void);
+  ACE_Allocator *input_cdr_msgblock_allocator ();
 
   /**
    * Allocator is intended for allocating the buffers used in the
    * Transport object. This allocator has locks.
    */
-  ACE_Allocator *transport_message_buffer_allocator (void);
+  ACE_Allocator *transport_message_buffer_allocator ();
 
   /**
    * Allocator is intended for allocating the ACE_Data_Blocks used in
    * outgoing CDR streams.  This allocator has locks.
    */
-  ACE_Allocator *output_cdr_dblock_allocator (void);
+  ACE_Allocator *output_cdr_dblock_allocator ();
 
   /**
    * Allocator is intended for allocating the buffers in the outgoing
    * CDR streams.  This allocator has locks.
    */
-  ACE_Allocator *output_cdr_buffer_allocator (void);
+  ACE_Allocator *output_cdr_buffer_allocator ();
 
   /**
    * Allocator is intended for allocating the ACE_Message_Blocks used
    * in the outgoing CDR streams.  This allocator is global, and has
    * locks.
    */
-  ACE_Allocator *output_cdr_msgblock_allocator (void);
+  ACE_Allocator *output_cdr_msgblock_allocator ();
 
   /**
    * Allocator is intended for allocating the AMH response handlers
    * This allocator is global.
    */
-  ACE_Allocator *amh_response_handler_allocator (void);
+  ACE_Allocator *amh_response_handler_allocator ();
 
   /**
    * Allocator is intended for allocating the AMI response handlers
    * This allocator is global.
    */
-  ACE_Allocator *ami_response_handler_allocator (void);
+  ACE_Allocator *ami_response_handler_allocator ();
   //@}
 
 private:
-
   /// Checks if the acceptor registry has been created.
-  int has_acceptor_registry_been_created (void) const;
+  int has_acceptor_registry_been_created () const;
 
   /// Helper to get the resource factory in the ORB_Core
-  TAO_Resource_Factory *resource_factory (void);
+  TAO_Resource_Factory *resource_factory ();
 
 private:
   /// ORB_Core related to this thread lane.

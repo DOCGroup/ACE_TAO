@@ -30,7 +30,7 @@ ACE_Thread_Semaphore g_semaphore (0);
 class My_Svc_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM,ACE_NULL_SYNCH>
 {
 public:
-  typedef ACE_Svc_Handler<ACE_SOCK_STREAM,ACE_NULL_SYNCH> super;
+  using super = ACE_Svc_Handler<ACE_SOCK_Stream, ACE_NULL_SYNCH>;
   My_Svc_Handler()
   {
     TEST_TRACE ("My_Svc_Handler:My_Svc_Handler");
@@ -39,13 +39,13 @@ public:
       Reference_Counting_Policy::ENABLED);
   }
 
-  ~My_Svc_Handler()
+  ~My_Svc_Handler() override
   {
     TEST_TRACE ("My_Svc_Handler::~My_Svc_Handler");
     --g_svc_handlers_leaked;
   }
 
-  int handle_close (ACE_HANDLE /*fd*/, ACE_Reactor_Mask /*mask*/)
+  int handle_close (ACE_HANDLE /*fd*/, ACE_Reactor_Mask /*mask*/) override
   {
     TEST_TRACE ("handle_close");
     g_semaphore.release();
@@ -58,11 +58,11 @@ bool g_acceptor_accept_fails;
 class My_Acceptor : public ACE_Acceptor<My_Svc_Handler, ACE_SOCK_ACCEPTOR>
 {
 public:
-  typedef ACE_Acceptor<My_Svc_Handler, ACE_SOCK_ACCEPTOR> super;
+  using super = ACE_Acceptor<My_Svc_Handler, ACE_SOCK_Acceptor>;
   My_Acceptor () : super (ACE_INET_Addr(9000)) {}
 
 protected:
-  int accept_svc_handler (My_Svc_Handler *svc_handler)
+  int accept_svc_handler (My_Svc_Handler *svc_handler) override
   {
     TEST_TRACE ("accept_svc_handler");
     int rv = super::accept_svc_handler(svc_handler);
@@ -73,7 +73,7 @@ protected:
       }
     return rv;
   }
-  int activate_svc_handler (My_Svc_Handler* /*svc_handler*/)
+  int activate_svc_handler (My_Svc_Handler* /*svc_handler*/) override
   {
     TEST_TRACE ("My_Acceptor::activate_svc_handler");
     g_semaphore.release();
@@ -84,9 +84,9 @@ protected:
 class My_Connector : public ACE_Connector<My_Svc_Handler, ACE_SOCK_CONNECTOR>
 {
 public:
-  typedef ACE_Connector<My_Svc_Handler, ACE_SOCK_CONNECTOR> super;
+  using super = ACE_Connector<My_Svc_Handler, ACE_SOCK_Connector>;
 protected:
-  int activate_svc_handler (My_Svc_Handler* /*svc_handler*/)
+  int activate_svc_handler (My_Svc_Handler* /*svc_handler*/) override
   {
     TEST_TRACE ("My_Connector::activate_svc_handler");
     g_semaphore.release();
@@ -96,7 +96,7 @@ protected:
 
 struct My_Task : public ACE_Task_Base
 {
-   int svc()
+   int svc() override
    {
      TEST_TRACE ("My_Task::svc");
      ACE_Reactor::instance()->owner(ACE_OS::thr_self());
@@ -114,7 +114,7 @@ struct My_Task : public ACE_Task_Base
 // event handler used to signal when the reactor started
 struct Timer_Handler : public ACE_Event_Handler
 {
-   int handle_timeout (const ACE_Time_Value&, const void*)
+   int handle_timeout (const ACE_Time_Value&, const void*) override
    {
      g_semaphore.release(); // signal reactor started
      return 0;

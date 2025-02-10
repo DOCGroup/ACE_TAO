@@ -39,7 +39,8 @@ class TAO_Export TAO_GIOP_Message_State
 {
 public:
   /// Constructor
-  TAO_GIOP_Message_State (void);
+  TAO_GIOP_Message_State () = default;
+  ~TAO_GIOP_Message_State () = default;
 
   /// Parse the message header.
   ///
@@ -50,27 +51,27 @@ public:
   int parse_message_header (ACE_Message_Block &incoming);
 
   /// Return the message size
-  CORBA::ULong message_size (void) const;
+  CORBA::ULong message_size () const;
 
   /// Return the message size
-  CORBA::ULong payload_size (void) const;
+  CORBA::ULong payload_size () const;
 
   /// Return the byte order information
-  CORBA::Octet byte_order (void) const;
+  CORBA::Octet byte_order () const;
 
   /// Return the message type
-  GIOP::MsgType message_type (void) const;
+  GIOP::MsgType message_type () const;
 
   /// Return the more fragments
-  CORBA::Boolean more_fragments (void) const;
+  CORBA::Boolean more_fragments () const;
 
   void more_fragments (CORBA::Boolean fragment);
 
   /// Get the GIOP version
-  TAO_GIOP_Message_Version const &giop_version (void) const;
+  TAO_GIOP_Message_Version const &giop_version () const;
 
   /// Return the compressed information
-  CORBA::Boolean compressed (void) const;
+  CORBA::Boolean compressed () const;
 
 private:
   /// Parse the message header.
@@ -99,36 +100,36 @@ private:
 
 private:
   /// GIOP version information..
-  TAO_GIOP_Message_Version giop_version_;
+  TAO_GIOP_Message_Version giop_version_ {TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR};
 
   /// 0 = big, 1 = little
-  CORBA::Octet byte_order_;
+  CORBA::Octet byte_order_ {0};
 
   /// MsgType above
-  GIOP::MsgType message_type_;
+  GIOP::MsgType message_type_ {GIOP::Request};
 
   /// In byte_order!
-  CORBA::ULong payload_size_;
+  CORBA::ULong payload_size_ {0};
 
   /// (Requests and Replys)
   /// A value of zero indicates that this message does not have any
   /// fragments.  A value of non-zero indicates that it does have
   /// fragments.
-  CORBA::Boolean more_fragments_;
+  CORBA::Boolean more_fragments_ {false};
 
   /// Compressed
-  CORBA::Boolean compressed_;
+  CORBA::Boolean compressed_ {false};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-static const size_t TAO_GIOP_MESSAGE_HEADER_LEN = 12;
-static const size_t TAO_GIOP_MESSAGE_SIZE_OFFSET = 8;
-static const size_t TAO_GIOP_MESSAGE_FLAGS_OFFSET = 6;
-static const size_t TAO_GIOP_MESSAGE_TYPE_OFFSET  = 7;
-static const size_t TAO_GIOP_VERSION_MINOR_OFFSET = 5;
-static const size_t TAO_GIOP_VERSION_MAJOR_OFFSET = 4;
-static const size_t TAO_GIOP_MESSAGE_FRAGMENT_HEADER = 4;
+constexpr size_t TAO_GIOP_MESSAGE_HEADER_LEN = 12;
+constexpr size_t TAO_GIOP_MESSAGE_SIZE_OFFSET = 8;
+constexpr size_t TAO_GIOP_MESSAGE_FLAGS_OFFSET = 6;
+constexpr size_t TAO_GIOP_MESSAGE_TYPE_OFFSET  = 7;
+constexpr size_t TAO_GIOP_VERSION_MINOR_OFFSET = 5;
+constexpr size_t TAO_GIOP_VERSION_MAJOR_OFFSET = 4;
+constexpr size_t TAO_GIOP_MESSAGE_FRAGMENT_HEADER = 4;
 
 #if defined (__ACE_INLINE__)
 # include "tao/GIOP_Message_State.inl"

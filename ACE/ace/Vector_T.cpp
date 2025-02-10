@@ -44,7 +44,7 @@ void ACE_Vector<T, DEFAULT_SIZE>::push_back (const T& elem)
 }
 
 template <class T, size_t DEFAULT_SIZE>
-void ACE_Vector<T, DEFAULT_SIZE>::dump (void) const
+void ACE_Vector<T, DEFAULT_SIZE>::dump () const
 {
 }
 

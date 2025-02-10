@@ -31,22 +31,18 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  */
 class TAO_PortableGroup_Export TAO_UIPMC_Wait_Never : public TAO_Wait_Strategy
 {
-
 public:
-  /// Constructor.
   TAO_UIPMC_Wait_Never (TAO_Transport *transport);
-
-  /// Destructor.
-  virtual ~TAO_UIPMC_Wait_Never (void);
+  ~TAO_UIPMC_Wait_Never () override = default;
 
   // = Documented in TAO_Wait_Strategy.
-  virtual int sending_request (TAO_ORB_Core *orb_core,
-                               TAO_Message_Semantics msg_semantics);
-  virtual int wait (ACE_Time_Value *max_wait_time,
-                    TAO_Synch_Reply_Dispatcher &rd);
-  virtual int register_handler (void);
-  virtual bool non_blocking (void) const;
-  virtual bool can_process_upcalls (void) const;
+  int sending_request (TAO_ORB_Core *orb_core,
+                       TAO_Message_Semantics msg_semantics) override;
+  int wait (ACE_Time_Value *max_wait_time,
+            TAO_Synch_Reply_Dispatcher &rd) override;
+  int register_handler () override;
+  bool non_blocking () const override;
+  bool can_process_upcalls () const override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

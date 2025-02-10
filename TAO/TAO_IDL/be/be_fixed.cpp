@@ -24,5 +24,3 @@ void be_fixed::destroy ()
   be_type::destroy ();
   AST_Fixed::destroy ();
 }
-
-IMPL_NARROW_FROM_DECL (be_fixed)

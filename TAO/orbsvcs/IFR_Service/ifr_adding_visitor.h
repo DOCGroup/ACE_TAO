@@ -38,7 +38,7 @@ public:
                       CORBA::Boolean in_reopened = 0,
                       bool allow_duplicate_typedefs = false);
 
-  virtual ~ifr_adding_visitor (void);
+  virtual ~ifr_adding_visitor ();
 
   virtual int visit_scope (UTL_Scope *node);
   virtual int visit_predefined_type (AST_PredefinedType *node);
@@ -70,6 +70,7 @@ public:
   virtual int visit_constant (AST_Constant *node);
   virtual int visit_array (AST_Array *node);
   virtual int visit_sequence (AST_Sequence *node);
+  virtual int visit_map (AST_Map *node);
   virtual int visit_string (AST_String *node);
   virtual int visit_typedef (AST_Typedef *node);
   virtual int visit_root (AST_Root *node);

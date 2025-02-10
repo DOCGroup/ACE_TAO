@@ -30,7 +30,6 @@ class Server_ORBInitializer :
   public virtual ::CORBA::LocalObject
 {
 public:
-
   /// Constructor.
   Server_ORBInitializer (CORBA::ULong request_pass_count);
 
@@ -40,10 +39,9 @@ public:
 
   /// Return the created server request interceptor.  Only valid after
   /// post_init(), i.e. ORB_init(), has been called.
-  PortableInterceptor::ServerRequestInterceptor_ptr server_interceptor (void);
+  PortableInterceptor::ServerRequestInterceptor_ptr server_interceptor ();
 
 private:
-
   /// How much requests to pass thru before forwarding.
   CORBA::ULong request_pass_count_;
 

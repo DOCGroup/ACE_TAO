@@ -3,12 +3,12 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Notify_Service::~TAO_Notify_Service (void)
+TAO_Notify_Service::~TAO_Notify_Service ()
 {
 }
 
 TAO_Notify_Service*
-TAO_Notify_Service::load_default (void)
+TAO_Notify_Service::load_default ()
 {
   static const char* services[] = { TAO_MC_NOTIFICATION_SERVICE_NAME,
                                     TAO_NOTIFICATION_SERVICE_NAME,

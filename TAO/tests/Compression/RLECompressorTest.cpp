@@ -9,15 +9,6 @@
 
 #include <memory>
 
-// Older versions of GCC do not support std::unique_ptr!
-struct ACE_Byte_Array_ptr : std::auto_ptr<ACE_Byte> {
-    explicit ACE_Byte_Array_ptr(ACE_Byte *_Ptr = 0)
-        : std::auto_ptr<ACE_Byte>(_Ptr) {}
-    ~ACE_Byte_Array_ptr(void) {
-        delete [] (this->release());
-    }
-};
-
 /* This test produces the following output (RLECompressor)
 
 ******** TEST RLE Compressor ************
@@ -182,7 +173,7 @@ struct HRTimer : ACE_High_Res_Timer
     HRTimer(const ACE_TCHAR* msg) : msg_(msg) {
         this->reset(); this->start();
     }
-    ~HRTimer(void) {
+    ~HRTimer() {
         this->stop(); this->print_ave(this->msg_, 1);
     }
 };
@@ -190,7 +181,6 @@ struct HRTimer : ACE_High_Res_Timer
 static int init_compressor(::CORBA::ORB_ptr orb)
 {
     try {
-
         ::CORBA::Object_var compression_manager =
             orb->resolve_initial_references(TAO_OBJID_COMPRESSIONMANAGER);
 
@@ -206,7 +196,6 @@ static int init_compressor(::CORBA::ORB_ptr orb)
         Compression::CompressorFactory_var compr_fact = compressor_factory;
 
         manager->register_factory (compr_fact.in ());
-
     } catch (...) {
         ACE_ERROR_RETURN((LM_ERROR,
             ACE_TEXT("ERROR: Unable to initialise RLE compressor manager.\n")),-1);
@@ -305,7 +294,6 @@ static int  testArray_compressor(const ::Compression::Compressor_var &compressor
     ACE_HEX_DUMP((LM_INFO, comp_data, (sizeof(comp_data) - 1), ACE_TEXT("Compression Data")));
 
     for (unsigned i = 0; i < sizeof(comp_data); i++) {
-
         COMP_RESULT &result = comp_result[i]; // Get A reference to our result for testing output
 
         Compression::Buffer in_data(i, i, reinterpret_cast<CORBA::Octet*>(comp_data), false), &out_data = result.out;
@@ -349,7 +337,7 @@ static int  test128_compressor(const ::Compression::Compressor_var &compressor)
             ACE_TEXT("ERROR: nil Compressor.\n")),-1);
     }
 
-    ACE_Byte_Array_ptr buff_128(new ACE_Byte[BUFF_128_SIZE]);
+    std::unique_ptr<ACE_Byte[]> buff_128(new ACE_Byte[BUFF_128_SIZE]);
 
     ACE_OS::memset(buff_128.get(), 0, BUFF_128_SIZE);  // Set Buffer to zero.
 
@@ -412,7 +400,7 @@ static int  test129A_compressor(const ::Compression::Compressor_var &compressor)
             ACE_TEXT("ERROR: nil Compressor.\n")),-1);
     }
 
-    const ACE_Byte_Array_ptr buff_129(new ACE_Byte[BUFF_129_SIZE]);
+    const std::unique_ptr<ACE_Byte[]> buff_129(new ACE_Byte[BUFF_129_SIZE]);
 
     ACE_OS::memset(buff_129.get(), 0, BUFF_129_SIZE);  // Set Buffer to zero.
 
@@ -475,7 +463,7 @@ static int  test129B_compressor(const ::Compression::Compressor_var &compressor)
             ACE_TEXT("ERROR: nil Compressor.\n")),-1);
     }
 
-    const ACE_Byte_Array_ptr buff_129(new ACE_Byte[BUFF_129_SIZE]);
+    const std::unique_ptr<ACE_Byte[]> buff_129(new ACE_Byte[BUFF_129_SIZE]);
 
     ACE_OS::memset(buff_129.get(), 0, BUFF_129_SIZE);  // Set Buffer to zero.
 
@@ -535,7 +523,6 @@ int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
     try {
-
         ::CORBA::ORB_var orb = ::CORBA::ORB_init(argc, argv);
 
         if (init_compressor(orb.in ()) != 0) {
@@ -580,7 +567,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         ACE_DEBUG((LM_INFO, ACE_TEXT("TAO::RLECompression Ratio = %f : 1\n"), tao_ratio));
 
         orb->shutdown ();
-
     } catch (const CORBA::Exception& ex) {
         ex._tao_print_exception ("RLECompressorTest: UNEXPECTED exception - ");
         return -1;

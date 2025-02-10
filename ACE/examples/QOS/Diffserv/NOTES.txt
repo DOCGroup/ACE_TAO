@@ -49,9 +49,3 @@ However, FreeBSD seems to be more fussy about the size of the parameter
 you pass into the setsockopt call.  Make sure you get the
 size right, and cast it properly, ie. don't cast a short, or some
 other size.
-
-
-Solaris notes
-=============
-No problems setting DSCP or ECN values.
-

@@ -38,22 +38,21 @@ class TAO_PortableServer_Export TAO_Binary_Search_OpTable
   : public TAO_Operation_Table
 {
 public:
-
   /// Do nothing destructor.
-  virtual ~TAO_Binary_Search_OpTable (void);
+  ~TAO_Binary_Search_OpTable () override = default;
 
   /// See the documentation in the base class for details.
-  virtual int find (const char *opname,
-                    TAO_Skeleton &skelfunc,
-                    const unsigned int length = 0);
+  int find (const char *opname,
+            TAO_Skeleton &skelfunc,
+            const unsigned int length = 0) override;
 
-  virtual int find (const char *opname,
-                    TAO_Collocated_Skeleton &skelfunc,
-                    TAO::Collocation_Strategy s,
-                    const unsigned int length = 0);
+  int find (const char *opname,
+            TAO_Collocated_Skeleton &skelfunc,
+            TAO::Collocation_Strategy s,
+            const unsigned int length = 0) override;
 
-  virtual int bind (const char *opname,
-                    const TAO::Operation_Skeletons skel_ptr);
+  int bind (const char *opname,
+            const TAO::Operation_Skeletons skel_ptr) override;
 
 private:
   /// Method that should defined by the subclasses. GPERF program

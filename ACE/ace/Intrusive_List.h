@@ -57,15 +57,15 @@ class ACE_Intrusive_List
 public:
   /// Constructor.  Use user specified allocation strategy
   /// if specified.
-  ACE_Intrusive_List (void);
+  ACE_Intrusive_List () = default;
 
   /// Destructor.
-  ~ACE_Intrusive_List (void);
+  ~ACE_Intrusive_List () = default;
 
   // = Check boundary conditions.
 
   /// Returns true if the container is empty, otherwise returns false.
-  bool is_empty (void) const;
+  bool is_empty () const;
 
   /// Insert an element at the beginning of the list
   void push_front (T *node);
@@ -74,16 +74,16 @@ public:
   void push_back (T *node);
 
   /// Remove the element at the beginning of the list
-  T *pop_front (void);
+  T *pop_front ();
 
   /// Remove the element at the end of the list
-  T *pop_back (void);
+  T *pop_back ();
 
   /// Get the element at the head of the queue
-  T *head (void) const;
+  T *head () const;
 
   /// Get the element at the tail of the queue
-  T *tail (void) const;
+  T *tail () const;
 
   /// Remove a element from the list
   /**
@@ -106,16 +106,16 @@ private:
    *
    */
   //@{
-  ACE_Intrusive_List (const ACE_Intrusive_List<T> &);
-  ACE_Intrusive_List<T>& operator= (const ACE_Intrusive_List<T> &);
+  ACE_Intrusive_List (const ACE_Intrusive_List<T> &) = delete;
+  ACE_Intrusive_List<T>& operator= (const ACE_Intrusive_List<T> &) = delete;
   //@}
 
 private:
   /// Head of the list
-  T *head_;
+  T *head_ {};
 
   /// Tail of the list
-  T *tail_;
+  T *tail_ {};
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
@@ -124,13 +124,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #include "ace/Intrusive_List.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Intrusive_List.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Intrusive_List.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_INTRUSIVE_LIST_H */

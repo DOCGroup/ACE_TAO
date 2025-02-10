@@ -25,13 +25,13 @@ Coffee_i::Coffee_i (const char *name)
 
 // Destructor
 
-Coffee_i::~Coffee_i (void)
+Coffee_i::~Coffee_i ()
 {
 }
 
 // get attribute
 Coffee::Desc *
-Coffee_i::description ( /*env*/)
+Coffee_i::description ()
 {
   Coffee::Desc *desc = new Coffee::Desc;
   desc->name = CORBA::string_dup (this->name_.in ());
@@ -60,7 +60,7 @@ Param_Test_i::Param_Test_i (const char *coffee_name,
 
 // Destructor
 
-Param_Test_i::~Param_Test_i (void)
+Param_Test_i::~Param_Test_i ()
 {
 }
 
@@ -263,7 +263,7 @@ Param_Test_i::test_strseq (const CORBA::StringSeq &s1,
         {
           ACE_DEBUG ((LM_DEBUG,
                       "Element #%d\n"
-                      "in : %s\n",
+                      "in : %C\n",
                       i,
                       (s2[i]? (const char *)s2[i]:"<nul>")));
         }
@@ -627,7 +627,7 @@ Param_Test_i::test_objref_struct (const Param_Test::Objref_Struct &s1,
 
 // make a Coffee object
 Coffee_ptr
-Param_Test_i::make_coffee (void)
+Param_Test_i::make_coffee ()
 {
   return this->obj_._this ();
 }
@@ -737,7 +737,7 @@ Param_Test_i::test_any (const CORBA::Any &a1,
   else if (a1 >>= str_in)
     {
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG, "Received unbounded string = %s\n", str_in));
+        ACE_DEBUG ((LM_DEBUG, "Received unbounded string = %C\n", str_in));
     }
   else if (a1 >>= coffee)
     {
@@ -973,13 +973,13 @@ Param_Test_i::test_multdim_array (const Param_Test::Multdim_Array a1,
 }
 
 void
-Param_Test_i::shutdown (void)
+Param_Test_i::shutdown ()
 {
   this->orb_->shutdown ();
 }
 
 void
-Param_Test_i::throw_badboy (void)
+Param_Test_i::throw_badboy ()
 {
   throw Param_Test::BadBoy ();
 }

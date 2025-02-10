@@ -27,7 +27,7 @@ TAO_Notify_ProxyConsumer_Find_Worker;
 
 typedef TAO_Notify_Seq_Worker_T<TAO_Notify_Proxy> TAO_Notify_Proxy_Seq_Worker;
 
-TAO_Notify_SupplierAdmin::TAO_Notify_SupplierAdmin (void)
+TAO_Notify_SupplierAdmin::TAO_Notify_SupplierAdmin ()
   : TAO_Notify_Admin ()
 {
 }
@@ -54,26 +54,26 @@ TAO_Notify_SupplierAdmin::init (TAO_Notify_EventChannel *ec)
 }
 
 void
-TAO_Notify_SupplierAdmin::_add_ref (void)
+TAO_Notify_SupplierAdmin::_add_ref ()
 {
   this->_incr_refcnt ();
 }
 
 void
-TAO_Notify_SupplierAdmin::_remove_ref (void)
+TAO_Notify_SupplierAdmin::_remove_ref ()
 {
   this->_decr_refcnt ();
 }
 
 void
-TAO_Notify_SupplierAdmin::release (void)
+TAO_Notify_SupplierAdmin::release ()
 {
   delete this;
   //@@ inform factory
 }
 
 void
-TAO_Notify_SupplierAdmin::destroy (void)
+TAO_Notify_SupplierAdmin::destroy ()
 {
   this->shutdown ();
   this->ec_->remove (this);
@@ -140,7 +140,7 @@ TAO_Notify_SupplierAdmin::set_qos (const CosNotification::QoSProperties & qos)
 }
 
 CosNotification::QoSProperties*
-TAO_Notify_SupplierAdmin::get_qos (void)
+TAO_Notify_SupplierAdmin::get_qos ()
 {
   return this->TAO_Notify_Object::get_qos ();
 }
@@ -177,7 +177,7 @@ TAO_Notify_SupplierAdmin::obtain_notification_push_consumer_with_qos (CosNotifyC
 
 
 CosEventChannelAdmin::ProxyPushConsumer_ptr
-TAO_Notify_SupplierAdmin::obtain_push_consumer (void)
+TAO_Notify_SupplierAdmin::obtain_push_consumer ()
 {
   CosEventChannelAdmin::ProxyPushConsumer_var proxy =
     TAO_Notify_PROPERTIES::instance()->builder()->build_proxy (this);
@@ -186,25 +186,25 @@ TAO_Notify_SupplierAdmin::obtain_push_consumer (void)
 }
 
 CosNotifyChannelAdmin::AdminID
-TAO_Notify_SupplierAdmin::MyID (void)
+TAO_Notify_SupplierAdmin::MyID ()
 {
   return this->id ();
 }
 
 CosNotifyChannelAdmin::EventChannel_ptr
-TAO_Notify_SupplierAdmin::MyChannel (void)
+TAO_Notify_SupplierAdmin::MyChannel ()
 {
   return this->ec_->_this ();
 }
 
 ::CosNotifyChannelAdmin::InterFilterGroupOperator
-TAO_Notify_SupplierAdmin::MyOperator (void)
+TAO_Notify_SupplierAdmin::MyOperator ()
 {
   return this->filter_operator_;
 }
 
 CosNotifyChannelAdmin::ProxyIDSeq*
-TAO_Notify_SupplierAdmin::push_consumers (void)
+TAO_Notify_SupplierAdmin::push_consumers ()
 {
   TAO_Notify_Proxy_Seq_Worker seq_worker;
 
@@ -261,13 +261,13 @@ TAO_Notify_SupplierAdmin::get_filter (CosNotifyFilter::FilterID filter)
 }
 
 ::CosNotifyFilter::FilterIDSeq*
-TAO_Notify_SupplierAdmin::get_all_filters (void)
+TAO_Notify_SupplierAdmin::get_all_filters ()
 {
   return this->filter_admin_.get_all_filters ();
 }
 
 void
-TAO_Notify_SupplierAdmin::remove_all_filters (void)
+TAO_Notify_SupplierAdmin::remove_all_filters ()
 {
   this->filter_admin_.remove_all_filters ();
 }
@@ -291,13 +291,13 @@ TAO_Notify_SupplierAdmin::find_proxy_consumer (
 /************** UNIMPLEMENTED METHODS ***************/
 
 CosEventChannelAdmin::ProxyPullConsumer_ptr
-TAO_Notify_SupplierAdmin::obtain_pull_consumer (void)
+TAO_Notify_SupplierAdmin::obtain_pull_consumer ()
 {
   throw CORBA::NO_IMPLEMENT ();
 }
 
 CosNotifyChannelAdmin::ProxyIDSeq*
-TAO_Notify_SupplierAdmin::pull_consumers (void)
+TAO_Notify_SupplierAdmin::pull_consumers ()
 {
   throw CORBA::NO_IMPLEMENT ();
 }

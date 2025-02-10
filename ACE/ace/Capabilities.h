@@ -40,11 +40,9 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_CapEntry
 {
 public:
-
-   virtual ~ACE_CapEntry (void);
+   virtual ~ACE_CapEntry () = default;
 
 protected:
-
   enum
   {
     ACE_INTCAP = 0,
@@ -55,9 +53,7 @@ protected:
   ACE_CapEntry (int captype);
 
 protected:
-
   int captype_;
-
 };
 
 /**
@@ -72,7 +68,7 @@ class ACE_Export ACE_IntCapEntry : public ACE_CapEntry
 {
 public:
   ACE_IntCapEntry (int val);
-  int getval (void) const;
+  int getval () const;
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
@@ -91,7 +87,7 @@ class ACE_Export ACE_StringCapEntry : public ACE_CapEntry
 {
 public:
   ACE_StringCapEntry (const ACE_TString &val);
-  ACE_TString getval (void) const;
+  ACE_TString getval () const;
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
@@ -110,7 +106,7 @@ class ACE_Export ACE_BoolCapEntry : public ACE_CapEntry
 {
 public:
   ACE_BoolCapEntry (int val);
-  int getval (void) const;
+  int getval () const;
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
@@ -136,17 +132,15 @@ protected:
 class ACE_Export ACE_Capabilities
 {
 public:
-
   typedef  ACE_Hash_Map_Manager_Ex<ACE_TString, ACE_CapEntry *, ACE_Hash<ACE_TString>, ACE_Equal_To<ACE_TString>, ACE_Null_Mutex> CAPABILITIES_MAP;
 
   /// The Constructor
-  ACE_Capabilities (void);
+  ACE_Capabilities ();
 
   /// The Destructor
-  ~ACE_Capabilities(void);
+  ~ACE_Capabilities();
 
 public:
-
   /// Get a string entry.
   int getval (const ACE_TCHAR *ent, ACE_TString &val);
 
@@ -158,7 +152,6 @@ public:
   int getent (const ACE_TCHAR *fname, const ACE_TCHAR *name);
 
 protected:
-
   /// Parse an integer property
   const ACE_TCHAR *parse (const ACE_TCHAR *buf, int &cap);
 
@@ -179,10 +172,9 @@ protected:
   int is_entry (const ACE_TCHAR *name, const ACE_TCHAR *line);
 
   /// Reset the set of capabilities
-  void resetcaps (void);
+  void resetcaps ();
 
 private:
-
   /// This is the set of ACE_CapEntry.
   CAPABILITIES_MAP caps_;
 };

@@ -48,14 +48,14 @@ DynAnyAnalyzer::register_factory (
   CORBA::ValueFactoryBase_var factory)
 {
   factory_id * new_fact (
-    dynamic_cast<factory_id *> (factory.in()) );
+    dynamic_cast<factory_id *> (factory.in()));
   if (new_fact)
     {
       tab("Registering factory for ValueType ");
       ACE_DEBUG ((LM_DEBUG, "%C\n", new_fact->id ()));
       CORBA::ValueFactoryBase_var old_fact (
         orb_->register_value_factory (
-          new_fact->id (), factory.in () )  );
+          new_fact->id (), factory.in () ));
     }
 }
 
@@ -137,7 +137,8 @@ DynAnyAnalyzer::get_correct_base_type (
 
 #define CASEE(type,CT,str) case CORBA::tk_##type: {\
   CORBA::CT b = da->get_##type();\
-  if (!newline) tab(""); ACE_DEBUG ((LM_DEBUG, str , b));\
+  if (!newline) tab(""); \
+  ACE_DEBUG ((LM_DEBUG, str , b));\
 } break;
 
 void
@@ -173,7 +174,7 @@ DynAnyAnalyzer::analyze (
             ACE_DEBUG ((LM_DEBUG, "{NULL} "));
           }
         ACE_DEBUG ((LM_DEBUG, "ValueBox Type: %C \"%C\": ",
-                    tc->name (), tc->id ())             );
+                    tc->name (), tc->id ()));
         if (box->is_null ())
           {
             ACE_DEBUG ((LM_DEBUG, "\n"));

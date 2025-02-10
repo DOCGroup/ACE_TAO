@@ -44,7 +44,7 @@ public:
   friend class TAO_SHMIOP_Profile;
 
   /// Default constructor.
-  TAO_SHMIOP_Endpoint (void);
+  TAO_SHMIOP_Endpoint ();
 
   /// Constructor.  This is the most efficient constructor since it
   /// does not require any address resolution processing.
@@ -68,7 +68,7 @@ public:
                        CORBA::Short priority);
 
   /// Destructor.
-  ~TAO_SHMIOP_Endpoint (void);
+  ~TAO_SHMIOP_Endpoint ();
 
   /**
    * @name TAO_Endpoint Methods
@@ -77,33 +77,33 @@ public:
    */
   //@{
   /// Return a copy of @c this
-  virtual TAO_Endpoint *next (void);
+  virtual TAO_Endpoint *next ();
   virtual int addr_to_string (char *buffer, size_t length);
-  virtual TAO_Endpoint *duplicate (void);
+  virtual TAO_Endpoint *duplicate ();
 
   /// Return true if this endpoint is equivalent to @a other_endpoint.  Two
   /// endpoints are equivalent if their port and host are the same.
   CORBA::Boolean is_equivalent (const TAO_Endpoint *other_endpoint);
 
   /// Return a hash value for this object.
-  CORBA::ULong hash (void);
+  CORBA::ULong hash ();
   //@}
 
   // = SHMIOP_Endpoint-specific methods.
 
   /// Return a reference to the <object_addr>.
-  const ACE_INET_Addr &object_addr (void) const;
+  const ACE_INET_Addr &object_addr () const;
 
   /// Return a pointer to the host string.  This object maintains
   /// ownership of this string.
-  const char *host (void) const;
+  const char *host () const;
 
   /// Copy the string @a h into <host_> and return the resulting pointer.
   /// This object maintains ownership of this string.
   const char *host (const char *h);
 
   /// Return the port number.
-  CORBA::UShort port (void) const;
+  CORBA::UShort port () const;
 
   /// Set the port number.
   CORBA::UShort port (CORBA::UShort p);

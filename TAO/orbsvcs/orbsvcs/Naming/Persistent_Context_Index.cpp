@@ -5,7 +5,7 @@
 
 #include "tao/debug.h"
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/OS_NS_unistd.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -92,7 +92,7 @@ TAO_Persistent_Context_Index::TAO_Persistent_Context_Index
 {
 }
 
-TAO_Persistent_Context_Index::~TAO_Persistent_Context_Index (void)
+TAO_Persistent_Context_Index::~TAO_Persistent_Context_Index ()
 {
   delete allocator_;
   delete context_impl_factory_;
@@ -100,19 +100,19 @@ TAO_Persistent_Context_Index::~TAO_Persistent_Context_Index (void)
 }
 
 ACE_Allocator*
-TAO_Persistent_Context_Index::allocator (void)
+TAO_Persistent_Context_Index::allocator ()
 {
   return allocator_;
 }
 
 CosNaming::NamingContext_ptr
-TAO_Persistent_Context_Index::root_context (void)
+TAO_Persistent_Context_Index::root_context ()
 {
   return CosNaming::NamingContext::_duplicate (root_context_.in ());
 }
 
 CORBA::ORB_ptr
-TAO_Persistent_Context_Index::orb (void)
+TAO_Persistent_Context_Index::orb ()
 {
   return orb_.in ();
 }
@@ -144,7 +144,6 @@ TAO_Persistent_Context_Index::init (size_t context_size)
     // CASE 1:there are no Naming Contexts registered.  We need to create
     // one.
     {
-
       this->root_context_ =
         TAO_Persistent_Naming_Context::make_new_context (poa_.in (),
                                                          TAO_ROOT_NAMING_CONTEXT,
@@ -160,7 +159,7 @@ TAO_Persistent_Context_Index::init (size_t context_size)
 }
 
 int
-TAO_Persistent_Context_Index::recreate_all (void)
+TAO_Persistent_Context_Index::recreate_all ()
 {
   CONTEXT_INDEX::ITERATOR *index_iter = 0;
 
@@ -168,7 +167,7 @@ TAO_Persistent_Context_Index::recreate_all (void)
                   (CONTEXT_INDEX::ITERATOR) (*index_),
                   -1);
 
-  ACE_Auto_Basic_Ptr<CONTEXT_INDEX::ITERATOR> it (index_iter);
+  std::unique_ptr<CONTEXT_INDEX::ITERATOR> it (index_iter);
 
   // Because of broken old g++!!!
   typedef ACE_Hash_Map_With_Allocator<TAO_Persistent_Index_ExtId,
@@ -193,9 +192,9 @@ TAO_Persistent_Context_Index::recreate_all (void)
                                                                  entry->int_id_.hash_map_,
                                                                  entry->int_id_.counter_);
 
-      // Put <context_impl> into the auto pointer temporarily, in case next
+      // Put <context_impl> into the unique pointer temporarily, in case next
       // allocation fails.
-      ACE_Auto_Basic_Ptr<TAO_Persistent_Naming_Context> temp (context_impl);
+      std::unique_ptr<TAO_Persistent_Naming_Context> temp (context_impl);
 
       TAO_Naming_Context *context = 0;
       ACE_NEW_RETURN (context,
@@ -205,7 +204,7 @@ TAO_Persistent_Context_Index::recreate_all (void)
       // Let <implementation> know about it's <interface>.
       context_impl->interface (context);
 
-      // Release auto pointer and start using reference counting to
+      // Release unique pointer and start using reference counting to
       // control our servant.
       temp.release ();
       PortableServer::ServantBase_var s = context;
@@ -222,7 +221,6 @@ TAO_Persistent_Context_Index::recreate_all (void)
       // If this is the root Naming Context, take a note of it.
       if (context_impl->root ())
           this->root_context_= result._retn ();
-
     } while (index_iter->advance ());
 
   return 0;
@@ -239,7 +237,7 @@ TAO_Persistent_Context_Index::create_naming_context_impl (
 }
 
 int
-TAO_Persistent_Context_Index::create_index (void)
+TAO_Persistent_Context_Index::create_index ()
 {
   // Make sure that the file name is of the legal length.
   if (ACE_OS::strlen (index_file_) >= MAXNAMELEN + MAXPATHLEN)

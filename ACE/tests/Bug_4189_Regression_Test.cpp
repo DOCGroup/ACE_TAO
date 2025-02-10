@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
@@ -25,7 +24,7 @@ const int SEC_TO_KEEP_SOCKET_OPEN = 2;
 
 #if defined (ACE_HAS_THREADS)
 
-int reuseAddr_test (void)
+int reuseAddr_test ()
 {
 # if defined ACE_WIN32 || !defined ACE_LACKS_IOCTL
   ACE_SOCK_Dgram_Bcast sock1;

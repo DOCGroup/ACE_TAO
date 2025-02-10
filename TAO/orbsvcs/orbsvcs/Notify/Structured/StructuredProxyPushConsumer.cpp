@@ -1,7 +1,6 @@
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Notify/Structured/StructuredProxyPushConsumer.h"
 #include "ace/Bound_Ptr.h"
-#include "ace/Auto_Ptr.h"
 #include "tao/debug.h"
 #include "orbsvcs/Notify/Structured/StructuredPushSupplier.h"
 #include "orbsvcs/Notify/Structured/StructuredEvent.h"
@@ -10,7 +9,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Notify_StructuredProxyPushConsumer::TAO_Notify_StructuredProxyPushConsumer (void)
+TAO_Notify_StructuredProxyPushConsumer::TAO_Notify_StructuredProxyPushConsumer ()
 {
 }
 
@@ -19,14 +18,14 @@ TAO_Notify_StructuredProxyPushConsumer::~TAO_Notify_StructuredProxyPushConsumer 
 }
 
 void
-TAO_Notify_StructuredProxyPushConsumer::release (void)
+TAO_Notify_StructuredProxyPushConsumer::release ()
 {
   delete this;
   //@@ inform factory
 }
 
 CosNotifyChannelAdmin::ProxyType
-TAO_Notify_StructuredProxyPushConsumer::MyType (void)
+TAO_Notify_StructuredProxyPushConsumer::MyType ()
 {
   return CosNotifyChannelAdmin::PUSH_STRUCTURED;
 }
@@ -63,7 +62,7 @@ TAO_Notify_StructuredProxyPushConsumer::push_structured_event (const CosNotifica
 }
 
 void
-TAO_Notify_StructuredProxyPushConsumer::disconnect_structured_push_consumer (void)
+TAO_Notify_StructuredProxyPushConsumer::disconnect_structured_push_consumer ()
 {
   TAO_Notify_StructuredProxyPushConsumer::Ptr guard( this );
   this->destroy ();
@@ -71,7 +70,7 @@ TAO_Notify_StructuredProxyPushConsumer::disconnect_structured_push_consumer (voi
 }
 
 const char *
-TAO_Notify_StructuredProxyPushConsumer::get_proxy_type_name (void) const
+TAO_Notify_StructuredProxyPushConsumer::get_proxy_type_name () const
 {
   return "structured_proxy_push_consumer";
 }
@@ -130,7 +129,6 @@ TAO_Notify_StructuredProxyPushConsumer::configure(
   // Nothing to do.
   // This virtual method was added to support Notification MC
 }
-
 
 
 TAO_END_VERSIONED_NAMESPACE_DECL

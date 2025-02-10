@@ -40,20 +40,20 @@ class TAO_PortableGroup_Export TAO_UIPMC_Connector : public TAO_Connector
 {
 public:
   /// Constructor.
-  TAO_UIPMC_Connector (void);
+  TAO_UIPMC_Connector ();
 
   /// Destructor.
-  ~TAO_UIPMC_Connector (void);
+  ~TAO_UIPMC_Connector () = default;
 
   // = The TAO_Connector methods, please check the documentation on
   // Transport_Connector.h
   int open (TAO_ORB_Core *orb_core);
-  int close (void);
+  int close ();
   TAO_Profile *create_profile (TAO_InputCDR& cdr);
 
   virtual int check_prefix (const char *endpoint);
 
-  virtual char object_key_delimiter (void) const;
+  virtual char object_key_delimiter () const;
 
 protected:
   /// = More TAO_Connector methods, please check the documentation on
@@ -64,7 +64,7 @@ protected:
                                   TAO_Transport_Descriptor_Interface &desc,
                                   ACE_Time_Value *timeout = 0);
 
-  virtual TAO_Profile * make_profile (void);
+  virtual TAO_Profile * make_profile ();
 
   /// Cancel the passed cvs handler from the connector
   virtual int cancel_svc_handler (TAO_Connection_Handler * svc_handler);

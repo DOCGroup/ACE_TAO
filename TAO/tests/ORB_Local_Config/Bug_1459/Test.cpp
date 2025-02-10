@@ -21,8 +21,10 @@
 // UIOP
 const ACE_TCHAR argStrA[] = ACE_TEXT ("AAA -ORBGestalt LOCAL -ORBId ORB-A -ORBSvcConf a.conf");
 
+#if defined (DO_1459_SSLIOP_TEST)
 // SSLIOP
 const ACE_TCHAR argStrB[] = ACE_TEXT ("BBB -ORBGestalt LOCAL -ORBId ORB-B -ORBSvcConf b.conf");
+#endif
 
 // UIPMC
 const ACE_TCHAR argStrC[] = ACE_TEXT ("CCC -ORBGestalt LOCAL -ORBId ORB-C -ORBSvcConf m1.conf");

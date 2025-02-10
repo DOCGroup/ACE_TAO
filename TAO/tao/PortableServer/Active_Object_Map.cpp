@@ -7,7 +7,7 @@
 
 #include "tao/SystemException.h"
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/CORBA_macros.h"
 #include "tao/debug.h"
 #include "PortableServer_Functions.h"
@@ -95,7 +95,7 @@ TAO_Active_Object_Map::TAO_Active_Object_Map (
 {
   TAO_Active_Object_Map::set_system_id_size (creation_parameters);
 
-  TAO_Id_Uniqueness_Strategy *id_uniqueness_strategy = 0;
+  TAO_Id_Uniqueness_Strategy *id_uniqueness_strategy {};
 
   if (unique_id_policy)
     {
@@ -115,14 +115,10 @@ TAO_Active_Object_Map::TAO_Active_Object_Map (
 #endif
     }
 
-  // Give ownership to the auto pointer.
-#if defined (ACE_HAS_CPP11)
+  // Give ownership to the unique pointer.
   std::unique_ptr<TAO_Id_Uniqueness_Strategy> new_id_uniqueness_strategy (id_uniqueness_strategy);
-#else
-  auto_ptr<TAO_Id_Uniqueness_Strategy> new_id_uniqueness_strategy (id_uniqueness_strategy);
-#endif /* ACE_HAS_CPP11 */
 
-  TAO_Lifespan_Strategy *lifespan_strategy = 0;
+  TAO_Lifespan_Strategy *lifespan_strategy {};
 
   if (persistent_id_policy)
     {
@@ -143,14 +139,10 @@ TAO_Active_Object_Map::TAO_Active_Object_Map (
                         CORBA::NO_MEMORY ());
     }
 
-  // Give ownership to the auto pointer.
-#if defined (ACE_HAS_CPP11)
+  // Give ownership to the unique pointer.
   std::unique_ptr<TAO_Lifespan_Strategy> new_lifespan_strategy (lifespan_strategy);
-#else
-  auto_ptr<TAO_Lifespan_Strategy> new_lifespan_strategy (lifespan_strategy);
-#endif /* ACE_HAS_CPP11 */
 
-  TAO_Id_Assignment_Strategy *id_assignment_strategy = 0;
+  TAO_Id_Assignment_Strategy *id_assignment_strategy {};
 
   if (user_id_policy)
     {
@@ -182,14 +174,10 @@ TAO_Active_Object_Map::TAO_Active_Object_Map (
 #endif
     }
 
-  // Give ownership to the auto pointer.
-#if defined (ACE_HAS_CPP11)
+  // Give ownership to the unique pointer.
   std::unique_ptr<TAO_Id_Assignment_Strategy> new_id_assignment_strategy (id_assignment_strategy);
-#else
-  auto_ptr<TAO_Id_Assignment_Strategy> new_id_assignment_strategy (id_assignment_strategy);
-#endif /* ACE_HAS_CPP11 */
 
-  TAO_Id_Hint_Strategy *id_hint_strategy = 0;
+  TAO_Id_Hint_Strategy *id_hint_strategy {};
   if ((user_id_policy
        || creation_parameters.allow_reactivation_of_system_ids_)
       && creation_parameters.use_active_hint_in_ids_)
@@ -208,14 +196,10 @@ TAO_Active_Object_Map::TAO_Active_Object_Map (
                         CORBA::NO_MEMORY ());
     }
 
-  // Give ownership to the auto pointer.
-#if defined (ACE_HAS_CPP11)
+  // Give ownership to the unique pointer.
   std::unique_ptr<TAO_Id_Hint_Strategy> new_id_hint_strategy (id_hint_strategy);
-#else
-  auto_ptr<TAO_Id_Hint_Strategy> new_id_hint_strategy (id_hint_strategy);
-#endif /* ACE_HAS_CPP11 */
 
-  servant_map *sm = 0;
+  servant_map *sm {};
   if (unique_id_policy)
     {
       switch (creation_parameters.reverse_object_lookup_strategy_for_unique_id_policy_)
@@ -246,14 +230,10 @@ TAO_Active_Object_Map::TAO_Active_Object_Map (
         }
     }
 
-  // Give ownership to the auto pointer.
-#if defined (ACE_HAS_CPP11)
+  // Give ownership to the unique pointer.
   std::unique_ptr<servant_map> new_servant_map (sm);
-#else
-  auto_ptr<servant_map> new_servant_map (sm);
-#endif /* ACE_HAS_CPP11 */
 
-  user_id_map *uim = 0;
+  user_id_map *uim {};
   if (user_id_policy
       || creation_parameters.allow_reactivation_of_system_ids_)
     {
@@ -320,34 +300,21 @@ TAO_Active_Object_Map::TAO_Active_Object_Map (
         }
     }
 
-  // Give ownership to the auto pointer.
-#if defined (ACE_HAS_CPP11)
+  // Give ownership to the unique pointer.
   std::unique_ptr<user_id_map> new_user_id_map (uim);
-#else
-  auto_ptr<user_id_map> new_user_id_map (uim);
-#endif /* ACE_HAS_CPP11 */
 
   id_uniqueness_strategy->set_active_object_map (this);
   lifespan_strategy->set_active_object_map (this);
   id_assignment_strategy->set_active_object_map (this);
 
   // Finally everything is fine.  Make sure to take ownership away
-  // from the auto pointer.
-#if defined (ACE_HAS_CPP11)
+  // from the unique pointer.
   this->id_uniqueness_strategy_ = std::move(new_id_uniqueness_strategy);
   this->lifespan_strategy_ =  std::move(new_lifespan_strategy);
   this->id_assignment_strategy_ = std::move(new_id_assignment_strategy);
   this->id_hint_strategy_ = std::move(new_id_hint_strategy);
   this->servant_map_ = std::move(new_servant_map);
   this->user_id_map_ = std::move(new_user_id_map);
-#else
-  this->id_uniqueness_strategy_ = new_id_uniqueness_strategy;
-  this->lifespan_strategy_ =  new_lifespan_strategy;
-  this->id_assignment_strategy_ = new_id_assignment_strategy;
-  this->id_hint_strategy_ = new_id_hint_strategy;
-  this->servant_map_ = new_servant_map;
-  this->user_id_map_ = new_user_id_map;
-#endif /* ACE_HAS_CPP11 */
 
 #if defined (TAO_HAS_MONITOR_POINTS) && (TAO_HAS_MONITOR_POINTS == 1)
   ACE_NEW (this->monitor_,
@@ -355,7 +322,7 @@ TAO_Active_Object_Map::TAO_Active_Object_Map (
 #endif /* TAO_HAS_MONITOR_POINTS==1 */
 }
 
-TAO_Active_Object_Map::~TAO_Active_Object_Map (void)
+TAO_Active_Object_Map::~TAO_Active_Object_Map ()
 {
   user_id_map::iterator iterator = this->user_id_map_->begin ();
   user_id_map::iterator end = this->user_id_map_->end ();
@@ -381,13 +348,13 @@ TAO_Active_Object_Map::is_user_id_in_map (
   bool &priorities_match,
   bool &deactivated)
 {
-  TAO_Active_Object_Map_Entry *entry = 0;
+  TAO_Active_Object_Map_Entry *entry {};
   bool result = false;
   int const find_result = this->user_id_map_->find (user_id, entry);
 
   if (find_result == 0)
     {
-      if (entry->servant_ == 0)
+      if (entry->servant_ == nullptr)
         {
           if (entry->priority_ != priority)
             {
@@ -410,10 +377,6 @@ TAO_Active_Object_Map::is_user_id_in_map (
 
 ////////////////////////////////////////////////////////////////////////////////
 
-TAO_Id_Uniqueness_Strategy::~TAO_Id_Uniqueness_Strategy (void)
-{
-}
-
 void
 TAO_Id_Uniqueness_Strategy::set_active_object_map (
   TAO_Active_Object_Map *active_object_map)
@@ -425,9 +388,8 @@ int
 TAO_Unique_Id_Strategy::is_servant_in_map (PortableServer::Servant servant,
                                            bool &deactivated)
 {
-  TAO_Active_Object_Map_Entry *entry = 0;
-  int result = this->active_object_map_->servant_map_->find (servant,
-                                                             entry);
+  TAO_Active_Object_Map_Entry *entry{};
+  int result = this->active_object_map_->servant_map_->find (servant, entry);
   if (result == 0)
     {
       result = 1;
@@ -457,7 +419,7 @@ TAO_Unique_Id_Strategy::bind_using_user_id (
 
   if (result == 0)
     {
-      if (servant != 0)
+      if (servant != nullptr)
         {
           entry->servant_ = servant;
 
@@ -488,24 +450,19 @@ TAO_Unique_Id_Strategy::bind_using_user_id (
       if (result == 0)
         {
           result =
-            this->active_object_map_->user_id_map_->bind (entry->user_id_,
-                                                          entry);
+            this->active_object_map_->user_id_map_->bind (entry->user_id_, entry);
           if (result == 0)
             {
-              if (servant != 0)
+              if (servant != nullptr)
                 {
                   result =
-                    this->active_object_map_->servant_map_->bind (
-                      entry->servant_,
-                      entry);
+                    this->active_object_map_->servant_map_->bind (entry->servant_, entry);
                 }
 
               if (result != 0)
                 {
-                  this->active_object_map_->user_id_map_->unbind (
-                    entry->user_id_);
-                  this->active_object_map_->id_hint_strategy_->unbind (
-                    *entry);
+                  this->active_object_map_->user_id_map_->unbind (entry->user_id_);
+                  this->active_object_map_->id_hint_strategy_->unbind (*entry);
                   delete entry;
                 }
               else
@@ -541,8 +498,7 @@ TAO_Unique_Id_Strategy::bind_using_user_id (
                   "TAO (%P|%t) - TAO_Unique_Id_Strategy::"
                   "bind_using_user_id: type=%C, id=%C\n",
                   repository_id.in (),
-                  hex_idstr.c_str()
-                  ));
+                  hex_idstr.c_str()));
     }
 #endif
 
@@ -553,9 +509,8 @@ int
 TAO_Unique_Id_Strategy::unbind_using_user_id (
   const PortableServer::ObjectId &user_id)
 {
-  TAO_Active_Object_Map_Entry *entry = 0;
-  int result = this->active_object_map_->user_id_map_->unbind (user_id,
-                                                               entry);
+  TAO_Active_Object_Map_Entry *entry {};
+  int result = this->active_object_map_->user_id_map_->unbind (user_id, entry);
   if (result == 0)
     {
       if (TAO_debug_level > 7)
@@ -567,8 +522,7 @@ TAO_Unique_Id_Strategy::unbind_using_user_id (
 
           TAOLIB_DEBUG ((LM_DEBUG,
                       "TAO (%P|%t) - TAO_Unique_Id_Strategy::unbind_using_user_id: id=%C\n",
-                      hex_idstr.c_str()
-                      ));
+                      hex_idstr.c_str()));
         }
 
       if (entry->servant_ != 0)
@@ -602,7 +556,7 @@ TAO_Unique_Id_Strategy::find_user_id_using_servant (
   PortableServer::Servant servant,
   PortableServer::ObjectId_out user_id)
 {
-  TAO_Active_Object_Map_Entry *entry = 0;
+  TAO_Active_Object_Map_Entry *entry {};
   int result = this->active_object_map_->servant_map_->find (servant, entry);
 
   if (result == 0)
@@ -628,7 +582,7 @@ TAO_Unique_Id_Strategy::find_system_id_using_servant (
   PortableServer::ObjectId_out system_id,
   CORBA::Short &priority)
 {
-  TAO_Active_Object_Map_Entry *entry = 0;
+  TAO_Active_Object_Map_Entry *entry {};
   int result = this->active_object_map_->servant_map_->find (servant,
                                                              entry);
   if (result == 0)
@@ -679,12 +633,11 @@ TAO_Multiple_Id_Strategy::bind_using_user_id (
   CORBA::Short priority,
   TAO_Active_Object_Map_Entry *&entry)
 {
-  int result =
-    this->active_object_map_->user_id_map_->find (user_id, entry);
+  int result = this->active_object_map_->user_id_map_->find (user_id, entry);
 
   if (result == 0)
     {
-      if (servant != 0)
+      if (servant != nullptr)
         {
           entry->servant_ = servant;
         }
@@ -750,7 +703,7 @@ int
 TAO_Multiple_Id_Strategy::unbind_using_user_id (
   const PortableServer::ObjectId &user_id)
 {
-  TAO_Active_Object_Map_Entry *entry = 0;
+  TAO_Active_Object_Map_Entry *entry {};
   int result = this->active_object_map_->user_id_map_->unbind (user_id,
                                                                entry);
   if (result == 0)
@@ -764,8 +717,7 @@ TAO_Multiple_Id_Strategy::unbind_using_user_id (
 
           TAOLIB_DEBUG ((LM_DEBUG,
                       "TAO (%P|%t) - TAO_Multiple_Id_Strategy::unbind_using_user_id: id=%C\n",
-                      hex_idstr.c_str()
-                      ));
+                      hex_idstr.c_str()));
         }
 
       result = this->active_object_map_->id_hint_strategy_->unbind (*entry);
@@ -825,10 +777,6 @@ TAO_Multiple_Id_Strategy::remaining_activations (
   return 0;
 }
 #endif
-
-TAO_Lifespan_Strategy::~TAO_Lifespan_Strategy (void)
-{
-}
 
 void
 TAO_Lifespan_Strategy::set_active_object_map (
@@ -949,10 +897,6 @@ TAO_Active_Object_Map_Entry *&entry)
 }
 #endif
 
-TAO_Id_Assignment_Strategy::~TAO_Id_Assignment_Strategy (void)
-{
-}
-
 void
 TAO_Id_Assignment_Strategy::set_active_object_map (
   TAO_Active_Object_Map *active_object_map)
@@ -992,7 +936,7 @@ TAO_System_Id_With_Unique_Id_Strategy::bind_using_system_id (
 
       if (result == 0)
         {
-          if (servant != 0)
+          if (servant != nullptr)
             {
               result =
                 this->active_object_map_->servant_map_->bind (entry->servant_,
@@ -1107,18 +1051,8 @@ TAO_System_Id_With_Multiple_Id_Strategy::bind_using_system_id (
 
 ////////////////////////////////////////////////////////////////////////////////
 
-TAO_Id_Hint_Strategy::~TAO_Id_Hint_Strategy (void)
-{
-}
-
-////////////////////////////////////////////////////////////////////////////////
-
 TAO_Active_Hint_Strategy::TAO_Active_Hint_Strategy (CORBA::ULong map_size)
   : system_id_map_ (map_size)
-{
-}
-
-TAO_Active_Hint_Strategy::~TAO_Active_Hint_Strategy (void)
 {
 }
 
@@ -1154,7 +1088,7 @@ TAO_Active_Hint_Strategy::find (const PortableServer::ObjectId &system_id,
 }
 
 size_t
-TAO_Active_Hint_Strategy::hint_size (void)
+TAO_Active_Hint_Strategy::hint_size ()
 {
   return ACE_Active_Map_Manager_Key::size ();
 }
@@ -1170,10 +1104,6 @@ TAO_Active_Hint_Strategy::system_id (PortableServer::ObjectId_out system_id,
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-
-TAO_No_Hint_Strategy::~TAO_No_Hint_Strategy (void)
-{
-}
 
 int
 TAO_No_Hint_Strategy::recover_key (const PortableServer::ObjectId &system_id,
@@ -1208,7 +1138,7 @@ TAO_No_Hint_Strategy::find (const PortableServer::ObjectId &,
 }
 
 size_t
-TAO_No_Hint_Strategy::hint_size (void)
+TAO_No_Hint_Strategy::hint_size ()
 {
   return 0;
 }

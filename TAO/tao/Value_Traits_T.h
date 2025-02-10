@@ -19,7 +19,6 @@ namespace TAO
 {
 namespace details
 {
-
 template<typename T, bool dummy>
 struct value_traits
 {
@@ -60,7 +59,6 @@ struct value_traits
     copy_range(begin, end, dst);
   }
 };
-
 } // namespace details
 } // namespace CORBA
 

@@ -39,7 +39,7 @@ namespace TAO
       typedef alloc_type ALLOC_TYPE;
       TAO_Buffer_Allocator (alloc_type *allocator);
 
-      virtual handler_type *allocate (void);
+      virtual handler_type *allocate ();
       virtual void release (handler_type *ptr);
     private:
       alloc_type* allocator_;
@@ -48,13 +48,7 @@ namespace TAO
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "tao/Buffer_Allocator_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Buffer_Allocator_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 #endif /* TAO_BUFFER_ALLOCATOR_T_H */

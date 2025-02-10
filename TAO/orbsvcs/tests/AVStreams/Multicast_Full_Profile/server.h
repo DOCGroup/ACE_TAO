@@ -12,18 +12,18 @@ class FTP_Server_Callback
   :public TAO_AV_Callback
 {
 public:
-  virtual int handle_stop (void);
+  virtual int handle_stop ();
   virtual int receive_frame (ACE_Message_Block *frame,
                              TAO_AV_frame_info *frame_info,
                              const ACE_Addr &);
-  virtual int handle_end_stream (void);
+  virtual int handle_end_stream ();
 };
 
 class FTP_Server_FlowEndPoint
   :public TAO_FlowConsumer
 {
 public:
-  FTP_Server_FlowEndPoint (void);
+  FTP_Server_FlowEndPoint ();
   int get_callback (const char *flowname,
                     TAO_AV_Callback *&callback);
 };
@@ -32,7 +32,7 @@ public:
 //   :public TAO_FDev
 // {
 // public:
-//   FTP_Server_FDev (void);
+//   FTP_Server_FDev ();
 //   virtual AVStreams::FlowConsumer_ptr make_consumer (AVStreams::FlowConnection_ptr the_requester,
 //                                                        AVStreams::QoS & the_qos,
 //                                                        CORBA::Boolean_out met_qos,
@@ -48,13 +48,13 @@ typedef TAO_FDev <TAO_FlowProducer, FTP_Server_FlowEndPoint> FTP_Server_FDev;
 class Server
 {
 public:
-  Server (void);
+  Server ();
   int init (int argc,
             ACE_TCHAR *argv[]);
-  int run (void);
-  FILE *file (void);
-  AVStreams::protocolSpec protocols (void);
-  const char *format (void);
+  int run ();
+  FILE *file ();
+  AVStreams::protocolSpec protocols ();
+  const char *format ();
 protected:
   int parse_args (int argc, ACE_TCHAR *argv[]);
   TAO_Naming_Client my_naming_client_;

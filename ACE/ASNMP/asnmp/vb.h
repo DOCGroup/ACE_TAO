@@ -70,7 +70,7 @@ class ASNMP_Export Vb
 public:
   /// constructor with no arguments
   /// makes an vb, unitialized (does not make object valid)
-  Vb( void);
+  Vb();
 
   /// constructor to initialize the oid
   /// makes a vb with oid portion initialized (does not make object valid)

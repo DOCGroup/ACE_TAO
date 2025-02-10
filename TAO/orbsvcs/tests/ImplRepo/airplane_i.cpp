@@ -13,7 +13,7 @@ Airplane_i::Airplane_i ()
 
 // Destructor
 
-Airplane_i::~Airplane_i (void)
+Airplane_i::~Airplane_i ()
 {
   // Nothing
 }
@@ -22,7 +22,7 @@ Airplane_i::~Airplane_i (void)
 // Returns a random plane and page number
 
 char *
-Airplane_i::get_plane (void)
+Airplane_i::get_plane ()
 {
   if (TAO_debug_level)
     ACE_DEBUG ((LM_DEBUG, "Airplane_i::get_plane\n"));

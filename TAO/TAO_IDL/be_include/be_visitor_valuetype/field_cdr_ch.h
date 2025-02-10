@@ -29,7 +29,7 @@ public:
   be_visitor_valuetype_field_cdr_ch (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_valuetype_field_cdr_ch (void);
+  ~be_visitor_valuetype_field_cdr_ch ();
 
   /// visit the field node
   virtual int visit_field (be_field *node);

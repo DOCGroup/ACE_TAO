@@ -36,13 +36,13 @@ Server_Request_Interceptor::forward (
 }
 
 char *
-Server_Request_Interceptor::name (void)
+Server_Request_Interceptor::name ()
 {
   return CORBA::string_dup ("Server_Request_Interceptor");
 }
 
 void
-Server_Request_Interceptor::destroy (void)
+Server_Request_Interceptor::destroy ()
 {
   CORBA::release (this->to_);
 }
@@ -69,8 +69,6 @@ Server_Request_Interceptor::receive_request (
       // Throw forward exception
       throw PortableInterceptor::ForwardRequest (this->to_);
     }
-
-  return;
 }
 
 void

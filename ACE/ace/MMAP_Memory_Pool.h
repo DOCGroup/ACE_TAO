@@ -120,9 +120,8 @@ public:
   bool install_signal_handler_;
 
 private:
-  // Prevent copying
-  ACE_MMAP_Memory_Pool_Options (const ACE_MMAP_Memory_Pool_Options &);
-  ACE_MMAP_Memory_Pool_Options &operator= (const ACE_MMAP_Memory_Pool_Options &);
+  ACE_MMAP_Memory_Pool_Options (const ACE_MMAP_Memory_Pool_Options &) = delete;
+  ACE_MMAP_Memory_Pool_Options &operator= (const ACE_MMAP_Memory_Pool_Options &) = delete;
 };
 
 /**
@@ -141,7 +140,7 @@ public:
                         const OPTIONS *options = 0);
 
   /// Destructor.
-  virtual ~ACE_MMAP_Memory_Pool (void);
+  virtual ~ACE_MMAP_Memory_Pool ();
 
   /// Ask system for initial chunk of shared memory.
   virtual void *init_acquire (size_t nbytes,
@@ -211,16 +210,16 @@ public:
   virtual int remap (void *addr);
 
   /// Return the base address of this memory pool.
-  virtual void *base_addr (void) const;
+  virtual void *base_addr () const;
 
   /// Dump the state of an object.
-  virtual void dump (void) const;
+  virtual void dump () const;
 
   /// Get reference to underlying ACE_Mem_Map object.
-  ACE_Mem_Map const & mmap (void) const;
+  ACE_Mem_Map const & mmap () const;
 
   /// Get reference to underlying ACE_Mem_Map object.
-  ACE_Mem_Map & mmap (void);
+  ACE_Mem_Map & mmap ();
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -245,9 +244,9 @@ protected:
    * SIGSEGV) will be triggered.  At that point, the ACE_Sig_Handler
    * (which is part of the ACE_Reactor) will catch the signal and
    * dispatch the handle_signal() method defined here.  If the SIGSEGV
-   * signal occurred due to the fact that the mapping wasn't uptodate
+   * signal occurred due to the fact that the mapping wasn't up to date
    * with respect to the backing store, the handler method below will
-   * update the mapping accordingly.  When the signal handler returns,
+   * update the mapping accordingly. When the signal handler returns,
    * the instruction should be restarted and the operation should work.
    */
   virtual int handle_signal (int signum, siginfo_t *, ucontext_t *);
@@ -321,7 +320,7 @@ public:
                              const OPTIONS *options = 0);
 
   /// Destructor.
-  virtual ~ACE_Lite_MMAP_Memory_Pool (void);
+  virtual ~ACE_Lite_MMAP_Memory_Pool ();
 
   /// Overwrite the default sync behavior with no-op
   virtual int sync (size_t len, int flags = MS_SYNC);
@@ -334,7 +333,6 @@ public:
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
-
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

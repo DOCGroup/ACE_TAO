@@ -10,7 +10,6 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       if (init_result != 0)
         return 1;
-
     }
   catch (const CORBA::Exception& ex)
     {

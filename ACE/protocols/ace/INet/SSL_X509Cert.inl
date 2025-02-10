@@ -57,7 +57,7 @@ namespace ACE
       }
 
     ACE_INLINE
-    ::X509* SSL_X509Cert::operator & (void)
+    ::X509* SSL_X509Cert::operator & ()
       {
         return this->ssl_cert_;
       }

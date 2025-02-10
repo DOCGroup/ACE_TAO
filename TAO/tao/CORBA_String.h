@@ -52,7 +52,7 @@ namespace TAO
     typedef TAO::details::string_traits_base <character_type> s_traits;
 
     /// Default constructor.
-    inline String_var (void) : ptr_ (0)
+    inline String_var () : ptr_ (0)
     {
     }
 
@@ -72,7 +72,7 @@ namespace TAO
     }
 
     /// Destructor.
-    inline ~String_var (void)
+    inline ~String_var ()
     {
       s_traits::release (this->ptr_);
     }
@@ -128,19 +128,19 @@ namespace TAO
     }
 
     /// For in parameter.
-    inline const character_type *in (void) const
+    inline const character_type *in () const
     {
       return this->ptr_;
     }
 
     /// For inout parameter.
-    inline character_type *&inout (void)
+    inline character_type *&inout ()
     {
       return this->ptr_;
     }
 
     /// For out parameter.
-    inline character_type *&out (void)
+    inline character_type *&out ()
     {
       s_traits::release (this->ptr_);
       this->ptr_ = 0;
@@ -148,7 +148,7 @@ namespace TAO
     }
 
     /// For string of return type.
-    inline character_type *_retn (void)
+    inline character_type *_retn ()
     {
       character_type *temp = this->ptr_;
       this->ptr_ = 0;
@@ -225,7 +225,7 @@ namespace TAO
     }
 
     /// Return underlying instance.
-    inline character_type *&ptr (void)
+    inline character_type *&ptr ()
     {
       return this->ptr_;
     }
@@ -273,6 +273,8 @@ TAO_Export ostream &
 operator<< (ostream &, CORBA::String_out &);
 TAO_Export istream &
 operator>> (istream &, CORBA::String_out &);
+
+#  ifndef ACE_HAS_CPP20
 TAO_Export ostream &
 operator<< (ostream &, const CORBA::WString_var &);
 TAO_Export istream &
@@ -281,6 +283,7 @@ TAO_Export ostream &
 operator<< (ostream &, CORBA::WString_out &);
 TAO_Export istream &
 operator>> (istream &, CORBA::WString_out &);
+#  endif /* ACE_HAS_CPP20 */
 
 # endif /* ACE_LACKS_IOSTREAM_TOTALLY */
 

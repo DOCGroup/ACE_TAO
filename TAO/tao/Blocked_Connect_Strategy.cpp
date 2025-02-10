@@ -15,7 +15,7 @@ void
 TAO_Blocked_Connect_Strategy::synch_options (ACE_Time_Value *timeout,
                                              ACE_Synch_Options &options)
 {
-  if (timeout != 0)
+  if (timeout != nullptr)
     {
       // Blocking with a timeout
       options.set (ACE_Synch_Options::USE_TIMEOUT, *timeout);

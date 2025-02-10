@@ -58,9 +58,10 @@ project(AnyTypeCode) : taolib, tao_output, install, extra_anytypecode, taoidldef
     FloatSeqA.cpp
     GIOPA.cpp
     IIOPA.cpp
-    IOPA.cpp
     IIOP_EndpointsA.cpp
+    IOPA.cpp
     Indirected_Type_TypeCode.cpp
+    Int8SeqA.cpp
     LongDoubleSeqA.cpp
     LongLongSeqA.cpp
     LongSeqA.cpp
@@ -93,6 +94,7 @@ project(AnyTypeCode) : taolib, tao_output, install, extra_anytypecode, taoidldef
     TypeCodeA.cpp
     TypeCode_CDR_Extraction.cpp
     TypeCode_Constants.cpp
+    UInt8SeqA.cpp
     ULongLongSeqA.cpp
     ULongSeqA.cpp
     Union_TypeCode_Static.cpp
@@ -117,9 +119,9 @@ project(AnyTypeCode) : taolib, tao_output, install, extra_anytypecode, taoidldef
     DoubleSeqA.h
     FloatSeqA.h
     IIOPA.h
-    IOPA.h
     IIOP_EndpointsA.h
     IOPA.h
+    Int8SeqA.h
     LongDoubleSeqA.h
     LongLongSeqA.h
     LongSeqA.h
@@ -139,6 +141,7 @@ project(AnyTypeCode) : taolib, tao_output, install, extra_anytypecode, taoidldef
     StringSeqA.h
     TAOA.h
     TimeBaseA.h
+    UInt8SeqA.h
     ULongLongSeqA.h
     ULongSeqA.h
     UShortSeqA.h

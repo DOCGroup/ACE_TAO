@@ -18,7 +18,7 @@ be_visitor_executor_ami_exs::be_visitor_executor_ami_exs (
 {
 }
 
-be_visitor_executor_ami_exs::~be_visitor_executor_ami_exs (void)
+be_visitor_executor_ami_exs::~be_visitor_executor_ami_exs ()
 {
 }
 
@@ -35,12 +35,12 @@ be_visitor_executor_ami_exs::visit_connector (be_connector *node)
 
   os_ << be_nl_2
       << class_name << "::"
-      << class_name << " (void)" << be_idt_nl;
+      << class_name << " ()" << be_idt_nl;
 
   /// The port is the only item in the connector's scope.
   UTL_ScopeActiveIterator j (node, UTL_Scope::IK_decls);
   AST_Extended_Port *p =
-    AST_Extended_Port::narrow_from_decl (j.item ());
+    dynamic_cast<AST_Extended_Port*> (j.item ());
 
   bool first = true;
   int port_nr = 0;
@@ -49,9 +49,9 @@ be_visitor_executor_ami_exs::visit_connector (be_connector *node)
        i.next ())
     {
       AST_Decl *d = i.item ();
-      AST_Provides *p = AST_Provides::narrow_from_decl (d);
+      AST_Provides *p = dynamic_cast<AST_Provides*> (d);
 
-      if (p != 0)
+      if (p != nullptr)
         {
           if (first)
             {
@@ -75,7 +75,7 @@ be_visitor_executor_ami_exs::visit_connector (be_connector *node)
 
   os_ << be_nl_2
       << class_name << "::~"
-      << class_name << " (void)" << be_nl
+      << class_name << " ()" << be_nl
       << "{" << be_idt_nl;
   for (int i = 0; i < port_nr; i ++)
     {
@@ -115,7 +115,7 @@ be_visitor_executor_ami_exs::visit_connector (be_connector *node)
 
   os_ << be_nl_2
       << "void" << be_nl
-      << class_name << "::configuration_complete (void)" << be_nl
+      << class_name << "::configuration_complete ()" << be_nl
       << "{" << be_idt_nl;
    for (int i = 0; i < port_nr; i ++)
     {
@@ -125,13 +125,13 @@ be_visitor_executor_ami_exs::visit_connector (be_connector *node)
 
   os_ << be_nl_2
       << "void" << be_nl
-      << class_name << "::ccm_activate (void)" << be_nl
+      << class_name << "::ccm_activate ()" << be_nl
       << "{" << be_nl
       << "}";
 
   os_ << be_nl_2
       << "void" << be_nl
-      << class_name << "::ccm_passivate (void)" << be_nl
+      << class_name << "::ccm_passivate ()" << be_nl
       << "{" << be_nl
       << "}";
 
@@ -142,7 +142,7 @@ be_visitor_executor_ami_exs::visit_connector (be_connector *node)
 
   os_ << be_nl_2
       << "void" << be_nl
-      << class_name << "::ccm_remove (void)" << be_nl
+      << class_name << "::ccm_remove ()" << be_nl
       << "{" << be_idt_nl;
    for (int i = 0; i < port_nr; i ++)
     {
@@ -179,7 +179,7 @@ be_visitor_executor_ami_exs::visit_provides (be_provides *node)
   const char *exec_ext = (ACE_OS::strstr (loc_name, "sync") ? "1" : "0");
 
     os_ << d->local_name () << "_"
-      << node->local_name () << " (void)" << be_nl
+      << node->local_name () << " ()" << be_nl
       << "{" << be_idt_nl
       << "return "
       << smart_scope << scope->full_name () << "::CCM_" << t->local_name () << "::_duplicate ("

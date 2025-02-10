@@ -29,11 +29,11 @@ public:
   Stopwatch_imp (CORBA::ORB_ptr, Timer_imp *);
 
   // = The Simple_Server methods.
-  void start (void);
+  void start ();
 
-  void stop (void);
+  void stop ();
 
-  void shutdown (void);
+  void shutdown ();
 
 private:
   /// The ORB

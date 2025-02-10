@@ -30,7 +30,7 @@ class ACEXML_Export ACEXML_URL_Addr : public ACE_INET_Addr
 {
 public:
   /// Initialization and termination methods.
-  ACEXML_URL_Addr (void);
+  ACEXML_URL_Addr ();
 
   /// Constructor.
   ACEXML_URL_Addr (const ACEXML_Char *host_name,
@@ -89,7 +89,7 @@ public:
   void operator= (const ACEXML_URL_Addr &addr);
 
   /// Destructor.
-  ~ACEXML_URL_Addr (void);
+  ~ACEXML_URL_Addr ();
 
   /**
    *  Compare two addresses for equality.  The addresses are considered
@@ -101,16 +101,15 @@ public:
   bool operator != (const ACEXML_URL_Addr &SAP) const;
 
   /// Computes and returns hash value.
-  virtual u_long hash (void) const;
+  virtual u_long hash () const;
 
   /// Return the path name.
-  const ACEXML_Char *get_path_name (void) const;
+  const ACEXML_Char *get_path_name () const;
 
   /// Commit suicide.
-  int destroy (void);
+  int destroy ();
 
 private:
-
   /// Calculate the maximum length of the address string
   size_t calculate_length (int ipaddr_format) const;
 

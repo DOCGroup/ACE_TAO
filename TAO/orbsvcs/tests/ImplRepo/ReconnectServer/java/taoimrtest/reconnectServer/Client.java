@@ -65,7 +65,7 @@ class Client
         props.setProperty ("jacorb.log.default.verbosity","3");
         try
         {
-            org.omg.CORBA.ORB orb = org.omg.CORBA.ORB.init( args, props );
+            org.omg.CORBA.ORB orb = org.omg.CORBA.ORB.init( args, props);
             client.timeObj = TimeSrvHelper.narrow (orb.string_to_object ("file://A.ior"));
             client.runTest ();
             if (!client.testPassed ())

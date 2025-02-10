@@ -54,7 +54,7 @@ public:
   TAO_Policy_Validator (TAO_ORB_Core &orb_core);
 
   /// Destructor.
-  virtual ~TAO_Policy_Validator (void);
+  virtual ~TAO_Policy_Validator ();
 
   /**
    * Validate that the policies in the specified set

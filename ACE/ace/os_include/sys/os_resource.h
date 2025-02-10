@@ -29,10 +29,6 @@
 #  include /**/ <sys/resource.h>
 #endif /* !ACE_LACKS_SYS_RESOURCE_H */
 
-#if defined (ACE_HAS_SYS_SYSTEMINFO_H)
-#  include /**/ <sys/systeminfo.h>
-#endif /* ACE_HAS_SYS_SYSTEMINFO_H */
-
 #if defined (ACE_HAS_SYS_SYSCALL_H)
 #  include /**/ <sys/syscall.h>
 #endif /* ACE_HAS_SYS_SYSCALL_H */
@@ -59,14 +55,7 @@ extern "C"
    };
 #endif /* ACE_WIN32 */
 
-#if defined (ACE_LACKS_RLIMIT_PROTOTYPE)
-  int getrlimit (int resource, struct rlimit *rlp);
-  int setrlimit (int resource, const struct rlimit *rlp);
-#endif /* ACE_LACKS_RLIMIT_PROTOTYPE */
-
-#if defined (ACE_HAS_PRUSAGE_T)
-   typedef prusage_t ACE_Rusage;
-#elif defined (ACE_HAS_GETRUSAGE)
+#if defined (ACE_HAS_GETRUSAGE)
    typedef rusage ACE_Rusage;
 #else
    typedef int ACE_Rusage;

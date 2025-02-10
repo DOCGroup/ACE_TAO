@@ -9,7 +9,7 @@
 #include "Task_Stats.h"
 #include "ace/Barrier.h"
 
-Thread_Task::Thread_Task (void)
+Thread_Task::Thread_Task ()
 {
 }
 
@@ -53,12 +53,11 @@ Thread_Task::activate_task (ACE_Barrier* barrier, RTCORBA::PriorityMapping *prio
 }
 
 int
-Thread_Task::svc (void)
+Thread_Task::svc ()
 {
   // if debugging, dump the priority that we're actually at.
   if (TAO_debug_level > 0)
     {
-
       // Get the priority of the current thread.
       RTCORBA::Priority prio =
         ACTIVITY::instance()->current ()->the_priority ();

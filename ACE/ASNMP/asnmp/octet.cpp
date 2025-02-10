@@ -75,7 +75,6 @@ int copy_octet_smi(SmiVALUE& smi, int size, const char *src, int& valid_flag)
 OctetStr::OctetStr( const char  * string, long size):
   output_buffer(0), validity(0)
 {
-
   init_octet_smi(smival);
 
   // check for null string

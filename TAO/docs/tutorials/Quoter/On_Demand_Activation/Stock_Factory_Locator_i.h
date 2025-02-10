@@ -26,7 +26,6 @@ class Quoter_Stock_Factory_Locator_i : public PortableServer::ServantLocator
 
  private:
   CORBA::ORB_var orb_;
-
 };
 
 #endif /* STOCK_FACTORY_LOCATOR_I_H */

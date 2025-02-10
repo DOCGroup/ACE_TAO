@@ -7,7 +7,6 @@
 #include "ace/Get_Opt.h"
 
 
-
 #if defined (ACE_HAS_THREADS)
 
 #include "ace/Guard_T.h"
@@ -19,7 +18,7 @@ static size_t n_threads = 4;
 
 // Explain usage and exit.
 static void
-print_usage_and_die (void)
+print_usage_and_die ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "usage: %n [-t n_threads] [-n iteration_count]\n"));

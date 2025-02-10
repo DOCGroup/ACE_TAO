@@ -18,7 +18,7 @@ CORBA::ExceptionList::ExceptionList (CORBA::ULong len,
     }
 }
 
-CORBA::ExceptionList::~ExceptionList (void)
+CORBA::ExceptionList::~ExceptionList ()
 {
   for (CORBA::ULong i = 0; i < this->count (); ++i)
     {
@@ -67,26 +67,26 @@ CORBA::ExceptionList::remove (CORBA::ULong)
 }
 
 CORBA::ExceptionList_ptr
-CORBA::ExceptionList::_duplicate (void)
+CORBA::ExceptionList::_duplicate ()
 {
   this->_incr_refcount ();
   return this;
 }
 
 void
-CORBA::ExceptionList::_destroy (void)
+CORBA::ExceptionList::_destroy ()
 {
   this->_decr_refcount ();
 }
 
 void
-CORBA::ExceptionList::_incr_refcount (void)
+CORBA::ExceptionList::_incr_refcount ()
 {
   ++this->refcount_;
 }
 
 void
-CORBA::ExceptionList::_decr_refcount (void)
+CORBA::ExceptionList::_decr_refcount ()
 {
   CORBA::ULong const refcount = --this->refcount_;
 

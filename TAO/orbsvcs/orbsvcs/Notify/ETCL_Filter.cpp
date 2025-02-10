@@ -1,9 +1,9 @@
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Notify/ETCL_Filter.h"
-#include "ace/Auto_Ptr.h"
 #include "tao/debug.h"
 #include "orbsvcs/Notify/Notify_Constraint_Visitors.h"
 #include "orbsvcs/Notify/Topology_Saver.h"
+#include <memory>
 
 #ifndef DEBUG_LEVEL
 # define DEBUG_LEVEL TAO_debug_level
@@ -11,7 +11,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Notify_Constraint_Expr::TAO_Notify_Constraint_Expr (void)
+TAO_Notify_Constraint_Expr::TAO_Notify_Constraint_Expr ()
 {
 }
 
@@ -86,12 +86,11 @@ TAO_Notify_Constraint_Expr::load_child (
 
 
 void
-TAO_Notify_Constraint_Expr::release (void)
+TAO_Notify_Constraint_Expr::release ()
 {
   delete this;
   //@@ inform factory
 }
-
 
 
 TAO_Notify_ETCL_Filter::TAO_Notify_ETCL_Filter (PortableServer::POA_ptr poa,
@@ -124,7 +123,7 @@ TAO_Notify_ETCL_Filter::~TAO_Notify_ETCL_Filter ()
 }
 
 char*
-TAO_Notify_ETCL_Filter::constraint_grammar (void)
+TAO_Notify_ETCL_Filter::constraint_grammar ()
 {
   return CORBA::string_dup (this->grammar_.c_str ());
 }
@@ -147,7 +146,7 @@ TAO_Notify_ETCL_Filter::add_constraint_i (CosNotifyFilter::ConstraintID cnstr_id
   ACE_NEW_THROW_EX (notify_constr_expr,
     TAO_Notify_Constraint_Expr (),
     CORBA::NO_MEMORY ());
-  auto_ptr <TAO_Notify_Constraint_Expr> auto_expr (notify_constr_expr);
+  std::unique_ptr <TAO_Notify_Constraint_Expr> auto_expr (notify_constr_expr);
 
   if (TAO_debug_level > 1)
     ORBSVCS_DEBUG ((LM_DEBUG,
@@ -172,7 +171,7 @@ TAO_Notify_ETCL_Filter::add_constraint_i
   ACE_NEW_THROW_EX (notify_constr_expr,
     TAO_Notify_Constraint_Expr (),
     CORBA::NO_MEMORY ());
-  auto_ptr <TAO_Notify_Constraint_Expr> auto_expr (notify_constr_expr);
+  std::unique_ptr <TAO_Notify_Constraint_Expr> auto_expr (notify_constr_expr);
 
   CosNotifyFilter::ConstraintExp const & expr =
     constraint.constraint_expression;
@@ -364,7 +363,7 @@ TAO_Notify_ETCL_Filter::get_constraints (
 }
 
 CosNotifyFilter::ConstraintInfoSeq *
-TAO_Notify_ETCL_Filter::get_all_constraints (void)
+TAO_Notify_ETCL_Filter::get_all_constraints ()
 {
   ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,
                       CORBA::INTERNAL ());
@@ -404,7 +403,7 @@ TAO_Notify_ETCL_Filter::get_all_constraints (void)
 }
 
 void
-TAO_Notify_ETCL_Filter::remove_all_constraints (void)
+TAO_Notify_ETCL_Filter::remove_all_constraints ()
 {
   ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,
                       CORBA::INTERNAL ());
@@ -413,7 +412,7 @@ TAO_Notify_ETCL_Filter::remove_all_constraints (void)
 }
 
 void
-TAO_Notify_ETCL_Filter::remove_all_constraints_i (void)
+TAO_Notify_ETCL_Filter::remove_all_constraints_i ()
 {
   CONSTRAINT_EXPR_LIST::ITERATOR iter (this->constraint_expr_list_);
   CONSTRAINT_EXPR_LIST::ENTRY *entry;
@@ -431,7 +430,7 @@ TAO_Notify_ETCL_Filter::remove_all_constraints_i (void)
 }
 
 void
-TAO_Notify_ETCL_Filter::destroy (void)
+TAO_Notify_ETCL_Filter::destroy ()
 {
   ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,
                       CORBA::INTERNAL ());
@@ -507,7 +506,7 @@ TAO_Notify_ETCL_Filter::detach_callback (
 }
 
 CosNotifyFilter::CallbackIDSeq *
-TAO_Notify_ETCL_Filter::get_callbacks (void)
+TAO_Notify_ETCL_Filter::get_callbacks ()
 {
   throw CORBA::NO_IMPLEMENT ();
 }
@@ -548,7 +547,7 @@ TAO_Notify_ETCL_Filter::save_persistent (TAO_Notify::Topology_Saver& saver)
 
 
 void
-TAO_Notify_ETCL_Filter::release (void)
+TAO_Notify_ETCL_Filter::release ()
 {
   delete this;
   //@@ inform factory

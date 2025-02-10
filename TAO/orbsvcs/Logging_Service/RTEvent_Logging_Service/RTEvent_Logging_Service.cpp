@@ -5,7 +5,7 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
 
-RTEvent_Logging_Service::RTEvent_Logging_Service (void)
+RTEvent_Logging_Service::RTEvent_Logging_Service ()
   : service_name_ ("RTEventLogFactory"),
     ior_file_name_ (0),
     pid_file_name_ (0),
@@ -15,7 +15,7 @@ RTEvent_Logging_Service::RTEvent_Logging_Service (void)
   // No-Op.
 }
 
-RTEvent_Logging_Service::~RTEvent_Logging_Service (void)
+RTEvent_Logging_Service::~RTEvent_Logging_Service ()
 {
   // No-Op.
 }
@@ -169,7 +169,7 @@ RTEvent_Logging_Service::init (int argc, ACE_TCHAR* argv[])
 }
 
 void
-RTEvent_Logging_Service::resolve_naming_service (void)
+RTEvent_Logging_Service::resolve_naming_service ()
 {
   CORBA::Object_var naming_obj =
     this->orb_->resolve_initial_references ("NameService");
@@ -183,7 +183,7 @@ RTEvent_Logging_Service::resolve_naming_service (void)
 }
 
 int
-RTEvent_Logging_Service::run (void)
+RTEvent_Logging_Service::run ()
 {
   if (this->nthreads_ > 0)
     {
@@ -200,7 +200,7 @@ RTEvent_Logging_Service::run (void)
 }
 
 int
-RTEvent_Logging_Service::svc (void)
+RTEvent_Logging_Service::svc ()
 {
   try
     {
@@ -215,7 +215,7 @@ RTEvent_Logging_Service::svc (void)
 }
 
 void
-RTEvent_Logging_Service::shutdown (void)
+RTEvent_Logging_Service::shutdown ()
 {
   if (this->bind_to_naming_service_)
     {

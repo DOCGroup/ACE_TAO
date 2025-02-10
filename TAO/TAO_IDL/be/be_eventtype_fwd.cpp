@@ -42,7 +42,7 @@ be_eventtype_fwd::be_eventtype_fwd (AST_Interface *dummy,
 {
 }
 
-be_eventtype_fwd::~be_eventtype_fwd (void)
+be_eventtype_fwd::~be_eventtype_fwd ()
 {
 }
 
@@ -55,12 +55,7 @@ be_eventtype_fwd::accept (be_visitor *visitor)
 }
 
 void
-be_eventtype_fwd::destroy (void)
+be_eventtype_fwd::destroy ()
 {
   this->be_valuetype_fwd::destroy ();
 }
-
-
-
-IMPL_NARROW_FROM_DECL (be_eventtype_fwd)
-

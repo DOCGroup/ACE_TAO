@@ -16,12 +16,12 @@
 #include "ace/Argv_Type_Converter.h"
 #include "ace/OS_main.h"
 
-Life_Cycle_Service_Server::Life_Cycle_Service_Server (void)
+Life_Cycle_Service_Server::Life_Cycle_Service_Server ()
 :   debug_level_ (1)
 {
 }
 
-Life_Cycle_Service_Server::~Life_Cycle_Service_Server (void)
+Life_Cycle_Service_Server::~Life_Cycle_Service_Server ()
 {
   try
     {
@@ -126,7 +126,7 @@ Life_Cycle_Service_Server::init (int argc,
 
 
 int
-Life_Cycle_Service_Server::run (void)
+Life_Cycle_Service_Server::run ()
 {
   if (this->debug_level_ >= 1)
     ORBSVCS_DEBUG ((LM_DEBUG,
@@ -159,7 +159,7 @@ Life_Cycle_Service_Server::parse_args (int argc,
         ORBSVCS_ERROR ((LM_ERROR,
                     "%s: unknown arg, -%c\n",
                     argv[0], char(opt)));
-        // fallthrough
+        ACE_FALLTHROUGH;
       case '?':
         ORBSVCS_DEBUG ((LM_DEBUG,
                     ACE_TEXT("usage:  %s")

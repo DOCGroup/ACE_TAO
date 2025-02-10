@@ -18,7 +18,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_ALLOC_HOOK_DEFINE_Tc(ACE_Obstack_T)
 
 template <class ACE_CHAR_T> void
-ACE_Obstack_T<ACE_CHAR_T>::dump (void) const
+ACE_Obstack_T<ACE_CHAR_T>::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Obstack_T<ACE_CHAR_T>::dump");
@@ -104,7 +104,7 @@ ACE_Obstack_T<ACE_CHAR_T>::grow (ACE_CHAR_T c)
 }
 
 template <class ACE_CHAR_T> ACE_Obchunk *
-ACE_Obstack_T<ACE_CHAR_T>::new_chunk (void)
+ACE_Obstack_T<ACE_CHAR_T>::new_chunk ()
 {
   ACE_TRACE ("ACE_Obstack_T<ACE_CHAR_T>::new_chunk");
 
@@ -137,7 +137,7 @@ ACE_Obstack_T<ACE_CHAR_T>::ACE_Obstack_T (size_t size,
 }
 
 template <class ACE_CHAR_T>
-ACE_Obstack_T<ACE_CHAR_T>::~ACE_Obstack_T (void)
+ACE_Obstack_T<ACE_CHAR_T>::~ACE_Obstack_T ()
 {
   ACE_TRACE ("ACE_Obstack_T<ACE_CHAR_T>::~ACE_Obstack_T");
 
@@ -193,7 +193,7 @@ ACE_Obstack_T<ACE_CHAR_T>::unwind_i (void* obj)
 }
 
 template <class ACE_CHAR_T> void
-ACE_Obstack_T<ACE_CHAR_T>::release (void)
+ACE_Obstack_T<ACE_CHAR_T>::release ()
 {
   ACE_TRACE ("ACE_Obstack_T<ACE_CHAR_T>::release");
 
@@ -209,7 +209,7 @@ ACE_Obstack_T<ACE_CHAR_T>::grow_fast (ACE_CHAR_T c)
 }
 
 template <class ACE_CHAR_T> ACE_CHAR_T *
-ACE_Obstack_T<ACE_CHAR_T>::freeze (void)
+ACE_Obstack_T<ACE_CHAR_T>::freeze ()
 {
   ACE_CHAR_T *retv = reinterpret_cast<ACE_CHAR_T *> (this->curr_->block_);
   * (reinterpret_cast<ACE_CHAR_T *> (this->curr_->cur_)) = 0;

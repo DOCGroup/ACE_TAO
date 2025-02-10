@@ -9,8 +9,8 @@ class ACE_Svc_Export SYSVSema_Test : public Benchmark_Performance
 {
 public:
   virtual int init (int, ACE_TCHAR *[]);
-  virtual int fini (void);
-  virtual int svc (void);
+  virtual int fini ();
+  virtual int svc ();
 
 private:
   static ACE_SV_Semaphore_Simple *sema;
@@ -31,14 +31,14 @@ SYSVSema_Test::init (int, ACE_TCHAR *[])
 }
 
 int
-SYSVSema_Test::fini (void)
+SYSVSema_Test::fini ()
 {
   delete SYSVSema_Test::sema;
   return 0;
 }
 
 int
-SYSVSema_Test::svc (void)
+SYSVSema_Test::svc ()
 {
   int ni      = this->thr_id ();
   synch_count = 2;

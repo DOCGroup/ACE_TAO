@@ -33,7 +33,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_PortableGroup_Export TAO_PG_Null_Property_Validator
 {
 public:
-
   /// Validate the given properties.
   /**
    * This particular implementation performs no validation
@@ -47,7 +46,6 @@ public:
    * whatsoever.
    */
   void validate_criteria (const PortableGroup::Properties & criteria);
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

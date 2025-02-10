@@ -63,23 +63,23 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 */
 
 #include "utl_stack.h"
+#include "utl_scoped_name.h"
 #include "utl_scope.h"
+#include "ast_decl.h"
 #include "global_extern.h"
 
-#undef  INCREMENT
-#define  INCREMENT  64
+const size_t UTL_ScopeStack::increments = 64;
 
-UTL_ScopeStack::UTL_ScopeStack (void)
-  : pd_stack_data_nalloced (INCREMENT),
+UTL_ScopeStack::UTL_ScopeStack ()
+  : pd_stack_data_nalloced (increments),
     pd_stack_top (0)
 {
-  ACE_NEW (this->pd_stack_data,
-           UTL_Scope *[INCREMENT]);
+  ACE_NEW (this->pd_stack_data, UTL_Scope *[increments]);
 }
 
-UTL_ScopeStack::~UTL_ScopeStack (void)
+UTL_ScopeStack::~UTL_ScopeStack ()
 {
-  if (this->pd_stack_data != 0)
+  if (this->pd_stack_data != nullptr)
     {
       delete [] this->pd_stack_data;
     }
@@ -89,7 +89,7 @@ UTL_ScopeStack::~UTL_ScopeStack (void)
 UTL_ScopeStack *
 UTL_ScopeStack::push (UTL_Scope *el)
 {
-  UTL_Scope  **tmp = 0;
+  UTL_Scope **tmp = nullptr;
   long ostack_data_nalloced;
   long i;
 
@@ -97,11 +97,11 @@ UTL_ScopeStack::push (UTL_Scope *el)
   if (this->pd_stack_data_nalloced == this->pd_stack_top)
     {
       ostack_data_nalloced = this->pd_stack_data_nalloced;
-      this->pd_stack_data_nalloced += INCREMENT;
+      this->pd_stack_data_nalloced += increments;
 
       ACE_NEW_RETURN (tmp,
                       UTL_Scope *[this->pd_stack_data_nalloced],
-                      0);
+                      nullptr);
 
       for (i = 0; i < ostack_data_nalloced; ++i)
         {
@@ -120,7 +120,7 @@ UTL_ScopeStack::push (UTL_Scope *el)
 
 // Pop an element from the stack.
 void
-UTL_ScopeStack::pop (void)
+UTL_ScopeStack::pop ()
 {
   if (this->pd_stack_top <= 0)
     {
@@ -131,9 +131,9 @@ UTL_ScopeStack::pop (void)
 
   // If our top scope has a #pragma prefix associated with it,
   // it goes away with the scope.
-  if (current != 0 && current->has_prefix ())
+  if (current != nullptr && current->has_prefix ())
     {
-      char *trash = 0;
+      char *trash = nullptr;
       idl_global->pragma_prefixes ().pop (trash);
       delete [] trash;
     }
@@ -143,11 +143,11 @@ UTL_ScopeStack::pop (void)
 
 // Return top element on stack.
 UTL_Scope *
-UTL_ScopeStack::top (void)
+UTL_ScopeStack::top ()
 {
   if (this->pd_stack_top <= 0)
     {
-      return 0;
+      return nullptr;
     }
 
   return this->pd_stack_data[pd_stack_top - 1];
@@ -155,11 +155,11 @@ UTL_ScopeStack::top (void)
 
 // Return bottom element on stack.
 UTL_Scope *
-UTL_ScopeStack::bottom (void)
+UTL_ScopeStack::bottom ()
 {
   if (this->pd_stack_top == 0)
     {
-      return 0;
+      return nullptr;
     }
 
   return this->pd_stack_data[0];
@@ -167,27 +167,27 @@ UTL_ScopeStack::bottom (void)
 
 // Clear entire stack.
 void
-UTL_ScopeStack::clear (void)
+UTL_ScopeStack::clear ()
 {
   this->pd_stack_top = 0;
 }
 
 // How deep is the stack?
 unsigned long
-UTL_ScopeStack::depth (void)
+UTL_ScopeStack::depth ()
 {
   return this->pd_stack_top;
 }
 
 // Return (top - 1) element on stack.
 UTL_Scope *
-UTL_ScopeStack::next_to_top (void)
+UTL_ScopeStack::next_to_top ()
 {
   UTL_Scope  *tmp, *retval;
 
   if (this->depth () < 2)
     {
-      return 0;
+      return nullptr;
     }
 
   tmp = top ();    // Save top
@@ -199,17 +199,33 @@ UTL_ScopeStack::next_to_top (void)
 
 // Return topmost non-NULL element.
 UTL_Scope *
-UTL_ScopeStack::top_non_null (void)
+UTL_ScopeStack::top_non_null ()
 {
   for (long i = this->pd_stack_top - 1; i >= 0; --i)
     {
-      if (this->pd_stack_data[i] != 0)
+      if (this->pd_stack_data[i] != nullptr)
         {
           return this->pd_stack_data[i];
         }
     }
 
-  return 0;
+  return nullptr;
+}
+
+AST_Decl *
+UTL_ScopeStack::lookup_by_name (
+  UTL_ScopedName *name, bool full_def_only, bool for_add)
+{
+  for (long i = pd_stack_top - 1; i >= 0; --i)
+    {
+      UTL_Scope *scope = pd_stack_data[i];
+      if (scope)
+        {
+          AST_Decl *node = scope->lookup_by_name (name, full_def_only, for_add);
+          if (node) return node;
+        }
+    }
+  return nullptr;
 }
 
 UTL_ScopeStackActiveIterator::UTL_ScopeStackActiveIterator (UTL_ScopeStack &s)
@@ -220,26 +236,26 @@ UTL_ScopeStackActiveIterator::UTL_ScopeStackActiveIterator (UTL_ScopeStack &s)
 
 // Advance to next item
 void
-UTL_ScopeStackActiveIterator::next (void)
+UTL_ScopeStackActiveIterator::next ()
 {
   il--;
 }
 
 // Get current item.
 UTL_Scope *
-UTL_ScopeStackActiveIterator::item (void)
+UTL_ScopeStackActiveIterator::item ()
 {
   if (this->il >= 0)
     {
       return this->source.pd_stack_data[il];
     }
 
-  return 0;
+  return nullptr;
 }
 
 // Is this iteration done?
-long
-UTL_ScopeStackActiveIterator::is_done (void)
+bool
+UTL_ScopeStackActiveIterator::is_done () const
 {
   if (this->il >= 0)
     {
@@ -248,4 +264,3 @@ UTL_ScopeStackActiveIterator::is_done (void)
 
   return true;
 }
-

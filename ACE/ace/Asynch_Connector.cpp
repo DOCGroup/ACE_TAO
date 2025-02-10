@@ -7,7 +7,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if (defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS)) && !defined(ACE_HAS_WINCE)
+#if defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS)
 // This only works on platforms that support async I/O.
 
 #include "ace/OS_NS_sys_socket.h"
@@ -20,16 +20,10 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class HANDLER>
-ACE_Asynch_Connector<HANDLER>::ACE_Asynch_Connector (void)
+ACE_Asynch_Connector<HANDLER>::ACE_Asynch_Connector ()
   : pass_addresses_ (false),
     validate_new_connection_ (false)
 {
-}
-
-template <class HANDLER>
-ACE_Asynch_Connector<HANDLER>::~ACE_Asynch_Connector (void)
-{
-  //this->asynch_connect_.close ();
 }
 
 template <class HANDLER> int
@@ -76,18 +70,18 @@ template <class HANDLER> void
 ACE_Asynch_Connector<HANDLER>::handle_connect (const ACE_Asynch_Connect::Result &result)
 {
   // Variable for error tracking
-  int error = 0;
+  bool error = false;
 
   // If the asynchronous connect fails.
   if (!result.success () ||
       result.connect_handle () == ACE_INVALID_HANDLE)
     {
-      error = 1;
+      error = true;
     }
 
   if (result.error () != 0)
     {
-      error = 1;
+      error = true;
     }
 
   // set blocking mode
@@ -95,7 +89,7 @@ ACE_Asynch_Connector<HANDLER>::handle_connect (const ACE_Asynch_Connect::Result 
       ACE::clr_flags
         (result.connect_handle (), ACE_NONBLOCK) != 0)
     {
-      error = 1;
+      error = true;
       ACELIB_ERROR ((LM_ERROR,
                   ACE_TEXT ("%p\n"),
                   ACE_TEXT ("ACE_Asynch_Connector::handle_connect : Set blocking mode")));
@@ -115,7 +109,7 @@ ACE_Asynch_Connector<HANDLER>::handle_connect (const ACE_Asynch_Connect::Result 
   if (this->validate_new_connection_ &&
       this->validate_connection (result, remote_address, local_address) == -1)
     {
-      error = 1;
+      error = true;
     }
 
   HANDLER *new_handler = 0;
@@ -125,7 +119,7 @@ ACE_Asynch_Connector<HANDLER>::handle_connect (const ACE_Asynch_Connect::Result 
       new_handler = this->make_handler ();
       if (new_handler == 0)
         {
-          error = 1;
+          error = true;
           ACELIB_ERROR ((LM_ERROR,
                       ACE_TEXT ("%p\n"),
                       ACE_TEXT ("ACE_Asynch_Connector::handle_connect : Making of new handler failed")));
@@ -173,7 +167,7 @@ ACE_Asynch_Connector<HANDLER>::validate_connection
 }
 
 template <class HANDLER> int
-ACE_Asynch_Connector<HANDLER>::cancel (void)
+ACE_Asynch_Connector<HANDLER>::cancel ()
 {
   return this->asynch_connect_.cancel ();
 }
@@ -224,13 +218,13 @@ ACE_Asynch_Connector<HANDLER>::parse_address (const ACE_Asynch_Connect::Result &
 
 
 template <class HANDLER> ACE_Asynch_Connect &
-ACE_Asynch_Connector<HANDLER>::asynch_connect (void)
+ACE_Asynch_Connector<HANDLER>::asynch_connect ()
 {
   return this->asynch_connect_;
 }
 
 template <class HANDLER> HANDLER *
-ACE_Asynch_Connector<HANDLER>::make_handler (void)
+ACE_Asynch_Connector<HANDLER>::make_handler ()
 {
   // Default behavior
   HANDLER *handler = 0;
@@ -239,7 +233,7 @@ ACE_Asynch_Connector<HANDLER>::make_handler (void)
 }
 
 template <class HANDLER> bool
-ACE_Asynch_Connector<HANDLER>::pass_addresses (void) const
+ACE_Asynch_Connector<HANDLER>::pass_addresses () const
 {
   return this->pass_addresses_;
 }
@@ -251,7 +245,7 @@ ACE_Asynch_Connector<HANDLER>::pass_addresses (bool new_value)
 }
 
 template <class HANDLER> bool
-ACE_Asynch_Connector<HANDLER>::validate_new_connection (void) const
+ACE_Asynch_Connector<HANDLER>::validate_new_connection () const
 {
   return this->validate_new_connection_;
 }

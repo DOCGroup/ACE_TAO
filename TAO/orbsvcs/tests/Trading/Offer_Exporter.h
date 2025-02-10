@@ -21,36 +21,34 @@
 class TAO_TTest_Export TAO_Offer_Exporter
 {
 public:
-
   TAO_Offer_Exporter (CosTrading::Lookup_ptr lookup_if,
                       CORBA::Boolean verbose);
 
-  ~TAO_Offer_Exporter (void);
+  ~TAO_Offer_Exporter ();
 
-  void export_offers (void);
+  void export_offers ();
   // Export a number of offers to the Trading Service.
 
-  void export_offers_to_all (void);
+  void export_offers_to_all ();
   // Export a number of offers to all traders accessible by the
   // bootstrapped trader.
 
-  void withdraw_offers (void);
+  void withdraw_offers ();
   // Withdraw all exported offers.
 
-  void describe_offers (void);
+  void describe_offers ();
   // Describe all the offers registered with the bootstrapped trader.
 
-  void modify_offers (void);
+  void modify_offers ();
   // Remove some properties and change some properties in each offer.
 
-  void withdraw_offers_using_constraints (void);
+  void withdraw_offers_using_constraints ();
   // Withdraw a number of offers based on a constraint string.
 
 private:
+  CosTrading::OfferIdSeq* grab_offerids ();
 
-  CosTrading::OfferIdSeq* grab_offerids (void);
-
-  void create_offers (void);
+  void create_offers ();
   // Fill in each of the offer structures.
 
   void export_to (CosTrading::Register_ptr reg);

@@ -13,10 +13,6 @@ TAO_Wait_On_Reactor::TAO_Wait_On_Reactor (TAO_Transport *transport)
 {
 }
 
-TAO_Wait_On_Reactor::~TAO_Wait_On_Reactor (void)
-{
-}
-
 int
 TAO_Wait_On_Reactor::wait (ACE_Time_Value *max_wait_time,
                            TAO_Synch_Reply_Dispatcher &rd)
@@ -49,7 +45,7 @@ TAO_Wait_On_Reactor::wait (ACE_Time_Value *max_wait_time,
 
       // Did we timeout? If so, stop running the loop.
       if (result == 0
-          && max_wait_time != 0
+          && max_wait_time != nullptr
           && *max_wait_time == ACE_Time_Value::zero)
         {
           break;
@@ -70,7 +66,7 @@ TAO_Wait_On_Reactor::wait (ACE_Time_Value *max_wait_time,
     }
 
   // Return an error if there was a problem receiving the reply.
-  if (max_wait_time != 0)
+  if (max_wait_time != nullptr)
     {
       if (rd.successful (leader_follower) && *max_wait_time == ACE_Time_Value::zero)
         {
@@ -93,7 +89,7 @@ TAO_Wait_On_Reactor::wait (ACE_Time_Value *max_wait_time,
 
 // Register the handler with the Reactor.
 int
-TAO_Wait_On_Reactor::register_handler (void)
+TAO_Wait_On_Reactor::register_handler ()
 {
   if (!this->is_registered_)
     {
@@ -104,13 +100,13 @@ TAO_Wait_On_Reactor::register_handler (void)
 }
 
 bool
-TAO_Wait_On_Reactor::non_blocking (void) const
+TAO_Wait_On_Reactor::non_blocking () const
 {
   return true;
 }
 
 bool
-TAO_Wait_On_Reactor::can_process_upcalls (void) const
+TAO_Wait_On_Reactor::can_process_upcalls () const
 {
   return true;
 }

@@ -21,8 +21,6 @@
 
 #include "tao/PortableServer/PortableServer.h"
 
-#include "ace/Copy_Disabled.h"
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
@@ -30,11 +28,16 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  *
  * @brief POA Abstraction.
  */
-class TAO_Notify_Serv_Export TAO_Notify_POA_Helper : private ACE_Copy_Disabled
+class TAO_Notify_Serv_Export TAO_Notify_POA_Helper
 {
 public:
   /// Default Constructor
-  TAO_Notify_POA_Helper (void);
+  TAO_Notify_POA_Helper ();
+
+  TAO_Notify_POA_Helper (const TAO_Notify_POA_Helper &) = delete;
+  TAO_Notify_POA_Helper (TAO_Notify_POA_Helper &&) = delete;
+  TAO_Notify_POA_Helper &operator= (const TAO_Notify_POA_Helper &) = delete;
+  TAO_Notify_POA_Helper &operator= (TAO_Notify_POA_Helper &&) = delete;
 
   /// Create a new PortableServer::POA.
   void init (PortableServer::POA_ptr parent_poa, const char* poa_name);
@@ -52,10 +55,10 @@ public:
   virtual ~TAO_Notify_POA_Helper ();
 
   /// Get underlying POA
-  PortableServer::POA_ptr poa (void);
+  PortableServer::POA_ptr poa ();
 
   /// Destroy underlying POA.
-  void destroy (void);
+  void destroy ();
 
   /// Activate Object, the POA will assign an ID and return its value.
   CORBA::Object_ptr activate (PortableServer::Servant servant,
@@ -76,7 +79,7 @@ public:
   CORBA::Object_ptr servant_to_reference (PortableServer::ServantBase * servant) const;
 
   /// Generate a unique id for each POA created.
-  ACE_CString get_unique_id (void);
+  ACE_CString get_unique_id ();
 
 protected:
   /// Set default POA policies.

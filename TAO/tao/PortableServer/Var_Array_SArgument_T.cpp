@@ -1,10 +1,6 @@
 #ifndef TAO_VAR_ARRAY_SARGUMENT_T_CPP
 #define TAO_VAR_ARRAY_SARGUMENT_T_CPP
 
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#include "tao/PortableServer/Var_Array_SArgument_T.h"
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
-
 #if !defined (__ACE_INLINE__)
 #include "tao/PortableServer/Var_Array_SArgument_T.inl"
 #endif /* __ACE_INLINE__ */
@@ -68,8 +64,7 @@ TAO::Inout_Var_Array_SArgument_T<S_forany,
   typedef typename S_forany::_slice_type slice_type;
   Insert_Policy<S_forany>::any_insert (
       any,
-      S_forany (const_cast <slice_type *>(this->x_))
-    );
+      S_forany (const_cast <slice_type *>(this->x_)));
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */

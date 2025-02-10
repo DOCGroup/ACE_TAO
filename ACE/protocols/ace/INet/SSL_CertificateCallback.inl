@@ -13,7 +13,7 @@ namespace ACE
       }
 
     ACE_INLINE
-    SSL_X509Cert& SSL_CertificateCallbackArg::certificate (void)
+    SSL_X509Cert& SSL_CertificateCallbackArg::certificate ()
       {
         return this->ssl_cert_;
       }

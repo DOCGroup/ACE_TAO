@@ -20,7 +20,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
@@ -44,7 +43,7 @@ namespace TAO
 #if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_value (CORBA::Any *any) const;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    S const & arg (void) const;
+    S const & arg () const;
 
   protected:
     S const & x_;
@@ -54,7 +53,6 @@ namespace TAO
    * @class In_Special_Basic_Clonable_Argument_T
    *
    * @brief Template class for IN stub argument of (w)char/boolean/octet.
-   *
    */
   template<typename S,
            typename to_S,
@@ -65,9 +63,9 @@ namespace TAO
   {
   public:
     In_Special_Basic_Clonable_Argument_T (S const &);
-    virtual ~In_Special_Basic_Clonable_Argument_T (void);
+    virtual ~In_Special_Basic_Clonable_Argument_T ();
 
-    virtual Argument* clone (void);
+    virtual Argument* clone ();
 
   private:
     bool is_clone_;
@@ -77,7 +75,6 @@ namespace TAO
    * @class Inout_Special_Basic_Argument_T
    *
    * @brief Template class for INOUT stub argument of (w)char/boolean/octet.
-   *
    */
   template<typename S,
            typename to_S,
@@ -93,7 +90,7 @@ namespace TAO
 #if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_value (CORBA::Any *any) const;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    S & arg (void);
+    S & arg ();
 
   private:
     S & x_;
@@ -103,7 +100,6 @@ namespace TAO
    * @class Out_Special_Basic_Argument_T
    *
    * @brief Template class for OUT stub argument of (w)char/boolean/octet.
-   *
    */
   template<typename S,
            typename to_S,
@@ -118,7 +114,7 @@ namespace TAO
 #if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_value (CORBA::Any *any) const;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    S & arg (void);
+    S & arg ();
 
   private:
     S & x_;
@@ -128,7 +124,6 @@ namespace TAO
    * @class Ret_Basic_Argument_T
    *
    * @brief Template class for return stub value of (w)char/boolean/octet.
-   *
    */
   template<typename S,
            typename to_S,
@@ -137,16 +132,16 @@ namespace TAO
   class Ret_Special_Basic_Argument_T : public RetArgument
   {
   public:
-    Ret_Special_Basic_Argument_T (void);
+    Ret_Special_Basic_Argument_T ();
 
     virtual CORBA::Boolean demarshal (TAO_InputCDR &);
 #if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_value (CORBA::Any *any) const;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    S & arg (void);
+    S & arg ();
 
-    S excp (void);
-    S retn (void);
+    S excp ();
+    S retn ();
 
   private:
     S x_;
@@ -164,7 +159,6 @@ namespace TAO
    * @struct Special_Basic_Arg_Traits_T
    *
    * @brief Template class for stub argument traits of (w)char/boolean/octet.
-   *
    */
   template<typename T,
            typename to_T,
@@ -194,13 +188,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #include "tao/Special_Basic_Argument_T.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "tao/Special_Basic_Argument_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Special_Basic_Argument_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 

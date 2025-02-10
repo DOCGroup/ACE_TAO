@@ -83,7 +83,7 @@ HTTP_Hdr_Node HTTP_HCodes::APPLET ("<APPLET", "<APPLET %s>");
 const int &HTTP_HCodes::NUM_HEADER_STRINGS
   = HTTP_Header_Nodes_Singleton::instance ()->num_header_strings_;
 
-HTTP_Header_Nodes::HTTP_Header_Nodes (void)
+HTTP_Header_Nodes::HTTP_Header_Nodes ()
   : num_header_strings_ (0)
 {
 }
@@ -100,12 +100,12 @@ HTTP_Hdr_Node::HTTP_Hdr_Node (const char *token, const char *format)
   header_nodes->num_header_strings_++;
 }
 
-HTTP_HCodes::HTTP_HCodes (void)
+HTTP_HCodes::HTTP_HCodes ()
   : header_nodes_ (HTTP_Header_Nodes_Singleton::instance ())
 {
 }
 
-HTTP_Headers::HTTP_Headers (void)
+HTTP_Headers::HTTP_Headers ()
 {
 }
 
@@ -141,7 +141,7 @@ HTTP_Headers::value_next (int index)
 }
 
 void
-HTTP_Headers::value_reset (void)
+HTTP_Headers::value_reset ()
 {
   this->table ()->iter ().first ();
 }

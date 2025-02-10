@@ -28,7 +28,7 @@ public:
   be_visitor_valuetype_fwd_ch (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_valuetype_fwd_ch (void);
+  ~be_visitor_valuetype_fwd_ch ();
 
   virtual int visit_valuetype_fwd (be_valuetype_fwd *node);
   virtual int visit_eventtype_fwd (be_eventtype_fwd *node);

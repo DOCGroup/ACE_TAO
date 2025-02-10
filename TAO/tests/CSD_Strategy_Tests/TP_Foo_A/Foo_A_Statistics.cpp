@@ -11,12 +11,6 @@ Foo_A_Statistics::Foo_A_Statistics(unsigned num_clients)
     }
 }
 
-
-Foo_A_Statistics::~Foo_A_Statistics()
-{
-}
-
-
 void
 Foo_A_Statistics::expected(unsigned op_num, unsigned count)
 {
@@ -82,6 +76,5 @@ Foo_A_Statistics::actual_vs_expected()
     }
   return true;
 }
-
 
 

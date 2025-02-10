@@ -17,7 +17,7 @@ public:
   Server_Task (CORBA::ORB_ptr orb);
 
   /// The thread entry point
-  virtual int svc (void);
+  virtual int svc ();
 
 private:
   /// Keep a reference to the ORB

@@ -21,11 +21,9 @@
 
 #if (TAO_HAS_TIME_POLICY == 1) && \
     (defined (ACE_HAS_HI_RES_TIMER) || \
-     defined (ACE_HAS_AIX_HI_RES_TIMER) || \
      defined (ACE_WIN32) || \
      (defined (ghs) && defined (ACE_HAS_PENTIUM)) || \
      ((defined (__GNUG__) || defined (__INTEL_COMPILER)) && !defined(ACE_VXWORKS) && defined (ACE_HAS_PENTIUM)) || \
-     (defined (linux) && defined (ACE_HAS_ALPHA_TIMER)) || \
      (defined (ACE_HAS_POWERPC_TIMER) && (defined (ghs) || defined (__GNUG__))) || \
      (defined (ACE_HAS_CLOCK_GETTIME) && defined (ACE_HAS_CLOCK_GETTIME_MONOTONIC)))
 
@@ -143,9 +141,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           ACE_DEBUG((LM_INFO,
                      "Unable to reset OS time. Insufficient privileges or not supported.\n"));
 
-          root_poa->destroy (1,  // ethernalize objects
-                             0  // wait for completion
-                            );
+          root_poa->destroy (true,  // ethernalize objects
+                             false);  // wait for completion
 
           orb->destroy ();
 
@@ -157,9 +154,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           ACE_Time_Value timeout (4, 0);
           orb->run (timeout);
 
-          root_poa->destroy (1,  // ethernalize objects
-                             0  // wait for completion
-                            );
+          root_poa->destroy (true,  // ethernalize objects
+                             false);  // wait for completion
 
           orb->destroy ();
 

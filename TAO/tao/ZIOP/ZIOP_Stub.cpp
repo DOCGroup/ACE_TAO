@@ -21,7 +21,7 @@ TAO_ZIOP_Stub::TAO_ZIOP_Stub (const char *repository_id,
 {
 }
 
-TAO_ZIOP_Stub::~TAO_ZIOP_Stub (void)
+TAO_ZIOP_Stub::~TAO_ZIOP_Stub ()
 {
   if (!CORBA::is_nil (this->compression_enabling_policy_.in ()))
     this->compression_enabling_policy_->destroy ();
@@ -31,7 +31,7 @@ TAO_ZIOP_Stub::~TAO_ZIOP_Stub (void)
 }
 
 void
-TAO_ZIOP_Stub::parse_policies (void)
+TAO_ZIOP_Stub::parse_policies ()
 {
   CORBA::PolicyList_var policy_list
     = this->base_profiles_.policy_list ();
@@ -61,7 +61,7 @@ TAO_ZIOP_Stub::parse_policies (void)
 }
 
 CORBA::Policy *
-TAO_ZIOP_Stub::exposed_compression_id_list_policy (void)
+TAO_ZIOP_Stub::exposed_compression_id_list_policy ()
 {
   if (!this->are_policies_parsed_)
     {
@@ -78,7 +78,7 @@ TAO_ZIOP_Stub::exposed_compression_id_list_policy (CORBA::Policy_ptr policy)
 }
 
 CORBA::Policy *
-TAO_ZIOP_Stub::exposed_compression_enabling_policy (void)
+TAO_ZIOP_Stub::exposed_compression_enabling_policy ()
 {
   if (!this->are_policies_parsed_)
     {
@@ -137,7 +137,7 @@ TAO_ZIOP_Stub::get_cached_policy (TAO_Cached_Policy_Type type)
 }
 
 CORBA::Policy *
-TAO_ZIOP_Stub::effective_compression_enabling_policy (void)
+TAO_ZIOP_Stub::effective_compression_enabling_policy ()
 {
   // Get effective override.
   CORBA::Policy_var override =
@@ -172,7 +172,7 @@ TAO_ZIOP_Stub::effective_compression_enabling_policy (void)
 }
 
 CORBA::Policy *
-TAO_ZIOP_Stub::effective_compression_id_list_policy (void)
+TAO_ZIOP_Stub::effective_compression_id_list_policy ()
 {
   // Get effective override (This is the CLIENTS compressor's priority ordered list).
   CORBA::Policy_var policy (

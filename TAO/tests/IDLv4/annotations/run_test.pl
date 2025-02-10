@@ -3,25 +3,18 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
     if 0;
 
 use strict;
-use Env qw(ACE_ROOT);
-use lib "$ACE_ROOT/bin";
-use PerlACE::Run_Test;
+use lib "$ENV{ACE_ROOT}/bin";
+use PerlACE::TestTarget;
 
-my $annotest_idl = new PerlACE::Process("annotest_idl", "");
-print $annotest_idl->CommandLine ();
-$annotest_idl->Spawn ();
-my $annotest_idl_result = $annotest_idl->WaitKill (10);
-if ($annotest_idl_result > 0) {
-  print STDERR "ERROR: annotest_idl returned $annotest_idl_result\n";
+my $target = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
+my $annotest_idl = $target->CreateProcess ("annotest_idl");
+
+my $test = $annotest_idl->SpawnWaitKill ($target->ProcessStartWaitInterval());
+
+if ($test != 0) {
+    print STDERR "ERROR: test returned $test\n";
+    exit 1;
 }
 
-my $status = 1 if $annotest_idl_result;
+exit 0;
 
-if ($status) {
-  print STDERR "test FAILED";
-}
-else {
-  print "test PASSED";
-}
-
-exit $status

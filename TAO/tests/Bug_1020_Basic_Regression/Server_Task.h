@@ -17,20 +17,15 @@
 class Server_Task : public ACE_Task_Base
 {
 public:
-
   /// Constructor
-  Server_Task (Test::Echo_ptr echo,
-               size_t sz);
+  Server_Task (Test::Echo_ptr echo);
 
   /// The thread entry point.
-  virtual int svc (void);
+  virtual int svc ();
 
 private:
   /// Reference to the test interface
   Test::Echo_var echo_;
-
-  /// Size of data that is traded
-  size_t sz_;
 };
 
 #include /**/ "ace/post.h"

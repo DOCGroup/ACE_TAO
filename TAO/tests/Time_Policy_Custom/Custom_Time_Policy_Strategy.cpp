@@ -25,7 +25,7 @@ Custom_Time_Policy_Strategy::~Custom_Time_Policy_Strategy ()
 {
 }
 
-ACE_Timer_Queue * Custom_Time_Policy_Strategy::create_timer_queue (void)
+ACE_Timer_Queue * Custom_Time_Policy_Strategy::create_timer_queue ()
 {
   ACE_Timer_Queue * tmq = 0;
 
@@ -44,7 +44,7 @@ Custom_Time_Policy_Strategy::destroy_timer_queue (ACE_Timer_Queue *tmq)
   delete tmq;
 }
 
-ACE_Dynamic_Time_Policy_Base * Custom_Time_Policy_Strategy::get_time_policy (void)
+ACE_Dynamic_Time_Policy_Base * Custom_Time_Policy_Strategy::get_time_policy ()
 {
   return &custom_time_policy_;
 }

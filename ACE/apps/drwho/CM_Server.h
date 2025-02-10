@@ -24,12 +24,12 @@
 class CM_Server : public Comm_Manager
 {
 public:
-  CM_Server (void);
-  virtual ~CM_Server (void);
+  CM_Server ();
+  virtual ~CM_Server ();
 
   virtual int open (short port_number);
   virtual int receive (int timeout = 0);
-  virtual int send (void);
+  virtual int send ();
   virtual int mux (char *packet, int &packet_length)   = 0;
   virtual int demux (char *packet, int &packet_length) = 0;
 };

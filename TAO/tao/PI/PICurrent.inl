@@ -2,7 +2,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE PortableInterceptor::SlotId
-TAO::PICurrent::slot_count (void) const
+TAO::PICurrent::slot_count () const
 {
   return this->slot_count_;
 }

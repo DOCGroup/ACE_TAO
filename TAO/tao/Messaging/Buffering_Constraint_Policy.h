@@ -54,22 +54,22 @@ public:
   static CORBA::Policy_ptr create (const CORBA::Any& val);
 
   /// Returns a copy of @c this.
-  virtual TAO_Buffering_Constraint_Policy *clone (void) const;
+  virtual TAO_Buffering_Constraint_Policy *clone () const;
 
   // = The TAO::Buffering_Constraint_Policy methods
 
-  virtual TAO::BufferingConstraint buffering_constraint (void);
+  virtual TAO::BufferingConstraint buffering_constraint ();
 
   void get_buffering_constraint (TAO::BufferingConstraint &) const;
 
-  virtual CORBA::PolicyType policy_type (void);
+  virtual CORBA::PolicyType policy_type ();
 
-  virtual CORBA::Policy_ptr copy (void);
+  virtual CORBA::Policy_ptr copy ();
 
-  virtual void destroy (void);
+  virtual void destroy ();
 
   /// Return the cached policy type for this policy.
-  virtual TAO_Cached_Policy_Type _tao_cached_type (void) const;
+  virtual TAO_Cached_Policy_Type _tao_cached_type () const;
 
 private:
   /// The attribute

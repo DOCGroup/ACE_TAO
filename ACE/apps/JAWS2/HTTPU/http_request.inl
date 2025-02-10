@@ -5,29 +5,29 @@
 #endif /* ACE_HAS_INLINED_OSCALLS */
 
 ACE_INLINE
-HTTP_Request::HTTP_Request (void)
+HTTP_Request::HTTP_Request ()
 {
 }
 
 ACE_INLINE
-HTTP_Request::~HTTP_Request (void)
+HTTP_Request::~HTTP_Request ()
 {
 }
 
 ACE_INLINE Parse_HTTP_Request *
-HTTP_Request::request_line (void)
+HTTP_Request::request_line ()
 {
   return &(this->request_);
 }
 
 ACE_INLINE const Parse_HTTP_Request *
-HTTP_Request::request_line (void) const
+HTTP_Request::request_line () const
 {
   return &(this->request_);
 }
 
 ACE_INLINE HTTP_Parse_URL *
-HTTP_Request::url (void)
+HTTP_Request::url ()
 {
   return &(this->url_);
 }

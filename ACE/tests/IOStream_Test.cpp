@@ -1,4 +1,3 @@
-
 //=============================================================================
 /**
  *  @file    IOStream_Test.cpp
@@ -18,8 +17,6 @@
 #include "ace/SOCK_Acceptor.h"
 #include "ace/IOStream.h"
 #include "ace/OS_NS_sys_wait.h"
-
-
 
 #if !defined (ACE_LACKS_ACE_IOSTREAM)
 #  include "ace/OS_NS_unistd.h"
@@ -64,7 +61,7 @@ typedef ACE_IOStream<ACE_SOCK_Stream> ACE_SOCK_IOStream;
 class qchar
 {
 public:
-  qchar (void) { c_ = '\0'; }
+  qchar () { c_ = '\0'; }
 
   qchar (char c) : c_ (c) { };
 
@@ -156,9 +153,8 @@ client (void *arg = 0)
 
   // We don't _need_ to dynamically allocate the ACE_SOCK_IOStream.
   // But if we don't, it doesn't get destroyed on some platforms,
-  // e.g., g++ 2.7.2.1 and Sun C++ 4.2 on Solaris 2.5.1. (It does work
-  // on Linux, so the code seems fine.)  If we manage the storage
-  // ourselves, we _will_ destroy it at the end of this function.
+  // If we manage the storage ourselves, we _will_ destroy it at
+  // the end of this function.
   ACE_SOCK_IOStream server;
 
   ACE_INET_Addr *remote_addr = (ACE_INET_Addr *) arg;
@@ -272,9 +268,8 @@ server (void *arg = 0)
 {
   // We don't _need_ to dynamically allocate the ACE_SOCK_IOStream.
   // But if we don't, it doesn't get destroyed on some platforms,
-  // e.g., g++ 2.7.2.1 and Sun C++ 4.2 on Solaris 2.5.1. (It does work
-  // on Linux, so the code seems fine.)  If we manage the storage
-  // ourselves, we _will_ destroy it at the end of this function.
+  // If we manage the storage ourselves, we _will_ destroy it at
+  // the end of this function.
   ACE_SOCK_IOStream client_handler;
 
   ACE_INET_Addr server_addr;
@@ -319,7 +314,6 @@ server (void *arg = 0)
   // Compared to the method above, this is quite messy.  Notice also
   // that whitespace is lost.
 
-#if defined (ACE_HAS_STRING_CLASS) && defined (ACE_HAS_STANDARD_CPP_LIBRARY)
   ACE_IOStream_String buf;
   ACE_DEBUG ((LM_DEBUG,
               " (%P|%t) Server Received: ("));
@@ -338,25 +332,6 @@ server (void *arg = 0)
 
   ACE_DEBUG ((LM_DEBUG,
               ")\n"));
-#else
-  char buf[BUFSIZ];
-  ACE_OS::memset (buf, 0, sizeof buf);
-  ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT (" (%P|%t) Server Received: (")));
-
-  while (ACE_OS::strlen (buf) == 0
-         || buf[ACE_OS::strlen (buf) - 1] != '"')
-    {
-      if (! (client_handler >> buf))
-        break;
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("%C "),
-                  buf));
-    }
-
-  ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT (")\n")));
-#endif /* ACE_HAS_STRING_CLASS */
 
   // Send some non-textual data to the client.  We use a single
   // character to separate the fields but we could have used any valid
@@ -406,7 +381,7 @@ server (void *arg = 0)
 }
 
 static int
-spawn (void)
+spawn ()
 {
   // Acceptor;
   ACE_SOCK_Acceptor acceptor;

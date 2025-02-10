@@ -32,10 +32,10 @@ class TAO_Trading_Serv_Export TAO_Interpreter
 {
 protected:
   /// Constructor.
-  TAO_Interpreter (void);
+  TAO_Interpreter ();
 
   /// Destructor.
-  ~TAO_Interpreter (void);
+  ~TAO_Interpreter ();
 
   /// Using the Yacc generated parser, construct an expression tree
   /// representing <constraints> from the tokens returned by it.
@@ -51,11 +51,10 @@ private:
   static TAO_SYNCH_MUTEX parserMutex__;
 };
 
-
 // Functions we need for parsing.
-extern int yyparse (void);
+extern int yyparse ();
 extern void yyrestart (FILE*);
-extern int yylex (void);
+extern int yylex ();
 
 // Have yylex read from the constraint string, not from stdin.
 #undef YY_INPUT
@@ -82,7 +81,6 @@ public:
   static int copy_into (char* buf, int max_size);
 
 private:
-
   /// Pointers to keep track of the input string.
   static char* string_;
   static char* current_;

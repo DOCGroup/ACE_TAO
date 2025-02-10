@@ -13,7 +13,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int
-TAO_CEC_Dispatching_Task::svc (void)
+TAO_CEC_Dispatching_Task::svc ()
 {
   bool done = false;
 
@@ -45,7 +45,7 @@ TAO_CEC_Dispatching_Task::svc (void)
               continue;
             }
 
-          int result = command->execute ();
+          int const result = command->execute ();
 
           ACE_Message_Block::release (mb);
 
@@ -107,27 +107,27 @@ TAO_CEC_Dispatching_Task::invoke (TAO_CEC_ProxyPushSupplier *proxy,
 
 // ****************************************************************
 
-TAO_CEC_Dispatch_Command::~TAO_CEC_Dispatch_Command (void)
+TAO_CEC_Dispatch_Command::~TAO_CEC_Dispatch_Command ()
 {
 }
 
 // ****************************************************************
 
 int
-TAO_CEC_Shutdown_Task_Command::execute (void)
+TAO_CEC_Shutdown_Task_Command::execute ()
 {
   return -1;
 }
 
 // ****************************************************************
 
-TAO_CEC_Push_Command::~TAO_CEC_Push_Command (void)
+TAO_CEC_Push_Command::~TAO_CEC_Push_Command ()
 {
   this->proxy_->_decr_refcnt ();
 }
 
 int
-TAO_CEC_Push_Command::execute (void)
+TAO_CEC_Push_Command::execute ()
 {
   this->proxy_->push_to_consumer (this->event_);
   return 0;
@@ -136,13 +136,13 @@ TAO_CEC_Push_Command::execute (void)
 // ****************************************************************
 
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
-TAO_CEC_Invoke_Command::~TAO_CEC_Invoke_Command (void)
+TAO_CEC_Invoke_Command::~TAO_CEC_Invoke_Command ()
 {
   this->proxy_->_decr_refcnt ();
 }
 
 int
-TAO_CEC_Invoke_Command::execute (void)
+TAO_CEC_Invoke_Command::execute ()
 {
   this->proxy_->invoke_to_consumer (this->typed_event_);
   return 0;

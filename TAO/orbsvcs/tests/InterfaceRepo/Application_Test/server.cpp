@@ -5,7 +5,6 @@
 #include "ace/Get_Opt.h"
 
 
-
 static const ACE_TCHAR *ior_output_file = ACE_TEXT("iorfile");
 
 int
@@ -127,8 +126,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       orb->run ();
 
-      root_poa->destroy (1,
-                         1);
+      root_poa->destroy (true, true);
 
       orb->destroy ();
     }

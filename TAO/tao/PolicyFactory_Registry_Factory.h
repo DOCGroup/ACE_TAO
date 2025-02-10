@@ -34,9 +34,9 @@ class TAO_Export TAO_PolicyFactory_Registry_Factory :
   public ACE_Service_Object
 {
 public:
-  virtual ~TAO_PolicyFactory_Registry_Factory (void);
+  virtual ~TAO_PolicyFactory_Registry_Factory ();
 
-  virtual TAO::PolicyFactory_Registry_Adapter* create (void) = 0;
+  virtual TAO::PolicyFactory_Registry_Adapter* create () = 0;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

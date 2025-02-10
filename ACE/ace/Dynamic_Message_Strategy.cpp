@@ -12,7 +12,6 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // ctor
-
 ACE_Dynamic_Message_Strategy::ACE_Dynamic_Message_Strategy (unsigned long static_bit_field_mask,
                                                             unsigned long static_bit_field_shift,
                                                             unsigned long dynamic_priority_max,
@@ -24,12 +23,6 @@ ACE_Dynamic_Message_Strategy::ACE_Dynamic_Message_Strategy (unsigned long static
     max_late_ (0, dynamic_priority_offset - 1),
     min_pending_ (0, dynamic_priority_offset),
     pending_shift_ (0, dynamic_priority_max)
-{
-}
-
-// dtor
-
-ACE_Dynamic_Message_Strategy::~ACE_Dynamic_Message_Strategy (void)
 {
 }
 
@@ -82,7 +75,7 @@ ACE_Dynamic_Message_Strategy::priority_status (ACE_Message_Block & mb,
 // Dump the state of the strategy.
 
 void
-ACE_Dynamic_Message_Strategy::dump (void) const
+ACE_Dynamic_Message_Strategy::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Dynamic_Message_Strategy::dump");
@@ -123,10 +116,6 @@ ACE_Deadline_Message_Strategy::ACE_Deadline_Message_Strategy (unsigned long stat
 {
 }
 
-ACE_Deadline_Message_Strategy::~ACE_Deadline_Message_Strategy (void)
-{
-}
-
 void
 ACE_Deadline_Message_Strategy::convert_priority (ACE_Time_Value & priority,
                                                  const ACE_Message_Block & mb)
@@ -138,7 +127,7 @@ ACE_Deadline_Message_Strategy::convert_priority (ACE_Time_Value & priority,
   // dynamic priority conversion function based on time to deadline
 
 void
-ACE_Deadline_Message_Strategy::dump (void) const
+ACE_Deadline_Message_Strategy::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Deadline_Message_Strategy::dump");
@@ -165,10 +154,6 @@ ACE_Laxity_Message_Strategy::ACE_Laxity_Message_Strategy (unsigned long static_b
 {
 }
 
-ACE_Laxity_Message_Strategy::~ACE_Laxity_Message_Strategy (void)
-{
-}
-
 void
 ACE_Laxity_Message_Strategy::convert_priority (ACE_Time_Value & priority,
                                                const ACE_Message_Block & mb)
@@ -181,7 +166,7 @@ ACE_Laxity_Message_Strategy::convert_priority (ACE_Time_Value & priority,
   // dynamic priority conversion function based on laxity
 
 void
-ACE_Laxity_Message_Strategy::dump (void) const
+ACE_Laxity_Message_Strategy::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Laxity_Message_Strategy::dump");

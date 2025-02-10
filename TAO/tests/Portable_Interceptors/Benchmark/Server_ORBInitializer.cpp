@@ -18,7 +18,6 @@ void
 Server_ORBInitializer::post_init (
     PortableInterceptor::ORBInitInfo_ptr info)
 {
-
   PortableInterceptor::ServerRequestInterceptor_ptr tmp =
     PortableInterceptor::ServerRequestInterceptor::_nil ();
 

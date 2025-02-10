@@ -18,13 +18,12 @@
 #include "ace/OS_NS_unistd.h"
 
 
-
 #if defined (ACE_HAS_THREADS)
 
 // Default number of threads.
 static size_t n_threads = 15;
 
-typedef ACE_Atomic_Op<ACE_Thread_Mutex, int> INTERLOCKED_INT;
+using INTERLOCKED_INT = ACE_Atomic_Op<ACE_Thread_Mutex, int>;
 static INTERLOCKED_INT current_threads_in_first_section;
 static INTERLOCKED_INT current_threads_in_second_section;
 

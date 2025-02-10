@@ -34,20 +34,20 @@ class TAO_PortableServer_Export TAO_Linear_Search_OpTable
 {
 public:
   /// Destructor.
-  ~TAO_Linear_Search_OpTable (void);
+  ~TAO_Linear_Search_OpTable () override = default;
 
   /// See the documentation in the base class for details.
-  virtual int find (const char *opname,
-                    TAO_Skeleton &skel_ptr,
-                    const unsigned int length = 0);
+  int find (const char *opname,
+            TAO_Skeleton &skel_ptr,
+            const unsigned int length = 0) override;
 
-  virtual int find (const char *opname,
-                    TAO_Collocated_Skeleton &skelfunc,
-                    TAO::Collocation_Strategy s,
-                    const unsigned int length = 0);
+  int find (const char *opname,
+            TAO_Collocated_Skeleton &skelfunc,
+            TAO::Collocation_Strategy s,
+            const unsigned int length = 0) override;
 
-  virtual int bind (const char *opname,
-                    const TAO::Operation_Skeletons skelptr);
+  int bind (const char *opname,
+            const TAO::Operation_Skeletons skelptr) override;
 
 private:
   // = Method that should defined by the subclasses. GPERF program

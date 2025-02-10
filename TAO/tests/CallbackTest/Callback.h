@@ -16,9 +16,9 @@ public:
   // = The skeleton methods
   virtual CORBA::Boolean are_you_there (CORBA::String_out answer);
 
-  virtual void test_oneway (void);
+  virtual void test_oneway ();
 
-  virtual void shutdown (void);
+  virtual void shutdown ();
 private:
   /// Use an ORB reference to shutdown the application.
   CORBA::ORB_var orb_;

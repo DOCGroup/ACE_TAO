@@ -19,7 +19,7 @@ HostProcess::HostProcess (const ACE_CString &src, long pid)
 {
 }
 
-HostProcess::~HostProcess (void)
+HostProcess::~HostProcess ()
 {
   for (AddrList::ITERATOR i(this->listen_endpoints_);
        !i.done();
@@ -51,7 +51,7 @@ HostProcess::proc_name (const ACE_CString &name)
 }
 
 const ACE_CString&
-HostProcess::proc_name (void) const
+HostProcess::proc_name () const
 {
   return this->proc_name_;
 }
@@ -114,7 +114,6 @@ HostProcess::find_thread_for_handle (long h)
 PeerProcess *
 HostProcess::find_peer (const ACE_CString &addr)
 {
-
   PeerProcess *pp = 0;
   Endpoint ep (addr.c_str());
   (void)this->by_addr_.find(ep,pp);
@@ -139,14 +138,14 @@ HostProcess::find_peer (long h)
 
 
 long
-HostProcess::pid (void) const
+HostProcess::pid () const
 {
   return this->pid_;
 }
 
 
 const ACE_Time_Value &
-HostProcess::start_time (void) const
+HostProcess::start_time () const
 {
   return this->start_time_;
 }

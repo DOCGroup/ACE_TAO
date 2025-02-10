@@ -2,7 +2,7 @@
 #include "ifr_dii_client.h"
 #include "ace/Get_Opt.h"
 
-IFR_DII_Client::IFR_DII_Client (void)
+IFR_DII_Client::IFR_DII_Client ()
   : namespace_name (CORBA::string_dup ("warehouse")),
     interface_name (CORBA::string_dup ("inventory")),
     op_name (CORBA::string_dup ("getCDinfo")),
@@ -12,7 +12,7 @@ IFR_DII_Client::IFR_DII_Client (void)
 {
 }
 
-IFR_DII_Client::~IFR_DII_Client (void)
+IFR_DII_Client::~IFR_DII_Client ()
 {
 }
 
@@ -45,7 +45,7 @@ IFR_DII_Client::init (int argc,
 }
 
 int
-IFR_DII_Client::run (void)
+IFR_DII_Client::run ()
 {
   int result = 0;
 
@@ -110,7 +110,7 @@ IFR_DII_Client::parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-IFR_DII_Client::find_interface_def (void)
+IFR_DII_Client::find_interface_def ()
 {
   this->target_def_ =
     this->target_->_get_interface ();
@@ -126,7 +126,7 @@ IFR_DII_Client::find_interface_def (void)
 }
 
 int
-IFR_DII_Client::lookup_interface_def (void)
+IFR_DII_Client::lookup_interface_def ()
 {
   CORBA::Object_var obj =
     this->orb_->resolve_initial_references ("InterfaceRepository");
@@ -197,7 +197,7 @@ IFR_DII_Client::lookup_interface_def (void)
 }
 
 void
-IFR_DII_Client::get_operation_def (void)
+IFR_DII_Client::get_operation_def ()
 {
   // What operation(s) does this interface contain?
   CORBA::ContainedSeq_var operations =
@@ -224,7 +224,7 @@ IFR_DII_Client::get_operation_def (void)
 }
 
 void
-IFR_DII_Client::create_dii_request (void)
+IFR_DII_Client::create_dii_request ()
 {
   this->req_ = this->target_->_request (this->op_name.in ());
 
@@ -289,7 +289,7 @@ IFR_DII_Client::create_dii_request (void)
 }
 
 void
-IFR_DII_Client::invoke_and_display (void)
+IFR_DII_Client::invoke_and_display ()
 {
   this->req_->invoke ();
 

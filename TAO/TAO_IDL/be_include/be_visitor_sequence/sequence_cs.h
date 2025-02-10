@@ -32,7 +32,7 @@ public:
   be_visitor_sequence_cs (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_sequence_cs (void);
+  ~be_visitor_sequence_cs ();
 
   /// visit sequence node
   virtual int visit_sequence (be_sequence *node);

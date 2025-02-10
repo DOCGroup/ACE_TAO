@@ -125,19 +125,18 @@ class TAO_RTEvent_Serv_Export TAO_ECG_Mcast_Gateway
   : public ACE_Service_Object
 {
 public:
-
   /// The Service_Object entry points.
   //@{
   virtual int init (int argc, ACE_TCHAR* argv[]);
-  virtual int fini (void);
+  virtual int fini ();
   //@}
 
   /// Helper function to register the Gateway into the service
   /// configurator.
-  static int init_svcs (void);
+  static int init_svcs ();
 
   /// Constructor.
-  TAO_ECG_Mcast_Gateway (void);
+  TAO_ECG_Mcast_Gateway ();
 
   /// Values for some configuration parameters to init ().
   //@{
@@ -182,7 +181,7 @@ public:
    */
   struct TAO_RTEvent_Serv_Export Attributes
   {
-    Attributes (void);
+    Attributes ();
 
     Address_Server_Type address_server_type;
     Handler_Type handler_type;
@@ -219,7 +218,6 @@ public:
             RtecEventChannelAdmin::EventChannel_ptr ec);
 
 private:
-
   /// Helpers.
   //@{
   /// Check that arguments to run() are not nil.
@@ -227,13 +225,13 @@ private:
                     RtecEventChannelAdmin::EventChannel_ptr ec);
 
   /// Verifies configuration values specified through init() make sense.
-  int validate_configuration (void);
+  int validate_configuration ();
   //@}
 
   /// Allocate and initialize appropriate objects.
   //@{
   PortableServer::ServantBase *
-        init_address_server (void);
+        init_address_server ();
 
   PortableServer::Servant_var<TAO_ECG_UDP_Sender>
         init_sender (RtecEventChannelAdmin::EventChannel_ptr ec,
@@ -245,7 +243,7 @@ private:
                        RtecUDPAdmin::AddrServer_ptr address_server,
                        TAO_ECG_Refcounted_Endpoint endpoint_rptr);
 
-  TAO_ECG_Refcounted_Endpoint init_endpoint (void);
+  TAO_ECG_Refcounted_Endpoint init_endpoint ();
 
   TAO_ECG_Refcounted_Handler
         init_handler (TAO_ECG_Dgram_Handler *recv,

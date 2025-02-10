@@ -49,8 +49,6 @@ if (status != OK)\
 #elif defined (ACE_WIN32) || defined (__FreeBSD__)
 #define SCHED_PRIORITY \
 ACE_Sched_Params::priority_max(ACE_SCHED_FIFO,ACE_SCOPE_THREAD)
-#elif defined (HPUX)
-#define SCHED_PRIORITY ACE_THR_PRI_FIFO_MAX
 #else
 #define SCHED_PRIORITY \
 ACE_THR_PRI_FIFO_DEF + 25
@@ -104,18 +102,18 @@ class Globals
 {
 public:
   /// default constructor.
-  Globals (void);
+  Globals ();
 
   /// parse the arguments.
   int parse_args (int argc, ACE_TCHAR **argv);
 
   /**
-   * Enables fifo scheduling eg., RT scheduling class on solaris.
+   * Enables fifo scheduling.
    * Returns 0 on success, 1 if insufficient permission, or -1
    * for other failure.  As a side effect, sets thr_create_flags
    * appropriately.
    */
-  static int sched_fifo_init (void);
+  static int sched_fifo_init ();
 
   /// Thread creation flags.  Must call sched_fifo_init () before
   /// accessing.
@@ -173,16 +171,15 @@ typedef ACE_Singleton<Globals,ACE_Null_Mutex> GLOBALS;
  */
 class MT_Priority
 {
-
 public:
   /// constructor.
-  MT_Priority (void);
+  MT_Priority ();
 
   /// Destructor.
-  virtual ~MT_Priority (void);
+  virtual ~MT_Priority ();
 
   /// Sets the priority of the high priority thread.
-  virtual ACE_Sched_Priority get_high_priority (void);
+  virtual ACE_Sched_Priority get_high_priority ();
 
   /// Sets the priority to be used for the low priority thread.
   virtual ACE_Sched_Priority get_low_priority
@@ -191,10 +188,10 @@ public:
      u_int use_multiple_priority);
 
   /// Accessor for num_priorities_.
-  u_int number_of_priorities (void);
+  u_int number_of_priorities ();
 
   /// Accessor for grain_.
-  u_int grain (void);
+  u_int grain ();
 
 protected:
   /// Number of priorities used.

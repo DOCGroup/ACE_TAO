@@ -12,24 +12,22 @@
 #include "tao/SystemException.h"
 #include "tao/PortableServer/ForwardRequestC.h"
 
-#include "ace/Copy_Disabled.h"
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_AMH_Response_Handler::TAO_AMH_Response_Handler ()
   : reply_status_ (GIOP::NO_EXCEPTION)
   , mesg_base_ (0)
   , request_id_ (0)
-  , response_expected_ (0)
-  , transport_ (0)
-  , orb_core_ (0)
+  , response_expected_ (false)
+  , transport_ (nullptr)
+  , orb_core_ (nullptr)
   , argument_flag_ (1)
   , rh_reply_status_ (TAO_RS_UNINITIALIZED)
-  , allocator_ (0)
+  , allocator_ (nullptr)
 {
 }
 
-TAO_AMH_Response_Handler::~TAO_AMH_Response_Handler (void)
+TAO_AMH_Response_Handler::~TAO_AMH_Response_Handler ()
 {
   this->transport_->remove_reference ();
 
@@ -38,7 +36,7 @@ TAO_AMH_Response_Handler::~TAO_AMH_Response_Handler (void)
   {
     ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
 
-    if (this->response_expected_ == 0) //oneway ?
+    if (!this->response_expected_) //oneway ?
       {
         return;
       }
@@ -86,7 +84,7 @@ TAO_AMH_Response_Handler::init(TAO_ServerRequest &server_request,
 }
 
 void
-TAO_AMH_Response_Handler::_tao_rh_init_reply (void)
+TAO_AMH_Response_Handler::_tao_rh_init_reply ()
 {
   {
     ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
@@ -126,7 +124,7 @@ TAO_AMH_Response_Handler::_tao_rh_init_reply (void)
 }
 
 void
-TAO_AMH_Response_Handler::_tao_rh_send_reply (void)
+TAO_AMH_Response_Handler::_tao_rh_send_reply ()
 {
   {
     ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
@@ -311,7 +309,7 @@ TAO_AMH_Response_Handler::_tao_rh_send_location_forward (CORBA::Object_ptr fwd,
 }
 
 void
-TAO_AMH_Response_Handler::_remove_ref (void)
+TAO_AMH_Response_Handler::_remove_ref ()
 {
   if (--this->refcount_ == 0)
     {
@@ -331,7 +329,7 @@ TAO_AMH_Response_Handler::_remove_ref (void)
 namespace TAO
 {
   void
-  ARH_Refcount_Functor::operator () (TAO_AMH_Response_Handler *arh) throw ()
+  ARH_Refcount_Functor::operator () (TAO_AMH_Response_Handler *arh) noexcept
   {
     (void) arh->_remove_ref ();
   }

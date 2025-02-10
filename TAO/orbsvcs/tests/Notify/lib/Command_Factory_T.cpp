@@ -4,14 +4,13 @@
 #include "Command_Factory_T.h"
 
 
-
 #include "ace/Dynamic_Service.h"
 #include "tao/debug.h"
 #include "Command_Builder.h"
 #include "Name.h"
 
 template <class COMMAND>
-TAO_Notify_Tests_Command_Factory_T<COMMAND>::TAO_Notify_Tests_Command_Factory_T (void)
+TAO_Notify_Tests_Command_Factory_T<COMMAND>::TAO_Notify_Tests_Command_Factory_T ()
 {
   if (TAO_debug_level > 0)
       ACE_DEBUG ((LM_DEBUG, "Creating command factory for %s\n", COMMAND::name()));
@@ -37,13 +36,13 @@ TAO_Notify_Tests_Command_Factory_T<COMMAND>::init (int /*argc*/, ACE_TCHAR/*argv
 }
 
 template <class COMMAND> int
-TAO_Notify_Tests_Command_Factory_T<COMMAND>::fini (void)
+TAO_Notify_Tests_Command_Factory_T<COMMAND>::fini ()
 {
   return 0;
 }
 
 template <class COMMAND> TAO_Notify_Tests_Command*
-TAO_Notify_Tests_Command_Factory_T<COMMAND>::create (void)
+TAO_Notify_Tests_Command_Factory_T<COMMAND>::create ()
 {
   return new COMMAND ();
 }

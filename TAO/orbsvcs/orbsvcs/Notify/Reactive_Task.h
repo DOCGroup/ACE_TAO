@@ -34,32 +34,32 @@ class TAO_Notify_Serv_Export TAO_Notify_Reactive_Task
 {
 public:
   /// Constructor
-  TAO_Notify_Reactive_Task (void);
+  TAO_Notify_Reactive_Task ();
 
   /// Destructor
-  virtual ~TAO_Notify_Reactive_Task (void);
+  virtual ~TAO_Notify_Reactive_Task ();
 
   /// Init the reactive task.
-  void init (void);
+  void init ();
 
   /// Shutdown task
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
   /// Exec the request.
   virtual void execute (TAO_Notify_Method_Request& method_request);
 
   /// The object used by clients to register timers. This method returns a Reactor based Timer.
-  virtual TAO_Notify_Timer* timer (void);
+  virtual TAO_Notify_Timer* timer ();
 
   /// Returns NULL.
-  virtual TAO_Notify_Buffering_Strategy* buffering_strategy (void);
+  virtual TAO_Notify_Buffering_Strategy* buffering_strategy ();
 
 private:
   /// The timer.
   TAO_Notify_Timer_Reactor::Ptr timer_;
 
   /// Release
-  virtual void release (void);
+  virtual void release ();
 };
 
 

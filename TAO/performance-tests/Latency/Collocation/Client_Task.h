@@ -15,20 +15,17 @@
 class Client_Task : public ACE_Task_Base
 {
 public:
-
   /// Constructor
   Client_Task (Test::Roundtrip_ptr reference,
                int iterations,
                ACE_Thread_Manager *thr_mgr);
 
   /// Thread entry point
-  int svc (void);
+  int svc ();
 
 private:
-
   const int niterations;
   Test::Roundtrip_var remote_ref_;
-
 };
 
 #include /**/ "ace/post.h"

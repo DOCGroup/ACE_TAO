@@ -55,7 +55,7 @@ namespace TAO_PG
       /// Meaningless method to keep ACE_Vector happy
       bool operator != (const NamedValue &rhs) const;
     };
-    typedef ACE_Vector< NamedValue, 10 > NamedValueVec;
+    typedef ACE_Vector<NamedValue, 10> NamedValueVec;
 
   public:
     /**
@@ -64,7 +64,7 @@ namespace TAO_PG
     Properties_Encoder ();
 
     /// standard destructor
-    ~Properties_Encoder ();
+    ~Properties_Encoder () = default;
 
     /**
      * add a name/value property to the Properties_Encoder.
@@ -78,12 +78,11 @@ namespace TAO_PG
     void encode (PortableGroup::Properties * property_set) const;
 
   private:
-    Properties_Encoder (const Properties_Encoder & rhs);
-    Properties_Encoder & operator = (const Properties_Encoder & rhs);
+    Properties_Encoder (const Properties_Encoder & rhs) = delete;
+    Properties_Encoder & operator = (const Properties_Encoder & rhs) = delete;
   private:
     NamedValueVec values_;
   };
-
 } //namespace TAO_PG
 
 TAO_END_VERSIONED_NAMESPACE_DECL

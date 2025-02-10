@@ -5,7 +5,7 @@
 #include "ace/OS_NS_stdlib.h"
 #include "ace/OS_Memory.h"
 
-ACE_URL_Addr::ACE_URL_Addr (void)
+ACE_URL_Addr::ACE_URL_Addr ()
   : path_name_ (0),
     addr_string_ (0),
     addr_string_len_ (0)
@@ -171,7 +171,7 @@ ACE_URL_Addr::operator= (const ACE_URL_Addr &addr)
 }
 
 u_long
-ACE_URL_Addr::hash (void) const
+ACE_URL_Addr::hash () const
 {
   u_long result = this->ACE_INET_Addr::hash ()
     + ACE::hash_pjw (this->get_path_name ());
@@ -205,12 +205,12 @@ ACE_URL_Addr::ACE_URL_Addr (const ACE_TCHAR *host_name,
 }
 
 const ACE_TCHAR *
-ACE_URL_Addr::get_path_name (void) const
+ACE_URL_Addr::get_path_name () const
 {
   return this->path_name_;
 }
 
-ACE_URL_Addr::~ACE_URL_Addr (void)
+ACE_URL_Addr::~ACE_URL_Addr ()
 {
   ACE_OS::free (reinterpret_cast<void *> (const_cast<ACE_TCHAR *>
                                                       (this->path_name_)));
@@ -220,7 +220,7 @@ ACE_URL_Addr::~ACE_URL_Addr (void)
 }
 
 int
-ACE_URL_Addr::destroy (void)
+ACE_URL_Addr::destroy ()
 {
   // Commit suicide.
   delete this;

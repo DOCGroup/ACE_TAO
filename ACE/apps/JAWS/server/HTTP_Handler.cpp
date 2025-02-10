@@ -20,7 +20,7 @@ HTTP_Handler::HTTP_Handler (JAWS_IO &io,
   this->io_.handler (this);
 }
 
-HTTP_Handler::~HTTP_Handler (void)
+HTTP_Handler::~HTTP_Handler ()
 {
   this->request_data_->release ();
   this->request_data_ = 0;
@@ -91,7 +91,7 @@ HTTP_Handler::read_complete (ACE_Message_Block &message_block)
 }
 
 void
-HTTP_Handler::receive_file_complete (void)
+HTTP_Handler::receive_file_complete ()
 {
   ACE_DEBUG ((LM_DEBUG, " (%t) %s received successfully\n",
               request_.uri ()));
@@ -143,19 +143,19 @@ HTTP_Handler::receive_file_error (int result)
 }
 
 void
-HTTP_Handler::confirmation_message_complete (void)
+HTTP_Handler::confirmation_message_complete ()
 {
   this->done ();
 }
 
 void
-HTTP_Handler::error_message_complete (void)
+HTTP_Handler::error_message_complete ()
 {
   this->done ();
 }
 
 void
-HTTP_Handler::transmit_file_complete (void)
+HTTP_Handler::transmit_file_complete ()
 {
   ACE_DEBUG ((LM_DEBUG, " (%t) %s transmitted successfully\n",
               request_.uri ()));
@@ -193,14 +193,14 @@ HTTP_Handler::transmit_file_error (int result)
 }
 
 void
-HTTP_Handler::read_error (void)
+HTTP_Handler::read_error ()
 {
   ACE_DEBUG ((LM_DEBUG, " (%t) error in reading request\n"));
   this->done ();
 }
 
 void
-HTTP_Handler::write_error (void)
+HTTP_Handler::write_error ()
 {
   ACE_DEBUG ((LM_DEBUG, " (%t) %s error in writing response\n",
               request_.uri ()));
@@ -209,7 +209,7 @@ HTTP_Handler::write_error (void)
 }
 
 void
-HTTP_Handler::timeout (void)
+HTTP_Handler::timeout ()
 {
   ACE_DEBUG ((LM_DEBUG, " (%t) %s error in reading request\n",
               request_.uri ()));
@@ -220,7 +220,7 @@ HTTP_Handler::timeout (void)
 }
 
 void
-HTTP_Handler::request_too_long (void)
+HTTP_Handler::request_too_long ()
 {
   ACE_DEBUG ((LM_DEBUG, " (%t) request too long\n"));
   this->response_.
@@ -229,17 +229,17 @@ HTTP_Handler::request_too_long (void)
 }
 
 void
-HTTP_Handler::done (void)
+HTTP_Handler::done ()
 {
   this->factory_.destroy_http_handler (*this, this->io_);
 }
 
-HTTP_Handler_Factory::~HTTP_Handler_Factory (void)
+HTTP_Handler_Factory::~HTTP_Handler_Factory ()
 {
 }
 
 HTTP_Handler *
-Synch_HTTP_Handler_Factory::create_http_handler (void)
+Synch_HTTP_Handler_Factory::create_http_handler ()
 {
   JAWS_Synch_IO *io;
   ACE_NEW_RETURN (io, JAWS_Synch_IO, 0);
@@ -260,7 +260,7 @@ Synch_HTTP_Handler_Factory::destroy_http_handler (HTTP_Handler &handler,
 //-------------SYNCH IO no Cache
 
 HTTP_Handler *
-No_Cache_Synch_HTTP_Handler_Factory::create_http_handler (void)
+No_Cache_Synch_HTTP_Handler_Factory::create_http_handler ()
 {
   JAWS_Synch_IO_No_Cache *io = 0;
   ACE_NEW_RETURN (io, JAWS_Synch_IO_No_Cache, 0);
@@ -303,7 +303,7 @@ Asynch_HTTP_Handler_Factory::destroy_http_handler (HTTP_Handler &handler,
 }
 
 HTTP_Handler *
-Asynch_HTTP_Handler_Factory::create_http_handler (void)
+Asynch_HTTP_Handler_Factory::create_http_handler ()
 {
   return 0;
 }

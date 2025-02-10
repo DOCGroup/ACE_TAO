@@ -8,7 +8,7 @@ Hello::Hello (CORBA::ORB_ptr orb, PortableServer::POA_ptr poa)
 }
 
 Test::HelloWorld_ptr
-Hello::get_helloworld (void)
+Hello::get_helloworld ()
 {
   HelloWorld *hello_world;
   ACE_NEW_THROW_EX (hello_world,
@@ -25,7 +25,7 @@ Hello::get_helloworld (void)
 }
 
 void
-Hello::shutdown (void)
+Hello::shutdown ()
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

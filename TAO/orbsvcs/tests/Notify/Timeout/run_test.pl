@@ -25,8 +25,6 @@ $sup->AddLibPath ('../lib');
 $con->AddLibPath ('../lib');
 $ns->AddLibPath ('../lib');
 
-PerlACE::check_privilege_group();
-
 #my $nscorbaloc = "-ORBInitRef NameService=file://$namingior";
 
 my $supiorfile = "supplier.ior";

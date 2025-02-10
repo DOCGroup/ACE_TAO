@@ -71,7 +71,7 @@ Notify_Sequence_Push_Consumer::push_structured_events(
   if (this->count_ >= this->expected_)
   {
     this->client_.consumer_done (this);
-    ACE_Time_Value totaltime = ( ACE_OS::gettimeofday() - this->first_ );
+    ACE_Time_Value totaltime = ( ACE_OS::gettimeofday() - this->first_);
     double events_per_ms = static_cast<double>(this->count_) /
       static_cast<double>(totaltime.msec());
     ACE_DEBUG((LM_DEBUG, "\nConsumer %s received %d at %.2f events/ms\n", name_.c_str(), this->count_, events_per_ms ));

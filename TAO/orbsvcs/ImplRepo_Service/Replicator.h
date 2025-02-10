@@ -77,22 +77,22 @@ public:
 
   Replicator (Shared_Backing_Store &repo, const Options& opts);
 
-  virtual ~Replicator(void);
+  virtual ~Replicator();
 
-  virtual int svc (void);
+  virtual int svc ();
   virtual int handle_exception (ACE_HANDLE );
 
-  void stop (void);
+  void stop ();
   void send_access_state (const char *name, ImplementationRepository::AAM_Status state);
   void send_entity (ImplementationRepository::UpdateInfo &info);
 
-  void init_orb (void);
+  void init_orb ();
 
   bool init_peer (const ACE_CString &filename );
   int send_registration (char *&ior );
 
-  bool peer_available (void);
-  char * ior (void);
+  bool peer_available ();
+  char * ior ();
 
 private:
   Replica_var me_;

@@ -9,7 +9,7 @@
 class Worker : public ACE_Task_Base
 {
 public:
-  int svc (void)
+  int svc ()
   {
     ACE_OS::sleep (5);
     return 0;
@@ -22,7 +22,7 @@ public:
 class Monitor_Checker : public ACE_Task_Base
 {
 public:
-  int svc (void)
+  int svc ()
   {
     /// Get an instance of the MC service singleton.
     MC_ADMINMANAGER* mgr =

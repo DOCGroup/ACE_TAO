@@ -18,7 +18,6 @@
 #include "ace/Thread_Manager.h"
 
 
-
 #if defined (ACE_HAS_THREADS)
 
 static const char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";

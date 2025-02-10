@@ -12,18 +12,18 @@ public:
   /// Constructor
   interface_3_i (CORBA::ORB_ptr orb);
 
-  virtual char * operation_1 (void);
-  virtual char * operation_2 (void);
-  virtual char * operation_3 (void);
+  virtual char * operation_1 ();
+  virtual char * operation_2 ();
+  virtual char * operation_3 ();
 
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
-  virtual ::CORBA::Long attribute_1 (void);
+  virtual ::CORBA::Long attribute_1 ();
   virtual void attribute_1 (::CORBA::Long attribute_1);
 
-  virtual char * attribute_2 (void);
+  virtual char * attribute_2 ();
 
-  virtual ::CORBA::Short attribute_3 (void);
+  virtual ::CORBA::Short attribute_3 ();
   virtual void attribute_3 (::CORBA::Short attribute_3);
 
 private:

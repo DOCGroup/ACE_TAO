@@ -22,10 +22,9 @@ class JAWS_Cached_Allocator : public ACE_New_Allocator
 //   fixed-sized classes.
 {
 public:
-
   JAWS_Cached_Allocator (size_t n_chunks = JAWS_DEFAULT_ALLOCATOR_CHUNKS);
 
-  ~JAWS_Cached_Allocator (void);
+  ~JAWS_Cached_Allocator ();
 
   void* malloc (size_t);
   // get a chunk of memory from free store.
@@ -34,15 +33,13 @@ public:
   // return a chunk of memory back to free store.
 
 protected:
-
   char * get_next_pool (char *pool);
 
   void set_next_pool (char *pool, char *next_pool);
 
-  void extend_pool (void);
+  void extend_pool ();
 
 private:
-
   size_t pool_size_;
 
   char *pool_head_;
@@ -53,9 +50,7 @@ private:
 
   ACE_Locked_Free_List<ACE_Cached_Mem_Pool_Node<T>, ACE_LOCK> free_list_;
   // Maintain a cached memory free list.
-
 };
-
 
 
 template <class T>
@@ -69,10 +64,9 @@ class JAWS_TSS_Cached_Allocator : public ACE_New_Allocator
 //   fixed-sized classes.
 {
 public:
-
   JAWS_TSS_Cached_Allocator (size_t n_chunks = JAWS_DEFAULT_ALLOCATOR_CHUNKS);
 
-  ~JAWS_TSS_Cached_Allocator (void);
+  ~JAWS_TSS_Cached_Allocator ();
 
   void * malloc (size_t);
   // get a chunk of memory from free store.
@@ -81,25 +75,14 @@ public:
   // return a chunk of memory back to free store.
 
 protected:
-
-  JAWS_Cached_Allocator<T, ACE_SYNCH_NULL_MUTEX> * ts_allocator (void);
+  JAWS_Cached_Allocator<T, ACE_SYNCH_NULL_MUTEX> * ts_allocator ();
 
 private:
-
   size_t n_chunks_;
 
   ACE_TSS_TYPE (JAWS_CACHED_ALLOCATOR(T)) ts_allocator_;
-
 };
 
-
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "jaws3/Cached_Allocator_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Cached_Allocator_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
-
 
 #endif /* JAWS_CACHED_ALLOCATOR_T_H */

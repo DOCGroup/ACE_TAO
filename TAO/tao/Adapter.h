@@ -45,10 +45,10 @@ class TAO_ServerRequest;
 class TAO_Export TAO_Adapter
 {
 public:
-  virtual ~TAO_Adapter (void);
+  virtual ~TAO_Adapter ();
 
   /// Initialize the Adapter
-  virtual void open (void) = 0;
+  virtual void open () = 0;
 
   /// The ORB is shutting down, destroy any resources attached to this
   /// adapter.
@@ -63,7 +63,7 @@ public:
    * Adapters at higher priority are used first, the first adapter
    * that matches a key is used to dispatch a request.
    */
-  virtual int priority (void) const = 0;
+  virtual int priority () const = 0;
 
   /// Return the status....
   virtual int dispatch (TAO::ObjectKey &key,
@@ -94,14 +94,14 @@ public:
 
   /// Return the name, i.e. the object id used to resolve it in the
   /// ORB.
-  virtual const char *name (void) const = 0;
+  virtual const char *name () const = 0;
 
   /**
    * Return the root of the Object Adapter.
    * Each adapter defines its own IDL interface accessed through the
    * method above.
    */
-  virtual CORBA::Object_ptr root (void) = 0;
+  virtual CORBA::Object_ptr root () = 0;
 
   /// Create a collocated object using the given profile and stub.
   virtual CORBA::Object_ptr create_collocated_object (TAO_Stub *,

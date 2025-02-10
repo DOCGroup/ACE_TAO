@@ -47,7 +47,6 @@ bool parse_args (int & argc, ACE_TCHAR *argv[])
       return false;
     }
   return true;
-
 }
 
 

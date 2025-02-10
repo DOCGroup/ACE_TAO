@@ -7,7 +7,6 @@
 #include "ace/OS_NS_strings.h"
 
 
-
 // constructor.
 QoS_Util::QoS_Util (int argc,
                     ACE_TCHAR *argv[])
@@ -25,14 +24,14 @@ QoS_Util::QoS_Util (int argc,
 }
 
 // destructor.
-QoS_Util::~QoS_Util (void)
+QoS_Util::~QoS_Util ()
 {
   delete this->mult_session_addr_;
   delete this->dest_addr_;
 }
 
 int
-QoS_Util::parse_args (void)
+QoS_Util::parse_args ()
 {
   ACE_Get_Opt get_opts (this->argc_, this->argv_, ACE_TEXT("m:n:p:P:c"));
   int c = 0;
@@ -90,31 +89,31 @@ QoS_Util::parse_args (void)
 }
 
 ACE_INET_Addr *
-QoS_Util::mult_session_addr (void) const
+QoS_Util::mult_session_addr () const
 {
   return this->mult_session_addr_;
 }
 
 ACE_INET_Addr *
-QoS_Util::dest_addr (void) const
+QoS_Util::dest_addr () const
 {
   return this->dest_addr_;
 }
 
 u_short
-QoS_Util::source_port (void) const
+QoS_Util::source_port () const
 {
   return this->source_port_;
 }
 
 ACE_Protocol_ID
-QoS_Util::protocol (void) const
+QoS_Util::protocol () const
 {
   return this->protocol_;
 }
 
 int
-QoS_Util::multicast_flag (void) const
+QoS_Util::multicast_flag () const
 {
   return this->multicast_flag_;
 }

@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_TIME_SERVICE_CLERK_H
 #define TAO_TIME_SERVICE_CLERK_H
 #include /**/ "ace/pre.h"
@@ -20,7 +19,6 @@
 #include "orbsvcs/TimeServiceS.h"
 #include "orbsvcs/Time/Timer_Helper.h"
 #include "orbsvcs/Time/time_serv_export.h"
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -39,7 +37,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Time_Serv_Export TAO_Time_Service_Clerk : public POA_CosTime::TimeService
 {
 public:
-
   /// Helper class to help in the updation of time.
   friend class Timer_Helper;
 
@@ -52,11 +49,11 @@ public:
                           const IORS& server);
 
   /// Destructor.
-  ~TAO_Time_Service_Clerk (void);
+  ~TAO_Time_Service_Clerk ();
 
   /// This operation returns the global time and an estimate of
   /// inaccuracy in a UTO.
-  virtual CosTime::UTO_ptr universal_time (void);
+  virtual CosTime::UTO_ptr universal_time ();
 
   /**
    * This operation returns the global time in a UTO only if the time
@@ -64,7 +61,7 @@ public:
    * operation is not implemented and throws a CORBA::NO_IMPLEMENT
    * exception, if called.
    */
-  virtual CosTime::UTO_ptr secure_universal_time (void);
+  virtual CosTime::UTO_ptr secure_universal_time ();
 
   /// This creates a new UTO based on the given parameters.
   virtual CosTime::UTO_ptr new_universal_time (TimeBase::TimeT time,
@@ -79,16 +76,16 @@ public:
                                          TimeBase::TimeT upper);
 
   /// Return the globally synchronized time.
-  virtual CORBA::ULongLong get_time (void);
+  virtual CORBA::ULongLong get_time ();
 
   /// Returns the time displacement factor.
-  CORBA::Short time_displacement_factor (void);
+  CORBA::Short time_displacement_factor ();
 
   /// Set the TDF.
   void time_displacement_factor (CORBA::Short);
 
   /// Get method for inaccuracy.
-  TimeBase::InaccuracyT inaccuracy (void);
+  TimeBase::InaccuracyT inaccuracy ();
 
   /// Set method for inaccuracy.
   void inaccuracy (TimeBase::InaccuracyT inaccuracy);
@@ -97,7 +94,6 @@ public:
   CORBA::ULongLong time_;
 
 private:
-
   /// Time displacement factor in minutes.
   CORBA::Short time_displacement_factor_;
 

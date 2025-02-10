@@ -10,7 +10,7 @@
 #include "tao/CDR.h"
 #include "tao/AnyTypeCode/TypeCode.h"
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/OS_Memory.h"
 
 #if !defined (__ACE_INLINE__)
@@ -54,7 +54,7 @@ TAO::Any_Dual_Impl_T<T>::Any_Dual_Impl_T (CORBA::TypeCode_ptr tc)
 }
 
 template<typename T>
-TAO::Any_Dual_Impl_T<T>::~Any_Dual_Impl_T (void)
+TAO::Any_Dual_Impl_T<T>::~Any_Dual_Impl_T ()
 {
 }
 
@@ -158,11 +158,7 @@ TAO::Any_Dual_Impl_T<T>::replace (TAO_InputCDR &cdr,
   ACE_NEW_RETURN (empty_value,
                   T,
                   false);
-#if defined (ACE_HAS_CPP11)
   std::unique_ptr<T> empty_value_safety (empty_value);
-#else
-  auto_ptr<T> empty_value_safety (empty_value);
-#endif /* ACE_HAS_CPP11 */
   TAO::Any_Dual_Impl_T<T> *replacement = 0;
   ACE_NEW_RETURN (replacement,
                   TAO::Any_Dual_Impl_T<T> (destructor,
@@ -170,11 +166,7 @@ TAO::Any_Dual_Impl_T<T>::replace (TAO_InputCDR &cdr,
                                            empty_value),
                   false);
 
-#if defined (ACE_HAS_CPP11)
   std::unique_ptr<TAO::Any_Dual_Impl_T<T> > replacement_safety (replacement);
-#else
-  auto_ptr<TAO::Any_Dual_Impl_T<T> > replacement_safety (replacement);
-#endif /* ACE_HAS_CPP11 */
 
   CORBA::Boolean const good_decode = replacement->demarshal_value (cdr);
 
@@ -201,14 +193,14 @@ TAO::Any_Dual_Impl_T<T>::marshal_value (TAO_OutputCDR &cdr)
 
 template<typename T>
 const void *
-TAO::Any_Dual_Impl_T<T>::value (void) const
+TAO::Any_Dual_Impl_T<T>::value () const
 {
   return this->value_;
 }
 
 template<typename T>
 void
-TAO::Any_Dual_Impl_T<T>::free_value (void)
+TAO::Any_Dual_Impl_T<T>::free_value ()
 {
   if (this->value_destructor_ != 0)
     {

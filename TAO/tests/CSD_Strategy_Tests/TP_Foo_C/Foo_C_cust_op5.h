@@ -1,5 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
-
 //=============================================================================
 /**
  *  @file    Foo_C_cust_op5.h
@@ -20,29 +18,22 @@ class Foo_C_i;
 class Foo_C_cust_op5;
 typedef TAO_Intrusive_Ref_Count_Handle<Foo_C_cust_op5> Foo_C_cust_op5_Handle;
 
-
 class CSD_TP_Foo_C_Export Foo_C_cust_op5 : public TAO::CSD::TP_Custom_Request_Operation
 {
-  public:
+public:
+  Foo_C_cust_op5(Foo_C_i* servant);
+  virtual ~Foo_C_cust_op5();
 
-    Foo_C_cust_op5(Foo_C_i* servant);
-    virtual ~Foo_C_cust_op5();
+  void result();
 
-    void result(void);
+protected:
+  virtual void execute_i();
+  virtual void cancel_i();
 
-
-  protected:
-
-    virtual void execute_i();
-    virtual void cancel_i();
-
-
-  private:
-
-    bool exception_;
-    bool cancelled_;
-
-    Foo_C_i*                        servant_;
+private:
+  bool exception_;
+  bool cancelled_;
+  Foo_C_i* servant_;
 };
 
 #endif

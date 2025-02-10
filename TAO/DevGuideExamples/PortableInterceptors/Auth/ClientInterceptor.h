@@ -9,9 +9,8 @@ class ClientInterceptor
 : public virtual PortableInterceptor::ClientRequestInterceptor,
   public virtual ::CORBA::LocalObject
 {
-
  public:
-  ClientInterceptor (void);
+  ClientInterceptor ();
 
   virtual ~ClientInterceptor ();
 

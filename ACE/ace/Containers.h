@@ -53,7 +53,7 @@ public:
   ACE_DLList_Node *prev_;
 
 protected:
-  ACE_DLList_Node (void);
+  ACE_DLList_Node ();
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

@@ -11,7 +11,7 @@ Hello::Hello(
 }
 
 void
-Hello::short_sleep (void)
+Hello::short_sleep ()
 {
   long count = atomic_counter_--;
 

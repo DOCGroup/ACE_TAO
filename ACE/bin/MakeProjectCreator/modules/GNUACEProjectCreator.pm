@@ -52,24 +52,6 @@ sub fill_value {
       return 'VPATH = .:' . $str . $self->crlf();
     }
   }
-  elsif ($name eq 'tao') {
-    my($incs) = $self->get_assignment('includes');
-    my($libs) = $self->get_assignment('libpaths');
-    return ((defined $incs && $incs =~ /tao/i) ||
-            (defined $libs && $libs =~ /tao/i));
-  }
-  elsif ($name eq 'ciao') {
-    my($incs) = $self->get_assignment('includes');
-    my($libs) = $self->get_assignment('libpaths');
-    return ((defined $incs && $incs =~ /ciao/i) ||
-            (defined $libs && $libs =~ /ciao/i));
-  }
-  elsif ($name eq 'dance') {
-    my($incs) = $self->get_assignment('includes');
-    my($libs) = $self->get_assignment('libpaths');
-    return ((defined $incs && $incs =~ /DAnCE/i) ||
-            (defined $libs && $libs =~ /DAnCE/i));
-  }
   elsif ($name eq 'genins') {
     my $ins = '';
     $self->get_install_info(sub { $ins .= '#' . $_[0] });

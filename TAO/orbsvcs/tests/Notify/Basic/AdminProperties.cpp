@@ -6,7 +6,7 @@
 
 /***************************************************************************/
 
-AdminProperties_Task::AdminProperties_Task (void)
+AdminProperties_Task::AdminProperties_Task ()
   : supplier_ (0)
   , client_ (0)
 {
@@ -26,7 +26,7 @@ AdminProperties_Task::init (int argc, ACE_TCHAR *argv[])
 }
 
 int
-AdminProperties_Task::svc (void)
+AdminProperties_Task::svc ()
 {
   // operations:
   CosNotification::StructuredEvent event;
@@ -120,7 +120,7 @@ AdminProperties_StructuredPushConsumer::push_structured_event (const CosNotifica
 
 /***************************************************************************/
 
-AdminProperties::AdminProperties (void)
+AdminProperties::AdminProperties ()
   : max_queue_length_ (10),
     max_consumers_ (3),
     max_suppliers_ (3),
@@ -134,7 +134,7 @@ AdminProperties::AdminProperties (void)
 {
 }
 
-AdminProperties::~AdminProperties (void)
+AdminProperties::~AdminProperties ()
 {
 }
 
@@ -255,7 +255,7 @@ AdminProperties::create_channel(bool reject)
 }
 
 void
-AdminProperties::run_test (void)
+AdminProperties::run_test ()
 {
   bool reject = true;
   this->create_channel(reject);
@@ -343,7 +343,7 @@ AdminProperties::test_max_queue_length (bool reject)
 }
 
 void
-AdminProperties::test_max_clients (void)
+AdminProperties::test_max_clients ()
 {
   this->create_suppliers ();
 
@@ -360,7 +360,7 @@ AdminProperties::test_max_clients (void)
 }
 
 void
-AdminProperties::create_suppliers (void)
+AdminProperties::create_suppliers ()
 {
   // Create the requested number of suppliers.
   // @@ CosNotifyChannelAdmin::AdminID adminid;
@@ -396,7 +396,7 @@ AdminProperties::create_suppliers (void)
 }
 
 void
-AdminProperties::create_consumers (void)
+AdminProperties::create_consumers ()
 {
   // Create the requested number of suppliers.
   // @@ CosNotifyChannelAdmin::AdminID adminid;

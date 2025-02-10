@@ -21,7 +21,7 @@ MUF_Sched_Param_Policy::MUF_Sched_Param_Policy (
 }
 
 MUF_Scheduling::SchedulingParameter
-MUF_Sched_Param_Policy::value (void)
+MUF_Sched_Param_Policy::value ()
 {
   return this->value_;
 }
@@ -33,7 +33,7 @@ MUF_Sched_Param_Policy::value (const MUF_Scheduling::SchedulingParameter& value)
 }
 
 CORBA::Policy_ptr
-MUF_Sched_Param_Policy::copy (void)
+MUF_Sched_Param_Policy::copy ()
 {
   MUF_Sched_Param_Policy* tmp = 0;
   ACE_NEW_THROW_EX (tmp,
@@ -45,13 +45,13 @@ MUF_Sched_Param_Policy::copy (void)
 }
 
 CORBA::PolicyType
-MUF_Sched_Param_Policy::policy_type (void)
+MUF_Sched_Param_Policy::policy_type ()
 {
   return 0;
 }
 
 void
-MUF_Sched_Param_Policy::destroy (void)
+MUF_Sched_Param_Policy::destroy ()
 {
 }
 
@@ -64,7 +64,6 @@ MUF_Scheduler::MUF_Scheduler (CORBA::ORB_ptr orb,
     ace_sched_policy_ (ace_sched_policy),
     ace_sched_scope_ (ace_sched_scope)
 {
-
   Kokyu::DSRT_ConfigInfo config;
 
   config.impl_type_ = this->disp_impl_type_;
@@ -74,7 +73,7 @@ MUF_Scheduler::MUF_Scheduler (CORBA::ORB_ptr orb,
   Kokyu::DSRT_Dispatcher_Factory<MUF_Scheduler_Traits>::DSRT_Dispatcher_Auto_Ptr
     tmp( Kokyu::DSRT_Dispatcher_Factory<MUF_Scheduler_Traits>::
          create_DSRT_dispatcher (config) );
-  kokyu_dispatcher_ = tmp;
+  kokyu_dispatcher_ = std::move(tmp);
 
   CORBA::Object_var object =
     orb->resolve_initial_references ("RTScheduler_Current");
@@ -103,12 +102,12 @@ MUF_Scheduler::MUF_Scheduler (CORBA::ORB_ptr orb,
   codec_ = codec_factory->create_codec (encoding);
 }
 
-MUF_Scheduler::~MUF_Scheduler (void)
+MUF_Scheduler::~MUF_Scheduler ()
 {
 }
 
 void
-MUF_Scheduler::shutdown (void)
+MUF_Scheduler::shutdown ()
 {
   kokyu_dispatcher_->shutdown ();
   ACE_DEBUG ((LM_DEBUG, "kokyu DSRT dispatcher shutdown\n"));
@@ -439,7 +438,6 @@ MUF_Scheduler::send_poll (PortableInterceptor::ClientRequestInfo_ptr)
 void
 MUF_Scheduler::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri)
 {
-
   Kokyu::Svc_Ctxt_DSRT_QoS sc_qos;
 
   CORBA::String_var operation = ri->operation ();
@@ -618,7 +616,7 @@ MUF_Scheduler::cancel (const RTScheduling::Current::IdType &)
 }
 
 CORBA::PolicyList*
-MUF_Scheduler::scheduling_policies (void)
+MUF_Scheduler::scheduling_policies ()
 {
   throw CORBA::NO_IMPLEMENT ();
 }
@@ -630,13 +628,13 @@ MUF_Scheduler::scheduling_policies (const CORBA::PolicyList &)
 }
 
 CORBA::PolicyList*
-MUF_Scheduler::poa_policies (void)
+MUF_Scheduler::poa_policies ()
 {
   throw CORBA::NO_IMPLEMENT ();
 }
 
 char *
-MUF_Scheduler::scheduling_discipline_name (void)
+MUF_Scheduler::scheduling_discipline_name ()
 {
   throw CORBA::NO_IMPLEMENT ();
 }

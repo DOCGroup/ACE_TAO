@@ -16,19 +16,16 @@ public:
   be_publishes (UTL_ScopedName *n,
                 AST_Type *publishes_type);
 
-  virtual ~be_publishes (void);
+  virtual ~be_publishes ();
 
   // Non-virtual override of frontend method.
-  be_eventtype *publishes_type (void) const;
-
-  // Narrowing.
-  DEF_NARROW_FROM_DECL(be_publishes);
+  be_eventtype *publishes_type () const;
 
   // Visiting.
   virtual int accept (be_visitor *visitor);
 
   // Cleanup.
-  virtual void destroy (void);
+  virtual void destroy ();
 };
 
 #endif // BE_PUBLISHES_H

@@ -31,9 +31,10 @@ istream &
 operator>> (istream &is, CORBA::String_var &sv)
 {
   is.seekg (0, ios::end);
-  sv = CORBA::string_alloc (static_cast<CORBA::ULong> (is.tellg ()));
+  std::streamsize const n = is.tellg ();
+  sv = CORBA::string_alloc (static_cast<CORBA::ULong> (n));
   is.seekg (0, ios::beg);
-  is >> sv.inout ();
+  is.read (sv.inout (), n);
   return is;
 }
 
@@ -48,11 +49,14 @@ istream &
 operator>> (istream &is, CORBA::String_out &so)
 {
   is.seekg (0, ios::end);
-  so = CORBA::string_alloc (static_cast<CORBA::ULong> (is.tellg ()));
+  std::streamsize const n = is.tellg ();
+  so = CORBA::string_alloc (static_cast<CORBA::ULong> (n));
   is.seekg (0, ios::beg);
-  is >> so.ptr ();
+  is.read (so.ptr (), n);
   return is;
 }
+
+#ifndef ACE_HAS_CPP20
 
 // Until we implement WString support for platforms with a
 // 4-byte wchar_t, we just define the following to emit
@@ -135,6 +139,8 @@ operator>> (istream &is, CORBA::WString_out &wso)
 
   return is;
 }
+
+#endif /* ACE_HAS_CPP20 */
 
 #endif /* ACE_LACKS_IOSTREAM_TOTALLY */
 

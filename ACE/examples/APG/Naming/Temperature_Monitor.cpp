@@ -37,7 +37,7 @@ void Temperature_Monitor::record_temperature (float temp)
 }
 
 // Listing 41 code/ch21
-void Temperature_Monitor::record_failure (void)
+void Temperature_Monitor::record_failure ()
 {
   Name_Binding_Ptr lastReset
     (this->naming_context_.fetch ("lastReset"));
@@ -103,7 +103,7 @@ Temperature_Monitor::reset_device (Name_Binding_Ptr &resetCount)
 // Listing 5
 
 // Listing 2 code/ch21
-void Temperature_Monitor::monitor (void)
+void Temperature_Monitor::monitor ()
 {
   this->thermometer_ =
     new Thermometer (this->opt_.thermometer_address ());

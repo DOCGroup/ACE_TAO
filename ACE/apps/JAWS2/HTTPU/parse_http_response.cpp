@@ -15,7 +15,7 @@ Parse_HTTP_Response::Parse_HTTP_Response (const char *response)
     this->init (response);
 }
 
-Parse_HTTP_Response::~Parse_HTTP_Response (void)
+Parse_HTTP_Response::~Parse_HTTP_Response ()
 {
   if (this->response_)
     ACE_OS::free (this->response_);

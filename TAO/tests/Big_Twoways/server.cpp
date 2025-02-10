@@ -192,7 +192,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       for (j = 0; j != peer_count; ++j)
         {
           session_list[j]->destroy ();
-
         }
 
       ACE_DEBUG ((LM_DEBUG, "Shutdown all peers . . .\n"));
@@ -204,7 +203,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "Shutdown poa and orb . . .\n"));
 
-      root_poa->destroy (1, 1);
+      root_poa->destroy (true, true);
 
       orb->destroy ();
     }

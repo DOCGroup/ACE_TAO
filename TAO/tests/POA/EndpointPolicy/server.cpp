@@ -294,7 +294,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   try
     {
-
       Hello *hello_impl;
       ACE_NEW_RETURN (hello_impl,
                       Hello (orb.in ()),
@@ -347,7 +346,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     }
   try
     {
-      root_poa->destroy (1, 1);
+      root_poa->destroy (true, true);
 
       orb->destroy ();
     }

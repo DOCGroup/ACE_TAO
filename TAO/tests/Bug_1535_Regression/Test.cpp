@@ -6,12 +6,12 @@ Hello::Hello (PortableServer::POA_ptr poa) :
 }
 
 void
-Hello::print_hello_world (void)
+Hello::print_hello_world ()
 {
 }
 
 PortableServer::POA_ptr
-Hello::_default_POA (void)
+Hello::_default_POA ()
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }

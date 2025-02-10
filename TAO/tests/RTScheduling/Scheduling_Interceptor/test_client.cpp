@@ -45,7 +45,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     {
       try
         {
-
           orb = CORBA::ORB_init (argc, argv);
 
           if (parse_args (argc, argv) == -1)
@@ -98,7 +97,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           server->two_way (ACE_TEXT_ALWAYS_CHAR(ior.c_str ()));
 
           current->end_scheduling_segment (name);
-
         }
       catch (const CORBA::THREAD_CANCELLED& )
         {

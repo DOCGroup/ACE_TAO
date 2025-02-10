@@ -113,7 +113,7 @@ publish_ior (CORBA::ORB_ptr orb, CORBA::Object_ptr o, const ACE_TCHAR* filename)
                                      errno);
     }
 
-  ACE_OS::fprintf (output_file, "%s", ior.in() );
+  ACE_OS::fprintf (output_file, "%s", ior.in());
   ACE_OS::fclose (output_file);
 }
 

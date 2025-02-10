@@ -8,10 +8,9 @@
 class CSD_TP_Foo_A_Export Foo_A_Statistics
 {
   public:
-
     Foo_A_Statistics(unsigned num_clients);
 
-    virtual ~Foo_A_Statistics();
+    virtual ~Foo_A_Statistics() = default;
 
     void expected(unsigned op_num, unsigned count);
     void actual(unsigned op_num, unsigned count);
@@ -19,9 +18,7 @@ class CSD_TP_Foo_A_Export Foo_A_Statistics
 
     bool actual_vs_expected();
 
-
   private:
-
     unsigned num_clients_;
 
     unsigned expected_[5];

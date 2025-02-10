@@ -34,7 +34,7 @@ class Consumer
   //   This class is a consumer of log generated events.
   //
 public:
-  Consumer (void);
+  Consumer ();
   // Constructor
 
   int run (int argc, ACE_TCHAR* argv[]);
@@ -71,8 +71,6 @@ private:
   DsNotifyLogAdmin::NotifyLogFactory_var notify_log_factory_;
 
   CosNotifyChannelAdmin::ProxyPushSupplier_var proxy_supplier_;
-
-
 };
 
 #endif /* NOTIFY_CONSUMER_H */

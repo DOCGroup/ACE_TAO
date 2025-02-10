@@ -1,4 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
 /*
 
 COPYRIGHT
@@ -75,9 +74,9 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "ast_root.h"
 
-#include "ace/UUID.h"
+#include "ace/OS_NS_stdio.h"
 
-extern int tao_yyparse (void);
+extern int tao_yyparse ();
 
 #ifdef USE_MCPP_BUFFER_LEXING
 char *tao_preproc_buffer = 0;
@@ -88,7 +87,7 @@ extern FILE *tao_yyin;
 #endif /* USE_MCPP_BUFFER_LEXING */
 
 int
-FE_yyparse (void)
+FE_yyparse ()
 {
   int const result = tao_yyparse ();
 
@@ -130,23 +129,23 @@ FE_set_yyin (FILE * f)
 // Constructor interfaces.
 
 UTL_Error *
-FE_new_UTL_Error (void)
+FE_new_UTL_Error ()
 {
-  UTL_Error *retval = 0;
+  UTL_Error *retval = nullptr;
   ACE_NEW_RETURN (retval,
                   UTL_Error,
-                  0);
+                  nullptr);
 
   return retval;
 }
 
 UTL_Indenter *
-FE_new_UTL_Indenter (void)
+FE_new_UTL_Indenter ()
 {
-  UTL_Indenter *retval = 0;
+  UTL_Indenter *retval = nullptr;
   ACE_NEW_RETURN (retval,
                   UTL_Indenter,
-                  0);
+                  nullptr);
 
   return retval;
 }

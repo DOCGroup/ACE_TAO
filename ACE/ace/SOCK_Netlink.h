@@ -41,8 +41,8 @@ class ACE_Export ACE_SOCK_Netlink : public ACE_SOCK
 {
 public:
   /// Default constructor.
-  ACE_SOCK_Netlink(void);
-  ~ACE_SOCK_Netlink(void);
+  ACE_SOCK_Netlink();
+  ~ACE_SOCK_Netlink();
   ACE_SOCK_Netlink (ACE_Netlink_Addr &local,
                     int protocol_family,
                     int protocol);

@@ -23,7 +23,7 @@ class PMC_Usr : public PM_Client
 {
 public:
   PMC_Usr (char *usr_name);
-  virtual void process (void);
+  virtual void process ();
 
 protected:
   virtual int encode (char *packet, int &total_bytes);

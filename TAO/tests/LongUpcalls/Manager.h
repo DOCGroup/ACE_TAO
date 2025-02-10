@@ -16,7 +16,7 @@ public:
   virtual void start_workers (CORBA::Short worker_count,
                               CORBA::Long milliseconds,
                               Test::Controller_ptr controller);
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
 private:
   CORBA::ORB_var orb_;
@@ -32,7 +32,7 @@ public:
           Test::Controller_ptr controller,
           CORBA::Long milliseconds);
 
-  virtual int svc (void);
+  virtual int svc ();
   // The service method
 
 private:

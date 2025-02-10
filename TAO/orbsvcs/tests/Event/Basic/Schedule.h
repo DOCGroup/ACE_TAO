@@ -40,25 +40,25 @@ class EC_Schedule : public EC_Driver
 {
 public:
   /// Constructor
-  EC_Schedule (void);
+  EC_Schedule ();
 
   // = The EC_Driver methods
   /// add some command line args to change the scheduling service to
   /// use.
   virtual int parse_args (int& argc, ACE_TCHAR* argv[]);
-  virtual void print_args (void) const;
-  virtual void print_usage (void);
+  virtual void print_args () const;
+  virtual void print_usage ();
 
   /// Set the scheduling service attribute
-  void initialize_ec_impl (void);
-  void cleanup_ec (void);
+  void initialize_ec_impl ();
+  void cleanup_ec ();
   virtual void modify_attributes (TAO_EC_Event_Channel_Attributes& attr);
 
   /// Don't run the suppliers, just compute the schedule.
-  void execute_test (void);
+  void execute_test ();
 
   /// Don't dump the EC_Driver results, they are meaningless.
-  void dump_results (void);
+  void dump_results ();
 
   /// This time really connect to the scheduler
   virtual void build_consumer_qos (

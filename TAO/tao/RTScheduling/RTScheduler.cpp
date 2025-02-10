@@ -3,7 +3,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_RTScheduler_Initializer::TAO_RTScheduler_Initializer (void)
+TAO_RTScheduler_Initializer::TAO_RTScheduler_Initializer ()
 {
   ACE_Service_Config::process_directive (ace_svc_desc_TAO_RTScheduler_Loader);
 }

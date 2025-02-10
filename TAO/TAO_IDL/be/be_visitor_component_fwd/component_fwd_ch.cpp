@@ -17,7 +17,7 @@ be_visitor_component_fwd_ch::be_visitor_component_fwd_ch (
 {
 }
 
-be_visitor_component_fwd_ch::~be_visitor_component_fwd_ch (void)
+be_visitor_component_fwd_ch::~be_visitor_component_fwd_ch ()
 {
 }
 

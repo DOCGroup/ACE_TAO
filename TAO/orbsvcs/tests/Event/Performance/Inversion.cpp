@@ -15,7 +15,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
 // ****************************************************************
 
-EC_Inversion::EC_Inversion (void)
+EC_Inversion::EC_Inversion ()
   :  same_events_ (0)
 {
 }
@@ -50,7 +50,7 @@ EC_Inversion::parse_args (int &argc, ACE_TCHAR *argv [])
 }
 
 void
-EC_Inversion::connect_consumers (void)
+EC_Inversion::connect_consumers ()
 {
   RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin =
     this->event_channel_->for_consumers ();
@@ -84,7 +84,7 @@ EC_Inversion::connect_consumers (void)
 }
 
 void
-EC_Inversion::connect_suppliers (void)
+EC_Inversion::connect_suppliers ()
 {
   RtecEventChannelAdmin::SupplierAdmin_var supplier_admin =
     this->event_channel_->for_suppliers ();
@@ -117,7 +117,7 @@ EC_Inversion::connect_suppliers (void)
 }
 
 void
-EC_Inversion::activate_tasks (void)
+EC_Inversion::activate_tasks ()
 {
   int priority;
 

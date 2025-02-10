@@ -20,7 +20,7 @@ void eat_my_memory()
   else
     {
       _message_buffer->length(1);
-      (*_message_buffer)[0] = CORBA::string_dup( output_string );
+      (*_message_buffer)[0] = CORBA::string_dup( output_string);
     }
 }
 

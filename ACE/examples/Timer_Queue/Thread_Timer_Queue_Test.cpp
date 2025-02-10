@@ -23,7 +23,6 @@
 #include "ace/Thread_Mutex.h"
 
 
-
 // Administrivia methods...
 Handler::Handler(const ACE_Time_Value &expiration_time)
   :  expires_ (expiration_time),
@@ -31,7 +30,7 @@ Handler::Handler(const ACE_Time_Value &expiration_time)
 {
 }
 
-Handler::~Handler (void)
+Handler::~Handler ()
 {
 }
 
@@ -76,7 +75,7 @@ Input_Task::Input_Task (Thread_Timer_Queue *queue,
 // user.
 
 int
-Input_Task::svc (void)
+Input_Task::svc ()
 {
   for (;;)
     // call back to the driver's implementation on how to read and
@@ -168,7 +167,7 @@ Input_Task::shutdown_timer (void *)
 }
 
 void
-Input_Task::dump (void)
+Input_Task::dump ()
 {
   ACE_GUARD (ACE_SYNCH_RECURSIVE_MUTEX, ace_mon, this->queue_->mutex ());
 
@@ -186,24 +185,24 @@ Input_Task::dump (void)
 
 // constructor
 
-Thread_Timer_Queue_Test_Driver::Thread_Timer_Queue_Test_Driver (void)
+Thread_Timer_Queue_Test_Driver::Thread_Timer_Queue_Test_Driver ()
   : input_task_ (&timer_queue_, *this)
 {
 }
 
-Thread_Timer_Queue_Test_Driver::~Thread_Timer_Queue_Test_Driver (void)
+Thread_Timer_Queue_Test_Driver::~Thread_Timer_Queue_Test_Driver ()
 {
 }
 
 int
-Thread_Timer_Queue_Test_Driver::run_test (void)
+Thread_Timer_Queue_Test_Driver::run_test ()
 {
   this->init ();
   return 0;
 }
 
 int
-Thread_Timer_Queue_Test_Driver::display_menu (void)
+Thread_Timer_Queue_Test_Driver::display_menu ()
 {
   static char menu[] =
     "Usage:\n"
@@ -219,7 +218,7 @@ Thread_Timer_Queue_Test_Driver::display_menu (void)
 }
 
 int
-Thread_Timer_Queue_Test_Driver::init (void)
+Thread_Timer_Queue_Test_Driver::init ()
 {
   typedef Command<Input_Task, Input_Task::ACTION> CMD;
 

@@ -3,7 +3,7 @@
 #include "Client_ORBInitializer.h"
 #include "interceptors.h"
 
-Client_ORBInitializer::Client_ORBInitializer (void)
+Client_ORBInitializer::Client_ORBInitializer ()
 {
 }
 
@@ -17,7 +17,6 @@ void
 Client_ORBInitializer::post_init (
     PortableInterceptor::ORBInitInfo_ptr info)
 {
-
   CORBA::String_var orb_id =
     info->orb_id ();
 

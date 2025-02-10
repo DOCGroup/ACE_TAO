@@ -21,7 +21,7 @@ class Widget
 {
 public:
   /// Destructor.
-  virtual ~Widget (void);
+  virtual ~Widget ();
 
   /// Add a new part to the widget. The widget takes ownership of the part
   /// object.
@@ -29,10 +29,10 @@ public:
 
   /// Remove a random part from the widget. Ownership of the part is returned
   /// to the caller.
-  virtual Widget_Part *remove_part (void) = 0;
+  virtual Widget_Part *remove_part () = 0;
 
   /// Ask the widget to print information about the parts that it contains.
-  virtual void list_parts (void) = 0;
+  virtual void list_parts () = 0;
 };
 
 #endif /* WIDGET_H */

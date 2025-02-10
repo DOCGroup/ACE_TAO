@@ -218,7 +218,6 @@ namespace ACE
 
               ACE_CString current_user_;
           };
-
       }
   }
 

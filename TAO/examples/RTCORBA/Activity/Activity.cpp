@@ -26,7 +26,7 @@ extern "C" void handler (int)
 
 //***************************************************************//
 
-Activity::Activity (void)
+Activity::Activity ()
   :builder_ (0),
    barrier_ (0),
    active_task_count_ (0),
@@ -35,7 +35,7 @@ Activity::Activity (void)
   state_lock_ = new ACE_Lock_Adapter <TAO_SYNCH_MUTEX>;
 }
 
-Activity::~Activity (void)
+Activity::~Activity ()
 {
   delete state_lock_;
   delete barrier_;
@@ -48,13 +48,13 @@ Activity::builder (Builder* builder)
 }
 
 CORBA::ORB_ptr
-Activity::orb (void)
+Activity::orb ()
 {
   return orb_.in ();
 }
 
 RTCORBA::Current_ptr
-Activity::current (void)
+Activity::current ()
 {
   return current_.in ();
 }
@@ -101,7 +101,7 @@ Activity::init (int& argc, ACE_TCHAR *argv [])
 }
 
 int
-Activity::resolve_naming_service (void)
+Activity::resolve_naming_service ()
 {
   CORBA::Object_var naming_obj =
     this->orb_->resolve_initial_references ("NameService");
@@ -119,7 +119,7 @@ Activity::resolve_naming_service (void)
 }
 
 void
-Activity::activate_poa_list (void)
+Activity::activate_poa_list ()
 {
   POA_LIST list;
   int count = builder_->poa_list (list);
@@ -131,7 +131,7 @@ Activity::activate_poa_list (void)
 }
 
 void
-Activity::activate_job_list (void)
+Activity::activate_job_list ()
 {
   JOB_LIST list;
   int count = builder_->job_list (list);
@@ -174,12 +174,11 @@ Activity::activate_job_list (void)
                   job_name.c_str ()));
 
       active_job_count_++;
-
     } /* while */
 }
 
 void
-Activity::activate_schedule (void)
+Activity::activate_schedule ()
 {
   TASK_LIST list;
   int count = builder_->task_list (list);
@@ -270,7 +269,7 @@ Activity::job_ended (Job_i* /*ended_job*/)
 }
 
 void
-Activity::check_ifexit (void)
+Activity::check_ifexit ()
 {
   // All tasks have finished and all jobs have been shutdown.
   if (active_task_count_ == 0 && active_job_count_ == 0)
@@ -290,7 +289,7 @@ Activity::check_ifexit (void)
         }
 
       // shutdown the ORB
-      orb_->shutdown (0);
+      orb_->shutdown (false);
     }
 }
 

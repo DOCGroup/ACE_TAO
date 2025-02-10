@@ -40,17 +40,15 @@ class TAO_Null_Fragmentation_Strategy
   : public TAO_GIOP_Fragmentation_Strategy
 {
 public:
-
-  TAO_Null_Fragmentation_Strategy (void) {}
-  virtual ~TAO_Null_Fragmentation_Strategy (void);
+  TAO_Null_Fragmentation_Strategy () {}
+  virtual ~TAO_Null_Fragmentation_Strategy ();
   virtual int fragment (TAO_OutputCDR &, ACE_CDR::ULong, ACE_CDR::ULong);
 
 private:
-
-  // Disallow copying and assignment.
-  TAO_Null_Fragmentation_Strategy (TAO_Null_Fragmentation_Strategy const &);
-  void operator= (TAO_Null_Fragmentation_Strategy const &);
-
+  TAO_Null_Fragmentation_Strategy (TAO_Null_Fragmentation_Strategy const &) = delete;
+  void operator= (TAO_Null_Fragmentation_Strategy const &) = delete;
+  TAO_Null_Fragmentation_Strategy (TAO_Null_Fragmentation_Strategy &&) = delete;
+  void operator= (TAO_Null_Fragmentation_Strategy &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

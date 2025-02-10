@@ -9,7 +9,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Notify_StructuredProxyPushSupplier::TAO_Notify_StructuredProxyPushSupplier (void)
+TAO_Notify_StructuredProxyPushSupplier::TAO_Notify_StructuredProxyPushSupplier ()
 {
 }
 
@@ -18,14 +18,14 @@ TAO_Notify_StructuredProxyPushSupplier::~TAO_Notify_StructuredProxyPushSupplier 
 }
 
 void
-TAO_Notify_StructuredProxyPushSupplier::release (void)
+TAO_Notify_StructuredProxyPushSupplier::release ()
 {
   delete this;
   //@@ inform factory
 }
 
 CosNotifyChannelAdmin::ProxyType
-TAO_Notify_StructuredProxyPushSupplier::MyType (void)
+TAO_Notify_StructuredProxyPushSupplier::MyType ()
 {
   return CosNotifyChannelAdmin::PUSH_STRUCTURED;
 }
@@ -46,7 +46,7 @@ TAO_Notify_StructuredProxyPushSupplier::connect_structured_push_consumer (CosNot
 }
 
 void
-TAO_Notify_StructuredProxyPushSupplier::disconnect_structured_push_supplier (void)
+TAO_Notify_StructuredProxyPushSupplier::disconnect_structured_push_supplier ()
 
 {
   TAO_Notify_StructuredProxyPushSupplier::Ptr guard( this );
@@ -55,7 +55,7 @@ TAO_Notify_StructuredProxyPushSupplier::disconnect_structured_push_supplier (voi
 }
 
 const char *
-TAO_Notify_StructuredProxyPushSupplier::get_proxy_type_name (void) const
+TAO_Notify_StructuredProxyPushSupplier::get_proxy_type_name () const
 {
   return "structured_proxy_push_supplier";
 }

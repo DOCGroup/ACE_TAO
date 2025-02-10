@@ -15,14 +15,14 @@ static const char prefix_[] = "shmiop";
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_SHMIOP_Protocol_Factory::TAO_SHMIOP_Protocol_Factory (void)
+TAO_SHMIOP_Protocol_Factory::TAO_SHMIOP_Protocol_Factory ()
   : TAO_Protocol_Factory (TAO_TAG_SHMEM_PROFILE),
     mmap_prefix_ (0),
     min_bytes_ (10*1024)        // @@ Nanbor, remove this magic number!!
 {
 }
 
-TAO_SHMIOP_Protocol_Factory::~TAO_SHMIOP_Protocol_Factory (void)
+TAO_SHMIOP_Protocol_Factory::~TAO_SHMIOP_Protocol_Factory ()
 {
   delete [] this->mmap_prefix_;
 }
@@ -35,19 +35,19 @@ TAO_SHMIOP_Protocol_Factory::match_prefix (const ACE_CString &prefix)
 }
 
 const char *
-TAO_SHMIOP_Protocol_Factory::prefix (void) const
+TAO_SHMIOP_Protocol_Factory::prefix () const
 {
   return ::prefix_;
 }
 
 char
-TAO_SHMIOP_Protocol_Factory::options_delimiter (void) const
+TAO_SHMIOP_Protocol_Factory::options_delimiter () const
 {
   return '/';
 }
 
 TAO_Acceptor *
-TAO_SHMIOP_Protocol_Factory::make_acceptor (void)
+TAO_SHMIOP_Protocol_Factory::make_acceptor ()
 {
   TAO_SHMIOP_Acceptor *acceptor = 0;
 
@@ -94,7 +94,7 @@ TAO_SHMIOP_Protocol_Factory::init (int argc,
 }
 
 TAO_Connector *
-TAO_SHMIOP_Protocol_Factory::make_connector (void)
+TAO_SHMIOP_Protocol_Factory::make_connector ()
 {
   TAO_Connector *connector = 0;
 
@@ -105,7 +105,7 @@ TAO_SHMIOP_Protocol_Factory::make_connector (void)
 }
 
 int
-TAO_SHMIOP_Protocol_Factory::requires_explicit_endpoint (void) const
+TAO_SHMIOP_Protocol_Factory::requires_explicit_endpoint () const
 {
   return 1;
 }

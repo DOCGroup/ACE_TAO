@@ -17,50 +17,50 @@
 class Options
 {
 public:
-  Options (void);
-  ~Options (void);
+  Options ();
+  ~Options ();
   void parse_args (int argc, ACE_TCHAR *argv[]);
 
-  void   stop_timer (void);
-  void   start_timer (void);
+  void   stop_timer ();
+  void   start_timer ();
 
   void   thr_count (size_t count);
-  size_t thr_count (void);
+  size_t thr_count ();
 
   void   initial_queue_length (size_t length);
-  size_t initial_queue_length (void);
+  size_t initial_queue_length ();
 
   void   high_water_mark (size_t size);
-  size_t high_water_mark (void);
+  size_t high_water_mark ();
 
   void   low_water_mark (size_t size);
-  size_t low_water_mark (void);
+  size_t low_water_mark ();
 
   void   message_size (size_t size);
-  size_t message_size (void);
+  size_t message_size ();
 
   void   iterations (size_t n);
-  size_t iterations (void);
+  size_t iterations ();
 
   void   t_flags (long flag);
-  long   t_flags (void);
+  long   t_flags ();
 
   void   supplier_port (const ACE_TCHAR *port);
-  const ACE_TCHAR  *supplier_port (void);
+  const ACE_TCHAR  *supplier_port ();
 
   void   consumer_port (const ACE_TCHAR *port);
-  const ACE_TCHAR  *consumer_port (void);
+  const ACE_TCHAR  *consumer_port ();
 
   void   supplier_file (const ACE_TCHAR *file);
-  const ACE_TCHAR  *supplier_file (void);
+  const ACE_TCHAR  *supplier_file ();
 
   void   consumer_file (const ACE_TCHAR *file);
-  const ACE_TCHAR  *consumer_file (void);
+  const ACE_TCHAR  *consumer_file ();
 
-  int    debug (void);
-  int    verbose (void);
+  int    debug ();
+  int    verbose ();
 
-  void   print_results (void);
+  void   print_results ();
 
 private:
   ACE_Profile_Timer itimer_;            // Time the process.

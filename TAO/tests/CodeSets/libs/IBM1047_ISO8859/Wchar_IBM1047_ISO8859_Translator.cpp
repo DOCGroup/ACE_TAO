@@ -16,14 +16,12 @@
 
 // ****************************************************************
 
-WIBM1047_ISO8859::WIBM1047_ISO8859 (void)
+WIBM1047_ISO8859::WIBM1047_ISO8859 ()
 {
-
 }
 
-WIBM1047_ISO8859::~WIBM1047_ISO8859 (void)
+WIBM1047_ISO8859::~WIBM1047_ISO8859 ()
 {
-
 }
 
 // = Documented in $ACE_ROOT/ace/CDR_Stream.h

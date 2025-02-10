@@ -47,10 +47,10 @@ public:
   URL_Status (STATUS_CODE = STATUS_INSUFFICIENT_DATA);
   URL_Status (const URL_Status &);
 
-  STATUS_CODE status (void) const;
+  STATUS_CODE status () const;
   void status (int);
   void status (STATUS_CODE);
-  int destroy (void);
+  int destroy ();
 private:
   STATUS_CODE status_;
 };

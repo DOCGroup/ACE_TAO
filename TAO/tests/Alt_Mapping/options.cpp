@@ -20,7 +20,7 @@
 #include "ace/Log_Msg.h"
 
 // Constructor.p
-Options::Options (void)
+Options::Options ()
   : ior_ (CORBA::string_dup ("file://test.ior")),
     test_type_ (Options::NO_TEST),
     invoke_type_ (Options::SII),
@@ -30,7 +30,7 @@ Options::Options (void)
 {
 }
 
-Options::~Options (void)
+Options::~Options ()
 {
 }
 
@@ -127,37 +127,37 @@ Options::read_ior (ACE_TCHAR *filename)
 }
 
 char const *
-Options::param_test_ior (void) const
+Options::param_test_ior () const
 {
   return this->ior_.in ();
 }
 
 Options::TEST_TYPE
-Options::test_type (void)
+Options::test_type ()
 {
   return this->test_type_;
 }
 
 Options::INVOKE_TYPE
-Options::invoke_type (void)
+Options::invoke_type ()
 {
   return this->invoke_type_;
 }
 
 CORBA::ULong
-Options::loop_count (void)
+Options::loop_count ()
 {
   return this->loop_count_;
 }
 
 CORBA::Boolean
-Options::debug (void) const
+Options::debug () const
 {
   return this->debug_;
 }
 
 CORBA::Boolean
-Options::shutdown (void) const
+Options::shutdown () const
 {
   return this->shutdown_;
 }

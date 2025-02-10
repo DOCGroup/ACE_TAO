@@ -2,7 +2,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
-TAO_Tagged_Components::TAO_Tagged_Components (void)
+TAO_Tagged_Components::TAO_Tagged_Components ()
   :  orb_type_ (0),
      orb_type_set_ (0),
      code_sets_set_ (0)
@@ -71,7 +71,7 @@ TAO_Tagged_Components::unique_tag (IOP::ComponentId tag) const
 }
 
 ACE_INLINE IOP::MultipleComponentProfile&
-TAO_Tagged_Components::components (void)
+TAO_Tagged_Components::components ()
 {
   return this->components_;
 }

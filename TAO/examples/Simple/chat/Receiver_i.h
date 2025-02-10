@@ -27,10 +27,10 @@ class Receiver_i : public POA_Receiver
 {
 public:
   /// Constructor.
-  Receiver_i (void);
+  Receiver_i ();
 
   /// Destructor.
-  virtual ~Receiver_i (void);
+  virtual ~Receiver_i ();
 
   /// Receives a message string.
   virtual void message (const char *msg);
@@ -40,7 +40,7 @@ public:
    * implementation should shutdown the chat client in response to
    * this.
    */
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
   /// Set the ORB pointer.
   void orb (CORBA::ORB_ptr o);

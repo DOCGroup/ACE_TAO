@@ -25,7 +25,7 @@ class be_visitor_component_svh : public be_visitor_component
 public:
   be_visitor_component_svh (be_visitor_context *ctx);
 
-  ~be_visitor_component_svh (void);
+  ~be_visitor_component_svh ();
 
   virtual int visit_component (be_component *node);
   virtual int visit_connector (be_connector *node);

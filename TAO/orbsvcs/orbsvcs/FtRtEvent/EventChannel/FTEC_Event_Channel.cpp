@@ -148,13 +148,13 @@ void TAO_FTEC_Event_Channel::oneway_set_update (
 
 
 RtecEventChannelAdmin::ConsumerAdmin_ptr
-TAO_FTEC_Event_Channel::for_consumers (void)
+TAO_FTEC_Event_Channel::for_consumers ()
 {
     return ec_impl_->for_consumers();
 }
 
 RtecEventChannelAdmin::SupplierAdmin_ptr
-TAO_FTEC_Event_Channel::for_suppliers (void)
+TAO_FTEC_Event_Channel::for_suppliers ()
 {
     return ec_impl_->for_suppliers();
 }
@@ -168,7 +168,7 @@ TAO_FTEC_Event_Channel::set_state (const FTRT::State & s)
 }
 
 void
-TAO_FTEC_Event_Channel::destroy (void)
+TAO_FTEC_Event_Channel::destroy ()
 {
   if (Fault_Detector::instance())
     Fault_Detector::instance()->stop();
@@ -196,7 +196,6 @@ TAO_FTEC_Event_Channel::remove_observer (RtecEventChannelAdmin::Observer_Handle)
 
   //ec_impl_->remove_observer (handle);
 }
-
 
 
 CORBA::Boolean
@@ -271,7 +270,6 @@ TAO_FTEC_Event_Channel::connect_push_supplier (
       )
 {
   return ec_impl_->connect_push_supplier(push_supplier, qos);
-
 }
 
 void

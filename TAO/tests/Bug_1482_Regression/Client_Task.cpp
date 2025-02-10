@@ -15,7 +15,7 @@ Client_Task::Client_Task (Test::Hello_ptr receiver,
 }
 
 int
-Client_Task::svc (void)
+Client_Task::svc ()
 {
   // ACE_DEBUG ((LM_DEBUG, "(%P|%t) Starting client task\n"));
 

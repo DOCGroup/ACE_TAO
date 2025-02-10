@@ -47,7 +47,7 @@ TAO_CEC_EventChannel (const TAO_CEC_EventChannel_Attributes& attr,
     this->factory_->create_supplier_control (this);
 }
 
-TAO_CEC_EventChannel::~TAO_CEC_EventChannel (void)
+TAO_CEC_EventChannel::~TAO_CEC_EventChannel ()
 {
   this->factory_->destroy_dispatching (this->dispatching_);
   this->dispatching_ = 0;
@@ -70,7 +70,7 @@ TAO_CEC_EventChannel::~TAO_CEC_EventChannel (void)
 }
 
 void
-TAO_CEC_EventChannel::activate (void)
+TAO_CEC_EventChannel::activate ()
 {
   this->dispatching_->activate ();
   this->pulling_strategy_->activate ();
@@ -79,7 +79,7 @@ TAO_CEC_EventChannel::activate (void)
 }
 
 void
-TAO_CEC_EventChannel::shutdown (void)
+TAO_CEC_EventChannel::shutdown ()
 {
   this->dispatching_->shutdown ();
   this->pulling_strategy_->shutdown ();
@@ -176,19 +176,19 @@ TAO_CEC_EventChannel::disconnected (TAO_CEC_ProxyPullSupplier* supplier)
 }
 
 CosEventChannelAdmin::ConsumerAdmin_ptr
-TAO_CEC_EventChannel::for_consumers (void)
+TAO_CEC_EventChannel::for_consumers ()
 {
   return this->consumer_admin_->_this ();
 }
 
 CosEventChannelAdmin::SupplierAdmin_ptr
-TAO_CEC_EventChannel::for_suppliers (void)
+TAO_CEC_EventChannel::for_suppliers ()
 {
   return this->supplier_admin_->_this ();
 }
 
 void
-TAO_CEC_EventChannel::destroy (void)
+TAO_CEC_EventChannel::destroy ()
 {
   this->shutdown ();
 }

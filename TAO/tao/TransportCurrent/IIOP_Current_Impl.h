@@ -31,7 +31,6 @@ namespace TAO
 {
   namespace Transport
   {
-
     /**
      * @class IIOP_Current_Impl
      *
@@ -44,53 +43,45 @@ namespace TAO
     class TAO_Transport_Current_Export IIOP_Current_Impl
       : public virtual IIOP::Current
       , public virtual Current_Impl
-      {
-      public:
+    {
+    public:
+      /// Constructor.
+      IIOP_Current_Impl (TAO_ORB_Core* core, size_t tss_slot_id);
 
-        /// Constructor.
-        IIOP_Current_Impl (TAO_ORB_Core* core, size_t tss_slot_id);
+      //@{
+      virtual ::CORBA::Long id ();
 
-        //@{
-        virtual ::CORBA::Long id (void);
+      virtual ::SSLIOP::Current_ptr ssliop_current ();
 
-        virtual ::SSLIOP::Current_ptr ssliop_current (void);
+      virtual ::CORBA::Long remote_port ();
 
-        virtual ::CORBA::Long remote_port (void);
+      virtual char* remote_host ();
 
-        virtual char* remote_host (void);
+      virtual ::CORBA::Long local_port ();
 
-        virtual ::CORBA::Long local_port (void);
+      virtual char* local_host ();
+      //@}
 
-        virtual char* local_host (void);
-        //@}
+    protected:
+      /// Destructor
+      /**
+        * Protected destructor to enforce the fact this class is reference
+        * counted, and should not be destroyed using delete() by anything
+        * other than the reference counting mechanism.
+        */
+      virtual ~IIOP_Current_Impl ();
 
-      protected:
-        /// Destructor
-        /**
-         * Protected destructor to enforce the fact this class is reference
-         * counted, and should not be destroyed using delete() by anything
-         * other than the reference counting mechanism.
-         */
-        virtual ~IIOP_Current_Impl (void);
+    private:
+      /// Returns the IIOP connection handler associated with the
+      /// Transport. Will throw NoContext if the (selected) transport
+      /// () == 0, or if transport->connection_handler () == 0. Will
+      /// throw NoContext, if no transport has been selected yet.
+      TAO_IIOP_Connection_Handler* handler ();
 
-      private:
-
-        /// Returns the IIOP connection handler associated with the
-        /// Transport. Will throw NoContext if the (selected) transport
-        /// () == 0, or if transport->connection_handler () == 0. Will
-        /// throw NoContext, if no transport has been selected yet.
-        TAO_IIOP_Connection_Handler* handler (void);
-
-      private:
-
-        /// Prevent copying through the copy constructor and
-        /// assignment operator.
-        //@{
-        IIOP_Current_Impl (const IIOP_Current_Impl &);
-        void operator= (const IIOP_Current_Impl &);
-        //@}
-
-      };
+    private:
+      IIOP_Current_Impl (const IIOP_Current_Impl &) = delete;
+      void operator= (const IIOP_Current_Impl &) = delete;
+    };
   }
 }
 

@@ -36,7 +36,6 @@ namespace TAO
 {
   namespace SSLIOP
   {
-
     /**
      * @class Acceptor
      *
@@ -46,14 +45,13 @@ namespace TAO
       : public IIOP_SSL_Acceptor
     {
     public:
-
       /// Constructor.
       Acceptor (::Security::QOP qop,
                 const ACE_Time_Value & timeout,
                 bool check_host);
 
       /// Destructor.
-      ~Acceptor (void);
+      ~Acceptor ();
 
       typedef TAO_Strategy_Acceptor<Connection_Handler, ACE_SSL_SOCK_Acceptor> BASE_ACCEPTOR;
       typedef TAO_Creation_Strategy<Connection_Handler> CREATION_STRATEGY;
@@ -77,7 +75,7 @@ namespace TAO
                                 int version_major,
                                 int version_minor,
                                 const char *options = 0);
-      virtual int close (void);
+      virtual int close ();
       virtual int create_profile (const TAO::ObjectKey &object_key,
                                   TAO_MProfile &mprofile,
                                   CORBA::Short priority);
@@ -86,10 +84,9 @@ namespace TAO
 
       /// Retrieve the CSIv1 SSLIOP::SSL component associated with the
       /// endpoints set up by this acceptor.
-      const ::SSLIOP::SSL &ssl_component (void) const;
+      const ::SSLIOP::SSL &ssl_component () const;
 
     private:
-
       /// Implement the common part of the open*() methods.
       int ssliop_open_i (TAO_ORB_Core *orb_core,
                          const ACE_INET_Addr& addr,
@@ -117,7 +114,6 @@ namespace TAO
                                  CORBA::Short priority);
 
     private:
-
       /// The concrete acceptor, as a pointer to it's base class.
       BASE_ACCEPTOR ssl_acceptor_;
 
@@ -152,9 +148,7 @@ namespace TAO
       ACE_Time_Value const timeout_;
 
       bool check_host_;
-
     };
-
   }  // End SSLIOP namespace.
 }  // End TAO namespace.
 

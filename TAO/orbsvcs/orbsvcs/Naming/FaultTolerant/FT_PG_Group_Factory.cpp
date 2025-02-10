@@ -18,15 +18,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO::FT_PG_Group_Factory::FT_PG_Group_Factory()
-  : replicator_ (0)
-{
-}
-
-TAO::FT_PG_Group_Factory::~FT_PG_Group_Factory()
-{
-}
-
 void
 TAO::FT_PG_Group_Factory::set_replicator (TAO_FT_Naming_Replication_Manager *repl)
 {
@@ -49,14 +40,15 @@ TAO::FT_PG_Group_Factory::set_object_group_stale (
             {
               ACE_CString change_type_str ("created");
               if (group_info.change_type == FT_Naming::DELETED)
-                change_type_str = "deleted";
-                ORBSVCS_DEBUG ((LM_DEBUG,
+                {
+                  change_type_str = "deleted";
+                }
+              ORBSVCS_DEBUG ((LM_DEBUG,
                             ACE_TEXT ("TAO (%P|%t) - FT_PG_Group_Factory: ")
                             ACE_TEXT ("Setting list store as stale "),
                             ACE_TEXT ("because of group with ID %lld "),
-                            ACE_TEXT ("was %s\n"),
-                            group_id, change_type_str.c_str ()
-                            ));
+                            ACE_TEXT ("was %C\n"),
+                            group_id, change_type_str.c_str ()));
             }
           this->list_store_->stale(true);
         }

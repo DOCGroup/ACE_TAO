@@ -28,7 +28,6 @@ namespace TAO
 {
   namespace CSD
   {
-
     class TP_Request;
     class TP_Queue_Visitor;
 
@@ -58,7 +57,6 @@ namespace TAO
     class TAO_CSD_TP_Export TP_Queue
     {
     public:
-
       /// Default Constructor.
       TP_Queue();
 
@@ -77,14 +75,12 @@ namespace TAO
       void accept_visitor(TP_Queue_Visitor& visitor);
 
     private:
-
       /// The request at the front of the queue.
       TP_Request* head_;
 
       /// The request at the end of the queue.
       TP_Request* tail_;
     };
-
   }
 }
 

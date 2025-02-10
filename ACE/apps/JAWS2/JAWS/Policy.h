@@ -18,14 +18,14 @@ class JAWS_IO_Handler_Factory;
 class JAWS_Export JAWS_Dispatch_Policy
 {
 public:
-  JAWS_Dispatch_Policy (void);
-  virtual ~JAWS_Dispatch_Policy (void);
+  JAWS_Dispatch_Policy ();
+  virtual ~JAWS_Dispatch_Policy ();
 
-  virtual int ratio (void) = 0;
-  virtual JAWS_IO * io (void) = 0;
-  virtual JAWS_IO_Handler_Factory *ioh_factory (void) = 0;
-  virtual JAWS_IO_Acceptor *acceptor (void) = 0;
-  virtual JAWS_Concurrency_Base * concurrency (void) = 0;
+  virtual int ratio () = 0;
+  virtual JAWS_IO * io () = 0;
+  virtual JAWS_IO_Handler_Factory *ioh_factory () = 0;
+  virtual JAWS_IO_Acceptor *acceptor () = 0;
+  virtual JAWS_Concurrency_Base * concurrency () = 0;
 
   virtual void ratio (int r) = 0;
   virtual void io (JAWS_IO *iop) = 0;
@@ -37,14 +37,14 @@ public:
 class JAWS_Export JAWS_Default_Dispatch_Policy : public JAWS_Dispatch_Policy
 {
 public:
-  JAWS_Default_Dispatch_Policy (void);
-  virtual ~JAWS_Default_Dispatch_Policy (void);
+  JAWS_Default_Dispatch_Policy ();
+  virtual ~JAWS_Default_Dispatch_Policy ();
 
-  virtual int ratio (void);
-  virtual JAWS_IO *io (void);
-  virtual JAWS_IO_Handler_Factory *ioh_factory (void);
-  virtual JAWS_IO_Acceptor *acceptor (void);
-  virtual JAWS_Concurrency_Base *concurrency (void);
+  virtual int ratio ();
+  virtual JAWS_IO *io ();
+  virtual JAWS_IO_Handler_Factory *ioh_factory ();
+  virtual JAWS_IO_Acceptor *acceptor ();
+  virtual JAWS_Concurrency_Base *concurrency ();
 
   virtual void ratio (int r);
   virtual void io (JAWS_IO *iop);

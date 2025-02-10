@@ -10,7 +10,6 @@
 Messenger_i::Messenger_i (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
 {
-
   CORBA::Object_var naming_obj =
     orb_->resolve_initial_references ("NameService");
 
@@ -76,7 +75,7 @@ Messenger_i::Messenger_i (CORBA::ORB_ptr orb)
 }
 
 
-Messenger_i::~Messenger_i (void)
+Messenger_i::~Messenger_i ()
 {
 }
 
@@ -85,7 +84,6 @@ CORBA::Boolean Messenger_i::send_message (
     const char * subject,
     char *& message)
 {
-
   ACE_OS::printf("Message from: %s\nSubject:      %s\nMessage:      %s\n",
                  user_name, subject, message);
   //cout << "Message from: " << user_name << endl;
@@ -121,6 +119,5 @@ CORBA::Boolean Messenger_i::send_message (
   consumer_proxy_->push_structured_event(event);
 
   return 1;
-
 }
 

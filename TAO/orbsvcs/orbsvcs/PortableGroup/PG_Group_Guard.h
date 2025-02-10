@@ -46,7 +46,6 @@ class TAO_PG_ObjectGroupManager;
 class TAO_PG_Group_Guard
 {
 public:
-
   /// Constructor.
   TAO_PG_Group_Guard (TAO_PG_GenericFactory & generic_factory,
                       TAO_PG_Factory_Set & factory_set,
@@ -54,13 +53,12 @@ public:
                       const PortableServer::ObjectId & oid);
 
   /// Destructor.
-  ~TAO_PG_Group_Guard (void);
+  ~TAO_PG_Group_Guard ();
 
   /// Relinquish cleanup responsibility.
-  void release (void);
+  void release ();
 
 private:
-
   /// Reference to the infrastructure TAO_PG_GenericFactory that
   /// created the below TAO_PG_Factory_Set.
   TAO_PG_GenericFactory & generic_factory_;
@@ -81,7 +79,6 @@ private:
   /// Flag that dictates whether or not the destructor will perform
   /// cleanup.
   bool released_;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

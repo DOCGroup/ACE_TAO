@@ -26,7 +26,7 @@ public:
 
   int open (ACE_INET_Addr &addr);
 
-  ACE_HANDLE get_handle (void) const;
+  ACE_HANDLE get_handle () const;
 
   int handle_input (ACE_HANDLE);
 
@@ -37,13 +37,13 @@ public:
   // Open a listening socket on the port specified by argv.
   int init (int argc, ACE_TCHAR *argv[]);
 
-  ACE_Event_Handler *get_handler (void) const;
+  ACE_Event_Handler *get_handler () const;
 
-  virtual RecordingDevice *wait_for_activity (void);
+  virtual RecordingDevice *wait_for_activity ();
 
-  virtual int answer_call (void);
+  virtual int answer_call ();
 
-  virtual CallerId *retrieve_callerId (void);
+  virtual CallerId *retrieve_callerId ();
 
   virtual int play_message (ACE_FILE_Addr &addr);
 
@@ -59,17 +59,17 @@ class TextListener : public RecordingDevice
 public:
   TextListener (TextListenerAcceptor *acceptor);
 
-  virtual const ACE_TCHAR *get_name (void) const;
+  virtual const ACE_TCHAR *get_name () const;
 
-  int answer_call (void);
+  int answer_call ();
 
-  CallerId *retrieve_callerId (void);
+  CallerId *retrieve_callerId ();
 
   int play_message (ACE_FILE_Addr &addr);
 
   MessageType *record_message (ACE_FILE_Addr &addr);
 
-  virtual void release (void);
+  virtual void release ();
   // Listing 01
   // Listing 02 code/ch18
 private:

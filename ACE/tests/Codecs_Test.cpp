@@ -12,9 +12,8 @@
 
 #include "test_config.h"
 #include "ace/Codecs.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/ACE.h"
-
 
 
 // Don't change the strings thinking that they are typos
@@ -47,7 +46,7 @@ encode_decode_stream (const ACE_Byte* stream, size_t length)
               encodeBuf));
 
 
-  ACE_Auto_Basic_Array_Ptr<ACE_Byte> cleanup_encodeBuf (encodeBuf);
+  std::unique_ptr<ACE_Byte[]> cleanup_encodeBuf (encodeBuf);
 
   size_t decode_len = 0;
   ACE_Byte* decodeBuf = ACE_Base64::decode (encodeBuf, &decode_len);
@@ -59,7 +58,7 @@ encode_decode_stream (const ACE_Byte* stream, size_t length)
       return -1;
     }
 
-  ACE_Auto_Basic_Array_Ptr<ACE_Byte> cleanup_decodeBuf (decodeBuf);
+  std::unique_ptr<ACE_Byte[]> cleanup_decodeBuf (decodeBuf);
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Decoded Base64 encoded stream = %C\n"),
@@ -88,7 +87,7 @@ run_main (int argc, ACE_TCHAR *argv[])
               ACE_TEXT ("This is ACE Version %u.%u.%u\n\n"),
               ACE::major_version (),
               ACE::minor_version(),
-              ACE::beta_version()));
+              ACE::micro_version()));
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Testing ACE Base64 - normal stream\n\n")));

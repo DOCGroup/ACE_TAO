@@ -1,9 +1,5 @@
 #include "tao/StringSeqC.h"
 
-#if defined (__BORLANDC__) && (__BORLANDC__ >= 0x660) && (__BORLANDC__ <= 0x730)
-#  pragma option push -w-8011
-#endif
-
 int
 ACE_TMAIN (int, ACE_TCHAR *[])
 {
@@ -51,7 +47,3 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 
   return 0;
 }
-
-#if defined (__BORLANDC__) && (__BORLANDC__ >= 0x660) && (__BORLANDC__ <= 0x730)
-# pragma option pop
-#endif

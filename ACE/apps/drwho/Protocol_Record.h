@@ -21,20 +21,19 @@
  */
 class Protocol_Record
 {
-
 public:
-  Protocol_Record (void);
+  Protocol_Record ();
   Protocol_Record (int use_dummy);
   Protocol_Record (const char *key_name1,
                    Protocol_Record *next = 0);
-  ~Protocol_Record (void);
-  const char *get_host (void);
+  ~Protocol_Record ();
+  const char *get_host ();
   const char *set_host (const char *str);
-  const char *get_login (void);
+  const char *get_login ();
   const char *set_login (const char *str);
-  const char *get_real (void);
+  const char *get_real ();
   const char *set_real (const char *str);
-  Drwho_Node *get_drwho_list (void);
+  Drwho_Node *get_drwho_list ();
 
   static Drwho_Node drwho_node_;
   const char *key_name1_;

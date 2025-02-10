@@ -40,9 +40,9 @@ class TAO_RTScheduler_ORB_Initializer
   , public virtual ::CORBA::LocalObject
 {
 public:
-  virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info);
+  void pre_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 
-  virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info);
+  void post_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 
 private:
   TAO_RTScheduler_Current_var current_;

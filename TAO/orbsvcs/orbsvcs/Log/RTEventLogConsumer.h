@@ -58,14 +58,14 @@ public:
   TAO_Rtec_LogConsumer (TAO_RTEventLog_i *log);
 
   /// Destructor.
-  ~TAO_Rtec_LogConsumer (void);
+  ~TAO_Rtec_LogConsumer ();
 
   /// Connect to RTEventLog.
   void connect (RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin);
 
 private:
   /// Disconnect from EventLog.
-  void disconnect_push_consumer (void);
+  void disconnect_push_consumer ();
 
   /// This method will call TAO_Log_i::log() to write
   /// the event to the Log.

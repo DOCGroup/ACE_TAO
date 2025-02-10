@@ -19,10 +19,9 @@ public:
                              long flags,
                              ACE_Time_Value* base_time);
 
-  virtual int perform_task (void);
+  virtual int perform_task ();
 
-  virtual void pre_activate (void);
-
+  virtual void pre_activate ();
 };
 
 #endif /*FP_TASK_H*/

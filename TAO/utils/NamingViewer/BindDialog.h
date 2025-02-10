@@ -37,7 +37,6 @@ public:
 
 // Implementation
 protected:
-
   // Generated message map functions
   //{{AFX_MSG(CBindDialog)
   afx_msg void OnViewior();

@@ -22,12 +22,12 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 // ----------------------------------------------------------------------
 
 // Constructor
-TAO_AV_Endpoint_Strategy::TAO_AV_Endpoint_Strategy (void)
+TAO_AV_Endpoint_Strategy::TAO_AV_Endpoint_Strategy ()
 {
 }
 
 // Destructor.
-TAO_AV_Endpoint_Strategy::~TAO_AV_Endpoint_Strategy (void)
+TAO_AV_Endpoint_Strategy::~TAO_AV_Endpoint_Strategy ()
 {
 }
 
@@ -71,7 +71,7 @@ TAO_AV_Endpoint_Process_Strategy::TAO_AV_Endpoint_Process_Strategy (ACE_Process_
 }
 
 // Destructor.
-TAO_AV_Endpoint_Process_Strategy::~TAO_AV_Endpoint_Process_Strategy (void)
+TAO_AV_Endpoint_Process_Strategy::~TAO_AV_Endpoint_Process_Strategy ()
 {
 }
 
@@ -80,7 +80,7 @@ TAO_AV_Endpoint_Process_Strategy::~TAO_AV_Endpoint_Process_Strategy (void)
 // to get the object references to the various objects created in the
 // child
 int
-TAO_AV_Endpoint_Process_Strategy::activate (void)
+TAO_AV_Endpoint_Process_Strategy::activate ()
 {
   ACE_Process process;
 
@@ -160,7 +160,7 @@ TAO_AV_Endpoint_Process_Strategy::activate (void)
 
 // Get ourselves a Naming service reference
 int
-TAO_AV_Endpoint_Process_Strategy::bind_to_naming_service (void)
+TAO_AV_Endpoint_Process_Strategy::bind_to_naming_service ()
 {
   try
     {
@@ -188,7 +188,7 @@ TAO_AV_Endpoint_Process_Strategy::bind_to_naming_service (void)
 
 // Get the VDev created in the child process from the namingservice
 int
-TAO_AV_Endpoint_Process_Strategy::get_vdev (void)
+TAO_AV_Endpoint_Process_Strategy::get_vdev ()
 {
   try
     {
@@ -240,7 +240,7 @@ TAO_AV_Endpoint_Process_Strategy_A::TAO_AV_Endpoint_Process_Strategy_A (ACE_Proc
 }
 
 // Destructor
-TAO_AV_Endpoint_Process_Strategy_A::~TAO_AV_Endpoint_Process_Strategy_A (void)
+TAO_AV_Endpoint_Process_Strategy_A::~TAO_AV_Endpoint_Process_Strategy_A ()
 {
 }
 
@@ -259,12 +259,11 @@ TAO_AV_Endpoint_Process_Strategy_A::create_A (AVStreams::StreamEndPoint_A_ptr &s
   stream_endpoint = AVStreams::StreamEndPoint_A::_duplicate( this->stream_endpoint_a_.in() );
   vdev = AVStreams::VDev::_duplicate( this->vdev_.in() );
   return 0;
-
 }
 
 // Gets the stream endpoint object reference from the naming service
 int
-TAO_AV_Endpoint_Process_Strategy_A::get_stream_endpoint (void)
+TAO_AV_Endpoint_Process_Strategy_A::get_stream_endpoint ()
 {
   try
     {
@@ -317,7 +316,7 @@ TAO_AV_Endpoint_Process_Strategy_B::TAO_AV_Endpoint_Process_Strategy_B (ACE_Proc
 }
 
 // Destructor
-TAO_AV_Endpoint_Process_Strategy_B::~TAO_AV_Endpoint_Process_Strategy_B (void)
+TAO_AV_Endpoint_Process_Strategy_B::~TAO_AV_Endpoint_Process_Strategy_B ()
 {
 }
 
@@ -353,7 +352,7 @@ TAO_AV_Endpoint_Process_Strategy_B::create_B (AVStreams::StreamEndPoint_B_ptr &s
 
 // Gets the B type stream_endpoint from the Naming service
 int
-TAO_AV_Endpoint_Process_Strategy_B::get_stream_endpoint (void)
+TAO_AV_Endpoint_Process_Strategy_B::get_stream_endpoint ()
 {
   try
     {

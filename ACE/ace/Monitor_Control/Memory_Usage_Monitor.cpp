@@ -1,7 +1,3 @@
-#if defined (ACE_HAS_KSTAT)
-#include <sys/sysinfo.h>
-#endif
-
 #include "ace/Monitor_Control/Memory_Usage_Monitor.h"
 
 #if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
@@ -24,7 +20,7 @@ namespace ACE
     }
 
     void
-    Memory_Usage_Monitor::update (void)
+    Memory_Usage_Monitor::update ()
     {
 #if defined (ACE_HAS_WIN32_PDH)
       this->update_i ();
@@ -41,26 +37,17 @@ namespace ACE
       double percent_mem_usage = used_ram / this->sysinfo_.totalram * 100.0;
 
       this->receive (percent_mem_usage);
-#elif defined (ACE_HAS_KSTAT)
-      unsigned long page_size = sysconf (_SC_PAGE_SIZE);
-      unsigned long total = sysconf (_SC_PHYS_PAGES) * page_size;
-      unsigned long free = sysconf (_SC_AVPHYS_PAGES) * page_size;
-
-      double used = total - free;
-      double percent_mem_usage = used / total * 100.0;
-
-      this->receive (percent_mem_usage);
 #endif
     }
 
     const char*
-    Memory_Usage_Monitor::default_name (void)
+    Memory_Usage_Monitor::default_name ()
     {
       return Memory_Usage_Monitor::default_name_;
     }
 
     void
-    Memory_Usage_Monitor::clear_i (void)
+    Memory_Usage_Monitor::clear_i ()
     {
 #if defined (ACE_HAS_WIN32_PDH)
       this->clear_impl ();

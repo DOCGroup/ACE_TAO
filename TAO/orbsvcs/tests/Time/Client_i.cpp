@@ -10,10 +10,9 @@
 #include "ace/os_include/os_netdb.h"
 
 
-
 // Constructor.
 
-Client_i::Client_i (void)
+Client_i::Client_i ()
   : ior_ (0),
     loop_count_ (10),
     shutdown_ (0),
@@ -26,7 +25,7 @@ Client_i::Client_i (void)
 // given server.
 
 void
-Client_i::test_for_secure_universal_time (void)
+Client_i::test_for_secure_universal_time ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "[CLIENT] Process/Thread Id : (%P/%t) Testing secure_time()\n"));
@@ -35,7 +34,6 @@ Client_i::test_for_secure_universal_time (void)
     {
       CosTime::UTO_var UTO_server =
            this->clerk_->secure_universal_time ();
-
     }
   catch (const CORBA::SystemException& sysex)
     {
@@ -49,7 +47,7 @@ Client_i::test_for_secure_universal_time (void)
 // from the clerk_ and prints out the various attributes of the UTO.
 
 void
-Client_i::test_for_universal_time (void)
+Client_i::test_for_universal_time ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "[CLIENT] Process/Thread Id : (%P/%t) Testing universal_time()\n"));
@@ -78,7 +76,7 @@ Client_i::test_for_universal_time (void)
 }
 
 void
-Client_i::test_for_new_universal_time (void)
+Client_i::test_for_new_universal_time ()
 {
   TimeBase::TimeT time = 999999999;
   TimeBase::InaccuracyT inaccuracy = 9999;
@@ -100,7 +98,6 @@ Client_i::test_for_new_universal_time (void)
       ACE_ASSERT ((UTO_server->utc_time ()).inacchi == 0);
       ACE_ASSERT ((UTO_server->utc_time ()).inacclo == 9999);
       ACE_ASSERT ((UTO_server->utc_time ()).tdf == 99);
-
     }
   catch (const CORBA::Exception& ex)
     {
@@ -111,7 +108,7 @@ Client_i::test_for_new_universal_time (void)
 }
 
 void
-Client_i::test_for_uto_from_utc (void)
+Client_i::test_for_uto_from_utc ()
 {
   TimeBase::UtcT utc_struct;
 
@@ -138,7 +135,6 @@ Client_i::test_for_uto_from_utc (void)
       ACE_ASSERT ((UTO_server->utc_time ()).inacclo == 50);
       ACE_ASSERT ((UTO_server->utc_time ()).inacchi == 50);
       ACE_ASSERT ((UTO_server->utc_time ()).tdf == 99);
-
     }
   catch (const CORBA::Exception& ex)
     {
@@ -149,7 +145,7 @@ Client_i::test_for_uto_from_utc (void)
 }
 
 void
-Client_i::test_for_new_interval (void)
+Client_i::test_for_new_interval ()
 {
   TimeBase::TimeT lower = 666666666;
   TimeBase::TimeT upper = 999999999;
@@ -164,7 +160,6 @@ Client_i::test_for_new_interval (void)
 
       ACE_ASSERT ((TIO_server->time_interval ()).lower_bound == 666666666);
       ACE_ASSERT ((TIO_server->time_interval ()).upper_bound == 999999999);
-
     }
   catch (const CORBA::Exception& ex)
     {
@@ -209,7 +204,7 @@ Client_i::read_ior (ACE_TCHAR *filename)
 // Parses the command line arguments and returns an error status.
 
 int
-Client_i::parse_args (void)
+Client_i::parse_args ()
 {
   ACE_Get_Opt get_opts (argc_, argv_, ACE_TEXT("dn:f:xk:"));
   int c;
@@ -261,7 +256,7 @@ Client_i::parse_args (void)
 // Execute client example code.
 
 int
-Client_i::run (void)
+Client_i::run ()
 {
   // Retrieves the current universal time.
   test_for_universal_time ();
@@ -283,15 +278,14 @@ Client_i::run (void)
   return 0;
 }
 
-Client_i::~Client_i (void)
+Client_i::~Client_i ()
 {
   ACE_OS::free (this->ior_);
 }
 
 int
-Client_i::obtain_initial_references (void)
+Client_i::obtain_initial_references ()
 {
-
   try
     {
       // Initialize the naming services.
@@ -385,7 +379,6 @@ Client_i::init (int argc, ACE_TCHAR **argv)
 
           if (this->obtain_initial_references () == -1)
             return -1;
-
         }
     }
   catch (const CORBA::Exception& ex)

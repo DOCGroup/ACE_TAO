@@ -178,7 +178,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       client.ORB_run ();
 #ifdef PAUSE_ON_EXIT
       _cputs( "All events received. Still connected.\n");
-      _cputs( "Hit a key to exit consumer: " );
+      _cputs( "Hit a key to exit consumer: ");
       _getch();
 #endif // PAUSE_ON_EXIT
       ACE_DEBUG ((LM_DEBUG, "Consumer done.\n"));

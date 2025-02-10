@@ -13,7 +13,7 @@ UDPTest_i::~UDPTest_i ()
 
 void UDPTest_i::send( const ::UDPTestI::BufferT Msg )
 {
-    memcpy( buf, Msg, 1000 ) ;
-    memset( buf, 0, 1000 ) ;
+    memcpy( buf, Msg, 1000 );
+    memset( buf, 0, 1000 );
     received_send_ = true;
 }

@@ -40,7 +40,7 @@ class TAO_Acceptor;
 class TAO_EndpointPolicy_Export  TAO_Endpoint_Value_Impl
 {
 public:
-  virtual ~TAO_Endpoint_Value_Impl(void);
+  virtual ~TAO_Endpoint_Value_Impl();
 
   /// This method is used to compare a candidate IOR endpoint with the
   /// endpoint defined by this policy value.

@@ -1,14 +1,14 @@
 #include "Logging_Service_i.h"
 #include "tao/debug.h"
 
-Logger_Server::Logger_Server (void)
+Logger_Server::Logger_Server ()
   :service_name_ (ACE_TEXT("LoggingService"))
 {
   // Do nothing
 }
 
 int
-Logger_Server::parse_args (void)
+Logger_Server::parse_args ()
 {
   ACE_Get_Opt get_opts (argc_, argv_, ACE_TEXT("dn:"));
   int c;
@@ -112,7 +112,7 @@ Logger_Server::init_naming_service ()
 }
 
 int
-Logger_Server::run (void)
+Logger_Server::run ()
 {
   int ret = this->orb_manager_.run ();
   if (ret == -1)
@@ -122,7 +122,7 @@ Logger_Server::run (void)
   return 0;
 }
 
-Logger_Server::~Logger_Server (void)
+Logger_Server::~Logger_Server ()
 {
   // Do nothing
 }

@@ -17,7 +17,7 @@ TAO_LF_Connect_Strategy::TAO_LF_Connect_Strategy (TAO_ORB_Core *orb_core,
 {
 }
 
-TAO_LF_Connect_Strategy::~TAO_LF_Connect_Strategy (void)
+TAO_LF_Connect_Strategy::~TAO_LF_Connect_Strategy ()
 {
 }
 
@@ -25,7 +25,7 @@ void
 TAO_LF_Connect_Strategy::synch_options (ACE_Time_Value *timeout,
                                         ACE_Synch_Options &options)
 {
-  if (timeout != 0)
+  if (timeout != nullptr)
     {
       options.set (ACE_Synch_Options::USE_REACTOR, *timeout);
     }
@@ -41,7 +41,7 @@ TAO_LF_Connect_Strategy::wait_i (TAO_LF_Event *ev,
                                  TAO_Transport *transport,
                                  ACE_Time_Value *max_wait_time)
 {
-  if (transport == 0)
+  if (transport == nullptr)
     return -1;
 
   TAO::Nested_Upcall_Guard guard(transport, this->no_upcall_);

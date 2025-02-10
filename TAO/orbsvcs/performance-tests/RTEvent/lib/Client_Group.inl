@@ -5,30 +5,30 @@
  */
 
 ACE_INLINE
-Client_Group::Client_Group (void)
+Client_Group::Client_Group ()
 {
 }
 
 ACE_INLINE Supplier *
-Client_Group::supplier (void) const
+Client_Group::supplier () const
 {
   return this->client_pair_.supplier ();
 }
 
 ACE_INLINE Consumer *
-Client_Group::consumer (void) const
+Client_Group::consumer () const
 {
   return this->client_pair_.consumer ();
 }
 
 ACE_INLINE Loopback_Supplier *
-Client_Group::loopback_supplier (void) const
+Client_Group::loopback_supplier () const
 {
   return this->loopback_pair_.loopback_supplier ();
 }
 
 ACE_INLINE Loopback_Consumer *
-Client_Group::loopback_consumer (void) const
+Client_Group::loopback_consumer () const
 {
   return this->loopback_pair_.loopback_consumer ();
 }

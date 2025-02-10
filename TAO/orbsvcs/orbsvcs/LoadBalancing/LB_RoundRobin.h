@@ -40,7 +40,6 @@ class TAO_LB_RoundRobin
   : public virtual POA_CosLoadBalancing::Strategy
 {
 public:
-
   /// Constructor.
   TAO_LB_RoundRobin (PortableServer::POA_ptr poa);
 
@@ -50,7 +49,7 @@ public:
    * Methods required by the CosLoadBalancing::Strategy interface.
    */
   //@{
-  virtual char * name (void);
+  virtual char * name ();
 
   virtual CosLoadBalancing::Properties * get_properties ();
 
@@ -76,12 +75,10 @@ public:
     );
 
 protected:
-
   /// Destructor
-  ~TAO_LB_RoundRobin (void);
+  ~TAO_LB_RoundRobin ();
 
 private:
-
   /// Keep a copy of location list for verify if the list is changed
   /// in next next_member() call.
   void copy_locations (PortableGroup::Locations_var& locations);
@@ -107,7 +104,6 @@ private:
 
   /// Locations list retrieved in last next_member() call.
   ACE_Vector <PortableGroup::Location> last_locations_;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

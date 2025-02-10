@@ -11,13 +11,13 @@ TAO_EventLogNotification::TAO_EventLogNotification (CosEventChannelAdmin::EventC
   obtain_proxy_consumer ();
 }
 
-TAO_EventLogNotification::~TAO_EventLogNotification (void)
+TAO_EventLogNotification::~TAO_EventLogNotification ()
 {
   // No-Op.
 }
 
 void
-TAO_EventLogNotification::disconnect_push_supplier (void)
+TAO_EventLogNotification::disconnect_push_supplier ()
 {
   this->consumer_->disconnect_push_consumer ();
 }

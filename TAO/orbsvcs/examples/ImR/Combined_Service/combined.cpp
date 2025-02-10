@@ -37,7 +37,6 @@ public:
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try {
-
     ACE_Service_Config config;
     config.open (argc, argv);
 
@@ -70,7 +69,6 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     poa->destroy(1, 1);
     orb->destroy();
-
   } catch (const CORBA::Exception& e) {
     e._tao_print_exception ("Combined Service:");
   }

@@ -1,7 +1,7 @@
 // -*- C++ -*-
 
 ACEXML_INLINE int
-ACEXML_XMLFilterImpl::setupParser (void)
+ACEXML_XMLFilterImpl::setupParser ()
 {
   if (this->parent_ == 0)
     return -1;

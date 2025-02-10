@@ -30,18 +30,18 @@ TAO::HTIOP::Transport::Transport (TAO::HTIOP::Connection_Handler *h,
 {
 }
 
-TAO::HTIOP::Transport::~Transport (void)
+TAO::HTIOP::Transport::~Transport ()
 {
 }
 
 ACE_Event_Handler *
-TAO::HTIOP::Transport::event_handler_i (void)
+TAO::HTIOP::Transport::event_handler_i ()
 {
   return this->connection_handler_;
 }
 
 TAO_Connection_Handler *
-TAO::HTIOP::Transport::connection_handler_i (void)
+TAO::HTIOP::Transport::connection_handler_i ()
 {
   return this->connection_handler_;
 }
@@ -76,7 +76,6 @@ TAO::HTIOP::Transport::recv (char *buf,
       TAO_debug_level > 4 &&
       errno != ETIME)
     {
-
       ORBSVCS_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - TAO::HTIOP::Transport[%d]::recv_i, ")
                   ACE_TEXT ("read failure - %m"),
@@ -106,7 +105,7 @@ TAO::HTIOP::Transport::recv (char *buf,
 }
 
 int
-TAO::HTIOP::Transport::register_handler (void)
+TAO::HTIOP::Transport::register_handler ()
 {
   if (TAO_debug_level > 4)
     {
@@ -304,7 +303,6 @@ TAO::HTIOP::Transport::get_listen_point (::HTIOP::ListenPointList &lp_list,
 
   if (local_addr.get_port_number() != 0)
     {
-
       // Note: Looks like there is no point in sending the list of
       // endpoints on interfaces on which this connection has not
       // been established. If this is wrong, please correct me.
@@ -355,7 +353,7 @@ TAO::HTIOP::Transport::get_listen_point (::HTIOP::ListenPointList &lp_list,
 
 
 TAO_Connection_Handler *
-TAO::HTIOP::Transport::invalidate_event_handler_i (void)
+TAO::HTIOP::Transport::invalidate_event_handler_i ()
 {
   TAO_Connection_Handler * eh = this->connection_handler_;
   this->connection_handler_ = 0;

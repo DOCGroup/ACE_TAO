@@ -22,8 +22,6 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
 
-
-
 static int
 test (ACE_Configuration *config,
       ACE_Configuration_Section_Key &testsection)
@@ -334,7 +332,7 @@ test_subkey_path (ACE_Configuration* config)
 }
 
 static int
-run_tests (void)
+run_tests ()
 {
   int status;
 
@@ -782,7 +780,6 @@ Config_Test::testEquality ()
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("Cannot open heap1\n")),
                         -1);
-
     }
   else if ((heap2.open ()) != 0)
     {
@@ -1079,7 +1076,6 @@ iniCompare (ACE_Configuration_Heap& fromFile, ACE_Configuration_Heap& original)
                       else
                         // if the type is invalid, then go ahead and fail it.
                         rc = false;
-
                     }// end if the original type was not a string.
                   else
                     {
@@ -1099,11 +1095,9 @@ iniCompare (ACE_Configuration_Heap& fromFile, ACE_Configuration_Heap& original)
                     // before we move on remove this value from the original.
                     original.remove_value (originalSection,
                                            valueName.c_str ());
-
                 }// end else if values match.
 
               valueIndex++;
-
             }// end value while loop
 
           // at this point the original should have no values.  look
@@ -1118,7 +1112,6 @@ iniCompare (ACE_Configuration_Heap& fromFile, ACE_Configuration_Heap& original)
 
           // having a value indicates a mismatch
           rc = valueIndex == 0;
-
         }// end else if sections match.
 
       if (rc)
@@ -1128,7 +1121,6 @@ iniCompare (ACE_Configuration_Heap& fromFile, ACE_Configuration_Heap& original)
                                  0); // do not remove subsections.
 
       ++sectionIndex;
-
     }// end section while loop
 
   // Finally, if the original has any sections, then we're not equal

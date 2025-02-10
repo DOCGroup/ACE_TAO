@@ -17,13 +17,13 @@ be_visitor_sequence_ch::be_visitor_sequence_ch (be_visitor_context *ctx)
 {
 }
 
-be_visitor_sequence_ch::~be_visitor_sequence_ch (void)
+be_visitor_sequence_ch::~be_visitor_sequence_ch ()
 {
 }
 
 int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
 {
-  if (node->defined_in () == 0)
+  if (node->defined_in () == nullptr)
     {
       // The node is a nested sequence, and has had no scope defined.
       node->set_defined_in (DeclAsScope (this->ctx_->scope ()->decl ()));
@@ -55,9 +55,9 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
 
   // Retrieve the base type since we may need to do some code
   // generation for the base type.
-  be_type *bt = be_type::narrow_from_decl (node->base_type ());
+  be_type *bt = dynamic_cast<be_type*> (node->base_type ());
 
-  if (bt == 0)
+  if (bt == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("be_visitor_sequence_ch::")
@@ -77,7 +77,7 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
       // to create_name will not get confused and give our anonymous
       // sequence element type the same name as we have.
       be_typedef *tmp = this->ctx_->tdef ();
-      this->ctx_->tdef (0);
+      this->ctx_->tdef (nullptr);
 
       if (bt->accept (this) != 0)
         {
@@ -95,32 +95,16 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
 
   *os << be_nl_2;
 
-  *os << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (os);
 
   if (idl_global->dcps_sequence_type_defined (node->full_name ()))
     {
-      // generate the sequence declaration as if it was native. This
-      // to satisfy DDS
-
-      // strip  the "Seq" ending to get the sample's name
-      const char * node_name = node->full_name ();
-      const size_t max_name_length = 2000;
-      if (ACE_OS::strlen (node_name) >= max_name_length)
-        {
-          return -1;
-        }
-      char sample_name[max_name_length];
-      ACE_OS::strncpy (sample_name,
-                       node_name,
-                       ACE_OS::strlen (node_name) - 3);
-      sample_name[ACE_OS::strlen (node_name) - 3] = '\0';
-
+      // Special Implementation for OpenDDS
       *os << be_nl_2
           << "typedef ::TAO::DCPS::ZeroCopyDataSeq< "
-          << sample_name
+          << node->base_type ()->full_name ()
           << ", DCPS_ZERO_COPY_SEQ_DEFAULT_SIZE> "
-          << node->local_name ()
+          << node->original_local_name ()
           << ";" << be_nl;
     }
   else
@@ -133,12 +117,12 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
       /// and _outs. They may get redefined and reinstated later.
       if (!be_global->alt_mapping () || !node->unbounded ())
         {
-          if (this->ctx_->tdef () != 0)
+          if (this->ctx_->tdef () != nullptr)
             {
               *os << "class " << node->local_name () << ";";
             }
 
-          if (this->ctx_->tdef () != 0)
+          if (this->ctx_->tdef () != nullptr)
             {
               this->gen_varout_typedefs (node, bt);
             }
@@ -195,12 +179,12 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
           << "public:" << be_idt;
 
       *os << be_nl
-          << node->local_name () << " (void);";
+          << node->local_name () << " () = default;";
 
       if (node->unbounded ())
         {
           *os << be_nl
-              << node->local_name () << " ( ::CORBA::ULong max);";
+              << node->local_name () << " (::CORBA::ULong max);";
         }
 
       /// If we are using std::vector, we can't implement this
@@ -237,19 +221,24 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
               << "::CORBA::Boolean release = false);" << be_uidt;
       }
 
+      // Default copy/move constructor and assignment operators
       *os << be_nl
-          << node->local_name () << " (const " << node->local_name ()
-          << " &);" << be_nl;
-      *os << "virtual ~" << node->local_name () << " (void);";
+          << node->local_name () << " (const " << node->local_name () << " &) = default;" << be_nl
+          << node->local_name () << " (" << node->local_name () << " &&) = default;" << be_nl
+          << node->local_name () << "& operator= (const " << node->local_name () << " &) = default;" << be_nl
+          << node->local_name () << "& operator= (" << node->local_name () << " &&) = default;"
+          << be_nl;
+
+      *os << "virtual ~" << node->local_name () << " () = default;";
 
       if (be_global->alt_mapping () && node->unbounded ())
         {
           *os << be_nl_2
-              << "virtual ::CORBA::ULong length (void) const;"
+              << "virtual ::CORBA::ULong length () const;"
               << be_nl
               << "virtual void length (::CORBA::ULong);"
               << be_nl_2
-              << "virtual ::CORBA::ULong maximum (void) const;";
+              << "virtual ::CORBA::ULong maximum () const;";
         }
 
       *os << be_nl;
@@ -258,28 +247,28 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
 
       // TAO provides extensions for octet sequences, first find out if
       // the base type is an octet (or an alias for octet).
-      be_predefined_type *predef = 0;
+      be_predefined_type *predef = nullptr;
 
       if (bt->base_node_type () == AST_Type::NT_pre_defined)
         {
           be_typedef* alias =
-                be_typedef::narrow_from_decl (bt);
+                dynamic_cast<be_typedef*> (bt);
 
-          if (alias == 0)
+          if (alias == nullptr)
             {
-              predef = be_predefined_type::narrow_from_decl (bt);
+              predef = dynamic_cast<be_predefined_type*> (bt);
             }
           else
             {
               predef =
-                be_predefined_type::narrow_from_decl (
+                dynamic_cast<be_predefined_type*> (
                     alias->primitive_base_type ()
                   );
             }
         }
 
       // Now generate the extension...
-      if (predef != 0
+      if (predef != nullptr
           && predef->pt () == AST_PredefinedType::PT_octet
           && node->unbounded ()
           && !be_global->alt_mapping ())

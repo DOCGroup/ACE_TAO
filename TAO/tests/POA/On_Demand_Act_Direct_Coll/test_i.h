@@ -20,11 +20,11 @@ public:
           ACE_thread_t thr_id);
 
   /// A twoway operation.
-  void method (void);
+  void method ();
 
   /// A twoway operation.
   char *
-  get_string (void);
+  get_string ();
 
 protected:
   /// Our ORB.

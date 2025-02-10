@@ -17,7 +17,7 @@ TAO::TypeCode::Case<StringType, TypeCodeType>::Case (
 
 template <typename StringType, typename TypeCodeType>
 ACE_INLINE
-TAO::TypeCode::Case<StringType, TypeCodeType>::Case (void)
+TAO::TypeCode::Case<StringType, TypeCodeType>::Case ()
   : name_ ()
   , type_ ()
 {
@@ -43,7 +43,7 @@ TAO::TypeCode::Case<StringType, TypeCodeType>::marshal (
 
 template <typename StringType, typename TypeCodeType>
 ACE_INLINE char const *
-TAO::TypeCode::Case<StringType, TypeCodeType>::name (void) const
+TAO::TypeCode::Case<StringType, TypeCodeType>::name () const
 {
   return
     Traits<StringType>::get_string (this->name_);
@@ -59,7 +59,7 @@ TAO::TypeCode::Case<StringType, TypeCodeType>::name (
 
 template <typename StringType, typename TypeCodeType>
 ACE_INLINE CORBA::TypeCode_ptr
-TAO::TypeCode::Case<StringType, TypeCodeType>::type (void) const
+TAO::TypeCode::Case<StringType, TypeCodeType>::type () const
 {
   return
     Traits<StringType>::get_typecode (this->type_);

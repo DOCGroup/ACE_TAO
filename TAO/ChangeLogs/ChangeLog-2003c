@@ -663,7 +663,7 @@ Wed Oct 15 11:22:01 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 	* tao/Transport.cpp (send_connection_closed_notifications_i): The
 	  while loop could lead to possible crash. Please see
 
-          http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1614
+          http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=1614
 
 	  for details of the problem and the nature of fixes applied. As
 	  usual, thanks to Carlos O'Ryan for digging this one up and
@@ -1705,14 +1705,14 @@ Wed Sep 24 09:02:19 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
         * tao/PortableServer/POA_Policies.cpp: Fix for [Bug 1587]. Please
           see  the documentation of the bug at
 
-          http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1587
+          http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=1587
 
           for more details. Thanks to Carlos O'Ryan for the patches.
 
         * tao/MProfile.cpp: Fix for [BUG 1589]. Please see the
           documentation of the bug at
 
-          http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1589
+          http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=1589
 
           Thanks to Huang-Ming Huang for the patch
 

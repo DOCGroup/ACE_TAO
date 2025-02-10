@@ -32,11 +32,11 @@ public:
   RND_Consumer (RND_Driver *driver);
 
   void push (const RtecEventComm::EventSet &event);
-  void disconnect_push_consumer (void);
+  void disconnect_push_consumer ();
 
   void connect (RtecEventChannelAdmin::ConsumerAdmin_ptr admin,
                 const RtecEventChannelAdmin::ConsumerQOS &qos);
-  void disconnect (void);
+  void disconnect ();
 
 protected:
   /// The driver
@@ -86,16 +86,16 @@ public:
 
   void connect (RtecEventChannelAdmin::SupplierAdmin_ptr admin,
                 const RtecEventChannelAdmin::SupplierQOS &qos);
-  void disconnect (void);
+  void disconnect ();
 
   /// Push a single event...
-  void push_new_event (void);
+  void push_new_event ();
   void push (RtecEventComm::EventSet &event);
 
-  virtual void disconnect_push_supplier (void);
+  virtual void disconnect_push_supplier ();
 
   /// Active method
-  virtual int svc (void);
+  virtual int svc ();
 
 private:
   /// The supplier.
@@ -119,7 +119,7 @@ RND_Supplier::RND_Supplier (int verbose)
 class RND_Driver
 {
 public:
-  RND_Driver (void);
+  RND_Driver ();
 
   /// Run the test
   int run (int argc, ACE_TCHAR *argv[]);

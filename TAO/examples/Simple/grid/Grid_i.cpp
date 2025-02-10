@@ -1,7 +1,7 @@
 // -*- C++ -*-
 #include "Grid_i.h"
 
-// Solaris and some Windows compilers don't have min in std namespaces
+// Some Windows compilers don't have min in std namespaces
 // moreover on Windows 'min' is a macro, so we have to avoid using it literally.
 CORBA::UShort
 Grid_i::ushort_min (CORBA::UShort a, CORBA::UShort b)
@@ -10,7 +10,7 @@ Grid_i::ushort_min (CORBA::UShort a, CORBA::UShort b)
 }
 
 // Default constructor.
-Grid_i::Grid_i (void)
+Grid_i::Grid_i ()
   : width_ (0),
     height_ (0),
     array_ (0)
@@ -28,7 +28,7 @@ Grid_i::Grid_i (CORBA::Short x,
 }
 
 // Default destructor.
-Grid_i::~Grid_i (void)
+Grid_i::~Grid_i ()
 {
 }
 
@@ -71,13 +71,13 @@ Grid_i::get (CORBA::Short x,
 
 // Access methods.
 CORBA::Short
-Grid_i::width (void)
+Grid_i::width ()
 {
   return this->width_;
 }
 
 CORBA::Short
-Grid_i::height (void)
+Grid_i::height ()
 {
   return this->height_;
 }
@@ -93,7 +93,7 @@ Grid_i::width (CORBA::Short x)
           ACE_OS::memcpy (array.get () + x * ctr, this->array_.get () + this->width_ * ctr,
                           Grid_i::ushort_min (this->width_, x) * sizeof (CORBA::Long));
         }
-      this->array_ = array;
+      this->array_ = std::move(array);
       array.release ();
       this->width_ = x;
     }
@@ -110,7 +110,7 @@ Grid_i::height (CORBA::Short y)
           ACE_OS::memcpy (array.get () + this->width_ * ctr, this->array_.get () + this->width_ * ctr,
                           this->width_ * sizeof (CORBA::Long));
         }
-      this->array_ = array;
+      this->array_ = std::move(array);
       array.release ();
       this->height_ = y;
     }
@@ -118,10 +118,10 @@ Grid_i::height (CORBA::Short y)
 
 // Destroy the grid
 void
-Grid_i::destroy (void)
+Grid_i::destroy ()
 {
   // Delete the array.
-  ACE_Auto_Array_Ptr<CORBA::Long> tmp (this->array_.release ());
+  std::unique_ptr<CORBA::Long[]> tmp (this->array_.release ());
   this->width_ = 0;
   this->height_ = 0;
 
@@ -150,7 +150,7 @@ Grid_Factory_i::orb (CORBA::ORB_ptr o)
 
 // Shutdown.
 void
-Grid_Factory_i::shutdown (void)
+Grid_Factory_i::shutdown ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P|%t) Grid Factory is shutting down\n")));
@@ -160,12 +160,12 @@ Grid_Factory_i::shutdown (void)
 }
 
 // Constructor
-Grid_Factory_i::Grid_Factory_i (void)
+Grid_Factory_i::Grid_Factory_i ()
 {
 }
 
 // Destructor
-Grid_Factory_i::~Grid_Factory_i (void)
+Grid_Factory_i::~Grid_Factory_i ()
 {
 }
 

@@ -29,9 +29,9 @@ class HTTPU_Export HTTP_Hdr_Node
   friend class HTTP_HCodes;
 
 public:
-  operator int (void) const;
-  operator const char * (void) const;
-  const char * format (void) const;
+  operator int () const;
+  operator const char * () const;
+  const char * format () const;
 
 private:
   HTTP_Hdr_Node (const char *token, const char *format);
@@ -51,7 +51,7 @@ class HTTPU_Export HTTP_Header_Nodes : public ACE_RB_Tree<int, const HTTP_Hdr_No
   friend class HTTP_Hdr_Node;
 
 public:
-  HTTP_Header_Nodes (void);
+  HTTP_Header_Nodes ();
 
 private:
   int num_header_strings_;
@@ -63,7 +63,7 @@ typedef ACE_Singleton<HTTP_Header_Nodes, ACE_SYNCH_MUTEX>
 class HTTPU_Export HTTP_HCodes
 {
 public:
-  HTTP_HCodes (void);
+  HTTP_HCodes ();
 
   enum {
     REPLACE_HEADER = 1,  // Remove any existing header that matches first
@@ -133,28 +133,25 @@ public:
   static const int &NUM_HEADER_STRINGS;
 
 protected:
-
   const HTTP_Hdr_Node &hcode (int type) const;
 
 protected:
-
   HTTP_Header_Nodes *header_nodes_;
 };
 
 class HTTPU_Export HTTP_Headers : public JAWS_Header_Info, public HTTP_HCodes
 {
 public:
-  const char *header( int name ) const;
-  const char *value( int name );
-  const char *value_next( int name );
-  void value_reset ( void );
+  const char *header(int name) const;
+  const char *value(int name);
+  const char *value_next(int name);
+  void value_reset ();
 
 public:
-  HTTP_Headers (void);
+  HTTP_Headers ();
 
   const char *header_token (int name) const;
   const char *header_strings (int name) const;
-
 };
 
 

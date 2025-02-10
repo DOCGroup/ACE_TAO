@@ -20,7 +20,7 @@ TAO_Rtec_LogConsumer::TAO_Rtec_LogConsumer (TAO_RTEventLog_i *log)
 {
 }
 
-TAO_Rtec_LogConsumer::~TAO_Rtec_LogConsumer (void)
+TAO_Rtec_LogConsumer::~TAO_Rtec_LogConsumer ()
 {
 }
 
@@ -48,11 +48,10 @@ TAO_Rtec_LogConsumer::push (const RtecEventComm::EventSet& events)
 
   this->log_->write_recordlist (recList);
 
-
 }
 
 void
-TAO_Rtec_LogConsumer::disconnect_push_consumer (void)
+TAO_Rtec_LogConsumer::disconnect_push_consumer ()
 {
   this->supplier_proxy_->disconnect_push_supplier ();
 }

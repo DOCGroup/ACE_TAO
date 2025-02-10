@@ -4,10 +4,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Network_Priority_Hook::~TAO_Network_Priority_Hook(void)
-{
-}
-
 void
 TAO_Network_Priority_Hook::update_network_priority (
   TAO_Root_POA &poa, TAO_POA_Policy_Set &)
@@ -25,7 +21,7 @@ TAO_Network_Priority_Hook::set_dscp_codepoint (
 }
 
 int
-TAO_Network_Priority_Hook::initialize (void)
+TAO_Network_Priority_Hook::initialize ()
 {
   return ACE_Service_Config::process_directive
     (ace_svc_desc_TAO_Network_Priority_Hook);

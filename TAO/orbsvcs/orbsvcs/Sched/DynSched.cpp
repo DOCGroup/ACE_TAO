@@ -19,7 +19,6 @@
 #endif /* __ACE_INLINE__ */
 
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 //////////////////////
@@ -27,11 +26,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 //////////////////////
 
 // compare the DFS finish times of two task entries, order higher time *first*
-#if defined (ACE_HAS_WINCE)
-int _cdecl compare_entry_finish_times (const void *first, const void *second)
-#else
 extern "C" int compare_entry_finish_times (const void *first, const void *second)
-#endif  // ACE_HAS_WINCE
 {
   // sort blank entries to the end
   if (! first)
@@ -308,7 +303,6 @@ ACE_DynScheduler::register_task (RT_Info *rt_info, handle_t &handle)
   // = registers a task.
 
 
-
 ACE_DynScheduler::status_t
 ACE_DynScheduler::get_rt_info (Object_Name name,
                                RT_Info* &rtinfo)
@@ -354,7 +348,6 @@ ACE_DynScheduler::get_rt_info (Object_Name name,
         }
     }
 }
-
 
 
 
@@ -487,13 +480,11 @@ void ACE_DynScheduler::export_to_file (RT_Info& info, FILE* file)
       (void) ACE_OS::fprintf (file, "%s, %d\n",
                               (const char*)tmp.entry_point,
                               info.dependencies[i].number_of_calls);
-
     }
 
   (void) ACE_OS::fprintf (file, "# end calls\n%d\n%d\n\n",
                           info.priority,
                           info.preemption_subpriority);
-
 
 }
 
@@ -1237,7 +1228,7 @@ ACE_DynScheduler::propagate_dispatches (
 
 
 ACE_DynScheduler::status_t
-ACE_DynScheduler::calculate_utilization_params (void)
+ACE_DynScheduler::calculate_utilization_params ()
 {
   critical_set_frame_size_ = 0;
   utilization_ = 0.0;
@@ -1286,7 +1277,6 @@ ACE_DynScheduler::calculate_utilization_params (void)
 }
 
 
-
 void
 ACE_DynScheduler::update_priority_level_params ()
 {
@@ -1307,7 +1297,7 @@ ACE_DynScheduler::update_priority_level_params ()
 }
 
 ACE_DynScheduler::status_t
-ACE_DynScheduler::setup_task_entries (void)
+ACE_DynScheduler::setup_task_entries ()
 {
   // store number of tasks, based on registrations
   tasks (static_cast<u_int> (rt_info_entries_.size ()));
@@ -1384,7 +1374,7 @@ ACE_DynScheduler::setup_task_entries (void)
 }
 
 ACE_DynScheduler::status_t
-ACE_DynScheduler::relate_task_entries (void)
+ACE_DynScheduler::relate_task_entries ()
 {
   status_t status = SUCCEEDED;
 
@@ -1412,7 +1402,6 @@ ACE_DynScheduler::relate_task_entries (void)
 ACE_DynScheduler::status_t
 ACE_DynScheduler::relate_task_entries_recurse (long &time, Task_Entry &entry)
 {
-
   // may have entered at a non-root node previously, so this does
   //  not necessarily indicate a cycle in the dependency graph
         if (entry.dfs_status () != Task_Entry::NOT_VISITED)
@@ -1584,7 +1573,7 @@ ACE_DynScheduler::identify_threads (ACE_CString & unresolved_locals,
 }
 
 ACE_DynScheduler::status_t
-ACE_DynScheduler::check_dependency_cycles (void)
+ACE_DynScheduler::check_dependency_cycles ()
 {
   status_t return_status = SUCCEEDED;
 
@@ -1748,7 +1737,7 @@ ACE_DynScheduler::schedule_dispatches (ACE_Unbounded_Set<RtecScheduler::Scheduli
   // calls internal dispatch scheduling method.
 
 ACE_DynScheduler::status_t
-ACE_DynScheduler::store_assigned_info (void)
+ACE_DynScheduler::store_assigned_info ()
 {
   for  (u_int i = 0; i < dispatch_entry_count_; ++i)
     {
@@ -1827,7 +1816,6 @@ ACE_DynScheduler::create_timeline ()
     Dispatch_Entry *rescheduled_entry;
     while (reschedule_queue.is_empty () == 0)
     {
-
       if (reschedule_queue.dequeue_head (rescheduled_entry) < 0)
       {
         status = ST_BAD_INTERNAL_POINTER;
@@ -1916,7 +1904,6 @@ ACE_DynScheduler::create_timeline ()
   // Create a timeline.
 
 
-
 ACE_DynScheduler::status_t
 ACE_DynScheduler::output_dispatch_priorities (const char *filename)
 {
@@ -1944,7 +1931,6 @@ ACE_DynScheduler::output_dispatch_priorities (const char *filename)
 ACE_DynScheduler::status_t
 ACE_DynScheduler::output_dispatch_priorities (FILE *file)
 {
-
   u_long dispatch_count = 0;
   u_long i = 0;
   for (i = 0; i < dispatch_entry_count_; ++i)

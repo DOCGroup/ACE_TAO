@@ -18,13 +18,13 @@ ACE_Event_Base::ACE_Event_Base ()
 {
 }
 
-ACE_Event_Base::~ACE_Event_Base (void)
+ACE_Event_Base::~ACE_Event_Base ()
 {
   this->remove ();
 }
 
 int
-ACE_Event_Base::remove (void)
+ACE_Event_Base::remove ()
 {
   int result = 0;
   if (!this->removed_)
@@ -36,7 +36,7 @@ ACE_Event_Base::remove (void)
 }
 
 int
-ACE_Event_Base::wait (void)
+ACE_Event_Base::wait ()
 {
   return ACE_OS::event_wait (&this->handle_);
 }
@@ -50,25 +50,25 @@ ACE_Event_Base::wait (const ACE_Time_Value *abstime, int use_absolute_time)
 }
 
 int
-ACE_Event_Base::signal (void)
+ACE_Event_Base::signal ()
 {
   return ACE_OS::event_signal (&this->handle_);
 }
 
 int
-ACE_Event_Base::pulse (void)
+ACE_Event_Base::pulse ()
 {
   return ACE_OS::event_pulse (&this->handle_);
 }
 
 int
-ACE_Event_Base::reset (void)
+ACE_Event_Base::reset ()
 {
   return ACE_OS::event_reset (&this->handle_);
 }
 
 void
-ACE_Event_Base::dump (void) const
+ACE_Event_Base::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));

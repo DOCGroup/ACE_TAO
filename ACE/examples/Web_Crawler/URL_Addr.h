@@ -30,7 +30,7 @@ class ACE_URL_Addr : public ACE_INET_Addr
 {
 public:
   /// Constructor.
-  ACE_URL_Addr (void);
+  ACE_URL_Addr ();
 
   ACE_URL_Addr (const ACE_TCHAR *host_name,
                 const ACE_TCHAR *path_name,
@@ -82,7 +82,7 @@ public:
   void operator= (const ACE_URL_Addr &addr);
 
   /// Destructor.
-  ~ACE_URL_Addr (void);
+  ~ACE_URL_Addr ();
 
   /**
    * Compare two addresses for equality.  The addresses are considered
@@ -95,13 +95,13 @@ public:
   bool operator != (const ACE_URL_Addr &SAP) const;
 
   /// Computes and returns hash value.
-  virtual u_long hash (void) const;
+  virtual u_long hash () const;
 
   /// Return the path name.
-  const ACE_TCHAR *get_path_name (void) const;
+  const ACE_TCHAR *get_path_name () const;
 
   /// Commit suicide.
-  int destroy (void);
+  int destroy ();
 private:
   /// Our path name.
   ACE_TCHAR *path_name_;

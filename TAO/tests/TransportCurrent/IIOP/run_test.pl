@@ -23,13 +23,13 @@ $client->DeleteFile($iorbase);
 $status = 0;
 
 $mode = shift (@ARGV);
-if ( $mode =~ /-dynamic/) {
+if ($mode =~ /-dynamic/) {
     $base_client_conf = "client_dynamic" . $PerlACE::svcconf_ext;
     $base_server_conf = "server_dynamic" . $PerlACE::svcconf_ext;
     $client_conf_file = $client->LocalFile ("$base_client_conf");
     $server_conf_file = $server->LocalFile ("$base_server_conf");
 }
-elsif  ( $mode =~ /-static/) {
+elsif ($mode =~ /-static/) {
     $base_client_conf = "client_static" . $PerlACE::svcconf_ext;
     $base_server_conf = "server_static" . $PerlACE::svcconf_ext;
     $client_conf_file = $client->LocalFile ("$base_client_conf");

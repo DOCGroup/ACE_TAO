@@ -17,7 +17,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_UIOP_Acceptor::TAO_UIOP_Acceptor (void)
+TAO_UIOP_Acceptor::TAO_UIOP_Acceptor ()
   : TAO_Acceptor (TAO_TAG_UIOP_PROFILE),
     base_acceptor_ (this),
     creation_strategy_ (0),
@@ -29,7 +29,7 @@ TAO_UIOP_Acceptor::TAO_UIOP_Acceptor (void)
 {
 }
 
-TAO_UIOP_Acceptor::~TAO_UIOP_Acceptor (void)
+TAO_UIOP_Acceptor::~TAO_UIOP_Acceptor ()
 {
   // Make sure we are closed before we start destroying the
   // strategies.
@@ -55,7 +55,6 @@ TAO_UIOP_Acceptor::create_profile (const TAO::ObjectKey &object_key,
     return this->create_shared_profile (object_key,
                                         mprofile,
                                         priority);
-
 }
 
 int
@@ -169,7 +168,7 @@ TAO_UIOP_Acceptor::is_collocated (const TAO_Endpoint *endpoint)
 }
 
 int
-TAO_UIOP_Acceptor::close (void)
+TAO_UIOP_Acceptor::close ()
 {
   if (this->unlink_on_close_)
     {
@@ -335,7 +334,7 @@ TAO_UIOP_Acceptor::rendezvous_point (ACE_UNIX_Addr &addr,
 }
 
 CORBA::ULong
-TAO_UIOP_Acceptor::endpoint_count (void)
+TAO_UIOP_Acceptor::endpoint_count ()
 {
   return 1;
 }

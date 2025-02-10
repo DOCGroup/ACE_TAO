@@ -100,7 +100,7 @@ AST_Exception::AST_Exception (UTL_ScopedName *n,
 {
 }
 
-AST_Exception::~AST_Exception (void)
+AST_Exception::~AST_Exception ()
 {
 }
 
@@ -137,9 +137,9 @@ AST_Exception::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
       // Continue until each element is visited.
       for (UTL_ScopeActiveIterator i (this, IK_decls);!i.is_done ();i.next ())
         {
-          AST_Field *field = AST_Field::narrow_from_decl (i.item ());
+          AST_Field *field = dynamic_cast<AST_Field*> (i.item ());
 
-          if (field == 0)
+          if (field == nullptr)
             // This will be an enum value or other legitimate non-field
             // member - in any case, no recursion.
             {
@@ -150,11 +150,11 @@ AST_Exception::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
 
           if (type->node_type () == AST_Decl::NT_typedef)
             {
-              AST_Typedef *td = AST_Typedef::narrow_from_decl (type);
+              AST_Typedef *td = dynamic_cast<AST_Typedef*> (type);
               type = td->primitive_base_type ();
             }
 
-          if (type == 0)
+          if (type == nullptr)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
                                  ACE_TEXT ("(%N:%l) AST_Exception::")
@@ -176,7 +176,7 @@ AST_Exception::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
   // Not in recursion.
   if (self_test)
     this->in_recursion_ = 0;
-  return 0; //this->in_recursion_;
+  return false; //this->in_recursion_;
 }
 
 // Dump this AST_Exception node to the ostream o.
@@ -198,10 +198,7 @@ AST_Exception::ast_accept (ast_visitor *visitor)
 }
 
 void
-AST_Exception::destroy (void)
+AST_Exception::destroy ()
 {
   this->AST_Structure::destroy ();
 }
-
-IMPL_NARROW_FROM_DECL(AST_Exception)
-IMPL_NARROW_FROM_SCOPE(AST_Exception)

@@ -45,12 +45,12 @@ class HostProcess
 {
 public:
   HostProcess (const ACE_CString &src, long pid);
-  ~HostProcess (void);
+  ~HostProcess ();
 
   // set/get the name of the process. This is only provided by
   // an alias supplied to the logWalker command line or manifest file.
   void proc_name (const ACE_CString &name);
-  const ACE_CString &proc_name (void) const;
+  const ACE_CString &proc_name () const;
 
   // Returns a thread instance based on thread id. Will create an instance
   // as needed.
@@ -64,9 +64,9 @@ public:
   Thread * find_thread_for_handle (long h);
 
   // Returns the process id.
-  long pid (void) const;
+  long pid () const;
 
-  const ACE_Time_Value &start_time (void) const;
+  const ACE_Time_Value &start_time () const;
   void start_time (const ACE_Time_Value &);
 
   // Return true if the supplied endpoint has been visited before. This

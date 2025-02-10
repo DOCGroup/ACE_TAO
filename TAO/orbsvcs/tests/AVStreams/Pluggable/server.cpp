@@ -51,7 +51,7 @@ FTP_Server_Callback::receive_frame (ACE_Message_Block *frame,
 }
 
 int
-FTP_Server_Callback::handle_destroy (void)
+FTP_Server_Callback::handle_destroy ()
 {
   // Called when the ftp client requests the stream to be shutdown.
   ACE_DEBUG ((LM_DEBUG,
@@ -60,12 +60,12 @@ FTP_Server_Callback::handle_destroy (void)
   return 0;
 }
 
-Server::Server (void)
+Server::Server ()
   : mmdevice_ (0)
 {
 }
 
-Server::~Server (void)
+Server::~Server ()
 {
   delete this->mmdevice_;
 }
@@ -187,13 +187,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       while ( !done )
       {
-        if ( orb->work_pending( ) )
+        if ( orb->work_pending())
         {
           orb->perform_work ();
         }
       }
 
-      orb->shutdown( 1 );
+      orb->shutdown(1);
     }
   catch (const CORBA::Exception& ex)
     {

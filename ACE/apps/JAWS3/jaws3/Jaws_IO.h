@@ -19,8 +19,7 @@ class JAWS_Export JAWS_IO_Impl
 //     Bridge Pattern.
 {
 public:
-
-  virtual ~JAWS_IO_Impl (void) {}
+  virtual ~JAWS_IO_Impl () {}
 
   // = Regular IO methods.
 
@@ -68,19 +67,17 @@ public:
                         , ACE_Message_Block *header = 0
                         , ACE_Message_Block *trailer = 0
                         ) = 0;
-
 };
 
 
 class JAWS_Export JAWS_IO
 {
 public:
-
   JAWS_IO (JAWS_IO_Impl *impl = 0);
 
-  ~JAWS_IO (void);
+  ~JAWS_IO ();
 
-  static JAWS_IO * instance (void)
+  static JAWS_IO * instance ()
   {
     return ACE_Singleton<JAWS_IO, ACE_SYNCH_MUTEX>::instance ();
   }
@@ -130,9 +127,7 @@ public:
 
 
 private:
-
   JAWS_IO_Impl *impl_;
-
 };
 
 #endif /* JAWS_IO_H */

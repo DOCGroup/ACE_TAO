@@ -6,5 +6,5 @@ Abstract: This set of documents provides help for developing applications
 Section: Programming/C++
 
 Format: html
-Index: /usr/share/doc/libace-doc/index.html
-Files: /usr/share/doc/libace-doc/*.html
+Index: /usr/share/doc/libace-dev/index.html
+Files: /usr/share/doc/libace-dev/*.html

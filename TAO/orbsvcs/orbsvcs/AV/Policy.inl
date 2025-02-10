@@ -6,7 +6,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 //--------------------------------------------------
 
 ACE_INLINE CORBA::ULong
-TAO_AV_Policy::type (void)
+TAO_AV_Policy::type ()
 {
   return this->type_;
 }
@@ -16,7 +16,7 @@ TAO_AV_Policy::type (void)
 //--------------------------------------------------
 
 ACE_INLINE CORBA::ULong
-TAO_AV_SSRC_Policy::value (void)
+TAO_AV_SSRC_Policy::value ()
 {
   return this->ssrc_;
 }
@@ -38,7 +38,7 @@ TAO_AV_Payload_Type_Policy::value (int pt)
 }
 
 ACE_INLINE int
-TAO_AV_Payload_Type_Policy::value (void)
+TAO_AV_Payload_Type_Policy::value ()
 {
   return this->payload_type_;
 }
@@ -46,7 +46,7 @@ TAO_AV_Payload_Type_Policy::value (void)
 
 // TAO_AV_RTCP_Sdes_Policy
 ACE_INLINE TAO_AV_RTCP_Sdes &
-TAO_AV_RTCP_Sdes_Policy::value (void)
+TAO_AV_RTCP_Sdes_Policy::value ()
 {
   return this->sdes_;
 }
@@ -70,7 +70,7 @@ TAO_AV_SFP_Credit_Policy::value (int credit)
 
 ACE_INLINE
 int
-TAO_AV_SFP_Credit_Policy::value (void)
+TAO_AV_SFP_Credit_Policy::value ()
 {
   return this->value_;
 }

@@ -57,7 +57,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
            i = i->cont ())
         {
           CORBA::ULong len = i->length ();
-          ACE_OS_String::memcpy (buffer, i->rd_ptr (), (size_t) len);
+          ACE_OS::memcpy (buffer, i->rd_ptr (), (size_t) len);
           buffer += len;
         }
 

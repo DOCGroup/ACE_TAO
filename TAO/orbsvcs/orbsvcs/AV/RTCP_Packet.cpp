@@ -5,7 +5,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-RTCP_Packet::RTCP_Packet(void)
+RTCP_Packet::RTCP_Packet()
 {
   this->chd_.ver_ = 2;
   this->chd_.count_ = 0;
@@ -30,7 +30,7 @@ RTCP_Packet::RTCP_Packet(char* buffer)
   this->packet_data_ = 0;
 }
 
-RTCP_Packet::~RTCP_Packet(void)
+RTCP_Packet::~RTCP_Packet()
 {
 }
 
@@ -66,7 +66,6 @@ RTCP_Packet::is_valid (char is_first)
     }
 
   return 1;
-
 }
 
 /*
@@ -136,16 +135,13 @@ RTCP_BYE_Packet::RTCP_BYE_Packet(char* buffer, int *len)
     }
 
   // Optional - store the reason for leaving
-  unsigned int temp = this->chd_.length_; // Borland reports a warning on the
-                                          // following line with out this.
   ACE_OS::memset(this->reason_, 0, sizeof(this->reason_));
-  if (temp > this->chd_.count_)
+  if (this->chd_.length_ > this->chd_.count_)
     {
       this->reason_length_ = buffer[index];
       index++;
       ACE_OS::memcpy(this->reason_, &buffer[index], this->reason_length_);
       index+=this->reason_length_;
-
     }
   else
     this->reason_length_ = 0;
@@ -159,7 +155,7 @@ RTCP_BYE_Packet::RTCP_BYE_Packet(char* buffer, int *len)
 
 //==============================================================================
 
-RTCP_BYE_Packet::~RTCP_BYE_Packet(void)
+RTCP_BYE_Packet::~RTCP_BYE_Packet()
 {
   if (this->ssrc_list_)
     delete []this->ssrc_list_;
@@ -170,7 +166,7 @@ RTCP_BYE_Packet::~RTCP_BYE_Packet(void)
 //==============================================================================
 
 unsigned int
-RTCP_BYE_Packet::packet_size(void)
+RTCP_BYE_Packet::packet_size()
 {
   ACE_UINT16 size = static_cast<ACE_UINT16> ((1+chd_.count_) * 4);
 
@@ -196,7 +192,7 @@ RTCP_BYE_Packet::ssrc_list(ACE_UINT32 **ssrc_list, unsigned char &length)
 //==============================================================================
 
 const char *
-RTCP_BYE_Packet::reason (void)
+RTCP_BYE_Packet::reason ()
 {
   ACE_CString reason = (const char *)this->reason_;
 
@@ -206,7 +202,7 @@ RTCP_BYE_Packet::reason (void)
 //==============================================================================
 
 void
-RTCP_BYE_Packet::build_packet(void)
+RTCP_BYE_Packet::build_packet()
 {
   unsigned int index;
   unsigned int i;
@@ -248,7 +244,7 @@ RTCP_BYE_Packet::build_packet(void)
 }
 
 void
-RTCP_BYE_Packet::dump (void)
+RTCP_BYE_Packet::dump ()
 {
   ORBSVCS_DEBUG ((LM_DEBUG,
               "\nRTCP_BYE_Packet:: from ssrc(s) "));
@@ -344,7 +340,7 @@ RTCP_RR_Packet::RTCP_RR_Packet (char* buffer,
 
 //==============================================================================
 
-RTCP_RR_Packet::~RTCP_RR_Packet(void)
+RTCP_RR_Packet::~RTCP_RR_Packet()
 {
   RR_Block *prev;
 
@@ -365,7 +361,7 @@ RTCP_RR_Packet::~RTCP_RR_Packet(void)
 //==============================================================================
 
 unsigned int
-RTCP_RR_Packet::packet_size(void)
+RTCP_RR_Packet::packet_size()
 {
     ACE_UINT16 size = static_cast<ACE_UINT16> ((2+this->chd_.count_*6) * 4);
     return size;
@@ -374,7 +370,7 @@ RTCP_RR_Packet::packet_size(void)
 //==============================================================================
 
 void
-RTCP_RR_Packet::build_packet(void)
+RTCP_RR_Packet::build_packet()
 {
   int index;
   RR_Block *local_block_ptr;
@@ -419,7 +415,7 @@ RTCP_RR_Packet::build_packet(void)
 }
 
 void
-RTCP_RR_Packet::dump (void)
+RTCP_RR_Packet::dump ()
 {
   RR_Block *b = this->rr_;
   int count = 1;
@@ -450,7 +446,7 @@ RTCP_RR_Packet::dump (void)
 }
 
 
-RTCP_SDES_Packet::RTCP_SDES_Packet(void) :
+RTCP_SDES_Packet::RTCP_SDES_Packet() :
                    RTCP_Packet ()
 {
   this->chd_.pt_ = RTCP_PT_SDES;
@@ -563,7 +559,7 @@ RTCP_SDES_Packet::RTCP_SDES_Packet(char* buffer, int *len):
 
 //==============================================================================
 
-RTCP_SDES_Packet::~RTCP_SDES_Packet(void)
+RTCP_SDES_Packet::~RTCP_SDES_Packet()
 {
   sdesChunk_t *cp; // pointer to chunk
   sdesChunk_t *cpprev;
@@ -778,7 +774,7 @@ RTCP_SDES_Packet::add_priv_item (ACE_UINT32 ssrc,
 //==============================================================================
 
 unsigned int
-RTCP_SDES_Packet::packet_size(void)
+RTCP_SDES_Packet::packet_size()
 {
   int size;
   sdesChunk_t *cp; // pointer to chunk
@@ -817,7 +813,7 @@ RTCP_SDES_Packet::packet_size(void)
 //==============================================================================
 
 void
-RTCP_SDES_Packet::build_packet(void)
+RTCP_SDES_Packet::build_packet()
 {
   sdesChunk_t *cp; // pointer to chunk
   sdesItem_t *ip; // pointer to item
@@ -900,7 +896,7 @@ RTCP_SDES_Packet::build_packet(void)
 }
 
 void
-RTCP_SDES_Packet::dump (void)
+RTCP_SDES_Packet::dump ()
 {
   sdesItem_t *ip;
 
@@ -1087,7 +1083,7 @@ RTCP_SR_Packet::RTCP_SR_Packet (char* buffer,
 
 //==============================================================================
 
-RTCP_SR_Packet::~RTCP_SR_Packet(void)
+RTCP_SR_Packet::~RTCP_SR_Packet()
 {
   RR_Block *prev;
 
@@ -1107,7 +1103,7 @@ RTCP_SR_Packet::~RTCP_SR_Packet(void)
 
 //==============================================================================
 
-unsigned int RTCP_SR_Packet::packet_size (void)
+unsigned int RTCP_SR_Packet::packet_size ()
 {
   ACE_UINT16 size  = static_cast<ACE_UINT16> ((2+chd_.count_*6) * 4); // + profile specific extensions ?
   size += 20; // the first line is the same as RR; 20 more bytes for SR
@@ -1117,7 +1113,7 @@ unsigned int RTCP_SR_Packet::packet_size (void)
 
 //==============================================================================
 
-void RTCP_SR_Packet::build_packet(void)
+void RTCP_SR_Packet::build_packet()
 {
   int index = 0;
   RR_Block *local_block_ptr;
@@ -1171,7 +1167,7 @@ void RTCP_SR_Packet::build_packet(void)
 }
 
 void
-RTCP_SR_Packet::dump (void)
+RTCP_SR_Packet::dump ()
 {
   RR_Block *b = this->rr_;
   int count = 1;

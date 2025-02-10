@@ -86,7 +86,7 @@ namespace ACE
       Channel (ACE_HANDLE h);
 
       /// Destructor.
-      ~Channel (void);
+      ~Channel ();
 
       enum State {
         Init,
@@ -158,39 +158,39 @@ namespace ACE
 
       // = Selectively close endpoints.
       /// Close down the reader.
-      int close_reader (void);
+      int close_reader ();
 
       /// Close down the writer.
-      int close_writer (void);
+      int close_writer ();
 
       /**
        * Close down the socket (we need this to make things work correctly
        * on Win32, which requires use to do a <close_writer> before doing
        * the close to avoid losing data).
        */
-      int close (void);
+      int close ();
 
       // = Meta-type info
       typedef ACE_INET_Addr PEER_ADDR;
 
       /// Dump the state of an object.
-      void dump (void) const;
+      void dump () const;
 
       /// Declare the dynamic allocation hooks.
       ACE_ALLOC_HOOK_DECLARE;
 
     public:
-      Session *session (void) const;
+      Session *session () const;
       void session (Session *);
 
-      Notifier *notifier (void);
+      Notifier *notifier ();
 
       void register_notifier (ACE_Reactor *r);
 
-      ACE_HANDLE get_handle (void) const;
+      ACE_HANDLE get_handle () const;
 
-      const ACE_SOCK_Stream &ace_stream (void) const;
-      ACE_SOCK_Stream &ace_stream (void);
+      const ACE_SOCK_Stream &ace_stream () const;
+      ACE_SOCK_Stream &ace_stream ();
 
       ///@notes Added the following methods to continue with
       /// current compilation of HTIOP. Might not be needed in
@@ -214,25 +214,24 @@ namespace ACE
       //@}
 
       // buffer related methods.
-      ACE_Message_Block &leftovers (void);
-      size_t data_len (void) const;
+      ACE_Message_Block &leftovers ();
+      size_t data_len () const;
       void data_len (size_t n);
-      size_t data_consumed (void) const;
+      size_t data_consumed () const;
       void data_consumed (size_t n);
-      int load_buffer (void);
-      int flush_buffer (void);
-      int recv_ack (void);
-      int send_ack (void);
+      int load_buffer ();
+      int flush_buffer ();
+      int recv_ack ();
+      int send_ack ();
       unsigned long request_count();
-      Filter *filter (void) const;
+      Filter *filter () const;
       void filter (Filter *);
-      State state (void) const;
+      State state () const;
       void state (Channel::State s);
-      int pre_recv(void);
-      int consume_error (void);
+      int pre_recv();
+      int consume_error ();
 
     private:
-
       /// The filter_ is a pluggable component used to manage the
       /// wrapping of data in a way suitable for the proxy to
       /// manage. The actual filter instance is owned by the

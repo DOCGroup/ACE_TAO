@@ -1,4 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
 /*
 
 COPYRIGHT
@@ -92,28 +91,18 @@ public:
                 AST_Expression *ev,
                 UTL_ScopedName *n);
 
-  virtual ~AST_Constant (void);
+  virtual ~AST_Constant ();
 
   // Data Accessors.
-  AST_Expression *constant_value (void);
-  AST_Expression::ExprType et (void);
+  AST_Expression *constant_value ();
+  AST_Expression::ExprType et ();
 
   // Accessors for the private member.
-  bool ifr_added (void);
+  bool ifr_added ();
   void ifr_added (bool val);
 
-  const char *exprtype_to_string (void);
-  // Returns the appropriate type.
-
-  static const char *exprtype_to_string (AST_Expression::ExprType et);
-  // For use with ORBs without the CORBA namespace.
-
-  UTL_ScopedName *enum_full_name (void);
+  UTL_ScopedName *enum_full_name ();
   // If our type is enum, we have to generate the scoped name.
-
-  // Narrowing
-
-  DEF_NARROW_FROM_DECL(AST_Constant);
 
   // AST Dumping.
   virtual void dump (ACE_OSTREAM_TYPE &o);
@@ -122,7 +111,7 @@ public:
   virtual int ast_accept (ast_visitor *visitor);
 
   // Cleanup.
-  virtual void destroy (void);
+  virtual void destroy ();
 
   static AST_Decl::NodeType const NT;
 

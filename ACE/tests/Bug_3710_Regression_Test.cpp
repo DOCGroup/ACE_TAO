@@ -12,7 +12,6 @@
 #include "ace/OS_Memory.h"
 
 
-
 // Main function.
 
 int

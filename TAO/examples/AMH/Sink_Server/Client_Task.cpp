@@ -15,7 +15,7 @@ Client_Task::Client_Task (int &argc, ACE_TCHAR **argv)
 }
 
 int
-Client_Task::parse_args (void)
+Client_Task::parse_args ()
 {
     ACE_Get_Opt get_opts (this->argc_, this->argv_, "k:n:O:");
     int c;
@@ -53,7 +53,7 @@ Client_Task::parse_args (void)
 }
 
 void
-Client_Task::try_RT_scheduling (void)
+Client_Task::try_RT_scheduling ()
 {
   int priority =
     (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO)
@@ -61,7 +61,7 @@ Client_Task::try_RT_scheduling (void)
   priority = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO,
                                               priority);
 
-  // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
+  // Enable FIFO scheduling
   if (ACE_OS::sched_params (ACE_Sched_Params (ACE_SCHED_FIFO,
                                               priority,
                                               ACE_SCOPE_PROCESS)) != 0)
@@ -106,7 +106,7 @@ Client_Task::narrow_servant (CORBA::ORB_ptr orb)
 }
 
 int
-Client_Task::run_test (void)
+Client_Task::run_test ()
 {
   ACE_hrtime_t test_start = 0;
   ACE_hrtime_t test_end = 0;
@@ -147,7 +147,7 @@ Client_Task::run_test (void)
 }
 
 int
-Client_Task::svc (void)
+Client_Task::svc ()
 {
   try
     {

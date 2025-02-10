@@ -10,7 +10,6 @@ class ClientInterceptor:
   public virtual PortableInterceptor::ClientRequestInterceptor,
   public virtual ::CORBA::LocalObject
 {
-
  public:
   ClientInterceptor (IOP::CodecFactory_var) ;
 

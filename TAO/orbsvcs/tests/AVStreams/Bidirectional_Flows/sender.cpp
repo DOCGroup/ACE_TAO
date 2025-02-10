@@ -33,7 +33,7 @@ Sender_StreamEndPoint::set_protocol_object (const char *,
   return 0;
 }
 
-Sender_Callback::Sender_Callback (void)
+Sender_Callback::Sender_Callback ()
   : frame_count_ (1)
 {
 }
@@ -73,7 +73,7 @@ Sender_Callback::receive_frame (ACE_Message_Block *frame,
   return 0;
 }
 
-Sender::Sender (void)
+Sender::Sender ()
   : sender_mmdevice_ (0),
     streamctrl_ (0),
     frame_count_ (0),
@@ -95,13 +95,13 @@ Sender::protocol_object (TAO_AV_Protocol_Object *object)
 }
 
 int
-Sender::eof (void)
+Sender::eof ()
 {
   return this->eof_;
 }
 
 void
-Sender::shutdown (void)
+Sender::shutdown ()
 {
   try
   {
@@ -152,7 +152,7 @@ Sender::parse_args (int argc,
 
 // Method to get the object reference of the receiver
 int
-Sender::bind_to_receiver (void)
+Sender::bind_to_receiver ()
 {
   CosNaming::Name name (1);
   name.length (1);
@@ -282,7 +282,7 @@ Sender::init (int argc,
 
 // Method to send data at the specified rate
 int
-Sender::pace_data (void)
+Sender::pace_data ()
 {
   // The time that should lapse between two consecutive frames sent.
   ACE_Time_Value inter_frame_time;
@@ -382,7 +382,6 @@ Sender::pace_data (void)
 
           // Reset the message block.
           this->mb_.reset ();
-
         } // end while
 
          // File reading is complete, destroy the stream.

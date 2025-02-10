@@ -34,19 +34,18 @@
 class Identity_Server
 {
 public:
-
   /// Default constructor.
-  Identity_Server (void);
+  Identity_Server ();
 
   /// Destructor.
-  ~Identity_Server (void);
+  ~Identity_Server ();
 
   /// Performs all the initializations necessary before going into the
   /// ORB event loop.
   int init (int argc, ACE_TCHAR *argv[]);
 
   /// Run the server.
-  int run (void);
+  int run ();
 
 private:
   /// Parses the commandline arguments.

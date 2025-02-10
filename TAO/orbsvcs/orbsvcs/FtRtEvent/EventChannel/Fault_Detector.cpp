@@ -11,7 +11,7 @@ Fault_Detector::ReactorTask::ReactorTask()
 }
 
 int
-Fault_Detector::ReactorTask::svc (void)
+Fault_Detector::ReactorTask::svc ()
 {
   this->reactor_.owner(ACE_OS::thr_self());
   this->reactor_.run_reactor_event_loop();

@@ -12,7 +12,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int
-TAO_OC_Endpoint_Selector_Loader::init (void)
+TAO_OC_Endpoint_Selector_Loader::init ()
 {
   return  ACE_Service_Config::process_directive (ace_svc_desc_TAO_OC_Endpoint_Selector_Factory);
 }

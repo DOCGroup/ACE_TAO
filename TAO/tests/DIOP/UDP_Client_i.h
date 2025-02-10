@@ -37,11 +37,11 @@ public:
                 ACE_UINT32 iterations);
 
   /// Destructor
-  virtual ~UDP_Client_i (void);
+  virtual ~UDP_Client_i ();
 
 private:
   // Runs in a separate thread.
-  virtual int svc (void );
+  virtual int svc ();
 
 private:
   CORBA::ORB_var orb_;

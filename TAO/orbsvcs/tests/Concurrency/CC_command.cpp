@@ -20,7 +20,7 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_string.h"
 
-CC_Command::~CC_Command(void)
+CC_Command::~CC_Command()
 {
 }
 
@@ -29,7 +29,7 @@ int CC_Command::execute()
   return 0;
 }
 
-CC_Command::CC_Command(void)
+CC_Command::CC_Command()
 {
 }
 
@@ -88,7 +88,7 @@ CC_Start_Cmd::~CC_Start_Cmd()
     }
 }
 
-int CC_Start_Cmd::execute(void)
+int CC_Start_Cmd::execute()
 {
   if (excep_)
     {
@@ -136,7 +136,7 @@ CC_CreateLockSet_Cmd::~CC_CreateLockSet_Cmd()
     }
 }
 
-int CC_CreateLockSet_Cmd::execute(void)
+int CC_CreateLockSet_Cmd::execute()
 {
   if(excep_)
     {
@@ -165,7 +165,7 @@ int CC_CreateLockSet_Cmd::execute(void)
     }
   catch (const CORBA::Exception& ex)
     {
-      ex._tao_print_exception ("CC_CreateLockSet_Cmd::execute(void)");
+      ex._tao_print_exception ("CC_CreateLockSet_Cmd::execute()");
     }
 
   return 1; // CC_SUCCESS
@@ -185,7 +185,7 @@ CC_Lock_Cmd::~CC_Lock_Cmd()
   ACE_OS::free (this->name_);
 }
 
-int CC_Lock_Cmd::execute(void)
+int CC_Lock_Cmd::execute()
 {
   if(excep_)
     {
@@ -206,7 +206,7 @@ int CC_Lock_Cmd::execute(void)
     }
   catch (const CORBA::Exception& ex)
     {
-      ex._tao_print_exception ("CC_Lock_Cmd::execute(void)");
+      ex._tao_print_exception ("CC_Lock_Cmd::execute()");
       return 0;
     }
   return 1; // CC_SUCCESS
@@ -226,7 +226,7 @@ CC_UnLock_Cmd::~CC_UnLock_Cmd()
   ACE_OS::free (this->name_);
 }
 
-int CC_UnLock_Cmd::execute(void)
+int CC_UnLock_Cmd::execute()
 {
   if(excep_)
     {
@@ -244,11 +244,10 @@ int CC_UnLock_Cmd::execute(void)
       CosConcurrencyControl::LockSet_var ccls = GetLockSet(name_);
 
       ccls->unlock (mode_);
-
     }
   catch (const CORBA::Exception& ex)
     {
-      ex._tao_print_exception ("CC_UnLock_Cmd::execute(void)");
+      ex._tao_print_exception ("CC_UnLock_Cmd::execute()");
       return 0;
     }
   return 1; // CC_SUCCESS
@@ -268,7 +267,7 @@ CC_TryLock_Cmd::~CC_TryLock_Cmd()
   ACE_OS::free (this->name_);
 }
 
-int CC_TryLock_Cmd::execute(void)
+int CC_TryLock_Cmd::execute()
 {
   if(excep_)
     {
@@ -302,7 +301,7 @@ int CC_TryLock_Cmd::execute(void)
     }
   catch (const CORBA::Exception& ex)
     {
-      ex._tao_print_exception ("CC_TryLock_Cmd::execute(void)");
+      ex._tao_print_exception ("CC_TryLock_Cmd::execute()");
       return 0;
     }
 
@@ -328,7 +327,7 @@ CC_ChangeMode_Cmd::~CC_ChangeMode_Cmd()
   ACE_OS::strdup (this->name_);
 }
 
-int CC_ChangeMode_Cmd::execute(void)
+int CC_ChangeMode_Cmd::execute()
 {
   if(excep_)
     {
@@ -347,11 +346,10 @@ int CC_ChangeMode_Cmd::execute(void)
       CosConcurrencyControl::LockSet_var ccls = GetLockSet(name_);
 
       ccls->change_mode (held_mode_, new_mode_);
-
     }
   catch (const CORBA::Exception& ex)
     {
-      ex._tao_print_exception ("CC_ChangeMode_Cmd::execute(void)");
+      ex._tao_print_exception ("CC_ChangeMode_Cmd::execute()");
     }
   return 1; // CC_SUCCESS
 }
@@ -365,7 +363,7 @@ CC_Sleep_Cmd::~CC_Sleep_Cmd()
 {
 }
 
-int CC_Sleep_Cmd::execute(void)
+int CC_Sleep_Cmd::execute()
 {
   if(excep_)
     {
@@ -390,7 +388,7 @@ CC_Repeat_Cmd::~CC_Repeat_Cmd()
 {
 }
 
-int CC_Repeat_Cmd::execute(void)
+int CC_Repeat_Cmd::execute()
 {
   if(excep_)
     {
@@ -415,7 +413,7 @@ CC_Wait_Cmd::~CC_Wait_Cmd()
   ACE_OS::free (this->prompt_);
 }
 
-int CC_Wait_Cmd::execute(void)
+int CC_Wait_Cmd::execute()
 {
   if (excep_)
     {
@@ -439,13 +437,13 @@ CC_Excep_Cmd::CC_Excep_Cmd (const char *excep)
   //  printf("CC_Excep_Cmd::CC_Excep_Cmd: excep: %s\n", excep);
 }
 
-CC_Excep_Cmd::~CC_Excep_Cmd(void)
+CC_Excep_Cmd::~CC_Excep_Cmd()
 {
   ACE_OS::free (this->ex_);
 }
 
 int
-CC_Excep_Cmd::execute(void)
+CC_Excep_Cmd::execute()
 {
   ACE_OS::printf ("Executing excep command (expected: %s)\n", ex_);
   // First we check to see if an exception has occurred. If not we fail
@@ -469,16 +467,16 @@ CC_Excep_Cmd::execute(void)
     }
 }
 
-CC_Dummy_Cmd::CC_Dummy_Cmd(void)
+CC_Dummy_Cmd::CC_Dummy_Cmd()
 {
 }
 
-CC_Dummy_Cmd::~CC_Dummy_Cmd(void)
+CC_Dummy_Cmd::~CC_Dummy_Cmd()
 {
 }
 
 int
-CC_Dummy_Cmd::execute(void)
+CC_Dummy_Cmd::execute()
 {
   return 1; // CC_SUCCESS
 }
@@ -488,13 +486,13 @@ CC_Print_Cmd::CC_Print_Cmd (const char * message)
 {
 }
 
-CC_Print_Cmd::~CC_Print_Cmd(void)
+CC_Print_Cmd::~CC_Print_Cmd()
 {
   ACE_OS::free(msg_);
 }
 
 int
-CC_Print_Cmd::execute(void)
+CC_Print_Cmd::execute()
 {
   ACE_OS::printf ("%s\n", msg_);
   return 1; // CC_SUCCESS
@@ -515,7 +513,7 @@ CC_Lookup_Cmd::~CC_Lookup_Cmd()
 }
 
 int
-CC_Lookup_Cmd::execute(void)
+CC_Lookup_Cmd::execute()
 {
   if(excep_)
     {
@@ -540,11 +538,10 @@ CC_Lookup_Cmd::execute(void)
             CosConcurrencyControl::LockSet::_narrow (ccls_obj.in ());
 
           cc_lockset_ = ccls;
-
         }
       catch (const CORBA::Exception& ex)
         {
-          ex._tao_print_exception ("CC_UnLock_Cmd::execute(void)");
+          ex._tao_print_exception ("CC_UnLock_Cmd::execute()");
         }
     }
   return 1; // CC_SUCCESS
@@ -555,17 +552,17 @@ CC_CommandElem::CC_CommandElem(CC_Command *cmd, CC_CommandElem *next)
 {
 }
 
-CC_CommandElem::~CC_CommandElem(void)
+CC_CommandElem::~CC_CommandElem()
 {
 }
 
-CC_Command *CC_CommandElem::GetCommand(void)
+CC_Command *CC_CommandElem::GetCommand()
 {
   return cmd_;
 }
 
 CC_CommandElem *
-CC_CommandElem::GetNext(void)
+CC_CommandElem::GetNext()
 {
   return next_;
 }
@@ -576,13 +573,13 @@ CC_CommandElem::SetNext(CC_CommandElem *next)
   next_ = next;
 }
 
-CC_CommandList::CC_CommandList(void)
+CC_CommandList::CC_CommandList()
   : head_ (0), last_ (0), times_ (1)
 {
   ACE_OS::printf("CC_CommandList::CC_CommandList\n");
 }
 
-CC_CommandList::~CC_CommandList(void)
+CC_CommandList::~CC_CommandList()
 {
 }
 
@@ -604,7 +601,7 @@ CC_CommandList::add(CC_Command *cmd)
 }
 
 int
-CC_CommandList::execute(void)
+CC_CommandList::execute()
 {
   CC_CommandElem *current = head_;
 

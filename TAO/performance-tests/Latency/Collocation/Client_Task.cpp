@@ -17,7 +17,7 @@ Client_Task::Client_Task (Test::Roundtrip_ptr reference,
 }
 
 int
-Client_Task::svc (void)
+Client_Task::svc ()
 {
   try
     {
@@ -77,5 +77,4 @@ Client_Task::svc (void)
     }
 
   return 0;
-
 }

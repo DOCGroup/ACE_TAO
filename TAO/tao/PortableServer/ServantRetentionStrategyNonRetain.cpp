@@ -24,12 +24,6 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    ServantRetentionStrategyNonRetain::ServantRetentionStrategyNonRetain (void) :
-      poa_ (0),
-      sys_id_count_ (0)
-    {
-    }
-
     void
     ServantRetentionStrategyNonRetain::strategy_init (TAO_Root_POA *poa)
     {
@@ -37,9 +31,9 @@ namespace TAO
     }
 
     void
-    ServantRetentionStrategyNonRetain::strategy_cleanup (void)
+    ServantRetentionStrategyNonRetain::strategy_cleanup ()
     {
-      poa_ = 0;
+      poa_ = nullptr;
     }
 
     void
@@ -87,12 +81,12 @@ namespace TAO
       throw PortableServer::POA::WrongPolicy ();
     }
 
-    TAO_SERVANT_LOCATION
+    TAO_Servant_Location
     ServantRetentionStrategyNonRetain::servant_present (
       const PortableServer::ObjectId &/*system_id*/,
       PortableServer::Servant &/*servant*/)
     {
-      return TAO_SERVANT_NOT_FOUND;
+      return TAO_Servant_Location::Not_Found;
     }
 
     PortableServer::Servant
@@ -129,13 +123,13 @@ namespace TAO
     }
 
     CORBA::ULong
-    ServantRetentionStrategyNonRetain::waiting_servant_deactivation (void) const
+    ServantRetentionStrategyNonRetain::waiting_servant_deactivation () const
     {
       return 0;
     }
 
     void
-    ServantRetentionStrategyNonRetain::deactivate_all_objects (void)
+    ServantRetentionStrategyNonRetain::deactivate_all_objects ()
     {
     }
 

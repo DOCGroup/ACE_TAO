@@ -33,7 +33,7 @@ public:
 
   void twoway_work_test (CORBA::ULong work);
 
-  void shutdown (void);
+  void shutdown ();
 
 private:
   /// The ORB

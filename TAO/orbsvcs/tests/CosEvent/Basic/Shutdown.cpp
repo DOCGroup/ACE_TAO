@@ -33,7 +33,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // ****************************************************************
 
-      poa->destroy (1, 1);
+      poa->destroy (true, true);
 
       orb->destroy ();
     }

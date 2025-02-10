@@ -75,10 +75,10 @@ class TAO_AnyTypeCode_Export TAO_Marshal_Object
 {
 public:
   /// constructor
-  TAO_Marshal_Object (void);
+  TAO_Marshal_Object ();
 
   /// destructor
-  virtual ~TAO_Marshal_Object (void);
+  virtual ~TAO_Marshal_Object ();
 
   /// skip entry point, it allocates the right kind of Marshal_Object
   /// and invokes skip on it.
@@ -111,7 +111,7 @@ public:
 class TAO_AnyTypeCode_Export TAO_Marshal_Primitive: public TAO_Marshal_Object
 {
 public:
-  TAO_Marshal_Primitive (void);
+  TAO_Marshal_Primitive ();
 
   /// skip operation
   virtual TAO::traverse_status skip (CORBA::TypeCode_ptr tc,
@@ -133,7 +133,7 @@ public:
 class TAO_AnyTypeCode_Export TAO_Marshal_Any: public TAO_Marshal_Object
 {
 public:
-  TAO_Marshal_Any (void);
+  TAO_Marshal_Any ();
 
   /// skip operation
   virtual TAO::traverse_status skip (CORBA::TypeCode_ptr tc,
@@ -155,7 +155,7 @@ public:
 class TAO_AnyTypeCode_Export TAO_Marshal_TypeCode: public TAO_Marshal_Object
 {
 public:
-  TAO_Marshal_TypeCode (void);
+  TAO_Marshal_TypeCode ();
 
   /// skip operation
   virtual TAO::traverse_status skip (CORBA::TypeCode_ptr tc,
@@ -177,7 +177,7 @@ public:
 class TAO_AnyTypeCode_Export TAO_Marshal_Principal: public TAO_Marshal_Object
 {
 public:
-  TAO_Marshal_Principal (void);
+  TAO_Marshal_Principal ();
 
   /// skip operation
   virtual TAO::traverse_status skip (CORBA::TypeCode_ptr tc,
@@ -199,7 +199,7 @@ public:
 class TAO_AnyTypeCode_Export TAO_Marshal_ObjRef: public TAO_Marshal_Object
 {
 public:
-  TAO_Marshal_ObjRef (void);
+  TAO_Marshal_ObjRef ();
 
   /// skip operation
   virtual TAO::traverse_status skip (CORBA::TypeCode_ptr tc,
@@ -221,7 +221,7 @@ public:
 class TAO_AnyTypeCode_Export TAO_Marshal_Struct : public TAO_Marshal_Object
 {
 public:
-  TAO_Marshal_Struct (void);
+  TAO_Marshal_Struct ();
 
   /// skip operation
   virtual TAO::traverse_status skip (CORBA::TypeCode_ptr tc,
@@ -243,7 +243,7 @@ public:
 class TAO_AnyTypeCode_Export TAO_Marshal_Union: public TAO_Marshal_Object
 {
 public:
-  TAO_Marshal_Union (void);
+  TAO_Marshal_Union ();
 
   /// skip operation
   virtual TAO::traverse_status skip (CORBA::TypeCode_ptr tc,
@@ -265,7 +265,7 @@ public:
 class TAO_AnyTypeCode_Export TAO_Marshal_String: public TAO_Marshal_Object
 {
 public:
-  TAO_Marshal_String (void);
+  TAO_Marshal_String ();
 
   /// skip operation
   virtual TAO::traverse_status skip (CORBA::TypeCode_ptr tc,
@@ -287,7 +287,7 @@ public:
 class TAO_AnyTypeCode_Export TAO_Marshal_Sequence: public TAO_Marshal_Object
 {
 public:
-  TAO_Marshal_Sequence (void);
+  TAO_Marshal_Sequence ();
 
   /// skip operation
   virtual TAO::traverse_status skip (CORBA::TypeCode_ptr tc,
@@ -309,7 +309,7 @@ public:
 class TAO_AnyTypeCode_Export TAO_Marshal_Array: public TAO_Marshal_Object
 {
 public:
-  TAO_Marshal_Array (void);
+  TAO_Marshal_Array ();
 
   /// skip operation
   virtual TAO::traverse_status skip (CORBA::TypeCode_ptr tc,
@@ -331,7 +331,7 @@ public:
 class TAO_AnyTypeCode_Export TAO_Marshal_Alias: public TAO_Marshal_Object
 {
 public:
-  TAO_Marshal_Alias (void);
+  TAO_Marshal_Alias ();
 
   /// skip operation
   virtual TAO::traverse_status skip (CORBA::TypeCode_ptr tc,
@@ -353,7 +353,7 @@ public:
 class TAO_AnyTypeCode_Export TAO_Marshal_Except: public TAO_Marshal_Object
 {
 public:
-  TAO_Marshal_Except (void);
+  TAO_Marshal_Except ();
 
   /// skip operation
   virtual TAO::traverse_status skip (CORBA::TypeCode_ptr tc,
@@ -375,7 +375,7 @@ public:
 class TAO_AnyTypeCode_Export TAO_Marshal_WString : public TAO_Marshal_Object
 {
 public:
-  TAO_Marshal_WString (void);
+  TAO_Marshal_WString ();
 
   /// skip operation
   virtual TAO::traverse_status skip (CORBA::TypeCode_ptr tc,
@@ -397,7 +397,7 @@ public:
 class TAO_AnyTypeCode_Export TAO_Marshal_Value: public TAO_Marshal_Object
 {
 public:
-  TAO_Marshal_Value (void);
+  TAO_Marshal_Value ();
 
   /// skip operation
   virtual TAO::traverse_status skip (CORBA::TypeCode_ptr tc,

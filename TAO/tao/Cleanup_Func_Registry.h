@@ -39,15 +39,13 @@ class TAO_Export TAO_Cleanup_Func_Registry
   friend class TAO_ORB_Core;
 
 public:
-
   /// Constructor.
-  TAO_Cleanup_Func_Registry (void);
+  TAO_Cleanup_Func_Registry () = default;
 
   /// Return the number of registered cleanup functions.
-  size_t size (void) const;
+  size_t size () const;
 
 protected:
-
   /// Register a cleanup function.  The number of slot the cleanup
   /// function is placed is in will match the one reserved for the
   /// corresponding thread specific object in the ORB Core TSS
@@ -60,8 +58,8 @@ protected:
   void cleanup (ACE_Array_Base<void *> &ts_objects);
 
 private:
-  ACE_UNIMPLEMENTED_FUNC (TAO_Cleanup_Func_Registry (const TAO_Cleanup_Func_Registry &))
-  ACE_UNIMPLEMENTED_FUNC (TAO_Cleanup_Func_Registry &operator= (const TAO_Cleanup_Func_Registry &))
+  TAO_Cleanup_Func_Registry (const TAO_Cleanup_Func_Registry &) = delete;
+  TAO_Cleanup_Func_Registry &operator= (const TAO_Cleanup_Func_Registry &) = delete;
 
   /// Array of registered cleanup functions.  The number of
   /// registered cleanup functions should be the same as the number

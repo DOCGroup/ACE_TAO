@@ -23,25 +23,25 @@ TAO_Leader_Follower::TAO_Leader_Follower (TAO_ORB_Core* orb_core,
 }
 
 ACE_INLINE TAO_ORB_Core_TSS_Resources *
-TAO_Leader_Follower::get_tss_resources (void) const
+TAO_Leader_Follower::get_tss_resources () const
 {
   return this->orb_core_->get_tss_resources ();
 }
 
 ACE_INLINE void
-TAO_Leader_Follower::set_avoid_client_leader (void)
+TAO_Leader_Follower::set_avoid_client_leader ()
 {
   this->avoid_client_leader_ = true;
 }
 
 ACE_INLINE bool
-TAO_Leader_Follower::follower_available (void) const
+TAO_Leader_Follower::follower_available () const
 {
   return !this->follower_set_.is_empty ();
 }
 
 ACE_INLINE bool
-TAO_Leader_Follower::no_leaders_available (void)
+TAO_Leader_Follower::no_leaders_available ()
 {
   if (this->new_leader_generator_)
     return this->new_leader_generator_->no_leaders_available ();
@@ -49,7 +49,7 @@ TAO_Leader_Follower::no_leaders_available (void)
 }
 
 ACE_INLINE int
-TAO_Leader_Follower::elect_new_leader (void)
+TAO_Leader_Follower::elect_new_leader ()
 {
   if (this->leaders_ == 0)
     {
@@ -119,7 +119,7 @@ TAO_Leader_Follower::reset_event_loop_thread_i (TAO_ORB_Core_TSS_Resources *tss)
 }
 
 ACE_INLINE void
-TAO_Leader_Follower::reset_event_loop_thread (void)
+TAO_Leader_Follower::reset_event_loop_thread ()
 {
   TAO_ORB_Core_TSS_Resources *tss = this->get_tss_resources ();
   if (tss->event_loop_thread_ > 0)
@@ -127,13 +127,13 @@ TAO_Leader_Follower::reset_event_loop_thread (void)
 }
 
 ACE_INLINE TAO_SYNCH_MUTEX &
-TAO_Leader_Follower::lock (void)
+TAO_Leader_Follower::lock ()
 {
   return this->lock_;
 }
 
 ACE_INLINE void
-TAO_Leader_Follower::set_upcall_thread (void)
+TAO_Leader_Follower::set_upcall_thread ()
 {
   TAO_ORB_Core_TSS_Resources *tss = this->get_tss_resources ();
 
@@ -158,13 +158,13 @@ TAO_Leader_Follower::set_upcall_thread (void)
 }
 
 ACE_INLINE bool
-TAO_Leader_Follower::leader_available (void) const
+TAO_Leader_Follower::leader_available () const
 {
   return this->leaders_ != 0;
 }
 
 ACE_INLINE void
-TAO_Leader_Follower::set_client_leader_thread (void)
+TAO_Leader_Follower::set_client_leader_thread ()
 {
   TAO_ORB_Core_TSS_Resources *tss = this->get_tss_resources ();
   ++this->leaders_;
@@ -173,7 +173,7 @@ TAO_Leader_Follower::set_client_leader_thread (void)
 }
 
 ACE_INLINE void
-TAO_Leader_Follower::reset_client_leader_thread (void)
+TAO_Leader_Follower::reset_client_leader_thread ()
 {
   TAO_ORB_Core_TSS_Resources *tss = this->get_tss_resources ();
   // We may be called twice when we gave up leadership from
@@ -188,7 +188,7 @@ TAO_Leader_Follower::reset_client_leader_thread (void)
 }
 
 ACE_INLINE bool
-TAO_Leader_Follower::is_client_leader_thread (void) const
+TAO_Leader_Follower::is_client_leader_thread () const
 {
   TAO_ORB_Core_TSS_Resources *tss = this->get_tss_resources ();
   return tss->client_leader_thread_ != 0;
@@ -207,13 +207,13 @@ TAO_Leader_Follower::remove_follower (TAO_LF_Follower *follower)
 }
 
 ACE_INLINE ACE_Reverse_Lock<TAO_SYNCH_MUTEX> &
-TAO_Leader_Follower::reverse_lock (void)
+TAO_Leader_Follower::reverse_lock ()
 {
   return this->reverse_lock_;
 }
 
 ACE_INLINE bool
-TAO_Leader_Follower::has_clients (void) const
+TAO_Leader_Follower::has_clients () const
 {
   return this->clients_;
 }
@@ -234,7 +234,7 @@ TAO_LF_Client_Thread_Helper::TAO_LF_Client_Thread_Helper (TAO_Leader_Follower &l
 }
 
 ACE_INLINE
-TAO_LF_Client_Thread_Helper::~TAO_LF_Client_Thread_Helper (void)
+TAO_LF_Client_Thread_Helper::~TAO_LF_Client_Thread_Helper ()
 {
   this->leader_follower_.reset_client_thread ();
 }
@@ -247,7 +247,7 @@ TAO_LF_Client_Leader_Thread_Helper::TAO_LF_Client_Leader_Thread_Helper (TAO_Lead
 }
 
 ACE_INLINE
-TAO_LF_Client_Leader_Thread_Helper::~TAO_LF_Client_Leader_Thread_Helper (void)
+TAO_LF_Client_Leader_Thread_Helper::~TAO_LF_Client_Leader_Thread_Helper ()
 {
   this->leader_follower_.reset_client_leader_thread ();
 }

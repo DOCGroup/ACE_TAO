@@ -23,7 +23,6 @@ public:
   /// ctor
   Test_i (CORBA::ORB_ptr orb,
           A::AMI_TestHandler_ptr rh,
-          CORBA::ULong max_count = 10,
           A::RunMode mode = A::RM_SLAVE);
 
   void set_opponent (A::Test_ptr opp);
@@ -36,7 +35,7 @@ public:
   virtual void report (
     const char * msg);
 
-  void shutdown (void);
+  void shutdown ();
 
 private:
   CORBA::ORB_var orb_;
@@ -44,8 +43,6 @@ private:
   A::AMI_TestHandler_var rh_;
 
   A::Test_var opponent_;
-
-  CORBA::ULong max_count_;
 
   A::RunMode mode_;
 
@@ -115,7 +112,6 @@ public:
 private:
   TestHandler evh_;
 };
-
 
 
 #endif /* TAO_MSAE_TEST_I_H */

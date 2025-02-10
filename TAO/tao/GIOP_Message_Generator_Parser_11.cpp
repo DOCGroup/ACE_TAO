@@ -4,7 +4,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::Octet
-TAO_GIOP_Message_Generator_Parser_11::minor_version (void) const
+TAO_GIOP_Message_Generator_Parser_11::minor_version () const
 {
   return static_cast<CORBA::Octet> (1);
 }

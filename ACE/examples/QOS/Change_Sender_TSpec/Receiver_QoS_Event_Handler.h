@@ -22,18 +22,18 @@ class Receiver_QoS_Event_Handler : public ACE_Event_Handler
 {
 public:
   /// Constructor.
-  Receiver_QoS_Event_Handler (void);
+  Receiver_QoS_Event_Handler ();
 
   /// Constructor.
   Receiver_QoS_Event_Handler (const ACE_SOCK_Dgram_Mcast_QoS &dgram_mcast_qos,
                               ACE_QoS_Session *qos_session);
 
   /// Destructor.
-  ~Receiver_QoS_Event_Handler (void);
+  ~Receiver_QoS_Event_Handler ();
 
   /// Override this to return the handle of the Dgram_Mcast
   /// that we are using.
-  virtual ACE_HANDLE get_handle (void) const;
+  virtual ACE_HANDLE get_handle () const;
 
   /// Handles a READ event.
   virtual int handle_input (ACE_HANDLE fd);
@@ -48,6 +48,5 @@ private:
 };
 
 #endif  /* RECEIVER_QOS_EVENT_HANDLER_H */
-
 
 

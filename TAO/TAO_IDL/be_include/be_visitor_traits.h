@@ -25,7 +25,7 @@ class be_visitor_traits : public be_visitor_scope
 public:
   be_visitor_traits (be_visitor_context *ctx);
 
-  virtual ~be_visitor_traits (void);
+  virtual ~be_visitor_traits ();
 
   virtual int visit_root (be_root *node);
   virtual int visit_module (be_module *node);

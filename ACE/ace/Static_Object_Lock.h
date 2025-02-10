@@ -40,11 +40,11 @@ class ACE_Export ACE_Static_Object_Lock
 {
 public:
   /// Static lock access point.
-  static ACE_Recursive_Thread_Mutex *instance (void);
+  static ACE_Recursive_Thread_Mutex *instance ();
 
   /// For use only by ACE_Object_Manager to clean up lock if it
   /// what dynamically allocated.
-  static void cleanup_lock (void);
+  static void cleanup_lock ();
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

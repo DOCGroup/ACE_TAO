@@ -26,12 +26,12 @@
 class TAO_CosEventChannelFactory_i :
   public virtual POA_CosEventChannelFactory::ChannelFactory
 {
- public:
+public:
   /// Constructor.
-  TAO_CosEventChannelFactory_i (void);
+  TAO_CosEventChannelFactory_i ();
 
   /// Destructor.
-  ~TAO_CosEventChannelFactory_i (void);
+  ~TAO_CosEventChannelFactory_i () = default;
 
   /**
    * This method creates a child poa with <poa> as the
@@ -57,30 +57,16 @@ class TAO_CosEventChannelFactory_i :
             CosNaming::NamingContext_ptr naming = CosNaming::NamingContext::_nil ());
 
   // = CosEventChannelFactory::ChannelFactory methods.
-  virtual CosEventChannelAdmin::EventChannel_ptr create
-    (
-     const char * channel_id,
-     CORBA::Boolean store_in_naming_service
-     );
+  virtual CosEventChannelAdmin::EventChannel_ptr create (const char * channel_id,
+                                                         CORBA::Boolean store_in_naming_service);
 
-  virtual void destroy
-    (
-     const char * channel_id,
-     CORBA::Boolean unbind_from_naming_service
-     );
+  virtual void destroy (const char * channel_id, CORBA::Boolean unbind_from_naming_service);
 
-  virtual CosEventChannelAdmin::EventChannel_ptr find
-    (
-     const char * channel_id
-     );
+  virtual CosEventChannelAdmin::EventChannel_ptr find (const char * channel_id);
 
-  virtual char * find_channel_id
-    (
-     CosEventChannelAdmin::EventChannel_ptr channel
-     );
- protected:
-
-  /// The Poa with which we activate all the Event Channels.
+  virtual char * find_channel_id (CosEventChannelAdmin::EventChannel_ptr channel);
+protected:
+  /// The POA with which we activate all the Event Channels.
   PortableServer::POA_var poa_;
 
   /// The naming context to use.

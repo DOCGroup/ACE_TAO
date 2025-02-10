@@ -6,7 +6,7 @@
 #define SHM_KEY (key_t) 5678
 
 static void
-client (void)
+client ()
 {
   ACE_Shared_Memory_SV shm_client (SHM_KEY, SHMSZ);
   char *shm = (char *) shm_client.malloc ();
@@ -19,7 +19,7 @@ client (void)
 }
 
 static void
-server (void)
+server ()
 {
   ACE_Shared_Memory_SV shm_server (SHM_KEY,
                                    SHMSZ,

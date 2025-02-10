@@ -6,8 +6,7 @@
 class Manager
 {
   public:
-
-  Manager (void);
+  Manager ();
 
   // Ctor
 
@@ -15,15 +14,15 @@ class Manager
 
   // Initialize the ORB, POA etc.
 
-  int init_register_name_service (void);
+  int init_register_name_service ();
   // Initialize the Name service, tegister the combined IOR with it
 
-  int activate_servant (void);
+  int activate_servant ();
   // Activate the servant etc.
 
-  int make_iors_register (void);
+  int make_iors_register ();
 
-  int run (void);
+  int run ();
   // Run the  ORB event loop..
  private:
   CORBA::ORB_var orb_;

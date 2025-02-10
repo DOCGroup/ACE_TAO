@@ -39,10 +39,9 @@ ST_AMH_Servant::test_method (Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
                              Test::Timestamp)
 {
   // Throw an overload exception
-
   Test::ServerOverload *ts = new Test::ServerOverload;
 
-  // Calee owns the memory now.  Need not delete 'ts'
+  // Caller owns the memory now.  Need not delete 'ts'
   Test::AMH_RoundtripExceptionHolder holder (ts);
 
   try
@@ -57,7 +56,7 @@ ST_AMH_Servant::test_method (Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
 void
 ST_AMH_Servant::shutdown (Test::AMH_RoundtripResponseHandler_ptr /*_tao_rh*/)
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }
 
 /*** Server Declaration ***/
@@ -72,8 +71,8 @@ public:
   ST_AMH_Server (int argc, ACE_TCHAR **argv);
   virtual ~ST_AMH_Server ();
 
-  /// ORB inititalisation stuff
-  int start_orb_and_poa (void);
+  /// ORB initialisation stuff
+  int start_orb_and_poa ();
 
   /// register the servant with the poa
   virtual void register_servant (ST_AMH_Servant *servant);
@@ -96,8 +95,6 @@ private:
   /// Write servant IOR to file specified with the '-o' option
   int write_ior_to_file (CORBA::String_var ior);
 };
-
-
 
 /*** Server Declaration ***/
 
@@ -134,7 +131,7 @@ ST_AMH_Server::~ST_AMH_Server ()
 }
 
 int
-ST_AMH_Server::start_orb_and_poa (void)
+ST_AMH_Server::start_orb_and_poa ()
 {
   try
     {

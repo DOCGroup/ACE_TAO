@@ -10,7 +10,7 @@ TAO::Security::EstablishTrustPolicy::EstablishTrustPolicy (
 {
 }
 
-TAO::Security::EstablishTrustPolicy::~EstablishTrustPolicy (void)
+TAO::Security::EstablishTrustPolicy::~EstablishTrustPolicy ()
 {
 }
 
@@ -21,7 +21,7 @@ TAO::Security::EstablishTrustPolicy::policy_type ()
 }
 
 CORBA::Policy_ptr
-TAO::Security::EstablishTrustPolicy::copy (void)
+TAO::Security::EstablishTrustPolicy::copy ()
 {
   TAO::Security::EstablishTrustPolicy *policy = 0;
   ACE_NEW_THROW_EX (policy,
@@ -36,12 +36,12 @@ TAO::Security::EstablishTrustPolicy::copy (void)
 }
 
 void
-TAO::Security::EstablishTrustPolicy::destroy (void)
+TAO::Security::EstablishTrustPolicy::destroy ()
 {
 }
 
 ::Security::EstablishTrust
-TAO::Security::EstablishTrustPolicy::trust (void)
+TAO::Security::EstablishTrustPolicy::trust ()
 {
   return this->trust_;
 }

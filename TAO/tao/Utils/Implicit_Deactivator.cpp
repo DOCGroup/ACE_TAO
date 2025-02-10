@@ -5,9 +5,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void
 TAO::Utils::Implicit_Deactivation_Functor::operator () (
-   PortableServer::ServantBase * servant) throw ()
+   PortableServer::ServantBase * servant) noexcept
 {
-
   try
     {
       PortableServer::POA_var poa (servant->_default_POA ());

@@ -27,7 +27,6 @@ class Echo_Collocated_ORBInitializer :
   public virtual ::CORBA::LocalObject
 {
 public:
-
   Echo_Collocated_ORBInitializer
     (PortableInterceptor::ProcessingMode server_proc_mode,
      PortableInterceptor::ProcessingMode client_proc_mode);
@@ -37,7 +36,6 @@ public:
   virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info);
 
 private:
-
   PortableInterceptor::ProcessingMode server_processing_mode_;
   PortableInterceptor::ProcessingMode client_processing_mode_;
 };

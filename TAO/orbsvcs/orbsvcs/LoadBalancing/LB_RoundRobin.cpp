@@ -15,18 +15,18 @@ TAO_LB_RoundRobin::TAO_LB_RoundRobin (PortableServer::POA_ptr poa)
 {
 }
 
-TAO_LB_RoundRobin::~TAO_LB_RoundRobin (void)
+TAO_LB_RoundRobin::~TAO_LB_RoundRobin ()
 {
 }
 
 char *
-TAO_LB_RoundRobin::name (void)
+TAO_LB_RoundRobin::name ()
 {
   return CORBA::string_dup ("RoundRobin");
 }
 
 CosLoadBalancing::Properties *
-TAO_LB_RoundRobin::get_properties (void)
+TAO_LB_RoundRobin::get_properties ()
 {
   // There are no RoundRobin properties.  Return an empty property
   // list.
@@ -182,7 +182,7 @@ TAO_LB_RoundRobin::analyze_loads (
 }
 
 PortableServer::POA_ptr
-TAO_LB_RoundRobin::_default_POA (void)
+TAO_LB_RoundRobin::_default_POA ()
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }

@@ -23,7 +23,7 @@ be_visitor_sequence_cdr_op_ch::be_visitor_sequence_cdr_op_ch (
 {
 }
 
-be_visitor_sequence_cdr_op_ch::~be_visitor_sequence_cdr_op_ch (void)
+be_visitor_sequence_cdr_op_ch::~be_visitor_sequence_cdr_op_ch ()
 {
 }
 
@@ -42,7 +42,7 @@ be_visitor_sequence_cdr_op_ch::visit_sequence (be_sequence *node)
       return 0;
     }
 
-  be_type *base_type = be_type::narrow_from_decl (node->base_type ());
+  be_type *base_type = dynamic_cast<be_type*> (node->base_type ());
 
   // If our base type is an anonymous sequence, generate code for it here.
   if (base_type->node_type () == AST_Decl::NT_sequence)
@@ -58,15 +58,14 @@ be_visitor_sequence_cdr_op_ch::visit_sequence (be_sequence *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  be_type *bt = be_type::narrow_from_decl (node);
-  be_typedef *tdef = be_typedef::narrow_from_decl (bt);
+  be_type *bt = dynamic_cast<be_type*> (node);
+  be_typedef *tdef = dynamic_cast<be_typedef*> (bt);
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (os);
 
   // If we're an anonymous sequence, we must protect against
   // being declared more than once.
-  if (tdef == 0)
+  if (tdef == nullptr)
     {
       *os << "\n\n#if !defined _TAO_CDR_OP_"
           << node->flat_name () << "_H_"
@@ -122,12 +121,12 @@ be_visitor_sequence_cdr_op_ch::visit_sequence (be_sequence *node)
   *os << be_nl
       << be_global->core_versioning_end () << be_nl;
 
-  if (tdef == 0)
+  if (tdef == nullptr)
     {
       *os << "\n\n#endif /* _TAO_CDR_OP_"
           << node->flat_name () << "_H_ */";
     }
 
-  node->cli_hdr_cdr_op_gen (1);
+  node->cli_hdr_cdr_op_gen (true);
   return 0;
 }

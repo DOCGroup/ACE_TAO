@@ -14,7 +14,7 @@ TAO_ESF_Peer_Admin<EVENT_CHANNEL,PROXY,INTERFACE,PEER>::
 
 template<class EVENT_CHANNEL, class PROXY, class INTERFACE, class PEER>
 TAO_ESF_Peer_Admin<EVENT_CHANNEL,PROXY,INTERFACE,PEER>::
-    ~TAO_ESF_Peer_Admin (void)
+    ~TAO_ESF_Peer_Admin ()
 {
 }
 

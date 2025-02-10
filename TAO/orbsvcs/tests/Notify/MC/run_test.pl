@@ -26,8 +26,6 @@ $mon->AddLibPath ('../lib');
 $sup->AddLibPath ('../lib');
 $con->AddLibPath ('../lib');
 
-PerlACE::check_privilege_group();
-
 # define the following as necessary to customize the test
 my $static_build = 0;
 my $port = $ns->RandomPort ();

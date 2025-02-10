@@ -67,16 +67,13 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #define _AST_DECL_AST_DECL_HH
 
 #include "utl_scoped_name.h"
-#include "idl_narrow.h"
 #include "ast_annotation_appls.h"
 
 #include "ace/os_include/sys/os_types.h"
 #include "ace/SString.h"
 #include "ace/Vector_T.h"
 
-// This is for AIX w/IBM C++
 class Identifier;
-
 class UTL_Scope;
 class UTL_String;
 class ast_visitor;
@@ -94,17 +91,17 @@ protected:
   COMMON_Base (bool local = false,
                bool abstract = false);
 
-  virtual ~COMMON_Base (void);
+  virtual ~COMMON_Base ();
 
 public:
   // A no-op, overridden in the child classes.
-  virtual void destroy (void);
+  virtual void destroy ();
 
   // Accessor needs to get overridden for a few types.
-  virtual bool is_local (void);
+  virtual bool is_local ();
   void is_local (bool val);
 
-  bool is_abstract (void) const;
+  bool is_abstract () const;
   void is_abstract (bool val);
 
 protected:
@@ -152,6 +149,7 @@ public:
       , NT_wstring                  // Denotes an IDL wstring
       , NT_array                    // Denotes an IDL array
       , NT_sequence                 // Denotes an IDL sequence
+      , NT_map                      // Denotes an IDL map
       , NT_typedef                  // Denotes a typedef
       , NT_pre_defined              // Denotes a predefined type
       , NT_native                   // Denotes a native type
@@ -196,10 +194,10 @@ public:
     UTL_ScopedName *name,
     AST_Decl *other);
 
-  virtual ~AST_Decl (void);
+  virtual ~AST_Decl ();
 
   // Cleanup method.
-  virtual void destroy (void);
+  virtual void destroy ();
 
   // If this decl has been found, some types need to be
   // moved onto their true definitions etc. Defaults to
@@ -207,28 +205,28 @@ public:
   virtual AST_Decl *adjust_found (bool ignore_fwd, bool full_def_only);
 
   // Is this decl a forward declared type (default false)
-  virtual bool is_fwd (void);
+  virtual bool is_fwd ();
 
   // Data Accessors.
 
-  bool imported (void);
+  bool imported ();
   void set_imported (bool is_it);
 
-  bool in_main_file (void);
+  bool in_main_file ();
   void set_in_main_file (bool is_it);
 
-  UTL_Scope *defined_in (void);
+  UTL_Scope *defined_in ();
   void set_defined_in (UTL_Scope *);
 
-  NodeType node_type (void);
+  NodeType node_type ();
 
-  long line (void);
+  long line ();
   void set_line (long l);
 
-  ACE_CString & file_name (void);
+  ACE_CString & file_name ();
   void set_file_name (ACE_CString s);
 
-  UTL_ScopedName *name (void);
+  UTL_ScopedName *name ();
 
   UTL_ScopedName *compute_name (const char *prefix,
                                 const char *suffix);
@@ -237,36 +235,36 @@ public:
 
   void set_name (UTL_ScopedName *n);
 
-  Identifier *local_name (void);
+  Identifier *local_name () const;
   void local_name (Identifier *id);
 
   Identifier *compute_local_name (const char *prefix,
                                   const char *sufix);
   // Apply prefix and suffix to the local name and return.
 
-  virtual const char *full_name (void);
+  virtual const char *full_name ();
   // Return the stringified full name.
 
-  virtual const char *flat_name (void);
+  virtual const char *flat_name ();
   // Return the flattened full scoped name.
 
-  const char *repoID (void);
+  const char *repoID ();
   void repoID (char *value);
   // Accessors for the repository ID.
 
-  const char *prefix (void);
+  const char *prefix ();
   void prefix (const char *value);
   // Accessors for the repository ID prefix.
 
-  const char *version (void);
+  const char *version ();
   void version (char *value);
   // Accessors for the version_ member.
 
-  bool anonymous (void) const;
+  bool anonymous () const;
   void anonymous (bool val);
   // Accessors for the anonymous_ member.
 
-  bool typeid_set (void) const;
+  bool typeid_set () const;
   void typeid_set (bool val);
   // Accessors for the typeid_set_ member.
 
@@ -281,16 +279,12 @@ public:
   // prefix to the all the reserved keywords. But when we invoke the
   // operation remotely, we should be sending only the name with out
   // "_cxx_" prefix.
-  Identifier *original_local_name (void);
+  Identifier *original_local_name ();
   void original_local_name (Identifier *);
 
   // To be overridden by the subclasses interface, struct, union, and
   // the corresponding forward declaration classes.
-  virtual bool is_defined (void);
-
-  // Narrowing.
-
-  DEF_NARROW_FROM_DECL(AST_Decl);
+  virtual bool is_defined ();
 
   // AST Dumping.
   virtual void dump (ACE_OSTREAM_TYPE &o);
@@ -306,18 +300,18 @@ public:
   // Return TRUE if "this" is a child of "s".
   bool is_child (AST_Decl *s);
 
-  bool is_nested (void);
+  bool is_nested ();
   // Determines if we are inside of a nested scope or not.
 
-  UTL_ScopedName *last_referenced_as (void) const;
+  UTL_ScopedName *last_referenced_as () const;
   void last_referenced_as (UTL_ScopedName *n);
 
   // Accessors for the prefix_scope_ member.
-  UTL_Scope *prefix_scope (void);
+  UTL_Scope *prefix_scope ();
   void prefix_scope (UTL_Scope *s);
 
   // Useful for GIOP to know if a wstring is being marshaled.
-  virtual int contains_wstring (void);
+  virtual int contains_wstring ();
   void contains_wstring (int val);
 
   // Additional checks when we think we have caught an IDL
@@ -326,7 +320,7 @@ public:
   bool masking_checks (AST_Decl *mod);
 
   // Accessors for the member.
-  bool in_tmpl_mod_not_aliased (void) const;
+  bool in_tmpl_mod_not_aliased () const;
   void in_tmpl_mod_not_aliased (bool val);
 
   /// Set and get annotations for this IDL element
@@ -410,13 +404,13 @@ protected:
 
   void dump_i (ACE_OSTREAM_TYPE &o, const char *s) const ;
 
-  void compute_repoID (void);
+  void compute_repoID ();
   // Computes the repoID.
 
-  void compute_full_name (void);
+  void compute_full_name ();
   // Computes the stringified scoped name.
 
-  void compute_flat_name (void);
+  void compute_flat_name ();
   // Compute the flattened fully scoped name.
 
   const char *node_type_to_string (NodeType nt);

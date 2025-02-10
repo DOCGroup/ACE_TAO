@@ -11,13 +11,13 @@ class Service
 {
 public:
   /// Constructor
-  Service (void);
+  Service ();
 
   /// Dump the results.
   /**
    * In case of failure this exposes any incomplete runs.
    */
-  void dump_results (void);
+  void dump_results ();
 
   // = The skeleton methods
   virtual void run_test (Test::Crashed_Callback_ptr callback);
@@ -40,7 +40,6 @@ private:
 private:
   /// Count the number of tests executed
   int test_count_;
-
 };
 
 #include /**/ "ace/post.h"

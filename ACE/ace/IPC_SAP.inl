@@ -4,13 +4,13 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
-ACE_IPC_SAP::~ACE_IPC_SAP (void)
+ACE_IPC_SAP::~ACE_IPC_SAP ()
 {
   // ACE_TRACE ("ACE_IPC_SAP::~ACE_IPC_SAP");
 }
 
 ACE_INLINE ACE_HANDLE
-ACE_IPC_SAP::get_handle (void) const
+ACE_IPC_SAP::get_handle () const
 {
   ACE_TRACE ("ACE_IPC_SAP::get_handle");
   return this->handle_;

@@ -12,8 +12,9 @@
 export DEB_BUILD_MAINT_OPTIONS = hardening=+format,+fortify,+stackprotector,+relro,+bindnow
 DPKG_EXPORT_BUILDFLAGS = 1
 include /usr/share/dpkg/buildflags.mk
-CFLAGS+=$(CPPFLAGS)
-CXXFLAGS+=$(CPPFLAGS)
+export DEB_CFLAGS_MAINT_APPEND = $(CPPFLAGS)
+export DEB_CXXFLAGS_MAINT_APPEND = $(CPPFLAGS)
+export DEB_CPPFLAGS_MAINT_APPEND = -g
 
 MWCFLAGS := -type gnuace -noreldefs
 DSO_MAKE_FLAG := versioned_so=2
@@ -34,11 +35,11 @@ ALL_ACEXML   := $(filter libacexml%,$(ALL_PACKAGES))
 
 export ACE_ROOT := $(shell pwd)
 export MPC_ROOT := $(ACE_ROOT)/MPC
-export LD_LIBRARY_PATH := $(LD_LIBRARY_PATH):$(ACE_ROOT)/lib
 
 ACE_MAJOR_VERSION := $(shell awk '/ACE_MAJOR_VERSION/ { print $$3 }' ${ACE_ROOT}/ace/Version.h)
 ACE_MINOR_VERSION := $(shell awk '/ACE_MINOR_VERSION/ { print $$3 }' ${ACE_ROOT}/ace/Version.h)
 ACE_MICRO_VERSION := $(shell awk '/ACE_MICRO_VERSION/ { print $$3 }' ${ACE_ROOT}/ace/Version.h)
+ACE_VERSION = ${ACE_MAJOR_VERSION}.${ACE_MINOR_VERSION}.${ACE_MICRO_VERSION}
 
 %:
 	dh $@
@@ -48,8 +49,17 @@ ACE_MICRO_VERSION := $(shell awk '/ACE_MICRO_VERSION/ { print $$3 }' ${ACE_ROOT}
 .PHONY: configure
 configure: configure-stamp
 configure-stamp:
+	for fname in debian/*VERSION*; do \
+		cp $$fname $$(echo $$fname | \
+		sed -e 's/VERSION/${ACE_VERSION}/'); done
+	for flname in debian/*.install.in; do \
+		sed 's/@DEB_HOST_MULTIARCH@/$(DEB_HOST_MULTIARCH)/g' \
+                $$flname > $${flname%.in}; done
+	for flname in debian/*.lintian-overrides.in; do \
+		sed 's/@ACE_VERSION@/${ACE_VERSION}/g' \
+                $$flname > $${flname%.in}; done
 	cp debian/platform_macros.GNU $(ACE_ROOT)/include/makeinclude
-	cp debian/config*.h $(ACE_ROOT)/ace/
+	cp debian/config.h $(ACE_ROOT)/ace/
 	cp debian/default.features $(ACE_ROOT)/bin/MakeProjectCreator/config
 	cp debian/ACE-DPKG.mwc $(ACE_ROOT)
 	cd $(ACE_ROOT) && $(ACE_ROOT)/bin/mwc.pl $(MWCFLAGS) ACE-DPKG.mwc
@@ -60,7 +70,7 @@ override_dh_auto_build-arch: configure-stamp
 
 override_dh_auto_build-indep: configure-stamp
 	$(MAKE) -C $(ACE_ROOT) $(DSO_MAKE_FLAG)
-	cd $(ACE_ROOT) && bin/generate_doxygen.pl -is_release -exclude_tao -exclude_ciao -exclude_dance
+	cd $(ACE_ROOT) && bin/generate_doxygen.pl -is_release -exclude_tao
 	find $(ACE_ROOT)/html $(DOXYGEN_FILES_TO_REMOVE) | xargs -r rm -f
 
 override_dh_auto_install: manpages-stamp
@@ -79,7 +89,7 @@ override_dh_auto_clean:
 	find $(ACE_ROOT) -name 'GNUmakefile*' -o -name '.depend.*' | xargs -r rm
 	rm -f $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
 	rm -f $(ACE_ROOT)/bin/MakeProjectCreator/config/default.features
-	rm -f $(ACE_ROOT)/ace/config.h $(ACE_ROOT)/ace/config-hurd.h
+	rm -f $(ACE_ROOT)/ace/config.h
 	rm -f $(ACE_ROOT)/ACE-DPKG.mwc
 	rm -f debian/*.1 debian/mpc-ace.sgml
 	rm -f *-stamp
@@ -89,16 +99,6 @@ override_dh_auto_clean:
 
 override_dh_compress:
 	dh_compress -Xexamples
-
-# Add --list-missing to make sure we don't miss new binaries
-override_dh_install:
-	dh_install --list-missing
-
-# ACE+TAO has different changelogs. Use the right one in every package.
-override_dh_installchangelogs:
-	dh_installchangelogs -pmpc-ace MPC/ChangeLog
-	dh_installchangelogs --remaining-packages \
-	        ChangeLogs/ACE-$(ACE_MAJOR_VERSION)_$(ACE_MINOR_VERSION)_$(ACE_MICRO_VERSION)
 
 override_dh_fixperms:
 ifneq (,$(filter libace-doc, $(shell dh_listpackages)))

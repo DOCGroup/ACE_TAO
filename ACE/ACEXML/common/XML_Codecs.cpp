@@ -1,11 +1,9 @@
 // -*- C++ -*-
 
-#include "ace/Auto_Ptr.h"
 #include "ace/OS_Memory.h"
 #include "ace/OS_NS_string.h"
 #include "ACEXML/common/XML_Codecs.h"
-
-
+#include <memory>
 
 ACEXML_Char*
 ACEXML_Base64::encode (const ACEXML_Char* input,
@@ -19,7 +17,7 @@ ACEXML_Base64::encode (const ACEXML_Char* input,
   ACE_NEW_RETURN (buf,
                   ACE_Byte[len],
                   0);
-  ACE_Auto_Basic_Array_Ptr<ACE_Byte> cleanup_buf (buf);
+  std::unique_ptr<ACE_Byte[]> cleanup_buf (buf);
 
   for (size_t i = 0; i < len; ++i)
     buf[i] = (ACE_Byte)input[i];
@@ -61,7 +59,7 @@ ACEXML_Base64::decode (const ACEXML_Char* input,
                   ACE_Byte[len],
                   0);
 
-  ACE_Auto_Basic_Array_Ptr<ACE_Byte> cleanup (buf);
+  std::unique_ptr<ACE_Byte[]> cleanup (buf);
 
   for (size_t i = 0; i < len; ++i)
     buf[i] = (ACE_Byte)input[i];

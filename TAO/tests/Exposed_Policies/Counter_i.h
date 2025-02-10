@@ -21,21 +21,19 @@
 class Counter_Servant : public POA_Counter
 {
 public:
-
   // = Ctor-Dtor Declaration
-
   Counter_Servant (Policy_Tester *policy_tester);
-  virtual ~Counter_Servant (void);
+  virtual ~Counter_Servant () = default;
 
   // = Counter Interface Methods Overloading.
 
-  virtual void increment (void);
+  virtual void increment ();
 
-  virtual CORBA::Long get_count (void);
+  virtual CORBA::Long get_count ();
 
-  virtual void reset (void);
+  virtual void reset ();
 
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
 protected:
   CORBA::Long count_;

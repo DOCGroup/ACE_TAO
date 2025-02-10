@@ -14,7 +14,6 @@ namespace TAO
 {
   namespace Transport
   {
-
     template <typename Impl>
     Current_ORBInitializer<Impl>::Current_ORBInitializer(const ACE_TCHAR* id)
       : Current_ORBInitializer_Base (id)

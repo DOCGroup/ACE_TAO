@@ -11,7 +11,7 @@
 #include "ace/Barrier.h"
 #include "ace/OS_NS_unistd.h"
 
-Send_Task::Send_Task (void)
+Send_Task::Send_Task ()
   : iterations_ (0)
   , period_in_usecs_ (0)
   , startup_sleep_ (0)
@@ -42,14 +42,14 @@ Send_Task::init (int iterations,
 }
 
 void
-Send_Task::stop (void)
+Send_Task::stop ()
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
   this->stop_ = 1;
 }
 
 int
-Send_Task::svc (void)
+Send_Task::svc ()
 {
   if (this->barrier_ == 0)
     return -1;

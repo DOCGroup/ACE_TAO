@@ -87,7 +87,6 @@ namespace TAO
     bool list_obsolete ();
 
   private:
-
     Group_Ids group_ids_;
 
     /// Ensure ID is monotonically increasing even when groups gets
@@ -110,7 +109,6 @@ namespace TAO
     TAO_SYNCH_MUTEX lock_;
 
     friend class PG_Group_List_Store_File_Guard;
-
   };
 }
 

@@ -36,6 +36,20 @@ extern "C"
 #  include /**/ <netdb.h>
 #endif /* !ACE_LACKS_NETDB_H */
 
+#if defined (ACE_VXWORKS)
+#  include /**/ <hostLib.h>
+#  if (ACE_VXWORKS < 0x700) || defined (GETHOSTBYNAME_REENTRANT)
+// With VxWorks 7 hostLib.h defines GETHOSTBYNAME_REENTRANT when gethostbyname()
+// is reentrant
+#    define ACE_VXWORKS_HAS_GETHOSTBYNAME_REENTRANT
+#  endif
+#  if (ACE_VXWORKS < 0x700) || defined (GETHOSTBYADDR_REENTRANT)
+// With VxWorks 7 hostLib.h defines GETHOSTBYADDR_REENTRANT when gethostbyaddr()
+// is reentrant
+#    define ACE_VXWORKS_HAS_GETHOSTBYADDR_REENTRANT
+#  endif
+#endif /* ACE_VXWORKS */
+
 #if defined (ACE_LACKS_HOSTENT)
 struct  hostent {
         char    *h_name;        /* official name of host */
@@ -113,24 +127,19 @@ struct  servent {
 # define EAI_OVERFLOW -12 /* Error result from getaddrinfo(): buffer overflow */
 #endif
 
-#if defined (ACE_HAS_STRUCT_NETDB_DATA)
-   typedef char ACE_HOSTENT_DATA[sizeof(struct hostent_data)];
-   typedef char ACE_SERVENT_DATA[sizeof(struct servent_data)];
-   typedef char ACE_PROTOENT_DATA[sizeof(struct protoent_data)];
-#else
-#  if !defined ACE_HOSTENT_DATA_SIZE
-#    define ACE_HOSTENT_DATA_SIZE (4*1024)
-#  endif /*ACE_HOSTENT_DATA_SIZE */
-#  if !defined ACE_SERVENT_DATA_SIZE
-#    define ACE_SERVENT_DATA_SIZE (4*1024)
-#  endif /*ACE_SERVENT_DATA_SIZE */
-#  if !defined ACE_PROTOENT_DATA_SIZE
-#    define ACE_PROTOENT_DATA_SIZE (2*1024)
-#  endif /*ACE_PROTOENT_DATA_SIZE */
-   typedef char ACE_HOSTENT_DATA[ACE_HOSTENT_DATA_SIZE];
-   typedef char ACE_SERVENT_DATA[ACE_SERVENT_DATA_SIZE];
-   typedef char ACE_PROTOENT_DATA[ACE_PROTOENT_DATA_SIZE];
-#endif /* ACE_HAS_STRUCT_NETDB_DATA */
+#if !defined ACE_HOSTENT_DATA_SIZE
+#  define ACE_HOSTENT_DATA_SIZE (4*1024)
+#endif /*ACE_HOSTENT_DATA_SIZE */
+#if !defined ACE_SERVENT_DATA_SIZE
+#  define ACE_SERVENT_DATA_SIZE (4*1024)
+#endif /*ACE_SERVENT_DATA_SIZE */
+#if !defined ACE_PROTOENT_DATA_SIZE
+#  define ACE_PROTOENT_DATA_SIZE (2*1024)
+#endif /*ACE_PROTOENT_DATA_SIZE */
+
+typedef char ACE_HOSTENT_DATA[ACE_HOSTENT_DATA_SIZE];
+typedef char ACE_SERVENT_DATA[ACE_SERVENT_DATA_SIZE];
+typedef char ACE_PROTOENT_DATA[ACE_PROTOENT_DATA_SIZE];
 
 # if !defined(MAXHOSTNAMELEN)
 #   define MAXHOSTNAMELEN  HOST_NAME_MAX

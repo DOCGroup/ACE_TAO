@@ -56,7 +56,6 @@ namespace TAO
         public ::CORBA::LocalObject
     {
     public:
-
       /// Result Type for dispatching method(s).
       enum DispatchResult
       {
@@ -114,7 +113,6 @@ namespace TAO
                                   const PortableServer::ObjectId& oid);
 
     private:
-
       /// Only our friend, the proxy, is allowed to invoke our private operations.
       /// This allows us to not pollute the public interface of the CSD Strategy_Base
       /// subclasses with methods that should never be called (except by the

@@ -1,4 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
 /*
 
 COPYRIGHT
@@ -81,17 +80,13 @@ public:
                  bool local,
                  bool abstract);
 
-  virtual ~AST_Attribute (void);
+  virtual ~AST_Attribute ();
 
   // Data Accessors.
 
-  bool readonly (void) const;
-  UTL_ExceptList *get_get_exceptions (void) const;
-  UTL_ExceptList *get_set_exceptions (void) const;
-
-  // Narrowing.
-
-  DEF_NARROW_FROM_DECL(AST_Attribute);
+  bool readonly () const;
+  UTL_ExceptList *get_get_exceptions () const;
+  UTL_ExceptList *get_set_exceptions () const;
 
   // AST Dumping.
   virtual void dump (ACE_OSTREAM_TYPE &o);
@@ -100,13 +95,15 @@ public:
   virtual int ast_accept (ast_visitor *visitor);
 
   // Cleanup.
-  virtual void destroy (void);
+  virtual void destroy ();
 
   // Methods to add exceptions directly, used when copying node.
   UTL_ExceptList *be_add_get_exceptions (UTL_ExceptList *t);
   UTL_ExceptList *be_add_set_exceptions (UTL_ExceptList *t);
 
   static AST_Decl::NodeType const NT;
+
+  virtual bool annotatable () const;
 
 private:
   // Data.
@@ -121,7 +118,7 @@ private:
 
   // Scope Management Protocol.
 
-  friend int tao_yyparse (void);
+  friend int tao_yyparse ();
   virtual UTL_NameList *fe_add_get_exceptions (UTL_NameList *e);
   virtual UTL_NameList *fe_add_set_exceptions (UTL_NameList *e);
 };

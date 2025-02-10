@@ -41,7 +41,6 @@ class JAWS_Export JAWS_Symbol_Table : public JAWS_SYMBOL_TABLE_BASE
 public:
   JAWS_Symbol_Table (size_t size = 211);
   // Hash table <size> should be a prime.
-
 };
 
 #endif /* JAWS_SYMBOL_TABLE_H */

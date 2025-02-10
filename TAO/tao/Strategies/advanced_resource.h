@@ -19,7 +19,7 @@ class TAO_Connection_Purging_Strategy;
 class TAO_Strategies_Export TAO_Resource_Factory_Changer
 {
 public:
-  TAO_Resource_Factory_Changer (void);
+  TAO_Resource_Factory_Changer ();
 };
 
 /**
@@ -37,10 +37,10 @@ class TAO_Strategies_Export TAO_Advanced_Resource_Factory :
 {
 public:
   /// Constructor.
-  TAO_Advanced_Resource_Factory (void);
+  TAO_Advanced_Resource_Factory ();
 
   /// Destructor.
-  virtual ~TAO_Advanced_Resource_Factory (void);
+  virtual ~TAO_Advanced_Resource_Factory ();
 
   // = Service Configurator hooks.
   /// Dynamic linking hook
@@ -84,23 +84,22 @@ public:
    * @name Resource Retrieval
    */
   //@{
-  virtual int init_protocol_factories (void);
-  virtual ACE_Allocator* input_cdr_dblock_allocator (void);
-  virtual ACE_Allocator* input_cdr_buffer_allocator (void);
-  virtual ACE_Allocator* input_cdr_msgblock_allocator (void);
-  virtual ACE_Allocator* amh_response_handler_allocator (void);
-  virtual ACE_Allocator* ami_response_handler_allocator (void);
-  virtual int input_cdr_allocator_type_locked (void);
-  virtual TAO_ProtocolFactorySet *get_protocol_factories (void);
+  virtual int init_protocol_factories ();
+  virtual ACE_Allocator* input_cdr_dblock_allocator ();
+  virtual ACE_Allocator* input_cdr_buffer_allocator ();
+  virtual ACE_Allocator* input_cdr_msgblock_allocator ();
+  virtual ACE_Allocator* amh_response_handler_allocator ();
+  virtual ACE_Allocator* ami_response_handler_allocator ();
+  virtual int input_cdr_allocator_type_locked ();
+  virtual TAO_ProtocolFactorySet *get_protocol_factories ();
   //@}
 
-  virtual TAO_Connection_Purging_Strategy *create_purging_strategy (void);
-  virtual TAO_LF_Strategy *create_lf_strategy (void);
+  virtual TAO_Connection_Purging_Strategy *create_purging_strategy ();
+  virtual TAO_LF_Strategy *create_lf_strategy ();
 
 protected:
-
   /// Obtain the reactor implementation
-  virtual ACE_Reactor_Impl *allocate_reactor_impl (void) const;
+  virtual ACE_Reactor_Impl *allocate_reactor_impl () const;
 
   void report_option_value_error (const ACE_TCHAR* option_name,
                                   const ACE_TCHAR* option_value);
@@ -126,8 +125,7 @@ protected:
   /// Type of lock used by AMI response handler allocator.
   Allocator_Lock_Type ami_response_handler_allocator_lock_type_;
 
-  virtual int load_default_protocols (void);
-
+  virtual int load_default_protocols ();
 };
 
 static TAO_Resource_Factory_Changer TAO_changer;

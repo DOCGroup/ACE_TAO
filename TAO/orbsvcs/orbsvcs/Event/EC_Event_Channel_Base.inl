@@ -15,7 +15,7 @@ TAO_EC_Event_Channel_Attributes (PortableServer::POA_ptr s_poa,
 }
 
 ACE_INLINE TAO_EC_Factory*
-TAO_EC_Event_Channel_Base::factory (void) const
+TAO_EC_Event_Channel_Base::factory () const
 {
   return this->factory_;
 }
@@ -32,55 +32,55 @@ TAO_EC_Event_Channel_Base::factory (TAO_EC_Factory* factory,
 }
 
 ACE_INLINE TAO_EC_Dispatching*
-TAO_EC_Event_Channel_Base::dispatching (void) const
+TAO_EC_Event_Channel_Base::dispatching () const
 {
   return this->dispatching_;
 }
 
 ACE_INLINE TAO_EC_Filter_Builder*
-TAO_EC_Event_Channel_Base::filter_builder (void) const
+TAO_EC_Event_Channel_Base::filter_builder () const
 {
   return this->filter_builder_;
 }
 
 ACE_INLINE TAO_EC_Supplier_Filter_Builder*
-TAO_EC_Event_Channel_Base::supplier_filter_builder (void) const
+TAO_EC_Event_Channel_Base::supplier_filter_builder () const
 {
   return this->supplier_filter_builder_;
 }
 
 ACE_INLINE TAO_EC_ConsumerAdmin*
-TAO_EC_Event_Channel_Base::consumer_admin (void) const
+TAO_EC_Event_Channel_Base::consumer_admin () const
 {
   return this->consumer_admin_;
 }
 
 ACE_INLINE TAO_EC_SupplierAdmin*
-TAO_EC_Event_Channel_Base::supplier_admin (void) const
+TAO_EC_Event_Channel_Base::supplier_admin () const
 {
   return this->supplier_admin_;
 }
 
 ACE_INLINE TAO_EC_Timeout_Generator*
-TAO_EC_Event_Channel_Base::timeout_generator (void) const
+TAO_EC_Event_Channel_Base::timeout_generator () const
 {
   return this->timeout_generator_;
 }
 
 ACE_INLINE TAO_EC_Scheduling_Strategy*
-TAO_EC_Event_Channel_Base::scheduling_strategy (void) const
+TAO_EC_Event_Channel_Base::scheduling_strategy () const
 {
   return this->scheduling_strategy_;
 }
 
 ACE_INLINE TAO_EC_ConsumerControl*
-TAO_EC_Event_Channel_Base::consumer_control (void) const
+TAO_EC_Event_Channel_Base::consumer_control () const
 {
   return this->consumer_control_;
 }
 
 ACE_INLINE TAO_EC_SupplierControl*
-TAO_EC_Event_Channel_Base::supplier_control (void) const
+TAO_EC_Event_Channel_Base::supplier_control () const
 {
   return this->supplier_control_;
 }
@@ -134,19 +134,19 @@ TAO_EC_Event_Channel_Base::destroy_proxy_collection (TAO_EC_ProxyPushSupplier_Co
 }
 
 ACE_INLINE PortableServer::POA_ptr
-TAO_EC_Event_Channel_Base::supplier_poa (void)
+TAO_EC_Event_Channel_Base::supplier_poa ()
 {
   return PortableServer::POA::_duplicate (this->supplier_poa_.in ());
 }
 
 ACE_INLINE PortableServer::POA_ptr
-TAO_EC_Event_Channel_Base::consumer_poa (void)
+TAO_EC_Event_Channel_Base::consumer_poa ()
 {
   return PortableServer::POA::_duplicate (this->consumer_poa_.in ());
 }
 
 ACE_INLINE ACE_Lock*
-TAO_EC_Event_Channel_Base::create_consumer_lock (void)
+TAO_EC_Event_Channel_Base::create_consumer_lock ()
 {
   return this->factory_->create_consumer_lock ();
 }
@@ -158,7 +158,7 @@ TAO_EC_Event_Channel_Base::destroy_consumer_lock (ACE_Lock* x)
 }
 
 ACE_INLINE ACE_Lock*
-TAO_EC_Event_Channel_Base::create_supplier_lock (void)
+TAO_EC_Event_Channel_Base::create_supplier_lock ()
 {
   return this->factory_->create_supplier_lock ();
 }
@@ -170,31 +170,31 @@ TAO_EC_Event_Channel_Base::destroy_supplier_lock (ACE_Lock* x)
 }
 
 ACE_INLINE int
-TAO_EC_Event_Channel_Base::consumer_reconnect (void) const
+TAO_EC_Event_Channel_Base::consumer_reconnect () const
 {
   return this->consumer_reconnect_;
 }
 
 ACE_INLINE int
-TAO_EC_Event_Channel_Base::supplier_reconnect (void) const
+TAO_EC_Event_Channel_Base::supplier_reconnect () const
 {
   return this->supplier_reconnect_;
 }
 
 ACE_INLINE int
-TAO_EC_Event_Channel_Base::disconnect_callbacks (void) const
+TAO_EC_Event_Channel_Base::disconnect_callbacks () const
 {
   return this->disconnect_callbacks_;
 }
 
 ACE_INLINE CORBA::Object_ptr
-TAO_EC_Event_Channel_Base::scheduler (void)
+TAO_EC_Event_Channel_Base::scheduler ()
 {
   return CORBA::Object::_duplicate (this->scheduler_.in ());
 }
 
 ACE_INLINE int
-TAO_EC_Event_Channel_Base::destroyed (void)
+TAO_EC_Event_Channel_Base::destroyed ()
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, 0);
   return (this->status_ == EC_S_DESTROYED);

@@ -16,7 +16,7 @@ public:
   // = The skeleton methods
   virtual void go_to_sleep (CORBA::ULong microseconds);
 
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
 private:
   /// Use an ORB reference to convert strings to objects and shutdown

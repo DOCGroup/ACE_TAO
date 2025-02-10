@@ -20,7 +20,7 @@ be_visitor_typedef::be_visitor_typedef (be_visitor_context *ctx)
 {
 }
 
-be_visitor_typedef::~be_visitor_typedef (void)
+be_visitor_typedef::~be_visitor_typedef ()
 {
 }
 
@@ -248,6 +248,80 @@ be_visitor_typedef::visit_sequence (be_sequence *node)
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_typedef::"
                          "visit_sequence - "
+                         "failed to accept visitor\n"),
+                        -1);
+    }
+
+  return 0;
+}
+
+int
+be_visitor_typedef::visit_map (be_map *node)
+{
+  // Instantiate a visitor context with a copy of our context. This info
+  // will be modified based on what type of node we are visiting.
+  be_visitor_context ctx (*this->ctx_);
+  ctx.node (node);
+  int status = 0;
+
+  switch (this->ctx_->state ())
+    {
+    case TAO_CodeGen::TAO_ROOT_CH:
+    case TAO_CodeGen::TAO_INTERFACE_CH:
+      {
+        be_visitor_map_ch visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
+    case TAO_CodeGen::TAO_ROOT_CI:
+      {
+        break;
+      }
+    case TAO_CodeGen::TAO_ROOT_CS:
+      {
+        be_visitor_map_cs visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
+    case TAO_CodeGen::TAO_ROOT_ANY_OP_CH:
+      {
+        // be_visitor_sequence_any_op_ch visitor (&ctx);
+        // status = node->accept (&visitor);
+        break;
+      }
+    case TAO_CodeGen::TAO_ROOT_ANY_OP_CS:
+      {
+        // be_visitor_sequence_any_op_cs visitor (&ctx);
+        // status = node->accept (&visitor);
+        break;
+      }
+    case TAO_CodeGen::TAO_ROOT_CDR_OP_CH:
+      {
+        be_visitor_map_cdr_op_ch visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
+    case TAO_CodeGen::TAO_ROOT_CDR_OP_CS:
+      {
+        be_visitor_map_cdr_op_cs visitor (&ctx);
+        status = node->accept (&visitor);
+        break;
+      }
+    default:
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "(%N:%l) be_visitor_typedef::"
+                           "visit_map - "
+                           "Bad context state\n"),
+                          -1);
+      }
+    }
+
+  if (status == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_visitor_typedef::"
+                         "visit_map - "
                          "failed to accept visitor\n"),
                         -1);
     }

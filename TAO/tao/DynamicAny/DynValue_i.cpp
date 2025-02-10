@@ -21,7 +21,7 @@ TAO_DynValue_i::TAO_DynValue_i (CORBA::Boolean allow_truncation)
 {
 }
 
-TAO_DynValue_i::~TAO_DynValue_i (void)
+TAO_DynValue_i::~TAO_DynValue_i ()
 {
 }
 
@@ -205,7 +205,7 @@ TAO_DynValue_i::get_member_name (
 }
 
 void
-TAO_DynValue_i::set_to_value (void)
+TAO_DynValue_i::set_to_value ()
 {
   this->component_count_ =
     static_cast <CORBA::ULong> (this->da_members_.size ());
@@ -234,7 +234,7 @@ TAO_DynValue_i::_narrow (CORBA::Object_ptr _tao_objref)
 }
 
 DynamicAny::FieldName
-TAO_DynValue_i::current_member_name (void)
+TAO_DynValue_i::current_member_name ()
 {
   if (this->destroyed_)
     {
@@ -253,7 +253,7 @@ TAO_DynValue_i::current_member_name (void)
 }
 
 CORBA::TCKind
-TAO_DynValue_i::current_member_kind (void)
+TAO_DynValue_i::current_member_kind ()
 {
   if (this->destroyed_)
     {
@@ -273,7 +273,7 @@ TAO_DynValue_i::current_member_kind (void)
 }
 
 DynamicAny::NameValuePairSeq *
-TAO_DynValue_i::get_members (void)
+TAO_DynValue_i::get_members ()
 {
   if (this->destroyed_)
     {
@@ -351,7 +351,7 @@ TAO_DynValue_i::set_members (
 }
 
 DynamicAny::NameDynAnyPairSeq *
-TAO_DynValue_i::get_members_as_dyn_any (void)
+TAO_DynValue_i::get_members_as_dyn_any ()
 {
   if (this->destroyed_)
     {
@@ -491,7 +491,7 @@ TAO_DynValue_i::equal (DynamicAny::DynAny_ptr rhs)
 }
 
 void
-TAO_DynValue_i::destroy (void)
+TAO_DynValue_i::destroy ()
 {
   if (this->destroyed_)
     {
@@ -519,7 +519,7 @@ TAO_DynValue_i::destroy (void)
 }
 
 DynamicAny::DynAny_ptr
-TAO_DynValue_i::current_component (void)
+TAO_DynValue_i::current_component ()
 {
   if (this->destroyed_)
     {
@@ -602,7 +602,7 @@ TAO_DynValue_i::insert_val (CORBA::ValueBase *value)
 // which then will be wrong type for the valuetype
 // output we want.
 CORBA::ValueBase *
-TAO_DynValue_i::get_val (void)
+TAO_DynValue_i::get_val ()
 {
   if (this->destroyed_)
     {
@@ -626,7 +626,7 @@ TAO_DynValue_i::get_val (void)
 }
 
 CORBA::Any_ptr
-TAO_DynValue_i::to_any (void)
+TAO_DynValue_i::to_any ()
 {
   if (this->destroyed_)
     {
@@ -704,7 +704,7 @@ TAO_DynValue_i::to_outputCDR (TAO_OutputCDR &out_cdr)
   if (!CORBA::ValueBase::_tao_write_special_value (
         out_cdr,
         reinterpret_cast <CORBA::ValueBase *>
-          (this->is_null_ ? 0 : this)             ))
+          (this->is_null_ ? 0 : this)))
     {
       // OK since a special_value hasn't been written we are
       // NOT a NULL or indirect ValueType. We need to create
@@ -1201,7 +1201,7 @@ TAO_DynValue_i::from_inputCDR (TAO_InputCDR &strm)
               // base-type's state.
               if (!( (currentBase || !requires_truncation) ?
                      ci.handle_chunking (strm) :
-                     ci.skip_chunks (strm)                  ))
+                     ci.skip_chunks (strm)))
                 {
                   TAOLIB_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO (%P|%t) - %N:%l TAO_DynValue_i::from_inputCDR() ")

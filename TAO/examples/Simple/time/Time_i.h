@@ -29,16 +29,16 @@ class Time_i: public POA_Time
 {
 public:
   /// Constructor
-  Time_i (void);
+  Time_i ();
 
   /// Destructor
-  virtual ~Time_i (void);
+  virtual ~Time_i ();
 
   /// Return the current time/date on the server
-  virtual CORBA::Long current_time (void);
+  virtual CORBA::Long current_time ();
 
   /// Shutdown the server.
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
   /// Set the ORB pointer.
   void orb (CORBA::ORB_ptr o);

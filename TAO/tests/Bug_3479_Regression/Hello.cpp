@@ -12,7 +12,7 @@ Hello::get_string (CORBA::String_out string_out)
 }
 
 void
-Hello::shutdown (void)
+Hello::shutdown ()
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

@@ -5,19 +5,17 @@
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
 
-#include "ace/Auto_Ptr.h"
 #include "ace/Reactor.h"
 #include "ace/TP_Reactor.h"
 #include "ace/Thread_Manager.h"
 
-#if defined (ACE_WIN32) && (!defined (ACE_HAS_STANDARD_CPP_LIBRARY) || \
-                            (ACE_HAS_STANDARD_CPP_LIBRARY == 0) || \
-                            defined (ACE_USES_OLD_IOSTREAMS))
-#  include <stdio.h>
+#if defined (ACE_WIN32) && defined (ACE_USES_OLD_IOSTREAMS)
+# include <stdio.h>
 #else
-#  include <string>
+# include <string>
 #endif
 
+#include <memory>
 #include "Reactor_Logging_Server_T.h"
 #include "Logging_Acceptor_Ex.h"
 
@@ -38,7 +36,6 @@ public:
   { delete this; return 0; }
 
 protected:
-
   // Protected destructor ensures dynamic allocation.
   virtual ~Quit_Handler () {}
 };
@@ -59,9 +56,7 @@ static ACE_THR_FUNC_RETURN controller (void *arg) {
   Quit_Handler *quit_handler = 0;
   ACE_NEW_RETURN (quit_handler, Quit_Handler (reactor), 0);
 
-#if defined (ACE_WIN32) && (!defined (ACE_HAS_STANDARD_CPP_LIBRARY) || \
-                            (ACE_HAS_STANDARD_CPP_LIBRARY == 0) || \
-                            defined (ACE_USES_OLD_IOSTREAMS))
+#if defined (ACE_WIN32) && defined (ACE_USES_OLD_IOSTREAMS)
   for (;;) {
     char user_input[80];
     ACE_OS::fgets (user_input, sizeof (user_input), stdin);
@@ -72,13 +67,9 @@ static ACE_THR_FUNC_RETURN controller (void *arg) {
   }
 #else
   for (;;) {
-#if defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB) && (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB == 0)
-    string user_input;
-    getline (cin, user_input, '\n');
-#else
     std::string user_input;
     std::getline (cin, user_input, '\n');
-#endif
+
     if (user_input == "quit") {
       reactor->notify (quit_handler);
       break;
@@ -95,7 +86,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   const size_t N_THREADS = 4;
   ACE_TP_Reactor tp_reactor;
   ACE_Reactor reactor (&tp_reactor);
-  auto_ptr<ACE_Reactor> delete_instance
+  std::unique_ptr<ACE_Reactor> delete_instance
     (ACE_Reactor::instance (&reactor));
 
   Server_Logging_Daemon *server;

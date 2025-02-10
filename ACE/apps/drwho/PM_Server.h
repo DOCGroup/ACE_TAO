@@ -21,14 +21,13 @@
  */
 class PM_Server : public Protocol_Manager
 {
-
 public:
-  PM_Server (void);
-  virtual ~PM_Server (void);
+  PM_Server ();
+  virtual ~PM_Server ();
 
   virtual int encode (char *packet, int &total_bytes) = 0;
   virtual int decode (char *packet, int &total_bytes) = 0;
-  virtual int process (void);
+  virtual int process ();
 
 protected:
   virtual char *handle_protocol_entries (char *bp,

@@ -28,7 +28,7 @@ public:
   RTPOA_Setup (CORBA::ORB_ptr orb,
                const RTCORBA_Setup &rtcorba_setup);
 
-  PortableServer::POA_ptr poa (void);
+  PortableServer::POA_ptr poa ();
 
 private:
   PortableServer::POA_var poa_;

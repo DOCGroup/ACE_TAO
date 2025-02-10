@@ -107,7 +107,7 @@ protected:
   virtual int handle_input (ACE_HANDLE);
 
   /// Transmit peer messages.
-  virtual int svc (void);
+  virtual int svc ();
 
   /**
    * When thread started, connection become blocked, so no need to use
@@ -149,7 +149,7 @@ protected:
                             ACE_Reactor_Mask = ACE_Event_Handler::ALL_EVENTS_MASK);
 
   /// Transmit peer messages.
-  virtual int svc (void);
+  virtual int svc ();
 
 private:
   /// If the controlling is in thread's svc() or not.

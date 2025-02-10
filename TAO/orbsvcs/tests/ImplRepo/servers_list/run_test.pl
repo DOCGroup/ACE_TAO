@@ -282,7 +282,7 @@ sub shutdown_servers
             last;
         }
         if (! $use_activator) {
-            $SRV_status = $SRV[$i]->WaitKill($srv[$i]->ProcessStopWaitInterval());
+            $SRV_status = $SRV[$i]->WaitKill($srv[$i]->ProcessStopWaitInterval(), {self_crash => 1});
             if ($SRV_status != 0) {
                 print STDERR "ERROR: server not shutdown correctly. It returned $SRV_status\n";
                 $status = 1;

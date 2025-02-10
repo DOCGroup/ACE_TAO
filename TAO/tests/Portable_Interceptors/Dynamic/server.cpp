@@ -2,7 +2,6 @@
 #include "test_i.h"
 #include "Echo_Server_ORBInitializer.h"
 #include "ace/OS_NS_stdio.h"
-
 #include "tao/ORBInitializer_Registry.h"
 
 const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
@@ -35,6 +34,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
+  int result = 0;
   try
     {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -42,7 +42,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         PortableInterceptor::ORBInitializer::_nil ();
 
       ACE_NEW_RETURN (temp_initializer,
-                      Echo_Server_ORBInitializer,
+                      Echo_Server_ORBInitializer (result),
                       -1);  // No exceptions yet!
       PortableInterceptor::ORBInitializer_var orb_initializer =
         temp_initializer;
@@ -86,7 +86,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CORBA::String_var ior =
         orb->object_to_string (server.in ());
 
-      ACE_DEBUG ((LM_DEBUG, "Test_Interceptors::Visual: <%s>\n", ior.in ()));
+      ACE_DEBUG ((LM_DEBUG, "Test_Interceptors::Visual: <%C>\n", ior.in ()));
 
       // If the ior_output_file exists, output the ior to it
       if (ior_output_file != 0)
@@ -105,7 +105,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
 
-      root_poa->destroy (1, 1);
+      root_poa->destroy (true, true);
 
       orb->destroy ();
     }
@@ -115,5 +115,5 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       return 1;
     }
 
-  return 0;
+  return result;
 }

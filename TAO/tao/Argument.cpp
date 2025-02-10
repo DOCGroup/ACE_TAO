@@ -3,7 +3,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO::Argument::~Argument (void)
+TAO::Argument::~Argument ()
 {
 }
 
@@ -22,7 +22,7 @@ TAO::Argument::demarshal (TAO_InputCDR &)
 TAO::Argument *
 TAO::Argument::clone ()
 {
-  return 0;
+  return nullptr;
 }
 
 #if TAO_HAS_INTERCEPTORS == 1
@@ -33,25 +33,25 @@ TAO::Argument::interceptor_value (CORBA::Any *) const
 }
 
 CORBA::ParameterMode
-TAO::InArgument::mode (void) const
+TAO::InArgument::mode () const
 {
   return CORBA::PARAM_IN;
 }
 
 CORBA::ParameterMode
-TAO::InoutArgument::mode (void) const
+TAO::InoutArgument::mode () const
 {
   return CORBA::PARAM_INOUT;
 }
 
 CORBA::ParameterMode
-TAO::OutArgument::mode (void) const
+TAO::OutArgument::mode () const
 {
   return CORBA::PARAM_OUT;
 }
 
 CORBA::ParameterMode
-TAO::RetArgument::mode (void) const
+TAO::RetArgument::mode () const
 {
   return CORBA::PARAM_OUT;
 }
@@ -59,12 +59,12 @@ TAO::RetArgument::mode (void) const
 #endif /* TAO_HAS_INTERCEPTORS */
 
 TAO::Argument *
-TAO::Void_Return_Argument::clone (void)
+TAO::Void_Return_Argument::clone ()
 {
-  TAO::Argument *clone_arg = 0;
+  TAO::Argument *clone_arg = nullptr;
   ACE_NEW_RETURN (clone_arg,
                   Void_Return_Argument (),
-                  0);
+                  nullptr);
   return clone_arg;
 }
 

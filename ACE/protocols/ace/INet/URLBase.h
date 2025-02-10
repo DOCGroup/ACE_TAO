@@ -26,7 +26,6 @@ namespace ACE
   {
     namespace INet
       {
-
         /**
         * @class ACE_INet_URLStream
         *
@@ -44,7 +43,7 @@ namespace ACE
 
               bool operator ! ();
 
-              operator bool ();
+              explicit operator bool ();
 
               std::istream& operator * ();
 
@@ -239,7 +238,6 @@ namespace ACE
 
               static authenticator_map authenticators_;
           };
-
       }
   }
 

@@ -27,18 +27,15 @@ public:
   Simple_Server_i (CORBA::ORB_ptr orb);
 
   /// ctor
-  Simple_Server_i (void);
+  Simple_Server_i ();
 
   // = The Simple_Server methods.
-  CORBA::ULongLong remote_call (void);
+  CORBA::ULongLong remote_call ();
 
-  void shutdown (void);
+  void shutdown ();
 
 private:
   CORBA::ORB_var orb_;
-
-  CORBA::Long val_;
-
 };
 
 #endif /* TAO_MPROFILE_CONNECTION_TIMEOUT_TEST_I_H */

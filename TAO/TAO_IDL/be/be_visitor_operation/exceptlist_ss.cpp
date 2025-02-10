@@ -23,7 +23,7 @@ be_visitor_operation_exceptlist_ss::be_visitor_operation_exceptlist_ss (
 {
 }
 
-be_visitor_operation_exceptlist_ss::~be_visitor_operation_exceptlist_ss (void)
+be_visitor_operation_exceptlist_ss::~be_visitor_operation_exceptlist_ss ()
 {
 }
 
@@ -32,12 +32,12 @@ be_visitor_operation_exceptlist_ss::visit_operation (be_operation * node)
 {
   TAO_OutStream * const os = this->ctx_->stream ();
 
-  *os << "\n#if TAO_HAS_INTERCEPTORS == 1" << be_nl;
-
   // When there are exceptions and typecode support is enabled, then generate
   // the typecodes of the user exceptions this operation can throw.
   if (node->exceptions () && be_global->tc_support ())
     {
+      *os << "\n#if TAO_HAS_INTERCEPTORS == 1" << be_nl;
+
       *os << "static ::CORBA::TypeCode_ptr const exceptions[] = " << be_idt_nl;
       *os << "{" << be_idt_nl;
 
@@ -47,7 +47,7 @@ be_visitor_operation_exceptlist_ss::visit_operation (be_operation * node)
       for (UTL_ExceptlistActiveIterator ei (node->exceptions ());
            !ei.is_done ();)
         {
-          be_exception * ex = be_exception::narrow_from_decl (ei.item ());
+          be_exception * ex = dynamic_cast<be_exception*> (ei.item ());
 
           *os << ex->tc_name ();
 
@@ -59,18 +59,10 @@ be_visitor_operation_exceptlist_ss::visit_operation (be_operation * node)
             }
         }
 
-      *os << be_uidt_nl << "};" << be_uidt_nl
-          << "static ::CORBA::ULong const nexceptions = "
-          << node->exceptions ()->length () << ";";
-    }
-  else
-    {
-      *os << "static ::CORBA::TypeCode_ptr const * const exceptions = 0;"
-          << be_nl
-          << "static ::CORBA::ULong const nexceptions = 0;";
-    }
+      *os << be_uidt_nl << "};" << be_uidt_nl;
 
-  *os << "\n#endif /* TAO_HAS_INTERCEPTORS */" << be_nl_2;
+      *os << "\n#endif /* TAO_HAS_INTERCEPTORS */" << be_nl_2;
+    }
 
   return 0;
 }

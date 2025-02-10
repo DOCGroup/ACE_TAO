@@ -96,7 +96,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     static const CORBA::Short increment = get_increment();
     for(CORBA::ULong i = 0; i < get_total_lanes(); i++) {
-
       // Set the priority to one that matches one of the lanes
       CORBA::Short priority = i * increment;
       current->the_priority(priority);

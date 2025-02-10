@@ -3,13 +3,13 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_string.h"
 
-Ptest::Ptest (void)
+Ptest::Ptest ()
   : debug_ (0),
     query_ (0)
 {
 }
 
-Ptest::~Ptest (void)
+Ptest::~Ptest ()
 {
 }
 
@@ -33,9 +33,7 @@ Ptest::init (int argc, ACE_TCHAR *argv[])
           ACE_ERROR_RETURN ((
               LM_ERROR,
               "Null objref from resolve_initial_references\n"
-            ),
-            -1
-          );
+            ), -1);
         }
 
       this->repo_ =
@@ -58,7 +56,7 @@ Ptest::init (int argc, ACE_TCHAR *argv[])
 }
 
 int
-Ptest::shutdown (void)
+Ptest::shutdown ()
 {
   try
     {
@@ -77,7 +75,7 @@ Ptest::shutdown (void)
 }
 
 int
-Ptest::run (void)
+Ptest::run ()
 {
   try
     {
@@ -130,7 +128,7 @@ Ptest::parse_args (int argc,
 }
 
 void
-Ptest::populate (void)
+Ptest::populate ()
 {
   if (this->debug_)
     {
@@ -170,7 +168,7 @@ Ptest::populate (void)
 }
 
 int
-Ptest::query (void)
+Ptest::query ()
 {
   if (this->debug_)
     {

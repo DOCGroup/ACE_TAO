@@ -15,7 +15,7 @@ TAO_AMH_Locate_ResponseHandler::_duplicate (TAO_AMH_Locate_ResponseHandler_ptr x
 
 // Inline operations for class TAO_AMH_Locate_ResponseHandler_var
 ACE_INLINE
-TAO_AMH_Locate_ResponseHandler_var::TAO_AMH_Locate_ResponseHandler_var (void)
+TAO_AMH_Locate_ResponseHandler_var::TAO_AMH_Locate_ResponseHandler_var ()
   : ptr_ (TAO_AMH_Locate_ResponseHandler::_nil ())
 {
 }
@@ -26,13 +26,13 @@ TAO_AMH_Locate_ResponseHandler_var::TAO_AMH_Locate_ResponseHandler_var (TAO_AMH_
 {}
 
 ACE_INLINE
-TAO_AMH_Locate_ResponseHandler_var::~TAO_AMH_Locate_ResponseHandler_var (void)
+TAO_AMH_Locate_ResponseHandler_var::~TAO_AMH_Locate_ResponseHandler_var ()
 {
   CORBA::release(ptr_);
 }
 
 ACE_INLINE TAO_AMH_Locate_ResponseHandler_ptr
-TAO_AMH_Locate_ResponseHandler_var::ptr (void) const
+TAO_AMH_Locate_ResponseHandler_var::ptr () const
 {
   return this->ptr_;
 }
@@ -74,25 +74,25 @@ TAO_AMH_Locate_ResponseHandler_var::operator TAO_AMH_Locate_ResponseHandler_ptr 
 }
 
 ACE_INLINE TAO_AMH_Locate_ResponseHandler_ptr
-TAO_AMH_Locate_ResponseHandler_var::operator-> (void) const
+TAO_AMH_Locate_ResponseHandler_var::operator-> () const
 {
   return this->ptr_;
 }
 
 ACE_INLINE TAO_AMH_Locate_ResponseHandler_ptr
-TAO_AMH_Locate_ResponseHandler_var::in (void) const
+TAO_AMH_Locate_ResponseHandler_var::in () const
 {
   return this->ptr_;
 }
 
 ACE_INLINE TAO_AMH_Locate_ResponseHandler_ptr &
-TAO_AMH_Locate_ResponseHandler_var::inout (void)
+TAO_AMH_Locate_ResponseHandler_var::inout ()
 {
   return this->ptr_;
 }
 
 ACE_INLINE TAO_AMH_Locate_ResponseHandler_ptr &
-TAO_AMH_Locate_ResponseHandler_var::out (void)
+TAO_AMH_Locate_ResponseHandler_var::out ()
 {
   CORBA::release (this->ptr_);
   this->ptr_ = TAO_AMH_Locate_ResponseHandler::_nil ();
@@ -100,7 +100,7 @@ TAO_AMH_Locate_ResponseHandler_var::out (void)
 }
 
 ACE_INLINE TAO_AMH_Locate_ResponseHandler_ptr
-TAO_AMH_Locate_ResponseHandler_var::_retn (void)
+TAO_AMH_Locate_ResponseHandler_var::_retn ()
 {
   // yield ownership
   TAO_AMH_Locate_ResponseHandler_ptr val = this->ptr_;

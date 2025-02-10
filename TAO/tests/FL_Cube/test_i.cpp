@@ -6,7 +6,6 @@ Simple_Server_i::Simple_Server_i (CORBA::ORB_ptr orb,
   :  orb_ (CORBA::ORB::_duplicate (orb)),
      window_ (window)
 {
-
 }
 
 void
@@ -22,9 +21,9 @@ Simple_Server_i::set_y_angle (CORBA::Long y)
 }
 
 void
-Simple_Server_i::shutdown (void)
+Simple_Server_i::shutdown ()
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }
 
 // ****************************************************************
@@ -61,7 +60,7 @@ Simple_Window::set_y_angle (CORBA::Long y)
 }
 
 void
-Simple_Window::draw (void)
+Simple_Window::draw ()
 {
   // Based on the CubeView example in the FL toolkit.
 
@@ -87,7 +86,7 @@ Simple_Window::draw (void)
 }
 
 void
-Simple_Window::draw_cube (void)
+Simple_Window::draw_cube ()
 {
   const float ALPHA = 0.5;
 

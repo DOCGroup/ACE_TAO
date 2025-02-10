@@ -15,15 +15,11 @@
 // Helper function type definition for sort //
 //////////////////////////////////////////////
 
-#if defined (ACE_HAS_WINCE)
-typedef int (_cdecl* COMP_FUNC) (const void*, const void*);
-#else
 // This is awkward, but it makes MSVC++ happy.
 extern "C"
 {
 typedef int (*COMP_FUNC) (const void*, const void*);
 }
-#endif  // ACE_HAS_WINCE
 
 ///////////////////////////////////////////////////
 // class ACE_Strategy_Scheduler member functions //
@@ -578,7 +574,6 @@ ACE_Strategy_Scheduler::schedule_timeline_entry (
 }
 
 
-
 ////////////////////////////////////////////////////////////////////
 // class template ACE_Strategy_Scheduler_Factory member functions //
 ////////////////////////////////////////////////////////////////////
@@ -600,7 +595,6 @@ ACE_Strategy_Scheduler_Factory<STRATEGY>::create (RtecScheduler::Preemption_Prio
 }
 
 
-
 /////////////////////////////////////////////////////////////////
 // abstract base class ACE_Scheduler_Strategy member functions //
 /////////////////////////////////////////////////////////////////
@@ -613,7 +607,7 @@ ACE_Scheduler_Strategy::ACE_Scheduler_Strategy (
 {
 }
 
-ACE_Scheduler_Strategy::~ACE_Scheduler_Strategy (void)
+ACE_Scheduler_Strategy::~ACE_Scheduler_Strategy ()
 {
 }
 
@@ -695,7 +689,6 @@ ACE_Scheduler_Strategy::minimum_critical_priority ()
 {
   return 0;
 }
-
 
 
 /////////////////////////////////////////////////////////////////////////
@@ -857,7 +850,6 @@ ACE_MUF_Scheduler_Strategy::dispatch_type (const Dispatch_Entry & /* entry */)
 
 
 
-
 /////////////////////////////////////////////////////////////////////////
 // class ACE_RMS_Scheduler_Strategy static data member initializations //
 /////////////////////////////////////////////////////////////////////////
@@ -987,7 +979,6 @@ ACE_RMS_Scheduler_Strategy::dispatch_type (const Dispatch_Entry & /* entry */)
 {
   return RtecScheduler::STATIC_DISPATCHING;
 }
-
 
 
 /////////////////////////////////////////////////////////////////////////
@@ -1121,7 +1112,6 @@ ACE_MLF_Scheduler_Strategy::dispatch_type (const Dispatch_Entry & /* entry */)
 {
   return RtecScheduler::LAXITY_DISPATCHING;
 }
-
 
 
 /////////////////////////////////////////////////////////////////////////

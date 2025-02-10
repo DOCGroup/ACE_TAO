@@ -10,7 +10,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 
 void
-ACE_Dynamic_Service_Base::dump (void) const
+ACE_Dynamic_Service_Base::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Dynamic_Service_Base::dump");

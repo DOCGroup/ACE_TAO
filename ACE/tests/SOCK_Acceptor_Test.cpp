@@ -9,14 +9,12 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_sys_wait.h"
 #include "ace/Time_Value.h"
 #include "ace/SOCK_Connector.h"
 #include "ace/SOCK_Acceptor.h"
-
 
 static int
 test_accept (ACE_Addr listen_addr, int v6_only)

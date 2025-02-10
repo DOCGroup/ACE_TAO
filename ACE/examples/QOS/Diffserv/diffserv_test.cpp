@@ -95,7 +95,6 @@ const char *dscp_char[]=
 int
 ACE_TMAIN (int argc , ACE_TCHAR *argv[])
 {
-
   if(argc != 3)
     {
       ACE_DEBUG((LM_DEBUG, "Usage:\n  %s [destination host] [destination port]\n\n", argv[0]));

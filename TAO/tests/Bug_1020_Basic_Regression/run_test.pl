@@ -69,7 +69,7 @@ while($elapsed < $max_running_time) {
 
     # ... wait for the clients to die unless they did not startup,
     # ignore errors because they intentionally crash themselves!
-    $CL->WaitKill($server->ProcessStartWaitInterval() + 20) unless $client < 0;
+    $CL->WaitKill($server->ProcessStartWaitInterval() + 20, {self_crash => 1}) unless $client < 0;
 
     $elapsed = time() - $start_time;
 }

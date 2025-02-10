@@ -56,14 +56,14 @@ public:
   virtual int init (int argc, ACE_TCHAR *argv[]);
 
   /// Exit hooks
-  virtual int fini (void);
+  virtual int fini ();
 
 protected:
   /// Thread Per Request implementation
   virtual int thread_per_request (HTTP_Handler_Factory &factory);
 
   /// Asynch Thread Pool implementation
-  virtual int asynch_thread_pool (void);
+  virtual int asynch_thread_pool ();
 
   /// Synch Thread Pool implementation
   virtual int synch_thread_pool (HTTP_Handler_Factory &factory);
@@ -96,7 +96,7 @@ public:
                           ACE_Thread_Manager &tm,
                           int threads,
                           HTTP_Handler_Factory &factory);
-  virtual int svc (void);
+  virtual int svc ();
 
 private:
   HTTP_Acceptor &acceptor_;
@@ -121,7 +121,7 @@ public:
                            HTTP_Handler_Factory &factory);
   virtual int open (void *args = 0);
   virtual int close (u_long);
-  virtual int svc (void);
+  virtual int svc ();
 
 private:
   ACE_HANDLE handle_;
@@ -143,7 +143,7 @@ class Asynch_Thread_Pool_Task : public ACE_Task<ACE_NULL_SYNCH>
 public:
   Asynch_Thread_Pool_Task (ACE_Proactor &proactor,
                            ACE_Thread_Manager &tm);
-  virtual int svc (void);
+  virtual int svc ();
 
 private:
   ACE_Proactor &proactor_;

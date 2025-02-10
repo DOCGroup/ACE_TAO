@@ -28,7 +28,7 @@ class Server_ORBInitializer :
 {
 public:
   /// Constructor
-  Server_ORBInitializer (void);
+  Server_ORBInitializer ();
 
   virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info);
 
@@ -36,7 +36,7 @@ public:
 
   /// Return the created server request interceptor.  Only valid after
   /// post_init(), i.e. ORB_init(), has been called.
-  Echo_Server_Request_Interceptor * server_interceptor (void);
+  Echo_Server_Request_Interceptor * server_interceptor ();
 
 private:
   /// Pointer to the server request interceptor.  ORB is responsible

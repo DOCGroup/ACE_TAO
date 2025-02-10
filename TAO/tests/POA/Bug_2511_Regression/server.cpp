@@ -22,14 +22,13 @@ class test_i :
   public virtual POA_test
 {
 public:
-
   test_i (PortableServer::POA_ptr poa);
 
-  void normal (void);
+  void normal ();
 
-  void exceptional (void);
+  void exceptional ();
 
-  void notexisting (void);
+  void notexisting ();
 
   PortableServer::POA_var poa_;
 };
@@ -40,19 +39,19 @@ test_i::test_i (PortableServer::POA_ptr poa)
 }
 
 void
-test_i::normal (void)
+test_i::normal ()
 {
   ACE_DEBUG ((LM_DEBUG, "executing normal\n"));
 }
 
 void
-test_i::exceptional (void)
+test_i::exceptional ()
 {
   ACE_DEBUG ((LM_DEBUG, "executing exceptional\n"));
 }
 
 void
-test_i::notexisting (void)
+test_i::notexisting ()
 {
   ACE_DEBUG ((LM_DEBUG, "executing notexisting\n"));
 }
@@ -61,7 +60,6 @@ class Servant_Locator :
   public PortableServer::ServantLocator
 {
 public:
-
   Servant_Locator (PortableServer::POA_ptr poa);
 
   ::PortableServer::Servant preinvoke (const PortableServer::ObjectId &,
@@ -133,7 +131,6 @@ Servant_Locator::postinvoke (const PortableServer::ObjectId &oid,
   ACE_DEBUG ((LM_DEBUG,
               "Servant_Locator::postinvoke for %C.%C\n",
               name.in (), op ));
-
 }
 
 int

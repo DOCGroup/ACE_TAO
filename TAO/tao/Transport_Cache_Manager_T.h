@@ -54,7 +54,6 @@ namespace TAO
    * map is updated only by holding the lock. The more compeling reason
    * to have the lock in this class and not in the Hash_Map is that, we
    * do quite a bit of work in this class for which we need a lock.
-   *
    */
   template <typename TT, typename TRDT, typename PSTRAT>
   class Transport_Cache_Manager_T
@@ -102,7 +101,7 @@ namespace TAO
       const char *orbid);
 
     /// Destructor
-    ~Transport_Cache_Manager_T (void);
+    ~Transport_Cache_Manager_T ();
 
     /// Add the transport to the cache.
     /**
@@ -123,7 +122,7 @@ namespace TAO
       size_t & busy_count);
 
     /// Remove entries from the cache depending upon the strategy.
-    int purge (void);
+    int purge ();
 
     /// Purge the entry from the Cache Map
     int purge_entry (HASH_MAP_ENTRY *& entry);
@@ -159,13 +158,13 @@ namespace TAO
     bool blockable_client_transports (Connection_Handler_Set &handlers);
 
     /// Return the current size of the cache.
-    size_t current_size (void) const;
+    size_t current_size () const;
 
     /// Return the total size of the cache.
-    size_t total_size (void) const;
+    size_t total_size () const;
 
     /// Return the underlying cache map
-    HASH_MAP &map (void);
+    HASH_MAP &map ();
 
   private:
     /// Lookup entry<key,value> in the cache. Grabs the lock and calls the
@@ -270,13 +269,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 # include "tao/Transport_Cache_Manager_T.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "tao/Transport_Cache_Manager_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("tao/Transport_Cache_Manager_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 

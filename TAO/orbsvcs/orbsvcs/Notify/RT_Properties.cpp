@@ -7,7 +7,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Notify_RT_Properties::TAO_Notify_RT_Properties (void)
+TAO_Notify_RT_Properties::TAO_Notify_RT_Properties ()
 {
 }
 
@@ -16,7 +16,7 @@ TAO_Notify_RT_Properties::~TAO_Notify_RT_Properties ()
 }
 
 TAO_Notify_RT_Properties *
-TAO_Notify_RT_Properties::instance (void)
+TAO_Notify_RT_Properties::instance ()
 {
   // Hide the template instantiation to prevent multiple instances
   // from being created.

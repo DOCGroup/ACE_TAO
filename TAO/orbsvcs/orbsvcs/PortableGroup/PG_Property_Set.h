@@ -31,7 +31,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-
   class PG_Property_Set;
   typedef ACE_Refcounted_Auto_Ptr<PG_Property_Set, TAO_SYNCH_MUTEX> PG_Property_Set_var;
 
@@ -62,11 +61,10 @@ namespace TAO
       ACE_SYNCH_NULL_MUTEX> ValueMapIterator;
 
   public:
-
     /**
      * constructor: empty set with no defaults.
      */
-    PG_Property_Set (void);
+    PG_Property_Set ();
 
     /**
      * constructor
@@ -149,13 +147,12 @@ namespace TAO
     ////////////////////
     // Forbidden methods
   private:
-    PG_Property_Set(const PG_Property_Set & rhs);
-    PG_Property_Set & operator = (const PG_Property_Set & rhs);
+    PG_Property_Set(const PG_Property_Set & rhs) = delete;
+    PG_Property_Set & operator = (const PG_Property_Set & rhs) = delete;
 
     ///////////////
     // Data Members
   private:
-
     /**
      * Protect internal state.
      */

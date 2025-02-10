@@ -21,7 +21,7 @@ ACEXML_AttributesImpl::ACEXML_AttributesImpl (const
     this->attrs_[i] = attrs.attrs_[i];
 }
 
-ACEXML_AttributesImpl::~ACEXML_AttributesImpl (void)
+ACEXML_AttributesImpl::~ACEXML_AttributesImpl ()
 {
 }
 
@@ -115,7 +115,7 @@ ACEXML_AttributesImpl::getIndex (const ACEXML_Char *uri,
 }
 
 size_t
-ACEXML_AttributesImpl::getLength (void)
+ACEXML_AttributesImpl::getLength ()
 {
   return this->attrs_.size ();
 }

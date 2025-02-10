@@ -58,33 +58,33 @@ static const int DEFAULT_ITERATIONS = 100000000;
 class Thread_Mutex
 {
 public:
-  Thread_Mutex (void);
-  ~Thread_Mutex (void);
-  int acquire (void);
-  int release (void);
+  Thread_Mutex ();
+  ~Thread_Mutex ();
+  int acquire ();
+  int release ();
 
 private:
   ACE_mutex_t mutex_;
 };
 
-Thread_Mutex::Thread_Mutex (void)
+Thread_Mutex::Thread_Mutex ()
 {
   ACE_OS::mutex_init (&this->mutex_);
 }
 
-Thread_Mutex::~Thread_Mutex (void)
+Thread_Mutex::~Thread_Mutex ()
 {
   ACE_OS::mutex_destroy (&this->mutex_);
 }
 
 inline int
-Thread_Mutex::acquire (void)
+Thread_Mutex::acquire ()
 {
   return ACE_OS::mutex_lock (&this->mutex_);
 }
 
 inline int
-Thread_Mutex::release (void)
+Thread_Mutex::release ()
 {
   return ACE_OS::mutex_unlock (&this->mutex_);
 }
@@ -93,12 +93,12 @@ Thread_Mutex::release (void)
 class Mutex_Base
 {
 public:
-  virtual ~Mutex_Base (void);
-  virtual int acquire (void) = 0;
-  virtual int release (void) = 0;
+  virtual ~Mutex_Base ();
+  virtual int acquire () = 0;
+  virtual int release () = 0;
 };
 
-Mutex_Base::~Mutex_Base (void)
+Mutex_Base::~Mutex_Base ()
 {
 }
 
@@ -106,33 +106,33 @@ Mutex_Base::~Mutex_Base (void)
 class Thread_Mutex_Derived : public Mutex_Base
 {
 public:
-  Thread_Mutex_Derived (void);
-  virtual ~Thread_Mutex_Derived (void);
-  virtual int acquire (void);
-  virtual int release (void);
+  Thread_Mutex_Derived ();
+  virtual ~Thread_Mutex_Derived ();
+  virtual int acquire ();
+  virtual int release ();
 
 private:
   ACE_mutex_t mutex_;
 };
 
-Thread_Mutex_Derived::Thread_Mutex_Derived (void)
+Thread_Mutex_Derived::Thread_Mutex_Derived ()
 {
   ACE_OS::mutex_init (&this->mutex_);
 }
 
-Thread_Mutex_Derived::~Thread_Mutex_Derived (void)
+Thread_Mutex_Derived::~Thread_Mutex_Derived ()
 {
   ACE_OS::mutex_destroy (&this->mutex_);
 }
 
 inline int
-Thread_Mutex_Derived::acquire (void)
+Thread_Mutex_Derived::acquire ()
 {
   return ACE_OS::mutex_lock (&this->mutex_);
 }
 
 inline int
-Thread_Mutex_Derived::release (void)
+Thread_Mutex_Derived::release ()
 {
   return ACE_OS::mutex_unlock (&this->mutex_);
 }

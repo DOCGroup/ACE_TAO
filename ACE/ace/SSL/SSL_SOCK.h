@@ -39,7 +39,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_SSL_Export ACE_SSL_SOCK : public ACE_SOCK
 {
 public:
-
   /**
    * Override ACE_SOCK base class implementations with these SSL
    * specific ones.
@@ -56,15 +55,14 @@ public:
   int enable (int value) const;
   int disable (int value) const;
   void set_handle (ACE_HANDLE);
-  ACE_HANDLE get_handle (void) const;
+  ACE_HANDLE get_handle () const;
   int control (int cmd, void *arg) const;
   //@}
 
 protected:
-
   /// Default constructor is private to prevent instances of this class
   /// from being defined.
-  ACE_SSL_SOCK (void);
+  ACE_SSL_SOCK ();
 
   /// Destructor
   /**
@@ -72,8 +70,7 @@ protected:
    * operator delete() from being called through a base class
    * ACE_SSL_SOCK pointer/reference.
    */
-  ~ACE_SSL_SOCK (void);
-
+  ~ACE_SSL_SOCK ();
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
@@ -85,7 +82,6 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #include /**/ "ace/post.h"
 
 #endif /* ACE_SSL_SOCK_H */
-
 
 
 

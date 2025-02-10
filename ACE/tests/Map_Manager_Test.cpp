@@ -22,51 +22,31 @@
 #include "ace/Hash_Cache_Map_Manager_T.h"
 #include "ace/Caching_Strategies_T.h"
 
-typedef ACE_Null_Mutex MUTEX;
-typedef ACE_UINT32 TYPE;
-typedef ACE_Active_Map_Manager_Key
-        ACTIVE_KEY;
-typedef ACE_Hash<TYPE>
-        HASH_KEY;
-typedef ACE_Equal_To<TYPE>
-        COMPARE_KEYS;
+using MUTEX = ACE_Null_Mutex;
+using TYPE = ACE_UINT32;
+using ACTIVE_KEY = ACE_Active_Map_Manager_Key;
+using HASH_KEY = ACE_Hash<TYPE>;
+using COMPARE_KEYS = ACE_Equal_To<TYPE>;
 
-typedef ACE_Map_Manager <TYPE, TYPE, MUTEX>
-        MAP_MANAGER;
-typedef ACE_Map_Iterator <TYPE, TYPE, MUTEX>
-        ITERATOR;
-typedef ACE_Map_Reverse_Iterator <TYPE, TYPE, MUTEX>
-        REVERSE_ITERATOR;
-typedef ACE_Map_Entry <TYPE, TYPE>
-        MAP_ENTRY;
-typedef ACE_Hash_Map_Manager_Ex <TYPE, TYPE, HASH_KEY, COMPARE_KEYS, MUTEX>
-        HASH_MAP_MANAGER;
-typedef ACE_Hash_Map_Iterator_Ex <TYPE, TYPE, HASH_KEY, COMPARE_KEYS, MUTEX>
-        HASH_ITERATOR;
-typedef ACE_Hash_Map_Reverse_Iterator_Ex <TYPE, TYPE, HASH_KEY, COMPARE_KEYS, MUTEX>
-        HASH_REVERSE_ITERATOR;
-typedef ACE_Hash_Map_Entry <TYPE, TYPE>
-        HASH_ENTRY;
-typedef ACE_Active_Map_Manager <TYPE>
-        ACTIVE_MAP_MANAGER;
+using MAP_MANAGER = ACE_Map_Manager<TYPE, TYPE, MUTEX>;
+using ITERATOR = ACE_Map_Iterator<TYPE, TYPE, MUTEX>;
+using REVERSE_ITERATOR = ACE_Map_Reverse_Iterator<TYPE, TYPE, MUTEX>;
+using MAP_ENTRY = ACE_Map_Entry<TYPE, TYPE>;
+using HASH_MAP_MANAGER = ACE_Hash_Map_Manager_Ex<TYPE, TYPE, HASH_KEY, COMPARE_KEYS, MUTEX>;
+using HASH_ITERATOR = ACE_Hash_Map_Iterator_Ex<TYPE, TYPE, HASH_KEY, COMPARE_KEYS, MUTEX>;
+using HASH_REVERSE_ITERATOR = ACE_Hash_Map_Reverse_Iterator_Ex<TYPE, TYPE, HASH_KEY, COMPARE_KEYS, MUTEX>;
+using HASH_ENTRY = ACE_Hash_Map_Entry<TYPE, TYPE>;
+using ACTIVE_MAP_MANAGER = ACE_Active_Map_Manager<TYPE>;
 
-typedef ACE_Hash_Map_Manager_Ex<TYPE, std::pair<TYPE, int>, HASH_KEY, COMPARE_KEYS, MUTEX>
-        CACHE_MAP_IMPL;
-typedef ACE_Hash_Map_Iterator_Ex<TYPE, std::pair<TYPE, int>, HASH_KEY, COMPARE_KEYS, MUTEX>
-        CACHE_ITER_IMPL;
-typedef ACE_Hash_Map_Reverse_Iterator_Ex<TYPE, std::pair<TYPE, int>, HASH_KEY, COMPARE_KEYS, MUTEX>
-        CACHE_REV_ITER_IMPL;
-typedef int ATTR;
-typedef ACE_Null_Cleanup_Strategy<TYPE, TYPE, CACHE_MAP_IMPL>
-        NULL_CLEANUP;
-typedef ACE_Null_Caching_Utility <TYPE, TYPE, CACHE_MAP_IMPL, CACHE_ITER_IMPL, ATTR>
-        NULL_UTILITY;
-typedef ACE_Null_Caching_Strategy<ATTR, NULL_UTILITY>
-        NULL_CACHING_STRATEGY;
-typedef ACE_Cache_Map_Manager<TYPE, TYPE, CACHE_MAP_IMPL, CACHE_ITER_IMPL, CACHE_REV_ITER_IMPL, NULL_CACHING_STRATEGY, ATTR>
-        CACHE_MAP_MANAGER;
-typedef ACE_Hash_Cache_Map_Manager<TYPE, TYPE, HASH_KEY, COMPARE_KEYS, NULL_CACHING_STRATEGY, ATTR>
-        HASH_CACHE_MAP_MANAGER;
+using CACHE_MAP_IMPL = ACE_Hash_Map_Manager_Ex<TYPE, std::pair<TYPE, int>, HASH_KEY, COMPARE_KEYS, MUTEX>;
+using CACHE_ITER_IMPL = ACE_Hash_Map_Iterator_Ex<TYPE, std::pair<TYPE, int>, HASH_KEY, COMPARE_KEYS, MUTEX>;
+using CACHE_REV_ITER_IMPL = ACE_Hash_Map_Reverse_Iterator_Ex<TYPE, std::pair<TYPE, int>, HASH_KEY, COMPARE_KEYS, MUTEX>;
+using ATTR = int;
+using NULL_CLEANUP = ANCLE<TYPE, TYPE, CACHE_MAP_IMPL>;
+using NULL_UTILITY = ACE_Null_Caching_Utility<TYPE, TYPE, CACHE_MAP_IMPL, CACHE_ITER_IMPL, ATTR>;
+using NULL_CACHING_STRATEGY = ANULL<ATTR, NULL_UTILITY>;
+using CACHE_MAP_MANAGER = ACMM<TYPE, TYPE, CACHE_MAP_IMPL, CACHE_ITER_IMPL, CACHE_REV_ITER_IMPL, NULL_CACHING_STRATEGY, ATTR>;
+using HASH_CACHE_MAP_MANAGER = ACE_Hash_Cache_Map_Manager<TYPE, TYPE, HASH_KEY, COMPARE_KEYS, NULL_CACHING_STRATEGY, ATTR>;
 
 static int
 test_cache_map_manager (size_t table_size,

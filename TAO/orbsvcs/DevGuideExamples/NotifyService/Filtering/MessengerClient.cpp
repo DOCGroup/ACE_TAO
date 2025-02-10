@@ -49,7 +49,6 @@ int ACE_TMAIN(int argc, ACE_TCHAR * argv[])
     messenger->send_message ("sysadmin@company.com",
                              "OCI's Distribution of TAO",
                              message.inout());
-
   }
   catch(const CORBA::Exception& ex) {
     std::cerr << "Caught a CORBA exception: " << ex << std::endl;

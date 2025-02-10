@@ -39,7 +39,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_SOCK : public ACE_IPC_SAP
 {
 public:
-
   /// Wrapper around the @c setsockopt system call.
   int set_option (int level,
                   int option,
@@ -59,7 +58,7 @@ public:
    * @return The result of closing the socket; 0 if the handle value
    *         was already ACE_INVALID_HANDLE.
    */
-  int close (void);
+  int close ();
 
   /// Return the local endpoint address in the referenced ACE_Addr.
   /// Returns 0 if successful, else -1.
@@ -73,7 +72,7 @@ public:
   int get_remote_addr (ACE_Addr &) const;
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -94,7 +93,6 @@ public:
             int reuse_addr);
 
 protected:
-
   /// Constructor with arguments to call the BSD-style @c socket system
   /// call (no QoS).
   ACE_SOCK (int type,
@@ -114,7 +112,7 @@ protected:
 
   /// Default constructor is protected to prevent instances of this class
   /// from being defined.
-  ACE_SOCK (void);
+  ACE_SOCK ();
 
   /// Protected destructor.
   /**
@@ -122,7 +120,7 @@ protected:
    * operator delete() from being called through a base class ACE_SOCK
    * pointer/reference.
    */
-  ~ACE_SOCK (void);
+  ~ACE_SOCK () = default;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

@@ -6,12 +6,12 @@
 #include "ace/OS_NS_unistd.h"
 
 ACE_INLINE
-Handle_L_Stream::~Handle_L_Stream (void)
+Handle_L_Stream::~Handle_L_Stream ()
 {
 }
 
 ACE_INLINE
-Handle_L_Stream::Handle_L_Stream (void)
+Handle_L_Stream::Handle_L_Stream ()
 {
   if (Handle_L_Stream::login_name == 0) {
 #if !defined(ACE_LACKS_CUSERID)
@@ -85,14 +85,14 @@ Handle_L_Stream::init (int argc, ACE_TCHAR *argv[])
 }
 
 ACE_INLINE int
-Handle_L_Stream::fini (void)
+Handle_L_Stream::fini ()
 {
   return ACE_Reactor::instance ()->remove_handler
     (this, ACE_Event_Handler::ACCEPT_MASK);
 }
 
 ACE_INLINE ACE_HANDLE
-Handle_L_Stream::get_handle (void) const
+Handle_L_Stream::get_handle () const
 {
   return ACE_LSOCK_Acceptor::get_handle ();
 }

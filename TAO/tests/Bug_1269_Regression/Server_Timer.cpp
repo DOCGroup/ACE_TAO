@@ -15,7 +15,7 @@ Server_Timer::Server_Timer(Test::Echo_ptr echo,
 }
 
 void
-Server_Timer::activate (void)
+Server_Timer::activate ()
 {
   ACE_Time_Value tv (0, 20000);
   this->reactor()->schedule_timer (this, 0, tv);

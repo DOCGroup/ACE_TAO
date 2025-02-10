@@ -34,16 +34,16 @@ class Test_Aio
 {
 public:
   /// Default constructor.
-  Test_Aio (void);
+  Test_Aio ();
 
   /// Initting the output file and the buffer.
-  int init (void);
+  int init ();
 
   /// Doing the testing stuff.
-  int do_aio (void);
+  int do_aio ();
 
   /// Destructor.
-  ~Test_Aio (void);
+  ~Test_Aio ();
 private:
   /// Output file descriptor.
   int out_fd_;
@@ -61,7 +61,7 @@ private:
   char *buffer_read_;
 };
 
-Test_Aio::Test_Aio (void)
+Test_Aio::Test_Aio ()
   : aiocb_write_ (new struct aiocb),
     aiocb_read_ (new struct aiocb),
     buffer_write_ (0),
@@ -69,7 +69,7 @@ Test_Aio::Test_Aio (void)
 {
 }
 
-Test_Aio::~Test_Aio (void)
+Test_Aio::~Test_Aio ()
 {
   delete aiocb_write_;
   delete aiocb_read_;
@@ -79,7 +79,7 @@ Test_Aio::~Test_Aio (void)
 
 // Init the output file and init the buffer.
 int
-Test_Aio::init (void)
+Test_Aio::init ()
 {
   // Open the output file.
   this->out_fd_ = open ("test_aio.log", O_RDWR | O_CREAT | O_TRUNC, 0666);
@@ -101,7 +101,7 @@ Test_Aio::init (void)
 // Go on aio_suspend. Wait for completion.
 // Print out the result.
 int
-Test_Aio::do_aio (void)
+Test_Aio::do_aio ()
 {
   // = Write to the file.
 

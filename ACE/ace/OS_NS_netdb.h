@@ -7,8 +7,6 @@
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  *  @author Jesper S. M|ller<stophph@diku.dk>
  *  @author and a cast of thousands...
- *
- *  Originally in OS.h.
  */
 //=============================================================================
 
@@ -36,7 +34,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE_OS
 {
-
   ACE_NAMESPACE_INLINE_FUNCTION
   struct hostent *gethostbyaddr (const char *addr,
                                  int length,
@@ -137,10 +134,10 @@ namespace ACE_OS
 
 # if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0) && defined (ACE_LACKS_NETDB_REENTRANT_FUNCTIONS)
   extern ACE_Export
-  int netdb_acquire (void);
+  int netdb_acquire ();
 
   extern ACE_Export
-  int netdb_release (void);
+  int netdb_release ();
 # endif /* defined (ACE_MT_SAFE) && ACE_LACKS_NETDB_REENTRANT_FUNCTIONS */
 
 } /* namespace ACE_OS */

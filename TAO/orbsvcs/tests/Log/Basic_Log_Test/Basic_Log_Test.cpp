@@ -9,14 +9,14 @@
 #include "ace/OS_NS_unistd.h"
 
 const char* BasicLog_Test::basic_log_factory_name_= "BasicLogFactory";
-const char* BasicLog_Test::naming_sevice_name_ = "NameService";
+const char* BasicLog_Test::naming_service_name_ = "NameService";
 
-BasicLog_Test::BasicLog_Test(void)
+BasicLog_Test::BasicLog_Test()
   : argc_ (0), argv_(0), logServiceIor_ (0)
 {
 }
 
-BasicLog_Test::~BasicLog_Test (void)
+BasicLog_Test::~BasicLog_Test ()
 {
   this->destroy_log ();
 }
@@ -55,13 +55,11 @@ BasicLog_Test::init (int argc, ACE_TCHAR *argv[])
     }
 
   ACE_RETURN(0);
-
 }
 
 int
-BasicLog_Test::init_factory (void)
+BasicLog_Test::init_factory ()
 {
-
   // Assumpting INS for finding LogServie
 
   //CORBA::Object_var logging_obj = orb_->resolve_initial_references ("BasicLogFactory",
@@ -114,7 +112,6 @@ BasicLog_Test::init_factory (void)
 int
 BasicLog_Test::test_CreateLog (CORBA::ULongLong maxSize)
 {
-
   try
     {
       DsLogAdmin::LogId id;
@@ -249,7 +246,6 @@ int BasicLog_Test::display_records ()
                rec_list[j].id, rec_list[j].time));
 
   return 0;
-
 }
 */
 int BasicLog_Test::write_records (CORBA::ULongLong numberOfRecords)
@@ -303,7 +299,6 @@ int BasicLog_Test::write_records (CORBA::ULongLong numberOfRecords)
         CORBA::String_var t(str.c_str ());
         record[0] <<= t.in ();
         basicLog_->write_records(record);
-
       }
   }
 
@@ -321,14 +316,12 @@ int BasicLog_Test::write_records (CORBA::ULongLong numberOfRecords)
 int
 BasicLog_Test::test_adminState()
 {
-
   basicLog_->set_administrative_state(DsLogAdmin::locked);
   try
     {
       this->write_records(0);
 
       ACE_ERROR_RETURN((LM_ERROR,"Setting administrative state to lock failed.  DsLogAdmin::LogLocked not thrown.\n"),-1);
-
     }
   catch (const DsLogAdmin::LogLocked&)
     {
@@ -347,7 +340,6 @@ BasicLog_Test::test_adminState()
       this->write_records(0);
       ACE_DEBUG ((LM_DEBUG,"Setting administrative state to succeeded.  DsLogAdmin::LogLocked not thrown.\n"));
       ACE_RETURN(0);
-
     }
   catch (const DsLogAdmin::LogLocked&)
     {
@@ -358,9 +350,8 @@ BasicLog_Test::test_adminState()
 
 
 int
-BasicLog_Test::test_logSize (void)
+BasicLog_Test::test_logSize ()
 {
-
   try
     {
       basicLog_->set_max_size (1);
@@ -403,7 +394,6 @@ BasicLog_Test::test_logSize (void)
 int
 BasicLog_Test::test_logCompaction(CORBA::ULong lifeExpectancy)
 {
-
   CORBA::ULongLong old_n_records = basicLog_->get_n_records ();
   if (old_n_records <= 0)
     {
@@ -450,7 +440,7 @@ BasicLog_Test::test_logCompaction(CORBA::ULong lifeExpectancy)
       ACE_ERROR_RETURN((LM_ERROR,
                         "Log compaction failed, because %d records remain.\n",
                         ACE_U64_TO_U32 (new_n_records)),
-                       -1 );
+                       -1);
     }
 
   return 0;
@@ -470,7 +460,6 @@ BasicLog_Test::test_retrieval (CORBA::ULong /* numberOfRecordsToWrite */)
 
   return rc;
 }
-
 
 
 int
@@ -510,10 +499,10 @@ BasicLog_Test::parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 void
-BasicLog_Test::resolve_naming_service (void)
+BasicLog_Test::resolve_naming_service ()
 {
   CORBA::Object_var naming_obj =
-    this->orb_->resolve_initial_references (naming_sevice_name_);
+    this->orb_->resolve_initial_references (naming_service_name_);
 
   // Need to check return value for errors.
   if (CORBA::is_nil (naming_obj.in ()))
@@ -524,7 +513,7 @@ BasicLog_Test::resolve_naming_service (void)
 }
 
 void
-BasicLog_Test::resolve_basic_factory (void)
+BasicLog_Test::resolve_basic_factory ()
 {
   CosNaming::Name name (1);
   name.length (1);
@@ -556,9 +545,8 @@ BasicLog_Test::destroy_log()
 }
 
 int
-BasicLog_Test::test_log_destroy (void)
+BasicLog_Test::test_log_destroy ()
 {
-
   ACE_DEBUG ((LM_ERROR, "Testing destroy log\n"));
   this->basicLog_->destroy ();
 
@@ -588,7 +576,7 @@ BasicLog_Test::test_log_destroy (void)
 }
 
 int
-BasicLog_Test::test_week_mask (void)
+BasicLog_Test::test_week_mask ()
 {
   DsLogAdmin::WeekMask masks;
   masks.length (1);
@@ -649,9 +637,8 @@ return 0;
 }
 
 int
-BasicLog_Test::test_capacity_alarm_threshold (void)
+BasicLog_Test::test_capacity_alarm_threshold ()
 {
-
   //basicLog_->set_log_full_action(DsLogAdmin::halt);
 
   DsLogAdmin::CapacityAlarmThresholdList list;
@@ -712,5 +699,4 @@ BasicLog_Test::test_capacity_alarm_threshold (void)
   this->write_records (0);
 
   return 0;
-
 }

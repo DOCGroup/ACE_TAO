@@ -22,7 +22,7 @@ class Client_Task
 public:
   Client_Task (client_ptr c,
                server_ptr s);
-  int svc (void);
+  int svc ();
 
 private:
   client_var client_;
@@ -37,7 +37,7 @@ Client_Task::Client_Task (client_ptr c,
 }
 
 int
-Client_Task::svc (void)
+Client_Task::svc ()
 {
   try
     {
@@ -159,8 +159,7 @@ ACT_TMAIN (int argc, ACE_TCHAR **argv)
           server->shutdown ();
         }
 
-      root_poa->destroy (1,
-                         1);
+      root_poa->destroy (true, true);
     }
   catch (const CORBA::Exception& ex)
     {

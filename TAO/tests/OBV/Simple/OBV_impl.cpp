@@ -17,14 +17,14 @@ Event_impl::~Event_impl ()
 }
 
 CORBA::ValueBase*
-Event_impl::_copy_value (void)
+Event_impl::_copy_value ()
 {
   return new Event_impl (this->value_ ());
 }
 
 
 void
-Event_impl::do_print (void)
+Event_impl::do_print ()
 {
   ACE_DEBUG((LM_DEBUG, "(value %d) \n",
              (CORBA::ULong) this->value_()));
@@ -35,7 +35,7 @@ Event_factory::~Event_factory ()
 }
 
 TAO_OBV_CREATE_RETURN_TYPE (Event)
-Event_factory::create_for_unmarshal (void)
+Event_factory::create_for_unmarshal ()
 {
   return new Event_impl;
 }

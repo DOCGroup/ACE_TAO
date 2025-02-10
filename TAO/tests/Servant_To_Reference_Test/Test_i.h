@@ -13,7 +13,7 @@ public:
   One_Impl (CORBA::ORB_ptr orb);
 
   // = The skeleton methods
-  virtual char * get_string (void);
+  virtual char * get_string ();
 
 private:
   /// Use an ORB reference to convert strings to objects and shutdown
@@ -29,7 +29,7 @@ public:
   Two_Impl (CORBA::ORB_ptr orb);
 
   // = The skeleton methods
-  virtual char * get_string (void);
+  virtual char * get_string ();
 
 private:
   /// Use an ORB reference to convert strings to objects and shutdown
@@ -45,7 +45,7 @@ public:
   Three_Impl (CORBA::ORB_ptr orb);
 
   // = The skeleton methods
-  virtual char * get_string (void);
+  virtual char * get_string ();
 
 private:
   /// Use an ORB reference to convert strings to objects and shutdown

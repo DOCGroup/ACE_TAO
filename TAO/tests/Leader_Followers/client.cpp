@@ -103,9 +103,8 @@ public:
     {
     }
 
-  int svc (void)
+  int svc ()
     {
-
       try
         {
           u_long work_from_this_thread = 0;
@@ -173,9 +172,8 @@ public:
     {
     }
 
-  int svc (void)
+  int svc ()
     {
-
       try
         {
           u_long event_loop_timeout_for_this_thread = 0;
@@ -222,7 +220,6 @@ private:
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-
   try
     {
       // Initialize the ORB.

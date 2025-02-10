@@ -10,7 +10,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <typename T>
 void
-ACE_Atomic_Op_GCC<T>::dump (void) const
+ACE_Atomic_Op_GCC<T>::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));

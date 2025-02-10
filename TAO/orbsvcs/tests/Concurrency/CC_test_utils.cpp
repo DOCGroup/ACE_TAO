@@ -36,7 +36,7 @@ char *CC_TestUtils::get_lock_mode_name (CosConcurrencyControl::lock_mode mode)
 }
 
 CosConcurrencyControl::LockSet_ptr
-CC_TestUtils::create_lock_set (void)
+CC_TestUtils::create_lock_set ()
 {
   // Create the lock set and return an obj ref corresponding to the
   // key.

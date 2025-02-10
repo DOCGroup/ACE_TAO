@@ -177,7 +177,6 @@ TAO_AV_RTCP_Callback::receive_control_frame (ACE_Message_Block *data,
       }
 
       first_rtcp_packet = 0;
-
     }
 
     if (more != 0)
@@ -330,13 +329,12 @@ TAO_AV_RTCP::rtcp_interval (int members,
 }
 
 
-
 // TAO_AV_RTCP_Flow_Factory
-TAO_AV_RTCP_Flow_Factory::TAO_AV_RTCP_Flow_Factory (void)
+TAO_AV_RTCP_Flow_Factory::TAO_AV_RTCP_Flow_Factory ()
 {
 }
 
-TAO_AV_RTCP_Flow_Factory::~TAO_AV_RTCP_Flow_Factory (void)
+TAO_AV_RTCP_Flow_Factory::~TAO_AV_RTCP_Flow_Factory ()
 {
 }
 
@@ -383,7 +381,7 @@ TAO_AV_RTCP_Flow_Factory::make_protocol_object (TAO_FlowSpec_Entry * /*entry*/,
 
 // TAO_AV_RTCP_Object
 int
-TAO_AV_RTCP_Object::handle_input (void)
+TAO_AV_RTCP_Object::handle_input ()
 {
   size_t bufsiz = 2*this->transport_->mtu ();
   ACE_Message_Block data (bufsiz);
@@ -437,15 +435,14 @@ TAO_AV_RTCP_Object::TAO_AV_RTCP_Object (TAO_AV_Callback *client_cb,
 {
   rtcp_cb = &this->rtcp_cb_;
   this->client_cb_ = client_cb;
-
 }
 
-TAO_AV_RTCP_Object::~TAO_AV_RTCP_Object (void)
+TAO_AV_RTCP_Object::~TAO_AV_RTCP_Object ()
 {
 }
 
 int
-TAO_AV_RTCP_Object::destroy (void)
+TAO_AV_RTCP_Object::destroy ()
 {
   this->callback_->handle_destroy ();
   delete this;
@@ -460,13 +457,13 @@ TAO_AV_RTCP_Object::set_policies (const TAO_AV_PolicyList &/*policy_list*/)
 }
 
 int
-TAO_AV_RTCP_Object::start (void)
+TAO_AV_RTCP_Object::start ()
 {
   return this->callback_->handle_start ();
 }
 
 int
-TAO_AV_RTCP_Object::stop (void)
+TAO_AV_RTCP_Object::stop ()
 {
   return this->callback_->handle_stop ();
 }
@@ -496,7 +493,7 @@ TAO_AV_RTCP_Object::ts_offset (ACE_UINT32 ts_offset)
 }
 
 // TAO_AV_RTCP_Callback
-TAO_AV_RTCP_Callback::TAO_AV_RTCP_Callback (void)
+TAO_AV_RTCP_Callback::TAO_AV_RTCP_Callback ()
   :is_initial_timeout_(1),
    packet_size_(0)
 {
@@ -510,7 +507,7 @@ TAO_AV_RTCP_Callback::TAO_AV_RTCP_Callback (void)
   this->output_.cname(cname);
 }
 
-TAO_AV_RTCP_Callback::~TAO_AV_RTCP_Callback (void)
+TAO_AV_RTCP_Callback::~TAO_AV_RTCP_Callback ()
 {
 }
 
@@ -521,13 +518,13 @@ TAO_AV_RTCP_Callback::schedule (int ms)
 }
 
 int
-TAO_AV_RTCP_Callback::handle_start (void)
+TAO_AV_RTCP_Callback::handle_start ()
 {
   return 0;
 }
 
 int
-TAO_AV_RTCP_Callback::handle_stop (void)
+TAO_AV_RTCP_Callback::handle_stop ()
 {
   return this->send_report(1);
 }
@@ -773,7 +770,7 @@ TAO_AV_RTCP_Callback::get_timeout (ACE_Time_Value *&tv,
 }
 
 int
-TAO_AV_RTCP_Callback::handle_destroy (void)
+TAO_AV_RTCP_Callback::handle_destroy ()
 {
   return 0;
 }

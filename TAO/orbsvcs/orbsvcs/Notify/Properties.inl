@@ -2,7 +2,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE TAO_Notify_Factory*
-TAO_Notify_Properties::factory (void)
+TAO_Notify_Properties::factory ()
 {
   return this->factory_;
 }
@@ -14,7 +14,7 @@ TAO_Notify_Properties::factory (TAO_Notify_Factory* factory)
 }
 
 ACE_INLINE TAO_Notify_Builder*
-TAO_Notify_Properties::builder (void)
+TAO_Notify_Properties::builder ()
 {
   return this->builder_;
 }
@@ -26,13 +26,13 @@ TAO_Notify_Properties::builder (TAO_Notify_Builder* builder)
 }
 
 ACE_INLINE CORBA::ORB_ptr
-TAO_Notify_Properties::orb (void)
+TAO_Notify_Properties::orb ()
 {
   return CORBA::ORB::_duplicate (orb_.in ());
 }
 
 ACE_INLINE CORBA::ORB_ptr
-TAO_Notify_Properties::dispatching_orb (void)
+TAO_Notify_Properties::dispatching_orb ()
 {
   return CORBA::ORB::_duplicate (dispatching_orb_.in ());
 }
@@ -50,7 +50,7 @@ TAO_Notify_Properties::dispatching_orb (CORBA::ORB_ptr dispatching_orb)
 }
 
 ACE_INLINE PortableServer::POA_ptr
-TAO_Notify_Properties::default_poa (void)
+TAO_Notify_Properties::default_poa ()
 {
   return PortableServer::POA::_duplicate (this->default_poa_.in ());
 }
@@ -62,7 +62,7 @@ TAO_Notify_Properties::default_poa (PortableServer::POA_ptr default_poa)
 }
 
 ACE_INLINE CORBA::Boolean
-TAO_Notify_Properties::asynch_updates (void)
+TAO_Notify_Properties::asynch_updates ()
 {
   return this->asynch_updates_;
 }
@@ -74,7 +74,7 @@ TAO_Notify_Properties::asynch_updates (CORBA::Boolean asynch_updates)
 }
 
 ACE_INLINE bool
-TAO_Notify_Properties::allow_reconnect (void)
+TAO_Notify_Properties::allow_reconnect ()
 {
   return this->allow_reconnect_;
 }
@@ -86,7 +86,7 @@ TAO_Notify_Properties::allow_reconnect (bool b)
 }
 
 ACE_INLINE bool
-TAO_Notify_Properties::validate_client (void)
+TAO_Notify_Properties::validate_client ()
 {
   return this->validate_client_;
 }
@@ -98,7 +98,7 @@ TAO_Notify_Properties::validate_client (bool b)
 }
 
 ACE_INLINE ACE_Time_Value
-TAO_Notify_Properties::validate_client_delay (void)
+TAO_Notify_Properties::validate_client_delay ()
 {
   return this->validate_client_delay_;
 }
@@ -110,7 +110,7 @@ TAO_Notify_Properties::validate_client_delay (ACE_Time_Value b)
 }
 
 ACE_INLINE ACE_Time_Value
-TAO_Notify_Properties::validate_client_interval (void)
+TAO_Notify_Properties::validate_client_interval ()
 {
   return this->validate_client_interval_;
 }
@@ -123,7 +123,7 @@ TAO_Notify_Properties::validate_client_interval (ACE_Time_Value b)
 
 
 ACE_INLINE bool
-TAO_Notify_Properties::separate_dispatching_orb (void)
+TAO_Notify_Properties::separate_dispatching_orb ()
 {
   return this->separate_dispatching_orb_;
 }
@@ -135,7 +135,7 @@ TAO_Notify_Properties::separate_dispatching_orb (bool b)
 }
 
 ACE_INLINE CORBA::Boolean
-TAO_Notify_Properties::updates (void)
+TAO_Notify_Properties::updates ()
 {
   return this->updates_;
 }
@@ -147,7 +147,7 @@ TAO_Notify_Properties::updates (CORBA::Boolean updates)
 }
 
 ACE_INLINE const CosNotification::QoSProperties&
-TAO_Notify_Properties::default_event_channel_qos_properties (void)
+TAO_Notify_Properties::default_event_channel_qos_properties ()
 {
   return this->ec_qos_;
 }
@@ -159,7 +159,7 @@ TAO_Notify_Properties::default_event_channel_qos_properties (const CosNotificati
 }
 
 ACE_INLINE const CosNotification::QoSProperties&
-TAO_Notify_Properties::default_supplier_admin_qos_properties (void)
+TAO_Notify_Properties::default_supplier_admin_qos_properties ()
 {
   return this->sa_qos_;
 }
@@ -171,7 +171,7 @@ TAO_Notify_Properties::default_supplier_admin_qos_properties (const CosNotificat
 }
 
 ACE_INLINE const CosNotification::QoSProperties&
-TAO_Notify_Properties::default_consumer_admin_qos_properties (void)
+TAO_Notify_Properties::default_consumer_admin_qos_properties ()
 {
   return this->ca_qos_;
 }
@@ -183,7 +183,7 @@ TAO_Notify_Properties::default_consumer_admin_qos_properties (const CosNotificat
 }
 
 ACE_INLINE const CosNotification::QoSProperties&
-TAO_Notify_Properties::default_proxy_supplier_qos_properties (void)
+TAO_Notify_Properties::default_proxy_supplier_qos_properties ()
 {
   return this->ps_qos_;
 }
@@ -195,7 +195,7 @@ TAO_Notify_Properties::default_proxy_supplier_qos_properties (const CosNotificat
 }
 
 ACE_INLINE const CosNotification::QoSProperties&
-TAO_Notify_Properties::default_proxy_consumer_qos_properties (void)
+TAO_Notify_Properties::default_proxy_consumer_qos_properties ()
 {
   return this->pc_qos_;
 }
@@ -207,7 +207,7 @@ TAO_Notify_Properties::default_proxy_consumer_qos_properties (const CosNotificat
 }
 
 ACE_INLINE CosNotifyChannelAdmin::InterFilterGroupOperator
-TAO_Notify_Properties::defaultConsumerAdminFilterOp (void)
+TAO_Notify_Properties::defaultConsumerAdminFilterOp ()
 {
   return this->defaultConsumerAdminFilterOp_;
 }
@@ -220,7 +220,7 @@ TAO_Notify_Properties::defaultConsumerAdminFilterOp (CosNotifyChannelAdmin::Inte
 
 
 ACE_INLINE CosNotifyChannelAdmin::InterFilterGroupOperator
-TAO_Notify_Properties::defaultSupplierAdminFilterOp (void)
+TAO_Notify_Properties::defaultSupplierAdminFilterOp ()
 {
   return this->defaultSupplierAdminFilterOp_;
 }

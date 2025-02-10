@@ -28,7 +28,6 @@ namespace TAO
 {
   namespace Utils
   {
-
     /**
      * @class RIR_Narrow
      *
@@ -53,16 +52,13 @@ namespace TAO
     private:
       static _ptr_type narrow_object (CORBA::Object_ptr object);
     };
-
   } // namespace Utils
 } // namespace TAO
 
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-# include "tao/Utils/RIR_Narrow.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
+#include "tao/Utils/RIR_Narrow.cpp"
 
 #include /**/ "ace/post.h"
 

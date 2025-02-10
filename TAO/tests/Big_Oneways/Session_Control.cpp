@@ -7,12 +7,12 @@ Session_Control::Session_Control (CORBA::ULong session_count)
 }
 
 int
-Session_Control::all_sessions_finished (void) const
+Session_Control::all_sessions_finished () const
 {
   return this->session_count_ == 0;
 }
 
-Session_Control::~Session_Control (void)
+Session_Control::~Session_Control ()
 {
   if (this->session_count_ == 0 && this->success_)
     {

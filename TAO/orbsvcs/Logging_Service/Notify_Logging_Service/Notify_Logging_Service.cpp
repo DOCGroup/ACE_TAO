@@ -7,7 +7,7 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
 
-Notify_Logging_Service::Notify_Logging_Service (void)
+Notify_Logging_Service::Notify_Logging_Service ()
   : service_name_ (NOTIFY_KEY),
     ior_file_name_ (0),
     pid_file_name_ (0),
@@ -17,7 +17,7 @@ Notify_Logging_Service::Notify_Logging_Service (void)
   // No-Op.
 }
 
-Notify_Logging_Service::~Notify_Logging_Service (void)
+Notify_Logging_Service::~Notify_Logging_Service ()
 {
   // No-Op.
 }
@@ -185,7 +185,7 @@ Notify_Logging_Service::init (int argc, ACE_TCHAR *argv[])
 }
 
 void
-Notify_Logging_Service::resolve_naming_service (void)
+Notify_Logging_Service::resolve_naming_service ()
 {
   CORBA::Object_var naming_obj =
     this->orb_->resolve_initial_references ("NameService");
@@ -199,7 +199,7 @@ Notify_Logging_Service::resolve_naming_service (void)
 }
 
 int
-Notify_Logging_Service::run (void)
+Notify_Logging_Service::run ()
 {
   if (this->nthreads_ > 0)
     {
@@ -216,7 +216,7 @@ Notify_Logging_Service::run (void)
 }
 
 int
-Notify_Logging_Service::svc (void)
+Notify_Logging_Service::svc ()
 {
   try
     {
@@ -231,7 +231,7 @@ Notify_Logging_Service::svc (void)
 }
 
 void
-Notify_Logging_Service::shutdown (void)
+Notify_Logging_Service::shutdown ()
 {
   if (this->bind_to_naming_service_)
     {

@@ -35,10 +35,10 @@ class Web_Crawler
 {
 public:
   /// Constructor.
-  Web_Crawler (void);
+  Web_Crawler ();
 
   /// Destructor.
-  ~Web_Crawler (void);
+  ~Web_Crawler ();
 
   /// Parses the command-line options and initializes the
   /// <URL_Visitor_Factory>.
@@ -46,7 +46,7 @@ public:
 
   /// Run the Web Crawler and carries out whatever visitation strategy
   /// is configured.  Returns -1 on failure and 0 on success.
-  int run (void);
+  int run ();
 
 private:
   /**

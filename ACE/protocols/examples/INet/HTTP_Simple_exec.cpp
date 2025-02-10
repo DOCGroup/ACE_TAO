@@ -1,5 +1,5 @@
 #include "ace/Get_Opt.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/OS_NS_errno.h"
 #include "ace/INet/HTTP_URL.h"
 #include "ace/INet/HTTP_ClientRequestHandler.h"
@@ -25,7 +25,7 @@ ACE_CString ca_location;
 #endif
 
 void
-usage (void)
+usage ()
 {
   std::cout << "usage: http_simple_wget [options] <url>\n";
   std::cout << "Executes an HTTP GET request and sends the result to STDOUT or file\n";
@@ -154,7 +154,7 @@ class My_HTTP_RequestHandler
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv [])
 {
-  ACE_Auto_Ptr<std::ofstream> fout;
+  std::unique_ptr<std::ofstream> fout;
   std::ostream* sout = &std::cout;
 
   if (!parse_args (argc, argv))
@@ -212,7 +212,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
 
       std::cout << "Parsing url [" << url.c_str () << "]" << std::endl;
 
-      ACE_Auto_Ptr<ACE::INet::URL_Base> url_safe (ACE::INet::URL_Base::create_from_string (url));
+      std::unique_ptr<ACE::INet::URL_Base> url_safe (ACE::INet::URL_Base::create_from_string (url));
 
       if (url_safe.get () == 0 || url != url_safe->to_string ())
         {

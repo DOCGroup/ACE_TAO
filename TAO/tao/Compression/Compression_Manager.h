@@ -46,7 +46,7 @@ namespace TAO
       (::Compression::CompressorId compressor_id,
        ::Compression::CompressionLevel compression_level);
 
-    virtual ::Compression::CompressorFactorySeq *get_factories (void);
+    virtual ::Compression::CompressorFactorySeq *get_factories ();
 
   private:
     TAO_SYNCH_MUTEX mutex_;

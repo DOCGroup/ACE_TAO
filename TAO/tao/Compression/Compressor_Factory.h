@@ -33,7 +33,7 @@ namespace TAO
   public:
     CompressorFactory (::Compression::CompressorId compressor_id);
 
-    virtual ::Compression::CompressorId compressor_id (void);
+    virtual ::Compression::CompressorId compressor_id ();
 
     virtual ::Compression::Compressor_ptr get_compressor
       (::Compression::CompressionLevel compression_level) = 0;
@@ -41,11 +41,8 @@ namespace TAO
   private:
     ::Compression::CompressorId const compressor_id_;
 
-#if defined (ACE_WIN32_VC14)
-    // Workaround for connect issue 1577211
-    ACE_UNIMPLEMENTED_FUNC (CompressorFactory (const CompressorFactory &))
-    ACE_UNIMPLEMENTED_FUNC (CompressorFactory &operator = (const CompressorFactory &))
-#endif
+    CompressorFactory (const CompressorFactory &) = delete;
+    CompressorFactory &operator = (const CompressorFactory &) = delete;
   };
 }
 

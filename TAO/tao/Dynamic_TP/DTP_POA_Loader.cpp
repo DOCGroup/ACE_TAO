@@ -15,11 +15,11 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_DTP_POA_Loader::TAO_DTP_POA_Loader (void)
+TAO_DTP_POA_Loader::TAO_DTP_POA_Loader ()
 {
 }
 
-TAO_DTP_POA_Loader::~TAO_DTP_POA_Loader (void)
+TAO_DTP_POA_Loader::~TAO_DTP_POA_Loader ()
 {
 }
 
@@ -68,7 +68,6 @@ TAO_DTP_POA_Loader::init (int argc, ACE_TCHAR* argv[])
 
   for (int curarg = 0; curarg < argc; curarg++)
     {
-
       if (TAO_debug_level > 0)
         {
           TAOLIB_DEBUG((LM_DEBUG,
@@ -93,7 +92,6 @@ TAO_DTP_POA_Loader::init (int argc, ACE_TCHAR* argv[])
         }
       else
         {
-
           /*
             If we get here then we have another map set to process and
             add to the map registry.
@@ -119,7 +117,6 @@ int
 TAO_DTP_POA_Loader::load_poa_map (ACE_TCHAR *map,
                                   TAO_CSD_Strategy_Repository *repo)
 {
-
   ACE_CString poa_name;
   ACE_CString config_name;
   TAO_DTP_POA_Strategy * strategy_container = 0;

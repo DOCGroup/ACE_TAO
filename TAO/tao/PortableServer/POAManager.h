@@ -59,8 +59,7 @@ class TAO_PortableServer_Export TAO_POA_Manager :
   friend class TAO_Object_Adapter;
 
 public:
-
-  void activate (void);
+  void activate ();
 
 #if (TAO_HAS_MINIMUM_POA == 0)
 
@@ -73,9 +72,9 @@ public:
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
-  PortableServer::POAManager::State get_state (void);
+  PortableServer::POAManager::State get_state ();
 
-  char *get_id (void);
+  char *get_id ();
 
   TAO_POA_Manager (TAO_Object_Adapter &object_adapter,
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
@@ -86,22 +85,21 @@ public:
                    const char * id);
 #endif
 
-  ~TAO_POA_Manager (void);
+  ~TAO_POA_Manager ();
 
   /// Check the state of this POA manager
-  void check_state (void);
+  void check_state ();
 
   PortableServer::POAManager::State get_state_i ();
 
-  virtual CORBA::ORB_ptr _get_orb (void);
+  virtual CORBA::ORB_ptr _get_orb ();
 
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
-  CORBA::PolicyList& get_policies (void);
+  CORBA::PolicyList& get_policies ();
 #endif
 
 protected:
-
-  void activate_i (void);
+  void activate_i ();
 
   void deactivate_i (CORBA::Boolean etherealize_objects,
                      CORBA::Boolean wait_for_completion);
@@ -118,14 +116,13 @@ protected:
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
-  ACE_Lock &lock (void);
+  ACE_Lock &lock ();
 
   int remove_poa (TAO_Root_POA *poa);
 
   int register_poa (TAO_Root_POA *poa);
 
 protected:
-
   PortableServer::POAManager::State state_;
 
   ACE_Lock &lock_;
@@ -139,22 +136,18 @@ protected:
   CORBA::String_var id_;
 
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
-
   TAO_POAManager_Factory& poa_manager_factory_;
   CORBA::PolicyList policies_;
-
 #endif
 
-
 private :
-
   /**
    * Generate an id for this POAManager.
    * @return A value that uniquely identifies the POAManager within a
    *         given process.
    * @note: The id_ has the ownership of the memory allocated in this method.
    */
-  char* generate_manager_id (void) const;
+  char* generate_manager_id () const;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

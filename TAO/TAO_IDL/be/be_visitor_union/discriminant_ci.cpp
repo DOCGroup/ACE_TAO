@@ -17,7 +17,7 @@ be_visitor_union_discriminant_ci::be_visitor_union_discriminant_ci (
 {
 }
 
-be_visitor_union_discriminant_ci::~be_visitor_union_discriminant_ci (void)
+be_visitor_union_discriminant_ci::~be_visitor_union_discriminant_ci ()
 {
 }
 
@@ -25,8 +25,8 @@ int
 be_visitor_union_discriminant_ci::visit_enum (be_enum *node)
 {
   be_union *bu =
-    be_union::narrow_from_decl (this->ctx_->node ());
-  be_type *bt = 0;
+    dynamic_cast<be_union*> (this->ctx_->node ());
+  be_type *bt = nullptr;
 
   if (this->ctx_->alias ())
     {
@@ -51,8 +51,7 @@ be_visitor_union_discriminant_ci::visit_enum (be_enum *node)
                         -1);
     }
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   if ((dv.computed_ != 0) && (bu->default_index () == -1))
     {
@@ -100,7 +99,7 @@ be_visitor_union_discriminant_ci::visit_enum (be_enum *node)
   *os << "// Accessor to get the discriminant." << be_nl
       << "ACE_INLINE" << be_nl
       << bt->name () << be_nl
-      << bu->name () << "::_d (void) const" << be_nl
+      << bu->name () << "::_d () const" << be_nl
       << "{" << be_idt_nl
       << "return this->disc_;" << be_uidt_nl
       << "}";
@@ -114,9 +113,9 @@ be_visitor_union_discriminant_ci::visit_predefined_type (
   )
 {
   be_union *bu =
-    be_union::narrow_from_decl (this->ctx_->node ());
+    dynamic_cast<be_union*> (this->ctx_->node ());
 
-  be_type *bt = 0;
+  be_type *bt = nullptr;
 
   if (this->ctx_->alias ())
     {
@@ -141,8 +140,7 @@ be_visitor_union_discriminant_ci::visit_predefined_type (
                         -1);
     }
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   if ((dv.computed_ != 0) && (bu->default_index () == -1))
     {
@@ -162,6 +160,7 @@ be_visitor_union_discriminant_ci::visit_predefined_type (
           *os << dv.u.short_val;
           break;
         case AST_Expression::EV_ushort:
+        case AST_Expression::EV_wchar:
           *os << dv.u.ushort_val;
           break;
         case AST_Expression::EV_long:
@@ -171,6 +170,9 @@ be_visitor_union_discriminant_ci::visit_predefined_type (
           *os << dv.u.ulong_val;
           break;
         case AST_Expression::EV_char:
+        case AST_Expression::EV_octet:
+        case AST_Expression::EV_int8:
+        case AST_Expression::EV_uint8:
           os->print ("'\\%o'", dv.u.char_val);
           break;
         case AST_Expression::EV_bool:
@@ -200,7 +202,7 @@ be_visitor_union_discriminant_ci::visit_predefined_type (
       << "// Accessor to set the discriminant." << be_nl
       << "ACE_INLINE" << be_nl
       << "void" << be_nl
-      << bu->name () << "::_d ( ::" << bt->name ()
+      << bu->name () << "::_d (::" << bt->name ()
       << " discval)" << be_nl
       << "{" << be_idt_nl
       << "this->disc_ = discval;" << be_uidt_nl
@@ -210,7 +212,7 @@ be_visitor_union_discriminant_ci::visit_predefined_type (
   *os << "// Accessor to get the discriminant." << be_nl
       << "ACE_INLINE" << be_nl
       << "::" << bt->name () << be_nl
-      << bu->name () << "::_d (void) const" << be_nl
+      << bu->name () << "::_d () const" << be_nl
       << "{" << be_idt_nl
       << "return this->disc_;" << be_uidt_nl
       << "}";
@@ -235,6 +237,6 @@ be_visitor_union_discriminant_ci::visit_typedef (be_typedef *node)
                         -1);
     }
 
-  this->ctx_->alias (0);
+  this->ctx_->alias (nullptr);
   return 0;
 }

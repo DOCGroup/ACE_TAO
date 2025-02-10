@@ -39,8 +39,8 @@ TAO_Cleanup_Func_Registry::cleanup (ACE_Array_Base <void *> &ts_objects)
   for (size_t i = 0; i < len; ++i)
     {
       ACE_CLEANUP_FUNC destructor = this->cleanup_funcs_[i];
-      if (destructor != 0)
-        destructor (ts_objects[i], 0);
+      if (destructor != nullptr)
+        destructor (ts_objects[i], nullptr);
     }
 }
 

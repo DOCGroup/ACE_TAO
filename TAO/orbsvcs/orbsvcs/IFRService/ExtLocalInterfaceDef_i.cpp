@@ -14,14 +14,14 @@ TAO_ExtLocalInterfaceDef_i::TAO_ExtLocalInterfaceDef_i (TAO_Repository_i *repo)
 {
 }
 
-TAO_ExtLocalInterfaceDef_i::~TAO_ExtLocalInterfaceDef_i (void)
+TAO_ExtLocalInterfaceDef_i::~TAO_ExtLocalInterfaceDef_i ()
 {
 }
 
 // Just call the base class version, this is here only to
 // disambiguate multiple inheritance.
 void
-TAO_ExtLocalInterfaceDef_i::destroy (void)
+TAO_ExtLocalInterfaceDef_i::destroy ()
 {
   TAO_IFR_WRITE_GUARD;
 

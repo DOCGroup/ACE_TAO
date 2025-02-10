@@ -28,7 +28,7 @@ ACEXML_Debug_Attribute_Builder::setName (const ACEXML_Char *n)
 }
 
 const ACEXML_Char *
-ACEXML_Debug_Attribute_Builder::getName (void)
+ACEXML_Debug_Attribute_Builder::getName ()
 {
   return this->name_.fast_rep ();
 }
@@ -42,7 +42,6 @@ ACEXML_Debug_Attribute_Builder::setAttType (const ATT_TYPE type)
       return 0;
     }
   ACEXML_THROW_RETURN (ACEXML_SAXParseException (ACE_TEXT("Attribute type redefinition in Debug Validator")), -1);
-
 }
 
 int
@@ -64,14 +63,14 @@ ACEXML_Debug_Attribute_Builder::setDefault (const DEFAULT_DECL def,
 }
 
 int
-ACEXML_Debug_Attribute_Builder::validAttr (void)
+ACEXML_Debug_Attribute_Builder::validAttr ()
 {
   // @@ Not implemented.  Always return 1 (true) for now.
   return 1;
 }
 
 void
-ACEXML_Debug_Attribute_Builder::dump (void)
+ACEXML_Debug_Attribute_Builder::dump ()
 {
   cout << this->name_ << " ";
 
@@ -189,7 +188,7 @@ ACEXML_Debug_Attributes_Builder::insertAttribute (
 }
 
 void
-ACEXML_Debug_Attributes_Builder::dump (void)
+ACEXML_Debug_Attributes_Builder::dump ()
 {
   // @@ Print print.
   cout << "<!ATTLIST " << this->element_name_ << endl;

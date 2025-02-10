@@ -2,7 +2,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE CORBA::ULong
-CORBA::SystemException::minor (void) const
+CORBA::SystemException::minor () const
 {
   return this->minor_;
 }
@@ -14,7 +14,7 @@ CORBA::SystemException::minor (CORBA::ULong m)
 }
 
 ACE_INLINE CORBA::CompletionStatus
-CORBA::SystemException::completed (void) const
+CORBA::SystemException::completed () const
 {
   return this->completed_;
 }

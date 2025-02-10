@@ -33,7 +33,7 @@ public:
   be_interface_fwd (AST_Interface *dummy,
                     UTL_ScopedName *n);
 
-  virtual ~be_interface_fwd (void);
+  virtual ~be_interface_fwd ();
 
   /// Mutator overrides for be_type members. If we have been
   /// defined, we want the full definition to be set as well.
@@ -41,13 +41,10 @@ public:
   virtual void seen_in_operation (bool val);
 
   /// Cleanup function.
-  virtual void destroy (void);
+  virtual void destroy ();
 
   // Visiting.
   virtual int accept (be_visitor* visitor);
-
-  // Narrowing.
-  DEF_NARROW_FROM_DECL (be_interface_fwd);
 };
 
 #endif // if !defined

@@ -18,7 +18,7 @@ be_visitor_interface_tie_sh::be_visitor_interface_tie_sh (
 {
 }
 
-be_visitor_interface_tie_sh::~be_visitor_interface_tie_sh (void)
+be_visitor_interface_tie_sh::~be_visitor_interface_tie_sh ()
 {
 }
 
@@ -67,8 +67,7 @@ be_visitor_interface_tie_sh::visit_interface (be_interface *node)
     }
 
   // Now generate the class definition.
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   *os << "// TIE class: Refer to CORBA v2.2, Section 20.34.4" << be_nl;
   *os << "template <class T>" << be_nl;
@@ -88,20 +87,20 @@ be_visitor_interface_tie_sh::visit_interface (be_interface *node)
       << "::CORBA::Boolean release = true);" << be_uidt
       << be_uidt_nl
       << "/// dtor" << be_nl
-      << "~" << tiename << " (void);" << be_nl
+      << "~" << tiename << " ();" << be_nl
       << "// TIE specific functions" << be_nl
       << "/// return the underlying object" << be_nl
-      << "T *_tied_object (void);" << be_nl
+      << "T *_tied_object ();" << be_nl
       << "/// set the underlying object" << be_nl
       << "void _tied_object (T &obj);" << be_nl
       << "/// set the underlying object and the ownership flag" << be_nl
       << "void _tied_object (T *obj, ::CORBA::Boolean release = true);" << be_nl
       << "/// do we own it" << be_nl
-      << "::CORBA::Boolean _is_owner (void);" << be_nl
+      << "::CORBA::Boolean _is_owner ();" << be_nl
       << "/// set the ownership" << be_nl_2
-      << "void _is_owner ( ::CORBA::Boolean b);" << be_nl
+      << "void _is_owner (::CORBA::Boolean b);" << be_nl
       << "// overridden ServantBase operations" << be_nl
-      << "PortableServer::POA_ptr _default_POA (void);";
+      << "PortableServer::POA_ptr _default_POA ();";
 
   int status =
     node->traverse_inheritance_graph (
@@ -123,9 +122,8 @@ be_visitor_interface_tie_sh::visit_interface (be_interface *node)
       << "T *ptr_;" << be_nl
       << "PortableServer::POA_var poa_;" << be_nl
       << "::CORBA::Boolean rel_;" << be_nl_2
-      << "// copy and assignment are not allowed" << be_nl
-      << tiename << " (const " << tiename << " &);" << be_nl
-      << "void operator= (const " << tiename << " &);" << be_uidt_nl
+      << tiename << " (const " << tiename << " &) = delete;" << be_nl
+      << "void operator= (const " << tiename << " &) = delete;" << be_uidt_nl
       << "};";
 
   return 0;

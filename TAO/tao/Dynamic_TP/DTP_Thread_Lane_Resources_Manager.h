@@ -40,37 +40,35 @@ class TAO_Dynamic_TP_Export TAO_DTP_Thread_Lane_Resources_Manager :
   public TAO_Thread_Lane_Resources_Manager
 {
 public:
-
   /// Constructor.
   TAO_DTP_Thread_Lane_Resources_Manager (TAO_ORB_Core &orb_core);
 
   /// Destructor.
-  ~TAO_DTP_Thread_Lane_Resources_Manager (void);
+  ~TAO_DTP_Thread_Lane_Resources_Manager ();
 
   /// Finalize resources.
-  void finalize (void);
+  void finalize ();
 
   /// Open default resources.
-  int open_default_resources (void);
+  int open_default_resources ();
 
   /// Shutdown reactor.
-  void shutdown_reactor (void);
+  void shutdown_reactor ();
 
   /// Certain ORB policies such as dropping replies on shutdown
   /// would need cleanup of transports to wake threads up.
-  void close_all_transports (void);
+  void close_all_transports ();
 
   /// Does @a mprofile belong to us?
   int is_collocated (const TAO_MProfile &mprofile);
 
   /// @name Accessors
   // @{
+  TAO_Thread_Lane_Resources &lane_resources ();
 
-  TAO_Thread_Lane_Resources &lane_resources (void);
+  TAO_Thread_Lane_Resources &default_lane_resources ();
 
-  TAO_Thread_Lane_Resources &default_lane_resources (void);
-
-  TAO_DTP_Thread_Pool_Manager &tp_manager (void);
+  TAO_DTP_Thread_Pool_Manager &tp_manager ();
 
   // @}
 
@@ -79,7 +77,6 @@ private:
   TAO_DTP_Thread_Lane_Resources_Manager (const TAO_DTP_Thread_Lane_Resources_Manager &);
 
 protected:
-
   /// Default lane resources.
   TAO_Thread_Lane_Resources *default_lane_resources_;
 
@@ -99,13 +96,10 @@ class TAO_Dynamic_TP_Export TAO_DTP_Thread_Lane_Resources_Manager_Factory
   : public TAO_Thread_Lane_Resources_Manager_Factory
 {
 public:
-
   /// Factory method.
   TAO_Thread_Lane_Resources_Manager *create_thread_lane_resources_manager (
     TAO_ORB_Core &core);
-
 };
-
 
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_Dynamic_TP,

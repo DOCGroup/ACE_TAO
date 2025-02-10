@@ -13,7 +13,7 @@ Client_Task::Client_Task (const ACE_TCHAR *ior,
 }
 
 int
-Client_Task::svc (void)
+Client_Task::svc ()
 {
   CORBA::Boolean exception = false;
   try
@@ -57,5 +57,4 @@ Client_Task::svc (void)
       ACE_ERROR ((LM_ERROR, "(ERROR: Client_Task::svc Expected exception not received\n"));
     }
   return 0;
-
 }

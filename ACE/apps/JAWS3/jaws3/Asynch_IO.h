@@ -16,8 +16,7 @@ class JAWS_Asynch_IO;
 class JAWS_Export JAWS_Asynch_IO : public JAWS_IO_Impl
 {
 public:
-
-  static JAWS_Asynch_IO * instance (void)
+  static JAWS_Asynch_IO * instance ()
   {
     return ACE_Singleton<JAWS_Asynch_IO, ACE_SYNCH_MUTEX>::instance ();
   }
@@ -64,7 +63,6 @@ public:
                 , ACE_Message_Block *header = 0
                 , ACE_Message_Block *trailer = 0
                 );
-
 };
 
 #endif /* JAWS_ASYNCH_IO_H */

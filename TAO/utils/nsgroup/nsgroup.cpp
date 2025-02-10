@@ -67,7 +67,6 @@ show_help(int argc, ACE_TCHAR *argv[])
 class  NSGROUP
 {
 public:
-
   enum NSGROUP_COMMAND {
     NSGROUP_NONE,
     NSGROUP_HELP,
@@ -87,27 +86,25 @@ public:
   NSGROUP (int argc, ACE_TCHAR **argv);
 
   /// start the ORB.
-  int start_orb (void);
+  int start_orb ();
 
   /// parse command line, validate arguments and run the command
-  int run_cmd (void);
+  int run_cmd ();
 
   /// Display command line interface usage
-  int show_usage( void );
+  int show_usage();
 
-  const ACE_TCHAR * group_arg(void) const { return group_arg_; }
-  const ACE_TCHAR * policy_arg(void) const { return policy_arg_; }
-  const ACE_TCHAR * location_arg(void) const { return location_arg_; }
-  const ACE_TCHAR * ior_arg(void) const { return ior_arg_; }
-  const ACE_TCHAR * namepath_arg(void) const { return namepath_arg_; }
+  const ACE_TCHAR * group_arg() const { return group_arg_; }
+  const ACE_TCHAR * policy_arg() const { return policy_arg_; }
+  const ACE_TCHAR * location_arg() const { return location_arg_; }
+  const ACE_TCHAR * ior_arg() const { return ior_arg_; }
+  const ACE_TCHAR * namepath_arg() const { return namepath_arg_; }
 
 private:
-
   /// parse command line arguments
-  NSGROUP_COMMAND parse_command_line (void);
+  NSGROUP_COMMAND parse_command_line ();
 
 private:
-
   NS_group_svc svc_;
 
   int argc_;
@@ -138,14 +135,13 @@ private:
 }
 
 int
-NSGROUP::start_orb (void)
+NSGROUP::start_orb ()
 {
   const int RC_SUCCESS =  0;
   const int RC_ERROR   = -1;
 
   try
   {
-
 #if 0
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("start_orb::argc(%u)\n"), this->argc_));
     for( int i = 0; i < this->argc_; ++i){
@@ -162,7 +158,6 @@ NSGROUP::start_orb (void)
 
     if (RC_SUCCESS != svc_.set_orb (orb_.in ()))
     {
-
       ACE_ERROR_RETURN (( LM_ERROR,
                           ACE_TEXT (" (%P|%t) Unable to initialize the ORB.\n")),
                           RC_ERROR);
@@ -212,11 +207,10 @@ NSGROUP::start_orb (void)
   }
 
   return RC_SUCCESS;
-
 }
 
 int
-NSGROUP::run_cmd(void)
+NSGROUP::run_cmd()
 {
   const int RC_ERROR   = -1;
   const int RC_BADARG  = -2;
@@ -225,7 +219,6 @@ NSGROUP::run_cmd(void)
 
   switch( parse_command_line () )
   {
-
     case NSGROUP_HELP:
       return show_usage ();
     break;
@@ -285,7 +278,7 @@ NSGROUP::run_cmd(void)
 }
 
 NSGROUP::NSGROUP_COMMAND
-NSGROUP::parse_command_line (void)
+NSGROUP::parse_command_line ()
 {
   #if 0
   ACE_DEBUG ((LM_DEBUG,
@@ -387,7 +380,6 @@ NSGROUP::parse_command_line (void)
   int non_option_arg_count = 0;
   for( int i = get_opts.opt_ind (); i < this->argc_; ++i)
   {
-
     non_option_arg_count++;
 
 
@@ -437,7 +429,6 @@ NSGROUP::parse_command_line (void)
                              ACE_OS::strlen (ACE_TEXT("member_remove"))) == 0 )
       {
         nsgroup_cmd_ =  NSGROUP_MEMBER_REMOVE;
-
       }
     else if(ACE_OS::strncmp (this->argv_[i], ACE_TEXT("member_show"),
                                ACE_OS::strlen (ACE_TEXT("member_show"))) == 0 )
@@ -460,7 +451,7 @@ NSGROUP::parse_command_line (void)
 
 
 int
-NSGROUP::show_usage ( void )
+NSGROUP::show_usage ()
 {
   const int RC_SUCCESS =  0;
 
@@ -494,7 +485,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   try
     {
-
       NSGROUP ns_group (argc, argv);
 
       if ( show_help (argc, argv) )

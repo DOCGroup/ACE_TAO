@@ -1,20 +1,8 @@
 #include "Notifier_Handler.h"
 #include "tao/ORB_Core.h"
 
-Notifier_Handler::Notifier_Handler (void)
-{
-  // No-Op.
-}
-
-// Destroy a Notifier target object.
-
-Notifier_Handler::~Notifier_Handler (void)
-{
-  // No-Op.
-}
-
 int
-Notifier_Handler::close (void)
+Notifier_Handler::close ()
 {
   if (this->notifier_ != 0)
     {
@@ -30,7 +18,7 @@ Notifier_Handler::close (void)
 }
 
 void
-Notifier_Handler::shutdown (void)
+Notifier_Handler::shutdown ()
 {
   ACE_ASSERT (this->shutdowncallback != 0);
 
@@ -38,7 +26,7 @@ Notifier_Handler::shutdown (void)
 }
 
 int
-Notifier_Handler::run (void)
+Notifier_Handler::run ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "Running the Supplier...\n"));
@@ -48,7 +36,7 @@ Notifier_Handler::run (void)
 }
 
 ACE_Reactor*
-Notifier_Handler::reactor(void)
+Notifier_Handler::reactor()
 {
   // @@ Please see if there's a way to get to the Reactor without
   // using the TAO_ORB_Core_instance().
@@ -56,7 +44,7 @@ Notifier_Handler::reactor(void)
 }
 
 Event_Comm::Notifier *
-Notifier_Handler::notifier (void)
+Notifier_Handler::notifier ()
 {
   return this->notifier_;
 }
@@ -72,7 +60,6 @@ Notifier_Handler::notifier (Event_Comm::Notifier *notifier)
 }
 
 // Init function.
-
 int
 Notifier_Handler::init (int argc,
                         ACE_TCHAR *argv[],

@@ -51,7 +51,6 @@ public:
   static const ACEXML_UTF8 magic_values_[][4];
 
   static const ACEXML_Char* get_encoding (const char* input);
-
 };
 
 #include /**/ "ace/post.h"

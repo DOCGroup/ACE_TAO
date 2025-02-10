@@ -9,13 +9,13 @@ Process_Factory::Process_Factory (CORBA::ORB_ptr orb)
 }
 
 int
-Process_Factory::shutdown_received (void)
+Process_Factory::shutdown_received ()
 {
   return this->shutdown_received_;
 }
 
 Test::Process_ptr
-Process_Factory::create_new_process (void)
+Process_Factory::create_new_process ()
 {
   Startup_Callback *startup_callback_impl;
   ACE_NEW_THROW_EX (startup_callback_impl,
@@ -101,13 +101,13 @@ Process_Factory::create_new_process (void)
 }
 
 void
-Process_Factory::noop (void)
+Process_Factory::noop ()
 {
 }
 
 void
-Process_Factory::shutdown (void)
+Process_Factory::shutdown ()
 {
   this->shutdown_received_ = 1;
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

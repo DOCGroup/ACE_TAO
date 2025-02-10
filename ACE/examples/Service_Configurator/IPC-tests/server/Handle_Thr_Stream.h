@@ -20,13 +20,13 @@ class Handle_Thr_Acceptor : public ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_A
   //   configured <ACE_Thread_Strategy>.
 {
 public:
-  Handle_Thr_Acceptor (void);
-  ~Handle_Thr_Acceptor (void);
+  Handle_Thr_Acceptor ();
+  ~Handle_Thr_Acceptor ();
 
   // = Dynamic linking hooks.
   virtual int init (int argc, ACE_TCHAR *argv[]);
   virtual int info (ACE_TCHAR **, size_t) const;
-  virtual int fini (void);
+  virtual int fini ();
 
 private:
   ACE_Thread_Manager thr_mgr_;
@@ -54,7 +54,7 @@ public:
   virtual int close (u_long);
   // Close down the service.
 
-  virtual int svc (void);
+  virtual int svc ();
   // Execute the service.
 
 protected:
@@ -63,8 +63,6 @@ protected:
 
 extern ACE_Service_Object_Type rts;
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "Handle_Thr_Stream.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 #endif /* ACE_HAS_THREADS */
 #endif /* _HANDLE_THR_STREAM_H */

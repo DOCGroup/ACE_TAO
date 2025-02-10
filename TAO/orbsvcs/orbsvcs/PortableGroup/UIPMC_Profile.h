@@ -51,10 +51,10 @@ class TAO_PortableGroup_Export TAO_UIPMC_Profile : public TAO_Profile
 public:
   /// The object key delimiter that UIPMC uses or expects.
   static const char object_key_delimiter_;
-  virtual char object_key_delimiter (void) const;
+  virtual char object_key_delimiter () const;
 
   /// Return the char string prefix.
-  static const char *prefix (void);
+  static const char *prefix ();
 
   /// Profile constructor, default. Used when the profile contents
   /// are not yet known or when it is being decoded from an IOR.
@@ -65,13 +65,8 @@ public:
   TAO_UIPMC_Profile (const ACE_INET_Addr &addr,
                      TAO_ORB_Core *orb_core);
 
-  ///  Profile constructor.  @@ Vadym - deprecate this.
-  TAO_UIPMC_Profile (const CORBA::Octet class_d_address[4],
-                     CORBA::UShort port,
-                     TAO_ORB_Core *orb_core);
-
   /// Destructor is to be called only through _decr_refcnt.
-  ~TAO_UIPMC_Profile (void);
+  ~TAO_UIPMC_Profile () = default;
 
   /// Template methods. Please see tao/Profile.h for documentation.
 
@@ -80,17 +75,17 @@ public:
   /// a useable decode_endpoints
   virtual int decode (TAO_InputCDR &cdr);
   virtual void parse_string (const char *string);
-  virtual char * to_string (void) const;
-  virtual int encode_endpoints (void);
+  virtual char * to_string () const;
+  virtual int encode_endpoints ();
   virtual void encodeAddressInfo (TAO_OutputCDR &stream) const;
-  virtual TAO_Endpoint *endpoint (void);
-  virtual CORBA::ULong endpoint_count (void) const;
+  virtual TAO_Endpoint *endpoint ();
+  virtual CORBA::ULong endpoint_count () const;
   virtual CORBA::ULong hash (CORBA::ULong max);
-  virtual IOP::TaggedProfile &create_tagged_profile (void);
+  virtual IOP::TaggedProfile &create_tagged_profile ();
   virtual void request_target_specifier (
     TAO_Target_Specification &target_spec,
     TAO_Target_Specification::TAO_Target_Address r);
-  virtual int supports_multicast (void) const;
+  virtual int supports_multicast () const;
   virtual void addressing_mode (CORBA::Short addr_mode);
   static int extract_group_component (const IOP::TaggedProfile &profile,
                                       PortableGroup::TagGroupTaggedComponent &group);
@@ -104,11 +99,11 @@ public:
 protected:
   /// Template methods, please see documentation in tao/Profile.h
   virtual int decode_profile (TAO_InputCDR& cdr);
-  virtual int decode_endpoints (void);
+  virtual int decode_endpoints ();
   virtual void parse_string_i (const char *);
   virtual void create_profile_body (TAO_OutputCDR &cdr) const;
   virtual CORBA::Boolean do_is_equivalent (const TAO_Profile *other_profile);
-  virtual void update_cached_group_component (void);
+  virtual void update_cached_group_component ();
 
 protected:
   /**

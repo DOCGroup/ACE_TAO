@@ -146,7 +146,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       constraint_list[0].event_types.length (0);
       constraint_list[0].constraint_expr = CORBA::string_dup(ACE_TEXT_ALWAYS_CHAR (constraintString));
 
-      filter->add_constraints (constraint_list);
+      CosNotifyFilter::ConstraintInfoSeq_var cons_info = filter->add_constraints (constraint_list);
 
       admin->add_filter(filter.in());
     }
@@ -157,13 +157,12 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     // Tell the supplier to go
     sig->go ();
 
-    client.ORB_run( );
+    client.ORB_run();
     ACE_DEBUG((LM_DEBUG, "Consumer done.\n"));
 
     sig->done ();
 
     return 0;
-
   }
   catch (const CORBA::Exception& e)
   {

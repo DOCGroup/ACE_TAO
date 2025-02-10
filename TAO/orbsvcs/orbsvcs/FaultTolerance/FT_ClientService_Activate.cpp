@@ -10,11 +10,11 @@ static bool initialized = false;
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_FT_ClientService_Activate::TAO_FT_ClientService_Activate (void)
+TAO_FT_ClientService_Activate::TAO_FT_ClientService_Activate ()
 {
 }
 
-TAO_FT_ClientService_Activate::~TAO_FT_ClientService_Activate (void)
+TAO_FT_ClientService_Activate::~TAO_FT_ClientService_Activate ()
 {
 }
 
@@ -35,7 +35,7 @@ TAO_FT_ClientService_Activate::activate_services (TAO_ORB_Core *orb_core)
 
 
 int
-TAO_FT_ClientService_Activate::Initializer (void)
+TAO_FT_ClientService_Activate::Initializer ()
 {
   if (initialized == false)
     {

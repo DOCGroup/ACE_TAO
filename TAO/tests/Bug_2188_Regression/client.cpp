@@ -63,7 +63,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       atobj->a_charArray (char_array.in ());
 
       ACE_DEBUG ((LM_DEBUG, "a_charArray worked OK.\n"));
-
     }
   catch (const CORBA::Exception& ex)
     {

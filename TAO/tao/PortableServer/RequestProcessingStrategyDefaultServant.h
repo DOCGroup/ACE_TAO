@@ -37,52 +37,50 @@ namespace TAO
       : public RequestProcessingStrategy
     {
     public:
-      RequestProcessingStrategyDefaultServant (void);
+      RequestProcessingStrategyDefaultServant () = default;
 
-      virtual void strategy_cleanup(void);
+      void strategy_cleanup() override;
 
-      PortableServer::ServantManager_ptr get_servant_manager (void);
+      PortableServer::ServantManager_ptr get_servant_manager () override;
 
-      void set_servant_manager (PortableServer::ServantManager_ptr imgr);
+      void set_servant_manager (PortableServer::ServantManager_ptr imgr) override;
 
-      PortableServer::Servant get_servant (void);
+      PortableServer::Servant get_servant () override;
 
-      void set_servant (PortableServer::Servant servant);
+      void set_servant (PortableServer::Servant servant) override;
 
-      virtual TAO_SERVANT_LOCATION locate_servant (
+      TAO_Servant_Location locate_servant (
         const PortableServer::ObjectId &system_id,
-        PortableServer::Servant &servant);
+        PortableServer::Servant &servant) override;
 
-      virtual PortableServer::Servant locate_servant (
+      PortableServer::Servant locate_servant (
         const char *operation,
         const PortableServer::ObjectId &system_id,
         TAO::Portable_Server::Servant_Upcall &servant_upcall,
         TAO::Portable_Server::POA_Current_Impl &poa_current_impl,
-        bool &wait_occurred_restart_call);
+        bool &wait_occurred_restart_call) override;
 
-      virtual PortableServer::Servant system_id_to_servant (
-        const PortableServer::ObjectId &system_id);
+      PortableServer::Servant system_id_to_servant (
+        const PortableServer::ObjectId &system_id) override;
 
-      virtual PortableServer::Servant id_to_servant (
-        const PortableServer::ObjectId &id);
+      PortableServer::Servant id_to_servant (
+        const PortableServer::ObjectId &id) override;
 
-      virtual void cleanup_servant (
+      void cleanup_servant (
         PortableServer::Servant servant,
-        const PortableServer::ObjectId &user_id);
+        const PortableServer::ObjectId &user_id) override;
 
-      virtual void etherealize_objects (CORBA::Boolean etherealize_objects);
+      void etherealize_objects (CORBA::Boolean etherealize_objects) override;
 
-      virtual PortableServer::ObjectId *servant_to_id (
-        PortableServer::Servant servant);
+      PortableServer::ObjectId *servant_to_id (
+        PortableServer::Servant servant) override;
 
-      virtual void post_invoke_servant_cleanup(
+      void post_invoke_servant_cleanup(
         const PortableServer::ObjectId &system_id,
-        const TAO::Portable_Server::Servant_Upcall &servant_upcall);
-
-      virtual ::PortableServer::RequestProcessingPolicyValue type() const;
+        const TAO::Portable_Server::Servant_Upcall &servant_upcall) override;
 
     private:
-      PortableServer::ServantBase_var default_servant_;
+      PortableServer::ServantBase_var default_servant_ {};
     };
   }
 }

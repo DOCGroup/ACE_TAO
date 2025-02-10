@@ -51,7 +51,7 @@ class TAO_Flushing_Strategy
 {
 public:
   /// Destructor
-  virtual ~TAO_Flushing_Strategy (void);
+  virtual ~TAO_Flushing_Strategy ();
 
   enum SCHEDULE_OUTPUT_RETURN { MUST_FLUSH = -2 };
 

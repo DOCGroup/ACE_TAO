@@ -29,7 +29,7 @@ class Server_Task : public ACE_Task_Base
                  ACE_Thread_Manager *thr_mgr);
 
     /// Thread entry point
-    int svc (void);
+    int svc ();
 
   private:
     /// Output file for the server IOR

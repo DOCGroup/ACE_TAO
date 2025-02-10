@@ -19,7 +19,7 @@ public:
   {
   }
 
-  int svc (void);
+  int svc ();
 
 private:
   PortableServer::POA_var p_;
@@ -29,9 +29,8 @@ private:
 };
 
 int
-MT_Task::svc (void)
+MT_Task::svc ()
 {
-
   try
     {
       for (CORBA::Long i = 0;
@@ -168,7 +167,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - test finished\n"));
 
-      root_poa->destroy (1, 1);
+      root_poa->destroy (true, true);
 
       orb->destroy ();
     }

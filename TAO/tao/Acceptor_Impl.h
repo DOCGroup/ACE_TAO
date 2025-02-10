@@ -79,7 +79,6 @@ template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1>
 class TAO_Accept_Strategy : public ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>
 {
 public:
-
   /// Constructor.
   TAO_Accept_Strategy (TAO_ORB_Core *orb_core);
 
@@ -102,13 +101,7 @@ protected:
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "tao/Acceptor_Impl.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Acceptor_Impl.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 #endif /* TAO_ACCEPTOR_IMPL_H */

@@ -16,7 +16,6 @@ namespace ACE
 {
   namespace INet
   {
-
     int SSL_CallbackManager::ssl_ctx_mngr_index_ = (-2);
 
     SSL_CallbackManager::SSL_CallbackManager ()

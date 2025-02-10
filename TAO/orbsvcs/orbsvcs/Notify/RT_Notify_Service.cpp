@@ -9,7 +9,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_RT_Notify_Service::TAO_RT_Notify_Service (void)
+TAO_RT_Notify_Service::TAO_RT_Notify_Service ()
 {
 }
 
@@ -53,7 +53,7 @@ TAO_RT_Notify_Service::init_i (CORBA::ORB_ptr orb)
 }
 
 TAO_Notify_Factory*
-TAO_RT_Notify_Service::create_factory (void)
+TAO_RT_Notify_Service::create_factory ()
 {
   TAO_Notify_Factory* factory =
     ACE_Dynamic_Service<TAO_Notify_Factory>::instance ("TAO_Notify_Factory");
@@ -68,7 +68,7 @@ TAO_RT_Notify_Service::create_factory (void)
 }
 
 TAO_Notify_Builder*
-TAO_RT_Notify_Service::create_builder (void)
+TAO_RT_Notify_Service::create_builder ()
 {
   TAO_Notify_Builder* builder = 0;
   ACE_NEW_THROW_EX (builder,

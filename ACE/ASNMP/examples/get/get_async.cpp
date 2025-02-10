@@ -32,8 +32,9 @@
 #include "ace/streams.h"
 
 // SNMPv1 Get Application
-class getapp : public Snmp_Result {
-  public:
+class getapp : public Snmp_Result
+{
+public:
   getapp(int argc, char **argv); // process command line args
   int valid() const;             // verify transaction can proceed
   int run();                     //  issue transaction
@@ -41,7 +42,7 @@ class getapp : public Snmp_Result {
 
   virtual void result(Snmp * r, int rc);
 
-  private:
+private:
   getapp(const getapp&);
 
   UdpAddress address_;
@@ -139,7 +140,6 @@ void getapp::usage()
 
 int getapp::run()
 {
-
    //----------[ create a ASNMP session ]-----------------------------------
    if ( snmp_.valid() != SNMP_CLASS_SUCCESS) {
       cout << "\nASNMP:ERROR:Create session failed: "<<

@@ -9,7 +9,7 @@ Hello::Hello (CORBA::ORB_ptr orb)
 }
 
 char *
-Hello::get_string (void)
+Hello::get_string ()
 {
   if (this->orb_->orb_core ()->lane_resources ().transport_cache ().current_size () > 1)
     {
@@ -21,7 +21,7 @@ Hello::get_string (void)
 }
 
 void
-Hello::shutdown (void)
+Hello::shutdown ()
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

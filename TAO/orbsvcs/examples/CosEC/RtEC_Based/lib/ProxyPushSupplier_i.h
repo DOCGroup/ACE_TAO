@@ -37,10 +37,10 @@ public:
                                  RtecEventChannelAdmin::ProxyPushSupplier_ptr pps);
 
   /// Destructor.
-  ~TAO_CosEC_ProxyPushSupplier_i (void);
+  ~TAO_CosEC_ProxyPushSupplier_i () = default;
 
   /// Ends the event communication and disposes this object.
-  virtual void disconnect_push_supplier (void);
+  virtual void disconnect_push_supplier ();
 
   /// Connects the <push_consumer> to the Event Channel.
   virtual void connect_push_consumer(CosEventComm::PushConsumer_ptr push_consumer);
@@ -48,7 +48,7 @@ public:
 private:
   /// Returns 0 if a push_consumer is already connected to this
   /// ProxyPushSupplier, otherwise it returns a 1.
-  int connected (void);
+  int connected ();
 
   /// The ConsumerQOS specified by the user of this class.
   const RtecEventChannelAdmin::ConsumerQOS &qos_;

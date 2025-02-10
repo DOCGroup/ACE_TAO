@@ -34,7 +34,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try {
     // Initialize orb
-    CORBA::ORB_var orb = CORBA::ORB_init( argc, argv );
+    CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
 
     if (parse_args (argc, argv) != 0)
       return 1;
@@ -44,7 +44,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     try
       {
-        test = Test::_narrow( obj.in() );
+        test = Test::_narrow( obj.in());
         if (killit)
           {
             test->terminate ();
@@ -65,7 +65,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           {
             if (CORBA::is_nil (test.in()))
               {
-                test = Test::_narrow( obj.in() );
+                test = Test::_narrow( obj.in());
               }
             CORBA::Short n = test->get_server_num ();
             ACE_DEBUG ((LM_DEBUG,

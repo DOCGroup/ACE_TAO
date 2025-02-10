@@ -2,5 +2,4 @@
 
 ACEXML_Validator::~ACEXML_Validator ()
 {
-
 }

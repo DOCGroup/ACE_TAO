@@ -20,10 +20,6 @@ TAO::PICurrent::PICurrent (TAO_ORB_Core &orb_core)
 {
 }
 
-TAO::PICurrent::~PICurrent (void)
-{
-}
-
 CORBA::Any *
 TAO::PICurrent::get_slot (PortableInterceptor::SlotId identifier)
 {
@@ -50,14 +46,14 @@ namespace
 }
 
 TAO::PICurrent_Impl *
-TAO::PICurrent::tsc (void)
+TAO::PICurrent::tsc ()
 {
   TAO::PICurrent_Impl *impl =
     static_cast<TAO::PICurrent_Impl *> (
       this->orb_core_.get_tss_resource (this->tss_slot_));
 
   // If this TSS has not yet been set-up, give it it's own PICurrent_Impl.
-  if (0 == impl)
+  if (!impl)
   {
     ACE_NEW_THROW_EX (impl,
                       TAO::PICurrent_Impl (&this->orb_core_, this->tss_slot_),
@@ -89,7 +85,7 @@ TAO::PICurrent::check_validity (const PortableInterceptor::SlotId &identifier)
 }
 
 CORBA::ORB_ptr
-TAO::PICurrent::_get_orb (void)
+TAO::PICurrent::_get_orb ()
 {
   return CORBA::ORB::_duplicate (this->orb_core_.orb ());
 }

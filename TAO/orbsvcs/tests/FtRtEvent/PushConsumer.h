@@ -19,11 +19,9 @@ public:
   PushConsumer_impl(CORBA::ORB_ptr orb);
 
     virtual void push (
-        const RtecEventComm::EventSet & data
-      );
+        const RtecEventComm::EventSet & data);
 
-    virtual void disconnect_push_consumer (
-      );
+    virtual void disconnect_push_consumer ();
 private:
   CORBA::ORB_var orb_;
   PushConsumer_impl(const PushConsumer_impl&);

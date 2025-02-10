@@ -21,7 +21,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Default_Client_Strategy_Factory::TAO_Default_Client_Strategy_Factory (void)
+TAO_Default_Client_Strategy_Factory::TAO_Default_Client_Strategy_Factory ()
   : transport_mux_strategy_ (TAO_MUXED_TMS)
   , wait_strategy_ (TAO_WAIT_ON_LEADER_FOLLOWER)
   , connect_strategy_ (TAO_LEADER_FOLLOWER_CONNECT)
@@ -57,7 +57,7 @@ TAO_Default_Client_Strategy_Factory::TAO_Default_Client_Strategy_Factory (void)
 #endif
 }
 
-TAO_Default_Client_Strategy_Factory::~TAO_Default_Client_Strategy_Factory (void)
+TAO_Default_Client_Strategy_Factory::~TAO_Default_Client_Strategy_Factory ()
 {
 }
 
@@ -242,7 +242,7 @@ TAO_Default_Client_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
              {
                ACE_TCHAR* name = argv[curarg];
 
-               ACE_TCHAR *err = 0;
+               ACE_TCHAR *err = nullptr;
                long limit = ACE_OS::strtol (name, &err, 10);
                if (err && *err != 0)
                  {
@@ -264,7 +264,7 @@ TAO_Default_Client_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
              {
                ACE_TCHAR* name = argv[curarg];
 
-               ACE_TCHAR *err = 0;
+               ACE_TCHAR *err = nullptr;
                long limit = ACE_OS::strtol (name, &err, 10);
                if (err && *err != 0)
                  {
@@ -287,7 +287,7 @@ TAO_Default_Client_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
              {
                ACE_TCHAR* name = argv[curarg];
 
-               ACE_TCHAR *err = 0;
+               ACE_TCHAR *err = nullptr;
                long limit = ACE_OS::strtol (name, &err, 10);
                if (err && *err != 0)
                  {
@@ -309,7 +309,7 @@ TAO_Default_Client_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
              {
                ACE_TCHAR* name = argv[curarg];
 
-               ACE_TCHAR *err = 0;
+               ACE_TCHAR *err = nullptr;
                long limit = ACE_OS::strtol (name, &err, 10);
                if (err && *err != 0)
                  {
@@ -331,7 +331,7 @@ TAO_Default_Client_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
              {
                ACE_TCHAR* name = argv[curarg];
 
-               ACE_TCHAR *err = 0;
+               ACE_TCHAR *err = nullptr;
                long limit = ACE_OS::strtol (name, &err, 10);
                if (err && *err != 0)
                  {
@@ -368,7 +368,7 @@ TAO_Transport_Mux_Strategy *
 TAO_Default_Client_Strategy_Factory::create_transport_mux_strategy (
    TAO_Transport *transport)
 {
-  TAO_Transport_Mux_Strategy *tms = 0;
+  TAO_Transport_Mux_Strategy *tms = nullptr;
 
   switch (this->transport_mux_strategy_)
     {
@@ -376,14 +376,14 @@ TAO_Default_Client_Strategy_Factory::create_transport_mux_strategy (
       {
         ACE_NEW_RETURN (tms,
                         TAO_Muxed_TMS (transport),
-                        0);
+                        nullptr);
         break;
       }
       case TAO_EXCLUSIVE_TMS:
       {
         ACE_NEW_RETURN (tms,
                         TAO_Exclusive_TMS (transport),
-                        0);
+                        nullptr);
         break;
       }
     }
@@ -392,9 +392,9 @@ TAO_Default_Client_Strategy_Factory::create_transport_mux_strategy (
 }
 
 ACE_Lock *
-TAO_Default_Client_Strategy_Factory::create_transport_mux_strategy_lock (void)
+TAO_Default_Client_Strategy_Factory::create_transport_mux_strategy_lock ()
 {
-  ACE_Lock *the_lock = 0;
+  ACE_Lock *the_lock = nullptr;
 
   switch (this->muxed_strategy_lock_type_)
     {
@@ -402,14 +402,14 @@ TAO_Default_Client_Strategy_Factory::create_transport_mux_strategy_lock (void)
         {
           ACE_NEW_RETURN (the_lock,
                           ACE_Lock_Adapter<ACE_SYNCH_NULL_MUTEX> (),
-                          0);
+                          nullptr);
           break;
         }
       case TAO_THREAD_LOCK:
         {
           ACE_NEW_RETURN (the_lock,
                           ACE_Lock_Adapter<TAO_SYNCH_RECURSIVE_MUTEX> (),
-                          0);
+                          nullptr);
           break;
         }
     }
@@ -418,7 +418,7 @@ TAO_Default_Client_Strategy_Factory::create_transport_mux_strategy_lock (void)
 }
 
 int
-TAO_Default_Client_Strategy_Factory::reply_dispatcher_table_size (void) const
+TAO_Default_Client_Strategy_Factory::reply_dispatcher_table_size () const
 {
   return this->rd_table_size_;
 }
@@ -427,51 +427,45 @@ TAO_Wait_Strategy *
 TAO_Default_Client_Strategy_Factory::create_wait_strategy (
   TAO_Transport *transport)
 {
-  TAO_Wait_Strategy *ws = 0;
+  TAO_Wait_Strategy *ws = nullptr;
 
-/*
- * Hook to customize the wait strategy object when the concrete
- * wait strategy object is known a priori.
- */
-//@@ WAIT_STRATEGY_SPL_COMMENT_HOOK_START
   switch (this->wait_strategy_)
     {
       case TAO_WAIT_ON_LEADER_FOLLOWER :
         {
           ACE_NEW_RETURN (ws,
                           TAO_Wait_On_Leader_Follower (transport),
-                          0);
+                          nullptr);
           break;
         }
       case TAO_WAIT_ON_REACTOR:
         {
           ACE_NEW_RETURN (ws,
                           TAO_Wait_On_Reactor (transport),
-                          0);
+                          nullptr);
           break;
         }
       case TAO_WAIT_ON_READ:
         {
           ACE_NEW_RETURN (ws,
                           TAO_Wait_On_Read (transport),
-                          0);
+                          nullptr);
           break;
         }
       case TAO_WAIT_ON_LF_NO_UPCALL:
         {
           ACE_NEW_RETURN (ws,
                           TAO::Wait_On_LF_No_Upcall (transport),
-                          0);
+                          nullptr);
           break;
         }
     }
-//@@ WAIT_STRATEGY_SPL_COMMENT_HOOK_END
 
   return ws;
 }
 
 TAO_Client_Strategy_Factory::Connect_Strategy
-TAO_Default_Client_Strategy_Factory::connect_strategy (void) const
+TAO_Default_Client_Strategy_Factory::connect_strategy () const
 {
   return this->connect_strategy_;
 }
@@ -480,7 +474,7 @@ TAO_Connect_Strategy *
 TAO_Default_Client_Strategy_Factory::create_connect_strategy (
   TAO_ORB_Core *orb_core)
 {
-  TAO_Connect_Strategy *cs = 0;
+  TAO_Connect_Strategy *cs = nullptr;
 
   switch (this->connect_strategy_)
     {
@@ -488,21 +482,21 @@ TAO_Default_Client_Strategy_Factory::create_connect_strategy (
         {
           ACE_NEW_RETURN (cs,
                           TAO_Blocked_Connect_Strategy (orb_core),
-                          0);
+                          nullptr);
           break;
         }
       case TAO_REACTIVE_CONNECT:
         {
           ACE_NEW_RETURN (cs,
                           TAO_Reactive_Connect_Strategy (orb_core),
-                          0);
+                          nullptr);
           break;
         }
       case TAO_LEADER_FOLLOWER_CONNECT :
         {
           ACE_NEW_RETURN (cs,
                           TAO_LF_Connect_Strategy (orb_core, this->wait_strategy_ == TAO_WAIT_ON_LF_NO_UPCALL),
-                          0);
+                          nullptr);
           break;
         }
     }
@@ -511,13 +505,13 @@ TAO_Default_Client_Strategy_Factory::create_connect_strategy (
 }
 
 Messaging::SyncScope
-TAO_Default_Client_Strategy_Factory::sync_scope (void) const
+TAO_Default_Client_Strategy_Factory::sync_scope () const
 {
   return this->sync_scope_;
 }
 
 int
-TAO_Default_Client_Strategy_Factory::allow_callback (void)
+TAO_Default_Client_Strategy_Factory::allow_callback ()
 {
   return (this->wait_strategy_ != TAO_WAIT_ON_READ);
 }
@@ -534,13 +528,13 @@ TAO_Default_Client_Strategy_Factory::report_option_value_error (
 }
 
 bool
-TAO_Default_Client_Strategy_Factory::use_cleanup_options (void) const
+TAO_Default_Client_Strategy_Factory::use_cleanup_options () const
 {
   return this->use_cleanup_options_;
 }
 
 const TAO::Invocation_Retry_Params &
-TAO_Default_Client_Strategy_Factory::invocation_retry_params (void) const
+TAO_Default_Client_Strategy_Factory::invocation_retry_params () const
 {
   return this->invocation_retry_params_;
 }

@@ -9,7 +9,7 @@
 #include "tao/ORB.h"
 #include "tao/Object_KeyC.h"
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/Lock_Adapter_T.h"
 #include "ace/SString.h"
 
@@ -28,19 +28,19 @@ TAO_Repository_i::TAO_Repository_i (CORBA::ORB_ptr orb,
 {
 }
 
-TAO_Repository_i::~TAO_Repository_i (void)
+TAO_Repository_i::~TAO_Repository_i ()
 {
   delete this->lock_;
 }
 
 CORBA::DefinitionKind
-TAO_Repository_i::def_kind (void)
+TAO_Repository_i::def_kind ()
 {
   return CORBA::dk_Repository;
 }
 
 void
-TAO_Repository_i::destroy (void)
+TAO_Repository_i::destroy ()
 {
   throw CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO);
 }
@@ -549,7 +549,7 @@ TAO_Repository_i::repo_init (CORBA::Repository_ptr repo_ref,
 }
 
 int
-TAO_Repository_i::create_sections (void)
+TAO_Repository_i::create_sections ()
 {
   this->config_->open_section (config_->root_section (),
                                "root",
@@ -595,7 +595,6 @@ TAO_Repository_i::create_sections (void)
           this->config_->set_integer_value (key,
                                             "pkind",
                                             i);
-
         }
     }
 
@@ -680,7 +679,7 @@ TAO_Repository_i::create_sections (void)
 }
 
 int
-TAO_Repository_i::create_servants_and_poas (void)
+TAO_Repository_i::create_servants_and_poas ()
 {
   CORBA::PolicyList policies (5);
   policies.length (5);
@@ -913,25 +912,25 @@ TAO_Repository_i::select_poa (CORBA::DefinitionKind def_kind) const
 }
 
 PortableServer::Current_ptr
-TAO_Repository_i::poa_current (void) const
+TAO_Repository_i::poa_current () const
 {
   return this->poa_current_.in ();
 }
 
 ACE_Configuration *
-TAO_Repository_i::config (void) const
+TAO_Repository_i::config () const
 {
   return this->config_;
 }
 
 CORBA::TypeCodeFactory_ptr
-TAO_Repository_i::tc_factory (void) const
+TAO_Repository_i::tc_factory () const
 {
   return this->tc_factory_.in ();
 }
 
 CORBA::Repository_ptr
-TAO_Repository_i::repo_objref (void) const
+TAO_Repository_i::repo_objref () const
 {
   return CORBA::Repository::_duplicate (this->repo_objref_.in ());
 }
@@ -943,61 +942,61 @@ TAO_Repository_i::repo_objref (CORBA::Repository_ptr objref)
 }
 
 ACE_Configuration_Section_Key
-TAO_Repository_i::root_key (void) const
+TAO_Repository_i::root_key () const
 {
   return this->root_key_;
 }
 
 ACE_Configuration_Section_Key
-TAO_Repository_i::repo_ids_key (void) const
+TAO_Repository_i::repo_ids_key () const
 {
   return this->repo_ids_key_;
 }
 
 ACE_Configuration_Section_Key
-TAO_Repository_i::pkinds_key (void) const
+TAO_Repository_i::pkinds_key () const
 {
   return this->pkinds_key_;
 }
 
 ACE_Configuration_Section_Key
-TAO_Repository_i::strings_key (void) const
+TAO_Repository_i::strings_key () const
 {
   return this->strings_key_;
 }
 
 ACE_Configuration_Section_Key
-TAO_Repository_i::wstrings_key (void) const
+TAO_Repository_i::wstrings_key () const
 {
   return this->wstrings_key_;
 }
 
 ACE_Configuration_Section_Key
-TAO_Repository_i::fixeds_key (void) const
+TAO_Repository_i::fixeds_key () const
 {
   return this->fixeds_key_;
 }
 
 ACE_Configuration_Section_Key
-TAO_Repository_i::arrays_key (void) const
+TAO_Repository_i::arrays_key () const
 {
   return this->arrays_key_;
 }
 
 ACE_Configuration_Section_Key
-TAO_Repository_i::sequences_key (void) const
+TAO_Repository_i::sequences_key () const
 {
   return this->sequences_key_;
 }
 
 const char *
-TAO_Repository_i::extension (void) const
+TAO_Repository_i::extension () const
 {
   return this->extension_.in ();
 }
 
 ACE_Lock &
-TAO_Repository_i::lock (void) const
+TAO_Repository_i::lock () const
 {
   return *this->lock_;
 }
@@ -1035,16 +1034,16 @@ TAO_Repository_i::pkind_to_string (CORBA::PrimitiveKind pkind) const
 }
 
 u_int
-TAO_Repository_i::num_pkinds (void) const
+TAO_Repository_i::num_pkinds () const
 {
   return sizeof (TAO_Repository_i::TAO_IFR_primitive_kinds) / sizeof (char*);
 }
 
 // For debugging use only.
 void
-TAO_Repository_i::shutdown (void)
+TAO_Repository_i::shutdown ()
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

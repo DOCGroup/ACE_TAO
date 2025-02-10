@@ -46,10 +46,10 @@ public:
   // Create Acceptor object using addr.
 
   /// Create Acceptor object using addr.
-  TAO_UIOP_Acceptor (void);
+  TAO_UIOP_Acceptor ();
 
   /// Destructor
-  virtual ~TAO_UIOP_Acceptor (void);
+  virtual ~TAO_UIOP_Acceptor ();
 
   typedef TAO_Strategy_Acceptor<TAO_UIOP_Connection_Handler, ACE_LSOCK_ACCEPTOR> TAO_UIOP_BASE_ACCEPTOR;
   typedef TAO_Creation_Strategy<TAO_UIOP_Connection_Handler> TAO_UIOP_CREATION_STRATEGY;
@@ -73,13 +73,13 @@ public:
                             int version_major,
                             int version_minor,
                             const char *options = 0);
-  virtual int close (void);
+  virtual int close ();
   virtual int create_profile (const TAO::ObjectKey &object_key,
                               TAO_MProfile &mprofile,
                               CORBA::Short priority);
 
   virtual int is_collocated (const TAO_Endpoint* endpoint);
-  virtual CORBA::ULong endpoint_count (void);
+  virtual CORBA::ULong endpoint_count ();
 
   virtual int object_key (IOP::TaggedProfile &profile,
                           TAO::ObjectKey &key);
@@ -99,7 +99,7 @@ private:
 
   /// Obtains uiop properties that must be used by this acceptor, i.e.,
   /// initializes <uiop_properties_>.
-  int init_uiop_properties (void);
+  int init_uiop_properties ();
 
   /// Create a UIOP profile representing this acceptor.
   int create_new_profile (const TAO::ObjectKey &object_key,

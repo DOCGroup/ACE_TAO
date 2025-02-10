@@ -212,7 +212,6 @@ rsvp_callback (rapi_sid_t /* sid */,
       ACELIB_DEBUG ((LM_DEBUG,
                   "Unknown RSVP Event Received\n"));
       break;
-
     }
 
   // Set the updated ACE_QoS for the RSVP callback argument(QoS session).
@@ -223,7 +222,7 @@ rsvp_callback (rapi_sid_t /* sid */,
 }
 
 // Constructor.
-ACE_RAPI_Session::ACE_RAPI_Session (void)
+ACE_RAPI_Session::ACE_RAPI_Session ()
 {
   ACE_TRACE ("ACE_RAPI_Session::ACE_RAPI_Session");
   //this->source_port (DEFAULT_SOURCE_SENDER_PORT);
@@ -270,7 +269,7 @@ ACE_RAPI_Session::open (ACE_INET_Addr dest_addr,
 
 // Close the RAPI QoS Session.
 int
-ACE_RAPI_Session::close (void)
+ACE_RAPI_Session::close ()
 {
   this->rsvp_error = rapi_release(this->session_id_);
 
@@ -288,7 +287,7 @@ ACE_RAPI_Session::close (void)
 
 //Get the most recent RSVP event that occurred
 ACE_QoS_Session::RSVP_Event_Type
-ACE_RAPI_Session::rsvp_event_type (void)
+ACE_RAPI_Session::rsvp_event_type ()
 {
   return this->rsvp_event_type_;
 }
@@ -305,7 +304,6 @@ ACE_RAPI_Session::qos (ACE_SOCK * /* socket */,
                        ACE_QoS_Manager * /* qos_manager */,
                        const ACE_QoS &ace_qos)
 {
-
   // If sender : call sending_qos ()
   // If receiver : call receiving_qos ()
   // If both : call sending_qos () and receiving_qos ()
@@ -425,7 +423,6 @@ ACE_RAPI_Session::sending_qos (const ACE_QoS &ace_qos)
 int
 ACE_RAPI_Session::receiving_qos (const ACE_QoS &ace_qos)
 {
-
   ACE_Flow_Spec *receiving_flowspec = ace_qos.receiving_flowspec ();
   if (receiving_flowspec == 0)
     {
@@ -526,7 +523,7 @@ ACE_RAPI_Session::receiving_qos (const ACE_QoS &ace_qos)
 }
 
 int
-ACE_RAPI_Session::update_qos (void)
+ACE_RAPI_Session::update_qos ()
 {
   // Update the session QoS Parameters based on the RSVP Event Received.
   if ((rsvp_error = rapi_dispatch ()) != 0)
@@ -627,7 +624,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 int ACE_GQoS_Session::GQoS_session_id = 0;
 
 // Constructor.
-ACE_GQoS_Session::ACE_GQoS_Session (void)
+ACE_GQoS_Session::ACE_GQoS_Session ()
 {
   ACE_TRACE ("ACE_GQoS_Session::ACE_GQoS_Session");
 }
@@ -647,7 +644,7 @@ ACE_GQoS_Session::open (ACE_INET_Addr dest_addr,
 
 // Close the GQoS Session.
 int
-ACE_GQoS_Session::close (void)
+ACE_GQoS_Session::close ()
 {
   // TBD.
   return 0;
@@ -659,7 +656,6 @@ ACE_GQoS_Session::qos (ACE_SOCK *socket,
                        ACE_QoS_Manager *qos_manager,
                        const ACE_QoS &ace_qos)
 {
-
   // Confirm if the current session is one of the QoS sessions
   // subscribed to by the given socket.
 
@@ -691,7 +687,7 @@ ACE_GQoS_Session::qos (ACE_SOCK *socket,
 }
 
 int
-ACE_GQoS_Session::update_qos (void)
+ACE_GQoS_Session::update_qos ()
 {
   // WSAIoctl (GET_QOS) call goes here...
   return 0;
@@ -699,7 +695,7 @@ ACE_GQoS_Session::update_qos (void)
 
 //Get the most recent RSVP event that occurred
 ACE_QoS_Session::RSVP_Event_Type
-ACE_GQoS_Session::rsvp_event_type (void)
+ACE_GQoS_Session::rsvp_event_type ()
 {
   return this->rsvp_event_type_;
 }

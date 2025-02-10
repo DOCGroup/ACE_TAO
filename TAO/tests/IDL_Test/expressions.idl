@@ -1,0 +1,52 @@
+module ShortValues {
+  const short a = 6;
+  const short b = 3;
+  const short div = a / b;
+  const short mul = a * b;
+  const short add = a + b;
+  const short sub = a - b;
+  const short mod = a % b;
+};
+
+module LongValues {
+  const long a = 6;
+  const long b = 3;
+  const long div = a / b;
+  const long mul = a * b;
+  const long add = a + b;
+  const long sub = a - b;
+  const long mod = a % b;
+};
+
+module MixedIntValues {
+  const long div = LongValues::a / ShortValues::b;
+  const long mul = LongValues::a * ShortValues::b;
+  const long add = LongValues::a + ShortValues::b;
+  const long sub = LongValues::a - ShortValues::b;
+  const long mod = LongValues::a % ShortValues::b;
+};
+
+module FloatValues {
+  const float a = 6.0;
+  const float b = 3.0;
+  const float div = a / b;
+  const float mul = a * b;
+  const float add = a + b;
+  const float sub = a - b;
+};
+
+module DoubleValues {
+  const double a = 6.0;
+  const double b = 3.0;
+  const double div = a / b;
+  const double mul = a * b;
+  const double add = a + b;
+  const double sub = a - b;
+};
+
+module MixedFloatValues {
+  const double div = DoubleValues::a / FloatValues::b;
+  const double mul = DoubleValues::a * FloatValues::b;
+  const double add = DoubleValues::a + FloatValues::b;
+  const double sub = DoubleValues::a - FloatValues::b;
+};

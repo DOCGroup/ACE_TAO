@@ -11,14 +11,13 @@
 #include "ace/OS_NS_stdlib.h"
 
 
-
-Log_Wrapper::Log_Wrapper (void)
+Log_Wrapper::Log_Wrapper ()
 {
   sequence_number_ = 0;
   this->log_msg_.app_id = ACE_OS::getpid ();
 }
 
-Log_Wrapper::~Log_Wrapper (void)
+Log_Wrapper::~Log_Wrapper ()
 {
 }
 

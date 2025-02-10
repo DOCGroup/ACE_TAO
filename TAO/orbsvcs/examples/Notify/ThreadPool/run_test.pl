@@ -22,8 +22,6 @@ my $sup = PerlACE::TestTarget::create_target (3) || die "Create target 3 failed\
 my $con = PerlACE::TestTarget::create_target (4) || die "Create target 4 failed\n";
 my $con2 = PerlACE::TestTarget::create_target (5) || die "Create target 5 failed\n";
 
-PerlACE::check_privilege_group();
-
 # ThreadPool Example
 #
 

@@ -7,12 +7,12 @@
 #include "tao/debug.h"
 #include "tao/ORB_Constants.h"
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/Reverse_Lock_T.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_PG_ObjectGroupManager::TAO_PG_ObjectGroupManager (void)
+TAO_PG_ObjectGroupManager::TAO_PG_ObjectGroupManager ()
   : poa_ (),
     object_group_map_ (TAO_PG_MAX_OBJECT_GROUPS),
     location_map_ (TAO_PG_MAX_LOCATIONS),
@@ -21,7 +21,7 @@ TAO_PG_ObjectGroupManager::TAO_PG_ObjectGroupManager (void)
 {
 }
 
-TAO_PG_ObjectGroupManager::~TAO_PG_ObjectGroupManager (void)
+TAO_PG_ObjectGroupManager::~TAO_PG_ObjectGroupManager ()
 {
   for (TAO_PG_Location_Map::iterator i = this->location_map_.begin ();
        i != this->location_map_.end ();
@@ -74,7 +74,6 @@ TAO_PG_ObjectGroupManager::add_member (
                              the_location,
                              member,
                              check_type_id);
-
 }
 
 
@@ -171,7 +170,7 @@ TAO_PG_ObjectGroupManager::add_member_i (
                             ENOMEM),
                           CORBA::COMPLETED_NO));
 
-      auto_ptr<TAO_PG_ObjectGroup_Array> safe_groups (groups);
+      std::unique_ptr<TAO_PG_ObjectGroup_Array> safe_groups (groups);
 
       // This should not fail!
       if (this->location_map_.bind (the_location, groups) != 0)
@@ -490,7 +489,7 @@ TAO_PG_ObjectGroupManager::create_object_group (
                         ENOMEM),
                       CORBA::COMPLETED_NO));
 
-  auto_ptr<TAO_PG_ObjectGroup_Map_Entry> safe_group_entry (group_entry);
+  std::unique_ptr<TAO_PG_ObjectGroup_Map_Entry> safe_group_entry (group_entry);
 
   // Set the RepositoryId associated with the created ObjectGroup_Map
   // entry.

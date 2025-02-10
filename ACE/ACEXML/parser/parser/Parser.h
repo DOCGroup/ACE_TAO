@@ -29,7 +29,6 @@
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Unbounded_Set.h"
 #include "ace/Containers_T.h"
-#include "ace/Auto_Ptr.h"
 #include "ACEXML/parser/parser/Entity_Manager.h"
 #include "ACEXML/parser/parser/ParserInternals.h"
 #include "ACEXML/parser/parser/ParserContext.h"
@@ -43,10 +42,10 @@ class ACEXML_PARSER_Export ACEXML_Parser : public ACEXML_XMLReader
 {
 public:
   /// Default constructor.
-  ACEXML_Parser (void);
+  ACEXML_Parser ();
 
   /// Destructor.
-  virtual ~ACEXML_Parser (void);
+  virtual ~ACEXML_Parser ();
 
   /**
    *  Initialize the parser state.
@@ -58,22 +57,22 @@ public:
    /**
    * Return the current content handler.
    */
-  virtual ACEXML_ContentHandler *getContentHandler (void) const;
+  virtual ACEXML_ContentHandler *getContentHandler () const;
 
   /*
    * Return the current DTD handler.
    */
-  virtual ACEXML_DTDHandler *getDTDHandler (void) const;
+  virtual ACEXML_DTDHandler *getDTDHandler () const;
 
   /*
    * Return the current entity resolver.
    */
-  virtual ACEXML_EntityResolver *getEntityResolver (void) const;
+  virtual ACEXML_EntityResolver *getEntityResolver () const;
 
   /*
    * Return the current error handler.
    */
-  virtual ACEXML_ErrorHandler *getErrorHandler (void) const;
+  virtual ACEXML_ErrorHandler *getErrorHandler () const;
 
   /**
    * Look up the value of a feature.  This method allows
@@ -131,35 +130,34 @@ public:
   virtual void setErrorHandler (ACEXML_ErrorHandler *handler);
 
 
-
 protected:
   /**
    * Parse XML Prolog.
    */
-  void parse_xml_prolog (void);
+  void parse_xml_prolog ();
 
   /**
    * Parse VersionInfo declaration.
    *
    */
-  void parse_version_info (void);
+  void parse_version_info ();
 
   /**
    *  Parse a EncodingDecl declaration.
    *
    */
-  void parse_encoding_decl (void);
+  void parse_encoding_decl ();
 
   /**
    *  Parse a XMLDecl declaration.
    *
    */
-  void parse_xml_decl (void);
+  void parse_xml_decl ();
 
   /**
    *  Parse a TextDecl declaration.
    */
-  int parse_text_decl (void);
+  int parse_text_decl ();
 
   /**
    * Parse a PI statement.  The first character encountered
@@ -167,13 +165,13 @@ protected:
    *
    * @retval 0 on success, -1 otherwise.
    */
-  int parse_processing_instruction (void);
+  int parse_processing_instruction ();
 
   /**
    * Parse the DOCTYPE declaration.  The first character encountered
    * should always be  'D' in doctype prefix: "@<@!DOCTYPE".
    */
-  int parse_doctypedecl (void);
+  int parse_doctypedecl ();
 
   /**
    * Parse an XML element.  The first character encountered should
@@ -218,7 +216,7 @@ protected:
    *
    * @retval  A pointer to name of reference, 0 otherwise.
    */
-  ACEXML_Char* parse_reference_name (void);
+  ACEXML_Char* parse_reference_name ();
 
   /**
    * Parse a CDATA section.  The first character should always be the first
@@ -227,19 +225,19 @@ protected:
    * @retval 0 on success.
    * @retval -1 if fail.
    */
-  int parse_cdata (void);
+  int parse_cdata ();
 
   /**
    * Parse a "markupdecl" section, this includes both "markupdecl" and
    * "DeclSep" sections in XML specification
    */
-  int parse_internal_dtd (void);
+  int parse_internal_dtd ();
 
   /**
    *  Skip over a comment. The first character encountered should always be
    *  the first '-' in the comment prefix "@<@!--".
    */
-  int parse_comment (void);
+  int parse_comment ();
 
   /**
    * Parse an "ELEMENT" decl.  The first character this method
@@ -248,7 +246,7 @@ protected:
    *
    * @retval 0 on success, -1 otherwise.
    */
-  int parse_element_decl (void);
+  int parse_element_decl ();
 
   /**
    * Parse an "ENTITY" decl.  The first character this method expects
@@ -256,7 +254,7 @@ protected:
    *
    * @retval 0 on success, -1 otherwise.
    */
-  int parse_entity_decl (void);
+  int parse_entity_decl ();
 
   /**
    * Parse an "ATTLIST" decl.  Thse first character this method
@@ -265,13 +263,13 @@ protected:
    *
    * @retval 0 on success, -1 otherwise.
    */
-  int parse_attlist_decl (void);
+  int parse_attlist_decl ();
 
   /**
    * Parse a AttType declaration.
    *
    */
-  int parse_atttype (void);
+  int parse_atttype ();
 
   /**
    *Parse a "NOTATION" decl.  The first character this method
@@ -280,7 +278,7 @@ protected:
    *
    * @retval 0 on success, -1 otherwise.
    */
-  int parse_notation_decl (void);
+  int parse_notation_decl ();
 
   /**
    * Parse an ExternalID or a reference to PUBLIC ExternalID.
@@ -308,50 +306,50 @@ protected:
    *  Parse an external DTD.
    *
    */
-  int parse_external_dtd (void);
+  int parse_external_dtd ();
 
   /**
    *  Parse an external subset. This does the actual parsing of an external
    *  subset and is called by @sa parse_external_dtd.
    *
    */
-  int parse_external_subset (void);
+  int parse_external_subset ();
 
   /**
    *  Parse a markupDecl section.
    *
    */
-  int parse_markup_decl (void);
+  int parse_markup_decl ();
 
   /**
    *  Parse a conditionalSect declaration.
    *
    */
-  int parse_conditional_section (void);
+  int parse_conditional_section ();
 
   /**
    *  Parse a includeSect declaration.
    *
    */
-  int parse_includesect (void);
+  int parse_includesect ();
 
   /**
    *
    *  Parse a ignoreSect declaration.
    */
-  int parse_ignoresect (void);
+  int parse_ignoresect ();
 
   /**
    * Parse a PEReference.
    *
    */
-  int parse_PE_reference (void);
+  int parse_PE_reference ();
 
   /**
    *  Parse a Reference.
    *
    */
-  int parse_entity_reference (void);
+  int parse_entity_reference ();
 
   /**
    *  Parse an entityValue.
@@ -363,7 +361,7 @@ protected:
    *  Parse a DefaultDecl specification.
    *
    */
-  int parse_defaultdecl (void);
+  int parse_defaultdecl ();
 
 
   /**
@@ -374,7 +372,7 @@ protected:
    *
    * @retval 0 on success, -1 otherwise.
    */
-  int parse_children_definition (void);
+  int parse_children_definition ();
 
   /**
    * Parse a @c cp non-terminal.  @c cp can either be a @c seq or a @c choice.
@@ -443,7 +441,7 @@ protected:
    *             if successful.
    *  @retval 0 otherwise.
    */
-  ACEXML_Char* parse_attname (void);
+  ACEXML_Char* parse_attname ();
 
   /**
    *  Parse an attribute value.
@@ -458,7 +456,7 @@ protected:
    *
    *  @return 0 if attribute type was read successfully, -1 otherwise.
    */
-  int parse_tokenized_type (void);
+  int parse_tokenized_type ();
 
   /**
    *  Parse a SystemLiteral.
@@ -554,13 +552,12 @@ protected:
   int isPubidChar (const ACEXML_Char c) const;
 
   /// Get a character.
-  virtual ACEXML_Char get (void);
+  virtual ACEXML_Char get ();
 
   /// Peek a character.
-  virtual ACEXML_Char peek (void);
+  virtual ACEXML_Char peek ();
 
 private:
-
   // *** Helper functions for parsing XML
 
   /**
@@ -571,7 +568,7 @@ private:
    *
    * @sa skip_whitespace_count
    */
-  ACEXML_Char skip_whitespace (void);
+  ACEXML_Char skip_whitespace ();
 
   /**
    * Skip any whitespaces encountered until the first non-whitespace
@@ -594,7 +591,7 @@ private:
    *
    * @retval 0 when succeeds, -1 if no equal sign is found.
    */
-  int skip_equal (void);
+  int skip_equal ();
 
   /**
    * Get a quoted string.  Quoted strings are used to specify
@@ -683,13 +680,13 @@ private:
    *
    * @retval Number of whitespace characters skipped.
    */
-  int check_for_PE_reference (void);
+  int check_for_PE_reference ();
 
   /**
    *  Reset the parser state.
    *
    */
-  void reset (void);
+  void reset ();
 
   /**
    * Very trivial, non-conformant normalization of a systemid.
@@ -841,7 +838,6 @@ private:
   /// If set, the parser should include namespace declarations in the list
   /// of attributes of an element.
   int namespace_prefixes_;
-
 };
 
 #if defined (__ACEXML_INLINE__)

@@ -22,7 +22,7 @@ TAO_Lookup (TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader)
 }
 
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
-TAO_Lookup<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::~TAO_Lookup (void)
+TAO_Lookup<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::~TAO_Lookup ()
 {
   ACE_GUARD (TRADER_LOCK_TYPE, trader_mon, this->lock_);
   for (Request_Ids::ITERATOR riter (this->request_ids_);
@@ -205,7 +205,7 @@ lookup_one_type (const char* type,
   // @@ Would have used Offer_Database::offer_iterator for less
   // coupling between TAO_Lookup and Offer_Database, but g++ barfs on
   // that.
-#if defined(_MSC_VER)
+#if defined(_MSC_VER) && !defined (ACE_HAS_CPP20)
   TAO_Offer_Database<MAP_LOCK_TYPE>::offer_iterator
     offer_iter (type, offer_database);
 #else
@@ -790,7 +790,7 @@ TAO_Register<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::TAO_Register (TAO_Trader<TRADER_LO
 }
 
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
-TAO_Register<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::~TAO_Register (void)
+TAO_Register<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::~TAO_Register ()
 {
 }
 
@@ -958,7 +958,7 @@ withdraw_using_constraint (const char *type,
   // Try to find the map of offers of desired service type.
   // @@ Again, should be Offer_Database::offer_iterator
   {
-#if defined (_MSC_VER)
+#if defined (_MSC_VER) && !defined (ACE_HAS_CPP20)
     TAO_Offer_Database<MAP_LOCK_TYPE>::offer_iterator
       offer_iter (type, offer_database);
 #else
@@ -1015,7 +1015,7 @@ resolve (const CosTrading::TraderName &name)
     this->trader_.trading_components ().link_if ();
 
   // Ensure that the link interface is supported.
-  if (! CORBA::is_nil (link_if))
+  if (CORBA::is_nil (link_if))
     return CosTrading::Register::_nil ();
 
   CosTrading::Link::LinkInfo_var link_info;
@@ -1035,7 +1035,7 @@ resolve (const CosTrading::TraderName &name)
     }
 
   // Ensure that the register pointer isn't nil.
-  if (! CORBA::is_nil (remote_reg.in ()))
+  if (CORBA::is_nil (remote_reg.in ()))
     throw CosTrading::Register::RegisterNotSupported (name);
 
   CosTrading::Register_ptr return_value = remote_reg.in ();
@@ -1061,8 +1061,7 @@ validate_properties (const char* type,
                      const CosTrading::PropertySeq& properties)
 {
   CORBA::ULong length = properties.length ();
-  const CosTradingRepos::ServiceTypeRepository::PropStructSeq&
-    prop_types = type_struct->props;
+  const CosTradingRepos::ServiceTypeRepository::PropStructSeq&prop_types = type_struct->props;
   TAO_Property_Evaluator_By_Name prop_eval (properties);
 
   // Perform property validation
@@ -1162,13 +1161,13 @@ TAO_Admin (TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader)
 }
 
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
-TAO_Admin<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::~TAO_Admin (void)
+TAO_Admin<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::~TAO_Admin ()
 {
 }
 
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 CosTrading::Admin::OctetSeq *
-TAO_Admin<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::request_id_stem (void)
+TAO_Admin<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::request_id_stem ()
 {
   ACE_GUARD_RETURN (TRADER_LOCK_TYPE, trader_mon, this->lock_, 0);
 
@@ -1454,7 +1453,7 @@ TAO_Link<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::TAO_Link (TAO_Trader<TRADER_LOCK_TYPE,
 }
 
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
-TAO_Link<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::~TAO_Link (void)
+TAO_Link<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::~TAO_Link ()
 {
 }
 
@@ -1564,7 +1563,7 @@ TAO_Link<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::describe_link (const char *name)
 
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 CosTrading::LinkNameSeq*
-TAO_Link<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::list_links (void)
+TAO_Link<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::list_links ()
 {
   // Allocate space for the link names.
   size_t size = this->links_.current_size ();
@@ -1632,7 +1631,7 @@ TAO_Proxy (TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader)
 }
 
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
-TAO_Proxy<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::~TAO_Proxy (void)
+TAO_Proxy<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::~TAO_Proxy ()
 {
 }
 

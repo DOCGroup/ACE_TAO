@@ -68,7 +68,7 @@ namespace TAO
   {
   public:
     /// Constructor.
-    ServerRequestInterceptor_Adapter_Impl (void);
+    ServerRequestInterceptor_Adapter_Impl ();
 
     /**
      * @name PortableInterceptor Server Side Interception Points
@@ -93,7 +93,7 @@ namespace TAO
 
     /// This method implements the "intermediate" server side
     /// interception point if the above #ifdef is set to 1 and a
-    /// starting intercetion point if it is not set to 1.
+    /// starting interception point if it is not set to 1.
     ///
     /// @note This method should have been the "starting" interception
     ///       point according to the interceptor spec. This will be
@@ -154,9 +154,9 @@ namespace TAO
       PortableInterceptor::ServerRequestInterceptor_ptr interceptor,
       const CORBA::PolicyList& policies);
 
-    virtual void destroy_interceptors (void);
+    virtual void destroy_interceptors ();
 
-    virtual TAO::PICurrent_Impl *allocate_pi_current (void);
+    virtual TAO::PICurrent_Impl *allocate_pi_current ();
 
     virtual void deallocate_pi_current (TAO::PICurrent_Impl *picurrent);
 

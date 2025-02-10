@@ -15,7 +15,7 @@ be_visitor_root_is::be_visitor_root_is (be_visitor_context *ctx)
 {
 }
 
-be_visitor_root_is::~be_visitor_root_is (void)
+be_visitor_root_is::~be_visitor_root_is ()
 {
 }
 
@@ -42,7 +42,7 @@ be_visitor_root_is::visit_root (be_root *node)
 }
 
 int
-be_visitor_root_is::init (void)
+be_visitor_root_is::init ()
 {
   /// First open the file for writing.
   int status =

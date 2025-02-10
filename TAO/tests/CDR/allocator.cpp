@@ -33,7 +33,6 @@
  */
 class Application_Simulator
 {
-
 public:
   /// Constructor, limits the amount of fragmentation and memory this
   /// class takes.
@@ -41,7 +40,7 @@ public:
                     int max_fragment_size);
 
   /// Destructor, releases any memory left behind.
-  ~Application_Simulator (void);
+  ~Application_Simulator ();
 
   /**
    * Simulate an upcall. The class allocates some memory and then
@@ -192,7 +191,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           if (!quiet)
             ACE_OS::printf ("AVE: %d %f\n",
                             i, average);
-
         }
     }
   catch (const CORBA::Exception& ex)
@@ -216,7 +214,7 @@ Application_Simulator::Application_Simulator (int max_fragments,
     *i = 0;
 }
 
-Application_Simulator::~Application_Simulator (void)
+Application_Simulator::~Application_Simulator ()
 {
   for (char** i = this->buffers_;
        i != this->buffers_ + this->max_fragments_;

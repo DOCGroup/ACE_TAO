@@ -8,7 +8,6 @@ namespace ACE
 {
   namespace HTTPS
   {
-
     SessionFactory_Impl::SessionHolder_Impl::SessionHolder_Impl ()
       : session_ (true)
       {
@@ -52,7 +51,7 @@ namespace ACE
         ACE_NEW_RETURN (session_holder,
                         SessionHolder_Impl (),
                         0);
-        ACE_Auto_Ptr<SessionHolder_Impl> session_safe_ref (session_holder);
+        std::unique_ptr<SessionHolder_Impl> session_safe_ref (session_holder);
 
         (*session_holder)->set_host (ikey.host (), ikey.port ());
         if (ikey.is_proxy_connection ())

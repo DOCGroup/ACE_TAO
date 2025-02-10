@@ -16,22 +16,22 @@
 // Get the instance of Name_Service using Dynamic_Service
 
 //inline Name_Service *
-//NAME_SERVICE (void)
+//NAME_SERVICE ()
 
 inline ACE_Naming_Context *
-NAMING_CONTEXT (void)
+NAMING_CONTEXT ()
 {
   return ACE_Dynamic_Service<ACE_Naming_Context>::instance ("ACE_Naming_Context");
 }
 
-Client_Test::Client_Test (void)
+Client_Test::Client_Test ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "Client_Test::Client_Test\n"));
 }
 
 int
-Client_Test::open (void)
+Client_Test::open ()
 {
   // Cache the name options.
   this->name_options_ = NAMING_CONTEXT ()->name_options ();
@@ -50,7 +50,7 @@ Client_Test::open (void)
 
 
 int
-Client_Test::close (void)
+Client_Test::close ()
 {
   // Deregister this handler with the ACE_Reactor.
   return ACE_Reactor::instance ()->remove_handler
@@ -222,14 +222,14 @@ Client_Test::handle_input (ACE_HANDLE)
 }
 
 void
-Client_Test::display_menu (void)
+Client_Test::display_menu ()
 {
   ACE_DEBUG ((LM_DEBUG, "\n"));
   this->list_options ();
   ACE_DEBUG ((LM_DEBUG, "         Name Service Main Menu\n"));
   ACE_DEBUG ((LM_DEBUG, "         ----------------------\n"));
   ACE_DEBUG ((LM_DEBUG, "<P> Use Process Local Database\n"));
-  ACE_DEBUG ((LM_DEBUG, "<N> Use Node Local Database\n"));;
+  ACE_DEBUG ((LM_DEBUG, "<N> Use Node Local Database\n"));
   ACE_DEBUG ((LM_DEBUG, "<H> Set Remote Name server <host> and <port>\n\n"));
   ACE_DEBUG ((LM_DEBUG, "<B> Bind <key> <value> [<type>]\n"));
   ACE_DEBUG ((LM_DEBUG, "<U> Unbind <key>\n"));
@@ -246,7 +246,7 @@ Client_Test::display_menu (void)
 }
 
 void
-Client_Test::list_options (void)
+Client_Test::list_options ()
 {
   switch (this->name_options_->context ())
     {
@@ -276,7 +276,7 @@ Client_Test::list_options (void)
 }
 
 int
-Client_Test::set_proc_local (void)
+Client_Test::set_proc_local ()
 {
   // Close down original name space
   NAMING_CONTEXT ()->close ();
@@ -286,7 +286,7 @@ Client_Test::set_proc_local (void)
 }
 
 int
-Client_Test::set_node_local (void)
+Client_Test::set_node_local ()
 {
   // Close down original name space
   NAMING_CONTEXT ()->close ();

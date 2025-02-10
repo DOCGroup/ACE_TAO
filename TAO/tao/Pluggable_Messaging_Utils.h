@@ -41,7 +41,7 @@ class TAO_Export TAO_Pluggable_Reply_Params_Base
 {
 public:
   /// Constructor.
-  TAO_Pluggable_Reply_Params_Base (void);
+  TAO_Pluggable_Reply_Params_Base ();
 
   /// The IOP service context list.
   IOP::ServiceContextList svc_ctx_;
@@ -66,17 +66,17 @@ public:
    * a service context list and would like to pass on their contents
    * without a copy.
    */
-  IOP::ServiceContextList &service_context_notowned (void);
+  IOP::ServiceContextList &service_context_notowned ();
   void service_context_notowned (IOP::ServiceContextList *svc);
 
   /// A flag that indicates if there is any data is going to get
   /// marshalled in the reply
   CORBA::Boolean argument_flag_;
 
-  GIOP::ReplyStatusType reply_status (void) const;
+  GIOP::ReplyStatusType reply_status () const;
   void reply_status (GIOP::ReplyStatusType status);
 
-  GIOP::LocateStatusType locate_reply_status (void) const;
+  GIOP::LocateStatusType locate_reply_status () const;
   void locate_reply_status (GIOP::LocateStatusType status);
 
 protected:

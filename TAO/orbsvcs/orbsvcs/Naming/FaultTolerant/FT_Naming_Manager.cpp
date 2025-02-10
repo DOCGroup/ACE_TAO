@@ -60,7 +60,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_FT_Naming_Manager::TAO_FT_Naming_Manager (void)
+TAO_FT_Naming_Manager::TAO_FT_Naming_Manager ()
   : factory_registry_ ("NamingManager::FactoryRegistry"),
     group_factory_ (),
     use_global_ (false),
@@ -79,7 +79,7 @@ TAO_FT_Naming_Manager::TAO_FT_Naming_Manager (void)
     ::FT_Naming::TAO_FT_OBJECT_GROUP_NAME;
 }
 
-TAO_FT_Naming_Manager::~TAO_FT_Naming_Manager (void)
+TAO_FT_Naming_Manager::~TAO_FT_Naming_Manager ()
 {
   this->object_group_property_name_.length (0);
   this->built_in_balancing_strategy_name_.length (0);
@@ -314,7 +314,6 @@ void
 TAO_FT_Naming_Manager::set_default_properties (
     const PortableGroup::Properties & props)
 {
-
   this->properties_support_.set_default_properties (props);
   //@@ validate properties?
 }
@@ -364,7 +363,6 @@ TAO_FT_Naming_Manager::set_properties_dynamically (
     PortableGroup::ObjectGroup_ptr object_group,
     const PortableGroup::Properties & overrides)
 {
-
   TAO::PG_Object_Group * group = 0;
   if (this->group_factory_.find_group (object_group, group))
   {
@@ -451,7 +449,6 @@ TAO_FT_Naming_Manager::add_member (
   if (this->group_factory_.find_group (object_group, group))
   {
     try {
-
       group->add_member (the_location,
                          member);
     }
@@ -464,7 +461,6 @@ TAO_FT_Naming_Manager::add_member (
     }
 
     result = group->reference ();
-
   }
   else
   {
@@ -567,7 +563,6 @@ PortableGroup::ObjectGroupId
 TAO_FT_Naming_Manager::get_object_group_id (
     PortableGroup::ObjectGroup_ptr object_group)
 {
-
   if (CORBA::is_nil (object_group))
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
@@ -661,7 +656,6 @@ TAO_FT_Naming_Manager::get_member_ref (
     PortableGroup::ObjectGroup_ptr object_group,
     const PortableGroup::Location & the_location)
 {
-
   if (CORBA::is_nil (object_group))
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
@@ -743,7 +737,6 @@ TAO_FT_Naming_Manager::delete_object (
     const PortableGroup::GenericFactory::FactoryCreationId &
       factory_creation_id)
 {
-
   PortableGroup::ObjectGroupId group_id = 0;
   if (factory_creation_id >>= group_id)
   {
@@ -788,7 +781,7 @@ TAO_FT_Naming_Manager::next_member (PortableGroup::ObjectGroup_ptr object_group)
   ::FT_Naming::LoadBalancingStrategyValue load_bal_strategy = this->global_strategy_;
   if (!this->use_global_)
     {
-      ACE_Auto_Ptr<PortableGroup::Properties> props
+      std::unique_ptr<PortableGroup::Properties> props
         (this->get_properties (object_group));
       PortableGroup::Value value;
       CORBA::Boolean found =

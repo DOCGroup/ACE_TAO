@@ -4,13 +4,13 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE const char *
-TAO_IIOP_Endpoint::host (void) const
+TAO_IIOP_Endpoint::host () const
 {
   return this->host_.in ();
 }
 
 ACE_INLINE CORBA::UShort
-TAO_IIOP_Endpoint::port (void) const
+TAO_IIOP_Endpoint::port () const
 {
   return this->port_;
 }
@@ -23,7 +23,7 @@ TAO_IIOP_Endpoint::port (CORBA::UShort p)
 
 #if defined (ACE_HAS_IPV6)
 ACE_INLINE bool
-TAO_IIOP_Endpoint::is_ipv6_decimal (void) const
+TAO_IIOP_Endpoint::is_ipv6_decimal () const
 {
   return this->is_ipv6_decimal_;
 }

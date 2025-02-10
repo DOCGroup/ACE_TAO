@@ -43,11 +43,11 @@ public:
   virtual void yield ();
   // Yield to other thread.
 
-  size_t iteration (void);
+  size_t iteration ();
   // Access methods.
 
 protected:
-  Baseline_Test_Base (void);
+  Baseline_Test_Base ();
 
   int yield_method_;
   // Should we your thr_yield or sleep (0).
@@ -72,7 +72,7 @@ public:
     USE_THR_YIELD
   };
 
-  Baseline_Test_Options (void);
+  Baseline_Test_Options ();
   // ctor.
 
   int parse_args (int argc, ACE_TCHAR *argv[]);
@@ -81,20 +81,20 @@ public:
   int reset_params (size_t iteration, int yield);
   // Reset test parameters for next round.
 
-  int test_try_lock (void);
+  int test_try_lock ();
   // Return test configuration.
 
-  void start_inc_timer (void);
-  void stop_inc_timer (void);
+  void start_inc_timer ();
+  void stop_inc_timer ();
   // Start/stop measuring time.
 
-  int inc_loop_counter (void);
+  int inc_loop_counter ();
   // Returns
 
-  size_t current_iteration (void);
+  size_t current_iteration ();
   // Return <iteration_>.
 
-  void print_result (void);
+  void print_result ();
   // Print out the result.
 
 private:
@@ -123,11 +123,11 @@ extern Baseline_Test_Options baseline_options;
 class ACE_Svc_Export Baseline_Test : public Benchmark_Method_Base
 {
 public:
-  Baseline_Test (void);
+  Baseline_Test ();
   virtual int init (int argc, ACE_TCHAR *argv[]);
   virtual int pre_run_test (Benchmark_Base *bp);
-  virtual int run_test (void);
-  virtual int post_run_test (void);
+  virtual int run_test ();
+  virtual int post_run_test ();
   virtual int valid_test_object (Benchmark_Base *);
 
   static void *hold_lock (void * arg);

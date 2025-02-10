@@ -18,8 +18,8 @@ class HTTPU_Export HTTP_SCode_Node
   friend class HTTP_SCode_Base;
 
 public:
-  operator int (void) const;
-  operator const char * (void) const;
+  operator int () const;
+  operator const char * () const;
 
 private:
   HTTP_SCode_Node (int code, const char *code_str);
@@ -70,16 +70,14 @@ class HTTPU_Export HTTP_SCode : public HTTP_SCode_Base
   friend class ACE_Singleton<HTTP_SCode, ACE_SYNCH_MUTEX>;
 
 protected:
-
-  HTTP_SCode (void);
-  ~HTTP_SCode (void);
+  HTTP_SCode ();
+  ~HTTP_SCode ();
 
 public:
-
   const char * operator[] (int) const;
   // Return the reason string corresponding to a status code number.
 
-  static HTTP_SCode *instance (void);
+  static HTTP_SCode *instance ();
   // Return reference to the singleton.
 
   enum
@@ -87,7 +85,7 @@ public:
     SC_TABLE_SIZE = MAX_STATUS_CODE - MIN_STATUS_CODE + 1
   };
 
-  void dump (void);
+  void dump ();
 
 private:
   static const char *table_[SC_TABLE_SIZE];

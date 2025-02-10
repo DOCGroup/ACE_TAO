@@ -41,10 +41,10 @@ public:
   ACE_Reference_Pair (T1 &t1, T2 &t2);
 
   /// Access first.
-  T1 &first (void) const;
+  T1 &first () const;
 
   /// Access second.
-  T2 &second (void) const;
+  T2 &second () const;
 
   // Compare pairs.
   bool operator== (const ACE_Reference_Pair<T1, T2> &rhs) const;
@@ -63,13 +63,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #include "ace/Pair_T.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Pair_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Pair_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_PAIR_T_H */

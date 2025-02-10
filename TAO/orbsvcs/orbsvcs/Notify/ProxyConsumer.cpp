@@ -26,7 +26,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Notify_ProxyConsumer::TAO_Notify_ProxyConsumer (void)
+TAO_Notify_ProxyConsumer::TAO_Notify_ProxyConsumer ()
   : supplier_admin_ (0)
 {
 }
@@ -36,7 +36,7 @@ TAO_Notify_ProxyConsumer::~TAO_Notify_ProxyConsumer ()
 }
 
 TAO_Notify_Peer*
-TAO_Notify_ProxyConsumer::peer (void)
+TAO_Notify_ProxyConsumer::peer ()
 {
   return this->supplier ();
 }
@@ -67,7 +67,7 @@ void
 TAO_Notify_ProxyConsumer::connect (TAO_Notify_Supplier *supplier)
 {
   // Adopt the supplier
-  ACE_Auto_Ptr< TAO_Notify_Supplier > auto_supplier (supplier);
+  std::unique_ptr<TAO_Notify_Supplier> auto_supplier (supplier);
 
   TAO_Notify_Atomic_Property_Long& supplier_count = this->admin_properties().suppliers ();
   const TAO_Notify_Property_Long& max_suppliers = this->admin_properties().max_suppliers ();
@@ -88,7 +88,7 @@ TAO_Notify_ProxyConsumer::connect (TAO_Notify_Supplier *supplier)
       }
 
     // Adopt the supplier
-    this->supplier_ = auto_supplier;
+    this->supplier_ = std::move(auto_supplier);
 
     this->supplier_admin_->subscribed_types (this->subscribed_types_); // get the parents subscribed types.
   }
@@ -145,7 +145,7 @@ TAO_Notify_ProxyConsumer::supports_reliable_events () const
 }
 
 void
-TAO_Notify_ProxyConsumer::disconnect (void)
+TAO_Notify_ProxyConsumer::disconnect ()
 {
   TAO_Notify_EventTypeSeq added;
 
@@ -158,7 +158,7 @@ TAO_Notify_ProxyConsumer::disconnect (void)
 }
 
 int
-TAO_Notify_ProxyConsumer::shutdown (void)
+TAO_Notify_ProxyConsumer::shutdown ()
 {
   if (this->TAO_Notify_Object::shutdown () == 1)
     return 1;
@@ -174,7 +174,7 @@ TAO_Notify_ProxyConsumer::shutdown (void)
 }
 
 void
-TAO_Notify_ProxyConsumer::destroy (void)
+TAO_Notify_ProxyConsumer::destroy ()
 {
   this->shutdown ();
   this->supplier_admin_->cleanup_proxy (this, false, false);

@@ -22,7 +22,7 @@ class be_visitor_executor_ex_idl
 public:
   be_visitor_executor_ex_idl (be_visitor_context *ctx);
 
-  ~be_visitor_executor_ex_idl (void);
+  ~be_visitor_executor_ex_idl ();
 
   virtual int visit_component (be_component *node);
   virtual int visit_connector (be_connector *node);
@@ -39,7 +39,7 @@ public:
   virtual int visit_consumes (be_consumes *node);
 
 private:
-  void gen_supported (void);
+  void gen_supported ();
   void gen_exception_list (UTL_ExceptList *exceptions,
                            const char *prefix = "",
                            bool closed = true);

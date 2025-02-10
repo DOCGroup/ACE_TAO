@@ -63,14 +63,14 @@ static const int opt_wfmo_reactor = 1;
 static int opt_select_reactor = 1;
 static ACE_MEM_IO::Signal_Strategy client_strategy = ACE_MEM_IO::Reactive;
 
-typedef ACE_Atomic_Op <ACE_SYNCH_MUTEX, u_short> WaitingCounter;
-typedef ACE_Singleton <WaitingCounter, ACE_SYNCH_RECURSIVE_MUTEX> Waiting;
+using WaitingCounter = ACE_Atomic_Op<ACE_MT_SYNCH::MUTEX, u_short>;
+using Waiting = ACE_Singleton<WaitingCounter, ACE_MT_SYNCH::RECURSIVE_MUTEX>;
 
 // Number of connections that are currently open
 static u_short connection_count = 0;
 
-typedef ACE_Acceptor<Echo_Handler, ACE_MEM_ACCEPTOR> ACCEPTOR;
-typedef ACE_Strategy_Acceptor<Echo_Handler, ACE_MEM_ACCEPTOR> S_ACCEPTOR;
+using ACCEPTOR = ACE_Acceptor<Echo_Handler, ACE_MEM_Acceptor>;
+using S_ACCEPTOR = ACE_Strategy_Acceptor<Echo_Handler, ACE_MEM_Acceptor>;
 
 void reset_handler (int conn)
 {
@@ -151,7 +151,7 @@ Echo_Handler::handle_close (ACE_HANDLE,
 }
 
 int
-Echo_Handler::svc (void)
+Echo_Handler::svc ()
 {
   while (this->handle_input (this->get_handle ()) >= 0)
     continue;
@@ -223,7 +223,7 @@ connect_client (void *arg)
 #endif
 
 void
-create_reactor (void)
+create_reactor ()
 {
   ACE_Reactor_Impl *impl = 0;
 
@@ -281,12 +281,7 @@ test_reactive (const ACE_TCHAR *prog,
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("spawn_n ()")));
 #else
   ACE_Process_Options opts;
-#  if defined (ACE_WIN32) || !defined (ACE_USES_WCHAR)
-  const ACE_TCHAR *cmdline_fmt = ACE_TEXT ("%s -p%d -r");
-#  else
-  const ACE_TCHAR *cmdline_fmt = ACE_TEXT ("%ls -p%d -r");
-#  endif /* ACE_WIN32 || !ACE_USES_WCHAR */
-  opts.command_line (cmdline_fmt, prog, sport);
+  opts.command_line (ACE_TEXT ("%") ACE_TEXT_PRIs ACE_TEXT (" -p%d -r"), prog, sport);
   if (ACE_Process_Manager::instance ()->spawn_n (NUMBER_OF_REACTIVE_CONNECTIONS,
                                                  opts) == -1)
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("spawn_n ()")));
@@ -372,12 +367,7 @@ test_concurrent (const ACE_TCHAR *prog,
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("spawn_n()")));
 #else
   ACE_Process_Options opts;
-#  if defined (ACE_WIN32) || !defined (ACE_USES_WCHAR)
-  const ACE_TCHAR *cmdline_fmt = ACE_TEXT ("%s -p%d -m");
-#  else
-  const ACE_TCHAR *cmdline_fmt = ACE_TEXT ("%ls -p%d -m");
-#  endif /* ACE_WIN32 || !ACE_USES_WCHAR */
-  opts.command_line (cmdline_fmt, prog, sport);
+  opts.command_line (ACE_TEXT ("%") ACE_TEXT_PRIs ACE_TEXT (" -p%d -m"), prog, sport);
   if (ACE_Process_Manager::instance ()->spawn_n (NUMBER_OF_MT_CONNECTIONS,
                                                  opts) == -1)
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("spawn_n()")));

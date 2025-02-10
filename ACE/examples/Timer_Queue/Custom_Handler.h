@@ -28,12 +28,10 @@
  */
 class Custom_Handler
 {
-
     public:
-
         Custom_Handler (const ACE_Time_Value &expiration_time);
 
-        virtual ~Custom_Handler (void);
+        virtual ~Custom_Handler ();
 
         // Set the custom handler's id
         void set_id (int id);
@@ -43,7 +41,6 @@ class Custom_Handler
                              const void *arg);
 
     private:
-
         // Store the expected time of expiration, it is used to print a nice
         // message saying how much delay was at the actual expiration time.
         ACE_Time_Value expires_;
@@ -61,7 +58,6 @@ class Custom_Handler
 class ACE_Svc_Export Custom_Handler_Upcall
 {
     public:
-
         typedef ACE_Timer_Queue_T<Custom_Handler*,
                                   Custom_Handler_Upcall,
                                   ACE_Null_Mutex> TTimerQueue;

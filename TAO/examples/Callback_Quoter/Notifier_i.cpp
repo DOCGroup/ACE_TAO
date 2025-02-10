@@ -10,24 +10,10 @@
  */
 //=============================================================================
 
-
 #include "Notifier_i.h"
-
-
-Notifier_i::Notifier_i (void)
-  : notifier_exited_(0)
-{
-  // No-op
-}
-
-Notifier_i::~Notifier_i (void)
-{
-  // No-op
-}
 
 // Register a distributed callback handler that is invoked when the
 // given stock reaches the desired threshold value.
-
 void
 Notifier_i::register_callback (const char *stock_name,
                                CORBA::Long threshold_value,
@@ -88,7 +74,6 @@ Notifier_i::register_callback (const char *stock_name,
 }
 
 // Obtain a pointer to the orb.
-
 void
 Notifier_i::orb (CORBA::ORB_ptr orb)
 {
@@ -96,7 +81,6 @@ Notifier_i::orb (CORBA::ORB_ptr orb)
 }
 
 // Remove the client handler.
-
 void
 Notifier_i::unregister_callback (Callback_Quoter::Consumer_ptr consumer)
 {
@@ -140,13 +124,12 @@ Notifier_i::unregister_callback (Callback_Quoter::Consumer_ptr consumer)
 
 // Gets the market status and sends the information to the consumer
 // who is interested in it.
-
 void
 Notifier_i::market_status (const char *stock_name,
                            CORBA::Long stock_value)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "Notifier_i:: The stockname is %s with price %d\n",
+              "Notifier_i:: The stockname is %C with price %d\n",
               stock_name,
               stock_value));
 
@@ -186,11 +169,10 @@ Notifier_i::market_status (const char *stock_name,
                 " Stock Not Present!\n"));
   // Raising an exception caused problems as they were caught by the Market daemon
   // who exited prematurely.
-
 }
 
 void
-Notifier_i::shutdown (void)
+Notifier_i::shutdown ()
 {
   if ( this->consumer_map_.close () > 0)
     ACE_ERROR ((LM_ERROR,
@@ -206,7 +188,6 @@ Notifier_i::shutdown (void)
 
   // Instruct the ORB to shutdown.
   this->orb_->shutdown ();
-
 }
 
 bool
@@ -219,4 +200,3 @@ Notifier_i::Consumer_Data::operator== (const Consumer_Data &rhs) const
 
   return this->consumer_->_is_equivalent (rhs.consumer_.in ());
 }
-

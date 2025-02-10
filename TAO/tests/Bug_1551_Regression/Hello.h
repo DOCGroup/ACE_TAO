@@ -13,7 +13,7 @@ public:
   /// Constructor
   Hello(CORBA::ORB_ptr orb, bool simulate_crashes);
 
-  virtual void short_sleep (void);
+  virtual void short_sleep ();
 
 private:
   CORBA::ORB_var orb_;

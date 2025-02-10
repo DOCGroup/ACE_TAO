@@ -7,11 +7,22 @@
 #include "ace/OS_NS_string.h"
 #include "idl_version.h"
 
-static const char * idlVersionNames[IDL_VERSION_COUNT] = {
-  "Invalid",
-  "3",
-  "4"
-};
+namespace {
+  const char * idlVersionNames[IDL_VERSION_COUNT] = {
+    "Invalid",
+    "3",
+    "4"
+  };
+
+  /**
+   * Values for __TAO_IDL_IDL_VERSION. Should work like __TAO_IDL does.
+   */
+  const char * idl_version_macros[IDL_VERSION_COUNT] = {
+    "0x0",
+    "0x030000",
+    "0x040000"
+  };
+}
 
 IdlVersion::IdlVersion () : version_(DEFAULT_DEFAULT_IDL_VERSION)
 {
@@ -56,6 +67,11 @@ void IdlVersion::from_string (const char * version)
         }
     }
   version_ = IDL_VERSION_INVALID;
+}
+
+const char * IdlVersion::to_macro () const
+{
+  return idl_version_macros[version_];
 }
 
 IdlVersion::operator SpecificIdlVersion () const

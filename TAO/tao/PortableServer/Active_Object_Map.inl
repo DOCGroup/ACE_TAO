@@ -17,33 +17,29 @@ TAO_Active_Object_Map::bind_using_system_id_returning_system_id (
   CORBA::Short priority,
   PortableServer::ObjectId_out system_id)
 {
-  if (servant == 0 && !this->using_active_maps_)
+  if (servant == nullptr && !this->using_active_maps_)
     {
       PortableServer::ObjectId id;
 
-      int result = this->user_id_map_->create_key (id);
+      int const result = this->user_id_map_->create_key (id);
 
       if (result == 0)
         {
           ACE_NEW_RETURN (system_id,
-                          PortableServer::ObjectId (id),
+                          PortableServer::ObjectId (std::move(id)),
                           -1);
         }
 
       return result;
     }
 
-  TAO_Active_Object_Map_Entry *entry = 0;
+  TAO_Active_Object_Map_Entry *entry {};
 
-  int result =
-    this->id_assignment_strategy_->bind_using_system_id (servant,
-                                                         priority,
-                                                         entry);
+  int result = this->id_assignment_strategy_->bind_using_system_id (servant, priority, entry);
 
   if (result == 0)
     {
-      result = this->id_hint_strategy_->system_id (system_id,
-                                                   *entry);
+      result = this->id_hint_strategy_->system_id (system_id, *entry);
     }
 
   return result;
@@ -55,12 +51,9 @@ TAO_Active_Object_Map::bind_using_system_id_returning_user_id (
   CORBA::Short priority,
   PortableServer::ObjectId_out user_id)
 {
-  TAO_Active_Object_Map_Entry *entry = 0;
+  TAO_Active_Object_Map_Entry *entry {};
 
-  int result =
-    this->id_assignment_strategy_->bind_using_system_id (servant,
-                                                         priority,
-                                                         entry);
+  int const result = this->id_assignment_strategy_->bind_using_system_id (servant, priority, entry);
   if (result == 0)
     ACE_NEW_RETURN (user_id,
                     PortableServer::ObjectId (entry->user_id_),
@@ -74,11 +67,8 @@ TAO_Active_Object_Map::bind_using_user_id (
   const PortableServer::ObjectId &user_id,
   CORBA::Short priority)
 {
-  TAO_Active_Object_Map_Entry *entry = 0;
-  return this->id_uniqueness_strategy_->bind_using_user_id (servant,
-                                                            user_id,
-                                                            priority,
-                                                            entry);
+  TAO_Active_Object_Map_Entry *entry {};
+  return this->id_uniqueness_strategy_->bind_using_user_id (servant, user_id, priority, entry);
 }
 
 ACE_INLINE int
@@ -96,7 +86,7 @@ TAO_Active_Object_Map::find_system_id_using_user_id (
       return 0;
     }
 
-  TAO_Active_Object_Map_Entry *entry = 0;
+  TAO_Active_Object_Map_Entry *entry {};
   int result =
     this->id_uniqueness_strategy_->bind_using_user_id (0,
                                                        user_id,
@@ -158,7 +148,7 @@ TAO_Active_Object_Map::find_servant_using_user_id (
   const PortableServer::ObjectId &user_id,
   PortableServer::Servant &servant)
 {
-  TAO_Active_Object_Map_Entry *entry = 0;
+  TAO_Active_Object_Map_Entry *entry {};
   int result = this->user_id_map_->find (user_id, entry);
 
   if (result == 0)
@@ -167,7 +157,7 @@ TAO_Active_Object_Map::find_servant_using_user_id (
         {
           result = -1;
         }
-      else if (entry->servant_ == 0)
+      else if (entry->servant_ == nullptr)
         {
           result = -1;
         }
@@ -220,12 +210,12 @@ TAO_Active_Object_Map::find_servant_and_system_id_using_user_id (
   PortableServer::ObjectId_out system_id,
   CORBA::Short &priority)
 {
-  TAO_Active_Object_Map_Entry *entry = 0;
+  TAO_Active_Object_Map_Entry *entry {};
   int result = this->find_entry_using_user_id (user_id, entry);
 
   if (result == 0)
     {
-      if (entry->servant_ == 0)
+      if (entry->servant_ == nullptr)
         {
           result = -1;
         }
@@ -253,7 +243,7 @@ TAO_Active_Object_Map::find_user_id_using_system_id (
   if (this->id_hint_strategy_->recover_key (system_id, id) == 0)
     {
       ACE_NEW_RETURN (user_id,
-                      PortableServer::ObjectId (id),
+                      PortableServer::ObjectId (std::move(id)),
                       -1);
     }
 
@@ -275,14 +265,14 @@ TAO_Active_Object_Map::remaining_activations (PortableServer::Servant servant)
 }
 
 ACE_INLINE size_t
-TAO_Active_Object_Map::current_size (void)
+TAO_Active_Object_Map::current_size ()
 {
   return this->user_id_map_->current_size ();
 }
 
 /* static */
 ACE_INLINE size_t
-TAO_Active_Object_Map::system_id_size (void)
+TAO_Active_Object_Map::system_id_size ()
 {
   return TAO_Active_Object_Map::system_id_size_;
 }

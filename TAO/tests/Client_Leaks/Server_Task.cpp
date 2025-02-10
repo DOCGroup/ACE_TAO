@@ -9,14 +9,14 @@ Server_Task::Server_Task (CORBA::ORB_ptr orb,
 }
 
 int
-Server_Task::svc (void)
+Server_Task::svc ()
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Starting server task\n"));
   try
     {
       // run the test for at most 120 seconds...
       // ACE_Time_Value tv (120, 0);
-      this->orb_->run ( /* tv, */);
+      this->orb_->run (/* tv, */);
     }
   catch (const CORBA::Exception&)
     {

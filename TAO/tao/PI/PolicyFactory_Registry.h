@@ -39,7 +39,6 @@ class TAO_PolicyFactory_Registry
   : public TAO::PolicyFactory_Registry_Adapter
 {
 public:
-
   /**
    * The type of table that maps policy type to policy factory.
    *
@@ -51,16 +50,14 @@ public:
    */
   typedef ACE_Map_Manager<CORBA::PolicyType,
                           PortableInterceptor::PolicyFactory_ptr,
-                          ACE_Null_Mutex>
-    TABLE;
+                          ACE_Null_Mutex> TABLE;
 
 public:
-
   /// Constructor
-  TAO_PolicyFactory_Registry (void);
+  TAO_PolicyFactory_Registry ();
 
   /// Destructor.  Releases duplicated PolicyFactory references.
-  ~TAO_PolicyFactory_Registry (void);
+  ~TAO_PolicyFactory_Registry ();
 
   /// Register a PolicyFactory with the underlying PolicyFactory
   /// sequence.  This method should only be called during ORB
@@ -83,10 +80,8 @@ public:
   bool factory_exists (CORBA::PolicyType & type) const;
 
 private:
-
   /// The table that maps policy type to policy factory.
   TABLE factories_;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

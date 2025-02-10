@@ -2,7 +2,7 @@
 #include "orbsvcs/LoadBalancing/LB_ServerRequestInterceptor.h"
 #include "tao/ORB_Constants.h"
 
-ORBInitializer::ORBInitializer (void)
+ORBInitializer::ORBInitializer ()
   : load_alert_ ()
 {
 }
@@ -34,7 +34,7 @@ ORBInitializer::post_init (
 
 
 TAO_LB_LoadAlert &
-ORBInitializer::load_alert (void)
+ORBInitializer::load_alert ()
 {
   return this->load_alert_;
 }

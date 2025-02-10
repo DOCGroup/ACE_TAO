@@ -40,10 +40,10 @@ public:
   /// Use <testing_collocation> to control some client's behaviors.
   PP_Test_Client (int shutdown = 0);
 
-  ~PP_Test_Client (void);
+  ~PP_Test_Client ();
 
   /// Execute client example code.
-  int run (void);
+  int run ();
 
   /// Initialize the client communication endpoint with server.
   /// <collocation_test_ior> is used to pass in the ior file name.
@@ -54,19 +54,19 @@ private:
   int read_ior (ACE_TCHAR *filename);
 
   /// Parses the arguments passed on the command line.
-  int parse_args (void);
+  int parse_args ();
 
   /// Oneway operation test.
-  void send_oneway (void);
+  void send_oneway ();
 
   /// Twoway operation test.
-  void send_void (void);
+  void send_void ();
 
   /// This method runs only the send_void() test.
-  int run_void (void);
+  int run_void ();
 
   /// This method runs only the send_oneway() test.
-  int run_oneway (void);
+  int run_oneway ();
 
   /// Invoke the method with <do_shutdown> != 0 to shutdown the server.
   int shutdown_server (int do_shutdown);

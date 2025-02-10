@@ -41,7 +41,7 @@ public:
     TAO_EmitsDef_i (TAO_Repository_i *repo);
 
   /// Destructor
-  virtual ~TAO_EmitsDef_i (void);
+  virtual ~TAO_EmitsDef_i ();
 
   /// Return our definition kind.
   virtual CORBA::DefinitionKind def_kind ();

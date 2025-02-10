@@ -69,7 +69,7 @@ FooServantList::create_and_activate(PortableServer::POA_ptr poa)
 
 
 void
-FooServantList::client_done(void)
+FooServantList::client_done()
 {
   unsigned num_left = --this->num_clients_;
 

@@ -63,9 +63,9 @@ public:
 #endif  // ACE_USES_WCHAR
 
 private:
-  ACE_UNIMPLEMENTED_FUNC (ACE_Dynamic_Service ())
-  ACE_UNIMPLEMENTED_FUNC (ACE_Dynamic_Service (const ACE_Dynamic_Service&))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Dynamic_Service& operator= (const ACE_Dynamic_Service&))
+  ACE_Dynamic_Service () = delete;
+  ACE_Dynamic_Service (const ACE_Dynamic_Service&) = delete;
+  ACE_Dynamic_Service& operator= (const ACE_Dynamic_Service&) = delete;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
@@ -74,13 +74,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #include "ace/Dynamic_Service.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 # include "ace/Dynamic_Service.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-# pragma implementation ("Dynamic_Service.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 

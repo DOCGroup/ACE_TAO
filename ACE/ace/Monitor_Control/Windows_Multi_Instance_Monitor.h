@@ -40,13 +40,13 @@ namespace ACE
     {
     protected:
       Windows_Multi_Instance_Monitor (const ACE_TCHAR *wildcard_path);
-      virtual ~Windows_Multi_Instance_Monitor (void);
+      virtual ~Windows_Multi_Instance_Monitor ();
 
       /// Platform-specific implementation.
-      void update_i (void);
+      void update_i ();
 
       /// Platform-specific reset.
-      void clear_impl (void);
+      void clear_impl ();
 
     protected:
       double value_;

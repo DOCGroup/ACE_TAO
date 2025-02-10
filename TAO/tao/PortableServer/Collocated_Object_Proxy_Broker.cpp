@@ -50,7 +50,7 @@ namespace TAO
   Collocated_Object_Proxy_Broker::_repository_id (CORBA::Object_ptr target)
   {
     TAO_Stub *stub = target->_stubobj ();
-    char * _tao_retval = 0;
+    char * _tao_retval {};
 
     try
       {
@@ -163,7 +163,7 @@ namespace TAO
   CORBA::InterfaceDef_ptr
   Collocated_Object_Proxy_Broker::_get_interface (CORBA::Object_ptr target)
   {
-    CORBA::InterfaceDef_ptr _tao_retval = 0;
+    CORBA::InterfaceDef_ptr _tao_retval {};
 
     TAO_Stub *stub = target->_stubobj ();
 
@@ -210,13 +210,13 @@ namespace TAO
 
 // -----------------------------------------------------
 TAO::Collocated_Object_Proxy_Broker *
-the_tao_collocated_object_proxy_broker (void)
+the_tao_collocated_object_proxy_broker ()
 {
   static TAO::Collocated_Object_Proxy_Broker the_broker;
   return &the_broker;
 }
 
-TAO::Object_Proxy_Broker * _TAO_collocation_Object_Proxy_Broker_Factory (void)
+TAO::Object_Proxy_Broker * _TAO_collocation_Object_Proxy_Broker_Factory ()
 {
   return the_tao_collocated_object_proxy_broker ();
 }
@@ -233,8 +233,6 @@ _TAO_collocation_Object_Proxy_Broker_Factory_Initializer (size_t)
 static int
 _TAO_collocation_Object_Proxy_Broker_Factory_Initializer_Scarecrow =
 _TAO_collocation_Object_Proxy_Broker_Factory_Initializer (
-    reinterpret_cast<size_t> (_TAO_collocation_Object_Proxy_Broker_Factory_Initializer
-      )
-  );
+    reinterpret_cast<size_t> (_TAO_collocation_Object_Proxy_Broker_Factory_Initializer));
 
 TAO_END_VERSIONED_NAMESPACE_DECL

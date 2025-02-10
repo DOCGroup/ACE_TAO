@@ -112,7 +112,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     {
       for (int j = 0; j < num_loops; ++j)
         {
-
           // Constructor called num_loops times.
           // Each time state read from persistent store.
           Savable savable(factory);
@@ -121,7 +120,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           // written from other process is correct.
           if (savable.is_loaded_from_stream ())
             {
-
               int int_read = savable.int_get(read_index);
               // If value read is not 0 then the other
               // process has written to persistent store.

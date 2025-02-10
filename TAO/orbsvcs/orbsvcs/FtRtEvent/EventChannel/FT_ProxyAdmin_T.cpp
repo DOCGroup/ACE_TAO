@@ -38,7 +38,7 @@ FT_ProxyAdmin<EC_PROXY_ADMIN, Proxy, ProxyInterface,State>::obtain_proxy (
 template <class EC_PROXY_ADMIN, class Proxy,
           class ProxyInterface, class State>
 typename FT_ProxyAdmin<EC_PROXY_ADMIN, Proxy, ProxyInterface, State>::ProxyInterface_ptr
-FT_ProxyAdmin<EC_PROXY_ADMIN, Proxy, ProxyInterface, State>::obtain_proxy (void)
+FT_ProxyAdmin<EC_PROXY_ADMIN, Proxy, ProxyInterface, State>::obtain_proxy ()
 {
   CORBA::Any_var any = Request_Context_Repository().get_cached_result();
 

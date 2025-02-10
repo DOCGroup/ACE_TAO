@@ -7,7 +7,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO::True_RefCount_Policy::~True_RefCount_Policy (void)
+TAO::True_RefCount_Policy::~True_RefCount_Policy ()
 {
 }
 

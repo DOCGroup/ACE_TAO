@@ -12,7 +12,7 @@ LB_server::LB_server (int argc, ACE_TCHAR **argv)
 }
 
 int
-LB_server::destroy (void)
+LB_server::destroy ()
 {
   try
     {
@@ -31,35 +31,34 @@ LB_server::destroy (void)
       return -1;
     }
   return 1;
-
 }
 
 CORBA::ORB_ptr
-LB_server::orb (void)
+LB_server::orb ()
 {
   return this->orb_.in ();
 }
 
 CORBA::Object_ptr
-LB_server::get_basic_object_group (void)
+LB_server::get_basic_object_group ()
 {
   return this->basic_object_group_.in ();
 }
 
 CORBA::Object_ptr
-LB_server::get_simple_object_group (void)
+LB_server::get_simple_object_group ()
 {
   return this->simple_object_group_.in ();
 }
 
 CosLoadBalancing::LoadManager_ptr
-LB_server::load_manager (void)
+LB_server::load_manager ()
 {
   return this->lm_.in ();
 }
 
 int
-LB_server::start_orb_and_poa (void)
+LB_server::start_orb_and_poa ()
 {
   try
     {
@@ -91,7 +90,6 @@ LB_server::start_orb_and_poa (void)
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to get Load Manager Reference\n"),
                           1);
-
     }
   catch (const CORBA::Exception& ex)
     {
@@ -100,11 +98,10 @@ LB_server::start_orb_and_poa (void)
     }
 
   return 1;
-
 }
 
 int
-LB_server::create_basic_object_group (void)
+LB_server::create_basic_object_group ()
 {
   try
     {
@@ -129,7 +126,6 @@ LB_server::create_basic_object_group (void)
 
       CORBA::String_var ior =
         this->orb_->object_to_string (this->basic_object_group_.in ());
-
     }
   catch (const CORBA::Exception& ex)
     {
@@ -139,11 +135,10 @@ LB_server::create_basic_object_group (void)
     }
 
   return 1;
-
 }
 
 int
-LB_server::create_simple_object_group (void)
+LB_server::create_simple_object_group ()
 {
   try
     {
@@ -168,7 +163,6 @@ LB_server::create_simple_object_group (void)
 
       CORBA::String_var ior =
         this->orb_->object_to_string (this->simple_object_group_.in ());
-
     }
   catch (const CORBA::Exception& ex)
     {
@@ -178,11 +172,10 @@ LB_server::create_simple_object_group (void)
     }
 
   return 1;
-
 }
 
 int
-LB_server::remove_basic_member (void)
+LB_server::remove_basic_member ()
 {
   try
     {
@@ -208,7 +201,7 @@ LB_server::remove_basic_member (void)
 }
 
 int
-LB_server::remove_simple_member (void)
+LB_server::remove_simple_member ()
 {
   try
     {

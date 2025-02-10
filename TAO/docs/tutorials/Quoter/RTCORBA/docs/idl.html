@@ -98,7 +98,7 @@ a daemon that can be started and stopped by a system administrator. <P>
 interface StockNameConsumer
 {
   void push_StockName (in StockName the_stockname);
-  
+
   attribute Cookie cookie;
 };
 </PRE>
@@ -134,18 +134,18 @@ interface StockDistributor : Trigger
 {
   /// Event source operation to establish connectivity.
   Cookie subscribe_notifier (in Stock::StockNameConsumer c, in RTCORBA::Priority priority);
-  
+
   /// Event source operation to discontinue connectivity.
   Stock::StockNameConsumer unsubscribe_notifier (in Cookie ck)
-    raises (Invalid_Subscription);;
+    raises (Invalid_Subscription);
 
   /// Factory operation to return StockQuoter object reference.
   StockQuoter provide_quoter_info ()
-    raises (Invalid_Subscription);;
-  
+    raises (Invalid_Subscription);
+
   /// Shutdown the object and terminate the application.
   oneway void shutdown ();
-  
+
   /// Controls rate of updates.
   attribute long notification_rate;
 };
@@ -157,7 +157,7 @@ clients with the Stock Distributor servers. <P>
 The provide_quoter_info() factory operation returns StockQuoter object references that Stock Broker clients can
 use to get more information about a particular stock. <P>
 The shutdown() operation is a oneway operation which shuts down the object and terminates the application. <P>
-The notification_rate attribute stands for the notification frequency that the Stock Distributor servers used 
+The notification_rate attribute stands for the notification frequency that the Stock Distributor servers used
 to communicate with the Stock Broker clients. <P>
 
 <PRE>
@@ -191,7 +191,7 @@ interface StockBroker
 
   /// Gets the current quoter connection.
   StockQuoter get_connection_quoter_info ();
-  
+
   /// Shutdown the object and terminate the application.
   oneway void shutdown ();
 };
@@ -199,9 +199,9 @@ interface StockBroker
 
 This is the interface definition for Stock Broker clients. <P>
 The get_consumer_notifier() operation returns an object reference of the StockNameConsumer interface
-shown earlier. When the stock quoter system is initialized, this factory operation will be used to 
+shown earlier. When the stock quoter system is initialized, this factory operation will be used to
 return the StockNameConsumer object that belongs to the StockBroker object. <P>
-The connect_quoter_info() and disconnect_quoter_info() operations are used to connect/disconnect the StockBroker 
+The connect_quoter_info() and disconnect_quoter_info() operations are used to connect/disconnect the StockBroker
 object with the StockQuoter object that's provided by the StockDistributor interface described next. <P>
 The get_connection_quoter_info() operation is used to get the current connected StockQuoter object. <P>
 The shutdown() operation is a oneway operation which shuts down the object and terminates the application. <P>

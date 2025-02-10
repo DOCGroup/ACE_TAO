@@ -23,28 +23,28 @@ class Test_Unbounded_Struct_Sequence
 {
 public:
   /// ctor
-  Test_Unbounded_Struct_Sequence (void);
+  Test_Unbounded_Struct_Sequence ();
 
   /// dtor
-  ~Test_Unbounded_Struct_Sequence (void);
+  ~Test_Unbounded_Struct_Sequence ();
 
   /// run the SII test
   int run_sii_test (Alt_Mapping_ptr objref);
 
   /// return operation name
-  const char *opname (void) const;
+  const char *opname () const;
 
   /// set values for parameters
   int init_parameters (Alt_Mapping_ptr objref);
 
   /// reset values for CORBA
-  int reset_parameters (void);
+  int reset_parameters ();
 
   /// check if results are valid
-  CORBA::Boolean check_validity (void);
+  CORBA::Boolean check_validity ();
 
   /// print all the values
-  void print_values (void);
+  void print_values ();
 
 protected:
   /// compare

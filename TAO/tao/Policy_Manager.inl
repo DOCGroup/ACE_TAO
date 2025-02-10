@@ -2,7 +2,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
-TAO_Policy_Manager::TAO_Policy_Manager (void)
+TAO_Policy_Manager::TAO_Policy_Manager ()
   : impl_ (TAO_POLICY_ORB_SCOPE)
 {
 }

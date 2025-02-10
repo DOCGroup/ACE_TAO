@@ -18,7 +18,7 @@ TAO_EC_ProxyPushConsumer::
   : event_channel_ (ec),
     ec_refcount_ (1),
     connected_ (false),
-    filter_ (0)
+    filter_ (nullptr)
 {
   this->lock_ =
     this->event_channel_->create_consumer_lock ();
@@ -29,7 +29,7 @@ TAO_EC_ProxyPushConsumer::
   this->qos_.is_gateway = false;
 }
 
-TAO_EC_ProxyPushConsumer::~TAO_EC_ProxyPushConsumer (void)
+TAO_EC_ProxyPushConsumer::~TAO_EC_ProxyPushConsumer ()
 {
   this->event_channel_->destroy_consumer_lock (this->lock_);
   this->cleanup_i ();
@@ -46,7 +46,7 @@ TAO_EC_ProxyPushConsumer::supplier_non_existent (
         ACE_Lock, ace_mon, *this->lock_,
         CORBA::INTERNAL ());
 
-    disconnected = 0;
+    disconnected = false;
     if (!this->is_connected_i ())
       {
         disconnected = true;
@@ -121,12 +121,12 @@ TAO_EC_ProxyPushConsumer::disconnected (TAO_EC_ProxyPushConsumer*)
 }
 
 void
-TAO_EC_ProxyPushConsumer::shutdown_hook (void)
+TAO_EC_ProxyPushConsumer::shutdown_hook ()
 {
 }
 
 void
-TAO_EC_ProxyPushConsumer::shutdown (void)
+TAO_EC_ProxyPushConsumer::shutdown ()
 {
   RtecEventComm::PushSupplier_var supplier;
 
@@ -140,7 +140,7 @@ TAO_EC_ProxyPushConsumer::shutdown (void)
 
     this->shutdown_hook ();
 
-    if (this->filter_ != 0)
+    if (this->filter_ != nullptr)
       {
         this->filter_->shutdown ();
 
@@ -165,22 +165,22 @@ TAO_EC_ProxyPushConsumer::shutdown (void)
 }
 
 void
-TAO_EC_ProxyPushConsumer::cleanup_i (void)
+TAO_EC_ProxyPushConsumer::cleanup_i ()
 {
   this->supplier_ =
     RtecEventComm::PushSupplier::_nil ();
   this->connected_ = false;
 
-  if (this->filter_ != 0)
+  if (this->filter_ != nullptr)
     {
       this->filter_->unbind (this);
       this->filter_->_decr_refcnt ();
-      this->filter_ = 0;
+      this->filter_ = nullptr;
     }
 }
 
 void
-TAO_EC_ProxyPushConsumer::deactivate (void)
+TAO_EC_ProxyPushConsumer::deactivate ()
 {
   try
     {
@@ -198,21 +198,21 @@ TAO_EC_ProxyPushConsumer::deactivate (void)
 }
 
 CORBA::ULong
-TAO_EC_ProxyPushConsumer::_incr_refcnt (void)
+TAO_EC_ProxyPushConsumer::_incr_refcnt ()
 {
   ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->lock_, 0);
   return this->ec_refcount_++;
 }
 
 void
-TAO_EC_ProxyPushConsumer::refcount_zero_hook (void)
+TAO_EC_ProxyPushConsumer::refcount_zero_hook ()
 {
   // Use the event channel
   this->event_channel_->destroy_proxy (this);
 }
 
 CORBA::ULong
-TAO_EC_ProxyPushConsumer::_decr_refcnt (void)
+TAO_EC_ProxyPushConsumer::_decr_refcnt ()
 {
   {
     ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->lock_, 0);
@@ -257,7 +257,7 @@ TAO_EC_ProxyPushConsumer_Guard::
 }
 
 TAO_EC_ProxyPushConsumer_Guard::
-    ~TAO_EC_ProxyPushConsumer_Guard (void)
+    ~TAO_EC_ProxyPushConsumer_Guard ()
 {
   // This access is safe because guard objects are created on the
   // stack, only one thread has access to them

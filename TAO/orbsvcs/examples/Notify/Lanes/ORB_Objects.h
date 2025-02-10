@@ -24,7 +24,7 @@ class TAO_Notify_ORB_Objects
 {
 public:
   /// Constructor
-  TAO_Notify_ORB_Objects (void);
+  TAO_Notify_ORB_Objects ();
 
   /// Destructor
   ~TAO_Notify_ORB_Objects ();
@@ -33,7 +33,7 @@ public:
   void init (CORBA::ORB_var& orb);
 
   /// Resolve Notification
-  CosNotifyChannelAdmin::EventChannelFactory_ptr notify_factory (void);
+  CosNotifyChannelAdmin::EventChannelFactory_ptr notify_factory ();
 
   ///= Public Data
   CORBA::ORB_var orb_;

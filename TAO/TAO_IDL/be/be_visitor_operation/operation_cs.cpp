@@ -20,7 +20,7 @@ be_visitor_operation_cs::be_visitor_operation_cs (be_visitor_context *ctx)
 {
 }
 
-be_visitor_operation_cs::~be_visitor_operation_cs (void)
+be_visitor_operation_cs::~be_visitor_operation_cs ()
 {
 }
 
@@ -47,13 +47,13 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
       ? this->ctx_->attribute ()->defined_in ()
       : node->defined_in ();
 
-  be_interface *intf = be_interface::narrow_from_scope (s);
+  be_interface *intf = dynamic_cast<be_interface*> (s);
 
-  if (intf == 0)
+  if (intf == nullptr)
     {
-      be_porttype *pt = be_porttype::narrow_from_scope (s);
+      be_porttype *pt = dynamic_cast<be_porttype*> (s);
 
-      if (pt == 0)
+      if (pt == nullptr)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("be_visitor_operation_cs::")
@@ -65,7 +65,7 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
         {
           intf = this->ctx_->interface ();
 
-          if (intf == 0)
+          if (intf == nullptr)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
                                  ACE_TEXT ("be_visitor_operation_cs::")
@@ -84,11 +84,10 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
       return 0;
     }
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   // Retrieve the operation return type.
-  be_type *bt = be_type::narrow_from_decl (node->return_type ());
+  be_type *bt = dynamic_cast<be_type*> (node->return_type ());
 
   if (!bt)
     {
@@ -142,7 +141,7 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
   /// If we are in a reply handler, are not an execp_* operation,
   /// and have no native args, then generate the AMI static
   /// reply stub declaration.
-  if (intf != 0
+  if (intf != nullptr
       && intf->is_ami_rh ()
       && !node->is_excep_ami ()
       && !node->has_native ())
@@ -171,7 +170,7 @@ be_visitor_operation_cs::visit_argument (be_argument *node)
   // This method is used to generate the ParamData table entry.
 
   TAO_OutStream *os = this->ctx_->stream ();
-  be_type *bt = be_type::narrow_from_decl (node->field_type ());
+  be_type *bt = dynamic_cast<be_type*> (node->field_type ());
 
   if (!bt)
     {

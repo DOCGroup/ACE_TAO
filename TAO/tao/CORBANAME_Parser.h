@@ -39,17 +39,17 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_CORBANAME_Parser : public TAO_IOR_Parser
 {
 public:
-  /// The destructor
-  virtual ~TAO_CORBANAME_Parser (void);
+  TAO_CORBANAME_Parser () = default;
+  ~TAO_CORBANAME_Parser () override = default;
 
   // = The IOR_Parser methods, please read the documentation in
   //   IOR_Parser.h
-  virtual bool match_prefix (const char *ior_string) const;
-  virtual CORBA::Object_ptr parse_string (const char *ior,
-                                          CORBA::ORB_ptr orb);
+  bool match_prefix (const char *ior_string) const override;
+  CORBA::Object_ptr parse_string (const char *ior,
+                                  CORBA::ORB_ptr orb) override;
 
  private:
-   virtual CORBA::Object_ptr
+   CORBA::Object_ptr
    parse_string_dynamic_request_helper (CORBA::Object_ptr naming_context,
                                         ACE_CString &key_string);
 };

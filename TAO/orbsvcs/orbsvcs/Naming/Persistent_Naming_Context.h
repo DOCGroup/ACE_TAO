@@ -51,7 +51,7 @@ public:
 
   /// Destructor.  Does not deallocate the hash map: if an instance of
   /// this class goes out of scope, its hash_map remains in persistent storage.
-  virtual ~TAO_Persistent_Bindings_Map (void);
+  virtual ~TAO_Persistent_Bindings_Map ();
 
   /**
    * This method removes the hash map from persistent storage/frees up
@@ -59,18 +59,18 @@ public:
    * cleaning up the insides. (We could add <close> to clean entries,
    * but not the data inside the entries.
    */
-  void destroy (void);
+  void destroy ();
 
   // = Accessor methods.
 
   /// Get a pointer to the underlying hash map.
-  HASH_MAP *map (void);
+  HASH_MAP *map ();
 
   /// Return the size of the underlying hash table.
-  size_t total_size (void);
+  size_t total_size ();
 
   /// Return the size of the underlying hash table.
-  virtual size_t current_size (void);
+  virtual size_t current_size ();
 
   // = Name bindings manipulation methods.
 
@@ -115,7 +115,6 @@ public:
                     CosNaming::BindingType &type);
 
 protected:
-
   /**
    * Helper to the <open> method.  By isolating placement new into a
    * separate method, we can deal with memory allocation failures more
@@ -179,7 +178,7 @@ public:
                                  ACE_UINT32 *counter = 0);
 
   /// Destructor.
-  virtual ~TAO_Persistent_Naming_Context (void);
+  virtual ~TAO_Persistent_Naming_Context ();
 
   // = Utility methods.
   /**
@@ -201,7 +200,7 @@ public:
    * same naming server in which the operation was invoked.  The
    * context is not bound.
    */
-  virtual CosNaming::NamingContext_ptr new_context (void);
+  virtual CosNaming::NamingContext_ptr new_context ();
 
   /**
    * Returns at most the requested number of bindings @a how_many in
@@ -214,7 +213,6 @@ public:
                      CosNaming::BindingIterator_out &bi);
 
 protected:
-
   /**
    * Set <destroyed_> flag (inherited from TAO_Hash_Naming_Context) to
    * <level>.  Legal values for <destroyed_> are 0, 1, and 2.  The

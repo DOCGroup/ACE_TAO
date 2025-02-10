@@ -27,7 +27,6 @@ module Quoter
     // = DESCRIPTION
     //   Return the price and name of a single stock
     //
-
     typedef sequence<double> StockHistory ;
 
     readonly attribute string symbol;
@@ -39,7 +38,6 @@ module Quoter
     double price ();
     // Get the price
 
-    StockHistory history() ;
-
+    StockHistory history();
   };
 };

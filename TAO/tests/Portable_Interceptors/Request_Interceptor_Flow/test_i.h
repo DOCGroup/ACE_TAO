@@ -26,7 +26,6 @@
 class test_i : public virtual POA_Test
 {
 public:
-
   /// Constructor.
   test_i (CORBA::ORB_ptr orb);
 
@@ -38,13 +37,11 @@ public:
                             CORBA::ULongSeq_out myseq);
 
   /// Shutdown the ORB.
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
 private:
-
   /// Pseudo-reference to the ORB.
   CORBA::ORB_var orb_;
-
 };
 
 #endif  /* TEST_I_H */

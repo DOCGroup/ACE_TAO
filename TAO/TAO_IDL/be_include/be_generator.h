@@ -256,6 +256,13 @@ public:
                                          bool is_local,
                                          bool is_abstract);
 
+  virtual AST_Map *create_map (AST_Expression *v,
+                               AST_Type *kt,
+                               AST_Type *vt,
+                               UTL_ScopedName *n,
+                               bool is_local,
+                               bool is_abstract);
+
   virtual AST_String *create_string (AST_Expression *v);
 
   virtual AST_String *create_wstring (AST_Expression *v);

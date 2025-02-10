@@ -71,7 +71,7 @@ PMC_Usr::decode (char *packet, int &packet_length)
 }
 
 void
-PMC_Usr::process (void)
+PMC_Usr::process ()
 {
   Protocol_Record *prp = this->get_each_friend ();
   Drwho_Node *np  = prp->get_drwho_list ();

@@ -8,7 +8,6 @@
 class ServerApp
 {
   public:
-
     ServerApp();
     ~ServerApp();
 
@@ -16,7 +15,6 @@ class ServerApp
 
 
   private:
-
     int parse_args(int argc, ACE_TCHAR* argv[]);
     void usage_statement();
 

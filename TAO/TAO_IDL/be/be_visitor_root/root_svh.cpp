@@ -16,7 +16,7 @@ be_visitor_root_svh::be_visitor_root_svh (be_visitor_context *ctx)
 {
 }
 
-be_visitor_root_svh::~be_visitor_root_svh (void)
+be_visitor_root_svh::~be_visitor_root_svh ()
 {
 }
 
@@ -45,7 +45,7 @@ be_visitor_root_svh::visit_root (be_root *node)
 }
 
 int
-be_visitor_root_svh::init (void)
+be_visitor_root_svh::init ()
 {
   /// First open the file for writing.
   int status =

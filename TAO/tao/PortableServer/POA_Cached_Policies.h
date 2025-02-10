@@ -40,7 +40,6 @@ namespace TAO
     class TAO_PortableServer_Export Cached_Policies
     {
     public:
-
       enum PriorityModel
       {
         CLIENT_PROPAGATED,
@@ -57,40 +56,39 @@ namespace TAO
 
       Cached_Policies ();
 
-      ~Cached_Policies (void);
+      ~Cached_Policies () = default;
 
       /// Update the cached policy values.
-      void update (TAO_POA_Policy_Set &policy_set
-                  );
+      void update (TAO_POA_Policy_Set &policy_set);
 
       /**
        * @name Accessor methods to cached values.
        */
       //@{
-      ::PortableServer::ThreadPolicyValue thread (void) const;
-      ::PortableServer::LifespanPolicyValue lifespan (void) const;
-      ::PortableServer::IdUniquenessPolicyValue id_uniqueness (void) const;
-      ::PortableServer::IdAssignmentPolicyValue id_assignment (void) const;
-      ::PortableServer::ImplicitActivationPolicyValue implicit_activation (void) const;
-      ::PortableServer::ServantRetentionPolicyValue servant_retention (void) const;
-      ::PortableServer::RequestProcessingPolicyValue request_processing (void) const;
-      PriorityModel priority_model (void) const;
-      CORBA::Short server_priority (void) const;
+      ::PortableServer::ThreadPolicyValue thread () const;
+      ::PortableServer::LifespanPolicyValue lifespan () const;
+      ::PortableServer::IdUniquenessPolicyValue id_uniqueness () const;
+      ::PortableServer::IdAssignmentPolicyValue id_assignment () const;
+      ::PortableServer::ImplicitActivationPolicyValue implicit_activation () const;
+      ::PortableServer::ServantRetentionPolicyValue servant_retention () const;
+      ::PortableServer::RequestProcessingPolicyValue request_processing () const;
+      PriorityModel priority_model () const;
+      CORBA::Short server_priority () const;
 
       /// Returns the network priority model that was set using a policy
       /// by the server application.
       ///
-      NetworkPriorityModel network_priority_model (void) const;
+      NetworkPriorityModel network_priority_model () const;
 
       /// Returns the request DiffServ codepoint that was set using a policy
       /// by the server application.
       ///
-      CORBA::Long request_diffserv_codepoint (void) const;
+      CORBA::Long request_diffserv_codepoint () const;
 
       /// Returns the reply DiffServ codepoint that was set using a policy
       /// by the server application.
       ///
-      CORBA::Long reply_diffserv_codepoint (void) const;
+      CORBA::Long reply_diffserv_codepoint () const;
 
       /// Caches the network priority model that was set using a policy
       /// by the server application.
@@ -114,10 +112,8 @@ namespace TAO
       //@}
 
     protected:
-
       /// Helper method to update a particular policy.
-      void update_policy (const CORBA::Policy_ptr policy
-                         );
+      void update_policy (const CORBA::Policy_ptr policy);
 
       ::PortableServer::ThreadPolicyValue thread_;
 

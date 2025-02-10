@@ -30,14 +30,14 @@ class EC_Shutdown : public EC_Driver
 {
 public:
   /// Constructor
-  EC_Shutdown (void);
+  EC_Shutdown ();
 
   // = The EC_Driver methods
   /// Don't run the suppliers just create the EC and then destroy it.
-  void execute_test (void);
+  void execute_test ();
 
   /// Don't dump the EC_Driver results, they are meaningless.
-  void dump_results (void);
+  void dump_results ();
 
   /// One of the consumers in the test has been disconnected from the EC
   virtual void consumer_disconnect (void* consumer_cookie);

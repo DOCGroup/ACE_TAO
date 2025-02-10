@@ -6,11 +6,10 @@
  */
 //=============================================================================
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "orbsvcs/Naming/Transient_Naming_Context.h"
 #include "orbsvcs/Naming/Bindings_Iterator_T.h"
 #include "ace/OS_NS_stdio.h"
-
 
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -65,24 +64,24 @@ TAO_Transient_Bindings_Map::TAO_Transient_Bindings_Map (size_t hash_table_size)
 {
 }
 
-TAO_Transient_Bindings_Map::~TAO_Transient_Bindings_Map (void)
+TAO_Transient_Bindings_Map::~TAO_Transient_Bindings_Map ()
 {
 }
 
 TAO_Transient_Bindings_Map::HASH_MAP &
-TAO_Transient_Bindings_Map::map (void)
+TAO_Transient_Bindings_Map::map ()
 {
   return map_;
 }
 
 size_t
-TAO_Transient_Bindings_Map::current_size (void)
+TAO_Transient_Bindings_Map::current_size ()
 {
   return map_.current_size ();
 }
 
 size_t
-TAO_Transient_Bindings_Map::total_size (void)
+TAO_Transient_Bindings_Map::total_size ()
 {
   return map_.total_size ();
 }
@@ -130,7 +129,7 @@ TAO_Transient_Naming_Context::TAO_Transient_Naming_Context (PortableServer::POA_
   context_ = transient_context_;
 }
 
-TAO_Transient_Naming_Context::~TAO_Transient_Naming_Context (void)
+TAO_Transient_Naming_Context::~TAO_Transient_Naming_Context ()
 {
 }
 
@@ -148,9 +147,9 @@ TAO_Transient_Naming_Context::make_new_context (PortableServer::POA_ptr poa,
                                                   context_size),
                     CORBA::NO_MEMORY ());
 
-  // Put <context_impl> into the auto pointer temporarily, in case next
+  // Put <context_impl> into the unique pointer temporarily, in case next
   // allocation fails.
-  ACE_Auto_Basic_Ptr<TAO_Transient_Naming_Context> temp (context_impl);
+  std::unique_ptr<TAO_Transient_Naming_Context> temp (context_impl);
 
   TAO_Naming_Context *context = 0;
   ACE_NEW_THROW_EX (context,
@@ -160,7 +159,7 @@ TAO_Transient_Naming_Context::make_new_context (PortableServer::POA_ptr poa,
   // Let <implementation> know about it's <interface>.
   context_impl->interface (context);
 
-  // Release auto pointer, and start using reference counting to
+  // Release unique pointer, and start using reference counting to
   // control our servant.
   temp.release ();
   PortableServer::ServantBase_var s = context;
@@ -181,7 +180,7 @@ TAO_Transient_Naming_Context::make_new_context (PortableServer::POA_ptr poa,
 }
 
 CosNaming::NamingContext_ptr
-TAO_Transient_Naming_Context::new_context (void)
+TAO_Transient_Naming_Context::new_context ()
 {
   // Generate a POA id for the new context.
   char poa_id[BUFSIZ];
@@ -227,9 +226,9 @@ TAO_Transient_Naming_Context::list (CORBA::ULong how_many,
                     HASH_MAP::ITERATOR (transient_context_->map ()),
                     CORBA::NO_MEMORY ());
 
-  // Store <hash_iter temporarily in auto pointer, in case we'll have
+  // Store hash_iter temporarily in unique pointer, in case we'll have
   // some failures and throw an exception.
-  ACE_Auto_Basic_Ptr<HASH_MAP::ITERATOR> temp (hash_iter);
+  std::unique_ptr<HASH_MAP::ITERATOR> temp (hash_iter);
 
   // Silliness below is required because of broken old g++!!!  E.g.,
   // without it, we could have just said HASH_MAP::ITERATOR everywhere we use ITER_DEF.
@@ -279,7 +278,7 @@ TAO_Transient_Naming_Context::list (CORBA::ULong how_many,
                         ITER_SERVANT (this, hash_iter, this->poa_.in ()),
                         CORBA::NO_MEMORY ());
 
-      // Release <hash_iter> from auto pointer, and start using
+      // Release <hash_iter> from unique pointer, and start using
       // reference counting to control our servant.
       temp.release ();
       PortableServer::ServantBase_var iter = bind_iter;

@@ -51,7 +51,7 @@ public:
   ACE_Dynamic_Service_Dependency  (const ACE_Service_Gestalt *cfg,
                                    const ACE_TCHAR *principal);
   ACE_Dynamic_Service_Dependency  (const ACE_TCHAR *principal);
-  ~ACE_Dynamic_Service_Dependency (void);
+  ~ACE_Dynamic_Service_Dependency ();
 
 private:
   void init (const ACE_Service_Gestalt *cfg, const ACE_TCHAR *principal);

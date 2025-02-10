@@ -12,18 +12,18 @@ Echo_Client_Request_Interceptor (const char *id)
 {
 }
 
-Echo_Client_Request_Interceptor::~Echo_Client_Request_Interceptor (void)
+Echo_Client_Request_Interceptor::~Echo_Client_Request_Interceptor ()
 {
 }
 
 char *
-Echo_Client_Request_Interceptor::name (void)
+Echo_Client_Request_Interceptor::name ()
 {
   return CORBA::string_dup (this->myname_);
 }
 
 void
-Echo_Client_Request_Interceptor::destroy (void)
+Echo_Client_Request_Interceptor::destroy ()
 {
 }
 

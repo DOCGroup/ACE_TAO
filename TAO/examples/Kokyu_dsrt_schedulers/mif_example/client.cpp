@@ -29,7 +29,7 @@ public:
     //          int sleep_time);
   // ctor
 
-  virtual int svc (void);
+  virtual int svc ();
   // The thread entry point.
 
 private:
@@ -191,7 +191,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
           current  =
             RTScheduling::Current::_narrow (object.in ());
-
         }
 
       Worker worker1 (orb.in (), server.in (), current.in (), scheduler, 10, 15);
@@ -278,7 +277,7 @@ Worker::Worker (CORBA::ORB_ptr orb,
 }
 
 int
-Worker::svc (void)
+Worker::svc ()
 {
   const char * name = 0;
   /*

@@ -14,7 +14,7 @@
 #include "orbsvcs/Naming/Storable_Naming_Context_Factory.h"
 #include "orbsvcs/Naming/Storable.h"
 #include "tao/Storable_Factory.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -40,7 +40,6 @@ TAO_Storable_Naming_Context_Activator::incarnate (
     const PortableServer::ObjectId &oid,
     PortableServer::POA_ptr poa)
 {
-
   // Make sure complete initialization has been done
   ACE_ASSERT (persistence_factory_ != 0);
 
@@ -58,7 +57,7 @@ TAO_Storable_Naming_Context_Activator::incarnate (
   { // Does this already exist on disk?
 
     ACE_CString file_name = poa_id.in ();
-    ACE_Auto_Ptr<TAO::Storable_Base> fl (
+    std::unique_ptr<TAO::Storable_Base> fl (
        persistence_factory_->create_stream (file_name.c_str (),
                                             "rw"));
 
@@ -75,9 +74,9 @@ TAO_Storable_Naming_Context_Activator::incarnate (
                                                              poa_id.in (),
                                                              persistence_factory_);
 
-  // Put <context_impl> into the auto pointer temporarily, in case next
+  // Put <context_impl> into the unique pointer temporarily, in case next
   // allocation fails.
-  ACE_Auto_Basic_Ptr<TAO_Storable_Naming_Context> temp (context_impl);
+  std::unique_ptr<TAO_Storable_Naming_Context> temp (context_impl);
 
   TAO_Naming_Context *context = 0;
   ACE_NEW_THROW_EX (context,
@@ -87,7 +86,7 @@ TAO_Storable_Naming_Context_Activator::incarnate (
   // Let <implementation> know about it's <interface>.
   context_impl->interface (context);
 
-  // Release auto pointer, and start using reference counting to
+  // Release unique pointer, and start using reference counting to
   // control our servant.
   temp.release ();
 

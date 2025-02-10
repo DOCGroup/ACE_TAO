@@ -24,7 +24,7 @@ TAO_Log_Constraint_Interpreter::TAO_Log_Constraint_Interpreter (
     }
 }
 
-TAO_Log_Constraint_Interpreter::~TAO_Log_Constraint_Interpreter (void)
+TAO_Log_Constraint_Interpreter::~TAO_Log_Constraint_Interpreter ()
 {
 }
 

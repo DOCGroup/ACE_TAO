@@ -32,7 +32,7 @@ public:
   be_visitor_operation_tie_sh (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_operation_tie_sh (void);
+  ~be_visitor_operation_tie_sh ();
 
   /// set the right context and make a visitor
   virtual int visit_operation (be_operation *node);

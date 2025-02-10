@@ -83,7 +83,6 @@ namespace  // anonymous
     dialog->SetSizer( topsizer);
     topsizer->SetSizeHints( dialog);
   }
-
 }; // anonymous
 
 WxBindNewContext::WxBindNewContext( wxWindow* parent)

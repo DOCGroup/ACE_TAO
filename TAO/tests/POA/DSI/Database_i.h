@@ -14,15 +14,14 @@
 class DatabaseImpl
 {
 public:
-
   //typedef ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex> DATABASE_MALLOC;
   typedef ACE_Malloc<ACE_LOCAL_MEMORY_POOL, ACE_Null_Mutex> DATABASE_MALLOC;
 
   class Simpler_Database_Malloc : public DATABASE_MALLOC
   {
   public:
-    Simpler_Database_Malloc (void);
-    ~Simpler_Database_Malloc (void);
+    Simpler_Database_Malloc ();
+    ~Simpler_Database_Malloc ();
   };
 
   typedef ACE_Singleton<Simpler_Database_Malloc, ACE_Null_Mutex> DATABASE;
@@ -34,7 +33,7 @@ public:
   public:
     Entry (CORBA::ORB_ptr orb,
            PortableServer::POA_ptr poa);
-    ~Entry (void);
+    ~Entry ();
 
     virtual void invoke (CORBA::ServerRequest_ptr request);
     // The invoke() method receives requests issued to any CORBA
@@ -47,7 +46,7 @@ public:
     // a POA_ptr as input parameters and returns a valid RepositoryId
     // representing the most-derived interface for that oid.
 
-    virtual PortableServer::POA_ptr _default_POA (void);
+    virtual PortableServer::POA_ptr _default_POA ();
     // Returns the default POA for this servant.
 
     virtual void is_a (CORBA::ServerRequest_ptr request);
@@ -69,7 +68,7 @@ public:
   public:
     Agent (CORBA::ORB_ptr orb,
            PortableServer::POA_ptr poa);
-    ~Agent (void);
+    ~Agent ();
 
     virtual Database::Entry_ptr create_entry (const char *key,
                                               const char *entry_type,
@@ -81,9 +80,9 @@ public:
     virtual void destroy_entry (const char *key,
                                 const char *entry_type);
 
-    virtual void shutdown (void);
+    virtual void shutdown ();
 
-    virtual PortableServer::POA_ptr _default_POA (void);
+    virtual PortableServer::POA_ptr _default_POA ();
     // Returns the default POA for this servant.
 
   protected:
@@ -101,33 +100,27 @@ public:
   class Employee
   {
   public:
-    Employee (const char* name,
-              CORBA::Long id);
+    Employee (const char* name, CORBA::Long id);
 
-    ~Employee (void);
+    ~Employee ();
 
-    const char *name (void) const;
+    const char *name () const;
     void name (const char* name);
 
-    CORBA::Long id (void) const;
+    CORBA::Long id () const;
     void id (CORBA::Long id);
 
-#if defined (ACE_HAS_NEW_NOTHROW)
-  /// Overloaded new operator, nothrow_t variant.
-   void *operator new (size_t bytes, const ACE_nothrow_t &nt);
-#if !defined (ACE_LACKS_PLACEMENT_OPERATOR_DELETE)
-   void operator delete (void *p, const ACE_nothrow_t&) throw ();
-#endif /* ACE_LACKS_PLACEMENT_OPERATOR_DELETE */
-#endif /* ACE_HAS_NEW_NOTHROW */
-
+    /// Overloaded new operator, nothrow_t variant.
+    void *operator new (size_t bytes, const std::nothrow_t &nt);
+    void operator delete (void *p, const std::nothrow_t&) noexcept;
     void *operator new (size_t);
     void operator delete (void *pointer);
 
   private:
-    CORBA::Long id_;
     // Employee ID.
+    CORBA::Long id_;
 
-    char *name_;
     // Employee name.
+    char *name_;
   };
 };

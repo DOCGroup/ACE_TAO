@@ -114,7 +114,6 @@ recursive_typecode_test (CORBA::ORB_ptr /* orb */,
   the_any <<= test;
 
   ::perform_invocation<Test::MyAttRefSequence> (hello, the_any);
-
 }
 
 void
@@ -159,7 +158,6 @@ nested_recursive_typecode_test (CORBA::ORB_ptr /* orb */,
   the_any <<= test;
 
   ::perform_invocation<Test2::MyAttRefSeqStruct> (hello, the_any);
-
 }
 
 /**
@@ -170,7 +168,7 @@ nested_recursive_typecode_test (CORBA::ORB_ptr /* orb */,
  * Test method invocation functor.
  */
 template <typename T>
-struct Caller : public std::unary_function<T, void>
+struct Caller : public std::function<void(T)>
 {
   /// Constructor.
   Caller (CORBA::ORB_ptr o, Test::Hello_ptr h)

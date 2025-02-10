@@ -16,7 +16,7 @@ TAO_Security_Current::TAO_Security_Current (size_t tss_slot,
 {
 }
 
-TAO_Security_Current::~TAO_Security_Current (void)
+TAO_Security_Current::~TAO_Security_Current ()
 {
 }
 
@@ -50,7 +50,7 @@ TAO_Security_Current::received_credentials ()
 }
 
 int
-TAO_Security_Current::init (void)
+TAO_Security_Current::init ()
 {
   int result = 0;
 

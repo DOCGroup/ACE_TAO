@@ -44,9 +44,8 @@ class TAO_DiffServPolicy_Export TAO_Server_Network_Priority_Policy
     public ::CORBA::LocalObject
 {
 public:
-
   /// default constructor.
-  TAO_Server_Network_Priority_Policy (void);
+  TAO_Server_Network_Priority_Policy ();
 
   /// Constructor.
   TAO_Server_Network_Priority_Policy (
@@ -59,33 +58,33 @@ public:
      const TAO_Server_Network_Priority_Policy &rhs);
 
   /// Returns a copy of <this>.
-  TAO_Server_Network_Priority_Policy *clone (void) const;
+  TAO_Server_Network_Priority_Policy *clone () const;
 
-  TAO::DiffservCodepoint request_diffserv_codepoint (void);
+  TAO::DiffservCodepoint request_diffserv_codepoint ();
 
   void request_diffserv_codepoint (TAO::DiffservCodepoint req_dscp);
 
-  TAO::DiffservCodepoint reply_diffserv_codepoint (void);
+  TAO::DiffservCodepoint reply_diffserv_codepoint ();
 
   void reply_diffserv_codepoint (TAO::DiffservCodepoint reply_dscp);
 
-  TAO::NetworkPriorityModel network_priority_model (void);
+  TAO::NetworkPriorityModel network_priority_model ();
 
   void network_priority_model (TAO::NetworkPriorityModel npm);
 
   static CORBA::Policy_ptr create (const CORBA::Any &val);
 
-  CORBA::PolicyType policy_type (void);
+  CORBA::PolicyType policy_type ();
 
-  CORBA::Policy_ptr copy (void);
+  CORBA::Policy_ptr copy ();
 
-  void destroy (void);
+  void destroy ();
 
   // Return the cached policy type for this policy.
-  TAO_Cached_Policy_Type _tao_cached_type (void) const;
+  TAO_Cached_Policy_Type _tao_cached_type () const;
 
   // Returns the scope at which this policy can be applied. See orbconf.h.
-  TAO_Policy_Scope _tao_scope (void) const;
+  TAO_Policy_Scope _tao_scope () const;
 
   /// This method writes a CDR representation of the object state.
   CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr);
@@ -94,8 +93,7 @@ public:
   CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr);
 
 protected:
-
-  virtual ~TAO_Server_Network_Priority_Policy (void);
+  virtual ~TAO_Server_Network_Priority_Policy ();
 
 private:
   /// The attributes

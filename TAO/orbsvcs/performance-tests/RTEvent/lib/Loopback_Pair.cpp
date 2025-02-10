@@ -40,7 +40,7 @@ Loopback_Pair::connect (RtecEventChannelAdmin::EventChannel_ptr ec)
 }
 
 void
-Loopback_Pair::disconnect (void)
+Loopback_Pair::disconnect ()
 {
   Auto_Disconnect<Loopback_Supplier> loopback_supplier_disconnect (this->loopback_supplier_);
   Auto_Disconnect<Loopback_Consumer> loopback_consumer_disconnect (this->loopback_consumer_);

@@ -7,8 +7,6 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::TestTarget;
 
-PerlACE::check_privilege_group();
-
 my $nm_service = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
 my $nt_service = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
 my $consumer   = PerlACE::TestTarget::create_target (3) || die "Create target 3 failed\n";

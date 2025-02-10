@@ -1,4 +1,3 @@
-
 //=============================================================================
 /**
  *  @file    Task_Ex_Test.cpp
@@ -10,14 +9,11 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "Task_Ex_Test.h"
 #include "ace/Task_Ex_T.h"
 #include "ace/Log_Msg.h"
-#include "ace/Auto_Ptr.h"
-
-
+#include <memory>
 
 #if defined (ACE_HAS_THREADS)
 
@@ -40,12 +36,11 @@ public:
   //FUZZ: disable check_for_lack_ACE_OS
   /// activate/spawn the threads.
   ///FUZZ: enable check_for_lack_ACE_OS
-  int open (void*);
+  int open (void*) override;
 
   /// svc thread entry point
-  virtual int svc (void);
+  int svc () override;
 private:
-
 };
 
 int Consumer::open (void*)
@@ -67,11 +62,7 @@ int Consumer::svc ()
   while(this->getq (pMsg)!=-1)
   {
     ACE_TEST_ASSERT (pMsg!=0);
-#if defined (ACE_HAS_CPP11)
     std::unique_ptr<User_Defined_Msg> pAuto(pMsg);
-#else
-    auto_ptr<User_Defined_Msg> pAuto(pMsg);
-#endif /* ACE_HAS_CPP11 */
     ACE_DEBUG((LM_DEBUG,
                ACE_TEXT("Consumer::svc got msg id=%d\n"),
                pMsg->msg_id ()));

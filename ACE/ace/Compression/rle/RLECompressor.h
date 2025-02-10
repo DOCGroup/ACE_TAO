@@ -57,9 +57,9 @@ public:
   /**
   * Default constructor. Should use instance() to get global instance.
   */
-  ACE_RLECompressor(void);
+  ACE_RLECompressor();
 
-  virtual ~ACE_RLECompressor(void);
+  ~ACE_RLECompressor() override = default;
 
   /**
   * Compress the @a in_ptr buffer for @a in_len into the
@@ -75,10 +75,10 @@ public:
   * for the possibility that a reduced compressed length
   * is not possible.
   */
-  virtual ACE_UINT64 compress( const void *in_ptr,
-                                ACE_UINT64 in_len,
-                                void *out_ptr,
-                                ACE_UINT64 max_out_len );
+  ACE_UINT64 compress(const void *in_ptr,
+                      ACE_UINT64 in_len,
+                      void *out_ptr,
+                      ACE_UINT64 max_out_len) override;
 
   /**
   * DeCompress the @a in_ptr buffer for @a in_len into the
@@ -89,10 +89,10 @@ public:
   * otherwise the return value will indicate the resultant
   * @a out_ptr decompressed buffer length.
   */
-  virtual ACE_UINT64 decompress( const void *in_ptr,
-                                  ACE_UINT64 in_len,
-                                  void *out_ptr,
-                                  ACE_UINT64 max_out_len );
+  ACE_UINT64 decompress(const void *in_ptr,
+                        ACE_UINT64 in_len,
+                        void *out_ptr,
+                        ACE_UINT64 max_out_len) override;
 };
 
 ACE_RLECOMPRESSION_SINGLETON_DECLARE(ACE_Singleton, ACE_RLECompressor, ACE_SYNCH_MUTEX);

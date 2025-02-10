@@ -3,7 +3,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 ACE::HTBP::Session *
-ACE::HTBP::Channel::session (void) const
+ACE::HTBP::Channel::session () const
 {
   return this->session_;
 }
@@ -22,7 +22,7 @@ ACE::HTBP::Channel::session (ACE::HTBP::Session *s)
 // should not be stored.
 ACE_INLINE
 ACE::HTBP::Filter *
-ACE::HTBP::Channel::filter (void) const
+ACE::HTBP::Channel::filter () const
 {
   return this->filter_;
 }
@@ -39,42 +39,42 @@ ACE::HTBP::Channel::filter (ACE::HTBP::Filter *f)
 
 ACE_INLINE
 int
-ACE::HTBP::Channel::close_reader (void)
+ACE::HTBP::Channel::close_reader ()
 {
   return this->ace_stream_.close_reader();
 }
 
 ACE_INLINE
 int
-ACE::HTBP::Channel::close_writer (void)
+ACE::HTBP::Channel::close_writer ()
 {
   return this->ace_stream_.close_writer();
 }
 
 ACE_INLINE
 int
-ACE::HTBP::Channel::close (void)
+ACE::HTBP::Channel::close ()
 {
   return this->ace_stream_.close();
 }
 
 ACE_INLINE
 ACE::HTBP::Channel::State
-ACE::HTBP::Channel::state (void) const
+ACE::HTBP::Channel::state () const
 {
   return this->state_;
 }
 
 ACE_INLINE
 ACE_Message_Block &
-ACE::HTBP::Channel::leftovers (void)
+ACE::HTBP::Channel::leftovers ()
 {
   return this->leftovers_;
 }
 
 ACE_INLINE
 size_t
-ACE::HTBP::Channel::data_len(void) const
+ACE::HTBP::Channel::data_len() const
 {
   return this->data_len_;
 }
@@ -88,7 +88,7 @@ ACE::HTBP::Channel::data_len(size_t n)
 
 ACE_INLINE
 size_t
-ACE::HTBP::Channel::data_consumed(void) const
+ACE::HTBP::Channel::data_consumed() const
 {
   return this->data_consumed_;
 }
@@ -96,14 +96,14 @@ ACE::HTBP::Channel::data_consumed(void) const
 
 ACE_INLINE
 const ACE_SOCK_Stream&
-ACE::HTBP::Channel::ace_stream (void) const
+ACE::HTBP::Channel::ace_stream () const
 {
   return this->ace_stream_;
 }
 
 ACE_INLINE
 ACE_SOCK_Stream&
-ACE::HTBP::Channel::ace_stream (void)
+ACE::HTBP::Channel::ace_stream ()
 {
   return this->ace_stream_;
 }

@@ -54,7 +54,6 @@ run_test (Simple_Server_ptr server);
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-
   try
     {
       CORBA::ORB_var orb =

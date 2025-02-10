@@ -6,14 +6,14 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_LF_CH_Event::TAO_LF_CH_Event (void)
+TAO_LF_CH_Event::TAO_LF_CH_Event ()
   : TAO_LF_Event (),
     prev_state_ (TAO_LF_Event::LFS_IDLE)
 
 {
 }
 
-TAO_LF_CH_Event::~TAO_LF_CH_Event (void)
+TAO_LF_CH_Event::~TAO_LF_CH_Event ()
 {
 }
 
@@ -39,7 +39,7 @@ TAO_LF_CH_Event::state_changed_i (LFS_STATE new_state)
       if (TAO_debug_level > 9)
         {
           size_t id = 0;
-          TAO_Connection_Handler *ch = 0;
+          TAO_Connection_Handler *ch = nullptr;
           if ((ch = dynamic_cast<TAO_Connection_Handler *> (this))
               && ch->transport ())
             {
@@ -109,7 +109,7 @@ TAO_LF_CH_Event::validate_state_change (LFS_STATE new_state)
 }
 
 bool
-TAO_LF_CH_Event::successful_i (void) const
+TAO_LF_CH_Event::successful_i () const
 {
   if (this->prev_state_ == TAO_LF_Event::LFS_CONNECTION_WAIT)
     return this->state_ == TAO_LF_Event::LFS_SUCCESS;
@@ -118,7 +118,7 @@ TAO_LF_CH_Event::successful_i (void) const
 }
 
 bool
-TAO_LF_CH_Event::error_detected_i (void) const
+TAO_LF_CH_Event::error_detected_i () const
 {
   if (this->prev_state_ == TAO_LF_Event::LFS_CONNECTION_WAIT)
     return this->state_ == TAO_LF_Event::LFS_CONNECTION_CLOSED;
@@ -137,7 +137,7 @@ TAO_LF_CH_Event::set_state (LFS_STATE new_state)
       if (TAO_debug_level > 9)
         {
           size_t id = 0;
-          TAO_Connection_Handler *ch = 0;
+          TAO_Connection_Handler *ch = nullptr;
           if ((ch = dynamic_cast<TAO_Connection_Handler *> (this)) &&
               ch->transport ())
             {
@@ -150,7 +150,7 @@ TAO_LF_CH_Event::set_state (LFS_STATE new_state)
 }
 
 bool
-TAO_LF_CH_Event::is_state_final (void) const
+TAO_LF_CH_Event::is_state_final () const
 {
   return this->state_ == TAO_LF_Event::LFS_CONNECTION_CLOSED;
 }

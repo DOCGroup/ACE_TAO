@@ -79,24 +79,24 @@ class TAO_IDL_FE_Export UTL_String
   // =DESCRIPTION
   //  string class to store identifiers
 public:
-  UTL_String (void);
+  UTL_String ();
 
   UTL_String (const char *str, bool take_copy= false);
 
   UTL_String (UTL_String *s, bool force_copy= false);
 
-  virtual ~UTL_String (void);
+  virtual ~UTL_String ();
 
-  virtual void destroy (void);
+  virtual void destroy ();
   // Cleanup function.
 
   virtual void dump (ACE_OSTREAM_TYPE &o);
   // Dump to the ostream.
 
-  char *get_string (void) {return this->p_str;}
+  char *get_string () const {return this->p_str;}
   // Get contents of utl_string.
 
-  char *get_canonical_rep (void);
+  char *get_canonical_rep ();
   // Get canonical representation. This is (implemented as) the all upper
   // case corresponding string.
 

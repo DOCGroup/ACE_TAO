@@ -70,7 +70,7 @@ class TAO_ECG_UDP_Out_Endpoint;
 class TAO_RTEvent_Serv_Export TAO_ECG_UDP_Sender_Disconnect_Command
 {
 public:
-  TAO_ECG_UDP_Sender_Disconnect_Command (void);
+  TAO_ECG_UDP_Sender_Disconnect_Command ();
   TAO_ECG_UDP_Sender_Disconnect_Command (
               RtecEventChannelAdmin::ProxyPushSupplier_ptr proxy);
 
@@ -80,10 +80,9 @@ public:
   TAO_ECG_UDP_Sender_Disconnect_Command &
    operator= (const TAO_ECG_UDP_Sender_Disconnect_Command & rhs);
 
-  void execute (void);
+  void execute ();
 
 private:
-
   RtecEventChannelAdmin::ProxyPushSupplier_var proxy_;
 };
 
@@ -101,16 +100,14 @@ class TAO_RTEvent_Serv_Export TAO_ECG_UDP_Sender :
   public TAO_EC_Deactivated_Object
 {
 public:
-
   /// Initialization and termination methods.
   //@{
-
   /// Create a new TAO_ECG_UDP_Sender object.
   /// (Constructor access is restricted to insure that all
   /// TAO_ECG_UDP_Sender objects are heap-allocated.)
   static PortableServer::Servant_var<TAO_ECG_UDP_Sender> create (CORBA::Boolean crc = 0);
 
-  ~TAO_ECG_UDP_Sender (void);
+  ~TAO_ECG_UDP_Sender ();
 
   /**
    * @param lcl_ec Event Channel to which we will act as a consumer of events.
@@ -148,7 +145,7 @@ public:
    * Calling this method may result in decrementing of the reference
    * count (due to deactivation) and deletion of the object.
    */
-  void shutdown (void);
+  void shutdown ();
   //@}
 
   /// Accessors.
@@ -160,7 +157,7 @@ public:
    * header + 8 bytes must fit).
    */
   int mtu (CORBA::ULong mtu);
-  CORBA::ULong mtu (void) const;
+  CORBA::ULong mtu () const;
 
   /// Get the local endpoint used to send the events.
   int get_local_addr (ACE_INET_Addr& addr);
@@ -170,18 +167,16 @@ public:
   //@{
   /// Invokes shutdown (), which may result in the object being deleted, if
   /// refcounting is used to manage its lifetime.
-  virtual void disconnect_push_consumer (void);
+  virtual void disconnect_push_consumer ();
   virtual void push (const RtecEventComm::EventSet &events);
   //@}
 
 protected:
-
   /// Constructor (protected).  Clients can create new
   /// TAO_ECG_UDP_Sender objects using the static create() method.
   TAO_ECG_UDP_Sender (CORBA::Boolean crc = 0);
 
 private:
-
   /// Helpers for the connect() method.
   //@{
   // Establishes connection to the Event Channel for the first time.

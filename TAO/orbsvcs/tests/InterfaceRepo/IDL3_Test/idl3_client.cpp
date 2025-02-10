@@ -241,12 +241,12 @@ const char *HOME_FINDER_EXCEP_NAMES[][1] =
     {"whups"}
   };
 
-IDL3_Client::IDL3_Client (void)
+IDL3_Client::IDL3_Client ()
   : debug_ (false)
 {
 }
 
-IDL3_Client::~IDL3_Client (void)
+IDL3_Client::~IDL3_Client ()
 {
 }
 
@@ -285,7 +285,7 @@ IDL3_Client::init (int argc,
 }
 
 int
-IDL3_Client::run (void)
+IDL3_Client::run ()
 {
   int status = this->component_test ();
 
@@ -345,7 +345,7 @@ IDL3_Client::parse_args (int argc,
 }
 
 int
-IDL3_Client::component_test (void)
+IDL3_Client::component_test ()
 {
   CORBA::Contained_var result =
     this->repo_->lookup_id (COMPONENT_ID);
@@ -461,7 +461,7 @@ IDL3_Client::component_test (void)
 }
 
 int
-IDL3_Client::home_test (void)
+IDL3_Client::home_test ()
 {
   CORBA::Contained_var result =
     this->repo_->lookup_id (HOME_ID);

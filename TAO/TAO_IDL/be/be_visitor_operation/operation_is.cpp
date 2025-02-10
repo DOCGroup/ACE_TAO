@@ -16,7 +16,7 @@ be_visitor_operation_is::be_visitor_operation_is (be_visitor_context *ctx)
 {
 }
 
-be_visitor_operation_is::~be_visitor_operation_is (void)
+be_visitor_operation_is::~be_visitor_operation_is ()
 {
 }
 
@@ -35,7 +35,7 @@ be_visitor_operation_is::visit_operation (be_operation *node)
   this->ctx_->node (node); // save the node
 
   // STEP I: generate the return type
-  be_type *bt = be_type::narrow_from_decl (node->return_type ());
+  be_type *bt = dynamic_cast<be_type*> (node->return_type ());
 
   if (!bt)
     {
@@ -48,8 +48,7 @@ be_visitor_operation_is::visit_operation (be_operation *node)
 
   if (be_global->gen_impl_debug_info ())
     {
-      *os << "// TAO_IDL - Generated from" << be_nl
-          << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+      TAO_INSERT_COMMENT (os);
     }
 
   be_visitor_context ctx (*this->ctx_);
@@ -64,7 +63,7 @@ be_visitor_operation_is::visit_operation (be_operation *node)
                         -1);
     }
 
-  const char *classname = 0;
+  const char *classname = nullptr;
 
   if (intf)
     {

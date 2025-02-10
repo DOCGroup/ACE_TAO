@@ -1,11 +1,9 @@
-
-
 This directory contains an implementation of the MIOP specification
 for TAO.  This currently includes:
 
-        .  The UIPMC (Unreliable IP multicast) Pluggable Protocol
-        .  The PortableGroup extensions to the POA
-        .  Request dispatch hooks to TAO to dispatch based on GroupID
+. The UIPMC (Unreliable IP multicast) Pluggable Protocol
+. The PortableGroup extensions to the POA
+. Request dispatch hooks to TAO to dispatch based on GroupID
 
 For examples on how to use MIOP, see $TAO_ROOT/orbsvcs/tests/Miop.
 

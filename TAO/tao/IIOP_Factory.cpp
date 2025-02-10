@@ -12,12 +12,12 @@ static const char the_prefix[] = "iiop";
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_IIOP_Protocol_Factory::TAO_IIOP_Protocol_Factory (void)
+TAO_IIOP_Protocol_Factory::TAO_IIOP_Protocol_Factory ()
   :  TAO_Protocol_Factory (IOP::TAG_INTERNET_IOP)
 {
 }
 
-TAO_IIOP_Protocol_Factory::~TAO_IIOP_Protocol_Factory (void)
+TAO_IIOP_Protocol_Factory::~TAO_IIOP_Protocol_Factory ()
 {
 }
 
@@ -29,25 +29,25 @@ TAO_IIOP_Protocol_Factory::match_prefix (const ACE_CString &prefix)
 }
 
 const char *
-TAO_IIOP_Protocol_Factory::prefix (void) const
+TAO_IIOP_Protocol_Factory::prefix () const
 {
   return ::the_prefix;
 }
 
 char
-TAO_IIOP_Protocol_Factory::options_delimiter (void) const
+TAO_IIOP_Protocol_Factory::options_delimiter () const
 {
   return '/';
 }
 
 TAO_Acceptor *
-TAO_IIOP_Protocol_Factory::make_acceptor (void)
+TAO_IIOP_Protocol_Factory::make_acceptor ()
 {
-  TAO_Acceptor *acceptor = 0;
+  TAO_Acceptor *acceptor = nullptr;
 
   ACE_NEW_RETURN (acceptor,
                   TAO_IIOP_Acceptor,
-                  0);
+                  nullptr);
 
   return acceptor;
 }
@@ -60,18 +60,18 @@ TAO_IIOP_Protocol_Factory::init (int /* argc */,
 }
 
 TAO_Connector *
-TAO_IIOP_Protocol_Factory::make_connector (void)
+TAO_IIOP_Protocol_Factory::make_connector ()
 {
-  TAO_Connector *connector = 0;
+  TAO_Connector *connector = nullptr;
 
   ACE_NEW_RETURN (connector,
                   TAO_IIOP_Connector,
-                  0);
+                  nullptr);
   return connector;
 }
 
 int
-TAO_IIOP_Protocol_Factory::requires_explicit_endpoint (void) const
+TAO_IIOP_Protocol_Factory::requires_explicit_endpoint () const
 {
   return 0;
 }

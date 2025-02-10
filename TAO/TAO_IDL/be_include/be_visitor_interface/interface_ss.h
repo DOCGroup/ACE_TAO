@@ -27,7 +27,7 @@ class be_visitor_interface_ss : public be_visitor_interface
 {
 public:
   be_visitor_interface_ss (be_visitor_context *ctx);
-  ~be_visitor_interface_ss (void);
+  ~be_visitor_interface_ss ();
 
   virtual int visit_interface (be_interface *node);
   virtual int visit_component (be_component *node);
@@ -45,8 +45,7 @@ protected:
 
   virtual int generate_amh_classes (be_interface *node);
   virtual int generate_proxy_classes (be_interface *node);
-  virtual int generate_copy_ctor (be_interface *node,
-                                  TAO_OutStream *os);
+
   virtual ACE_CString generate_flat_name (be_interface *node);
   virtual ACE_CString generate_local_name (be_interface *node);
   virtual ACE_CString generate_full_skel_name (be_interface *node);

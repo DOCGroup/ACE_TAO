@@ -1220,7 +1220,7 @@ Thu Sep 26 11:55:05 2002  Carlos O'Ryan  <coryan@atdesk.com>
 	* tao/Connection_Handler.h:
 	* tao/Connection_Handler.inl:
 	  Remove unused IIOP-specific method.  This fixes:
-	    http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1314
+	    http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=1314
 
 Tue Sep 26 05:32:22 UTC 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -1253,7 +1253,7 @@ Wed Sep 25 17:17:49 2002  Carlos O'Ryan  <coryan@atdesk.com>
 	* orbsvcs/orbsvcs/PortableGroup/UIPMC_Connector.cpp:
 	  Do not use naked delete for reference counted objects.  This
 	  fixes:
-	    http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1313
+	    http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=1313
 
 Wed Sep 25 17:58:03 2002  Jeff Parsons <parsons@cs.wustl.edu>
 
@@ -2349,7 +2349,7 @@ Fri Sep 13 09:37:59 2002  Carlos O'Ryan  <coryan@atdesk.com>
 	  The routines affected are handle_input(), handle_output(),
 	  handle_close(), handle_close_i() and a couple others.
 	  This fixes:
-	    http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1309
+	    http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=1309
 
 	* tao/Strategies/DIOP_Acceptor.cpp:
 	  The re-factoring eliminated some default arguments for
@@ -7822,7 +7822,7 @@ Tue Jul  2 15:46:14 2002  Balachandran Natarajan  <bala@cs.wustl.edu>
 
 	This checkin is to prevent a problem that occurs unders certain
         circumstances as described in [Bug 1230]
-        http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1230
+        http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=1230
 
 	The methodology used to solve the problem is pretty much similar
         to that described in the bug report.

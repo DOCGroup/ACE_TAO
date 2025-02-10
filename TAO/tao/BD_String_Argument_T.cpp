@@ -44,7 +44,7 @@ TAO::In_BD_String_Argument_T<S_var,BOUND,Insert_Policy>::interceptor_value (
 template<typename S_var,
          size_t BOUND,
          template <typename> class Insert_Policy>
-TAO::In_BD_String_Clonable_Argument_T<S_var,BOUND,Insert_Policy>::~In_BD_String_Clonable_Argument_T (void)
+TAO::In_BD_String_Clonable_Argument_T<S_var,BOUND,Insert_Policy>::~In_BD_String_Clonable_Argument_T ()
 {
   if (this->is_clone_)
     {
@@ -58,7 +58,7 @@ template<typename S_var,
          size_t BOUND,
          template <typename> class Insert_Policy>
 TAO::Argument*
-TAO::In_BD_String_Clonable_Argument_T<S_var,BOUND,Insert_Policy>::clone (void)
+TAO::In_BD_String_Clonable_Argument_T<S_var,BOUND,Insert_Policy>::clone ()
 {
   typename S_var::s_traits::char_type * clone_x =
              new typename S_var::s_traits::char_type [BOUND];
@@ -149,8 +149,7 @@ TAO::Out_BD_String_Argument_T<S_var,BOUND,Insert_Policy>::interceptor_value (
   typedef typename S_var::s_traits::from_type from_type;
   Insert_Policy<from_type>::any_insert (
       any,
-      from_type (this->x_, BOUND)
-    );
+      from_type (this->x_, BOUND));
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */

@@ -1,0 +1,10 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@libdir@
+includedir=@includedir@
+
+Name: ACE_FOR_TAO
+Description: ADAPTIVE Communication Environment subset for use by TAO
+Version: @VERSION@
+Libs: -L${libdir} -lACE_FOR_TAO @LIBS@
+Cflags: -I${includedir}

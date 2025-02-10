@@ -10,7 +10,7 @@ public:
   MessengerHandler (CORBA::ORB_ptr orb);
 
   //Destructor
-  virtual ~MessengerHandler (void);
+  virtual ~MessengerHandler ();
 
 virtual void send_message (
     CORBA::Boolean ami_return_val,

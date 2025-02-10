@@ -14,7 +14,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void
-ACE_Read_Buffer::dump (void) const
+ACE_Read_Buffer::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Read_Buffer::dump");
@@ -41,7 +41,6 @@ ACE_Read_Buffer::ACE_Read_Buffer (FILE *fp,
     this->allocator_ = ACE_Allocator::instance ();
 }
 
-#if !defined (ACE_HAS_WINCE)
 ACE_Read_Buffer::ACE_Read_Buffer (ACE_HANDLE handle,
                                   bool close_on_delete,
                                   ACE_Allocator *alloc)
@@ -56,9 +55,8 @@ ACE_Read_Buffer::ACE_Read_Buffer (ACE_HANDLE handle,
   if (this->allocator_ == 0)
     this->allocator_ = ACE_Allocator::instance ();
 }
-#endif  // ACE_HAS_WINCE
 
-ACE_Read_Buffer::~ACE_Read_Buffer (void)
+ACE_Read_Buffer::~ACE_Read_Buffer ()
 {
   ACE_TRACE ("ACE_Read_Buffer::~ACE_Read_Buffer");
 

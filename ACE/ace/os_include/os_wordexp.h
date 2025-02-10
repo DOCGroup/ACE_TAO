@@ -24,9 +24,7 @@
 
 #include "ace/os_include/os_stddef.h" // size_t
 
-#if !defined (ACE_LACKS_WORDEXP_H)
-#  include /**/ <wordexp.h>
-#endif /* !ACE_LACKS_WORDEXP_H */
+#include /**/ <wordexp.h>
 
 #include /**/ "ace/post.h"
 #endif /* ACE_OS_INCLUDE_OS_WORDEXP_H */

@@ -1,4 +1,4 @@
-#! /usr/bin/perl
+#!/usr/bin/env perl
 sub uniqueid
 {
   if ($^O eq "MSWin32")

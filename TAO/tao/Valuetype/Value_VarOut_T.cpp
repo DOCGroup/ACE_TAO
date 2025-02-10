@@ -9,8 +9,8 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <typename T>
-TAO_Value_Var_T<T>::TAO_Value_Var_T (void)
-  : ptr_ (0)
+TAO_Value_Var_T<T>::TAO_Value_Var_T ()
+  : ptr_ (nullptr)
 {}
 
 template <typename T>
@@ -32,7 +32,7 @@ TAO_Value_Var_T<T>::TAO_Value_Var_T (const TAO_Value_Var_T<T> & p)
 }
 
 template <typename T>
-TAO_Value_Var_T<T>::~TAO_Value_Var_T (void)
+TAO_Value_Var_T<T>::~TAO_Value_Var_T ()
 {
   TAO::Value_Traits<T>::remove_ref (this->ptr_);
 }
@@ -78,28 +78,28 @@ TAO_Value_Var_T<T>::operator T *& ()
 
 template <typename T>
 T *
-TAO_Value_Var_T<T>::operator-> (void) const
+TAO_Value_Var_T<T>::operator-> () const
 {
   return this->ptr_;
 }
 
 template <typename T>
 T *
-TAO_Value_Var_T<T>::in (void) const
+TAO_Value_Var_T<T>::in () const
 {
   return this->ptr_;
 }
 
 template <typename T>
 T *&
-TAO_Value_Var_T<T>::inout (void)
+TAO_Value_Var_T<T>::inout ()
 {
   return this->ptr_;
 }
 
 template <typename T>
 T *&
-TAO_Value_Var_T<T>::out (void)
+TAO_Value_Var_T<T>::out ()
 {
   TAO::Value_Traits<T>::remove_ref (this->ptr_);
   this->ptr_ = 0;
@@ -108,7 +108,7 @@ TAO_Value_Var_T<T>::out (void)
 
 template <typename T>
 T *
-TAO_Value_Var_T<T>::_retn (void)
+TAO_Value_Var_T<T>::_retn ()
 {
   T * tmp = this->ptr_;
   this->ptr_ = 0;
@@ -117,7 +117,7 @@ TAO_Value_Var_T<T>::_retn (void)
 
 template <typename T>
 T *
-TAO_Value_Var_T<T>::ptr (void) const
+TAO_Value_Var_T<T>::ptr () const
 {
   return this->ptr_;
 }
@@ -128,7 +128,7 @@ template <typename T>
 TAO_Value_Out_T<T>::TAO_Value_Out_T (T *& p)
   : ptr_ (p)
 {
-  this->ptr_ = 0;
+  this->ptr_ = nullptr;
 }
 
 template <typename T>
@@ -136,7 +136,7 @@ TAO_Value_Out_T<T>::TAO_Value_Out_T (TAO_Value_Var_T<T> & p)
   : ptr_ (p.out ())
 {
   TAO::Value_Traits<T>::remove_ref (this->ptr_);
-  this->ptr_ = 0;
+  this->ptr_ = nullptr;
 }
 
 template <typename T>
@@ -168,14 +168,14 @@ TAO_Value_Out_T<T>::operator T *& ()
 
 template <typename T>
 T *&
-TAO_Value_Out_T<T>::ptr (void)
+TAO_Value_Out_T<T>::ptr ()
 {
   return this->ptr_;
 }
 
 template <typename T>
 T *
-TAO_Value_Out_T<T>::operator-> (void)
+TAO_Value_Out_T<T>::operator-> ()
 {
   return this->ptr_;
 }

@@ -6,11 +6,11 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_ECG_Simple_Address_Server::TAO_ECG_Simple_Address_Server (void)
+TAO_ECG_Simple_Address_Server::TAO_ECG_Simple_Address_Server ()
 {
 }
 
-TAO_ECG_Simple_Address_Server::~TAO_ECG_Simple_Address_Server (void)
+TAO_ECG_Simple_Address_Server::~TAO_ECG_Simple_Address_Server ()
 {
 }
 

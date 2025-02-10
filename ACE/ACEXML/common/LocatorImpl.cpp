@@ -6,7 +6,7 @@
 # include "ACEXML/common/LocatorImpl.inl"
 #endif /* __ACEXML_INLINE__ */
 
-ACEXML_LocatorImpl::ACEXML_LocatorImpl (void)
+ACEXML_LocatorImpl::ACEXML_LocatorImpl ()
   : publicId_ (0),
     systemId_ (0),
     lineNumber_ (1),
@@ -32,13 +32,13 @@ ACEXML_LocatorImpl::ACEXML_LocatorImpl (const ACEXML_Locator& locator)
 {
 }
 
-ACEXML_LocatorImpl::~ACEXML_LocatorImpl (void)
+ACEXML_LocatorImpl::~ACEXML_LocatorImpl ()
 {
   this->reset();
 }
 
 void
-ACEXML_LocatorImpl::reset (void)
+ACEXML_LocatorImpl::reset ()
 {
   delete[] this->publicId_;
   this->publicId_ = 0;

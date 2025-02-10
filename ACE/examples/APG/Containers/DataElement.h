@@ -32,11 +32,11 @@ public:
 
   ~DataElement () { count_--; }
 
-  int getData (void) const { return data_; }
+  int getData () const { return data_; }
 
   void setData (int val) { data_ = val; }
 
-  static int numOfActiveObjects (void) { return count_; }
+  static int numOfActiveObjects () { return count_; }
 
  private:
   int data_;

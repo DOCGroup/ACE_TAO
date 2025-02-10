@@ -1,8 +1,6 @@
 /**
  * @file Recursive_Thread_Mutex.cpp
  *
- * Originally in Synch.cpp
- *
  * @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
 
@@ -36,18 +34,18 @@ ACE_Recursive_Thread_Mutex::ACE_Recursive_Thread_Mutex (const ACE_TCHAR *name,
                  ACE_TEXT ("recursive_mutex_init")));
 }
 
-ACE_Recursive_Thread_Mutex::~ACE_Recursive_Thread_Mutex (void)
+ACE_Recursive_Thread_Mutex::~ACE_Recursive_Thread_Mutex ()
 {
   // ACE_TRACE ("ACE_Recursive_Thread_Mutex::~ACE_Recursive_Thread_Mutex");
   this->remove ();
 }
 
 int
-ACE_Recursive_Thread_Mutex::remove (void)
+ACE_Recursive_Thread_Mutex::remove ()
 {
 // ACE_TRACE ("ACE_Recursive_Thread_Mutex::remove");
   int result = 0;
-  if (this->removed_ == false)
+  if (!this->removed_)
     {
       this->removed_ = true;
       result = ACE_OS::recursive_mutex_destroy (&this->lock_);
@@ -58,7 +56,7 @@ ACE_Recursive_Thread_Mutex::remove (void)
 // The counter part of the following two functions for Win32 are
 // located in file Synch.i
 ACE_thread_t
-ACE_Recursive_Thread_Mutex::get_thread_id (void)
+ACE_Recursive_Thread_Mutex::get_thread_id ()
 {
   // ACE_TRACE ("ACE_Recursive_Thread_Mutex::get_thread_id");
 #if defined (ACE_HAS_RECURSIVE_MUTEXES)
@@ -78,10 +76,10 @@ ACE_Recursive_Thread_Mutex::get_thread_id (void)
 }
 
 int
-ACE_Recursive_Thread_Mutex::get_nesting_level (void)
+ACE_Recursive_Thread_Mutex::get_nesting_level ()
 {
   // ACE_TRACE ("ACE_Recursive_Thread_Mutex::get_nesting_level");
-#if defined (ACE_HAS_VXTHREADS) || defined (ACE_HAS_PHARLAP) || defined (ACE_HAS_WINCE)
+#if defined (ACE_HAS_VXTHREADS)
   ACE_NOTSUP_RETURN (-1);
 #elif defined (ACE_HAS_RECURSIVE_MUTEXES)
 # if defined (ACE_WIN32)
@@ -101,11 +99,11 @@ ACE_Recursive_Thread_Mutex::get_nesting_level (void)
   nesting_level = this->lock_.nesting_level_;
   ACE_OS::mutex_unlock (&this->lock_.nesting_mutex_);
   return nesting_level;
-#endif /* !ACE_HAS_WINCE */
+#endif /* ACE_HAS_VXTHREADS */
 }
 
 void
-ACE_Recursive_Thread_Mutex::dump (void) const
+ACE_Recursive_Thread_Mutex::dump () const
 {
 #if defined (ACE_HAS_DUMP)
 // ACE_TRACE ("ACE_Recursive_Thread_Mutex::dump");

@@ -14,10 +14,8 @@
 #include "tao/Storable_Base.h"
 #include "tao/Storable_Factory.h"
 #include "tao/Storable_File_Guard.h"
-
-#include "ace/Auto_Ptr.h"
-
 #include <algorithm>
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -29,7 +27,7 @@ namespace TAO
     PG_Group_List_Store_File_Guard (PG_Group_List_Store & list_store,
                                     Method_Type method_type);
 
-    ~PG_Group_List_Store_File_Guard () ACE_NOEXCEPT_FALSE;
+    ~PG_Group_List_Store_File_Guard () noexcept(false);
 
     virtual void set_object_last_changed (const time_t & time);
 
@@ -69,7 +67,7 @@ TAO::PG_Group_List_Store_File_Guard::PG_Group_List_Store_File_Guard (
     }
 }
 
-TAO::PG_Group_List_Store_File_Guard::~PG_Group_List_Store_File_Guard () ACE_NOEXCEPT_FALSE
+TAO::PG_Group_List_Store_File_Guard::~PG_Group_List_Store_File_Guard () noexcept(false)
 {
   this->release ();
   if (list_store_.lock_.release() == -1)
@@ -144,8 +142,7 @@ TAO::PG_Group_List_Store::PG_Group_List_Store (
   // version already exists.
   bool stream_exists = false;
   {
-    ACE_Auto_Ptr<TAO::Storable_Base> stream (
-      this->create_stream ("r"));
+    std::unique_ptr<TAO::Storable_Base> stream (this->create_stream ("r"));
 
     if (stream->exists ())
       stream_exists = true;
@@ -220,11 +217,11 @@ TAO::PG_Group_List_Store::read (TAO::Storable_Base & stream)
 
   stream >> this->next_group_id_;
 
-  size_t size;
+  ACE_UINT64 size;
   stream >> size;
 
   PortableGroup::ObjectGroupId group_id;
-  for (size_t i = 0; i < size; ++i)
+  for (ACE_UINT64 i = 0; i < size; ++i)
     {
       stream >> group_id;
       group_ids_.insert (group_id);
@@ -237,7 +234,7 @@ TAO::PG_Group_List_Store::write (TAO::Storable_Base & stream)
   stream.rewind ();
 
   stream << this->next_group_id_;
-  stream << group_ids_.size ();
+  stream << static_cast<ACE_UINT64> (group_ids_.size ());
   for (Group_Id_Const_Iterator it = group_ids_.begin ();
                                it != group_ids_.end (); ++it)
     {
@@ -259,8 +256,8 @@ TAO::PG_Group_List_Store::create_stream (const char * mode)
 bool
 TAO::PG_Group_List_Store::list_obsolete ()
 {
-  // TODO: Upate if obsolete flag is set based on CORBA call.
-  ACE_Auto_Ptr<TAO::Storable_Base> stream (this->create_stream ("r"));
+  // TODO: Update if obsolete flag is set based on CORBA call.
+  std::unique_ptr<TAO::Storable_Base> stream (this->create_stream ("r"));
   if (!stream->exists ())
     throw CORBA::INTERNAL ();
   if (stream->open () != 0)

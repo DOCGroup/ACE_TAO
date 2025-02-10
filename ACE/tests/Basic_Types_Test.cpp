@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #include "ace/config-all.h"
 // Don't use the ACE version accessors in class ACE, so that we can
 // support this test cleanly with the OS component, only.
@@ -31,11 +30,10 @@
 #include "ace/Basic_Types.h"
 #include "ace/OS_NS_unistd.h"
 
-typedef void* (*a_function_pointer) (void*);
+using a_function_pointer = void *(*)(void *);
 
-static
-u_int
-check (const ACE_TCHAR *message, u_int i, u_int j)
+ACE_UINT32
+check (const ACE_TCHAR* message, ACE_UINT32 i, ACE_UINT32 j)
 {
   if (i == j)
     {
@@ -48,6 +46,21 @@ check (const ACE_TCHAR *message, u_int i, u_int j)
                   message, i, j));
       return 1;
     }
+}
+
+ACE_UINT32
+check64 (const ACE_TCHAR* message, ACE_UINT64 i, ACE_UINT64 j)
+{
+  if (i == j)
+  {
+    ACE_DEBUG ((LM_DEBUG, message, j, ACE_TEXT ("\n")));
+    return 0;
+  }
+  else
+  {
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("assertion failed \"%s\": %u != %u\n"), message, i, j));
+    return 1;
+  }
 }
 
 int
@@ -96,12 +109,15 @@ run_main (int, ACE_TCHAR *[])
   errors += check (ACE_TEXT ("sizeof (ACE_INT16) is %u%s"),
                    sizeof (ACE_INT16), 2);
   errors += check (ACE_TEXT ("sizeof (ACE_UINT16) is %u%s"),
-                   sizeof (ACE_INT16), 2);
+                   sizeof (ACE_UINT16), 2);
 
   errors += check (ACE_TEXT ("sizeof (ACE_INT32) is %u%s"),
                    sizeof (ACE_INT32), 4);
   errors += check (ACE_TEXT ("sizeof (ACE_UINT32) is %u%s"),
-                   sizeof (ACE_INT32), 4);
+                   sizeof (ACE_UINT32), 4);
+
+  errors += check (ACE_TEXT ("sizeof (ACE_INT64) is %u%s"),
+                   sizeof (ACE_INT64), 8);
   errors += check (ACE_TEXT ("sizeof (ACE_UINT64) is %u%s"),
                    sizeof (ACE_UINT64), 8);
 
@@ -145,6 +161,16 @@ run_main (int, ACE_TCHAR *[])
   ++errors;
 #endif /* ACE_LITTLE_ENDIAN */
 
+  test_val = 0x0123;
+  ACE_UINT32 test_val_2 = 0x01234567;
+  ACE_UINT64 test_val_3 = 0x0123456789abcdef;
+  errors +=
+    check (ACE_TEXT ("ACE_SWAP_WORD(0x0123) is %u%s"), ACE_SWAP_WORD (test_val), 0x2301);
+  errors +=
+    check (ACE_TEXT ("ACE_SWAP_LONG(0x01234567) is %u%s"), ACE_SWAP_LONG (test_val_2), 0x67452301);
+  errors +=
+    check64 (ACE_TEXT ("ACE_SWAP_LONG_LONG(0x0123456789abcdef) is %Q%s"), ACE_SWAP_LONG_LONG (test_val_3), 0xefcdab8967452301);
+
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("OS page size: %u\n"),
               ACE_OS::getpagesize ()));
 
@@ -156,7 +182,6 @@ run_main (int, ACE_TCHAR *[])
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("clock ticks/sec = %d\n"),
               (int) ACE_OS::sysconf (_SC_CLK_TCK)));
 #endif /* _SC_CLK_TCK */
-
 
   ACE_END_TEST;
   return errors == 0  ?  0  :  1;

@@ -42,7 +42,7 @@ class TAO_Asynch_Timeout_Handler
 public:
   TAO_Asynch_Timeout_Handler (ACE_Reactor *reactor);
 
-  ~TAO_Asynch_Timeout_Handler ();
+  ~TAO_Asynch_Timeout_Handler () = default;
 
   /// Schedule a timer
   long schedule_timer (TAO_Transport_Mux_Strategy *tms,

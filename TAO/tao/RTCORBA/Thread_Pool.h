@@ -45,16 +45,14 @@ class TAO_RTCORBA_Export TAO_RT_New_Leader_Generator
   : public TAO_New_Leader_Generator
 {
 public:
-
   /// Constructor.
   TAO_RT_New_Leader_Generator (TAO_Thread_Lane &lane);
 
   /// Leader/Follower class uses this method to notify the system that
   /// we are out of leaders.
-  bool no_leaders_available (void);
+  bool no_leaders_available ();
 
 private:
-
   /// Lane associated with this leader generator.
   TAO_Thread_Lane &lane_;
 };
@@ -70,15 +68,14 @@ private:
 class TAO_Thread_Pool_Threads : public ACE_Task_Base
 {
 public:
-
   /// Constructor.
   TAO_Thread_Pool_Threads (TAO_Thread_Lane &lane);
 
   /// Method executed when a thread is spawned.
-  int svc (void);
+  int svc ();
 
   /// Accessor to the lane to which this thread belongs to.
-  TAO_Thread_Lane &lane (void) const;
+  TAO_Thread_Lane &lane () const;
 
   /// Set TSS resources for the current thread.
   static void set_tss_resources (TAO_ORB_Core &orb_core,
@@ -134,31 +131,31 @@ public:
                    ACE_Time_Value const &dynamic_thread_time);
 
   /// Destructor.
-  ~TAO_Thread_Lane (void);
+  ~TAO_Thread_Lane ();
 
   /// Open the lane.
-  void open (void);
+  void open ();
 
   /// Finalize the resources.
-  void finalize (void);
+  void finalize ();
 
   /// Shutdown the reactor.
-  void shutdown_reactor (void);
+  void shutdown_reactor ();
 
   /// Wait for threads to exit.
-  void wait (void);
+  void wait ();
 
   /// Does @a mprofile belong to us?
   int is_collocated (const TAO_MProfile &mprofile);
 
   /// Create the static threads - only called once.
-  int create_static_threads (void);
+  int create_static_threads ();
 
   /// Mark that this lane is shutting down, we then don't create any
   /// dynamic threads anymore. When the pool is shutting down the leader
   /// follower loop is called which can cause a request to create a
   /// new dynamic thread but we shouldn't create a new one.
-  void shutting_down (void);
+  void shutting_down ();
 
   /// Called by the TAO_RT_New_Leader_Generator to request a new dynamic
   /// thread.
@@ -169,32 +166,31 @@ public:
    * @retval true A new thread is created
    * @retval false No thread could be created
    */
-  bool new_dynamic_thread (void);
+  bool new_dynamic_thread ();
 
   /// @name Accessors
   // @{
-  TAO_Thread_Pool &pool (void) const;
-  CORBA::ULong id (void) const;
+  TAO_Thread_Pool &pool () const;
+  CORBA::ULong id () const;
 
-  CORBA::Short lane_priority (void) const;
-  CORBA::ULong static_threads (void) const;
-  CORBA::ULong dynamic_threads (void) const;
+  CORBA::Short lane_priority () const;
+  CORBA::ULong static_threads () const;
+  CORBA::ULong dynamic_threads () const;
 
-  CORBA::ULong current_threads (void) const;
+  CORBA::ULong current_threads () const;
 
-  CORBA::Short native_priority (void) const;
+  CORBA::Short native_priority () const;
 
-  TAO_Thread_Lane_Resources &resources (void);
+  TAO_Thread_Lane_Resources &resources ();
 
-  TAO_RT_ORBInitializer::TAO_RTCORBA_DT_LifeSpan lifespan (void) const;
+  TAO_RT_ORBInitializer::TAO_RTCORBA_DT_LifeSpan lifespan () const;
 
-  ACE_Time_Value const &dynamic_thread_time (void) const;
+  ACE_Time_Value const &dynamic_thread_time () const;
   // @}
 
 private:
-
   /// Validate lane's priority and map it to a native value.
-  void validate_and_map_priority (void);
+  void validate_and_map_priority ();
 
   int create_threads_i (TAO_Thread_Pool_Threads &thread_pool,
                         CORBA::ULong number_of_threads,
@@ -256,7 +252,6 @@ class TAO_Thread_Pool_Manager;
 class TAO_RTCORBA_Export TAO_Thread_Pool
 {
 public:
-
   /// Constructor (for pools without lanes).
   TAO_Thread_Pool (TAO_Thread_Pool_Manager &manager,
                    CORBA::ULong id,
@@ -283,50 +278,48 @@ public:
                    ACE_Time_Value const &dynamic_thread_time);
 
   /// Destructor.
-  ~TAO_Thread_Pool (void);
+  ~TAO_Thread_Pool ();
 
   /// Open the pool.
-  void open (void);
+  void open ();
 
   /// Finalize the resources.
-  void finalize (void);
+  void finalize ();
 
   /// Shutdown the reactor.
-  void shutdown_reactor (void);
+  void shutdown_reactor ();
 
   /// Wait for threads to exit.
-  void wait (void);
+  void wait ();
 
   /// Mark this thread pool that we are shutting down.
-  void shutting_down (void);
+  void shutting_down ();
 
   /// Does @a mprofile belong to us?
   int is_collocated (const TAO_MProfile &mprofile);
 
   /// Create the static threads - only called once.
-  int create_static_threads (void);
+  int create_static_threads ();
 
   /// Check if this thread pool has (explicit) lanes.
-  bool with_lanes (void) const;
+  bool with_lanes () const;
 
   /// @name Accessors
   // @{
+  TAO_Thread_Pool_Manager &manager () const;
+  CORBA::ULong id () const;
 
-  TAO_Thread_Pool_Manager &manager (void) const;
-  CORBA::ULong id (void) const;
+  CORBA::ULong stack_size () const;
+  CORBA::Boolean allow_borrowing () const;
+  CORBA::Boolean allow_request_buffering () const;
+  CORBA::ULong max_buffered_requests () const;
+  CORBA::ULong max_request_buffer_size () const;
 
-  CORBA::ULong stack_size (void) const;
-  CORBA::Boolean allow_borrowing (void) const;
-  CORBA::Boolean allow_request_buffering (void) const;
-  CORBA::ULong max_buffered_requests (void) const;
-  CORBA::ULong max_request_buffer_size (void) const;
-
-  TAO_Thread_Lane **lanes (void);
-  CORBA::ULong number_of_lanes (void) const;
+  TAO_Thread_Lane **lanes ();
+  CORBA::ULong number_of_lanes () const;
   // @}
 
 private:
-
   TAO_Thread_Pool_Manager &manager_;
   CORBA::ULong id_;
 
@@ -355,21 +348,20 @@ class TAO_ORB_Core;
 class TAO_RTCORBA_Export TAO_Thread_Pool_Manager
 {
 public:
-
   /// Constructor.
   TAO_Thread_Pool_Manager (TAO_ORB_Core &orb_core);
 
   /// Destructor.
-  ~TAO_Thread_Pool_Manager (void);
+  ~TAO_Thread_Pool_Manager ();
 
   /// Finalize the resources.
-  void finalize (void);
+  void finalize ();
 
   /// Shutdown the reactor.
-  void shutdown_reactor (void);
+  void shutdown_reactor ();
 
   /// Wait for threads to exit.
-  void wait (void);
+  void wait ();
 
   /// Does @a mprofile belong to us?
   int is_collocated (const TAO_MProfile &mprofile);
@@ -407,14 +399,12 @@ public:
 
   /// @name Accessors
   // @{
-  TAO_ORB_Core &orb_core (void) const;
+  TAO_ORB_Core &orb_core () const;
   // @}
 
 private:
-
   /// @name Helpers
   // @{
-
   RTCORBA::ThreadpoolId
   create_threadpool_i (CORBA::ULong stacksize,
                        CORBA::ULong static_threads,
@@ -441,7 +431,6 @@ private:
   // @}
 
 private:
-
   TAO_ORB_Core &orb_core_;
 
   THREAD_POOLS thread_pools_;

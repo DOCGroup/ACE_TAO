@@ -27,7 +27,7 @@ HTTP_Response::HTTP_Response (HTTP_Request &request, JAWS_IO &io)
 {
 }
 
-HTTP_Response::~HTTP_Response (void)
+HTTP_Response::~HTTP_Response ()
 {
 #if defined (ACE_JAWS_BASELINE)
   if (this->HTTP_HEADER != EMPTY_HEADER)
@@ -43,7 +43,7 @@ HTTP_Response::process_request(HTTP_Response &response)
 }
 
 void
-HTTP_Response::process_request (void)
+HTTP_Response::process_request ()
 {
   ACE_DEBUG ((LM_DEBUG, "  (%t) processing request: %s\n",
               this->request_.status_string ()));
@@ -141,7 +141,7 @@ HTTP_Response::error_response (int status_code, const char *log_message)
 }
 
 void
-HTTP_Response::normal_response (void)
+HTTP_Response::normal_response ()
 {
   const char *hv = 0;;
 
@@ -221,7 +221,7 @@ HTTP_Response::normal_response (void)
 
 
 void
-HTTP_Response::cgi_response (void)
+HTTP_Response::cgi_response ()
 {
   ACE_Process_Options cgi_options;
 
@@ -313,7 +313,7 @@ HTTP_Response::cgi_response (void)
 }
 
 void
-HTTP_Response::build_headers (void)
+HTTP_Response::build_headers ()
 {
   // At this point, we should really determine the type of request
   // this is, and build the appropriate header.

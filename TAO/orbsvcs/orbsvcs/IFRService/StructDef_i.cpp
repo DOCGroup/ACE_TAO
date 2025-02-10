@@ -3,7 +3,7 @@
 #include "orbsvcs/IFRService/Repository_i.h"
 #include "orbsvcs/IFRService/IFR_Service_Utils.h"
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/SString.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -17,18 +17,18 @@ TAO_StructDef_i::TAO_StructDef_i (TAO_Repository_i *repo)
 {
 }
 
-TAO_StructDef_i::~TAO_StructDef_i (void)
+TAO_StructDef_i::~TAO_StructDef_i ()
 {
 }
 
 CORBA::DefinitionKind
-TAO_StructDef_i::def_kind (void)
+TAO_StructDef_i::def_kind ()
 {
   return CORBA::dk_Struct;
 }
 
 void
-TAO_StructDef_i::destroy (void)
+TAO_StructDef_i::destroy ()
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -38,7 +38,7 @@ TAO_StructDef_i::destroy (void)
 }
 
 void
-TAO_StructDef_i::destroy_i (void)
+TAO_StructDef_i::destroy_i ()
 {
   // Destroy our members.
   TAO_Container_i::destroy_i ();
@@ -48,7 +48,7 @@ TAO_StructDef_i::destroy_i (void)
 }
 
 CORBA::TypeCode_ptr
-TAO_StructDef_i::type (void)
+TAO_StructDef_i::type ()
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::TypeCode::_nil ());
 
@@ -58,7 +58,7 @@ TAO_StructDef_i::type (void)
 }
 
 CORBA::TypeCode_ptr
-TAO_StructDef_i::type_i (void)
+TAO_StructDef_i::type_i ()
 {
   ACE_TString id;
   this->repo_->config ()->get_string_value (this->section_key_,
@@ -97,7 +97,7 @@ TAO_StructDef_i::type_i (void)
 }
 
 CORBA::StructMemberSeq *
-TAO_StructDef_i::members (void)
+TAO_StructDef_i::members ()
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
@@ -107,7 +107,7 @@ TAO_StructDef_i::members (void)
 }
 
 CORBA::StructMemberSeq *
-TAO_StructDef_i::members_i (void)
+TAO_StructDef_i::members_i ()
 {
   ACE_Unbounded_Queue<CORBA::DefinitionKind> kind_queue;
   ACE_Unbounded_Queue<ACE_TString> path_queue;

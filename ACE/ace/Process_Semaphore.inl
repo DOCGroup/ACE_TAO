@@ -3,7 +3,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM)
 ACE_INLINE const ACE_sema_t &
-ACE_Process_Semaphore::lock (void) const
+ACE_Process_Semaphore::lock () const
 {
 // ACE_TRACE ("ACE_Process_Semaphore::lock");
   return this->lock_.lock ();
@@ -15,7 +15,7 @@ ACE_Process_Semaphore::lock (void) const
 // other synchronization APIs.
 
 ACE_INLINE int
-ACE_Process_Semaphore::acquire_read (void)
+ACE_Process_Semaphore::acquire_read ()
 {
   return this->acquire ();
 }
@@ -25,7 +25,7 @@ ACE_Process_Semaphore::acquire_read (void)
 // other synchronization APIs.
 
 ACE_INLINE int
-ACE_Process_Semaphore::acquire_write (void)
+ACE_Process_Semaphore::acquire_write ()
 {
   return this->acquire ();
 }
@@ -35,7 +35,7 @@ ACE_Process_Semaphore::acquire_write (void)
 // interface consistent with the other synchronization APIs.
 
 ACE_INLINE int
-ACE_Process_Semaphore::tryacquire_read (void)
+ACE_Process_Semaphore::tryacquire_read ()
 {
   return this->tryacquire ();
 }
@@ -45,7 +45,7 @@ ACE_Process_Semaphore::tryacquire_read (void)
 // interface consistent with the other synchronization APIs.
 
 ACE_INLINE int
-ACE_Process_Semaphore::tryacquire_write (void)
+ACE_Process_Semaphore::tryacquire_write ()
 {
   return this->tryacquire ();
 }
@@ -55,7 +55,7 @@ ACE_Process_Semaphore::tryacquire_write (void)
 // Assumes the caller has already acquired the semaphore using one of
 // the above calls, and returns 0 (success) always.
 ACE_INLINE int
-ACE_Process_Semaphore::tryacquire_write_upgrade (void)
+ACE_Process_Semaphore::tryacquire_write_upgrade ()
 {
   return 0;
 }

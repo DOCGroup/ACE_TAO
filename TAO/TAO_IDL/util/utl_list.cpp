@@ -78,7 +78,7 @@ UTL_List::UTL_List (UTL_List *c)
 {
 }
 
-UTL_List::~UTL_List (void)
+UTL_List::~UTL_List ()
 {
 }
 
@@ -86,7 +86,7 @@ UTL_List::~UTL_List (void)
 ACE_CDR::Long
 UTL_List::list_length (ACE_CDR::Long n)
 {
-  if (this->pd_cdr_data == 0)
+  if (this->pd_cdr_data == nullptr)
     {
       return n;
     }
@@ -100,7 +100,7 @@ UTL_List::list_length (ACE_CDR::Long n)
 void
 UTL_List::nconc (UTL_List *l)
 {
-  if (this->pd_cdr_data == 0)
+  if (this->pd_cdr_data == nullptr)
     {
       this->pd_cdr_data = l;
     }
@@ -112,21 +112,21 @@ UTL_List::nconc (UTL_List *l)
 
 // Override this operation to copy lists of other types.
 UTL_List *
-UTL_List::copy (void)
+UTL_List::copy ()
 {
-  UTL_List *retval = 0;
+  UTL_List *retval = nullptr;
 
-  if (this->pd_cdr_data == 0)
+  if (this->pd_cdr_data == nullptr)
     {
       ACE_NEW_RETURN (retval,
-                      UTL_List (0),
-                      0);
+                      UTL_List (nullptr),
+                      nullptr);
     }
   else
     {
       ACE_NEW_RETURN (retval,
                       UTL_List (this->pd_cdr_data->copy ()),
-                      0);
+                      nullptr);
     }
 
   return retval;
@@ -134,7 +134,7 @@ UTL_List::copy (void)
 
 // Get next list.
 UTL_List *
-UTL_List::tail (void)
+UTL_List::tail ()
 {
   return pd_cdr_data;
 }
@@ -150,19 +150,19 @@ UTL_List::set_tail (UTL_List *l)
 
 // Compute list length.
 ACE_CDR::Long
-UTL_List::length (void)
+UTL_List::length ()
 {
   return list_length (1);
 }
 
 void
-UTL_List::destroy (void)
+UTL_List::destroy ()
 {
-  if (this->pd_cdr_data != 0)
+  if (this->pd_cdr_data != nullptr)
     {
       this->pd_cdr_data->destroy ();
       delete this->pd_cdr_data;
-      this->pd_cdr_data = 0;
+      this->pd_cdr_data = nullptr;
     }
 }
 
@@ -175,16 +175,16 @@ UTL_ListActiveIterator::UTL_ListActiveIterator (UTL_List *s)
 
 // Is iterator done?
 bool
-UTL_ListActiveIterator::is_done (void)
+UTL_ListActiveIterator::is_done ()
 {
-  return (this->source == 0) ? true : false;
+  return (this->source == nullptr) ? true : false;
 }
 
 // Advance to next item.
 void
-UTL_ListActiveIterator::next (void)
+UTL_ListActiveIterator::next ()
 {
-  if (this->source != 0)
+  if (this->source != nullptr)
     {
       this->source = this->source->tail ();
     }

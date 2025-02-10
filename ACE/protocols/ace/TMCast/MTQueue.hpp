@@ -3,11 +3,11 @@
 #ifndef TMCAST_MT_QUEUE_HPP
 #define TMCAST_MT_QUEUE_HPP
 
-#include "ace/Auto_Ptr.h"
 #include "ace/Unbounded_Set.h"
 #include "ace/Unbounded_Queue.h"
 #include "ace/os_include/sys/os_types.h"
 #include "ace/Condition_T.h"
+#include <memory>
 
 namespace ACE_TMCast
 {
@@ -154,7 +154,7 @@ namespace ACE_TMCast
     }
 
   private:
-    auto_ptr<MutexType> mutexp_;
+    std::unique_ptr<MutexType> mutexp_;
     MutexType& mutex_;
     QueueType queue_;
 

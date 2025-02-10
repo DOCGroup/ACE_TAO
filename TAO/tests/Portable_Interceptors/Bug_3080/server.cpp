@@ -78,7 +78,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_OS::fprintf (output_file, "%s", ior.in ());
       ACE_OS::fclose (output_file);
 
-      root_poa->destroy (1, 1 );
+      root_poa->destroy (true, true);
 
       orb->destroy ();
 

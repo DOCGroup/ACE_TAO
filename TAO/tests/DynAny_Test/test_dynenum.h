@@ -18,11 +18,11 @@ class Test_DynEnum
 {
 public:
   Test_DynEnum (CORBA::ORB_var orb, int debug);
-  ~Test_DynEnum (void);
+  ~Test_DynEnum ();
 
-  const char* test_name (void) const;
+  const char* test_name () const;
 
-  int run_test (void);
+  int run_test ();
 
 private:
   CORBA::ORB_var orb_;

@@ -2,15 +2,13 @@
 // ACE_Malloc class using the ACE_Shared_Memory_Pool (which uses
 // System V shared memory).  Note that it doesn't matter whether the
 // parent or the child creates the semaphore since Semaphore_Complex
-// will correctly serialize the intialization of the mutex and synch
+// will correctly serialize the initialization of the mutex and synch
 // objects.
 
 #include "ace/Malloc_T.h"
 #include "ace/Shared_Memory_Pool.h"
 #include "ace/SV_Semaphore_Complex.h"
 #include "ace/OS_NS_unistd.h"
-
-
 
 #if defined (ACE_HAS_SYSV_IPC) && !defined(ACE_LACKS_SYSV_SHMEM)
 

@@ -27,16 +27,14 @@ public:
 
   int init(RtecEventChannelAdmin::EventChannel_ptr);
 
-    virtual void  disconnect_push_supplier (
-      );
+    virtual void  disconnect_push_supplier ();
 private:
-
   class ReactorTask : public ACE_Task_Base
   {
   public:
     // ctor
     ReactorTask(ACE_Event_Handler* handler) : reactor_(0), handler_(handler){}
-    virtual int svc (void);
+    virtual int svc ();
     // The thread entry point.
 
     ACE_Reactor* reactor_;

@@ -7,11 +7,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-/*
- * Hook to specialize to add includes
- */
-//@@ REACTOR_SPL_INCLUDE_FORWARD_DECL_ADD_HOOK
-
 #include "ace/Timer_Queue_T.h"
 #include "ace/Guard_T.h"
 #include "ace/Reverse_Lock_T.h"
@@ -26,8 +21,8 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// This fudge factor can be overriden for timers that need it, such as on
-// Solaris, by defining the ACE_TIMER_SKEW symbol in the appropriate config
+// This fudge factor can be overriden for timers that need it
+// by defining the ACE_TIMER_SKEW symbol in the appropriate config
 // header.
 #if !defined (ACE_TIMER_SKEW)
 #  define ACE_TIMER_SKEW 0
@@ -36,7 +31,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 template <class TYPE, class FUNCTOR> ACE_INLINE
 ACE_Timer_Queue_Upcall_Base<TYPE, FUNCTOR>::ACE_Timer_Queue_Upcall_Base (FUNCTOR * upcall_functor)
   : ACE_Abstract_Timer_Queue<TYPE>()
-  , ACE_Copy_Disabled()
   , upcall_functor_(upcall_functor)
   , delete_upcall_functor_ (upcall_functor == 0)
 {
@@ -67,7 +61,7 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::gettimeofday()
 }
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY> void
-ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::gettimeofday (ACE_Time_Value (*gettimeofday)(void))
+ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::gettimeofday (ACE_Time_Value (*gettimeofday)())
 {
   this->time_policy_.set_gettimeofday (gettimeofday);
 }
@@ -163,7 +157,7 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::current_time()
 }
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY> void
-ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::dump (void) const
+ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Timer_Queue_T::dump");
@@ -193,7 +187,7 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::ACE_Timer_Queue_T (FUNC
 }
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY>
-ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::~ACE_Timer_Queue_T (void)
+ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::~ACE_Timer_Queue_T ()
 {
   ACE_TRACE ("ACE_Timer_Queue_T::~ACE_Timer_Queue_T");
 
@@ -203,7 +197,7 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::~ACE_Timer_Queue_T (voi
 }
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY> ACE_Timer_Node_T<TYPE> *
-ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::alloc_node (void)
+ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::alloc_node ()
 {
   return this->free_list_->remove ();
 }
@@ -215,7 +209,7 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::free_node (ACE_Timer_No
 }
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY> ACE_LOCK &
-ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::mutex (void)
+ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::mutex ()
 {
   return this->mutex_;
 }
@@ -249,7 +243,7 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::schedule (const TYPE &t
 }
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY> int
-ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::expire (void)
+ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::expire ()
 {
   // We can't check here is the timer queue is empty, in some
   // implementations (like the timer heap) calling is_empty()
@@ -291,7 +285,6 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::expire (const ACE_Time_
       this->postinvoke (info, cur_time, upcall_act);
 
       ++number_of_timers_expired;
-
     }
 
   ACE_UNUSED_ARG (result);

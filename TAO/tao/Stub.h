@@ -22,17 +22,7 @@
 
 #include "tao/MProfile.h"
 #include "tao/ORB_Core_Auto_Ptr.h"
-#if defined (ACE_HAS_CPP11)
-# include <atomic>
-#else
-# include "ace/Atomic_Op.h"
-#endif /* ACE_HAS_CPP11 */
-
-#if defined (HPUX) && defined (IOR)
-   /* HP-UX 11.11 defines IOR in /usr/include/pa/inline.h
-      and we don't want that definition.  See IOP_IORC.h. */
-# undef IOR
-#endif /* HPUX && IOR */
+#include <atomic>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -89,7 +79,7 @@ public:
 
   /// Return the queueing strategy to be used in by the transport.
   /// Selection will be based on the SyncScope policies.
-  TAO::Transport_Queueing_Strategy *transport_queueing_strategy (void);
+  TAO::Transport_Queueing_Strategy *transport_queueing_strategy ();
 
   /// All objref representations carry around a type ID.
   CORBA::String_var type_id;
@@ -114,39 +104,39 @@ public:
             TAO_ORB_Core *orb_core);
 
   // = Memory management.
-  void _incr_refcnt (void);
-  void _decr_refcnt (void);
+  void _incr_refcnt ();
+  void _decr_refcnt ();
 
   /// Return the Profile lock. This lock can be used at places where
   /// profiles need to be edited.
-  const TAO_SYNCH_MUTEX& profile_lock (void) const;
+  const TAO_SYNCH_MUTEX& profile_lock () const;
 
   /// Manage the base (non-forwarded) profiles.
   /// Returns a pointer to the profile_in_use object.  This object
   /// retains ownership of this profile.
-  TAO_Profile *profile_in_use (void);
+  TAO_Profile *profile_in_use ();
 
   /// Return the ObjectKey
-  const TAO::ObjectKey &object_key (void) const;
+  const TAO::ObjectKey &object_key () const;
 
   /**
    * Copy of the profile list, user must free memory when done.
    * although the user can call make_profiles() then reorder
    * the list and give it back to TAO_Stub.
    */
-  TAO_MProfile *make_profiles (void);
+  TAO_MProfile *make_profiles ();
 
   /// Obtain a reference to the basic profile set.
-  const TAO_MProfile& base_profiles (void) const;
+  const TAO_MProfile& base_profiles () const;
 
   /// Obtain a reference to the basic profile set.
-  TAO_MProfile& base_profiles (void);
+  TAO_MProfile& base_profiles ();
 
   /// Obtain a pointer to the forwarded profile set
-  const TAO_MProfile *forward_profiles (void) const;
+  const TAO_MProfile *forward_profiles () const;
 
   /// Obtain a pointer to the forwarded profile set
-  TAO_MProfile *forward_profiles (void);
+  TAO_MProfile *forward_profiles ();
 
   /// True if permanent location forward occurred, in this case the lock must be set and the
 
@@ -159,7 +149,7 @@ public:
    * profile_in_use_ is set to the first profile in the base_profiles
    * list.
    */
-  TAO_Profile *next_profile (void);
+  TAO_Profile *next_profile ();
 
   /**
    * THREAD SAFE
@@ -167,23 +157,23 @@ public:
    * profile and if there are anmy existing forward profiles they are
    * reset.
    */
-  void reset_profiles (void);
+  void reset_profiles ();
 
   /// Returns true if the profile in use is
   /// the same as the profile in use after
   /// reset_profiles() is called.
-  CORBA::Boolean at_starting_profile (void) const;
+  CORBA::Boolean at_starting_profile () const;
 
   /// Returns true if a forward profile has successfully been used.
   /// profile_success_ && forward_profiles_
-  CORBA::Boolean valid_forward_profile (void);
+  CORBA::Boolean valid_forward_profile ();
 
   /// NON-THREAD-SAFE.  Will set profile_success_ to true.
-  void set_valid_profile (void);
+  void set_valid_profile ();
 
   /// Returns true if a connection was successful with at least
   /// one profile.
-  CORBA::Boolean valid_profile (void) const;
+  CORBA::Boolean valid_profile () const;
 
   /// Initialize the base_profiles_ and set profile_in_use_ to
   /// reference the first profile.
@@ -198,6 +188,9 @@ public:
    * permanent_forward=true is only valid if currently used profile
    * set represents a GroupObject (IOGR), otherwise this flag will be
    * ignored.
+   *
+   * Updates the profile in use to be the first profile of
+   * the newly set forward target.
    */
   void add_forward_profiles (const TAO_MProfile &mprofiles,
                              const CORBA::Boolean permanent_forward = false);
@@ -207,22 +200,22 @@ public:
    * Used to get the next profile after the one being used has
    * failed during the initial connect or send of the message!
    */
-  CORBA::Boolean next_profile_retry (void);
+  CORBA::Boolean next_profile_retry ();
 
   /// Accessor.
-  TAO_ORB_Core* orb_core (void) const;
+  TAO_ORB_Core* orb_core () const;
 
   /// Is this stub collocated with the servant?
-  CORBA::Boolean is_collocated (void) const;
+  CORBA::Boolean is_collocated () const;
 
   /// Mutator to mark this stub as being collocated with the servant.
   void is_collocated (CORBA::Boolean);
 
   /// This returns a duplicated ORB pointer.
-  CORBA::ORB_ptr servant_orb_ptr (void);
+  CORBA::ORB_ptr servant_orb_ptr ();
 
   /// This returns the ORB var itself (generally for temporary use).
-  CORBA::ORB_var &servant_orb_var (void);
+  CORBA::ORB_var &servant_orb_var ();
 
   /**
    * Accesor and mutator for the servant ORB.  Notice that the mutator
@@ -236,7 +229,7 @@ public:
   void collocated_servant (TAO_Abstract_ServantBase* servant);
 
   /// Accessor for the servant reference in collocated cases.
-  TAO_Abstract_ServantBase* collocated_servant (void) const;
+  TAO_Abstract_ServantBase* collocated_servant () const;
 
   /// Mutator for setting the object proxy broker pointer.
   /// CORBA::Objects using this stub will use this for standard calls
@@ -246,7 +239,7 @@ public:
   /// Accessor for getting the object proxy broker pointer.
   /// CORBA::Objects using this stub use this for standard calls
   /// like is_a; get_interface; etc...
-  TAO::Object_Proxy_Broker *object_proxy_broker (void) const;
+  TAO::Object_Proxy_Broker *object_proxy_broker () const;
 
   /**
    * Create the IOP::IOR info. We will create the info at most once.
@@ -259,14 +252,14 @@ public:
    * This method is intended to be used only by the CORBA::Object
    * class.
    */
-  void destroy (void);
+  void destroy ();
 
   /// Return the cached value from the ORB_Core.
   /**
    * This flag indicates whether the stub code should make use of the
    * collocation opportunities that are available to the ORB.
    */
-  CORBA::Boolean optimize_collocation_objects (void) const;
+  CORBA::Boolean optimize_collocation_objects () const;
 
   /// Needed to avoid copying forward_profiles for thread safety
   CORBA::Boolean marshal (TAO_OutputCDR&);
@@ -275,16 +268,15 @@ public:
   bool forwarded_on_exception () const;
 
 protected:
-
   /// Destructor is to be called only through _decr_refcnt() to
   /// enforce proper reference counting.
-  virtual ~TAO_Stub (void);
+  virtual ~TAO_Stub ();
 
-  /// NON-THREAD SAFE version of reset_profiles (void);
-  void reset_profiles_i (void);
+  /// NON-THREAD SAFE version of reset_profiles ();
+  void reset_profiles_i ();
 
-  /// NON-THREAD SAFE version of next_profile (void)
-  TAO_Profile *next_profile_i (void);
+  /// NON-THREAD SAFE version of next_profile ()
+  TAO_Profile *next_profile_i ();
 
 private:
   /// Makes a copy of the profile and frees the existing profile_in_use.
@@ -297,23 +289,23 @@ private:
 
   /// NON-THREAD-SAFE.  Utility method which unrolls (removes or pops)
   /// the top most forwarding profile list.
-  void forward_back_one (void);
+  void forward_back_one ();
 
    /// NOT THREAD-SAFE.  Utility method which pops all forward profile
    /// lists and resets the forward_profiles_ pointer.
   void reset_forward ();
 
   /// NON-THREAD-SAFE.  utility method for next_profile.
-  TAO_Profile *next_forward_profile (void);
+  TAO_Profile *next_forward_profile ();
 
   /// THREAD-SAFE Create the IOR info
   int get_profile_ior_info (TAO_MProfile &profile, IOP::IOR *&ior_info);
 
 private:
-
-  // = Disallow copy construction and assignment.
-  TAO_Stub (const TAO_Stub &);
-  TAO_Stub &operator = (const TAO_Stub &);
+  TAO_Stub (const TAO_Stub &) = delete;
+  TAO_Stub (TAO_Stub &&) = delete;
+  TAO_Stub &operator = (const TAO_Stub &) = delete;
+  TAO_Stub &operator = (TAO_Stub &&) = delete;
 
 protected:
   /// Automatically manage the ORB_Core reference count
@@ -325,7 +317,6 @@ protected:
    *
    * This <B>must</B> be the first field of the class, otherwise the
    * TAO_ORB_Core is destroyed too early!
-   *
    */
   TAO_ORB_Core_Auto_Ptr orb_core_;
 
@@ -384,11 +375,7 @@ protected:
   CORBA::Boolean profile_success_;
 
   /// Reference counter.
-#if defined (ACE_HAS_CPP11)
   std::atomic<uint32_t> refcount_;
-#else
-  ACE_Atomic_Op<TAO_SYNCH_MUTEX, unsigned long> refcount_;
-#endif /* ACE_HAS_CPP11 */
 
   /// The policy overrides in this object, if nil then use the default
   /// policies.
@@ -418,34 +405,22 @@ protected:
 
   /// True if forwarding request upon some specific exceptions
   /// (e.g. OBJECT_NOT_EXIST) already happened.
-  ACE_Atomic_Op<TAO_SYNCH_MUTEX, bool> forwarded_on_exception_;
+  std::atomic<bool> forwarded_on_exception_;
 };
 
-// Define a TAO_Stub auto_ptr class.
 /**
- * @class TAO_Stub_Auto_Ptr
- *
- * @brief Implements the draft C++ standard auto_ptr abstraction.
- * This class allows one to work Stub Objects *Only*!
+ * Custom deleter to decrement the refcount when called
  */
-class TAO_Export TAO_Stub_Auto_Ptr
+struct TAO_Export TAO_Stub_Decr_Refcnt
 {
-public:
-  explicit TAO_Stub_Auto_Ptr (TAO_Stub *p = 0);
-  TAO_Stub_Auto_Ptr (TAO_Stub_Auto_Ptr &ap);
-  TAO_Stub_Auto_Ptr &operator= (TAO_Stub_Auto_Ptr &rhs);
-  ~TAO_Stub_Auto_Ptr (void);
-
-  // = Accessor methods.
-  TAO_Stub &operator *() const;
-  TAO_Stub *get (void) const;
-  TAO_Stub *release (void);
-  void reset (TAO_Stub *p = 0);
-  TAO_Stub *operator-> () const;
-
-protected:
-  TAO_Stub *p_;
+  void operator()(TAO_Stub* stub) const { if (stub) stub->_decr_refcnt(); }
 };
+
+/**
+ * TAO_Stub_Auto_Ptr will decrement the refcount when going our of scope
+ * using std::unique_ptr and a custom deleter
+ */
+using TAO_Stub_Auto_Ptr = std::unique_ptr<TAO_Stub, TAO_Stub_Decr_Refcnt>;
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

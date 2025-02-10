@@ -7,7 +7,7 @@
 
 // Listing 5 code/ch12
 int
-HA_CommandHandler::svc (void)
+HA_CommandHandler::svc ()
 {
   while(1)
     {
@@ -43,7 +43,7 @@ HA_CommandHandler::svc (void)
 
 // Listing 4 code/ch12
 ACE_Message_Block *
-Message_Receiver::shut_down_message (void)
+Message_Receiver::shut_down_message ()
 {
   ACE_Message_Block *mb = 0;
   ACE_NEW_RETURN

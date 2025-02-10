@@ -27,12 +27,6 @@ ACE_STATIC_SVC_DEFINE (TAO_UTF16_BOM_Factory,
                        0)
 ACE_FACTORY_DEFINE (TAO_Codeset, TAO_UTF16_BOM_Factory)
 
-TAO_UTF16_BOM_Factory::TAO_UTF16_BOM_Factory ()
-  : translator_ (0)
-  , forceBE_ (false)
-{
-}
-
 TAO_UTF16_BOM_Factory::~TAO_UTF16_BOM_Factory ()
 {
   delete this->translator_;

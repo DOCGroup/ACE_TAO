@@ -33,7 +33,7 @@ public:
   HA_CommandHandler (HA_Device_Repository& rep) : rep_(rep)
   { }
 
-  virtual int svc (void)
+  virtual int svc ()
   {
     ACE_DEBUG
       ((LM_DEBUG, ACE_TEXT ("(%t) Handler Thread running\n")));

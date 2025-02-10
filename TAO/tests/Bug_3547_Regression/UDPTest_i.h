@@ -10,7 +10,7 @@ public:
    UDPTest_i ();
    virtual ~UDPTest_i ();
 
-   virtual void send( const ::UDPTestI::BufferT Msg );
+   virtual void send(const ::UDPTestI::BufferT Msg);
 
    bool received_send_;
 };

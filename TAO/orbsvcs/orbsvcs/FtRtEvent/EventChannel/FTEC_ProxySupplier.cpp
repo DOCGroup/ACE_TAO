@@ -26,7 +26,6 @@ void
 TAO_FTEC_ProxyPushSupplier::activate (
        RtecEventChannelAdmin::ProxyPushSupplier_ptr &result)
 {
-
   result =
     RtecEventChannelAdmin::ProxyPushSupplier::_nil();
   try{
@@ -70,7 +69,7 @@ void TAO_FTEC_ProxyPushSupplier::connect_push_consumer (
 }
 
 
-void TAO_FTEC_ProxyPushSupplier::disconnect_push_supplier (void)
+void TAO_FTEC_ProxyPushSupplier::disconnect_push_supplier ()
 {
   if (Request_Context_Repository().is_executed_request())
     return;
@@ -88,7 +87,7 @@ void TAO_FTEC_ProxyPushSupplier::disconnect_push_supplier (void)
 }
 
 
-void TAO_FTEC_ProxyPushSupplier::suspend_connection (void)
+void TAO_FTEC_ProxyPushSupplier::suspend_connection ()
 {
   if (Request_Context_Repository().is_executed_request())
     return;
@@ -113,7 +112,7 @@ void TAO_FTEC_ProxyPushSupplier::suspend_connection (void)
   }
 }
 
-void TAO_FTEC_ProxyPushSupplier::resume_connection (void)
+void TAO_FTEC_ProxyPushSupplier::resume_connection ()
 {
   if (Request_Context_Repository().is_executed_request())
     return;

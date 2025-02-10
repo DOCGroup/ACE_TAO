@@ -3,7 +3,6 @@
 #include "ace/Get_Opt.h"
 
 
-
 const ACE_TCHAR *ior = ACE_TEXT("file://shutdown.ior");
 bool shutdown_nsmain = false;
 int test_count = 10;

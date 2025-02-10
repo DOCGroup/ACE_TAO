@@ -30,10 +30,9 @@
  */
 class RWho_DB_Manager
 {
-
 public:
-  RWho_DB_Manager (void);
-  ~RWho_DB_Manager (void);
+  RWho_DB_Manager ();
+  ~RWho_DB_Manager ();
   int get_next_user (Protocol_Record &protocol_record);
 
 private:
@@ -45,7 +44,7 @@ private:
   char original_pathname[MAXPATHLEN + 1];
   const char *rwho_dir_name;
 
-  int get_next_host (void);
+  int get_next_host ();
 };
 
 #endif /* _RWHO_DB_MANAGER_H */

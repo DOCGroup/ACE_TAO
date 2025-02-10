@@ -3,7 +3,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int
-TAO_Notify_Default_EMO_Factory::init_svc (void)
+TAO_Notify_Default_EMO_Factory::init_svc ()
 {
   // NOP.
   return 0;

@@ -32,7 +32,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * in.  This way, the least frequently used transport has the
  * smallest ordering number and will therefore be purged first.
  */
-
 class TAO_Strategies_Export TAO_LFU_Connection_Purging_Strategy:
                             public TAO_Connection_Purging_Strategy
 {

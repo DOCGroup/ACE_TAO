@@ -5,7 +5,7 @@
  *
  * ACE wrapper around access functions for the OSF's DCE codeset registry
  * access functions - the inline functions either call the system supplied
- * DCE based codeset regsitry function, or calls the emulation
+ * DCE based codeset registry function, or calls the emulation
  *
  *  @author Phil Mesnier <mesnier_p@ociweb.com>
  */

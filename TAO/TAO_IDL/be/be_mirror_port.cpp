@@ -26,12 +26,12 @@ be_mirror_port::be_mirror_port (
 {
 }
 
-be_mirror_port::~be_mirror_port (void)
+be_mirror_port::~be_mirror_port ()
 {
 }
 
 void
-be_mirror_port::destroy (void)
+be_mirror_port::destroy ()
 {
   this->AST_Mirror_Port::destroy ();
   this->be_extended_port::destroy ();
@@ -43,6 +43,3 @@ be_mirror_port::accept (be_visitor *visitor)
 {
   return visitor->visit_mirror_port (this);
 }
-
-IMPL_NARROW_FROM_DECL (be_mirror_port)
-

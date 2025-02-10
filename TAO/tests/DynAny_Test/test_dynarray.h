@@ -18,11 +18,11 @@ class Test_DynArray
 {
 public:
   Test_DynArray (CORBA::ORB_var orb, int debug);
-  ~Test_DynArray (void);
+  ~Test_DynArray ();
 
-  const char* test_name (void) const;
+  const char* test_name () const;
 
-  int run_test (void);
+  int run_test ();
 
 private:
   CORBA::ORB_var orb_;

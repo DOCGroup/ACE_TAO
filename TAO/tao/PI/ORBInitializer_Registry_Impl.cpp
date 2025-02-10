@@ -16,7 +16,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO::ORBInitializer_Registry::ORBInitializer_Registry (void)
+TAO::ORBInitializer_Registry::ORBInitializer_Registry ()
   : lock_ (),
     initializers_ ()
 {
@@ -66,7 +66,7 @@ TAO::ORBInitializer_Registry::init (int, ACE_TCHAR *[])
 }
 
 int
-TAO::ORBInitializer_Registry::fini (void)
+TAO::ORBInitializer_Registry::fini ()
 {
   ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX,
                     guard,

@@ -42,7 +42,7 @@ public:
    * we skip over entries that don't have any hosts associated with
    * them.
    */
-  virtual Protocol_Record *get_next_entry (void);
+  virtual Protocol_Record *get_next_entry ();
 };
 
 #endif /* _BS_SERVER_H */

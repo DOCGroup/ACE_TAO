@@ -2,7 +2,7 @@
 #include "Client_ORBInitializer.h"
 #include "client_interceptor.h"
 
-Client_ORBInitializer::Client_ORBInitializer (void)
+Client_ORBInitializer::Client_ORBInitializer ()
 {
 }
 

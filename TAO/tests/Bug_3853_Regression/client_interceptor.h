@@ -25,13 +25,13 @@ public:
   Echo_Client_Request_Interceptor ();
   // ctor.
 
-  virtual ~Echo_Client_Request_Interceptor ();
+  virtual ~Echo_Client_Request_Interceptor () = default;
   // dtor.
 
-  virtual char * name (void);
+  virtual char * name ();
   // Canonical name of the interceptor.
 
-  virtual void destroy (void);
+  virtual void destroy ();
 
   virtual void send_poll (PortableInterceptor::ClientRequestInfo_ptr);
 

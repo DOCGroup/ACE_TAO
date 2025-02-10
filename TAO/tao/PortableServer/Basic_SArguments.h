@@ -36,10 +36,8 @@ namespace TAO
   class TAO_PortableServer_Export SArg_Traits<void>
   {
   public:
-
     typedef void        ret_type;
     typedef RetArgument ret_val;
-
   };
 
   /**

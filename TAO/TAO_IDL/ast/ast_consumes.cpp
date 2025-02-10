@@ -16,12 +16,12 @@ AST_Consumes::AST_Consumes (UTL_ScopedName *n,
 {
 }
 
-AST_Consumes::~AST_Consumes (void)
+AST_Consumes::~AST_Consumes ()
 {
 }
 
 AST_Type *
-AST_Consumes::consumes_type (void) const
+AST_Consumes::consumes_type () const
 {
   return this->field_type ();
 }
@@ -40,9 +40,7 @@ AST_Consumes::ast_accept (ast_visitor *visitor)
 }
 
 void
-AST_Consumes::destroy (void)
+AST_Consumes::destroy ()
 {
   this->AST_Field::destroy ();
 }
-
-IMPL_NARROW_FROM_DECL(AST_Consumes)

@@ -30,8 +30,8 @@ public:
   virtual void operator() (int which_signal) = 0;
 
 protected:
-  Shutdown_Functor (void) {}
-  virtual ~Shutdown_Functor (void) {}
+  Shutdown_Functor () {}
+  virtual ~Shutdown_Functor () {}
 };
 
 /**

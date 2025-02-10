@@ -17,7 +17,7 @@
 
 
 ACE_Reactor *
-My_Resource_Factory::get_reactor (void)
+My_Resource_Factory::get_reactor ()
 {
 #if defined (ACE_HAS_THREADS)
   // Use whatever the default is if we've got threads.
@@ -31,7 +31,7 @@ My_Resource_Factory::get_reactor (void)
 ACE_FACTORY_DEFINE (Alt_Resource_Factory, My_Resource_Factory)
 
 int
-DLL_ORB::svc (void)
+DLL_ORB::svc ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("\n\tRunning ORB event loop (%t)\n\n")));
@@ -111,7 +111,7 @@ DLL_ORB::init (int argc, ACE_TCHAR *argv[])
 }
 
 int
-DLL_ORB::fini (void)
+DLL_ORB::fini ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("\n\tFinalizing the service (%t)\n\n")));
@@ -119,7 +119,7 @@ DLL_ORB::fini (void)
   // return 0;
 }
 
-Time_Date_Servant::Time_Date_Servant (void)
+Time_Date_Servant::Time_Date_Servant ()
   : servant_ (0)
   , ior_output_file_ (0)
   , orb_ ("")

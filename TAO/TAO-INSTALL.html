@@ -31,7 +31,7 @@ to run TAO on:<P>
 <table width="100%" border=1>
   <tr valign=top>
     <td><b>Fully supported, i.e., continually tested and used daily</b></td>
-    <td>Windows (Microsoft Visual C++ 7.1, 9.0, 10.0, 11.0, 12, 14.0, 14.1, and 14.2),
+    <td>Windows (Microsoft Visual Studio 2015, 2017, and 2019),
         Linux/Intel (Redhat, Debian, and SuSe), Android
     </td>
   </tr>
@@ -42,7 +42,7 @@ to run TAO on:<P>
   </tr>
   <tr valign=top>
     <td><b>Partially supported, i.e., infrequently tested</b></td>
-    <td>Solaris 9, FreeBSD, NetBSD, Windows CE, MacOSX, Linux/Alpha (RedHat, SuSE, and Debian), and AIX 5.x
+    <td>FreeBSD, NetBSD, MacOSX, Linux/Alpha (RedHat, SuSE, and Debian)
     </td>
   </tr>
   <tr valign=top bgcolor="#AFAFAF">
@@ -53,7 +53,7 @@ to run TAO on:<P>
     <td><b>Formerly Supported Platforms</b></td>
     <td> Embarcadero C++ Builder, Sun/C++ 5.1 through 5.4, g++
          prior to 2.95.x, HP/UX 10.x, pSoS, Chorus, DEC UNIX, SCO, UnixWare, MVS,
-         Windows 9x/ME, Chorus, Tandem NS, OpenVMS 8.3 IA64
+         Windows 9x/ME, Chorus, Tandem NS, OpenVMS 8.3 IA64, Windows CE, Solaris 9, AIX
     </td>
   </tr>
 </table>
@@ -62,18 +62,16 @@ to run TAO on:<P>
 TAO.  If you have <A
 HREF="../docs/ACE-porting.html">porting
 questions</A> or have a problem compiling the TAO along with ACE
-wrappers on the platforms shown above please send email to the <A
-HREF="http://www.dre.vanderbilt.edu/~schmidt/TAO-mail.html">TAO mailing list</A> and we'll
-try to help you fix the problems.  You can also submit issues and
-enhancement requests through
-<a href="https://github.com/DOCGroup/ACE_TAO">github</a>.<P>
+wrappers on the platforms shown above please open a github <A
+HREF="https://github.com/DOCGroup/ACE_TAO">issue or discussion</A> and we'll
+try to help you fix the problems.<P>
 
 TAO can be obtained <A
-HREF="http://download.dre.vanderbilt.edu">electronically</A>
+HREF="https://download.dre.vanderbilt.edu">electronically</A>
 via the WWW and ftp.  <A
-HREF="http://www.dre.vanderbilt.edu/TAO">TAO</A> is bundled
+HREF="https://www.dre.vanderbilt.edu/TAO">TAO</A> is bundled
 with the <A
-HREF="http://www.dre.vanderbilt.edu/ACE"> ACE </A> release.  You'll
+HREF="https://www.dre.vanderbilt.edu/ACE"> ACE </A> release.  You'll
 always need the most recent version of ACE because TAO tracks and
 influences changes to ACE.  Always use the ACE+TAO release
 bundle as a single piece instead of trying to mix and match things up.<P>
@@ -148,8 +146,8 @@ bundle as a single piece instead of trying to mix and match things up.<P>
           <LI>Run MPC like this, $ACE_ROOT/bin/mwc.pl TAO_ACE.mwc -type gnuace </LI>
           <LI>Run
           'make'.</LI> </OL></P><P> This will create all the required libraries for TAO
-          and TAO orbsvcs. In step 6, use -type vc71 if you want to
-          generate VC71 project and workspace files for Win32. Please
+          and TAO orbsvcs. In step 6, use -type vs2019 if you want to
+          generate Visual Studio 2019 project and workspace files for Win32. Please
           see <A href="../MPC/docs/USAGE"> MPC USAGE </A> document for
           details on how to generate build files for other compilers
           and tools.</P>
@@ -390,7 +388,7 @@ Make sure that you first build <code>$TAO_ROOT\TAO_IDL</code> and then <code>
 $TAO_ROOT\tao</code> because in order to compile the core TAO libraries
 you need to have <code>TAO_IDL</code> compiled.
 
-<H4>Visual C++ 7.1 and newer</H4>
+<H4>Visual Studio 2015 and newer</H4>
 
 <P>It works best if TAO is placed in ACE_wrappers so TAO ends up in
 <CODE>ACE_wrappers\TAO</CODE> because the Visual Studio Project files
@@ -402,7 +400,7 @@ href="../bin/MakeProjectCreator/config/acedefaults.mpb"> this base
 project </a> file.</P>
 
 <OL>
-  <LI>Make sure ACE is built (For Visual C++ 7.1, use ACE.sln). <P>
+  <LI>Make sure ACE is built (For Visual Studio 2015, use ACE.sln). <P>
 
   <LI>First make sure <CODE>ACE_wrappers\bin</CODE> is listed in the Executable
       Directories in Tools|Options.  This is needed if using the TAO_IDL
@@ -534,7 +532,7 @@ quickly.
   <LI>Please make sure that you have <a href="http://www.perl.org">
   perl</a> installed, preferably perl
    5.8 or higher. Users on Win32 based platforms are recommended to use
-  <a href="http://www.activestate.com/Products/ActivePerl/"> Active
+  <a href="https://www.activestate.com/products/perl"> Active
   State Perl </a>. We use active state perl without problems. We have
   ran into problems trying to use the cygwin version of perl on Win32
   based platforms.</LI><p/>
@@ -564,7 +562,7 @@ quickly.
    <CODE>-type bmake</CODE> for Borland C++ make files.</LI><p/>
    <LI> Build ACE+TAO together in one shot. To do that please issue
   the following commands: <p>
-  <CODE> $ACE_ROOT/bin/mwc.pl TAO_ACE.mwc </CODE> <p>
+  <CODE> $ACE_ROOT/bin/mwc.pl TAO_ACE.mwc -type gnuace </CODE> <p>
    from <CODE>$TAO_ROOT</CODE>. This will generate GNUmakefiles for
   ACE, gperf, and core ACE+TAO libraries. Issuing a
   <CODE>'make'</CODE> from <CODE>$TAO_ROOT </CODE> will build all of
@@ -580,7 +578,7 @@ quickly.
 
 
 <HR><P>
-Back to the <A HREF="http://www.dre.vanderbilt.edu/~schmidt/TAO.html">TAO</A> home page.
+Back to the <A HREF="https://www.dre.vanderbilt.edu/~schmidt/TAO.html">TAO</A> home page.
 
 <!--#include virtual="/~schmidt/cgi-sig.html" -->
 </BODY>

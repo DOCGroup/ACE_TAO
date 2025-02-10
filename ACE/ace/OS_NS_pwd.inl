@@ -6,7 +6,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 // Accessors to PWD file.
 
 ACE_INLINE void
-ACE_OS::endpwent (void)
+ACE_OS::endpwent ()
 {
 #if !defined (ACE_LACKS_PWD_FUNCTIONS)
   ::endpwent ();
@@ -14,7 +14,7 @@ ACE_OS::endpwent (void)
 }
 
 ACE_INLINE struct passwd *
-ACE_OS::getpwent (void)
+ACE_OS::getpwent ()
 {
 #if !defined (ACE_LACKS_PWD_FUNCTIONS)
   return ::getpwent ();
@@ -48,29 +48,13 @@ ACE_OS::getpwnam_r (const char *name,
   ACE_UNUSED_ARG (bufsize);
   ACE_UNUSED_ARG (result);
   ACE_NOTSUP_RETURN (0);
-#elif defined (ACE_HAS_LYNXOS4_GETPWNAM_R)
-  if (::getpwnam_r (pwd, const_cast<char*>(name), buffer, bufsize) == -1)
-    {
-      *result = 0;
-      return -1;
-    }
-  *result = pwd;
-  return 0;
-#elif defined (ACE_HAS_STHREADS)
-  if (::getpwnam_r (name, pwd, buffer, bufsize) != 0)
-    {
-      *result = 0;
-      return -1;
-    }
-  *result = pwd;
-  return 0;
 #else
   return ::getpwnam_r (name, pwd, buffer, bufsize, result);
 #endif /* ACE_LACKS_PWD_FUNCTIONS */
 }
 
 ACE_INLINE void
-ACE_OS::setpwent (void)
+ACE_OS::setpwent ()
 {
 #if !defined (ACE_LACKS_PWD_FUNCTIONS)
   ::setpwent ();

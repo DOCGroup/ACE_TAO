@@ -1,6 +1,6 @@
 #include "orbsvcs/Log_Macros.h"
 #include "Notify_Service.h"
-#include "orbsvcs/orbsvcs/Notify/Properties.h"
+#include "orbsvcs/Notify/Properties.h"
 
 // Must include this file to get a static initializer
 #include "tao/Valuetype/Valuetype_Adapter_Impl.h"

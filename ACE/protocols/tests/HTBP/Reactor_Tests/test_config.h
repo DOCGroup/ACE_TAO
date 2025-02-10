@@ -39,13 +39,7 @@
 // The second #undef protects against being reset in a config.h file.
 #undef ACE_NDEBUG
 
-#if defined (ACE_HAS_WINCE)
-// Note that Pocket PC 2002 will NOT create a directory if it does not start with a leading '\'.
-// PPC 2002 only accepts '\log' as a valid directory name, while 'log\' works under WinCE 3.0.
-# define ACE_LOG_DIRECTORY_FOR_MKDIR ACE_TEXT ("\\log")
-# define ACE_LOG_DIRECTORY           ACE_TEXT ("\\log\\")
-# define MAKE_PIPE_NAME(X) ACE_TEXT ("\\\\.\\pipe\\"#X)
-#elif defined (ACE_WIN32)
+#if defined (ACE_WIN32)
 # define ACE_LOG_DIRECTORY ACE_TEXT ("log\\")
 # define MAKE_PIPE_NAME(X) ACE_TEXT ("\\\\.\\pipe\\"#X)
 #else
@@ -53,18 +47,9 @@
 # define MAKE_PIPE_NAME(X) ACE_TEXT (X)
 #endif /* ACE_WIN32 */
 
-#if defined (ACE_HAS_WINCE)
-#define ACE_LOG_FILE_EXT_NAME ACE_TEXT (".txt")
-#else
 #define ACE_LOG_FILE_EXT_NAME ACE_TEXT (".log")
-#endif /* ACE_HAS_WINCE */
 
-#if defined (ACE_HAS_WINCE) || defined (ACE_HAS_PHARLAP)
-const size_t ACE_MAX_CLIENTS = 4;
-#else
 const size_t ACE_MAX_CLIENTS = 30;
-#endif /* ACE_HAS_WINCE */
-
 const size_t ACE_NS_MAX_ENTRIES = 1000;
 const size_t ACE_DEFAULT_USECS = 1000;
 const size_t ACE_MAX_TIMERS = 4;
@@ -111,7 +96,7 @@ const size_t ACE_MAX_THREADS = 4;
 
 #if defined (VXWORKS)
 // This is the only way I could figure out to avoid an error
-// about attempting to unlink a non-existant file.
+// about attempting to unlink a non-existent file.
 #define ACE_INIT_LOG(NAME) \
   ACE_TCHAR temp[MAXPATHLEN]; \
   ACE_OS::sprintf (temp, ACE_TEXT ("%s%s%s"), \
@@ -153,17 +138,17 @@ const size_t ACE_MAX_THREADS = 4;
 class ACE_Test_Output
 {
 public:
-  ACE_Test_Output (void);
-  ~ACE_Test_Output (void);
+  ACE_Test_Output ();
+  ~ACE_Test_Output ();
   int set_output (const ACE_TCHAR *filename, int append = 0);
-  OFSTREAM *output_file (void);
-  void close (void);
+  OFSTREAM *output_file ();
+  void close ();
 
 private:
   OFSTREAM *output_file_;
 };
 
-inline ACE_Test_Output::ACE_Test_Output (void)
+inline ACE_Test_Output::ACE_Test_Output ()
   : output_file_ (0)
 {
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
@@ -171,22 +156,22 @@ inline ACE_Test_Output::ACE_Test_Output (void)
 #endif /* ACE_LACKS_IOSTREAM_TOTALLY */
 }
 
-inline ACE_Test_Output::~ACE_Test_Output (void)
+inline ACE_Test_Output::~ACE_Test_Output ()
 {
-#if !defined (ACE_LACKS_IOSTREAM_TOTALLY) && !defined (ACE_PSOS)
+#if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
   ACE_LOG_MSG->msg_ostream (&cerr);
-#endif /* ! ACE_LACKS_IOSTREAM_TOTALLY && ! ACE_PSOS */
+#endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
 
   ACE_LOG_MSG->clr_flags (ACE_Log_Msg::OSTREAM);
   ACE_LOG_MSG->set_flags (ACE_Log_Msg::STDERR);
 
-#if !defined (ACE_LACKS_IOSTREAM_TOTALLY) && !defined (ACE_HAS_PHARLAP)
+#if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
   delete this->output_file_;
 #endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
 }
 
 inline OFSTREAM *
-ACE_Test_Output::output_file (void)
+ACE_Test_Output::output_file ()
 {
   return this->output_file_;
 }
@@ -194,22 +179,13 @@ ACE_Test_Output::output_file (void)
 inline int
 ACE_Test_Output::set_output (const ACE_TCHAR *filename, int append)
 {
-#if defined (ACE_HAS_PHARLAP)
-  // For PharLap, just send it all to the host console for now - redirect
-  // to a file there for saving/analysis.
-  EtsSelectConsole(ETS_CO_HOST);
-  ACE_LOG_MSG->msg_ostream (&cout);
-
-#else
   ACE_TCHAR temp[MAXPATHLEN];
   // Ignore the error value since the directory may already exist.
-  const ACE_TCHAR *test_dir;
+  const ACE_TCHAR *test_dir {};
 
-#if !defined (ACE_HAS_WINCE)
   test_dir = ACE_OS::getenv (ACE_TEXT ("ACE_TEST_DIR"));
 
   if (test_dir == 0)
-#endif /* ACE_HAS_WINCE */
     test_dir = ACE_TEXT ("");
 
   ACE_OS::sprintf (temp,
@@ -222,7 +198,7 @@ ACE_Test_Output::set_output (const ACE_TCHAR *filename, int append)
 #if defined (VXWORKS)
   // This is the only way I could figure out to avoid a console
   // warning about opening an existing file (w/o O_CREAT), or
-  // attempting to unlink a non-existant one.
+  // attempting to unlink a non-existent one.
   ACE_HANDLE fd = ACE_OS::open (temp,
                                 O_WRONLY|O_CREAT,
                                 S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH);
@@ -234,14 +210,10 @@ ACE_Test_Output::set_output (const ACE_TCHAR *filename, int append)
 # else /* ! VXWORKS */
   // This doesn't seem to work on VxWorks if the directory doesn't
   // exist: it creates a plain file instead of a directory.  If the
-  // directory does exist, it causes a wierd console error message
+  // directory does exist, it causes a weird console error message
   // about "cat: input error on standard input: Is a directory".  So,
   // VxWorks users must create the directory manually.
-#   if defined (ACE_HAS_WINCE)
-  ACE_OS::mkdir (ACE_LOG_DIRECTORY_FOR_MKDIR);
-#   else
   ACE_OS::mkdir (ACE_LOG_DIRECTORY);
-#   endif  // ACE_HAS_WINCE
 # endif /* ! VXWORKS */
 
 # if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
@@ -259,8 +231,6 @@ ACE_Test_Output::set_output (const ACE_TCHAR *filename, int append)
 # endif /* ACE_LACKS_IOSTREAM_TOTALLY */
 
   ACE_LOG_MSG->msg_ostream (this->output_file ());
-#endif /* ACE_HAS_PHARLAP */
-
   ACE_LOG_MSG->clr_flags (ACE_Log_Msg::STDERR | ACE_Log_Msg::LOGGER );
   ACE_LOG_MSG->set_flags (ACE_Log_Msg::OSTREAM);
 
@@ -268,7 +238,7 @@ ACE_Test_Output::set_output (const ACE_TCHAR *filename, int append)
 }
 
 inline void
-ACE_Test_Output::close (void)
+ACE_Test_Output::close ()
 {
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
   this->output_file_->flush ();

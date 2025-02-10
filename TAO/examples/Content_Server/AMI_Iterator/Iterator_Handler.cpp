@@ -8,7 +8,7 @@
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_string.h"
 
-Iterator_Handler::Iterator_Handler (void)
+Iterator_Handler::Iterator_Handler ()
   : file_ (ACE_sap_any_cast (const ACE_FILE_Addr &)),
     file_io_ (),
     contents_ (),
@@ -20,7 +20,7 @@ Iterator_Handler::Iterator_Handler (void)
   // Nothing else
 }
 
-Iterator_Handler::~Iterator_Handler (void)
+Iterator_Handler::~Iterator_Handler ()
 {
   (void) this->file_io_.close ();
 }
@@ -49,7 +49,6 @@ Iterator_Handler::next_chunk (CORBA::Boolean pending_data,
 
       this->contents_->sendc_next_chunk (this->ami_handler_.in (),
                                          this->offset_);
-
     }
   else
     {
@@ -69,7 +68,7 @@ Iterator_Handler::next_chunk (CORBA::Boolean pending_data,
     }
 }
 void
-Iterator_Handler::destroy (void)
+Iterator_Handler::destroy ()
 {
   // Deactivate this reply handler.
   this->deactivate ();
@@ -126,7 +125,7 @@ Iterator_Handler::initialize_content_iterator
 }
 
 void
-Iterator_Handler::deactivate (void)
+Iterator_Handler::deactivate ()
 {
   // Get the POA used when activating the Reply Handler object.
   PortableServer::POA_var poa =
@@ -208,7 +207,7 @@ Iterator_Handler::get_viewer (char *viewer,
 }
 
 int
-Iterator_Handler::spawn_viewer (void)
+Iterator_Handler::spawn_viewer ()
 {
   char viewer[BUFSIZ];
 

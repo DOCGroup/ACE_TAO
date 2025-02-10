@@ -27,7 +27,7 @@ Quoter_Factory_i::Quoter_Factory_i (size_t num, PortableServer::POA_ptr poa_ptr)
 
 // Destructor
 
-Quoter_Factory_i::~Quoter_Factory_i (void)
+Quoter_Factory_i::~Quoter_Factory_i ()
 {
   for (size_t i = 0; i < this->quoter_num_; i++)
     delete this->my_quoters_[i];
@@ -37,7 +37,7 @@ Quoter_Factory_i::~Quoter_Factory_i (void)
 
 // Initialize everything in the factory
 
-int Quoter_Factory_i::init (void)
+int Quoter_Factory_i::init ()
 {
   ACE_NEW_RETURN (this->my_quoters_,
                   Quoter_i *[this->quoter_num_],
@@ -104,7 +104,7 @@ Quoter_i::Quoter_i (const char *name,
 
 // Destructor
 
-Quoter_i::~Quoter_i (void)
+Quoter_i::~Quoter_i ()
 {
   // Nothing
 }
@@ -248,7 +248,7 @@ Quoter_i::move (CosLifeCycle::FactoryFinder_ptr /* there */,
 // Removes the object.  Once we shut down the ORB we can call it a day.
 
 void
-Quoter_i::remove (void)
+Quoter_i::remove ()
 {
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG, "I have been asked to shut down.\n"));

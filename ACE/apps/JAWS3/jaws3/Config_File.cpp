@@ -17,8 +17,7 @@
 class JAWS_strings
 {
 public:
-
-  ~JAWS_strings (void)
+  ~JAWS_strings ()
   {
     void *p;
     while (this->queue_.dequeue_head (p) != -1)
@@ -50,9 +49,7 @@ public:
   }
 
 private:
-
   ACE_Unbounded_Queue<void *> queue_;
-
 };
 
 
@@ -62,23 +59,20 @@ private:
 class JAWS_Config_File_Impl
 {
 public:
-
   JAWS_Config_File_Impl (const ACE_TCHAR *config_file);
-  ~JAWS_Config_File_Impl (void);
+  ~JAWS_Config_File_Impl ();
   int find (const ACE_TCHAR *key, const ACE_TCHAR *&value);
 
-  void parse_file (void);
-  void reset (void);
-  void dump (void);
+  void parse_file ();
+  void reset ();
+  void dump ();
 
   enum { JAWS_CONFIG_FILE_SYMBOL_TABLE_SIZE = 211 };
 
 private:
-
   ACE_FILE_Addr faddr_;
   JAWS_strings *strings_;
   JAWS_Symbol_Table *symbols_;
-
 };
 
 JAWS_Config_File_Impl::JAWS_Config_File_Impl (const ACE_TCHAR *config_file)
@@ -91,7 +85,7 @@ JAWS_Config_File_Impl::JAWS_Config_File_Impl (const ACE_TCHAR *config_file)
   this->parse_file ();
 }
 
-JAWS_Config_File_Impl::~JAWS_Config_File_Impl (void)
+JAWS_Config_File_Impl::~JAWS_Config_File_Impl ()
 {
   delete this->symbols_;
   this->symbols_ = 0;
@@ -106,7 +100,7 @@ JAWS_Config_File_Impl::find (const ACE_TCHAR *key, const ACE_TCHAR *&value)
 }
 
 void
-JAWS_Config_File_Impl::parse_file (void)
+JAWS_Config_File_Impl::parse_file ()
 {
   ACE_FILE_Connector fconnector;
   ACE_FILE_IO fio;
@@ -248,7 +242,7 @@ JAWS_Config_File_Impl::parse_file (void)
 }
 
 void
-JAWS_Config_File_Impl::reset (void)
+JAWS_Config_File_Impl::reset ()
 {
   delete this->symbols_;
   delete this->strings_;
@@ -258,7 +252,7 @@ JAWS_Config_File_Impl::reset (void)
 }
 
 void
-JAWS_Config_File_Impl::dump (void)
+JAWS_Config_File_Impl::dump ()
 {
   JAWS_SYMBOL_TABLE_ITERATOR iter (*this->symbols_);
   JAWS_SYMBOL_TABLE_ENTRY *entry = 0;
@@ -289,13 +283,13 @@ JAWS_Config_File::find (const ACE_TCHAR *key, const ACE_TCHAR *&value)
 }
 
 void
-JAWS_Config_File::reset (void)
+JAWS_Config_File::reset ()
 {
   this->impl_->reset ();
 }
 
 void
-JAWS_Config_File::dump (void)
+JAWS_Config_File::dump ()
 {
   this->impl_->dump ();
 }

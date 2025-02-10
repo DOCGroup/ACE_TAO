@@ -11,12 +11,13 @@
 #ifndef KOKYU_H
 #define KOKYU_H
 #include /**/ "ace/pre.h"
-#include "ace/Copy_Disabled.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include <utility>
+#include <memory>
 #include "kokyu_export.h"
 #include "Kokyu_defs.h"
 
@@ -54,9 +55,15 @@ namespace Kokyu
    * Dispatcher is the class that users will be using to achieve
    * dynamic dispatching of events in an event channel.
    */
-  class Kokyu_Export Dispatcher : private ACE_Copy_Disabled
+  class Kokyu_Export Dispatcher
   {
   public:
+    Dispatcher () = default;
+    Dispatcher (const Dispatcher &) = delete;
+    Dispatcher (Dispatcher &&) = delete;
+    Dispatcher &operator= (const Dispatcher &) = delete;
+    Dispatcher &operator= (Dispatcher &&) = delete;
+
     /// Dispatch a command object based on the qos info supplied.
     int dispatch (const Dispatch_Command*, const QoSDescriptor&);
 
@@ -74,10 +81,10 @@ namespace Kokyu
   private:
     /// Auto ptr to the implementation. Implementation will be created on the
     /// heap and deleted automatically when the dispatcher object is destructed.
-    auto_ptr<Dispatcher_Impl> dispatcher_impl_;
+    std::unique_ptr<Dispatcher_Impl> dispatcher_impl_;
   };
 
-  typedef auto_ptr<Dispatcher> Dispatcher_Auto_Ptr;
+  typedef std::unique_ptr<Dispatcher> Dispatcher_Auto_Ptr;
 
   /**
    * @class Dispatcher_Factory
@@ -88,21 +95,26 @@ namespace Kokyu
    * Factory class creates a dispatcher for EC and configures the
    * interface object with the appropriate implementation.
    */
-  class Kokyu_Export Dispatcher_Factory : private ACE_Copy_Disabled
-    {
-    public:
-      /**
-       * Create a dispatcher for dynamic dispatching of commands
-       * (eg. events). The caller is responsible for freeing the
-       * returned dynamically allocated memory.
-       *
-       * @param config Configuration information for the dispatcher.
-       *
-       * @return pointer to the dispatcher.
-       */
-      static Dispatcher*
-      create_dispatcher (const Dispatcher_Attributes& attr);
-    };
+  class Kokyu_Export Dispatcher_Factory
+  {
+  public:
+    Dispatcher_Factory (const Dispatcher_Factory &) = delete;
+    Dispatcher_Factory (Dispatcher_Factory &&) = delete;
+    Dispatcher_Factory &operator= (const Dispatcher_Factory &) = delete;
+    Dispatcher_Factory &operator= (Dispatcher_Factory &&) = delete;
+
+    /**
+      * Create a dispatcher for dynamic dispatching of commands
+      * (eg. events). The caller is responsible for freeing the
+      * returned dynamically allocated memory.
+      *
+      * @param config Configuration information for the dispatcher.
+      *
+      * @return pointer to the dispatcher.
+      */
+    static Dispatcher*
+    create_dispatcher (const Dispatcher_Attributes& attr);
+  };
 } //end of namespace
 
 #if defined (__ACE_INLINE__)

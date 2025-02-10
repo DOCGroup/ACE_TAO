@@ -39,8 +39,7 @@ class TAO_Stub;
 class TAO_Export TAO_IIOP_Protocol_Properties
 {
 public:
-
-  TAO_IIOP_Protocol_Properties (void);
+  TAO_IIOP_Protocol_Properties ();
 
   CORBA::Long send_buffer_size_;
   CORBA::Long recv_buffer_size_;
@@ -54,8 +53,7 @@ public:
 class TAO_Export TAO_UIOP_Protocol_Properties
 {
 public:
-
-  TAO_UIOP_Protocol_Properties (void);
+  TAO_UIOP_Protocol_Properties ();
 
   CORBA::Long send_buffer_size_;
   CORBA::Long recv_buffer_size_;
@@ -64,8 +62,7 @@ public:
 class TAO_Export TAO_SHMIOP_Protocol_Properties
 {
 public:
-
-  TAO_SHMIOP_Protocol_Properties (void);
+  TAO_SHMIOP_Protocol_Properties ();
 
   CORBA::Long send_buffer_size_;
   CORBA::Long recv_buffer_size_;
@@ -80,8 +77,7 @@ public:
 class TAO_Export TAO_DIOP_Protocol_Properties
 {
 public:
-
-  TAO_DIOP_Protocol_Properties (void);
+  TAO_DIOP_Protocol_Properties ();
 
   CORBA::Long send_buffer_size_;
   CORBA::Long recv_buffer_size_;
@@ -93,8 +89,7 @@ public:
 class TAO_Export TAO_SCIOP_Protocol_Properties
 {
 public:
-
-  TAO_SCIOP_Protocol_Properties (void);
+  TAO_SCIOP_Protocol_Properties ();
 
   CORBA::Long send_buffer_size_;
   CORBA::Long recv_buffer_size_;
@@ -109,7 +104,7 @@ class TAO_Export TAO_Protocols_Hooks : public ACE_Service_Object
 {
 public:
   /// Destructor
-  virtual ~TAO_Protocols_Hooks (void);
+  virtual ~TAO_Protocols_Hooks ();
 
   /// Initialize the protocols hooks instance.
   virtual void init_hooks (TAO_ORB_Core *orb_core) = 0;
@@ -152,7 +147,7 @@ public:
   virtual void client_protocol_properties_at_orb_level (
     TAO_SCIOP_Protocol_Properties &protocol_properties) = 0;
 
-  virtual CORBA::Long get_dscp_codepoint (void) = 0;
+  virtual CORBA::Long get_dscp_codepoint () = 0;
 
   virtual void get_selector_hook (CORBA::Policy *model_policy,
                                   CORBA::Boolean &is_client_propagated,

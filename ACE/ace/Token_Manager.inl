@@ -4,7 +4,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE ACE_TOKEN_CONST::MUTEX &
-ACE_Token_Manager::mutex (void)
+ACE_Token_Manager::mutex ()
 {
   ACE_TRACE ("ACE_Token_Manager::mutex");
   return lock_;

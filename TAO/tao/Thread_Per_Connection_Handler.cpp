@@ -16,14 +16,14 @@ TAO_Thread_Per_Connection_Handler::TAO_Thread_Per_Connection_Handler (
   this->ch_->transport ()->add_reference ();
 }
 
-TAO_Thread_Per_Connection_Handler::~TAO_Thread_Per_Connection_Handler (void)
+TAO_Thread_Per_Connection_Handler::~TAO_Thread_Per_Connection_Handler ()
 {
   this->ch_->close_connection ();
   this->ch_->transport ()->remove_reference ();
 }
 
 int
-TAO_Thread_Per_Connection_Handler::svc (void)
+TAO_Thread_Per_Connection_Handler::svc ()
 {
   ACE::clr_flags (this->ch_->transport ()->event_handler_i ()->get_handle (),
                   ACE_NONBLOCK);

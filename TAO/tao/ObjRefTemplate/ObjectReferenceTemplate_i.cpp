@@ -20,12 +20,12 @@ namespace TAO
   {
   }
 
-  ObjectReferenceTemplate::~ObjectReferenceTemplate (void)
+  ObjectReferenceTemplate::~ObjectReferenceTemplate ()
   {
   }
 
   ::CORBA::ValueBase *
-  ObjectReferenceTemplate::_copy_value (void)
+  ObjectReferenceTemplate::_copy_value ()
   {
     ::CORBA::ValueBase *ret_val= 0;
     ACE_NEW_THROW_EX (
@@ -42,19 +42,19 @@ namespace TAO
   }
 
   char *
-  ObjectReferenceTemplate::server_id (void)
+  ObjectReferenceTemplate::server_id ()
   {
     return CORBA::string_dup (this->server_id_);
   }
 
   char *
-  ObjectReferenceTemplate::orb_id (void)
+  ObjectReferenceTemplate::orb_id ()
   {
     return CORBA::string_dup (this->orb_id_);
   }
 
   PortableInterceptor::AdapterName *
-  ObjectReferenceTemplate::adapter_name (void)
+  ObjectReferenceTemplate::adapter_name ()
   {
     PortableInterceptor::AdapterName *adapter_name = 0;
 

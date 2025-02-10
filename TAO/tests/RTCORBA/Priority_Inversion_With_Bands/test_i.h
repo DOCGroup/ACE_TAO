@@ -27,13 +27,13 @@ public:
                const char *iteration);
 
   /// Our POA.
-  PortableServer::POA_ptr _default_POA (void);
+  PortableServer::POA_ptr _default_POA ();
 
   /// Work (burn CPU).
   void work (CORBA::ULong work);
 
   /// Estimates work iterations performed per second.
-  int estimate_iterations (void);
+  int estimate_iterations ();
 
 private:
   /// ORB.

@@ -36,7 +36,7 @@ Test_i::Test_i (CORBA::ORB_ptr o)
 }
 
 // Implementation skeleton destructor
-Test_i::~Test_i (void)
+Test_i::~Test_i ()
 {
 }
 
@@ -60,7 +60,7 @@ void Test_i::do_something_VariableLength (
   my_info->d = ::CORBA::string_dup("Howdy");
 }
 
-void Test_i::shutdown (void)
+void Test_i::shutdown ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("\nThe server is shutting down\n")));

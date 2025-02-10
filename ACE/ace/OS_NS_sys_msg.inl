@@ -8,7 +8,7 @@ ACE_OS::msgctl (int msqid, int cmd, struct msqid_ds *val)
 {
   ACE_OS_TRACE ("ACE_OS::msgctl");
 #if defined (ACE_HAS_SYSV_IPC)
-  ACE_OSCALL_RETURN (::msgctl (msqid, cmd, val), int, -1);
+  return ::msgctl (msqid, cmd, val);
 #else
   ACE_UNUSED_ARG (msqid);
   ACE_UNUSED_ARG (cmd);
@@ -23,7 +23,7 @@ ACE_OS::msgget (key_t key, int msgflg)
 {
   ACE_OS_TRACE ("ACE_OS::msgget");
 #if defined (ACE_HAS_SYSV_IPC)
-  ACE_OSCALL_RETURN (::msgget (key, msgflg), int, -1);
+  return ::msgget (key, msgflg);
 #else
   ACE_UNUSED_ARG (key);
   ACE_UNUSED_ARG (msgflg);
@@ -38,8 +38,7 @@ ACE_OS::msgrcv (int int_id, void *buf, size_t len,
 {
   ACE_OS_TRACE ("ACE_OS::msgrcv");
 #if defined (ACE_HAS_SYSV_IPC)
-  ACE_OSCALL_RETURN (::msgrcv (int_id, buf, len, type, flags),
-                     int, -1);
+  return ::msgrcv (int_id, buf, len, type, flags);
 #else
   ACE_UNUSED_ARG (int_id);
   ACE_UNUSED_ARG (buf);
@@ -57,10 +56,9 @@ ACE_OS::msgsnd (int int_id, const void *buf, size_t len, int flags)
   ACE_OS_TRACE ("ACE_OS::msgsnd");
 #if defined (ACE_HAS_SYSV_IPC)
 # if defined (ACE_HAS_NONCONST_MSGSND)
-  ACE_OSCALL_RETURN (::msgsnd (int_id,
-                               const_cast<void *> (buf), len, flags), int, -1);
+  return ::msgsnd (int_id, const_cast<void *> (buf), len, flags);
 # else
-  ACE_OSCALL_RETURN (::msgsnd (int_id, buf, len, flags), int, -1);
+  return ::msgsnd (int_id, buf, len, flags);
 # endif /* ACE_HAS_NONCONST_MSGSND */
 #else
   ACE_UNUSED_ARG (int_id);

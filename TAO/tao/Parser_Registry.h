@@ -1,5 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
-
 //=============================================================================
 /**
  *  @file    Parser_Registry.h
@@ -8,7 +6,6 @@
  *  @author  Carlos O'Ryan <coryan@uci.edu>
  */
 //=============================================================================
-
 
 #ifndef TAO_PARSER_REGISTRY_H
 #define TAO_PARSER_REGISTRY_H
@@ -24,7 +21,6 @@
 #include /**/ "tao/Versioned_Namespace.h"
 
 #include "ace/os_include/os_stddef.h"
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -45,10 +41,10 @@ class TAO_Export TAO_Parser_Registry
 {
 public:
   /// Default constructor.
-  TAO_Parser_Registry (void);
+  TAO_Parser_Registry ();
 
   /// Dstructor.
-  ~TAO_Parser_Registry (void);
+  ~TAO_Parser_Registry ();
 
   /// Initialize the parser registry with the list of known protocols.
   /// Invoked by the ORB during startup.
@@ -60,23 +56,20 @@ public:
 
   // = Iterator.
   typedef TAO_IOR_Parser** Parser_Iterator;
-  Parser_Iterator begin (void) const;
-  Parser_Iterator end (void) const;
+  Parser_Iterator begin () const;
+  Parser_Iterator end () const;
 
 private:
-
   // The parser registry should not be copied.
   TAO_Parser_Registry (const TAO_Parser_Registry&);
   void operator= (const TAO_Parser_Registry&);
 
 private:
-
   /// List of parsers
   TAO_IOR_Parser **parsers_;
 
   /// Number of parsers
   size_t size_;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

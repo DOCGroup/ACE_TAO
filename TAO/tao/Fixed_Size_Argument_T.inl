@@ -14,7 +14,7 @@ template<typename S,
          template <typename> class Insert_Policy>
 ACE_INLINE
 const S &
-TAO::In_Fixed_Size_Argument_T<S,Insert_Policy>::arg (void) const
+TAO::In_Fixed_Size_Argument_T<S,Insert_Policy>::arg () const
 {
   return *this->x_;
 }
@@ -42,7 +42,7 @@ template<typename S,
          template <typename> class Insert_Policy>
 ACE_INLINE
 S &
-TAO::Inout_Fixed_Size_Argument_T<S,Insert_Policy>::arg (void)
+TAO::Inout_Fixed_Size_Argument_T<S,Insert_Policy>::arg ()
 {
   return *this->x_;
 }
@@ -62,7 +62,7 @@ template<typename S,
          template <typename> class Insert_Policy>
 ACE_INLINE
 S &
-TAO::Out_Fixed_Size_Argument_T<S,Insert_Policy>::arg (void)
+TAO::Out_Fixed_Size_Argument_T<S,Insert_Policy>::arg ()
 {
   return this->x_;
 }
@@ -73,7 +73,7 @@ template<typename S,
          template <typename> class Insert_Policy>
 ACE_INLINE
 TAO::Ret_Fixed_Size_Argument_T<S,Insert_Policy>::
-Ret_Fixed_Size_Argument_T (void)
+Ret_Fixed_Size_Argument_T ()
 {
 }
 
@@ -81,7 +81,7 @@ template<typename S,
          template <typename> class Insert_Policy>
 ACE_INLINE
 S &
-TAO::Ret_Fixed_Size_Argument_T<S,Insert_Policy>::arg (void)
+TAO::Ret_Fixed_Size_Argument_T<S,Insert_Policy>::arg ()
 {
   return this->x_;
 }
@@ -90,7 +90,7 @@ template<typename S,
          template <typename> class Insert_Policy>
 ACE_INLINE
 S
-TAO::Ret_Fixed_Size_Argument_T<S,Insert_Policy>::excp (void)
+TAO::Ret_Fixed_Size_Argument_T<S,Insert_Policy>::excp ()
 {
   return this->x_;
 }
@@ -99,7 +99,7 @@ template<typename S,
          template <typename> class Insert_Policy>
 ACE_INLINE
 S
-TAO::Ret_Fixed_Size_Argument_T<S,Insert_Policy>::retn (void)
+TAO::Ret_Fixed_Size_Argument_T<S,Insert_Policy>::retn ()
 {
   return this->x_;
 }

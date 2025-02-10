@@ -101,7 +101,7 @@ public:
   /**
    * Dump the content of the attribute definition.
    */
-  virtual void dump (void);
+  virtual void dump ();
 private:
   CONTENT_TYPE type_;
 

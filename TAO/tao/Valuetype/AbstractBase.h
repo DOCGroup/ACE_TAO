@@ -25,11 +25,7 @@
 #include "tao/Objref_VarOut_T.h"
 #include "tao/Object.h"  /* For CORBA::Object_var */
 #include "tao/Pseudo_VarOut_T.h"
-#if defined (ACE_HAS_CPP11)
-# include <atomic>
-#else
-# include "ace/Atomic_Op.h"
-#endif /* ACE_HAS_CPP11 */
+#include <atomic>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -55,7 +51,6 @@ namespace CORBA
   class TAO_Valuetype_Export AbstractBase
   {
   public:
-
     /// Constructor.
     /**
      * This constructor is only meant to be called by the
@@ -72,21 +67,21 @@ namespace CORBA
 
     static CORBA::AbstractBase_ptr _narrow (CORBA::AbstractBase_ptr obj);
     static CORBA::AbstractBase_ptr _duplicate (CORBA::AbstractBase_ptr obj);
-    static CORBA::AbstractBase_ptr _nil (void);
+    static CORBA::AbstractBase_ptr _nil ();
 
     /// Used in the implementation of CORBA::Any
     static void _tao_any_destructor (void*);
 
     /// Spec required conversion operations
-    CORBA::Object_ptr _to_object (void);
-    CORBA::ValueBase *_to_value (void);
+    CORBA::Object_ptr _to_object ();
+    CORBA::ValueBase *_to_value ();
 
     virtual CORBA::Boolean _is_a (const char *type_id);
-    virtual const char* _interface_repository_id (void) const;
+    virtual const char* _interface_repository_id () const;
 
     /// TAO specific operations
 
-    virtual const char* _tao_obv_repository_id (void) const;
+    virtual const char* _tao_obv_repository_id () const;
     virtual CORBA::Boolean _tao_marshal_v (TAO_OutputCDR &) const;
     virtual CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &);
     virtual CORBA::Boolean _tao_match_formal_type (ptrdiff_t) const;
@@ -102,17 +97,17 @@ namespace CORBA
 #endif /* GEN_OSTREAM_OPS */
 
     /// Memory management operations
-    virtual void _add_ref (void);
-    virtual void _remove_ref (void);
+    virtual void _add_ref ();
+    virtual void _remove_ref ();
 
-    CORBA::Boolean _is_objref (void) const;
+    CORBA::Boolean _is_objref () const;
 
     /// Return the stub object
-    TAO_Stub *_stubobj (void) const;
+    TAO_Stub *_stubobj () const;
 
     /// Acessors
-    CORBA::Boolean _is_collocated (void) const;
-    TAO_Abstract_ServantBase *_servant (void) const;
+    CORBA::Boolean _is_collocated () const;
+    TAO_Abstract_ServantBase *_servant () const;
 
     /// Return the equivalent object reference.
     /**
@@ -120,39 +115,31 @@ namespace CORBA
      * a var or some such thing. The memory is owned by @c this
      * object.
      */
-    CORBA::Object_ptr equivalent_objref (void);
+    CORBA::Object_ptr equivalent_objref ();
 
     /// Wrapper for _remove_ref(), naming convention for
     /// templatizing.
-    void _decr_refcount (void);
+    void _decr_refcount ();
 
   protected:
-
-    AbstractBase (void);
+    AbstractBase ();
     AbstractBase (const AbstractBase &);
 
-    virtual ~AbstractBase (void);
+    virtual ~AbstractBase () = default;
 
   protected:
-
     CORBA::Boolean is_objref_;
 
   private:
-
     AbstractBase & operator= (const AbstractBase &);
 
-    virtual CORBA::ValueBase *_tao_to_value (void);
+    virtual CORBA::ValueBase *_tao_to_value ();
 
     CORBA::Object_ptr create_object (TAO_Stub *stub);
 
   private:
-
     /// Number of outstanding references to this object.
-#if defined (ACE_HAS_CPP11)
     std::atomic<uint32_t> refcount_;
-#else
-    ACE_Atomic_Op<TAO_SYNCH_MUTEX, unsigned long> refcount_;
-#endif /* ACE_HAS_CPP11 */
 
     CORBA::Boolean is_collocated_;
     TAO_Abstract_ServantBase *servant_;

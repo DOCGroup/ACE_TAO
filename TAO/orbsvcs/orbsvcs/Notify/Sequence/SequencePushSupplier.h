@@ -40,14 +40,13 @@ public:
   void init (CosNotifyComm::SequencePushSupplier_ptr push_supplier);
 
   /// TAO_Notify_Destroy_Callback methods
-  virtual void release (void);
+  virtual void release ();
 
   /// Retrieve the ior of this peer
-  virtual ACE_CString get_ior (void) const;
+  virtual ACE_CString get_ior () const;
 
 protected:
-
-  virtual CORBA::Object_ptr get_supplier (void);
+  virtual CORBA::Object_ptr get_supplier ();
 
  /// The Supplier
   CosNotifyComm::SequencePushSupplier_var push_supplier_;

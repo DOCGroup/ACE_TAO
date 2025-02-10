@@ -22,7 +22,6 @@ public:
 
 // Operations
 public:
-
 // Overrides
 // ClassWizard generated virtual function overrides
 //{{AFX_VIRTUAL(CServerView)
@@ -44,7 +43,6 @@ public:
 #endif
 
 protected:
-
 // Generated message map functions
 protected:
   //{{AFX_MSG(CServerView)

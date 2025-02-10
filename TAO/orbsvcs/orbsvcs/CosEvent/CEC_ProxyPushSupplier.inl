@@ -2,7 +2,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE CORBA::Boolean
-TAO_CEC_ProxyPushSupplier::is_connected_i (void) const
+TAO_CEC_ProxyPushSupplier::is_connected_i () const
 {
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
   if (this->is_typed_ec ())
@@ -19,7 +19,7 @@ TAO_CEC_ProxyPushSupplier::is_connected_i (void) const
 }
 
 ACE_INLINE CORBA::Boolean
-TAO_CEC_ProxyPushSupplier::is_connected (void) const
+TAO_CEC_ProxyPushSupplier::is_connected () const
 {
   ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->lock_, false);
 
@@ -27,7 +27,7 @@ TAO_CEC_ProxyPushSupplier::is_connected (void) const
 }
 
 ACE_INLINE CosEventComm::PushConsumer_ptr
-TAO_CEC_ProxyPushSupplier::consumer (void) const
+TAO_CEC_ProxyPushSupplier::consumer () const
 {
   ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->lock_, 0);
 
@@ -79,7 +79,7 @@ TAO_CEC_ProxyPushSupplier::consumer (CosTypedEventComm::TypedPushConsumer_ptr ty
 
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
 ACE_INLINE CORBA::Boolean
-TAO_CEC_ProxyPushSupplier::is_typed_ec (void) const
+TAO_CEC_ProxyPushSupplier::is_typed_ec () const
 {
   if (this->typed_event_channel_ != 0)
   {

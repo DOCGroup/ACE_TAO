@@ -20,7 +20,7 @@ public:
   int put (ACE_Message_Block *message,
            ACE_Time_Value *timeout);
 
-  virtual int svc (void);
+  virtual int svc ();
 
   virtual int close (u_long flags);
 

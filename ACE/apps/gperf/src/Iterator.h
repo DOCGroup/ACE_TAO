@@ -31,7 +31,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "Options.h"
-#include "ace/Copy_Disabled.h"
 
 /**
  * Provides an Iterator that expands and decodes a control string
@@ -45,7 +44,7 @@
  * No errors are handled in these routines, they are passed back
  * to the calling routines via a user-supplied Error_Value
  */
-class Iterator : private ACE_Copy_Disabled
+class Iterator
 {
 public:
   Iterator (char *s,
@@ -54,7 +53,12 @@ public:
             int word_end,
             int bad_val,
             int key_end);
-  int operator () (void);
+  Iterator (const Iterator &) = delete;
+  Iterator (Iterator &&) = delete;
+  Iterator &operator= (const Iterator &) = delete;
+  Iterator &operator= (Iterator &&) = delete;
+
+  int operator () ();
 
 private:
   /// A pointer to the string provided by the user.

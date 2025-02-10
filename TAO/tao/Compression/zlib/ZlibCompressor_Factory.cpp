@@ -7,8 +7,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-
-Zlib_CompressorFactory::Zlib_CompressorFactory (void) :
+Zlib_CompressorFactory::Zlib_CompressorFactory () :
   ::TAO::CompressorFactory (::Compression::COMPRESSORID_ZLIB)
 {
 }
@@ -20,8 +19,7 @@ Zlib_CompressorFactory::get_compressor (
     // Ensure Compression range 0-9 and will also convert -1(default) to 9(max).
     compression_level = ace_range(  ::Compression::CompressionLevel(Z_NO_COMPRESSION),   // Min value
                                     ::Compression::CompressionLevel(Z_BEST_COMPRESSION), // Max value
-                                    compression_level   // Argument value
-                                  );
+                                    compression_level); // Argument value
 
     ::Compression::Compressor_ptr compressor = 0;
 
@@ -40,7 +38,6 @@ Zlib_CompressorFactory::get_compressor (
             }
 
             compressor = (*it).second.in();
-
         } catch (...) {
             TAOLIB_ERROR_RETURN((LM_ERROR,
                 ACE_TEXT("(%P | %t) ERROR: ZlibCompressor - Unable to create Zlib Compressor at level [%d].\n"),

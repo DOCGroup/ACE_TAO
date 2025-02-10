@@ -46,7 +46,7 @@ ACE_ConsumerQOS_Factory::insert_bitmasked_value (CORBA::ULong source_mask,
 }
 
 ACE_INLINE int
-ACE_ConsumerQOS_Factory::insert_null_terminator (void)
+ACE_ConsumerQOS_Factory::insert_null_terminator ()
 {
   RtecEventChannelAdmin::Dependency dependency;
   if (this->event_initializer_ != 0)
@@ -121,13 +121,13 @@ ACE_ConsumerQOS_Factory::insert_act (RtecEventComm::EventData act)
 }
 
 ACE_INLINE const RtecEventChannelAdmin::ConsumerQOS&
-ACE_ConsumerQOS_Factory::get_ConsumerQOS (void)
+ACE_ConsumerQOS_Factory::get_ConsumerQOS ()
 {
   return qos_;
 }
 
 ACE_INLINE
-ACE_ConsumerQOS_Factory::operator const RtecEventChannelAdmin::ConsumerQOS& (void)
+ACE_ConsumerQOS_Factory::operator const RtecEventChannelAdmin::ConsumerQOS& ()
 {
   return qos_;
 }
@@ -135,13 +135,13 @@ ACE_ConsumerQOS_Factory::operator const RtecEventChannelAdmin::ConsumerQOS& (voi
 // ************************************************************
 
 ACE_INLINE const RtecEventChannelAdmin::SupplierQOS&
-ACE_SupplierQOS_Factory::get_SupplierQOS (void)
+ACE_SupplierQOS_Factory::get_SupplierQOS ()
 {
   return qos_;
 }
 
 ACE_INLINE
-ACE_SupplierQOS_Factory::operator const RtecEventChannelAdmin::SupplierQOS& (void)
+ACE_SupplierQOS_Factory::operator const RtecEventChannelAdmin::SupplierQOS& ()
 {
   return qos_;
 }

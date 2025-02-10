@@ -44,7 +44,7 @@ public:
   TAO_Contained_i (TAO_Repository_i *repo);
 
   /// Destructor.
-  virtual ~TAO_Contained_i (void);
+  virtual ~TAO_Contained_i ();
 
   /// Remove the repository entry.
   virtual void destroy ();

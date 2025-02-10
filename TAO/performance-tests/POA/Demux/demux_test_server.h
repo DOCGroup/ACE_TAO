@@ -28,27 +28,26 @@ class Demux_Test_Server
 {
 public:
   /// ctor
-  Demux_Test_Server (void);
+  Demux_Test_Server ();
 
   /// dtor
-  ~Demux_Test_Server (void);
+  ~Demux_Test_Server ();
 
   /// Execute client code.
-  int run (void);
+  int run ();
 
   /// Initialize the communication endpoint with server.
   int init (int argc, ACE_TCHAR **argv);
 
   /// Calculates the statistics by reading different data values from results.dat.
-  int calculate_avg_latency (void);
+  int calculate_avg_latency ();
 
 private:
-
   /// parse command line arguments (if any)
-  int parse_args (void);
+  int parse_args ();
 
   /// initialize the naming service
-  int init_naming_service (void);
+  int init_naming_service ();
 
   /// # of arguments on the command line.
   int argc_;
@@ -97,7 +96,6 @@ private:
   /// Use the Transient POAs for servant activation as opposed
   /// to persistent POAs.
   int use_transient_poas_;
-
 };
 
 

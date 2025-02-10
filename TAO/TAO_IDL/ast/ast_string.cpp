@@ -94,9 +94,9 @@ AST_String::AST_String (AST_Decl::NodeType nt,
   // Always the case.
   this->size_type (AST_Type::VARIABLE);
 
-  Identifier *id = 0;
-  UTL_ScopedName *new_name = 0;
-  UTL_ScopedName *conc_name = 0;
+  Identifier *id = nullptr;
+  UTL_ScopedName *new_name = nullptr;
+  UTL_ScopedName *conc_name = nullptr;
   bool narrow = this->width () == (ssize_t) sizeof (char);
 
   ACE_NEW (id,
@@ -104,7 +104,7 @@ AST_String::AST_String (AST_Decl::NodeType nt,
 
   ACE_NEW (conc_name,
            UTL_ScopedName (id,
-                           0));
+                           nullptr));
 
   if (narrow)
     {
@@ -148,7 +148,7 @@ AST_String::AST_String (AST_Decl::NodeType nt,
   this->flat_name_ = ACE::strnew (namebuf);
 }
 
-AST_String::~AST_String (void)
+AST_String::~AST_String ()
 {
 }
 
@@ -170,11 +170,11 @@ AST_String::ast_accept (ast_visitor *visitor)
 }
 
 void
-AST_String::destroy (void)
+AST_String::destroy ()
 {
   this->pd_max_size->destroy ();
   delete this->pd_max_size;
-  this->pd_max_size = 0;
+  this->pd_max_size = nullptr;
 
   this->AST_ConcreteType::destroy ();
 }
@@ -182,17 +182,13 @@ AST_String::destroy (void)
 // Data accessors.
 
 AST_Expression *
-AST_String::max_size (void)
+AST_String::max_size ()
 {
   return this->pd_max_size;
 }
 
 long
-AST_String::width (void)
+AST_String::width ()
 {
   return this->pd_width;
 }
-
-
-
-IMPL_NARROW_FROM_DECL(AST_String)

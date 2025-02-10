@@ -46,7 +46,6 @@ namespace TAO
     : public ACE_Service_Object
   {
   public:
-
     /// Destructor.
     /**
      * @note Even though this class only defines an interface, a
@@ -55,7 +54,7 @@ namespace TAO
      *       line option.  Apparently the compiler generated
      *       destructor is inlined.
      */
-    virtual ~ORT_Adapter_Factory (void);
+    virtual ~ORT_Adapter_Factory ();
 
     /// Create a new adapter, in case not possible to allocate, returns 0
     virtual TAO::ORT_Adapter * create () = 0;

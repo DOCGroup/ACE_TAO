@@ -16,7 +16,7 @@ public:
   void setID (long timerID);
 
   // Get the timer id.
-  long getID (void);
+  long getID ();
 
   // Handle the timeout.
   virtual int handle_timeout(const ACE_Time_Value &tv,

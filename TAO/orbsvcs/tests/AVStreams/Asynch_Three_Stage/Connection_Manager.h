@@ -36,12 +36,11 @@ class Endpoint_Addresses
 class Connection_Manager
 {
 public:
-
   /// Constructor
-  Connection_Manager (void);
+  Connection_Manager ();
 
   /// Destructor
-  ~Connection_Manager (void);
+  ~Connection_Manager ();
 
   /// Initialize this class.
   int init (CORBA::ORB_ptr orb);
@@ -60,10 +59,10 @@ public:
                        AVStreams::MMDevice_ptr receiver);
 
   /// Connect to the sender that we found.
-  void connect_to_sender (void);
+  void connect_to_sender ();
 
   /// Destroy all streams.
-  void destroy (void);
+  void destroy ();
 
   /// Destroy streams associated with <flowname>.
   void destroy (const ACE_CString &flowname);
@@ -85,7 +84,6 @@ public:
           Protocol_Objects;
 
 
-
   // Map of streamctrl.
   typedef ACE_Hash_Map_Manager<ACE_CString,
                                AVStreams::StreamCtrl_var,
@@ -99,17 +97,14 @@ public:
           EP_Addr;
 
   // Map accessors.
-  Receivers &receivers (void);
-  Protocol_Objects &protocol_objects (void);
-  StreamCtrls &streamctrls (void);
+  Receivers &receivers ();
+  Protocol_Objects &protocol_objects ();
+  StreamCtrls &streamctrls ();
 
   void load_ep_addr (const char* file_name);
 
 protected:
-
-
-
-  void find_receivers (void);
+  void find_receivers ();
 
   void add_to_receivers (CosNaming::BindingList &binding_list);
 

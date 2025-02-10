@@ -27,6 +27,7 @@
 #include "orbsvcs/Channel_Clients_T.h"
 #include "orbsvcs/Event/EC_Gateway_Sched.h"
 #include "orbsvcs/CosNamingC.h"
+#include <atomic>
 
 class Test_ECG;
 
@@ -52,7 +53,7 @@ public:
              RtecEventChannelAdmin::EventChannel_ptr ec);
   // This method connects the supplier to the EC.
 
-  void close (void);
+  void close ();
   // Disconnect from the EC.
 
   void activate (const char* name,
@@ -60,14 +61,14 @@ public:
                  RtecEventChannelAdmin::EventChannel_ptr ec);
 
   void push (const RtecEventComm::EventSet& events);
-  void disconnect_push_consumer (void);
+  void disconnect_push_consumer ();
   // Implement the callbacks for our consumer personality.
 
 
-  virtual void disconnect_push_supplier (void);
+  virtual void disconnect_push_supplier ();
   // The methods in the skeleton.
 
-  RtecEventComm::EventSourceID supplier_id (void) const;
+  RtecEventComm::EventSourceID supplier_id () const;
   // The supplier ID.
 
 private:
@@ -95,7 +96,6 @@ private:
 
   RtecEventChannelAdmin::ProxyPushSupplier_var supplier_proxy_;
   // We talk to the EC (as a supplier) using this proxy.
-
 };
 
 class Test_Consumer : public POA_RtecEventComm::PushConsumer
@@ -118,11 +118,11 @@ public:
              RtecEventChannelAdmin::EventChannel_ptr ec);
   // This method connects the consumer to the EC.
 
-  void close (void);
+  void close ();
   // Disconnect from the EC.
 
   virtual void push (const RtecEventComm::EventSet& events);
-  virtual void disconnect_push_consumer (void);
+  virtual void disconnect_push_consumer ();
   // The skeleton methods.
 
 private:
@@ -158,7 +158,7 @@ class Test_ECG
   //   and publications list.
   //
 public:
-  Test_ECG (void);
+  Test_ECG ();
 
   enum {
     MAX_EVENTS = 1024,
@@ -199,7 +199,7 @@ private:
   // Helper routine to obtain an EC given its name.
 
   void connect_suppliers (RtecEventChannelAdmin::EventChannel_ptr local_ec);
-  void disconnect_suppliers (void);
+  void disconnect_suppliers ();
   // Connect the suppliers.
 
   void activate_suppliers (RtecEventChannelAdmin::EventChannel_ptr local_ec);
@@ -212,20 +212,20 @@ private:
   // Publications list.
 
   void connect_consumers (RtecEventChannelAdmin::EventChannel_ptr local_ec);
-  void disconnect_consumers (void);
+  void disconnect_consumers ();
   // Connect and disconnect the consumers.
 
-  int shutdown (void);
+  int shutdown ();
   // Called when the main thread (i.e. not the scavenger thread) is
   // shutting down.
 
   int parse_args (int argc, ACE_TCHAR* argv[]);
   // parse the command line args
 
-  void dump_results (void);
+  void dump_results ();
   // Dump the results to the standard output.
 
-  void wait_until_ready (void);
+  void wait_until_ready ();
   // Block event delivery until all the consumers are ready.
 
   struct Stats;
@@ -353,11 +353,11 @@ private:
   // to setup all the consumers.
   // The suppliers wait on the condition variable.
 
-  ACE_Atomic_Op<TAO_SYNCH_MUTEX,int> running_suppliers_;
+  std::atomic<int> running_suppliers_;
   // keep track of how many suppliers are still running so we shutdown
   // at the right moment.
 
-  ACE_Atomic_Op<TAO_SYNCH_MUTEX,int> running_consumers_;
+  std::atomic<int> running_consumers_;
   // keep track of how many consumers are still running so we shutdown
   // at the right moment.
 

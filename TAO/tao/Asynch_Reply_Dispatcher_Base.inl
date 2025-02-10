@@ -5,7 +5,7 @@ namespace TAO
 {
   ACE_INLINE void
   ARDB_Refcount_Functor::operator () (
-      TAO_Asynch_Reply_Dispatcher_Base *ardb) throw ()
+      TAO_Asynch_Reply_Dispatcher_Base *ardb) noexcept
   {
     (void) ardb->intrusive_remove_ref (ardb);
   }

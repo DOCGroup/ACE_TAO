@@ -58,10 +58,10 @@ public:
                          PortableServer::POA_ptr poa);
 
   /// Destructor.
-  ~TAO_Bindings_Iterator (void);
+  ~TAO_Bindings_Iterator ();
 
   /// Returns the Default POA of this Servant object
-  virtual PortableServer::POA_ptr _default_POA (void);
+  virtual PortableServer::POA_ptr _default_POA ();
 
   // = Idl methods.
 
@@ -78,7 +78,7 @@ public:
                          CosNaming::BindingList_out bl);
 
   /// This operation destroys the iterator.
-  void destroy (void);
+  void destroy ();
 
   // = Helper method.
 
@@ -117,13 +117,7 @@ private:
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "orbsvcs/Naming/Bindings_Iterator_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Bindings_Iterator_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 #endif /* TAO_BINDINGS_ITERATOR_T_H */

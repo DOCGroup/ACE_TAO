@@ -6,7 +6,7 @@
 
 #include "jaws3/Options.h"
 
-JAWS_Options::JAWS_Options (void)
+JAWS_Options::JAWS_Options ()
 {
   this->cf_ = new JAWS_Config_File ("jaws.conf");
 }

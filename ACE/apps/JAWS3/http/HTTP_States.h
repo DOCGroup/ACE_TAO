@@ -19,7 +19,7 @@ public:                                                          \
                                    , void *                      \
                                    );                            \
                                                                  \
-  static JAWS_Protocol_State * instance (void)                   \
+  static JAWS_Protocol_State * instance ()                       \
   {                                                              \
     return ACE_Singleton<JAWS_HTTP_STATE_NAME, ACE_SYNCH_MUTEX>  \
            ::instance ();                                        \

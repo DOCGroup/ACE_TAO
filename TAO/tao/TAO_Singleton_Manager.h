@@ -48,7 +48,7 @@ class TAO_Export TAO_Singleton_Manager : public ACE_Object_Manager_Base
 {
 public:
   /// Explicitly initialize.
-  virtual int init (void);
+  virtual int init ();
 
   /**
    * Explicitly initialize the TAO_Singleton_Manager, in addition to
@@ -58,30 +58,30 @@ public:
   int init (int register_with_object_manager);
 
   /// Explicitly destroy.
-  virtual int fini (void);
+  virtual int fini ();
 
   /**
    * Returns 1 before the TAO_Singleton_Manager has been constructed.
    * See ACE_Object_Manager::starting_up for more information.
    */
-  static int starting_up (void);
+  static int starting_up ();
 
   /// Returns 1 after the TAO_Singleton_Manager has been destroyed.
   /// See ACE_Object_Manager::shutting_down for more information.
-  static int shutting_down (void);
+  static int shutting_down ();
 
   /// Accesses a default signal set used, for example, in
   /// ACE_Sig_Guard methods.
-  static sigset_t *default_mask (void);
+  static sigset_t *default_mask ();
 
   /// Returns the current thread hook for the process.
-  static ACE_Thread_Hook *thread_hook (void);
+  static ACE_Thread_Hook *thread_hook ();
 
   /// Returns the existing thread hook and assign a new_thread_hook.
   static ACE_Thread_Hook *thread_hook (ACE_Thread_Hook *new_thread_hook);
 
   /// Accessor to singleton instance.
-  static TAO_Singleton_Manager *instance (void);
+  static TAO_Singleton_Manager *instance ();
 
   /// Register an ACE_Cleanup object for cleanup at process
   /// termination.
@@ -94,7 +94,7 @@ public:
    * memory, or EEXIST if the object (or array) had already been
    * registered.
    */
-  static int at_exit (ACE_Cleanup *object, void *param = 0, const char* name = 0);
+  static int at_exit (ACE_Cleanup *object, void *param = nullptr, const char* name = nullptr);
 
   /// Register an object (or array) for cleanup at process
   /// termination.
@@ -117,20 +117,17 @@ public:
                       const char* name);
 
 protected:
-
   /// Force allocation on the heap.
   //@{
-  TAO_Singleton_Manager (void);
-  ~TAO_Singleton_Manager (void);
+  TAO_Singleton_Manager ();
+  ~TAO_Singleton_Manager ();
   //@}
 
 private:
-
-  /// Disallow copying by not implementing the following ...
-  //@{
-  TAO_Singleton_Manager (const TAO_Singleton_Manager &);
-  TAO_Singleton_Manager &operator= (const TAO_Singleton_Manager &);
-  //@}
+  TAO_Singleton_Manager (const TAO_Singleton_Manager &) = delete;
+  TAO_Singleton_Manager &operator= (const TAO_Singleton_Manager &) = delete;
+  TAO_Singleton_Manager (TAO_Singleton_Manager &&) = delete;
+  TAO_Singleton_Manager &operator= (TAO_Singleton_Manager &&) = delete;
 
   /// Register an object or array for deletion at program termination.
   /// See description of static version above for return values.
@@ -154,7 +151,6 @@ private:
   /// Lock that is used to guard internal structures.
   TAO_SYNCH_RECURSIVE_MUTEX *internal_lock_;
 #endif /* ACE_MT_SAFE */
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

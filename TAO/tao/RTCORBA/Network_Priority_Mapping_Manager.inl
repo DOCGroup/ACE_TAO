@@ -6,7 +6,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 // *************************************************************
 
 ACE_INLINE
-TAO_Network_Priority_Mapping_Manager_var::TAO_Network_Priority_Mapping_Manager_var (void) // default constructor
+TAO_Network_Priority_Mapping_Manager_var::TAO_Network_Priority_Mapping_Manager_var () // default constructor
   : ptr_ (TAO_Network_Priority_Mapping_Manager::_nil ())
 {}
 
@@ -16,7 +16,7 @@ TAO_Network_Priority_Mapping_Manager_var::TAO_Network_Priority_Mapping_Manager_v
 {}
 
 ACE_INLINE ::TAO_Network_Priority_Mapping_Manager_ptr
-TAO_Network_Priority_Mapping_Manager_var::ptr (void) const
+TAO_Network_Priority_Mapping_Manager_var::ptr () const
 {
   return this->ptr_;
 }
@@ -28,7 +28,7 @@ TAO_Network_Priority_Mapping_Manager_var::TAO_Network_Priority_Mapping_Manager_v
 {}
 
 ACE_INLINE
-TAO_Network_Priority_Mapping_Manager_var::~TAO_Network_Priority_Mapping_Manager_var (void) // destructor
+TAO_Network_Priority_Mapping_Manager_var::~TAO_Network_Priority_Mapping_Manager_var () // destructor
 {
   CORBA::release (this->ptr_);
 }
@@ -65,25 +65,25 @@ TAO_Network_Priority_Mapping_Manager_var::operator ::TAO_Network_Priority_Mappin
 }
 
 ACE_INLINE ::TAO_Network_Priority_Mapping_Manager_ptr
-TAO_Network_Priority_Mapping_Manager_var::operator-> (void) const
+TAO_Network_Priority_Mapping_Manager_var::operator-> () const
 {
   return this->ptr_;
 }
 
 ACE_INLINE ::TAO_Network_Priority_Mapping_Manager_ptr
-TAO_Network_Priority_Mapping_Manager_var::in (void) const
+TAO_Network_Priority_Mapping_Manager_var::in () const
 {
   return this->ptr_;
 }
 
 ACE_INLINE ::TAO_Network_Priority_Mapping_Manager_ptr &
-TAO_Network_Priority_Mapping_Manager_var::inout (void)
+TAO_Network_Priority_Mapping_Manager_var::inout ()
 {
   return this->ptr_;
 }
 
 ACE_INLINE ::TAO_Network_Priority_Mapping_Manager_ptr &
-TAO_Network_Priority_Mapping_Manager_var::out (void)
+TAO_Network_Priority_Mapping_Manager_var::out ()
 {
   CORBA::release (this->ptr_);
   this->ptr_ = ::TAO_Network_Priority_Mapping_Manager::_nil ();
@@ -91,7 +91,7 @@ TAO_Network_Priority_Mapping_Manager_var::out (void)
 }
 
 ACE_INLINE ::TAO_Network_Priority_Mapping_Manager_ptr
-TAO_Network_Priority_Mapping_Manager_var::_retn (void)
+TAO_Network_Priority_Mapping_Manager_var::_retn ()
 {
   // yield ownership of managed obj reference
   ::TAO_Network_Priority_Mapping_Manager_ptr val = this->ptr_;
@@ -112,7 +112,7 @@ TAO_Network_Priority_Mapping_Manager_var::release (TAO_Network_Priority_Mapping_
 }
 
 ACE_INLINE ::TAO_Network_Priority_Mapping_Manager_ptr
-TAO_Network_Priority_Mapping_Manager_var::nil (void)
+TAO_Network_Priority_Mapping_Manager_var::nil ()
 {
   return ::TAO_Network_Priority_Mapping_Manager::_nil ();
 }
@@ -187,13 +187,13 @@ TAO_Network_Priority_Mapping_Manager_out::operator ::TAO_Network_Priority_Mappin
 }
 
 ACE_INLINE ::TAO_Network_Priority_Mapping_Manager_ptr &
-TAO_Network_Priority_Mapping_Manager_out::ptr (void) // ptr
+TAO_Network_Priority_Mapping_Manager_out::ptr () // ptr
 {
   return this->ptr_;
 }
 
 ACE_INLINE ::TAO_Network_Priority_Mapping_Manager_ptr
-TAO_Network_Priority_Mapping_Manager_out::operator-> (void)
+TAO_Network_Priority_Mapping_Manager_out::operator-> ()
 {
   return this->ptr_;
 }
@@ -206,7 +206,7 @@ TAO_Network_Priority_Mapping_Manager::TAO_Network_Priority_Mapping_Manager (RTCO
 }
 
 ACE_INLINE RTCORBA::NetworkPriorityMapping *
-TAO_Network_Priority_Mapping_Manager::mapping (void)
+TAO_Network_Priority_Mapping_Manager::mapping ()
 {
   return this->mapping_;
 }

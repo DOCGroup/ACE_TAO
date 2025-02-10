@@ -43,7 +43,7 @@ namespace TAO
 
 #if TAO_HAS_INTERCEPTORS == 1
   Dynamic::ParameterList *
-  DII_Invocation::arguments (void)
+  DII_Invocation::arguments ()
   {
     Dynamic::ParameterList_var safe_parameter_list;
 
@@ -162,7 +162,7 @@ namespace TAO
 #if TAO_HAS_INTERCEPTORS == 1
   //@NOTE: Need to figure a way to share this code
   Dynamic::ParameterList *
-  DII_Deferred_Invocation::arguments (void)
+  DII_Deferred_Invocation::arguments ()
   {
     Dynamic::ParameterList_var safe_parameter_list;
 

@@ -33,7 +33,7 @@ public:
   CORBA::Long bind (Peer_ptr a_peer);
 
   /// Start the peers...
-  void start (void);
+  void start ();
 
 private:
   /// The callback method

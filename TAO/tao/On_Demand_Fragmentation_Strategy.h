@@ -15,7 +15,6 @@
 
 #include "tao/GIOP_Fragmentation_Strategy.h"
 #include "ace/CDR_Base.h"
-#include "ace/Copy_Disabled.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -38,33 +37,30 @@ class TAO_Transport;
  *
  * @see TAO_GIOP_Fragmentation_Strategy
  */
-class TAO_On_Demand_Fragmentation_Strategy
-  : public TAO_GIOP_Fragmentation_Strategy
+class TAO_On_Demand_Fragmentation_Strategy : public TAO_GIOP_Fragmentation_Strategy
 {
 public:
   /// Constructor.
   TAO_On_Demand_Fragmentation_Strategy (TAO_Transport * transport,
                                         ACE_CDR::ULong max_message_size);
 
-  virtual ~TAO_On_Demand_Fragmentation_Strategy (void);
+  virtual ~TAO_On_Demand_Fragmentation_Strategy ();
   virtual int fragment (TAO_OutputCDR & cdr,
                         ACE_CDR::ULong pending_alignment,
                         ACE_CDR::ULong pending_length);
 
 private:
-
-  // Disallow copying and assignment.
-  TAO_On_Demand_Fragmentation_Strategy (TAO_On_Demand_Fragmentation_Strategy const &);
-  void operator= (TAO_On_Demand_Fragmentation_Strategy const &);
+  TAO_On_Demand_Fragmentation_Strategy (TAO_On_Demand_Fragmentation_Strategy const &) = delete;
+  void operator= (TAO_On_Demand_Fragmentation_Strategy const &) = delete;
+  TAO_On_Demand_Fragmentation_Strategy (TAO_On_Demand_Fragmentation_Strategy &&) = delete;
+  void operator= (TAO_On_Demand_Fragmentation_Strategy &&) = delete;
 
 private:
-
   /// Pointer to the underlying transport object.
   TAO_Transport * const transport_;
 
   /// Size of GIOP message at which fragmentation will occur.
   ACE_CDR::ULong const max_message_size_;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

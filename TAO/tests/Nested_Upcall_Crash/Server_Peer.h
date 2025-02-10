@@ -19,8 +19,8 @@ public:
   void callme(Test::Peer_ptr callback,
               CORBA::ULong max_depth,
               Test::Payload const & extra_data);
-  void crash(void);
-  void noop(void);
+  void crash();
+  void noop();
 
 private:
   unsigned int seed_;

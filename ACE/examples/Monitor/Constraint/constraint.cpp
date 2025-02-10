@@ -34,7 +34,7 @@ class Trigger16k : public Control_Action
 class Monitor_Checker : public ACE_Task_Base
 {
 public:
-  int svc (void)
+  int svc ()
   {
     /// Get an instance of the MC service singleton.
     MC_ADMINMANAGER* mgr =

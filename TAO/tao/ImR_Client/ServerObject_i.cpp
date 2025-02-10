@@ -12,21 +12,21 @@ ServerObject_i::ServerObject_i (CORBA::ORB_ptr orb,
 }
 
 void
-ServerObject_i::ping (void)
+ServerObject_i::ping ()
 {
 }
 
 void
-ServerObject_i::shutdown (void)
+ServerObject_i::shutdown ()
 {
   // Note : We want our child POAs to be able to unregister themselves from
   // the ImR, so we must destroy them before shutting down the orb.
   poa_->destroy(1, 0);
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }
 
 PortableServer::POA_ptr
-ServerObject_i::_default_POA (void)
+ServerObject_i::_default_POA ()
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }

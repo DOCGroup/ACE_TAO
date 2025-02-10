@@ -7,9 +7,9 @@ test_i::test_i (CORBA::ORB_ptr orb)
 }
 
 void
-test_i::shutdown (void)
+test_i::shutdown ()
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }
 
 CORBA::ULong

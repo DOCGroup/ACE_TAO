@@ -26,7 +26,7 @@ public:
 
   void get_out (CORBA::Long_out arg) IT_THROW_DECL((CORBA::SystemException));
 
-  void shutdown (void) IT_THROW_DECL((CORBA::SystemException));
+  void shutdown () IT_THROW_DECL((CORBA::SystemException));
 
 private:
   /// The ORB pseudo-reference (for shutdown).

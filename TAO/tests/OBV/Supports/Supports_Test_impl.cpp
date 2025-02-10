@@ -6,7 +6,7 @@
 
 /* vt_graph_impl */
 
-vt_graph_impl::vt_graph_impl (void)
+vt_graph_impl::vt_graph_impl ()
 {
 }
 
@@ -24,7 +24,7 @@ vt_graph_impl::vt_graph_impl (int num_nodes)
 }
 
 // Get the number of nodes in the vt_graph.
-CORBA::Long vt_graph_impl::size (void)
+CORBA::Long vt_graph_impl::size ()
 {
   return nodes_ ().length ();
 }
@@ -41,7 +41,7 @@ vt_graph_impl::add_node (const char * name)
 
 // Print out information about each node.
 void
-vt_graph_impl::print (void)
+vt_graph_impl::print ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "Printing graph data...\n"));
@@ -57,7 +57,7 @@ vt_graph_impl::print (void)
 /* vt_graph_init_impl - factory operations */
 
 Supports_Test::vt_graph *
-vt_graph_init_impl::create (void)
+vt_graph_init_impl::create ()
 {
   vt_graph_impl * ret_val = 0;
   ACE_NEW_RETURN (ret_val, vt_graph_impl, 0);
@@ -65,7 +65,7 @@ vt_graph_init_impl::create (void)
 }
 
 CORBA::ValueBase *
-vt_graph_init_impl::create_for_unmarshal (void)
+vt_graph_init_impl::create_for_unmarshal ()
 {
   vt_graph_impl * ret_val = 0;
   ACE_NEW_RETURN (ret_val, vt_graph_impl, 0);
@@ -79,7 +79,7 @@ test_impl::test_impl (CORBA::ORB_ptr orb) : orb_ (CORBA::ORB::_duplicate (orb))
 {
 }
 
-test_impl::~test_impl (void)
+test_impl::~test_impl ()
 {
 }
 
@@ -118,7 +118,6 @@ void
 test_impl::pass_vt_graph_out (
     Supports_Test::vt_graph_out vt_graph_param)
 {
-
   vt_graph_impl * the_vt_graph = 0;
   ACE_NEW (the_vt_graph, vt_graph_impl (4));
   vt_graph_param = the_vt_graph;
@@ -126,14 +125,12 @@ test_impl::pass_vt_graph_out (
   ACE_ASSERT (vt_graph_param->size () == 4);
   vt_graph_param->add_node ("NEW1");
   ACE_ASSERT (vt_graph_param->size () == 5);
-
 }
 
 void
 test_impl::pass_obj_graph_inout (
     Supports_Test::graph * &graph_param)
 {
-
   ACE_ASSERT (graph_param->size () == 6);
   graph_param->add_node ("NEW3");
   ACE_ASSERT (graph_param->size () == 7);
@@ -143,28 +140,26 @@ void
 test_impl::pass_vt_graph_inout (
     Supports_Test::vt_graph * &vt_graph_param)
 {
-
   ACE_ASSERT (vt_graph_param->size () == 6);
   vt_graph_param->add_node ("NEW3");
   ACE_ASSERT (vt_graph_param->size () == 7);
-
 }
 
 void
-test_impl::start (void)
+test_impl::start ()
 {
 }
 
 void
-test_impl::finish (void)
+test_impl::finish ()
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }
 
 
 /* node_impl */
 
-node_impl::node_impl (void)
+node_impl::node_impl ()
 {
 }
 
@@ -185,7 +180,6 @@ node_impl::add_edge (Supports_Test::Node * neighbor)
   neighbors_ ().length (neighbors_ ().length () + 1);
   neighbors_ ()[neighbors_ ().length () - 1] = neighbor;
   neighbor->_add_ref ();
-  return;
 }
 
 // Remove the edge from this node to neighbor.
@@ -208,7 +202,7 @@ node_impl::change_weight (CORBA::Long new_weight)
 }
 
 void
-node_impl::print (void)
+node_impl::print ()
 {
   cout << "  Name: " << name_ () << endl;
   cout << "    Weight: " << weight_ () << endl;
@@ -221,7 +215,7 @@ node_impl::print (void)
 /* node_init_impl - factory operations */
 
 Supports_Test::Node *
-node_init_impl::create (void)
+node_init_impl::create ()
 {
   node_impl * ret_val = 0;
   ACE_NEW_RETURN (ret_val, node_impl, 0);
@@ -229,7 +223,7 @@ node_init_impl::create (void)
 }
 
 CORBA::ValueBase *
-node_init_impl::create_for_unmarshal (void)
+node_init_impl::create_for_unmarshal ()
 {
   node_impl * ret_val = 0;
   ACE_NEW_RETURN (ret_val, node_impl, 0);

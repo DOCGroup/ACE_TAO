@@ -136,30 +136,30 @@ public:
                              int own_factory = 0);
 
   /// Destructor
-  virtual ~TAO_CEC_TypedEventChannel (void);
+  virtual ~TAO_CEC_TypedEventChannel ();
 
   /// Start the internal threads (if any), etc.
   /// After this call the EC can be used.
-  virtual void activate (void);
+  virtual void activate ();
 
   /// Shutdown any internal threads, cleanup all the internal
   /// structures, flush all the messages, etc.
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
   /// Access the dispatching module....
-  TAO_CEC_Dispatching* dispatching (void) const;
+  TAO_CEC_Dispatching* dispatching () const;
 
   /// Access the consumer admin implementation.
-  TAO_CEC_TypedConsumerAdmin* typed_consumer_admin (void) const;
+  TAO_CEC_TypedConsumerAdmin* typed_consumer_admin () const;
 
   /// Access the supplier admin implementation.
-  TAO_CEC_TypedSupplierAdmin* typed_supplier_admin (void) const;
+  TAO_CEC_TypedSupplierAdmin* typed_supplier_admin () const;
 
   /// Access the consumer control strategy.
-  TAO_CEC_ConsumerControl* consumer_control (void) const;
+  TAO_CEC_ConsumerControl* consumer_control () const;
 
   /// Access the supplier control strategy.
-  TAO_CEC_SupplierControl* supplier_control (void) const;
+  TAO_CEC_SupplierControl* supplier_control () const;
 
   // = The factory methods, they delegate on the CEC_Factory.
   /// Create and destroy a ProxyPushSupplier
@@ -181,14 +181,14 @@ public:
   void destroy_proxy_collection (TAO_CEC_TypedProxyPushConsumer_Collection*);
 
   /// Access the supplier and consumer POAs from the factory.
-  PortableServer::POA_ptr typed_supplier_poa (void);
-  PortableServer::POA_ptr typed_consumer_poa (void);
+  PortableServer::POA_ptr typed_supplier_poa ();
+  PortableServer::POA_ptr typed_consumer_poa ();
 
   /// Locking strategies for the ProxyPushConsumer and
   /// ProxyPushSupplier objects
-  ACE_Lock* create_consumer_lock (void);
+  ACE_Lock* create_consumer_lock ();
   void destroy_consumer_lock (ACE_Lock*);
-  ACE_Lock* create_supplier_lock (void);
+  ACE_Lock* create_supplier_lock ();
   void destroy_supplier_lock (ACE_Lock*);
 
   /// Used to inform the EC that a Consumer has connected or
@@ -204,14 +204,14 @@ public:
   virtual void disconnected (TAO_CEC_ProxyPushSupplier*);
 
   /// Can the consumers reconnect to the EC?
-  int consumer_reconnect (void) const;
+  int consumer_reconnect () const;
 
   /// Can the suppliers reconnect to the EC?
-  int supplier_reconnect (void) const;
+  int supplier_reconnect () const;
 
   /// Should we send callback disconnect messages when a proxy is
   /// disconnected by the client
-  int disconnect_callbacks (void) const;
+  int disconnect_callbacks () const;
 
   // Hash map which will operate as a IFR cache for the Supported Interface's operations and parameters
   typedef ACE_Hash_Map_Manager_Ex<const char *, TAO_CEC_Operation_Params *, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Null_Mutex> InterfaceDescription;
@@ -227,13 +227,13 @@ public:
   int supplier_register_supported_interface (const char *supported_interface);
 
   /// Function to return the supported_interface_
-  const char * supported_interface (void) const;
+  const char * supported_interface () const;
 
   /// Function to return the base_interfaces_
   CORBA::RepositoryId base_interfaces (CORBA::ULong index) const;
 
   /// Function to return the number of base_interfaces_
-  CORBA::ULong number_of_base_interfaces (void) const;
+  CORBA::ULong number_of_base_interfaces () const;
 
   /// Function populates the NVList from the provide param information
   virtual void create_operation_list (TAO_CEC_Operation_Params *oper_params,
@@ -245,14 +245,14 @@ public:
 
   // = The CosTypedEventChannelAdmin::TypedEventChannel methods...
   virtual ::CosTypedEventChannelAdmin::TypedConsumerAdmin_ptr
-    for_consumers (void);
+    for_consumers ();
 
   virtual ::CosTypedEventChannelAdmin::TypedSupplierAdmin_ptr
-    for_suppliers (void);
+    for_suppliers ();
 
-  virtual void destroy (void);
+  virtual void destroy ();
 
-  ServantRetryMap& get_servant_retry_map (void);
+  ServantRetryMap& get_servant_retry_map ();
 
   /// Forwarded to the factory
   CORBA::Policy_ptr
@@ -266,7 +266,7 @@ protected:
   int insert_into_ifr_cache (const char *operation, TAO_CEC_Operation_Params *parameters);
 
   /// Function clears the IFR cache
-  int clear_ifr_cache (void);
+  int clear_ifr_cache ();
 
 private:
   /// The POAs used to activate "supplier-side" and "consumer-side"
@@ -339,10 +339,10 @@ class TAO_Event_Serv_Export TAO_CEC_Param
 {
 public:
   /// Constructor
-  TAO_CEC_Param (void);
+  TAO_CEC_Param () = default;
 
   /// Destructor
-  ~TAO_CEC_Param (void);
+  ~TAO_CEC_Param () = default;
 
 private:
   /// Only the TypedEventChannel can read the private fields.
@@ -359,7 +359,7 @@ class TAO_Event_Serv_Export TAO_CEC_Operation_Params
   /// constructor
   TAO_CEC_Operation_Params (CORBA::ULong num_params);
   /// destructor
-  ~TAO_CEC_Operation_Params (void);
+  ~TAO_CEC_Operation_Params ();
 
 private:
   /// Only the TypedEventChannel can read the private fields.

@@ -11,13 +11,12 @@
 #endif /* __ACE_INLINE__ */
 
 void
-Simple_Server_i::ping (void)
+Simple_Server_i::ping ()
 {
-  return;
 }
 
 void
-Simple_Server_i::validate_protocol (void)
+Simple_Server_i::validate_protocol ()
 {
   if (this->validated_ == NOT_VALIDATED)
     {
@@ -74,7 +73,7 @@ Simple_Server_i::test_method (CORBA::Long x)
 }
 
 void
-Simple_Server_i::shutdown (void)
+Simple_Server_i::shutdown ()
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

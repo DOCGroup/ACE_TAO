@@ -4,7 +4,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO::FT_Property_Validator::FT_Property_Validator (void)
+TAO::FT_Property_Validator::FT_Property_Validator ()
   : replication_style_ (1),
     membership_style_ (1),
     consistency_style_ (1),
@@ -32,7 +32,7 @@ TAO::FT_Property_Validator::FT_Property_Validator (void)
 }
 
 
-TAO::FT_Property_Validator::~FT_Property_Validator (void)
+TAO::FT_Property_Validator::~FT_Property_Validator ()
 {
 }
 

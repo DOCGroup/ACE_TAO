@@ -2,7 +2,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_BiDir_Adapter::~TAO_BiDir_Adapter (void)
+TAO_BiDir_Adapter::~TAO_BiDir_Adapter ()
 {
 }
 

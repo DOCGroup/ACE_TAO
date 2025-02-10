@@ -111,7 +111,6 @@ struct TAO_RTSched_Export TAO_RT_Info_Tuple
 class TAO_RTSched_Export TAO_Reconfig_Scheduler_Entry
 {
 public:
-
   // Info for DFS traversal, topological sort of call graph.
   enum DFS_Status {NOT_VISITED, VISITED, FINISHED};
 
@@ -140,7 +139,7 @@ public:
                        long &tuple_count);
 
   /// Accessor for stored original RT_Info data.
-  TAO_RT_Info_Ex & orig_rt_info_data (void);
+  TAO_RT_Info_Ex & orig_rt_info_data ();
 
   /// Mutator for stored original RT_Info data.
   void orig_rt_info_data (TAO_RT_Info_Ex &data);
@@ -305,7 +304,6 @@ public:
 */
 
 private:
-
   /**
    * Stores the values of operation characteristics as they were specified
    * in the most recent call to the Reconfig_Scheduler's set () method.
@@ -402,13 +400,11 @@ private:
 class TAO_RTSched_Export TAO_Reconfig_Sched_Entry_Visitor
 {
 public:
-
   /// Destructor.
-  virtual ~TAO_Reconfig_Sched_Entry_Visitor (void);
+  virtual ~TAO_Reconfig_Sched_Entry_Visitor ();
 
   /// Visit a Reconfig Scheduler Entry.
   virtual int visit (TAO_Reconfig_Scheduler_Entry &) = 0;
-
 };
 
 
@@ -422,7 +418,6 @@ class TAO_RTSched_Export TAO_RSE_Reset_Visitor :
   //   prior to the first DFS traversal for topological sorting.
 {
 public:
-
   /// Constructor.
   TAO_RSE_Reset_Visitor ();
 
@@ -446,13 +441,11 @@ public:
 class TAO_RTSched_Export TAO_RT_Info_Tuple_Visitor
 {
 public:
-
   /// Destructor.
-  virtual ~TAO_RT_Info_Tuple_Visitor (void);
+  virtual ~TAO_RT_Info_Tuple_Visitor ();
 
   /// Visit a RT_Info tuple.
   virtual int visit (TAO_RT_Info_Tuple &) = 0;
-
 };
 
 /**
@@ -466,7 +459,6 @@ public:
 class TAO_RTSched_Export TAO_Reconfig_Sched_Strategy_Base
 {
 public:
-
   /// Ordering function to compare the DFS finish times of
   /// two RT_Info_Tuples
   static int comp_tuple_finish_times (const void *first, const void *second);
@@ -509,7 +501,6 @@ class TAO_RTSched_Export TAO_MUF_FAIR_Reconfig_Sched_Strategy
   //   has index 0, the next higher rate has index 1, etc.
 {
 public:
-
   /**
    * Ordering function used to qsort an array of RT_Info_Tuple
    * pointers into a total <priority, subpriority> ordering.  Returns
@@ -566,7 +557,6 @@ class TAO_RTSched_Export TAO_RMS_FAIR_Reconfig_Sched_Strategy
   //   order.
 {
 public:
-
   /**
    * Ordering function used to qsort an array of RT_Info_Tuple
    * pointers into a total <priority, subpriority> ordering.  Returns
@@ -638,7 +628,6 @@ class TAO_RTSched_Export TAO_RMS_MLF_Reconfig_Sched_Strategy
   //   order.
 {
 public:
-
   /**
    * Ordering function used to qsort an array of RT_Info_Tuple
    * pointers into a total <priority, subpriority> ordering.  Returns

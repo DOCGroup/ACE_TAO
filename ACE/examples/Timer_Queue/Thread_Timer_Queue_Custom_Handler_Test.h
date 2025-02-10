@@ -64,7 +64,7 @@ public:
               Thread_Timer_Queue_Custom_Handler_Test &timer_queue_driver);
 
   /// This method runs the event loop in the new thread.
-  virtual int svc (void);
+  virtual int svc ();
 
   // = Some helper methods.
 
@@ -81,7 +81,7 @@ public:
   int shutdown_timer (void *);
 
   /// Dump the state of the timer queue.
-  void dump (void);
+  void dump ();
 
 private:
   /// The timer queue implementation.
@@ -108,12 +108,12 @@ private:
 class ACE_Svc_Export Thread_Timer_Queue_Custom_Handler_Test : public Timer_Queue_Test_Driver <Thread_Timer_Queue, Custom_Handler_Input_Task, Custom_Handler_Input_Task::ACTION>
 {
 public:
-  Thread_Timer_Queue_Custom_Handler_Test (void);
-  ~Thread_Timer_Queue_Custom_Handler_Test (void);
+  Thread_Timer_Queue_Custom_Handler_Test ();
+  ~Thread_Timer_Queue_Custom_Handler_Test ();
 
-  virtual int display_menu (void);
-  virtual int init (void);
-  virtual int run_test (void);
+  virtual int display_menu ();
+  virtual int init ();
+  virtual int run_test ();
 
 private:
   /// Subclassed from ACE_Task.

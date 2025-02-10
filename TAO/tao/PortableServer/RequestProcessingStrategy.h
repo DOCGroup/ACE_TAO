@@ -12,13 +12,12 @@
 #define TAO_REQUEST_PROCESSING_STRATEGY_H
 #include /**/ "ace/pre.h"
 
-#include "tao/PortableServer/Policy_Strategy.h"
+#include "tao/PortableServer/PortableServer.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/PortableServer/PortableServer.h"
 #include "tao/PortableServer/Servant_Location.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -45,33 +44,27 @@ namespace TAO
   namespace Portable_Server
   {
     class RequestProcessingStrategy
-      : public Policy_Strategy
     {
     public:
-      RequestProcessingStrategy (void);
+      RequestProcessingStrategy () = default;
+      virtual ~RequestProcessingStrategy () = default;
 
       virtual void strategy_init(TAO_Root_POA *poa);
 
-      virtual void strategy_init(
-        TAO_Root_POA *poa,
-        ::PortableServer::ServantRetentionPolicyValue);
-
-      virtual void strategy_cleanup(void);
+      virtual void strategy_cleanup();
 
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
-
-      virtual PortableServer::ServantManager_ptr get_servant_manager (void) = 0;
+      virtual PortableServer::ServantManager_ptr get_servant_manager () = 0;
 
       virtual void set_servant_manager (
         PortableServer::ServantManager_ptr imgr) = 0;
 
       virtual void set_servant (PortableServer::Servant servant) = 0;
 
-      virtual PortableServer::Servant get_servant (void) = 0;
-
+      virtual PortableServer::Servant get_servant () = 0;
 #endif /* TAO_HAS_MINIMUM_POA == 0 !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO) */
 
-      virtual TAO_SERVANT_LOCATION locate_servant (
+      virtual TAO_Servant_Location locate_servant (
         const PortableServer::ObjectId &system_id,
         PortableServer::Servant &servant) = 0;
 
@@ -101,13 +94,8 @@ namespace TAO
         const PortableServer::ObjectId &system_id,
         const TAO::Portable_Server::Servant_Upcall &servant_upcall) = 0;
 
-      virtual ::PortableServer::RequestProcessingPolicyValue type() const = 0;
-
-      virtual ::PortableServer::ServantRetentionPolicyValue sr_type() const;
-
     protected:
-      TAO_Root_POA* poa_;
-      ::PortableServer::ServantRetentionPolicyValue sr_value_;
+      TAO_Root_POA* poa_ {};
     };
   }
 }

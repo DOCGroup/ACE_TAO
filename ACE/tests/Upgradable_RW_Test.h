@@ -3,9 +3,7 @@
 /**
  *  @file    Upgradable_RW_Test.h
  *
- *  This class gets its own header file to work around AIX C++
- *  compiler "features" related to template instantiation...  It is
- *  only used by Upgradable_RW_Test.cpp.
+ *  It is only used by Upgradable_RW_Test.cpp.
  *
  *  @author Michael Kircher <mk1@cs.wustl.edu>
  */
@@ -53,7 +51,7 @@ public:
   {
   }
 
-  ACE_CString *value (void)
+  ACE_CString *value ()
   {
     return this->item_;
   }
@@ -74,7 +72,7 @@ typedef ACE_Double_Linked_List<Element> Linked_List;
 class Time_Calculation
 {
 public:
-  Time_Calculation (void)
+  Time_Calculation ()
     : reported_times_ (0)
   {
     times_.real_time = 0;
@@ -85,7 +83,7 @@ public:
   /// take the time of the thread and add it to
   void report_time (ACE_Profile_Timer::ACE_Elapsed_Time &elapsed_time);
 
-  void print_stats (void);
+  void print_stats ();
 
 private:
   /// add the times incrementally
@@ -113,7 +111,7 @@ public:
   {
   };
 
-  virtual int svc (void);
+  virtual int svc ();
 
 private:
   /// keep a reference to the time calculation class
@@ -139,7 +137,7 @@ public:
   {
   };
 
-  virtual int svc (void);
+  virtual int svc ();
 
 private:
   /// keep a reference to the time calculation class

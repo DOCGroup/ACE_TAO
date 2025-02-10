@@ -14,15 +14,13 @@ class First_i
   : public virtual POA_Two_Objects_Test::First
 {
 public:
-
   // Ctor..
   First_i (CORBA::ORB_ptr orb, ACE_Auto_Event &two_way_done);
 
   /// Interface methods..
-  void oneway_method (void);
+  void oneway_method ();
 
 private:
-
   /// Use an ORB reference to convert strings to objects and shutdown
   /// the application.
   CORBA::ORB_var orb_;

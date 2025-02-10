@@ -2,7 +2,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
-TAO_Smart_Proxy_Base::TAO_Smart_Proxy_Base (void)
+TAO_Smart_Proxy_Base::TAO_Smart_Proxy_Base ()
 {
 }
 

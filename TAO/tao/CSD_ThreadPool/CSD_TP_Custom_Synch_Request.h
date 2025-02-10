@@ -28,7 +28,6 @@ namespace TAO
 {
   namespace CSD
   {
-
     class TP_Custom_Synch_Request;
     typedef TAO_Intrusive_Ref_Count_Handle<TP_Custom_Synch_Request>
                                              TP_Custom_Synch_Request_Handle;
@@ -45,7 +44,6 @@ namespace TAO
     class TAO_CSD_TP_Export TP_Custom_Synch_Request : public TP_Custom_Request
     {
     public:
-
       /// Constructor.
       TP_Custom_Synch_Request(TP_Custom_Request_Operation* op,
                               TP_Servant_State*            servant_state);
@@ -59,23 +57,18 @@ namespace TAO
       /// been cancelled.
       bool wait();
 
-
     protected:
-
       /// Dispatch the request to the servant.
       virtual void dispatch_i();
 
       /// Cancel the request.
       virtual void cancel_i();
 
-
     private:
-
       /// Helper used to block and unblock the thread that invokes our
       /// wait() method.
       TP_Synch_Helper synch_helper_;
     };
-
   }
 }
 

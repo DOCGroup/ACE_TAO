@@ -18,7 +18,7 @@
 //               Test_Multdim_Array
 // ************************************************************************
 
-Test_Multdim_Array::Test_Multdim_Array (void)
+Test_Multdim_Array::Test_Multdim_Array ()
   : opname_ (CORBA::string_dup ("test_multdim_array")),
     in_ (new Param_Test::Multdim_Array),
     inout_ (new Param_Test::Multdim_Array),
@@ -27,14 +27,14 @@ Test_Multdim_Array::Test_Multdim_Array (void)
 {
 }
 
-Test_Multdim_Array::~Test_Multdim_Array (void)
+Test_Multdim_Array::~Test_Multdim_Array ()
 {
   CORBA::string_free (this->opname_);
   this->opname_ = 0;
 }
 
 const char *
-Test_Multdim_Array::opname (void) const
+Test_Multdim_Array::opname () const
 {
   return this->opname_;
 }
@@ -87,7 +87,7 @@ Test_Multdim_Array::init_parameters (Param_Test_ptr /*objref*/
 }
 
 int
-Test_Multdim_Array::reset_parameters (void)
+Test_Multdim_Array::reset_parameters ()
 {
   Generator *gen = GENERATOR::instance (); // value generator
 
@@ -140,7 +140,7 @@ Test_Multdim_Array::run_sii_test (Param_Test_ptr objref)
 }
 
 CORBA::Boolean
-Test_Multdim_Array::check_validity (void)
+Test_Multdim_Array::check_validity ()
 {
   if (this->compare (this->in_.in (),
                      this->inout_.in ()) &&
@@ -179,7 +179,7 @@ Test_Multdim_Array::compare (const Param_Test::Multdim_Array_slice *a1,
 }
 
 void
-Test_Multdim_Array::print_values (void)
+Test_Multdim_Array::print_values ()
 {
   ACE_DEBUG ((LM_DEBUG, "IN array\n"));
   this->print (this->in_.in ());

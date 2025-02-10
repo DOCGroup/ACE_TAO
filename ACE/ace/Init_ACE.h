@@ -37,7 +37,7 @@ namespace ACE
    * @return Returns 0 on success, -1 on failure, and 1 if it had
    * already been called.
    */
-  extern ACE_Export int init (void);
+  extern ACE_Export int init ();
 
   /**
    * Finalize the ACE library services and releases ACE's internal
@@ -48,7 +48,7 @@ namespace ACE
    * @return Returns 0 on success, -1 on failure, and 1 if it had already been
    * called.
    */
-  extern ACE_Export int fini (void);
+  extern ACE_Export int fini ();
 
   // private:
   //  Used internally, so not exported.

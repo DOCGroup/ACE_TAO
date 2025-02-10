@@ -34,7 +34,7 @@
 class ifr_visitor : public ast_visitor
 {
 public:
-  virtual ~ifr_visitor (void);
+  virtual ~ifr_visitor ();
 
   virtual int visit_decl (AST_Decl *d);
   virtual int visit_scope (UTL_Scope *node);
@@ -82,6 +82,7 @@ public:
   virtual int visit_enum_val (AST_EnumVal *node);
   virtual int visit_array (AST_Array *node);
   virtual int visit_sequence (AST_Sequence *node);
+  virtual int visit_map (AST_Map *node);
   virtual int visit_string (AST_String *node);
   virtual int visit_typedef (AST_Typedef *node);
   virtual int visit_root (AST_Root *node);
@@ -89,11 +90,11 @@ public:
   virtual int visit_param_holder (AST_Param_Holder *node);
 
   /// Accessor for our lock.
-  ACE_Lock &lock (void) const;
+  ACE_Lock &lock () const;
 
 protected:
   // Not abstract but we want to force subclassing anyway.
-  ifr_visitor (void);
+  ifr_visitor ();
 
 private:
   /// Lock.

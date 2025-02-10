@@ -21,7 +21,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Marshal_Object::~TAO_Marshal_Object (void)
+TAO_Marshal_Object::~TAO_Marshal_Object ()
 {
 }
 

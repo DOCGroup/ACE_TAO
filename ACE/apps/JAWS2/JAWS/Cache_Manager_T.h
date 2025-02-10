@@ -16,13 +16,11 @@ class JAWS_Cache_List;
 template <class KEY, class FACTORY, class HASH_FUNC, class EQ_FUNC>
 class JAWS_Cache_Manager
 {
-
   friend class JAWS_Cache_Hash<KEY, HASH_FUNC, EQ_FUNC>;
   friend class JAWS_Cache_Heap<KEY, FACTORY, HASH_FUNC, EQ_FUNC>;
   friend class JAWS_Cache_List<KEY, FACTORY, HASH_FUNC, EQ_FUNC>;
 
 public:
-
   typedef ACE_Singleton<FACTORY, ACE_SYNCH_MUTEX> Object_Factory;
   typedef JAWS_Cache_Hash<KEY, HASH_FUNC, EQ_FUNC> Cache_Hash;
   typedef JAWS_Cache_List<KEY, FACTORY, HASH_FUNC, EQ_FUNC> Cache_Heap;
@@ -73,9 +71,9 @@ public:
                                       // counts
             );
 
-  ~JAWS_Cache_Manager (void);
+  ~JAWS_Cache_Manager ();
 
-  int close (void);
+  int close ();
 
   // Search Methods
 
@@ -98,11 +96,10 @@ public:
   // Decrement reference count on cached object, perhaps delete.
   // Returns 0 if only decremented, 1 if deleted, -1 if error.
 
-  int FLUSH (void);
+  int FLUSH ();
   // Removes lowest priority object from cache.
 
 protected:
-
   int GET_i (const KEY &key, JAWS_Cache_Object *&object);
   // Retrieve the object associated with key from cache.  Return 0 on
   // success, -1 on failure.
@@ -112,7 +109,7 @@ protected:
   // Inserts or replaces object associated with key into cache.
   // Return 0 on success, -1 on failure.
 
-  int FLUSH_i (void);
+  int FLUSH_i ();
   // Removes lowest priority object from cache.
 
   int FLUSH_i (const KEY &key);
@@ -122,7 +119,6 @@ protected:
   // Decrement reference count on cached object, perhaps delete.
 
 private:
-
   ACE_Allocator *allocator_;
   JAWS_Cache_Object_Factory *factory_;
 
@@ -140,7 +136,6 @@ private:
   Cache_Heap *heap_;
 
   ACE_SYNCH_RW_MUTEX lock_;
-
 };
 
 
@@ -158,10 +153,10 @@ public:
   JAWS_Cache_Proxy (const KEY &, DATA *, size_t, Cache_Manager * = 0);
   // Corresponds to a U/PUT
 
-  virtual ~JAWS_Cache_Proxy (void);
+  virtual ~JAWS_Cache_Proxy ();
 
-  DATA *data (void) const;
-  operator DATA * (void) const;
+  DATA *data () const;
+  operator DATA * () const;
 
   virtual int close (DATA *);
 
@@ -170,8 +165,6 @@ private:
   Cache_Manager *manager_;
 };
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "JAWS/Cache_Manager_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #endif /* JAWS_CACHE_MANAGER_T_H */

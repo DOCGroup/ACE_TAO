@@ -34,7 +34,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace PortableInterceptor
 {
-
   /**
    * @class DLL_Resident_ORB_Initializer
    *
@@ -51,13 +50,9 @@ namespace PortableInterceptor
         const ACE_TCHAR * dll_name);
       virtual ~DLL_Resident_ORB_Initializer ();
 
-      virtual void pre_init (
-        ::PortableInterceptor::ORBInitInfo_ptr info
-      );
+      virtual void pre_init (::PortableInterceptor::ORBInitInfo_ptr info);
 
-    virtual void post_init (
-        ::PortableInterceptor::ORBInitInfo_ptr info
-      );
+    virtual void post_init (::PortableInterceptor::ORBInitInfo_ptr info);
 
   private:
     PortableInterceptor::ORBInitializer_var initializer_;
@@ -77,7 +72,6 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #include /**/ "ace/post.h"
 
 #endif /* PI_DLL_RESIDENT_ORB_INITIALIZER_H */
-
 
 
 

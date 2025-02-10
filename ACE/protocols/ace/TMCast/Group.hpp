@@ -3,10 +3,9 @@
 #ifndef TMCAST_GROUP_HPP
 #define TMCAST_GROUP_HPP
 
-#include <ace/Auto_Ptr.h>
 #include <ace/INET_Addr.h>
-
 #include "Export.hpp"
+#include <memory>
 
 namespace ACE_TMCast
 {
@@ -36,7 +35,7 @@ namespace ACE_TMCast
 
   private:
     class GroupImpl;
-    auto_ptr<GroupImpl> pimpl_;
+    std::unique_ptr<GroupImpl> pimpl_;
 
   private:
     Group (Group const&);

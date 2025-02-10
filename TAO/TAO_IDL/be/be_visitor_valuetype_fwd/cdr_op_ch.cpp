@@ -19,7 +19,7 @@ be_visitor_valuetype_fwd_cdr_op_ch::be_visitor_valuetype_fwd_cdr_op_ch (
 {
 }
 
-be_visitor_valuetype_fwd_cdr_op_ch::~be_visitor_valuetype_fwd_cdr_op_ch (void)
+be_visitor_valuetype_fwd_cdr_op_ch::~be_visitor_valuetype_fwd_cdr_op_ch ()
 {
 }
 
@@ -29,7 +29,7 @@ be_visitor_valuetype_fwd_cdr_op_ch::visit_valuetype_fwd (
   )
 {
   AST_Interface *fd = node->full_definition ();
-  be_valuetype *bfd = be_valuetype::narrow_from_decl (fd);
+  be_valuetype *bfd = dynamic_cast<be_valuetype*> (fd);
 
   // If this forward declared vt is defined later in the file,
   // the CDR operator declaration (along with the corresponding
@@ -49,7 +49,7 @@ be_visitor_valuetype_fwd_cdr_op_ch::visit_valuetype_fwd (
   TAO_OutStream *os = this->ctx_->stream ();
 
   be_valuetype *fvd =
-    be_valuetype::narrow_from_decl (node->full_definition ());
+    dynamic_cast<be_valuetype*> (node->full_definition ());
 
   if (fvd->gen_helper_header () == -1)
     {
@@ -62,8 +62,7 @@ be_visitor_valuetype_fwd_cdr_op_ch::visit_valuetype_fwd (
 
   // generate the CDR << and >> operator declarations (prototypes)
 
-  *os << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   *os << be_global->core_versioning_begin () << be_nl;
 

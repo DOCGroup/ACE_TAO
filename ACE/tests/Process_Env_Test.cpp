@@ -14,10 +14,8 @@
 #include "ace/Process.h"
 #include "ace/SString.h"
 
-typedef void (*setenvfn_t) (const ACE_TCHAR *name, const ACE_TCHAR *value,
-                            void *ctx);
-
-#if defined (ACE_WIN32) && !defined (ACE_USES_WCHAR) && !defined (ACE_HAS_WINCE)
+#if defined (ACE_WIN32) && !defined (ACE_USES_WCHAR)
+using setenvfn_t = void (*)(const ACE_TCHAR *, const ACE_TCHAR *, void *);
 
 void create_large_env (setenvfn_t setenv, void *ctx)
 {
@@ -35,13 +33,11 @@ void create_large_env (setenvfn_t setenv, void *ctx)
     }
 }
 
-
 void apo_setenv (const ACE_TCHAR *name, const ACE_TCHAR *value, void *ctx)
 {
   ACE_Process_Options *apo = static_cast<ACE_Process_Options *> (ctx);
   apo->setenv (name, value);
 }
-
 
 void thisproc_setenv (const ACE_TCHAR *name, const ACE_TCHAR *value, void *)
 {
@@ -50,7 +46,6 @@ void thisproc_setenv (const ACE_TCHAR *name, const ACE_TCHAR *value, void *)
   putstr += value;
   ACE_OS::putenv (putstr.c_str ());
 }
-
 #endif
 
 int
@@ -59,7 +54,7 @@ run_main (int, ACE_TCHAR*[])
   int test_status = 0;
   ACE_START_TEST (ACE_TEXT ("Process_Env_Test"));
 
-#if defined (ACE_WIN32) && !defined (ACE_USES_WCHAR) && !defined (ACE_HAS_WINCE)
+#if defined (ACE_WIN32) && !defined (ACE_USES_WCHAR)
   ACE_Process_Options options (
                         0,
                         ACE_Process_Options::DEFAULT_COMMAND_LINE_BUF_LEN,
@@ -71,10 +66,23 @@ run_main (int, ACE_TCHAR*[])
   ACE_Process process;
   if (process.spawn (options) != -1)
     {
-      ACE_ERROR ((LM_ERROR,
-                  "ERROR: This should have failed due to the large "
-                  "environment buffer\n"));
-      test_status = 1;
+      /*
+       * In Windows versions < Vista the ENTIRE environment block could be a
+       * maximum of 32,767 bytes long
+       *
+       * In Windows versions > Vista it's 32,767 bytes per environment variable
+       */
+#if (_WIN32_WINNT < 0x0600)
+        ACE_ERROR ((LM_ERROR,
+                    "ERROR: This should have failed due to the large "
+                    "environment buffer\n"));
+
+        test_status = 1;
+#else
+        ACE_DEBUG ((LM_DEBUG,
+                    "Using large environment buffer works as expected "
+                    "on Windows vista or newer\n"));
+#endif /* _WIN32_WINNT < 0x0600 */
     }
 
   options.enable_unicode_environment ();
@@ -91,7 +99,7 @@ run_main (int, ACE_TCHAR*[])
                              128 * 1024);
   create_large_env (thisproc_setenv, 0);
   opts2.enable_unicode_environment ();
-  opts2.setenv (ACE_TEXT ("ZZ"), ACE_TEXT ("1"));
+  opts2.setenv (ACE_TEXT ("Z"), ACE_TEXT ("1"));
   opts2.command_line (ACE_TEXT ("cmd.exe /d /c ")
     ACE_TEXT ("\"if defined Z (exit 1) else (exit 2)\""));
   ACE_Process process2;
@@ -105,14 +113,14 @@ run_main (int, ACE_TCHAR*[])
   process2.wait (&status);
   if (status != 1)
     {
-       ACE_ERROR ((LM_ERROR,
-                  "ERROR: process2 did not inherit env var Z.\n"));
+      ACE_ERROR ((LM_ERROR,
+                 "ERROR: process2 did not inherit env var Z, wait returned %d.\n", status));
       test_status = 1;
     }
 
 #else
   ACE_DEBUG ((LM_INFO, "This test is for Win32 without ACE_USES_WCHAR\n"));
-#endif /* ACE_WIN32 && !ACE_USES_WCHAR && !ACE_HAS_WINCE */
+#endif /* ACE_WIN32 && !ACE_USES_WCHAR */
 
   ACE_END_TEST;
   return test_status;

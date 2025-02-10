@@ -60,7 +60,6 @@ namespace TAO
       size_t op_len,
       TAO::Collocation_Strategy strategy);
   };
-
 }  // End namespace TAO
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -1,0 +1,2 @@
+# It's Bison-generate code covered by the GNU Bison GPL-exception
+libace-ssl-@ACE_VERSION@: possible-gpl-code-linked-with-openssl

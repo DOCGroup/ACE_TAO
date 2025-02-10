@@ -1,15 +1,9 @@
-
-
 This tests TAO's CosPropertyService implementation.
-
-Please report bugs/comments to <alex@cs.wustl.edu> and
-                               <ace-users@cs.wustl.edu>
 
 To compile:
 ==========
 
 % make realclean all
-
 
 To run:
 ======

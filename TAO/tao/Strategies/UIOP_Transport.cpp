@@ -23,18 +23,18 @@ TAO_UIOP_Transport::TAO_UIOP_Transport (TAO_UIOP_Connection_Handler *handler,
 {
 }
 
-TAO_UIOP_Transport::~TAO_UIOP_Transport (void)
+TAO_UIOP_Transport::~TAO_UIOP_Transport ()
 {
 }
 
 ACE_Event_Handler *
-TAO_UIOP_Transport::event_handler_i (void)
+TAO_UIOP_Transport::event_handler_i ()
 {
   return this->connection_handler_;
 }
 
 TAO_Connection_Handler *
-TAO_UIOP_Transport::connection_handler_i (void)
+TAO_UIOP_Transport::connection_handler_i ()
 {
   return this->connection_handler_;
 }

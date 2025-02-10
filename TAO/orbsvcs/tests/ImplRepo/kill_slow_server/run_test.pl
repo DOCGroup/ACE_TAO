@@ -190,7 +190,7 @@ sub shutdown_server
     my $expected = shift;
     # Shutting down any server object within the server will shutdown the whole server
     $TI->Arguments ("-ORBInitRef ImplRepoService=file://$ti_imriorfile ".
-                    "shutdown TestObject_a" );
+                    "shutdown TestObject_a");
     $TI_status = $TI->SpawnWaitKill ($ti->ProcessStartWaitInterval());
     if ($TI_status != $expected) {
         print STDERR "ERROR: tao_imr shutdown returned $TI_status expected $expected\n";
@@ -202,7 +202,7 @@ sub kill_server
 {
     # Shutting down any server object within the server will shutdown the whole server
     $TI->Arguments ("-ORBInitRef ImplRepoService=file://$ti_imriorfile ".
-                    "kill TestObject_a -s 9" );
+                    "kill TestObject_a -s 9");
     $TI_status = $TI->SpawnWaitKill ($ti->ProcessStartWaitInterval());
     if ($TI_status != 0) {
         print STDERR "ERROR: tao_imr kill returned $TI_status\n";
@@ -214,7 +214,7 @@ sub start_server_no_wait
 {
     # Shutting down any server object within the server will shutdown the whole server
     $TINW->Arguments ("-ORBInitRef ImplRepoService=file://$ti_imriorfile ".
-                      "start TestObject_a" );
+                      "start TestObject_a");
     $TI_status = $TINW->Spawn ($tinw->ProcessStartWaitInterval());
 
     if ($TI_status != 0) {
@@ -238,7 +238,7 @@ sub manual_start_server
 {
     # Shutting down any server object within the server will shutdown the whole server
     $TI->Arguments ("-ORBInitRef ImplRepoService=file://$ti_imriorfile ".
-                    "start TestObject_a" );
+                    "start TestObject_a");
     $TI_status = $TI->SpawnWaitKill ($ti->ProcessStartWaitInterval());
     if ($TI_status != 0) {
         print STDERR "ERROR: tao_imr start returned $TI_status\n";

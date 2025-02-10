@@ -52,7 +52,7 @@ namespace TAO
                     bool response_expected = true);
 
 #if TAO_HAS_INTERCEPTORS ==1
-    virtual Dynamic::ParameterList *arguments (void);
+    virtual Dynamic::ParameterList *arguments ();
 #endif /*TAO_HAS_INTERCEPTORS == 1*/
 
   protected:
@@ -78,7 +78,7 @@ namespace TAO
                              bool response_expected = true);
 
 #if TAO_HAS_INTERCEPTORS ==1
-    virtual Dynamic::ParameterList *arguments (void);
+    virtual Dynamic::ParameterList *arguments ();
 #endif /*TAO_HAS_INTERCEPTORS == 1*/
   };
 }

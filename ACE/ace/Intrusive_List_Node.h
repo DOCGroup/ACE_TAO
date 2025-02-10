@@ -44,9 +44,9 @@ public:
    *
    */
   //@{
-  T *prev (void) const;
+  T *prev () const;
   void prev (T *);
-  T *next (void) const;
+  T *next () const;
   void next (T *);
   //@}
 
@@ -56,12 +56,12 @@ protected:
    * The constructor is protected, because only derived classes should
    * be instantiated.
    */
-  ACE_Intrusive_List_Node (void);
+  ACE_Intrusive_List_Node () = default;
 
 private:
   /// Head and tail of the list
-  T *prev_;
-  T *next_;
+  T *prev_ {};
+  T *next_ {};
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
@@ -70,13 +70,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #include "ace/Intrusive_List_Node.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Intrusive_List_Node.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Intrusive_List_Node.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_INTRUSIVE_LIST_NODE_H */

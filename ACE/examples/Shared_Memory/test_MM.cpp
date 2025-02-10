@@ -8,7 +8,7 @@
 ACE_TCHAR shm_key[] = ACE_TEXT ("/tmp/fooXXXXXX");
 
 static void
-client (void)
+client ()
 {
   ACE_Shared_Memory *shm_client = new ACE_Shared_Memory_MM (shm_key);
   char *shm = (char *) shm_client->malloc ();
@@ -21,7 +21,7 @@ client (void)
 }
 
 static void
-server (void)
+server ()
 {
   ACE_Shared_Memory *shm_server = new ACE_Shared_Memory_MM (shm_key, SHMSZ);
   char *shm = (char *) shm_server->malloc ();

@@ -15,19 +15,18 @@ class AST_Component;
 class FE_ComponentHeader : public FE_InterfaceHeader
 {
 public:
-
   FE_ComponentHeader (UTL_ScopedName *n,
                       UTL_ScopedName *base_component,
                       UTL_NameList *supports,
                       bool compile_now);
-  virtual ~FE_ComponentHeader (void);
+  virtual ~FE_ComponentHeader ();
 
   // Data Accessors.
-  AST_Component *base_component (void) const;
-  AST_Type **supports (void) const;
-  long n_supports (void) const;
-  AST_Interface **supports_flat (void) const;
-  long n_supports_flat (void) const;
+  AST_Component *base_component () const;
+  AST_Type **supports () const;
+  long n_supports () const;
+  AST_Interface **supports_flat () const;
+  long n_supports_flat () const;
 
 protected:
   void compile_inheritance (UTL_ScopedName *base_component);

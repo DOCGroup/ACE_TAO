@@ -108,9 +108,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "ping - event loop finished\n"));
 
-      persistent_poa->destroy (1, 1);
+      persistent_poa->destroy (true, true);
 
-      root_poa->destroy (1, 1);
+      root_poa->destroy (true, true);
     }
   catch (const CORBA::Exception& ex)
     {

@@ -59,7 +59,6 @@ namespace ACE
               virtual ACE::INet::ConnectionHolder* create_connection (
                   const ACE::INet::ConnectionKey& key) const;
           };
-
       }
   }
 

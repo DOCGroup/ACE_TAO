@@ -10,7 +10,7 @@ JAWS_String_Hash_Functor::JAWS_String_Hash_Functor (const char *s)
   this->i_ = ACE::hash_pjw (s);
 }
 
-JAWS_String_Hash_Functor::operator unsigned long (void) const
+JAWS_String_Hash_Functor::operator unsigned long () const
 {
   return this->i_;
 }
@@ -22,12 +22,12 @@ JAWS_String_Equal_Functor::JAWS_String_Equal_Functor (const char *s1,
   this->i_ = ACE_OS::strcmp (s1, s2);
 }
 
-JAWS_String_Equal_Functor::operator int (void) const
+JAWS_String_Equal_Functor::operator int () const
 {
   return this->i_ == 0;
 }
 
-JAWS_Strdup_String::JAWS_Strdup_String (void)
+JAWS_Strdup_String::JAWS_Strdup_String ()
   : c_ (0),
     s_ (0)
 {
@@ -48,7 +48,7 @@ JAWS_Strdup_String::JAWS_Strdup_String (const JAWS_Strdup_String &s)
   ++*(this->c_);
 }
 
-JAWS_Strdup_String::~JAWS_Strdup_String (void)
+JAWS_Strdup_String::~JAWS_Strdup_String ()
 {
   if (this->c_ && --*(this->c_) == 0)
     {
@@ -60,7 +60,7 @@ JAWS_Strdup_String::~JAWS_Strdup_String (void)
   this->c_ = 0;
 }
 
-JAWS_Strdup_String::operator const char * (void) const
+JAWS_Strdup_String::operator const char * () const
 {
   return this->s_;
 }

@@ -16,7 +16,7 @@ be_visitor_root_ci::be_visitor_root_ci (be_visitor_context *ctx)
 {
 }
 
-be_visitor_root_ci::~be_visitor_root_ci (void)
+be_visitor_root_ci::~be_visitor_root_ci ()
 {
 }
 
@@ -55,7 +55,7 @@ be_visitor_root_ci::visit_root (be_root *node)
 }
 
 int
-be_visitor_root_ci::init (void)
+be_visitor_root_ci::init ()
 {
   /// First open the client-side file for writing
   int status =

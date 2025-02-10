@@ -96,9 +96,9 @@ server_i::no_op (client_ptr remote_partner,
 }
 
 void
-server_i::shutdown (void)
+server_i::shutdown ()
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }
 
 client_i::client_i (server_ptr remote_partner)
@@ -140,7 +140,6 @@ void
 client_i::oneway_no_op (const act &act_for_iterations,
                         const act &act_for_flag)
 {
-
   try
     {
       this->remote_partner_->no_op (self_.in (),
@@ -154,7 +153,7 @@ client_i::oneway_no_op (const act &act_for_iterations,
 }
 
 void
-client_i::twoway_no_op (void)
+client_i::twoway_no_op ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "client_i::twoway_no_op\n"));

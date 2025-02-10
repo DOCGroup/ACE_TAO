@@ -1,6 +1,6 @@
 #include "JAWS_Concurrency.h"
 
-JAWS_Concurrency_Base::JAWS_Concurrency_Base (void)
+JAWS_Concurrency_Base::JAWS_Concurrency_Base ()
 {
 }
 
@@ -11,7 +11,7 @@ JAWS_Concurrency_Base::put (ACE_Message_Block *mb, ACE_Time_Value *tv)
 }
 
 int
-JAWS_Concurrency_Base::svc (void)
+JAWS_Concurrency_Base::svc ()
 {
   int result = 0;
 
@@ -33,11 +33,11 @@ JAWS_Concurrency_Base::svc (void)
   return 0;
 }
 
-JAWS_Dispatch_Policy::JAWS_Dispatch_Policy (void)
+JAWS_Dispatch_Policy::JAWS_Dispatch_Policy ()
 {
 }
 
-JAWS_Dispatch_Policy::~JAWS_Dispatch_Policy (void)
+JAWS_Dispatch_Policy::~JAWS_Dispatch_Policy ()
 {
 }
 

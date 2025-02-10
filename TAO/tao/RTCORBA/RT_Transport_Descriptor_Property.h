@@ -34,12 +34,12 @@ class TAO_RTCORBA_Export TAO_RT_Transport_Descriptor_Property
 
 public:
   /// Constructor
-  TAO_RT_Transport_Descriptor_Property (void);
+  TAO_RT_Transport_Descriptor_Property ();
 
   /// Destructor
-  virtual ~TAO_RT_Transport_Descriptor_Property (void);
+  virtual ~TAO_RT_Transport_Descriptor_Property ();
 
-  virtual TAO_RT_Transport_Descriptor_Property *duplicate (void) = 0;
+  virtual TAO_RT_Transport_Descriptor_Property *duplicate () = 0;
 
   virtual CORBA::Boolean is_equivalent (const TAO_RT_Transport_Descriptor_Property *other_prop) = 0;
 
@@ -48,9 +48,10 @@ protected:
   TAO_RT_Transport_Descriptor_Property* next_;
 
 private:
-  // = Disallow copying and assignment.
-  TAO_RT_Transport_Descriptor_Property (const TAO_RT_Transport_Descriptor_Property &);
-  TAO_RT_Transport_Descriptor_Property & operator= (const TAO_RT_Transport_Descriptor_Property &);
+  TAO_RT_Transport_Descriptor_Property (const TAO_RT_Transport_Descriptor_Property &) = delete;
+  TAO_RT_Transport_Descriptor_Property (TAO_RT_Transport_Descriptor_Property &&) = delete;
+  TAO_RT_Transport_Descriptor_Property & operator= (const TAO_RT_Transport_Descriptor_Property &) = delete;
+  TAO_RT_Transport_Descriptor_Property & operator= (TAO_RT_Transport_Descriptor_Property &&) = delete;
 };
 
 /**
@@ -67,16 +68,16 @@ class TAO_RTCORBA_Export TAO_RT_Transport_Descriptor_Private_Connection_Property
 {
 public:
   /// Constructor
-  TAO_RT_Transport_Descriptor_Private_Connection_Property (void);
+  TAO_RT_Transport_Descriptor_Private_Connection_Property ();
   TAO_RT_Transport_Descriptor_Private_Connection_Property (long object_id);
 
   /// Destructor
-  ~TAO_RT_Transport_Descriptor_Private_Connection_Property (void);
+  ~TAO_RT_Transport_Descriptor_Private_Connection_Property ();
 
   /// Init
   void init (long object_id);
 
-  virtual TAO_RT_Transport_Descriptor_Property *duplicate (void);
+  virtual TAO_RT_Transport_Descriptor_Property *duplicate ();
 
   virtual CORBA::Boolean is_equivalent (const TAO_RT_Transport_Descriptor_Property *other_prop);
 
@@ -87,7 +88,6 @@ private:
    * @c object_id_ is the @c TAO_Stub* of the object.
    */
   long object_id_;
-
 };
 
 /*****************************************************************************/
@@ -104,17 +104,17 @@ class TAO_RTCORBA_Export TAO_RT_Transport_Descriptor_Banded_Connection_Property
 {
 public:
   /// Constructor
-  TAO_RT_Transport_Descriptor_Banded_Connection_Property (void);
+  TAO_RT_Transport_Descriptor_Banded_Connection_Property ();
   TAO_RT_Transport_Descriptor_Banded_Connection_Property (CORBA::Short low_priority,
                                                           CORBA::Short high_priority);
 
   /// Destructor
-  ~TAO_RT_Transport_Descriptor_Banded_Connection_Property (void);
+  ~TAO_RT_Transport_Descriptor_Banded_Connection_Property ();
 
   /// Init
   void init (CORBA::Short low_priority, CORBA::Short high_priority);
 
-  virtual TAO_RT_Transport_Descriptor_Property *duplicate (void);
+  virtual TAO_RT_Transport_Descriptor_Property *duplicate ();
 
   virtual CORBA::Boolean is_equivalent (const TAO_RT_Transport_Descriptor_Property *other_prop);
 

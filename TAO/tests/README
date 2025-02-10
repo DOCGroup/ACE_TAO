@@ -1,5 +1,3 @@
-
-
 This directory contains a number of tests to validate that TAO is
 functioning correctly.  The individual directories contain READMEs on
 how to run the following tests:
@@ -35,7 +33,7 @@ how to run the following tests:
 
         . Bidirectional
 
-          This is a test that exercises the birectional GIOP connection
+          This is a test that exercises the bidirectional GIOP connection
           implementation in TAO.
 
         . Bidirectional_NestedUpcall

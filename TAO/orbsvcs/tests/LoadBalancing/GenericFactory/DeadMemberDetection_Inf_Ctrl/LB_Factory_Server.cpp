@@ -21,13 +21,13 @@ LB_Factory_Server::LB_Factory_Server (int argc, ACE_TCHAR ** argv)
 }
 
 CORBA::ORB_ptr
-LB_Factory_Server::orb (void)
+LB_Factory_Server::orb ()
 {
   return this->orb_.in ();
 }
 
 int
-LB_Factory_Server::run (void)
+LB_Factory_Server::run ()
 {
   try
     {
@@ -44,12 +44,11 @@ LB_Factory_Server::run (void)
       return -1;
     }
   return 1;
-
 }
 
 
 int
-LB_Factory_Server::destroy (void)
+LB_Factory_Server::destroy ()
 {
   try
     {
@@ -66,7 +65,6 @@ LB_Factory_Server::destroy (void)
       return -1;
     }
   return 1;
-
 }
 
 int
@@ -125,7 +123,7 @@ LB_Factory_Server::parse_args (int& argc, ACE_TCHAR **& argv)
 }
 
 int
-LB_Factory_Server::init (void)
+LB_Factory_Server::init ()
 {
   try
     {
@@ -195,6 +193,5 @@ LB_Factory_Server::init (void)
     }
 
   return 1;
-
 }
 

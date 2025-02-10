@@ -26,8 +26,8 @@
 class ImR_ResponseHandler
 {
 public:
-  ImR_ResponseHandler (void);
-  virtual ~ImR_ResponseHandler (void);
+  ImR_ResponseHandler ();
+  virtual ~ImR_ResponseHandler ();
 
   // Dummy implementations used for internal operations
   virtual void send_ior (const char *pior);

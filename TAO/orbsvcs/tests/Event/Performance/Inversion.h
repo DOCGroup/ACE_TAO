@@ -26,7 +26,7 @@ class EC_Inversion : public EC_Driver
 {
 public:
   /// Constructor
-  EC_Inversion (void);
+  EC_Inversion ();
 
   // = The EC_Driver methods
   /**
@@ -42,11 +42,11 @@ public:
    * other consumer receives events from a set of low priority
    * suppliers.
    */
-  virtual void connect_consumers (void);
-  virtual void connect_suppliers (void);
+  virtual void connect_consumers ();
+  virtual void connect_suppliers ();
 
   /// Activate the suppliers at different priorities
-  virtual void activate_tasks (void);
+  virtual void activate_tasks ();
 
 private:
   /// If set then both low priority and high priority suppliers

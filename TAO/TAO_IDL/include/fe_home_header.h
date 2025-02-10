@@ -23,12 +23,12 @@ public:
                  UTL_ScopedName *managed_component,
                  UTL_ScopedName *primary_key);
 
-  virtual ~FE_HomeHeader (void);
+  virtual ~FE_HomeHeader ();
 
   // Data Accessors.
-  AST_Home *base_home (void) const;
-  AST_Component *managed_component (void) const;
-  AST_Type *primary_key (void) const;
+  AST_Home *base_home () const;
+  AST_Component *managed_component () const;
+  AST_Type *primary_key () const;
 
 protected:
   AST_Home *base_home_;

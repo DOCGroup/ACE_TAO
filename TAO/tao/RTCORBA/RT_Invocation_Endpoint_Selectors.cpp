@@ -124,7 +124,6 @@ TAO_RT_Invocation_Endpoint_Selector::select_endpoint_based_on_client_protocol_po
       CORBA::PolicyList *p = r.inconsistent_policies ();
       if (p)
         {
-
           p->length (1);
           (*p)[0u] = CORBA::Policy::_duplicate (client_protocol_policy);
         }
@@ -176,7 +175,6 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (
           CORBA::PolicyList *p = r.inconsistent_policies ();
           if (p)
             {
-
               p->length (1);
               (*p)[0u] = CORBA::Policy::_duplicate (bands_policy.in ());
             }
@@ -228,13 +226,11 @@ TAO_RT_Invocation_Endpoint_Selector::endpoint_from_profile (
                                 "Unable to access RT CORBA Priority in client thread "
                                 "accessing object with CLIENT_PROPAGATED priority model.\n"));
                   throw CORBA::DATA_CONVERSION (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO);
-
                 }
 
               // If there are no bands.
               if (bands_policy.ptr () == 0)
                 {
-
                   // Match the priority of the client thread with the
                   // endpoint.
                   match_priority = true;

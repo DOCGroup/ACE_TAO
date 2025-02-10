@@ -8,7 +8,6 @@ TAO_UTO::TAO_UTO (TimeBase::TimeT time,
                   TimeBase::InaccuracyT inaccuracy,
                   TimeBase::TdfT tdf)
 {
-
   this->attr_utc_time_.time = time;
 
   // Extract the lower 32 bits in the inacclo.
@@ -17,28 +16,22 @@ TAO_UTO::TAO_UTO (TimeBase::TimeT time,
   // Extract the lower 16 bits of the remaining bits. 'And'ing with 0xFFFF
   // is only a sanity check.
 
-#if defined (ACE_LACKS_U_LONGLONG_T)
-  this->attr_utc_time_.inacchi = 0;
-#else
   this->attr_utc_time_.inacchi =
     static_cast<CORBA::UShort> ((inaccuracy >> 32U) & 0xFFFF);
 
-#endif /* ACE_LACKS_U_LONGLONG_T */
-
   this->attr_utc_time_.tdf = tdf;
-
 }
 
 // Destructor.
 
-TAO_UTO::~TAO_UTO (void)
+TAO_UTO::~TAO_UTO ()
 {
 }
 
 // Get Method for the readonly attribute time.
 
 TimeBase::TimeT
-TAO_UTO::time (void)
+TAO_UTO::time ()
 {
   return attr_utc_time_.time;
 }
@@ -46,7 +39,7 @@ TAO_UTO::time (void)
 // Get method for the readonly attribute inaccuracy.
 
 TimeBase::InaccuracyT
-TAO_UTO::inaccuracy (void)
+TAO_UTO::inaccuracy ()
 {
   // Construct the Inaccuracy from the
   // inacchi and inacclo.
@@ -60,7 +53,7 @@ TAO_UTO::inaccuracy (void)
 // Get method for the readonly attribute tdf.
 
 TimeBase::TdfT
-TAO_UTO::tdf (void)
+TAO_UTO::tdf ()
 {
   return attr_utc_time_.tdf;
 }
@@ -68,7 +61,7 @@ TAO_UTO::tdf (void)
 // Get method for the readonly attribute utc_time.
 
 TimeBase::UtcT
-TAO_UTO::utc_time (void)
+TAO_UTO::utc_time ()
 {
   return attr_utc_time_;
 }
@@ -77,7 +70,7 @@ TAO_UTO::utc_time (void)
 // the Base Time, UTC and Distributed Time Sync. Algos. [3].
 
 CosTime::UTO_ptr
-TAO_UTO::absolute_time (void)
+TAO_UTO::absolute_time ()
 {
   return CosTime::UTO::_nil ();
 }
@@ -159,7 +152,6 @@ TAO_UTO::time_to_interval (CosTime::UTO_ptr uto)
                             TAO_TIO (uto_time,
                                      this->time ()),
                             CORBA::NO_MEMORY ());
-
         }
       else
         {
@@ -167,7 +159,6 @@ TAO_UTO::time_to_interval (CosTime::UTO_ptr uto)
                             TAO_TIO (this->time (),
                                      uto_time),
                             CORBA::NO_MEMORY ());
-
         }
     }
   catch (const CORBA::Exception& ex)
@@ -183,7 +174,7 @@ TAO_UTO::time_to_interval (CosTime::UTO_ptr uto)
 // time value in the UTO.
 
 CosTime::TIO_ptr
-TAO_UTO::interval (void)
+TAO_UTO::interval ()
 {
   TAO_TIO *tio = 0;
 

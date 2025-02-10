@@ -28,7 +28,7 @@ public:
   be_visitor_union_branch_cdr_op_cs (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_union_branch_cdr_op_cs (void);
+  ~be_visitor_union_branch_cdr_op_cs ();
 
   /// visit the union_branch node
   virtual int visit_union_branch (be_union_branch *node);
@@ -50,7 +50,7 @@ public:
   virtual int visit_union (be_union *node);
 
   /// extra code generation for an explicit default case
-  virtual int explicit_default (void);
+  virtual int explicit_default ();
 
  private:
   int emit_valuetype_common (be_type *node);

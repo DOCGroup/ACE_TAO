@@ -4,8 +4,6 @@
 /**
  *  @file    Thread_Semaphore.h
  *
- *   Moved from Synch.h.
- *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
 //==========================================================================
@@ -46,10 +44,10 @@ public:
                         int max = 0x7FFFFFFF);
 
   /// Default destructor.
-  ~ACE_Thread_Semaphore (void);
+  ~ACE_Thread_Semaphore ();
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;

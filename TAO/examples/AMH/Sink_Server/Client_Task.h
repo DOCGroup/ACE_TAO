@@ -28,17 +28,17 @@ public:
   /// Constructor
   Client_Task (int &argc, ACE_TCHAR **argv);
 
-  int parse_args (void);
+  int parse_args ();
 
-  void try_RT_scheduling (void);
+  void try_RT_scheduling ();
 
   int narrow_servant (CORBA::ORB_ptr orb);
 
-  int run_test (void);
+  int run_test ();
 
 protected:
   /// The service method
-  virtual int svc (void);
+  virtual int svc ();
 
 private:
   /// Print Statistics

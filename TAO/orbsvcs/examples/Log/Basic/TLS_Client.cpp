@@ -9,8 +9,7 @@
 #define QUERY_LANG "TCL"
 
 
-
-TLS_Client::TLS_Client (void)
+TLS_Client::TLS_Client ()
 {
   // No-Op.
 }
@@ -36,7 +35,7 @@ TLS_Client::init_ORB (int argc,
 }
 
 void
-TLS_Client::resolve_naming_service (void)
+TLS_Client::resolve_naming_service ()
 {
   CORBA::Object_var naming_obj =
     this->orb_->resolve_initial_references (NAMING_SERVICE_NAME);
@@ -50,7 +49,7 @@ TLS_Client::resolve_naming_service (void)
 }
 
 void
-TLS_Client::resolve_TLS_Basic_factory (void)
+TLS_Client::resolve_TLS_Basic_factory ()
 {
   CosNaming::Name name (1);
   name.length (1);
@@ -64,7 +63,7 @@ TLS_Client::resolve_TLS_Basic_factory (void)
 }
 
 void
-TLS_Client::run_tests (void)
+TLS_Client::run_tests ()
 {
   ACE_ASSERT (!CORBA::is_nil (this->basic_log_factory_.in ()));
 

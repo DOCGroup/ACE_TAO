@@ -35,7 +35,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try {
     // Initialize orb
-    CORBA::ORB_var orb = CORBA::ORB_init( argc, argv );
+    CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
 
     if (parse_args (argc, argv) != 0)
       return 1;
@@ -45,7 +45,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     ior += ".ior";
     ACE_DEBUG ((LM_DEBUG, "using target = %c, iorstr %s\n", target, ior.c_str()));
     CORBA::Object_var obj = orb->string_to_object (ior.c_str());
-    Test_var test = Test::_narrow( obj.in() );
+    Test_var test = Test::_narrow( obj.in());
     ACE_ASSERT (!CORBA::is_nil(test.in()));
 
     CORBA::Long spid = test->server_pid ();

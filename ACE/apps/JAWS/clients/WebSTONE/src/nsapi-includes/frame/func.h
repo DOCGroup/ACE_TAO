@@ -78,7 +78,7 @@ struct FuncStruct {
  * func_init will only read from the static arrays defined in func.c.
  */
 
-void func_init(void);
+void func_init();
 
 /*
  * func_find returns a pointer to the function named name, or NULL if none

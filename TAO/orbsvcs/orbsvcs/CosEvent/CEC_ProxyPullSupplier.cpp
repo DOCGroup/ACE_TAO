@@ -23,13 +23,12 @@ TAO_CEC_ProxyPullSupplier::TAO_CEC_ProxyPullSupplier
   this->lock_ =
     this->event_channel_->create_supplier_lock ();
 
-  this->default_POA_ =
-    this->event_channel_->supplier_poa ();
+  this->default_POA_ = this->event_channel_->supplier_poa ();
 
   this->event_channel_->get_servant_retry_map ().bind (this, 0);
 }
 
-TAO_CEC_ProxyPullSupplier::~TAO_CEC_ProxyPullSupplier (void)
+TAO_CEC_ProxyPullSupplier::~TAO_CEC_ProxyPullSupplier ()
 {
   this->event_channel_->get_servant_retry_map ().unbind (this);
   this->event_channel_->destroy_supplier_lock (this->lock_);
@@ -52,7 +51,7 @@ TAO_CEC_ProxyPullSupplier::activate (
 }
 
 void
-TAO_CEC_ProxyPullSupplier::deactivate (void)
+TAO_CEC_ProxyPullSupplier::deactivate ()
 {
   try
     {
@@ -72,7 +71,7 @@ TAO_CEC_ProxyPullSupplier::deactivate (void)
 }
 
 void
-TAO_CEC_ProxyPullSupplier::shutdown (void)
+TAO_CEC_ProxyPullSupplier::shutdown ()
 {
   // Save the consumer we where connected to, we need to send a
   // disconnect message to it.
@@ -148,7 +147,7 @@ TAO_CEC_ProxyPullSupplier::push (const CORBA::Any &event)
 }
 
 CORBA::Any *
-TAO_CEC_ProxyPullSupplier::pull (void)
+TAO_CEC_ProxyPullSupplier::pull ()
 {
   if (this->is_connected () == 0)
     throw CosEventComm::Disconnected ();
@@ -190,7 +189,7 @@ TAO_CEC_ProxyPullSupplier::try_pull (CORBA::Boolean_out has_event)
 }
 
 void
-TAO_CEC_ProxyPullSupplier::cleanup_i (void)
+TAO_CEC_ProxyPullSupplier::cleanup_i ()
 {
   this->consumer_ =
     CosEventComm::PullConsumer::_nil ();
@@ -198,14 +197,14 @@ TAO_CEC_ProxyPullSupplier::cleanup_i (void)
 }
 
 CORBA::ULong
-TAO_CEC_ProxyPullSupplier::_incr_refcnt (void)
+TAO_CEC_ProxyPullSupplier::_incr_refcnt ()
 {
   ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->lock_, 0);
   return this->refcount_++;
 }
 
 CORBA::ULong
-TAO_CEC_ProxyPullSupplier::_decr_refcnt (void)
+TAO_CEC_ProxyPullSupplier::_decr_refcnt ()
 {
   {
     ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->lock_, 0);
@@ -330,19 +329,19 @@ TAO_CEC_ProxyPullSupplier::disconnect_pull_supplier ()
 }
 
 PortableServer::POA_ptr
-TAO_CEC_ProxyPullSupplier::_default_POA (void)
+TAO_CEC_ProxyPullSupplier::_default_POA ()
 {
   return PortableServer::POA::_duplicate (this->default_POA_.in ());
 }
 
 void
-TAO_CEC_ProxyPullSupplier::_add_ref (void)
+TAO_CEC_ProxyPullSupplier::_add_ref ()
 {
   this->_incr_refcnt ();
 }
 
 void
-TAO_CEC_ProxyPullSupplier::_remove_ref (void)
+TAO_CEC_ProxyPullSupplier::_remove_ref ()
 {
   this->_decr_refcnt ();
 }

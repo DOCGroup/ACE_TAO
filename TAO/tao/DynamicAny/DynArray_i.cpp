@@ -16,12 +16,12 @@ TAO_DynArray_i::TAO_DynArray_i (CORBA::Boolean allow_truncation)
 {
 }
 
-TAO_DynArray_i::~TAO_DynArray_i (void)
+TAO_DynArray_i::~TAO_DynArray_i ()
 {
 }
 
 void
-TAO_DynArray_i::init_common (void)
+TAO_DynArray_i::init_common ()
 {
   this->ref_to_component_ = false;
   this->container_is_destroying_ = false;
@@ -131,7 +131,7 @@ TAO_DynArray_i::init (CORBA::TypeCode_ptr tc)
 }
 
 CORBA::TypeCode_ptr
-TAO_DynArray_i::get_element_type (void)
+TAO_DynArray_i::get_element_type ()
 {
   CORBA::TypeCode_var element_type =
     CORBA::TypeCode::_duplicate (this->type_.in ());
@@ -182,7 +182,7 @@ TAO_DynArray_i::_narrow (CORBA::Object_ptr _tao_objref)
 // ****************************************************************
 
 DynamicAny::AnySeq *
-TAO_DynArray_i::get_elements (void)
+TAO_DynArray_i::get_elements ()
 {
   if (this->destroyed_)
     {
@@ -255,7 +255,7 @@ TAO_DynArray_i::set_elements (const DynamicAny::AnySeq & value)
 }
 
 DynamicAny::DynAnySeq *
-TAO_DynArray_i::get_elements_as_dyn_any (void)
+TAO_DynArray_i::get_elements_as_dyn_any ()
 {
   if (this->destroyed_)
     {
@@ -401,7 +401,7 @@ TAO_DynArray_i::from_any (const CORBA::Any& any)
 }
 
 CORBA::Any_ptr
-TAO_DynArray_i::to_any (void)
+TAO_DynArray_i::to_any ()
 {
   if (this->destroyed_)
     {
@@ -501,7 +501,7 @@ TAO_DynArray_i::equal (DynamicAny::DynAny_ptr rhs)
 }
 
 void
-TAO_DynArray_i::destroy (void)
+TAO_DynArray_i::destroy ()
 {
   if (this->destroyed_)
     {
@@ -523,7 +523,7 @@ TAO_DynArray_i::destroy (void)
 }
 
 DynamicAny::DynAny_ptr
-TAO_DynArray_i::current_component (void)
+TAO_DynArray_i::current_component ()
 {
   if (this->destroyed_)
     {

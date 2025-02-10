@@ -163,8 +163,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // Get a ref to the IORManipulation object
       CORBA::Object_var IORM =
-        orb->resolve_initial_references (TAO_OBJID_IORMANIPULATION,
-                                         0);
+        orb->resolve_initial_references (TAO_OBJID_IORMANIPULATION, 0);
 
       // Narrow
       iorm =
@@ -195,7 +194,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - event loop finished\n"));
 
-      root_poa->destroy (1, 1);
+      root_poa->destroy (true, true);
 
       orb->destroy ();
     }

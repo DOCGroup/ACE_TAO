@@ -27,19 +27,19 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_AV_Export TAO_AV_Protocol_Object
 {
 public:
-  TAO_AV_Protocol_Object (void);
+  TAO_AV_Protocol_Object ();
 
   /// constructor.
   TAO_AV_Protocol_Object (TAO_AV_Callback *callback,
                           TAO_AV_Transport *transport);
 
   /// Destructor
-  virtual ~TAO_AV_Protocol_Object (void);
+  virtual ~TAO_AV_Protocol_Object ();
 
   virtual int open (TAO_AV_Callback *callback,
                     TAO_AV_Transport *transport);
 
-  virtual int handle_input (void) = 0;
+  virtual int handle_input () = 0;
 
   /// Called on a control object.
   virtual int handle_control_input (ACE_Message_Block *control_frame,
@@ -47,11 +47,11 @@ public:
 
   /// set/get policies.
   virtual int set_policies (const TAO_AV_PolicyList &policy_list);
-  virtual TAO_AV_PolicyList get_policies (void);
+  virtual TAO_AV_PolicyList get_policies ();
 
   /// start/stop the flow.
-  virtual int start (void);
-  virtual int stop (void);
+  virtual int start ();
+  virtual int stop ();
 
   /// send a data frame.
   virtual int send_frame (ACE_Message_Block *frame,
@@ -67,8 +67,8 @@ public:
 
   /// end the stream.
   virtual void control_object (TAO_AV_Protocol_Object *object);
-  virtual int destroy (void) = 0;
-  TAO_AV_Transport *transport (void);
+  virtual int destroy () = 0;
+  TAO_AV_Transport *transport ();
 protected:
   TAO_AV_Transport *transport_;
   TAO_AV_PolicyList policy_list_;
@@ -83,15 +83,15 @@ class TAO_AV_Export TAO_AV_Flow_Protocol_Factory : public ACE_Service_Object
 {
 public:
   /// Initialization hook.
-  TAO_AV_Flow_Protocol_Factory (void);
-  virtual ~TAO_AV_Flow_Protocol_Factory (void);
+  TAO_AV_Flow_Protocol_Factory ();
+  virtual ~TAO_AV_Flow_Protocol_Factory ();
   virtual int init (int argc, ACE_TCHAR *argv[]);
   virtual int match_protocol (const char *flow_string);
   virtual TAO_AV_Protocol_Object* make_protocol_object (TAO_FlowSpec_Entry *entry,
                                                         TAO_Base_StreamEndPoint *endpoint,
                                                         TAO_AV_Flow_Handler *handler,
                                                         TAO_AV_Transport *transport);
-  virtual const char *control_flow_factory (void);
+  virtual const char *control_flow_factory ();
   int ref_count;
 };
 

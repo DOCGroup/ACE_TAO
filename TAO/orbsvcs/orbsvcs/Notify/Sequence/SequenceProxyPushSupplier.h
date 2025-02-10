@@ -45,13 +45,13 @@ class TAO_Notify_Serv_Export TAO_Notify_SequenceProxyPushSupplier
 
 public:
   /// Constructor
-  TAO_Notify_SequenceProxyPushSupplier (void);
+  TAO_Notify_SequenceProxyPushSupplier ();
 
   /// Destructor
   virtual ~TAO_Notify_SequenceProxyPushSupplier ();
 
 
-  virtual const char * get_proxy_type_name (void) const;
+  virtual const char * get_proxy_type_name () const;
 
   virtual void load_attrs (const TAO_Notify::NVPList& attrs);
   virtual void validate ();
@@ -59,7 +59,7 @@ public:
   virtual void configure(TAO_Notify_ConsumerAdmin & admin, CosNotifyChannelAdmin::ProxyID_out proxy_id);
 
   /// = Servant methods
-  virtual CosNotifyChannelAdmin::ProxyType MyType (void);
+  virtual CosNotifyChannelAdmin::ProxyType MyType ();
 
   virtual void connect_sequence_push_consumer (
     CosNotifyComm::SequencePushConsumer_ptr push_consumer
@@ -69,7 +69,7 @@ public:
   );
 
   /// TAO_Notify_Destroy_Callback methods
-  virtual void release (void);
+  virtual void release ();
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

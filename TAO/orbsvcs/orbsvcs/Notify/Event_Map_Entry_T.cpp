@@ -14,7 +14,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class PROXY>
-TAO_Notify_Event_Map_Entry_T<PROXY>::TAO_Notify_Event_Map_Entry_T (void)
+TAO_Notify_Event_Map_Entry_T<PROXY>::TAO_Notify_Event_Map_Entry_T ()
   : collection_ (0), count_ (0), usage_count_ (1)
 {
 }
@@ -26,7 +26,7 @@ TAO_Notify_Event_Map_Entry_T<PROXY>::~TAO_Notify_Event_Map_Entry_T ()
 }
 
 template <class PROXY> void
-TAO_Notify_Event_Map_Entry_T<PROXY>::init (void)
+TAO_Notify_Event_Map_Entry_T<PROXY>::init ()
 {
   TAO_Notify_Factory* factory = TAO_Notify_PROPERTIES::instance ()->factory ();
 

@@ -31,35 +31,30 @@ class Hello_Impl : public Hello
 {
 public:
   /// Constructor
-  Hello_Impl (void);
+  Hello_Impl ();
 
   /// Destructor
-  ~Hello_Impl (void);
+  ~Hello_Impl ();
 
   /// See the documentation in the base class
-  void say_next (void);
+  void say_next () override;
 
   /// Uses ACE::strnew() to allocate the returned string.
-  ACE_TCHAR *new_info (void);
+  ACE_TCHAR *new_info () override;
 
   /// Uses ACE_OS::malloc() to allocate the returned string.
-  ACE_TCHAR *malloc_info (void);
+  ACE_TCHAR *malloc_info () override;
 
   // Overload the new/delete opertors so the object will be
   // created/deleted using the memory allocator associated with the
   // DLL/SO.
   void *operator new (size_t bytes);
 
-#if defined (ACE_HAS_NEW_NOTHROW)
   /// Overloaded new operator, nothrow_t variant.
-  void *operator new (size_t bytes, const ACE_nothrow_t &nt);
-#if !defined (ACE_LACKS_PLACEMENT_OPERATOR_DELETE)
-  void operator delete (void *p, const ACE_nothrow_t&) throw ();
-#endif /* ACE_LACKS_PLACEMENT_OPERATOR_DELETE */
-#endif /* ACE_HAS_NEW_NOTHROW */
+  void *operator new (size_t bytes, const std::nothrow_t &nt);
+  void operator delete (void *p, const std::nothrow_t&) noexcept;
 
   void operator delete (void *ptr);
-
 };
 
 #endif /* ACE_TESTS_DLL_TEST_IMPL_H */

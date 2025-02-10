@@ -2,38 +2,38 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE bool
-TAO_Transport::queue_is_empty_i (void) const
+TAO_Transport::queue_is_empty_i () const
 {
   return (this->head_ == 0);
 }
 
 ACE_INLINE CORBA::ULong
-TAO_Transport::tag (void) const
+TAO_Transport::tag () const
 {
   return this->tag_;
 }
 
 ACE_INLINE TAO_ORB_Core *
-TAO_Transport::orb_core (void) const
+TAO_Transport::orb_core () const
 {
   return this->orb_core_;
 }
 
 ACE_INLINE TAO_Transport_Mux_Strategy *
-TAO_Transport::tms (void) const
+TAO_Transport::tms () const
 {
   return tms_;
 }
 
 // Return the Wait strategy used by the Transport.
 ACE_INLINE TAO_Wait_Strategy *
-TAO_Transport::wait_strategy (void) const
+TAO_Transport::wait_strategy () const
 {
   return this->ws_;
 }
 
 ACE_INLINE int
-TAO_Transport::bidirectional_flag (void) const
+TAO_Transport::bidirectional_flag () const
 {
   return this->bidirectional_flag_;
 }
@@ -57,7 +57,7 @@ TAO_Transport::opened_as (TAO::Connection_Role role)
 }
 
 ACE_INLINE TAO::Transport_Cache_Manager::HASH_MAP_ENTRY *
-TAO_Transport::cache_map_entry (void)
+TAO_Transport::cache_map_entry ()
 {
   return this->cache_map_entry_;
 }
@@ -72,7 +72,7 @@ TAO_Transport::cache_map_entry (
 }
 
 ACE_INLINE unsigned long
-TAO_Transport::purging_order (void) const
+TAO_Transport::purging_order () const
 {
   return this->purging_order_;
 }
@@ -88,7 +88,7 @@ TAO_Transport::purging_order (unsigned long value)
 }
 
 ACE_INLINE size_t
-TAO_Transport::id (void) const
+TAO_Transport::id () const
 {
   return this->id_;
 }
@@ -100,7 +100,7 @@ TAO_Transport::id (size_t id)
 }
 
 ACE_INLINE bool
-TAO_Transport::queue_is_empty (void)
+TAO_Transport::queue_is_empty ()
 {
   ACE_GUARD_RETURN (ACE_Lock,
                     ace_mon,
@@ -110,20 +110,20 @@ TAO_Transport::queue_is_empty (void)
 }
 
 ACE_INLINE int
-TAO_Transport::flush_timer_pending (void) const
+TAO_Transport::flush_timer_pending () const
 {
   return this->flush_timer_id_ != -1;
 }
 
 ACE_INLINE void
-TAO_Transport::reset_flush_timer (void)
+TAO_Transport::reset_flush_timer ()
 {
   this->flush_timer_id_ = -1;
   this->current_deadline_ = ACE_Time_Value::zero;
 }
 
 ACE_INLINE TAO_GIOP_Message_Base *
-TAO_Transport::messaging_object (void)
+TAO_Transport::messaging_object ()
 {
   return this->messaging_object_;
 }
@@ -133,13 +133,13 @@ TAO_Transport::messaging_object (void)
 
 
 ACE_INLINE TAO_Codeset_Translator_Base *
-TAO_Transport::char_translator (void) const
+TAO_Transport::char_translator () const
 {
   return this->char_translator_;
 }
 
 ACE_INLINE TAO_Codeset_Translator_Base *
-TAO_Transport::wchar_translator (void) const
+TAO_Transport::wchar_translator () const
 {
   return this->wchar_translator_;
 }
@@ -160,7 +160,7 @@ TAO_Transport::wchar_translator (TAO_Codeset_Translator_Base *tf)
 
 /// CodeSet negotiation
 ACE_INLINE CORBA::Boolean
-TAO_Transport::is_tcs_set(void) const
+TAO_Transport::is_tcs_set() const
 {
   return tcs_set_;
 }
@@ -172,32 +172,32 @@ TAO_Transport::first_request_sent (bool flag)
 }
 
 ACE_INLINE bool
-TAO_Transport::first_request (void) const
+TAO_Transport::first_request () const
 {
   return this->first_request_;
 }
 
 ACE_INLINE bool
-TAO_Transport::is_connected (void) const
+TAO_Transport::is_connected () const
 {
   ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->handler_lock_, false);
   return this->is_connected_;
 }
 
 ACE_INLINE TAO_Connection_Handler *
-TAO_Transport::connection_handler (void)
+TAO_Transport::connection_handler ()
 {
   return this->connection_handler_i();
 }
 
 ACE_INLINE size_t
-TAO_Transport::recv_buffer_size (void) const
+TAO_Transport::recv_buffer_size () const
 {
   return this->recv_buffer_size_;
 }
 
 ACE_INLINE size_t
-TAO_Transport::sent_byte_count (void) const
+TAO_Transport::sent_byte_count () const
 {
   return this->sent_byte_count_;
 }
@@ -205,7 +205,7 @@ TAO_Transport::sent_byte_count (void) const
 #if TAO_HAS_TRANSPORT_CURRENT == 1
 
 ACE_INLINE TAO::Transport::Stats*
-TAO_Transport::stats (void) const
+TAO_Transport::stats () const
 {
   return this->stats_;
 }
@@ -230,7 +230,7 @@ TAO::Transport::Stats::messages_sent (size_t message_length)
 }
 
 ACE_INLINE CORBA::LongLong
-TAO::Transport::Stats::messages_sent (void) const
+TAO::Transport::Stats::messages_sent () const
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->stat_mutex_, 0);
 
@@ -238,7 +238,7 @@ TAO::Transport::Stats::messages_sent (void) const
 }
 
 ACE_INLINE CORBA::LongLong
-TAO::Transport::Stats::bytes_sent (void) const
+TAO::Transport::Stats::bytes_sent () const
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->stat_mutex_, 0);
 
@@ -255,7 +255,7 @@ TAO::Transport::Stats::messages_received (size_t message_length)
 }
 
 ACE_INLINE CORBA::LongLong
-TAO::Transport::Stats::messages_received (void) const
+TAO::Transport::Stats::messages_received () const
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->stat_mutex_, 0);
 
@@ -263,7 +263,7 @@ TAO::Transport::Stats::messages_received (void) const
 }
 
 ACE_INLINE CORBA::LongLong
-TAO::Transport::Stats::bytes_received (void) const
+TAO::Transport::Stats::bytes_received () const
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->stat_mutex_, 0);
 
@@ -279,7 +279,7 @@ TAO::Transport::Stats::opened_since (const ACE_Time_Value& tv)
 }
 
 ACE_INLINE const ACE_Time_Value&
-TAO::Transport::Stats::opened_since (void) const
+TAO::Transport::Stats::opened_since () const
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->stat_mutex_, ACE_Time_Value::zero);
 
@@ -289,7 +289,7 @@ TAO::Transport::Stats::opened_since (void) const
 #endif /* TAO_HAS_TRANSPORT_CURRENT == 1 */
 
 ACE_INLINE int
-TAO_Transport::notify_reactor (void)
+TAO_Transport::notify_reactor ()
 {
   if (!this->ws_->is_registered ())
     {

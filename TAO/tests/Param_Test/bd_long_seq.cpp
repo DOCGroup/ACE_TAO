@@ -17,7 +17,7 @@
 //               Test_Bounded_Long_Sequence
 // ************************************************************************
 
-Test_Bounded_Long_Sequence::Test_Bounded_Long_Sequence (void)
+Test_Bounded_Long_Sequence::Test_Bounded_Long_Sequence ()
   : opname_ (CORBA::string_dup ("test_bounded_long_sequence")),
     in_ (new Param_Test::Bounded_Long_Seq),
     inout_ (new Param_Test::Bounded_Long_Seq),
@@ -26,14 +26,14 @@ Test_Bounded_Long_Sequence::Test_Bounded_Long_Sequence (void)
 {
 }
 
-Test_Bounded_Long_Sequence::~Test_Bounded_Long_Sequence (void)
+Test_Bounded_Long_Sequence::~Test_Bounded_Long_Sequence ()
 {
   CORBA::string_free (this->opname_);
   this->opname_ = 0;
 }
 
 const char *
-Test_Bounded_Long_Sequence::opname (void) const
+Test_Bounded_Long_Sequence::opname () const
 {
   return this->opname_;
 }
@@ -87,7 +87,7 @@ Test_Bounded_Long_Sequence::init_parameters (Param_Test_ptr)
 }
 
 int
-Test_Bounded_Long_Sequence::reset_parameters (void)
+Test_Bounded_Long_Sequence::reset_parameters ()
 {
   this->inout_ = new Param_Test::Bounded_Long_Seq; // delete the previous ones
   this->out_ = new Param_Test::Bounded_Long_Seq;
@@ -115,13 +115,12 @@ Test_Bounded_Long_Sequence::run_sii_test (Param_Test_ptr objref)
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("Test_Bounded_Long_Sequence::run_sii_test\n");
-
     }
   return -1;
 }
 
 CORBA::Boolean
-Test_Bounded_Long_Sequence::check_validity (void)
+Test_Bounded_Long_Sequence::check_validity ()
 {
   CORBA::Boolean flag = 0;
   if ((this->in_->length () == this->inout_->length ()) &&
@@ -150,7 +149,7 @@ Test_Bounded_Long_Sequence::check_validity (CORBA::Request_ptr req)
 }
 
 void
-Test_Bounded_Long_Sequence::print_values (void)
+Test_Bounded_Long_Sequence::print_values ()
 {
   CORBA::ULong i;
   ACE_DEBUG ((LM_DEBUG, "\n*=*=*=*=*=*=*=*=*=*=\n"));

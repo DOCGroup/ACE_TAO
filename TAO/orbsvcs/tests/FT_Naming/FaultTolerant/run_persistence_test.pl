@@ -305,8 +305,8 @@ sub persistence_test ()
     my $client_nm_iorfile = $client->LocalFile ($nm_iorfile);
 
     print_msg("Persistence Test");
-    init_persistence_dir ($server, $name_dir );
-    init_persistence_dir ($server, $group_dir );
+    init_persistence_dir ($server, $name_dir);
+    init_persistence_dir ($server, $group_dir);
 
     my $ns_args       = "-ORBListenEndPoints $ns_endpoint1 ".
                         "-ORBDebugLevel $debug_level " .
@@ -447,8 +447,8 @@ sub backup_restore_test ()
     my $client_nm_iorfile = $client->LocalFile ($nm_iorfile);
 
     print_msg("Backup/Restore Test");
-    init_persistence_dir ($server, $name_dir );
-    init_persistence_dir ($server, $group_dir );
+    init_persistence_dir ($server, $name_dir);
+    init_persistence_dir ($server, $group_dir);
 
     my $ns_args       = "-ORBListenEndPoints $ns_endpoint1 ".
                         "-ORBDebugLevel $debug_level " .

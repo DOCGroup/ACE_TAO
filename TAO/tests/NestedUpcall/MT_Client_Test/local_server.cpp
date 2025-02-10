@@ -30,7 +30,7 @@ MT_Server_Task::MT_Server_Task (ACE_Thread_Manager* thr_mgr_ptr,
 }
 
 int
-MT_Server_Task::svc (void)
+MT_Server_Task::svc ()
 {
   if (this->mT_Server_.init (this->argc_,
                              this->argv_,
@@ -75,9 +75,8 @@ MT_Server::read_ior (ACE_TCHAR *filename)
 }
 
 
-
 int
-MT_Server::parse_args (void)
+MT_Server::parse_args ()
 {
   ACE_Get_Opt get_opts (argc_, argv_, ACE_TEXT("d:f:g:h:i:n:s:"));
   int c;
@@ -224,7 +223,7 @@ MT_Server::run ()
   return 0;
 }
 
-MT_Server::~MT_Server (void)
+MT_Server::~MT_Server ()
 {
   if (this->object_key_ != 0)
     ACE_OS::free (this->object_key_);
@@ -242,7 +241,7 @@ MT_Server::~MT_Server (void)
 
 
 int
-MT_Server::run_ORB_briefly (void)
+MT_Server::run_ORB_briefly ()
 {
   if (this->iterations_ > 0)
     {

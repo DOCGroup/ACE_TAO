@@ -34,31 +34,30 @@
 class ACEXML_Export ACEXML_Exception
 {
 public:
-
   /// Destructor.
-  virtual ~ACEXML_Exception (void);
+  virtual ~ACEXML_Exception ();
 
   /// Throw the exception.
-  virtual void _raise (void) = 0;
+  virtual void _raise () = 0;
 
   /// Static narrow operation.
   static ACEXML_Exception* _downcast (ACEXML_Exception* ex);
 
   /// Return the exception type.  (for safe downcast.)
-  virtual const ACEXML_Char *id (void) const ;
+  virtual const ACEXML_Char *id () const ;
 
   /// Dynamically create a copy of this exception.
-  virtual ACEXML_Exception *duplicate (void) const = 0;
+  virtual ACEXML_Exception *duplicate () const = 0;
 
   /// Check whether this is an exception of type specified by <name>.
   virtual int is_a (const ACEXML_Char *name);
 
   /// Print out exception using ACE_DEBUG.
-  virtual void print (void) const = 0;
+  virtual void print () const = 0;
 
 protected:
   /// Default constructor.
-  ACEXML_Exception (void);
+  ACEXML_Exception ();
 
   /// All exceptions have names.  This name is used to identify the
   /// type of an exception.

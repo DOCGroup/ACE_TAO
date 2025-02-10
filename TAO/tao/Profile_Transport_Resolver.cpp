@@ -27,8 +27,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-
-  Profile_Transport_Resolver::~Profile_Transport_Resolver (void)
+  Profile_Transport_Resolver::~Profile_Transport_Resolver ()
   {
     if (this->profile_)
       {
@@ -82,7 +81,7 @@ namespace TAO
     // Select the endpoint
     es->select_endpoint (this, max_time_val);
 
-    if (this->transport_.get () == 0)
+    if (this->transport_.get () == nullptr)
       {
         // No useable endpoint could be found. We will not
         // be able to send the message. Wait to throw an exception until
@@ -130,7 +129,7 @@ namespace TAO
     TAO_Connector_Registry *conn_reg =
       this->stub_->orb_core ()->connector_registry ();
 
-    if (conn_reg == 0)
+    if (conn_reg == nullptr)
       {
         throw ::CORBA::INTERNAL (
           CORBA::SystemException::_tao_minor_code (
@@ -148,18 +147,18 @@ namespace TAO
       }
     else if (has_con_timeout)
       {
-        if (timeout == 0 || connection_timeout < *timeout)
+        if (timeout == nullptr || connection_timeout < *timeout)
           timeout = &connection_timeout;
         else
           has_con_timeout = false;
       }
     else if (!this->blocked_)
       {
-        timeout = 0;
+        timeout = nullptr;
       }
 
     TAO_Connector *con = conn_reg->get_connector (desc->endpoint ()->tag ());
-    ACE_ASSERT(con != 0);
+    ACE_ASSERT(con != nullptr);
     if (parallel)
       {
         this->transport_.set (con->parallel_connect (this, desc, timeout));
@@ -172,7 +171,7 @@ namespace TAO
     // If the user has set a roundtrip timeout policy, throw a timeout
     // exception.  Otherwise, just fall through and return false to
     // look at the next endpoint.
-    if (this->transport_.get () == 0 &&
+    if (this->transport_.get () == nullptr &&
         has_con_timeout == false &&
         errno == ETIME)
       {
@@ -182,7 +181,7 @@ namespace TAO
             errno),
           CORBA::COMPLETED_NO);
       }
-    else if (this->transport_.get () == 0)
+    else if (this->transport_.get () == nullptr)
       {
         return false;
       }
@@ -200,7 +199,7 @@ namespace TAO
   }
 
   bool
-  Profile_Transport_Resolver::use_parallel_connect (void) const
+  Profile_Transport_Resolver::use_parallel_connect () const
   {
     TAO_ORB_Core *oc = this->stub_->orb_core();
     return (oc->orb_params()->use_parallel_connects()
@@ -229,7 +228,7 @@ namespace TAO
 
 
   void
-  Profile_Transport_Resolver::init_inconsistent_policies (void)
+  Profile_Transport_Resolver::init_inconsistent_policies ()
   {
     ACE_NEW_THROW_EX (this->inconsistent_policies_,
                       CORBA::PolicyList (0),

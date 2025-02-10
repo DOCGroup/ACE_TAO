@@ -3,14 +3,13 @@
 #include "tao/Storable_Factory.h"
 #include "tao/Storable_File_Guard.h"
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 const int Savable::bytes_size_max = 128;
 
 class Savable_File_Guard: public TAO::Storable_File_Guard
 {
 public:
-
   Savable_File_Guard (Savable & savable, Method_Type method_type);
 
   ~Savable_File_Guard ();
@@ -91,7 +90,6 @@ Savable::Savable (TAO::Storable_Factory & storable_factory)
   : storable_factory_(storable_factory)
   , loaded_from_stream_ (false)
 {
-
   for (int index = 0; index < 2; ++index)
     {
       this->i_[index] = 0;
@@ -104,8 +102,7 @@ Savable::Savable (TAO::Storable_Factory & storable_factory)
         }
     }
 
-  ACE_Auto_Ptr<TAO::Storable_Base>
-    stream (storable_factory_.create_stream("test.dat", "r"));
+  std::unique_ptr<TAO::Storable_Base> stream (storable_factory_.create_stream("test.dat", "r"));
   if (stream->exists ())
     {
       Savable_File_Guard fg(*this, SFG::CREATE_WITH_FILE);

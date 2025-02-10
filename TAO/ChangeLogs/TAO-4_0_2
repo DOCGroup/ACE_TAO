@@ -1,0 +1,50 @@
+commit 7bf94db38459dd2546a6dddda27ecac5ef1f20e0
+Author: Jan Vermaete <jan.vermaete@gmail.com>
+Date:   Fri Oct 25 14:05:08 2024 +0200
+
+    spelling: changed 'explictly' to 'explicitly'
+    
+    It was a warning when running lintian when making an OpenDDS deb file.
+    
+    I: opendds: spelling-error-in-binary usr/lib/libTAO_IDL_FE.so.2.5.21 explictly explicitly
+    
+    Signed-off-by: Jan Vermaete <jan.vermaete@gmail.com>
+
+commit dfd76988181dd380795b9ae1ad267848faa6cff1
+Author: Jan Vermaete <jan.vermaete@gmail.com>
+Date:   Fri Oct 25 13:16:03 2024 +0200
+
+    spelling: changed implImented to implEmented
+    
+    It was a warning when running lintian when making an OpenDDS deb file.
+    
+    I: opendds: spelling-error-in-binary usr/lib/libTAO_IDL_FE.so.2.5.21 explictly explicitly
+    I: opendds: spelling-error-in-binary usr/lib/libTAO_Valuetype.so.2.5.21 implimented implemented
+    
+    Signed-off-by: Jan Vermaete <jan.vermaete@gmail.com>
+
+commit 4a52b9387b14f557907b2f28d0064fa863c0ea1c
+Author: Osyotr <Osyotr@users.noreply.github.com>
+Date:   Thu Oct 24 14:04:30 2024 +0300
+
+    Remove checked_iterator.h
+
+commit fbc7205d70adb80180ea81bdcd6acd759b9e316f
+Author: remko <remko.duppen@topicus.nl>
+Date:   Tue Oct 15 16:49:46 2024 +0200
+
+    fixed a typo in the documentation
+
+commit 852621f99f833e2fc22673490b69a5f048027b37
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 5 10:19:41 2024 +0200
+
+    Extended output CDR classes to serialize a std::string_view directly
+    
+        * ACE/ace/CDR_Size.h:
+        * ACE/ace/CDR_Size.inl:
+        * ACE/ace/CDR_Stream.h:
+        * ACE/ace/CDR_Stream.inl:
+        * ACE/tests/CDR_Test.cpp:
+        * TAO/tao/CDR.h:
+        * TAO/tao/CDR.inl:

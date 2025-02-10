@@ -25,13 +25,15 @@
  */
 class be_visitor_valuetype_marshal_cs : public be_visitor_scope
 {
+  int marshal_state (be_valuetype *node);
+  int unmarshal_state (be_valuetype *node);
 
 public:
   /// constructor
   be_visitor_valuetype_marshal_cs (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_valuetype_marshal_cs (void);
+  ~be_visitor_valuetype_marshal_cs ();
 
   virtual int visit_valuetype (be_valuetype *node);
   virtual int visit_eventtype (be_eventtype *node);

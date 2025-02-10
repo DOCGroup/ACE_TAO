@@ -20,12 +20,6 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<class NCS_TO_TCS>
-TAO_Codeset_Translator_Factory_T<NCS_TO_TCS>::TAO_Codeset_Translator_Factory_T () :
-  translator_(0)
-{
-}
-
-template<class NCS_TO_TCS>
 TAO_Codeset_Translator_Factory_T<NCS_TO_TCS>::~TAO_Codeset_Translator_Factory_T ()
 {
   delete translator_;

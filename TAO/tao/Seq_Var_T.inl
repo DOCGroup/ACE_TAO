@@ -5,8 +5,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<typename T>
 ACE_INLINE
-TAO_Seq_Var_Base_T<T>::TAO_Seq_Var_Base_T (void)
-  : ptr_ (0)
+TAO_Seq_Var_Base_T<T>::TAO_Seq_Var_Base_T ()
+  : ptr_ (nullptr)
 {}
 
 template<typename T>
@@ -17,7 +17,7 @@ TAO_Seq_Var_Base_T<T>::TAO_Seq_Var_Base_T (T * p)
 
 template<typename T>
 ACE_INLINE
-TAO_Seq_Var_Base_T<T>::~TAO_Seq_Var_Base_T (void)
+TAO_Seq_Var_Base_T<T>::~TAO_Seq_Var_Base_T ()
 {
   delete this->ptr_;
 }
@@ -25,7 +25,7 @@ TAO_Seq_Var_Base_T<T>::~TAO_Seq_Var_Base_T (void)
 template<typename T>
 ACE_INLINE
 const T *
-TAO_Seq_Var_Base_T<T>::operator-> (void) const
+TAO_Seq_Var_Base_T<T>::operator-> () const
 {
   return this->ptr_;
 }
@@ -33,7 +33,7 @@ TAO_Seq_Var_Base_T<T>::operator-> (void) const
 template<typename T>
 ACE_INLINE
 T *
-TAO_Seq_Var_Base_T<T>::operator-> (void)
+TAO_Seq_Var_Base_T<T>::operator-> ()
 {
   return this->ptr_;
 }
@@ -62,7 +62,7 @@ TAO_Seq_Var_Base_T<T>::operator T & () const
 template<typename T>
 ACE_INLINE
 const T &
-TAO_Seq_Var_Base_T<T>::in (void) const
+TAO_Seq_Var_Base_T<T>::in () const
 {
   return *this->ptr_;
 }
@@ -70,7 +70,7 @@ TAO_Seq_Var_Base_T<T>::in (void) const
 template<typename T>
 ACE_INLINE
 T &
-TAO_Seq_Var_Base_T<T>::inout (void)
+TAO_Seq_Var_Base_T<T>::inout ()
 {
   return *this->ptr_;
 }
@@ -78,27 +78,27 @@ TAO_Seq_Var_Base_T<T>::inout (void)
 template<typename T>
 ACE_INLINE
 T *&
-TAO_Seq_Var_Base_T<T>::out (void)
+TAO_Seq_Var_Base_T<T>::out ()
 {
   delete this->ptr_;
-  this->ptr_ = 0;
+  this->ptr_ = nullptr;
   return this->ptr_;
 }
 
 template<typename T>
 ACE_INLINE
 T *
-TAO_Seq_Var_Base_T<T>::_retn (void)
+TAO_Seq_Var_Base_T<T>::_retn ()
 {
   T * tmp = this->ptr_;
-  this->ptr_ = 0;
+  this->ptr_ = nullptr;
   return tmp;
 }
 
 template<typename T>
 ACE_INLINE
 T *
-TAO_Seq_Var_Base_T<T>::ptr (void) const
+TAO_Seq_Var_Base_T<T>::ptr () const
 {
   return this->ptr_;
 }
@@ -107,7 +107,7 @@ TAO_Seq_Var_Base_T<T>::ptr (void) const
 
 template<typename T>
 ACE_INLINE
-TAO_FixedSeq_Var_T<T>::TAO_FixedSeq_Var_T (void)
+TAO_FixedSeq_Var_T<T>::TAO_FixedSeq_Var_T ()
 {}
 
 template<typename T>
@@ -117,9 +117,7 @@ TAO_FixedSeq_Var_T<T>::TAO_FixedSeq_Var_T (T * p)
 {}
 
 template<typename T>
-TAO_FixedSeq_Var_T<T>::TAO_FixedSeq_Var_T (
-    const TAO_FixedSeq_Var_T<T> & p
-  )
+TAO_FixedSeq_Var_T<T>::TAO_FixedSeq_Var_T (const TAO_FixedSeq_Var_T<T> & p)
   : TAO_Seq_Var_Base_T<T> (p)
 {
 }
@@ -163,7 +161,7 @@ TAO_FixedSeq_Var_T<T>::operator[] (CORBA::ULong index) const
 
 template<typename T>
 ACE_INLINE
-TAO_VarSeq_Var_T<T>::TAO_VarSeq_Var_T (void)
+TAO_VarSeq_Var_T<T>::TAO_VarSeq_Var_T ()
 {
 }
 
@@ -175,8 +173,7 @@ TAO_VarSeq_Var_T<T>::TAO_VarSeq_Var_T (T * p)
 }
 
 template<typename T>
-TAO_VarSeq_Var_T<T>::TAO_VarSeq_Var_T (
-    const TAO_VarSeq_Var_T<T> & p)
+TAO_VarSeq_Var_T<T>::TAO_VarSeq_Var_T (const TAO_VarSeq_Var_T<T> & p)
   : TAO_Seq_Var_Base_T<T> (p)
 {
 }

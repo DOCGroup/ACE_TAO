@@ -261,6 +261,7 @@
 /TSS_Test
 /Unbounded_Set_Test
 /Unbounded_Set_Test_Ex
+/UNIX_Addr_Test
 /UnloadLibACE
 /Upgradable_RW_Test
 /UPIPE_SAP_Test
@@ -276,3 +277,4 @@
 /Compiler_Features_37_Test
 /Compiler_Features_38_Test
 /SOCK_Acceptor_Test
+Multicast_Interfaces_Test

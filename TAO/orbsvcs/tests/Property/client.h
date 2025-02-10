@@ -38,17 +38,17 @@ class Client
 {
 public:
   /// Constructor.
-  Client (void);
+  Client ();
 
   /// Initialize the ORB etc, and bind the MMDevices.
   int init (int argc,
             ACE_TCHAR **argv);
 
   /// Run the client.  This will call StreamCtrl::bind_devs.
-  int run (void);
+  int run ();
 
   /// Testing  the property service methods.
-  int property_tester (void);
+  int property_tester ();
 
 protected:
   /// Bind to the remote MMDevice.
@@ -58,34 +58,34 @@ protected:
   // = Property Testing.
 
   /// Testing the define property method.
-  int test_define_property (void);
+  int test_define_property ();
 
   /// Testing the number of properties, currently in the Property Set.
-  int test_get_number_of_properties (void);
+  int test_get_number_of_properties ();
 
   ///Testing get_all_property_names.
-  int test_get_all_property_names (void);
+  int test_get_all_property_names ();
 
   /// Testing get_property_value.
-  int test_get_property_value (void);
+  int test_get_property_value ();
 
   ///Testing get_properties.  Give the names and get their properties.
-  int test_get_properties (void);
+  int test_get_properties ();
 
   /// Testing get_all_properties.
-  int test_get_all_properties (void);
+  int test_get_all_properties ();
 
   /// Testing delete_property.
   int test_delete_property (const char *property_name);
 
   /// Testing delete_properties.
-  int test_delete_properties (void);
+  int test_delete_properties ();
 
   /// Defining a sequence of properties.
-  int test_define_properties (void);
+  int test_define_properties ();
 
   /// Defines properties with various modes.
-  int test_define_property_with_mode (void);
+  int test_define_property_with_mode ();
 
   /// The ORB manager, handles ORB initialization etc.
   TAO_ORB_Manager manager_;

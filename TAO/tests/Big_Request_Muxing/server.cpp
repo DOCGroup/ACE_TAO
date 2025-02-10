@@ -171,7 +171,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                   maybe_lost_count, maybe_lost,
                   runtime.sec(), runtime.usec()));
 
-      root_poa->destroy (1, 1);
+      root_poa->destroy (true, true);
 
       orb->destroy ();
 

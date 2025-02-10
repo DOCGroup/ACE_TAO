@@ -30,14 +30,14 @@ TAO_Notify_PushSupplier::init (CosEventComm::PushSupplier_ptr push_supplier)
 }
 
 void
-TAO_Notify_PushSupplier::release (void)
+TAO_Notify_PushSupplier::release ()
 {
   delete this;
   //@@ inform factory
 }
 
 ACE_CString
-TAO_Notify_PushSupplier::get_ior (void) const
+TAO_Notify_PushSupplier::get_ior () const
 {
   ACE_CString result;
   CORBA::ORB_var orb = TAO_Notify_PROPERTIES::instance()->orb();
@@ -54,7 +54,7 @@ TAO_Notify_PushSupplier::get_ior (void) const
 }
 
 CORBA::Object_ptr
-TAO_Notify_PushSupplier::get_supplier (void)
+TAO_Notify_PushSupplier::get_supplier ()
 {
   return CosEventComm::PushSupplier::_duplicate (this->push_supplier_.in ());
 }

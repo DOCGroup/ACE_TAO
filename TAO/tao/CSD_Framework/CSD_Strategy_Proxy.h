@@ -44,7 +44,6 @@ namespace TAO
     class TAO_CSD_FW_Export Strategy_Proxy
     {
     public:
-
       /// Default Constructor.
       Strategy_Proxy();
 
@@ -88,7 +87,6 @@ namespace TAO
                                     const PortableServer::ObjectId& oid);
 
     private:
-
       /// Smart Pointer to a custom servant dispatching strategy object.
       /// This smart pointer will be in the "nil" state when the "default"
       /// strategy is to be applied.

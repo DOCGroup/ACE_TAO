@@ -70,14 +70,13 @@ namespace TAO
       public virtual ::CORBA::LocalObject
   {
   public:
-
-    FT_ClientRequest_Interceptor (void);
+    FT_ClientRequest_Interceptor ();
 
     /// Canonical name of the interceptor.
-    virtual char * name (void);
+    virtual char * name ();
 
 
-    virtual void destroy (void);
+    virtual void destroy ();
 
     virtual void send_poll (PortableInterceptor::ClientRequestInfo_ptr);
 
@@ -92,11 +91,9 @@ namespace TAO
     void ft_send_extended_sc (CORBA::Boolean send);
 
   protected:
-
-    ~FT_ClientRequest_Interceptor (void);
+    ~FT_ClientRequest_Interceptor ();
 
   private:
-
     void group_version_context (PortableInterceptor::ClientRequestInfo_ptr ri,
                                 IOP::TaggedComponent* tp);
 
@@ -105,7 +102,6 @@ namespace TAO
     TimeBase::TimeT request_expiration_time (CORBA::Policy *policy);
 
   private:
-
     /// Name of the interceptor
     const char *name_;
 

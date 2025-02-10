@@ -21,7 +21,7 @@ be_visitor_attr_setarg_type::be_visitor_attr_setarg_type  (
 {
 }
 
-be_visitor_attr_setarg_type::~be_visitor_attr_setarg_type (void)
+be_visitor_attr_setarg_type::~be_visitor_attr_setarg_type ()
 {
 }
 
@@ -30,7 +30,7 @@ be_visitor_attr_setarg_type::visit_array (be_array *)
 {
   be_type *bt = this->ctx_->alias ();
 
-  if (bt == 0)
+  if (bt == nullptr)
     {
       /// Support anonymous types?
       return -1;
@@ -107,7 +107,7 @@ be_visitor_attr_setarg_type::visit_sequence (be_sequence *)
 {
   be_type *bt = this->ctx_->alias ();
 
-  if (bt == 0)
+  if (bt == nullptr)
     {
       /// Support anonymous types?
       return -1;
@@ -156,7 +156,7 @@ be_visitor_attr_setarg_type::visit_typedef (be_typedef *node)
                         -1);
     }
 
-  this->ctx_->alias (0);
+  this->ctx_->alias (nullptr);
   return 0;
 }
 

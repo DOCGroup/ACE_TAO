@@ -16,7 +16,7 @@ TAO_Register_Offer_Iterator (TAO_Offer_Database<MAP_LOCK_TYPE> &db,
 
 template <class MAP_LOCK_TYPE>
 TAO_Register_Offer_Iterator<MAP_LOCK_TYPE>::
-~TAO_Register_Offer_Iterator (void)
+~TAO_Register_Offer_Iterator ()
 {
   while (! this->offer_ids_.is_empty ())
     {
@@ -37,7 +37,7 @@ add_offer (CosTrading::OfferId id,
 
 template <class MAP_LOCK_TYPE> CORBA::ULong
 TAO_Register_Offer_Iterator<MAP_LOCK_TYPE>::
-max_left (void)
+max_left ()
 {
   return static_cast<CORBA::ULong> (this->offer_ids_.size ());
 }

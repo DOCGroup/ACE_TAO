@@ -10,7 +10,7 @@
 #include "jaws3/Options.h"
 
 
-JAWS_TPR_Concurrency::JAWS_TPR_Concurrency (void)
+JAWS_TPR_Concurrency::JAWS_TPR_Concurrency ()
   : getting_ (0)
   , shutdown_task_ (0)
   , error_ (0)

@@ -31,24 +31,22 @@ ace_sig_handlers_dispatch (int signum, siginfo_t *info, ucontext_t *context)
 #define ace_signal_handlers_dispatcher ACE_SignalHandler(ace_sig_handlers_dispatch)
 
 #else
-#define ace_signal_handler_dispatcher ACE_SignalHandler(ACE_Sig_Handler::dispatch)
+#define ace_signal_handler_dispatcher reinterpret_cast<ACE_SignalHandler> (reinterpret_cast<void*> ((ACE_Sig_Handler_Ex)ACE_Sig_Handler::dispatch))
 
-#define ace_signal_handlers_dispatcher ACE_SignalHandler(ACE_Sig_Handlers::dispatch)
+#define ace_signal_handlers_dispatcher reinterpret_cast<ACE_SignalHandler> (reinterpret_cast<void*> ((ACE_Sig_Handler_Ex)ACE_Sig_Handlers::dispatch))
 #endif /* ACE_HAS_SIG_C_FUNC */
-
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// Array of Event_Handlers that will handle the signals.
+/// Array of Event_Handlers that will handle the signals.
 ACE_Event_Handler *ACE_Sig_Handler::signal_handlers_[ACE_NSIG];
 
-// Remembers if a signal has occurred.
+/// Remembers if a signal has occurred.
 sig_atomic_t ACE_Sig_Handler::sig_pending_ = 0;
-
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Sig_Handler)
 
-ACE_Sig_Handler::~ACE_Sig_Handler (void)
+ACE_Sig_Handler::~ACE_Sig_Handler ()
 {
   for (int s = 1; s < ACE_NSIG; ++s)
     if (ACE_Sig_Handler::signal_handlers_[s])
@@ -56,7 +54,7 @@ ACE_Sig_Handler::~ACE_Sig_Handler (void)
 }
 
 void
-ACE_Sig_Handler::dump (void) const
+ACE_Sig_Handler::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Sig_Handler::dump");
@@ -64,7 +62,7 @@ ACE_Sig_Handler::dump (void) const
 }
 
 int
-ACE_Sig_Handler::sig_pending (void)
+ACE_Sig_Handler::sig_pending ()
 {
   ACE_TRACE ("ACE_Sig_Handler::sig_pending");
   ACE_MT (ACE_Recursive_Thread_Mutex *lock =
@@ -131,10 +129,9 @@ ACE_Sig_Handler::handler (int signum,
   return ACE_Sig_Handler::handler_i (signum, new_sh);
 }
 
-// Register an ACE_Event_Handler along with the corresponding SIGNUM.
-// This method does NOT acquire any locks, so it can be called from a
-// signal handler.
-
+/// Register an ACE_Event_Handler along with the corresponding SIGNUM.
+/// This method does NOT acquire any locks, so it can be called from a
+/// signal handler.
 int
 ACE_Sig_Handler::register_handler_i (int signum,
                                      ACE_Event_Handler *new_sh,
@@ -149,30 +146,27 @@ ACE_Sig_Handler::register_handler_i (int signum,
       ACE_Sig_Action sa; // Define a "null" action.
       ACE_Event_Handler *sh = ACE_Sig_Handler::handler_i (signum, new_sh);
 
-      // Return a pointer to the old <ACE_Sig_Handler> if the user
+      // Return a pointer to the old ACE_Event_Handler if the user
       // asks for this.
       if (old_sh != 0)
         *old_sh = sh;
 
-      // Make sure that <new_disp> points to a valid location if the
+      // Make sure that @a new_disp points to a valid location if the
       // user doesn't care...
       if (new_disp == 0)
         new_disp = &sa;
 
       new_disp->handler (ace_signal_handler_dispatcher);
-#if !defined (ACE_HAS_LYNXOS4_SIGNALS)
       new_disp->flags (new_disp->flags () | SA_SIGINFO);
-#endif /* ACE_HAS_LYNXOS4_SIGNALS */
       return new_disp->register_action (signum, old_disp);
     }
   else
     return -1;
 }
 
-// Register an ACE_Event_Handler along with the corresponding SIGNUM.
-// This method acquires a lock, so it can't be called from a signal
-// handler, e.g., <dispatch>.
-
+/// Register an ACE_Event_Handler along with the corresponding SIGNUM.
+/// This method acquires a lock, so it can't be called from a signal
+/// handler, e.g., <dispatch>.
 int
 ACE_Sig_Handler::register_handler (int signum,
                                    ACE_Event_Handler *new_sh,
@@ -220,8 +214,7 @@ ACE_Sig_Handler::remove_handler_i (int signum,
   return new_disp->register_action (signum, old_disp);
 }
 
-// Remove an ACE_Event_Handler.
-
+/// Remove an ACE_Event_Handler.
 int
 ACE_Sig_Handler::remove_handler (int signum,
                                  ACE_Sig_Action *new_disp,
@@ -240,13 +233,10 @@ ACE_Sig_Handler::remove_handler (int signum,
   return -1;
 }
 
-// Master dispatcher function that gets called by a signal handler and
-// dispatches one handler...
-
+/// Master dispatcher function that gets called by a signal handler and
+/// dispatches one handler...
 void
-ACE_Sig_Handler::dispatch (int signum,
-                           siginfo_t *siginfo,
-                           ucontext_t *ucontext)
+ACE_Sig_Handler::dispatch (int signum, siginfo_t *siginfo, ucontext_t *ucontext)
 {
   ACE_TRACE ("ACE_Sig_Handler::dispatch");
 
@@ -285,18 +275,18 @@ ACE_Sig_Handler::dispatch (int signum,
 // from compiling...
 #define ACE_MAX_SIGNAL_HANDLERS ((size_t) 20)
 
-// Keeps track of the id that uniquely identifies each registered
-// signal handler.  This id can be used to cancel a timer via the
-// <remove_handler> method.
+/// Keeps track of the id that uniquely identifies each registered
+/// signal handler.  This id can be used to cancel a timer via the
+/// <remove_handler> method.
 int ACE_Sig_Handlers::sigkey_ = 0;
 
-// If this is true then a 3rd party library has registered a
-// handler...
+/// If this is true then a 3rd party library has registered a
+/// handler...
 bool ACE_Sig_Handlers::third_party_sig_handler_ = false;
 
 // Make life easier by defining typedefs...
-typedef ACE_Fixed_Set <ACE_Event_Handler *, ACE_MAX_SIGNAL_HANDLERS> ACE_SIG_HANDLERS_SET;
-typedef ACE_Fixed_Set_Iterator <ACE_Event_Handler *, ACE_MAX_SIGNAL_HANDLERS> ACE_SIG_HANDLERS_ITERATOR;
+using ACE_SIG_HANDLERS_SET = ACE_Fixed_Set<ACE_Event_Handler *, ((size_t)20)>;
+using ACE_SIG_HANDLERS_ITERATOR = ACE_Fixed_Set_Iterator<ACE_Event_Handler *, ((size_t)20)>;
 
 class ACE_Sig_Handlers_Set
 {
@@ -325,21 +315,20 @@ ACE_Sig_Handlers_Set::instance (int signum)
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Sig_Handlers)
 
-ACE_Sig_Handlers::ACE_Sig_Handlers (void)
+ACE_Sig_Handlers::ACE_Sig_Handlers ()
 {
 }
 
 void
-ACE_Sig_Handlers::dump (void) const
+ACE_Sig_Handlers::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Sig_Handlers::dump");
 #endif /* ACE_HAS_DUMP */
 }
 
-// This is the method that does all the dirty work...  The basic
-// structure of this method was devised by Detlef Becker.
-
+/// This is the method that does all the dirty work...  The basic
+/// structure of this method was devised by Detlef Becker.
 int
 ACE_Sig_Handlers::register_handler (int signum,
                                     ACE_Event_Handler *new_sh,
@@ -355,8 +344,8 @@ ACE_Sig_Handlers::register_handler (int signum,
 
   if (ACE_Sig_Handler::in_range (signum))
     {
-      ACE_Sig_Adapter *ace_sig_adapter = 0; // Our signal handler.
-      ACE_Sig_Adapter *extern_sh = 0; // An external signal handler.
+      ACE_Sig_Adapter *ace_sig_adapter = nullptr; // Our signal handler.
+      ACE_Sig_Adapter *extern_sh = nullptr; // An external signal handler.
       ACE_Sig_Action sa;
 
       // Get current signal disposition.
@@ -364,7 +353,6 @@ ACE_Sig_Handlers::register_handler (int signum,
 
       // Check whether we are already in control of the signal
       // handling disposition...
-
       if (!(sa.handler () == ace_signal_handlers_dispatcher
           || sa.handler () == ACE_SignalHandler (SIG_IGN)
           || sa.handler () == ACE_SignalHandler (SIG_DFL)))
@@ -373,7 +361,6 @@ ACE_Sig_Handlers::register_handler (int signum,
 
           // Upto here we never disabled RESTART_MODE.  Thus,
           // RESTART_MODE can only be changed by 3rd party libraries.
-
           if (ACE_BIT_DISABLED (sa.flags (), SA_RESTART)
               && ACE_Sig_Handlers::third_party_sig_handler_)
             // Toggling is disallowed since we might break 3rd party
@@ -402,11 +389,11 @@ ACE_Sig_Handlers::register_handler (int signum,
                       ACE_Sig_Adapter (new_sh,
                                        ++ACE_Sig_Handlers::sigkey_),
                       -1);
+
       // Add the ACE signal handler to the set of handlers for this
       // signal (make sure it goes before the external one if there is
       // one of these).
-
-      int result = ACE_Sig_Handlers_Set::instance (signum)->insert (ace_sig_adapter);
+      int const result = ACE_Sig_Handlers_Set::instance (signum)->insert (ace_sig_adapter);
 
       if (result == -1)
         {
@@ -437,9 +424,7 @@ ACE_Sig_Handlers::register_handler (int signum,
 
           // Default is to restart signal handlers.
           new_disp->flags (new_disp->flags () | SA_RESTART);
-#if !defined (ACE_HAS_LYNXOS4_SIGNALS)
           new_disp->flags (new_disp->flags () | SA_SIGINFO);
-#endif /* ACE_HAS_LYNXOS4_SIGNALS */
 
           // Finally install (possibly reinstall) the ACE signal
           // handler disposition with the SA_RESTART mode enabled.
@@ -465,11 +450,10 @@ ACE_Sig_Handlers::register_handler (int signum,
   return -1;
 }
 
-// Remove the ACE_Event_Handler currently associated with <signum>.
-// Install the new disposition (if given) and return the previous
-// disposition (if desired by the caller).  Returns 0 on success and
-// -1 if <signum> is invalid.
-
+/// Remove the ACE_Event_Handler currently associated with @a signum.
+/// Install the new disposition (if given) and return the previous
+/// disposition (if desired by the caller).  Returns 0 on success and
+// -1 if @a signum is invalid.
 int
 ACE_Sig_Handlers::remove_handler (int signum,
                                   ACE_Sig_Action *new_disp,
@@ -490,7 +474,6 @@ ACE_Sig_Handlers::remove_handler (int signum,
       ACE_SIG_HANDLERS_ITERATOR handler_iterator (*handler_set);
 
       // Iterate through the set of handlers for this signal.
-
       for (ACE_Event_Handler **eh;
            handler_iterator.next (eh) != 0;
            )
@@ -501,7 +484,6 @@ ACE_Sig_Handlers::remove_handler (int signum,
           // Remove the handler if (1) its key matches the key we've
           // been told to remove or (2) if we've been told to remove
           // *all* handlers (i.e., <sigkey> == -1).
-
           if (sh->sigkey () == sigkey || sigkey == -1)
             {
               handler_set->remove (*eh);
@@ -514,7 +496,6 @@ ACE_Sig_Handlers::remove_handler (int signum,
           // If there are no more handlers left for a signal then
           // register the new disposition or restore the default
           // disposition.
-
           ACE_Sig_Action sa (SIG_DFL, (sigset_t *) 0);
 
           if (new_disp == 0)
@@ -528,13 +509,10 @@ ACE_Sig_Handlers::remove_handler (int signum,
     return -1;
 }
 
-// Master dispatcher function that gets called by a signal handler and
-// dispatches *all* the handlers...
-
+/// Master dispatcher function that gets called by a signal handler and
+/// dispatches *all* the handlers...
 void
-ACE_Sig_Handlers::dispatch (int signum,
-                            siginfo_t *siginfo,
-                            ucontext_t *ucontext)
+ACE_Sig_Handlers::dispatch (int signum, siginfo_t *siginfo, ucontext_t *ucontext)
 {
   ACE_TRACE ("ACE_Sig_Handlers::dispatch");
   // The following is #ifdef'd out because it's entirely non-portable
@@ -569,10 +547,9 @@ ACE_Sig_Handlers::dispatch (int signum,
       }
 }
 
-// Return the first item in the list of handlers.  Note that this will
-// trivially provide the same behavior as the ACE_Sig_Handler
-// version if there is only 1 handler registered!
-
+/// Return the first item in the list of handlers.  Note that this will
+/// trivially provide the same behavior as the ACE_Sig_Handler
+/// version if there is only 1 handler registered!
 ACE_Event_Handler *
 ACE_Sig_Handlers::handler (int signum)
 {
@@ -585,12 +562,11 @@ ACE_Sig_Handlers::handler (int signum)
   return *eh;
 }
 
-// The following is a strange bit of logic that tries to give the same
-// semantics as what happens in ACE_Sig_Handler when we replace the
-// current signal handler with a new one.  Note that if there is only
-// one signal handler the behavior will be identical.  If there is
-// more than one handler then things get weird...
-
+/// The following is a strange bit of logic that tries to give the same
+/// semantics as what happens in ACE_Sig_Handler when we replace the
+/// current signal handler with a new one.  Note that if there is only
+/// one signal handler the behavior will be identical.  If there is
+/// more than one handler then things get weird...
 ACE_Event_Handler *
 ACE_Sig_Handlers::handler (int signum, ACE_Event_Handler *new_sh)
 {
@@ -598,7 +574,7 @@ ACE_Sig_Handlers::handler (int signum, ACE_Event_Handler *new_sh)
   ACE_SIG_HANDLERS_SET *handler_set =
     ACE_Sig_Handlers_Set::instance (signum);
   ACE_SIG_HANDLERS_ITERATOR handler_iterator (*handler_set);
-  ACE_Event_Handler **eh = 0;
+  ACE_Event_Handler **eh = nullptr;
 
   // Find the first handler...
   handler_iterator.next (eh);
@@ -609,12 +585,12 @@ ACE_Sig_Handlers::handler (int signum, ACE_Event_Handler *new_sh)
   // ... and then insert the new signal handler into the beginning of
   // the set (note, this is a bit too tied up in the implementation of
   // ACE_Unbounded_Set...).
-  ACE_Sig_Adapter *temp = 0;
+  ACE_Sig_Adapter *temp = nullptr;
 
   ACE_NEW_RETURN (temp,
                   ACE_Sig_Adapter (new_sh,
                                    ++ACE_Sig_Handlers::sigkey_),
-                  0);
+                  nullptr);
   handler_set->insert (temp);
   return *eh;
 }

@@ -15,7 +15,6 @@ test_i::method (CORBA::ULong request_number,
                 CORBA::ULong work)
 {
   ACE_Time_Value start (0);
-  // HPUX seems to require this cast
   start.msec (static_cast<long> (start_time));
   ACE_DEBUG ((LM_DEBUG,
               "server:\t%d took\t%dms\n",
@@ -30,7 +29,7 @@ test_i::method (CORBA::ULong request_number,
 }
 
 void
-test_i::flush (void)
+test_i::flush ()
 {
   ACE_DEBUG ((LM_DEBUG, "server: got flush request\n"));
 }
@@ -39,8 +38,8 @@ void
 test_i::shutdown (CORBA::Long start_time)
 {
   ACE_Time_Value start (0);
-  start.msec (static_cast<long> (start_time)); // HPUX seems to require this cast
+  start.msec (static_cast<long> (start_time));
   ACE_DEBUG ((LM_DEBUG, "server: Shutting down... (%dms)\n",
               (ACE_OS::gettimeofday() - start).msec ()));
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

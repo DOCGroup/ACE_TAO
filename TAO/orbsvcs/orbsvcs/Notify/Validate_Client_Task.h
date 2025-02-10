@@ -43,7 +43,6 @@ class TAO_Notify_Serv_Export TAO_Notify_validate_client_Task
   : public ACE_Task<ACE_NULL_SYNCH>
 {
 public:
-
   typedef TAO_Condition<TAO_SYNCH_MUTEX> CONDITION;
 
   /// Constructor.  It does not assume ownership of the <event_channel>
@@ -53,11 +52,11 @@ public:
                                      TAO_Notify_EventChannelFactory *ecf);
 
   /// destructor...
-  virtual ~TAO_Notify_validate_client_Task (void);
+  virtual ~TAO_Notify_validate_client_Task ();
 
-  virtual int svc (void);
+  virtual int svc ();
 
-  void shutdown (void);
+  void shutdown ();
 
 private:
   /// The delay of first time validate.

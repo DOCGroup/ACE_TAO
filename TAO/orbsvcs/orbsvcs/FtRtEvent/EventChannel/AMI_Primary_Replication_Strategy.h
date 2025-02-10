@@ -42,13 +42,13 @@ public:
                                    const FtRtecEventChannelAdmin::ObjectId& oid);
   virtual void add_member(const FTRT::ManagerInfo & info,
                           CORBA::ULong object_group_ref_version);
-  virtual int  acquire_read (void);
-  virtual int  acquire_write (void);
-  virtual int  release (void);
+  virtual int  acquire_read ();
+  virtual int  acquire_write ();
+  virtual int  release ();
   PortableServer::POA_ptr poa() { return poa_.in(); }
   CORBA::ORB_ptr orb() { return orb_.in();}
 private:
-  virtual int svc (void);
+  virtual int svc ();
   CORBA::ORB_var orb_;
   PortableServer::POA_var root_poa_;
   PortableServer::POA_var poa_;

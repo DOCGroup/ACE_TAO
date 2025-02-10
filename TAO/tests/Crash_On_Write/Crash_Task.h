@@ -18,7 +18,7 @@ public:
               const ACE_Time_Value &running_time);
 
   /// Thread entry point
-  int svc (void);
+  int svc ();
 
 private:
   /// Total running time for each thread

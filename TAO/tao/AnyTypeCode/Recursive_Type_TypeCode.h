@@ -27,7 +27,6 @@ namespace TAO
 {
   namespace TypeCode
   {
-
     /**
      * @class Recursive_Type
      *
@@ -47,7 +46,6 @@ namespace TAO
       : public TypeCodeBase
     {
     public:
-
       /// Recursive @c struct constructor.
       Recursive_Type (CORBA::TCKind kind,
                       char const * id,
@@ -96,7 +94,6 @@ namespace TAO
       //@}
 
     protected:
-
       /**
        * @name TAO @c CORBA::TypeCode Template Methods
        *
@@ -111,7 +108,6 @@ namespace TAO
       //@}
 
     public:
-
       /// Set @c struct @c TypeCode parameters.
       bool struct_parameters (char const * name,
                               MemberArrayType const & fields,
@@ -133,7 +129,6 @@ namespace TAO
                                  CORBA::ULong nfields);
 
     private:
-
       /**
        * @class Reset
        *
@@ -145,13 +140,12 @@ namespace TAO
       {
       public:
         Reset (CORBA::ULong & flag) : flag_ (flag) { }
-        ~Reset (void) { this->flag_ = 0; }
+        ~Reset () { this->flag_ = 0; }
       private:
         CORBA::ULong & flag_;
       };
 
     private:
-
       /// Internal state thread synchronization mutex.
       mutable TAO_SYNCH_RECURSIVE_MUTEX lock_;
 
@@ -166,7 +160,6 @@ namespace TAO
       /// Track whether data has been initialized.
       bool data_initialized_;
     };
-
   }  // End namespace TypeCode
 }  // End namespace TAO
 
@@ -177,13 +170,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 # include "tao/AnyTypeCode/Recursive_Type_TypeCode.inl"
 #endif  /* __ACE_INLINE__ */
 
-#ifdef ACE_TEMPLATES_REQUIRE_SOURCE
-# include "tao/AnyTypeCode/Recursive_Type_TypeCode.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#ifdef ACE_TEMPLATES_REQUIRE_PRAGMA
-# pragma implementation ("Recursive_Type_TypeCode.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
+#include "tao/AnyTypeCode/Recursive_Type_TypeCode.cpp"
 
 #include /**/ "ace/post.h"
 

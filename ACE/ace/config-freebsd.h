@@ -25,7 +25,6 @@
 # undef ACE_HAS_PENTIUM
 #endif /* ACE_HAS_PENTIUM */
 
-#define ACE_HAS_3_PARAM_READDIR_R
 #define ACE_HAS_3_PARAM_WCSTOK
 #define ACE_HAS_4_4BSD_SENDMSG_RECVMSG
 #define ACE_HAS_ALLOCA
@@ -44,7 +43,6 @@
 #define ACE_HAS_POSIX_TIME
 #define ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS
 #define ACE_HAS_RTLD_LAZY_V
-#define ACE_HAS_SEMUN
 #define ACE_HAS_SIGISMEMBER_BUG
 #define ACE_HAS_SIGSUSPEND
 #define ACE_HAS_SIGWAIT
@@ -71,7 +69,6 @@
 #define ACE_LACKS_ISCTYPE
 #define ACE_LACKS_ITOW
 #define ACE_LACKS_LOG2
-#define ACE_LACKS_MALLOC_H
 #define ACE_LACKS_MUTEXATTR_PSHARED
 #define ACE_LACKS_SIGINFO_H
 #define ACE_LACKS_SI_ADDR
@@ -133,7 +130,6 @@
 # define ACE_LACKS_SIGSET
 # define ACE_LACKS_SIGSET_T
 # define ACE_LACKS_RWLOCK_T
-# define ACE_LACKS_READDIR_R
 # define ACE_LACKS_SETSCHED
 # define ACE_LACKS_PTHREAD_THR_SIGSETMASK
 # define ACE_LACKS_UCONTEXT_H
@@ -183,6 +179,14 @@ enum schedparam_policy {
 
 #if (__FreeBSD_version < 700038)
 # define ACE_HAS_VOID_UNSETENV
+#endif
+
+#if (__FreeBSD_version >= 800025)
+# define ACE_HAS_CPUSET_T
+#endif
+
+#if (__FreeBSD_version < 1200059)
+# define ACE_HAS_SEMUN
 #endif
 
 #include /**/ "ace/post.h"

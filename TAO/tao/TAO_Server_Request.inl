@@ -5,7 +5,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // This constructor is used by the CSD clone.
 ACE_INLINE
-TAO_ServerRequest::TAO_ServerRequest (void)
+TAO_ServerRequest::TAO_ServerRequest ()
   : mesg_base_ (0),
     operation_ (0),
     operation_len_ (0),
@@ -37,25 +37,25 @@ TAO_ServerRequest::TAO_ServerRequest (void)
 }
 
 ACE_INLINE TAO_ORB_Core *
-TAO_ServerRequest::orb_core (void) const
+TAO_ServerRequest::orb_core () const
 {
   return this->orb_core_;
 }
 
 ACE_INLINE TAO_InputCDR *
-TAO_ServerRequest::incoming (void) const
+TAO_ServerRequest::incoming () const
 {
   return this->incoming_;
 }
 
 ACE_INLINE TAO_OutputCDR *
-TAO_ServerRequest::outgoing (void) const
+TAO_ServerRequest::outgoing () const
 {
   return this->outgoing_;
 }
 
 ACE_INLINE const char *
-TAO_ServerRequest::operation (void) const
+TAO_ServerRequest::operation () const
 {
   return (this->operation_ == 0 ? "" : this->operation_);
 }
@@ -68,25 +68,25 @@ TAO_ServerRequest::operation (const char *operation,
   if (this->release_operation_)
     CORBA::string_free (const_cast <char*> (this->operation_));
 
-  this->operation_len_ = (length == 0 ? ACE_OS::strlen (operation) : length);
+  this->operation_len_ = (length == 0 ? std::strlen (operation) : length);
   this->release_operation_ = release;
   this->operation_ = operation;
 }
 
 ACE_INLINE size_t
-TAO_ServerRequest::operation_length (void) const
+TAO_ServerRequest::operation_length () const
 {
   return this->operation_len_;
 }
 
 ACE_INLINE CORBA::Boolean
-TAO_ServerRequest::response_expected (void) const
+TAO_ServerRequest::response_expected () const
 {
   return this->response_expected_;
 }
 
 ACE_INLINE CORBA::Boolean
-TAO_ServerRequest::deferred_reply (void) const
+TAO_ServerRequest::deferred_reply () const
 {
   return this->deferred_reply_;
 }
@@ -98,7 +98,7 @@ TAO_ServerRequest::response_expected (CORBA::Boolean response)
 }
 
 ACE_INLINE void
-TAO_ServerRequest::sync_before_dispatch (void)
+TAO_ServerRequest::sync_before_dispatch ()
 {
   if (this->sync_with_server_ &&
       this->transport_ != 0 &&
@@ -109,7 +109,7 @@ TAO_ServerRequest::sync_before_dispatch (void)
 }
 
 ACE_INLINE void
-TAO_ServerRequest::sync_after_dispatch (void)
+TAO_ServerRequest::sync_after_dispatch ()
 {
   if (this->sync_with_server_ &&
       this->transport_ != 0 &&
@@ -120,7 +120,7 @@ TAO_ServerRequest::sync_after_dispatch (void)
 }
 
 ACE_INLINE CORBA::Boolean
-TAO_ServerRequest::sync_with_server (void) const
+TAO_ServerRequest::sync_with_server () const
 {
   return this->sync_with_server_;
 }
@@ -132,7 +132,7 @@ TAO_ServerRequest::sync_with_server (CORBA::Boolean sync_flag)
 }
 
 ACE_INLINE CORBA::Boolean
-TAO_ServerRequest::is_queued (void) const
+TAO_ServerRequest::is_queued () const
 {
   return this->is_queued_;
 }
@@ -144,37 +144,37 @@ TAO_ServerRequest::is_queued (CORBA::Boolean queued_flag)
 }
 
 ACE_INLINE TAO::ObjectKey &
-TAO_ServerRequest::object_key (void)
+TAO_ServerRequest::object_key ()
 {
   return this->profile_.object_key ();
 }
 
 ACE_INLINE TAO_Service_Context &
-TAO_ServerRequest::request_service_context (void)
+TAO_ServerRequest::request_service_context ()
 {
   return this->request_service_context_;
 }
 
 ACE_INLINE IOP::ServiceContextList &
-TAO_ServerRequest::reply_service_info (void)
+TAO_ServerRequest::reply_service_info ()
 {
   return this->reply_service_context ().service_info ();
 }
 
 ACE_INLINE IOP::ServiceContextList &
-TAO_ServerRequest::request_service_info (void)
+TAO_ServerRequest::request_service_info ()
 {
   return this->request_service_context ().service_info ();
 }
 
 ACE_INLINE TAO_Transport *
-TAO_ServerRequest::transport (void)
+TAO_ServerRequest::transport ()
 {
   return this->transport_.get ();
 }
 
 ACE_INLINE CORBA::ULong
-TAO_ServerRequest::request_id (void)
+TAO_ServerRequest::request_id ()
 {
   return this->request_id_;
 }
@@ -192,7 +192,7 @@ TAO_ServerRequest::requesting_principal (const CORBA::OctetSeq &principal)
 }
 
 ACE_INLINE TAO_Tagged_Profile &
-TAO_ServerRequest::profile (void)
+TAO_ServerRequest::profile ()
 {
   return this->profile_;
 }
@@ -206,19 +206,19 @@ TAO_ServerRequest::forward_location (CORBA::Object_ptr forward_reference)
 }
 
 ACE_INLINE CORBA::Object_ptr
-TAO_ServerRequest::forward_location (void)
+TAO_ServerRequest::forward_location ()
 {
   return CORBA::Object::_duplicate (this->forward_location_.in ());
 }
 
 ACE_INLINE bool
-TAO_ServerRequest::is_forwarded (void) const
+TAO_ServerRequest::is_forwarded () const
 {
   return this->is_forwarded_;
 }
 
 ACE_INLINE GIOP::ReplyStatusType
-TAO_ServerRequest::reply_status (void)
+TAO_ServerRequest::reply_status ()
 {
   return this->reply_status_;
 }
@@ -230,13 +230,13 @@ TAO_ServerRequest::reply_status (GIOP::ReplyStatusType reply_status)
 }
 
 ACE_INLINE void
-TAO_ServerRequest::is_dsi (void)
+TAO_ServerRequest::is_dsi ()
 {
   this->is_dsi_ = true;
 }
 
 ACE_INLINE TAO_Operation_Details const *
-TAO_ServerRequest::operation_details (void) const
+TAO_ServerRequest::operation_details () const
 {
   return this->operation_details_;
 }
@@ -248,7 +248,7 @@ TAO_ServerRequest::dsi_nvlist_align (ptrdiff_t alignment)
 }
 
 ACE_INLINE CORBA::Boolean
-TAO_ServerRequest::argument_flag (void)
+TAO_ServerRequest::argument_flag ()
 {
   return this->argument_flag_;
 }
@@ -260,7 +260,7 @@ TAO_ServerRequest::argument_flag (CORBA::Boolean flag)
 }
 
 ACE_INLINE bool
-TAO_ServerRequest::collocated (void) const
+TAO_ServerRequest::collocated () const
 {
   return this->transport_.get () == 0;
 }
@@ -268,13 +268,13 @@ TAO_ServerRequest::collocated (void) const
 
 #if TAO_HAS_INTERCEPTORS == 1
 ACE_INLINE size_t &
-TAO_ServerRequest::interceptor_count (void)
+TAO_ServerRequest::interceptor_count ()
 {
   return this->interceptor_count_;
 }
 
 ACE_INLINE CORBA::Exception *
-TAO_ServerRequest::caught_exception (void)
+TAO_ServerRequest::caught_exception ()
 {
   return this->caught_exception_;
 }
@@ -286,7 +286,7 @@ TAO_ServerRequest::pi_reply_status (PortableInterceptor::ReplyStatus s)
 }
 
 ACE_INLINE PortableInterceptor::ReplyStatus
-TAO_ServerRequest::pi_reply_status (void)
+TAO_ServerRequest::pi_reply_status ()
 {
   return this->pi_reply_status_;
 }

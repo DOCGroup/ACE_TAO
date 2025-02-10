@@ -2,7 +2,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO::SL3::CredentialsAcquirerFactory::~CredentialsAcquirerFactory (void)
+TAO::SL3::CredentialsAcquirerFactory::~CredentialsAcquirerFactory ()
 {
 }
 

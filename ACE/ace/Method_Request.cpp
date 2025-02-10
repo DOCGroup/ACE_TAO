@@ -7,12 +7,8 @@ ACE_Method_Request::ACE_Method_Request (unsigned long prio)
 {
 }
 
-ACE_Method_Request::~ACE_Method_Request (void)
-{
-}
-
 unsigned long
-ACE_Method_Request::priority (void) const
+ACE_Method_Request::priority () const
 {
   return this->priority_;
 }

@@ -33,8 +33,8 @@ typedef ACE_Null_Mutex MAP_MUTEX;
 class ACE_Svc_Export Event_Channel : public ACE_Event_Handler
 {
 public:
-  Event_Channel (void);
-  ~Event_Channel (void);
+  Event_Channel ();
+  ~Event_Channel ();
 
   /// Open the channel.
   virtual int open (void * = 0);
@@ -78,11 +78,11 @@ public:
                    ACE_Time_Value * = 0);
 
   /// Actively initiate connections to the Peers.
-  void initiate_connector (void);
+  void initiate_connector ();
 
   /// Passively initiate the <Peer_Acceptor>s for Consumer and
   /// Suppliers.
-  int initiate_acceptors (void);
+  int initiate_acceptors ();
 
 private:
   /// Parse the command-line arguments.
@@ -98,7 +98,7 @@ private:
   void subscription_event (ACE_Message_Block *data);
 
   /// Perform timer-based performance profiling.
-  int compute_performance_statistics (void);
+  int compute_performance_statistics ();
 
   /// Periodically callback to perform timer-based performance
   /// profiling.

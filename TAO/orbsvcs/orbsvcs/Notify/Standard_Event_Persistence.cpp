@@ -10,7 +10,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_Notify
 {
-
 Standard_Event_Persistence::Standard_Event_Persistence ()
   : filename_ (ACE_TEXT ("__PERSISTENT_EVENT__.DB"))
   , block_size_ (512)

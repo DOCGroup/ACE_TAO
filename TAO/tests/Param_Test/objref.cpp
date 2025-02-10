@@ -17,19 +17,19 @@
 //               Test_ObjRef
 // ************************************************************************
 
-Test_ObjRef::Test_ObjRef (void)
+Test_ObjRef::Test_ObjRef ()
   : opname_ (CORBA::string_dup ("test_objref"))
 {
 }
 
-Test_ObjRef::~Test_ObjRef (void)
+Test_ObjRef::~Test_ObjRef ()
 {
   CORBA::string_free (this->opname_);
   this->opname_ = 0;
 }
 
 const char *
-Test_ObjRef::opname (void) const
+Test_ObjRef::opname () const
 {
   return this->opname_;
 }
@@ -106,7 +106,7 @@ Test_ObjRef::init_parameters (Param_Test_ptr objref)
 }
 
 int
-Test_ObjRef::reset_parameters (void)
+Test_ObjRef::reset_parameters ()
 {
   // Environemnt variable
   Coffee::Desc desc;
@@ -149,13 +149,12 @@ Test_ObjRef::run_sii_test (Param_Test_ptr objref)
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("Test_ObjRef::run_sii_test\n");
-
     }
   return -1;
 }
 
 CORBA::Boolean
-Test_ObjRef::check_validity (void)
+Test_ObjRef::check_validity ()
 {
   // Environemnt variable
 
@@ -210,7 +209,7 @@ Test_ObjRef::check_validity (CORBA::Request_ptr)
 }
 
 void
-Test_ObjRef::print_values (void)
+Test_ObjRef::print_values ()
 {
   // Env. variable
 
@@ -259,13 +258,12 @@ Test_ObjRef::print_values (void)
     }
 
 
-
   ACE_DEBUG ((LM_DEBUG,
               "\n=*=*=*=*=*=*"
-              "in = %s, "
-              "inout = %s, "
-              "out = %s, "
-              "ret = %s*=*=*=*=*=\n",
+              "in = %C, "
+              "inout = %C, "
+              "out = %C, "
+              "ret = %C*=*=*=*=*=\n",
               in?in:"ERROR(null string)",
               inout?inout:"ERROR(null string)",
               out?out:"ERROR(null string)",

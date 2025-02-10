@@ -78,12 +78,12 @@ set_timeout_policy (CORBA::Object_ptr obj, const ACE_Time_Value& to)
 }
 
 void
-do_restart_test (void)
+do_restart_test ()
 {
   CORBA::Object_var obj = orb->string_to_object (ior);
   ACE_ASSERT (!CORBA::is_nil(obj.in ()));
   obj = set_timeout_policy (obj.in (), ACE_Time_Value (5,0));
-  Test_var test = Test::_narrow( obj.in () );
+  Test_var test = Test::_narrow( obj.in ());
   ACE_ASSERT (!CORBA::is_nil(test.in ()));
   int attempt = 2;
   while (attempt > 0)
@@ -128,7 +128,7 @@ int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try {
-    orb = CORBA::ORB_init( argc, argv );
+    orb = CORBA::ORB_init(argc, argv);
 
     if (parse_args (argc, argv) != 0)
       return 1;

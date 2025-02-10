@@ -8,7 +8,7 @@
 #include "tao/debug.h"
 
 #include "ace/Get_Opt.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/Sched_Params.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/ACE.h"
@@ -95,7 +95,7 @@ Test_Supplier::connect (RtecScheduler::Scheduler_ptr scheduler,
 }
 
 void
-Test_Supplier::disconnect (void)
+Test_Supplier::disconnect ()
 {
   if (CORBA::is_nil (this->consumer_proxy_.in ()))
     return;
@@ -216,17 +216,17 @@ Test_Supplier::svc ()
 }
 
 void
-Test_Supplier::disconnect_push_supplier (void)
+Test_Supplier::disconnect_push_supplier ()
 {
 }
 
-int Test_Supplier::supplier_id (void) const
+int Test_Supplier::supplier_id () const
 {
   return this->supplier_id_;
 }
 
 RtecEventChannelAdmin::ProxyPushConsumer_ptr
-Test_Supplier::consumer_proxy (void)
+Test_Supplier::consumer_proxy ()
 {
   return this->consumer_proxy_.in ();
 }

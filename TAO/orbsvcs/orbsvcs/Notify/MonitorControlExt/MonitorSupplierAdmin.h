@@ -23,10 +23,10 @@ class TAO_Notify_MC_Ext_Export TAO_MonitorSupplierAdmin:
 {
 public:
   /// Construct a monitor supplier admin
-  TAO_MonitorSupplierAdmin (void);
+  TAO_MonitorSupplierAdmin ();
 
   /// Remove the statistics for this event channel
-  ~TAO_MonitorSupplierAdmin (void);
+  ~TAO_MonitorSupplierAdmin ();
 
   /// Register our statistic and control objects
   void register_stats_controls (TAO_MonitorEventChannel* mec,

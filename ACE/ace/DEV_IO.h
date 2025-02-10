@@ -41,7 +41,7 @@ public:
   friend class ACE_DEV_Connector;
 
   /// Default constructor.
-  ACE_DEV_IO (void);
+  ACE_DEV_IO ();
 
   // = Various send operations.
   /// send upto @a n bytes in @a buf.
@@ -151,7 +151,7 @@ public:
   ssize_t recv (void *buf, size_t n, ACE_OVERLAPPED *overlapped) const;
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   // = The following two methods are no-ops to keep the
   // ACE_Connector happy.

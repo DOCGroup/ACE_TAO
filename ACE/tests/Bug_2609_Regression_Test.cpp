@@ -29,7 +29,7 @@ ACE_Thread_Semaphore g_semaphore (0);
 class My_Svc_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM,ACE_NULL_SYNCH>
 {
 public:
-  typedef ACE_Svc_Handler<ACE_SOCK_STREAM,ACE_NULL_SYNCH> super;
+  using super = ACE_Svc_Handler<ACE_SOCK_Stream, ACE_NULL_SYNCH>;
   My_Svc_Handler()
   {
     TEST_TRACE ("My_Svc_Handler:My_Svc_Handler");
@@ -38,14 +38,14 @@ public:
       Reference_Counting_Policy::ENABLED);
   }
 
-  ~My_Svc_Handler()
+  ~My_Svc_Handler() override
   {
     TEST_TRACE ("My_Svc_Handler::~My_Svc_Handler");
     g_handler_deleted = true;
   }
 
   //FUZZ: disable check_for_lack_ACE_OS
-  int open (void* pv)
+  int open (void* pv) override
   {
     TEST_TRACE ("open");
     g_semaphore.release (); // signal open completed
@@ -56,7 +56,7 @@ public:
   }
   //FUZZ: enable check_for_lack_ACE_OS
 
-  int handle_close (ACE_HANDLE, ACE_Reactor_Mask)
+  int handle_close (ACE_HANDLE, ACE_Reactor_Mask) override
   {
     TEST_TRACE ("handle_close");
     if (g_handler_deleted)
@@ -72,7 +72,7 @@ public:
 
 struct My_Task : public ACE_Task_Base
 {
-   int svc()
+   int svc() override
    {
      TEST_TRACE ("My_Task::svc");
      ACE_Reactor *r = ACE_Reactor::instance ();
@@ -91,14 +91,14 @@ struct My_Task : public ACE_Task_Base
 // event handler used to signal when the reactor started
 struct Timer_Handler : public ACE_Event_Handler
 {
-   int handle_timeout (const ACE_Time_Value&, const void*)
+   int handle_timeout (const ACE_Time_Value&, const void*) override
    {
      g_semaphore.release (); // signal reactor started
      return 0;
    }
 };
 
-typedef ACE_Acceptor<My_Svc_Handler, ACE_SOCK_ACCEPTOR> My_Acceptor;
+using My_Acceptor = ACE_Acceptor<My_Svc_Handler, ACE_SOCK_Acceptor>;
 
 #endif
 

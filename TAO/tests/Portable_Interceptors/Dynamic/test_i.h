@@ -19,24 +19,20 @@ class Visual_i : public POA_Test_Interceptors::Visual
 public:
   Visual_i (CORBA::ORB_ptr orb);
 
-  virtual CORBA::Long calculate (CORBA::Long one,
-                                 CORBA::Long two);
+  CORBA::Long calculate (CORBA::Long one, CORBA::Long two) override;
 
-  void normal (CORBA::Long arg,
-               CORBA::String_out msg);
+  void normal (CORBA::Long arg, CORBA::String_out msg)  override;
 
-  virtual Test_Interceptors::Visual::VarLenStruct * the_structure ();
+  Test_Interceptors::Visual::VarLenStruct * the_structure () override;
 
-  virtual void user (void);
+  void user () override;
 
-  virtual void system (void);
+  void system () override;
 
-  virtual void shutdown (void);
+  void shutdown () override;
 
 private:
-
   CORBA::ORB_var orb_;
-
 };
 
 #endif /* TAO_INTERCEPTOR_TEST_I_H */

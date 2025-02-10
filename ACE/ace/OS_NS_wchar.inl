@@ -9,7 +9,7 @@ ACE_OS::fgetwc (FILE* fp)
   ACE_UNUSED_ARG (fp);
   ACE_NOTSUP_RETURN (0);
 #  else
-  ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::fgetwc (fp), wint_t, WEOF);
+  return std::fgetwc (fp);
 #  endif /* ACE_LACKS_FGETWC */
 }
 #endif /* ACE_HAS_WCHAR */
@@ -76,7 +76,7 @@ ACE_OS::ungetwc (wint_t c, FILE* fp)
   ACE_UNUSED_ARG (fp);
   ACE_NOTSUP_RETURN (0);
 #  else
-  ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::ungetwc (c, fp), wint_t, WEOF);
+  return std::ungetwc (c, fp);
 #  endif /* ACE_LACKS_FGETWC */
 }
 #endif /* ACE_HAS_WCHAR */

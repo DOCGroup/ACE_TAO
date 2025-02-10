@@ -5,8 +5,6 @@
 
 #include "DllORB.h"
 
-char const * const scpc_orbId = "testDllOrb";
-
 ACE_TCHAR const * const scpc_loadOrb = ACE_DYNAMIC_VERSIONED_SERVICE_DIRECTIVE(
   "testDllOrb",
   "bug2926",
@@ -90,8 +88,7 @@ void loadunloadcycle()
   v_ec = v_notifyFactory->create_channel(
     initialQos,
     initialAdmin,
-    id
-  );
+    id);
 
   ACE_DEBUG((
     LM_DEBUG,

@@ -7,7 +7,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace TAO
 {
   template <typename TRANSPORT_TYPE> ACE_INLINE
-  Cache_IntId_T<TRANSPORT_TYPE>::Cache_IntId_T (void)
+  Cache_IntId_T<TRANSPORT_TYPE>::Cache_IntId_T ()
     : transport_ (0),
       recycle_state_ (ENTRY_UNKNOWN),
       is_connected_ (false)
@@ -37,21 +37,21 @@ namespace TAO
 
   template <typename TRANSPORT_TYPE> ACE_INLINE
   typename Cache_IntId_T<TRANSPORT_TYPE>::transport_type *
-  Cache_IntId_T<TRANSPORT_TYPE>::transport (void)
+  Cache_IntId_T<TRANSPORT_TYPE>::transport ()
   {
     return this->transport_;
   }
 
   template <typename TRANSPORT_TYPE> ACE_INLINE
   const typename Cache_IntId_T<TRANSPORT_TYPE>::transport_type *
-  Cache_IntId_T<TRANSPORT_TYPE>::transport (void) const
+  Cache_IntId_T<TRANSPORT_TYPE>::transport () const
   {
     return this->transport_;
   }
 
   template <typename TRANSPORT_TYPE> ACE_INLINE
   bool
-  Cache_IntId_T<TRANSPORT_TYPE>::is_connected (void) const
+  Cache_IntId_T<TRANSPORT_TYPE>::is_connected () const
   {
     return this->is_connected_;
   }
@@ -64,14 +64,14 @@ namespace TAO
   }
 
   template <typename TRANSPORT_TYPE> ACE_INLINE Cache_Entries_State
-  Cache_IntId_T<TRANSPORT_TYPE>::recycle_state (void) const
+  Cache_IntId_T<TRANSPORT_TYPE>::recycle_state () const
   {
     return this->recycle_state_;
   }
 
   template <typename TRANSPORT_TYPE> ACE_INLINE
   typename Cache_IntId_T<TRANSPORT_TYPE>::transport_type *
-  Cache_IntId_T<TRANSPORT_TYPE>::relinquish_transport (void)
+  Cache_IntId_T<TRANSPORT_TYPE>::relinquish_transport ()
   {
     // Yield ownership of the TAO_Transport object.
     transport_type *val = this->transport_;
@@ -98,7 +98,7 @@ namespace TAO
 
   /*******************************************************/
   template <typename TRANSPORT_DESCRIPTOR_TYPE> ACE_INLINE
-  Cache_ExtId_T<TRANSPORT_DESCRIPTOR_TYPE>::Cache_ExtId_T (void)
+  Cache_ExtId_T<TRANSPORT_DESCRIPTOR_TYPE>::Cache_ExtId_T ()
     : transport_property_ (0),
       is_delete_ (false),
       index_ (0)
@@ -116,7 +116,7 @@ namespace TAO
   }
 
   template <typename TRANSPORT_DESCRIPTOR_TYPE> ACE_INLINE
-  Cache_ExtId_T<TRANSPORT_DESCRIPTOR_TYPE>::~Cache_ExtId_T (void)
+  Cache_ExtId_T<TRANSPORT_DESCRIPTOR_TYPE>::~Cache_ExtId_T ()
   {
     if (this->is_delete_)
       delete this->transport_property_;
@@ -173,13 +173,13 @@ namespace TAO
   }
 
   template <typename TRANSPORT_DESCRIPTOR_TYPE> ACE_INLINE u_long
-  Cache_ExtId_T<TRANSPORT_DESCRIPTOR_TYPE>::hash (void) const
+  Cache_ExtId_T<TRANSPORT_DESCRIPTOR_TYPE>::hash () const
   {
     return (this->transport_property_->hash () + this->index_);
   }
 
   template <typename TRANSPORT_DESCRIPTOR_TYPE> ACE_INLINE void
-  Cache_ExtId_T<TRANSPORT_DESCRIPTOR_TYPE>::duplicate (void)
+  Cache_ExtId_T<TRANSPORT_DESCRIPTOR_TYPE>::duplicate ()
   {
     transport_descriptor_type *prop = 0;
 
@@ -199,7 +199,7 @@ namespace TAO
 
 
   template <typename TRANSPORT_DESCRIPTOR_TYPE> ACE_INLINE CORBA::ULong
-  Cache_ExtId_T<TRANSPORT_DESCRIPTOR_TYPE>::index (void) const
+  Cache_ExtId_T<TRANSPORT_DESCRIPTOR_TYPE>::index () const
   {
     return this->index_;
   }
@@ -212,14 +212,14 @@ namespace TAO
   }
 
   template <typename TRANSPORT_DESCRIPTOR_TYPE> ACE_INLINE void
-  Cache_ExtId_T<TRANSPORT_DESCRIPTOR_TYPE>::incr_index (void)
+  Cache_ExtId_T<TRANSPORT_DESCRIPTOR_TYPE>::incr_index ()
   {
     ++this->index_;
   }
 
   template <typename TRANSPORT_DESCRIPTOR_TYPE> ACE_INLINE
   typename Cache_ExtId_T<TRANSPORT_DESCRIPTOR_TYPE>::transport_descriptor_type *
-  Cache_ExtId_T<TRANSPORT_DESCRIPTOR_TYPE>::property (void) const
+  Cache_ExtId_T<TRANSPORT_DESCRIPTOR_TYPE>::property () const
   {
     return this->transport_property_;
   }

@@ -96,14 +96,14 @@ AST_Array::AST_Array (UTL_ScopedName *n,
     AST_ConcreteType (AST_Decl::NT_array,
                       n),
     pd_n_dims (nd),
-    pd_base_type (0),
+    pd_base_type (nullptr),
     owns_base_type_ (false)
 {
   this->pd_dims = this->compute_dims (ds,
                                       nd);
 }
 
-AST_Array::~AST_Array (void)
+AST_Array::~AST_Array ()
 {
 }
 
@@ -115,15 +115,15 @@ AST_Expression **
 AST_Array::compute_dims (UTL_ExprList *ds,
                          ACE_CDR::ULong nds)
 {
-  if (ds == 0)
+  if (ds == nullptr)
     {
-      return 0;
+      return nullptr;
     }
 
-  AST_Expression **result = 0;
+  AST_Expression **result = nullptr;
   ACE_NEW_RETURN (result,
                   AST_Expression *[nds],
-                  0);
+                  nullptr);
 
   UTL_ExprlistActiveIterator iter (ds);
 
@@ -135,13 +135,13 @@ AST_Array::compute_dims (UTL_ExprList *ds,
       AST_Param_Holder *ph = orig->param_holder ();
 
       AST_Expression::ExprType ex_type =
-        (ph == 0 ? orig->ev ()->et : ph->info ()->const_type_);
+        (ph == nullptr ? orig->ev ()->et : ph->info ()->const_type_);
 
-      AST_Expression *copy = 0;
+      AST_Expression *copy = nullptr;
       ACE_NEW_RETURN (copy,
                       AST_Expression (orig,
                                       ex_type),
-                      0);
+                      nullptr);
 
       result[i] = copy;
     }
@@ -179,7 +179,7 @@ AST_Array::ast_accept (ast_visitor *visitor)
 
 // Compute the size type of the node in question.
 int
-AST_Array::compute_size_type (void)
+AST_Array::compute_size_type ()
 {
   AST_Type *type = this->base_type ();
 
@@ -201,19 +201,19 @@ AST_Array::compute_size_type (void)
 
 // Data accessors.
 ACE_CDR::ULong
-AST_Array::n_dims (void)
+AST_Array::n_dims ()
 {
   return this->pd_n_dims;
 }
 
 AST_Expression **
-AST_Array::dims (void)
+AST_Array::dims ()
 {
   return this->pd_dims;
 }
 
 AST_Type *
-AST_Array::base_type (void) const
+AST_Array::base_type () const
 {
   return this->pd_base_type;
 }
@@ -233,30 +233,30 @@ AST_Array::set_base_type (AST_Type *nbt)
 }
 
 bool
-AST_Array::legal_for_primary_key (void) const
+AST_Array::legal_for_primary_key () const
 {
   return this->base_type ()->legal_for_primary_key ();
 }
 
 void
-AST_Array::destroy (void)
+AST_Array::destroy ()
 {
   if (this->owns_base_type_)
     {
       this->pd_base_type->destroy ();
       delete this->pd_base_type;
-      this->pd_base_type = 0;
+      this->pd_base_type = nullptr;
     }
 
   for (ACE_CDR::ULong i = 0; i < this->pd_n_dims; ++i)
     {
       this->pd_dims[i]->destroy ();
       delete this->pd_dims[i];
-      this->pd_dims[i] = 0;
+      this->pd_dims[i] = nullptr;
     }
 
   delete [] this->pd_dims;
-  this->pd_dims = 0;
+  this->pd_dims = nullptr;
   this->pd_n_dims = 0;
 
   this->AST_ConcreteType::destroy ();
@@ -269,8 +269,6 @@ AST_Array::set_dims (AST_Expression **ds,
   this->pd_dims = ds;
   this->pd_n_dims = nds;
 }
-
-IMPL_NARROW_FROM_DECL(AST_Array)
 
 AST_Annotation_Appls &
 AST_Array::base_type_annotations ()

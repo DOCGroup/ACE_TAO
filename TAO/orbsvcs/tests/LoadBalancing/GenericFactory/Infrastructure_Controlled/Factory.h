@@ -15,9 +15,8 @@ class Factory
   : public virtual POA_PortableGroup::GenericFactory
 {
 public:
-
   /// Constructor
-  Factory (void);
+  Factory ();
   /// creates a Test::Simple servant reference.
   /// This reference is then passed as a FactoryInfos property
   /// when the LoadManager creates the object group.
@@ -52,7 +51,6 @@ private:
 
   /// Lock used to synchronize access to the factory creation id
   TAO_SYNCH_MUTEX lock_;
-
 };
 
 #if defined(_MSC_VER)

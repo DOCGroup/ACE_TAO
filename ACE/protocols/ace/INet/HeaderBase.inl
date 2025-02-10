@@ -124,7 +124,7 @@ namespace ACE
       }
 
     ACE_INLINE
-    const ACE_CString& NVPair::first (void) const
+    const ACE_CString& NVPair::first () const
       {
         return this->first_;
       }
@@ -136,7 +136,7 @@ namespace ACE
       }
 
     ACE_INLINE
-    const ACE_CString& NVPair::second (void) const
+    const ACE_CString& NVPair::second () const
       {
         return this->second_;
       }

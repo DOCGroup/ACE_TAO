@@ -8,13 +8,11 @@
 #include "ace/MEM_IO.inl"
 #endif /* __ACE_INLINE__ */
 
-
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_MEM_IO)
 
-ACE_Reactive_MEM_IO::~ACE_Reactive_MEM_IO (void)
+ACE_Reactive_MEM_IO::~ACE_Reactive_MEM_IO ()
 {
 }
 
@@ -132,7 +130,7 @@ ACE_MT_MEM_IO::Simple_Queue::read ()
     {
       retv = this->mq_->head_;
       // Here, we assume we already have acquired the lock necessary
-      // and there are soemthing in the queue.
+      // and there are something in the queue.
       if (this->mq_->head_ == this->mq_->tail_)
         {
           // Last message in the queue.
@@ -334,7 +332,7 @@ ACE_MT_MEM_IO::send_buf (ACE_MEM_SAP_Node *buf,
 #endif /* ACE_WIN32 || !_ACE_USE_SV_SEM */
 
 void
-ACE_MEM_IO::dump (void) const
+ACE_MEM_IO::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_MEM_IO::dump");
@@ -374,7 +372,7 @@ ACE_MEM_IO::init (const ACE_TCHAR *name,
 }
 
 int
-ACE_MEM_IO::fini (void)
+ACE_MEM_IO::fini ()
 {
   if (this->deliver_strategy_ != 0)
     {

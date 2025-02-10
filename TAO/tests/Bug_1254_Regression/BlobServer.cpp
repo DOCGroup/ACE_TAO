@@ -26,7 +26,7 @@ BlobServerImpl::test(
 }
 
 void
-BlobServerImpl::shutdown (void)
+BlobServerImpl::shutdown ()
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

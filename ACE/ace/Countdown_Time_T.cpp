@@ -21,13 +21,13 @@ ACE_Countdown_Time_T<TIME_POLICY>::ACE_Countdown_Time_T (ACE_Time_Value *max_wai
 }
 
 template <typename TIME_POLICY> ACE_INLINE
-ACE_Countdown_Time_T<TIME_POLICY>::~ACE_Countdown_Time_T (void)
+ACE_Countdown_Time_T<TIME_POLICY>::~ACE_Countdown_Time_T ()
 {
   this->stop ();
 }
 
 template <typename TIME_POLICY> ACE_INLINE void
-ACE_Countdown_Time_T<TIME_POLICY>::start (void)
+ACE_Countdown_Time_T<TIME_POLICY>::start ()
 {
   if (this->max_wait_time_ != 0)
     {
@@ -38,7 +38,7 @@ ACE_Countdown_Time_T<TIME_POLICY>::start (void)
 }
 
 template <typename TIME_POLICY> ACE_INLINE void
-ACE_Countdown_Time_T<TIME_POLICY>::stop (void)
+ACE_Countdown_Time_T<TIME_POLICY>::stop ()
 {
   if (this->max_wait_time_ != 0 && !this->stopped_)
     {

@@ -27,7 +27,7 @@ template<class PROXY, class COLLECTION, class ITERATOR, class ACE_LOCK>
 class TAO_ESF_Immediate_Changes : public TAO_ESF_Proxy_Collection<PROXY>
 {
 public:
-  TAO_ESF_Immediate_Changes (void);
+  TAO_ESF_Immediate_Changes ();
   TAO_ESF_Immediate_Changes (const COLLECTION &collection);
 
   // = The TAO_ESF_Proxy methods
@@ -35,7 +35,7 @@ public:
   virtual void connected (PROXY *proxy);
   virtual void reconnected (PROXY *proxy);
   virtual void disconnected (PROXY *proxy);
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
 private:
   COLLECTION collection_;
@@ -43,20 +43,12 @@ private:
   ACE_LOCK lock_;
 };
 
-// ****************************************************************
-
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "orbsvcs/ESF/ESF_Immediate_Changes.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "orbsvcs/ESF/ESF_Immediate_Changes.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("ESF_Immediate_Changes.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #endif /* TAO_ESF_IMMEDIATE_CHANGES_H */

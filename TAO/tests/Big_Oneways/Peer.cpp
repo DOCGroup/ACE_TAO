@@ -6,7 +6,7 @@ Peer::Peer (CORBA::ORB_ptr orb)
 {
 }
 
-Peer::~Peer (void)
+Peer::~Peer ()
 {
 }
 
@@ -41,12 +41,12 @@ Peer::create_session (Test::Session_Control_ptr control,
 }
 
 void
-Peer::shutdown (void)
+Peer::shutdown ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) Peer::shutdown, waiting for threads\n"));
 
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) Peer::shutdown, shutting down ORB\n"));
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

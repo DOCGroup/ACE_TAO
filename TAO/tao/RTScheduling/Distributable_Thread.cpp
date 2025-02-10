@@ -3,31 +3,22 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_DistributableThread::TAO_DistributableThread (void)
-  :state_ (RTScheduling::DistributableThread::ACTIVE)
-{
-}
-
-TAO_DistributableThread::~TAO_DistributableThread (void)
-{
-}
-
 void
-TAO_DistributableThread::cancel (void)
+TAO_DistributableThread::cancel ()
 {
   this->state_ = RTScheduling::DistributableThread::CANCELLED;
 }
 
 RTScheduling::DistributableThread::DT_State
-TAO_DistributableThread::state (void)
+TAO_DistributableThread::state ()
 {
   return this->state_;
 }
 
 RTScheduling::DistributableThread_ptr
-TAO_DistributableThread_Factory::create_DT (void)
+TAO_DistributableThread_Factory::create_DT ()
 {
-  TAO_DistributableThread* DT = 0;
+  TAO_DistributableThread* DT = nullptr;
 
   ACE_NEW_THROW_EX (DT,
                     TAO_DistributableThread,

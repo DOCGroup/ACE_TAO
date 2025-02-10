@@ -35,10 +35,10 @@ Selection </a> </li>
               <li><a href="#TARF">TAO_Advanced_Resource_Factory </a></li>
             </ol>
           </li>
-          <li><a href="#TSSF">Server_Strategy_Factory </a> </li>
-          <li><a href="#TCSF">Client_Strategy_Factory </a></li>
-          <li><a href="#TUPF">TAO_UIPMC_Protocol_Factory </a></li>
-          <li><a href="#TMSF">MIOP_Strategy_Factory </a></li>
+          <li><a href="#TSSF">Server_Strategy_Factory</a> </li>
+          <li><a href="#TCSF">Client_Strategy_Factory</a></li>
+          <li><a href="#TUPF">TAO_UIPMC_Protocol_Factory</a></li>
+          <li><a href="#TMSF">TAO_MIOP_Resource_Factory</a></li>
           <li><a href="#TTSM">Time_Policy_Manager</a></li>
         </ol>
       </li>
@@ -501,7 +501,7 @@ preferences over normal I/O, thereby causing priority inversion.</p>
          <p>If this option is enabled (<code>1</code>), the orb will use the
          local memory pool.</p>
         <p> This option defaults to the compile-time option specified by
-        <code>TAO_USES_LOCAL_MEMORY_POOL</code>.</p>
+        <code>TAO_USE_LOCAL_MEMORY_POOL</code>. The default is <code>1</code> (enabled)</p>
         </td>
       </tr>
     </tbody>
@@ -813,7 +813,7 @@ is set. The default is true. </td>
       <tr>
         <td><code>-ORBUseParallelConnects</code> <em>boolean (0|1)</em></td>
         <td><a name="-ORBUseParallelConnects"></a>This option allows users to
-        specify the ORB attempt to connect simultaniously to all endpoints
+        specify the ORB attempt to connect simultaneously to all endpoints
         listed in profiles, rather than stepping through individual endpoints,
         trying and possibly failing, before moving on to the next. For this
         feature to work, the server must be using shared profiles.
@@ -1012,8 +1012,7 @@ having them use the same configurator file.
         <td>Use this option to cycle through profiles when it has
 	been detected that a connection is closed when reading a server reply
         and having the server possibly process the reqest more than once
-        is acceptable. This option currently does not work under FreeBSD,
-        OpenVMS, AIX, and Solaris.
+        is acceptable. This option currently does not work under FreeBSD.
         The number of retries will not exceed <em>limit</em>.
 	If this option is used then -ORBForwardOnTransientLimit should
 	also be used to avoid a TRANSIENT exception being thrown.
@@ -1509,7 +1508,7 @@ thread-pool reactor which is the default.</td>
               highly scalable replacement for the
               <code>select()</code> based reactors.  The
               ACE_Dev_Poll_Reactor is currently only supported on
-              HP-UX, Solaris and Linux. Be aware that dev_poll
+              Linux. Be aware that dev_poll
               support is experimental!</td>
             </tr>
           </tbody>
@@ -1835,10 +1834,10 @@ bulk." </p>
 </blockquote>
     <h4><a name="TUPF">4. TAO_UIPMC_Protocol_Factory</a></h4>
     This factory is located in the <code>TAO_PortableGroup</code> library and
-    is used with the DIOP and MIOP protocols managing the UDP connectionless
-    sockets (normally one-way calls only) instead of the standard IIOP TCP/IP
-    two-way connection based sockets. It accepts the options shown below.
-    (Any options required should be given
+    implements the MIOP protocol. It uses the
+    <a href="TMSF">TAO_MIOP_Resource_Factory</a> to manage UDP connection options
+    shared with the TAO_DIOP_Protocol_Factory. It accepts its own un-shared
+    options shown below. (Any options required should be given
     to the TAO_UIPMC_Protocol_Factory between the two double-quotes at the end
     of the line as a space separated list; however none are required as all
     options take default values if not specified.) This factory can be loaded
@@ -1910,15 +1909,15 @@ bulk." </p>
         </tbody>
       </table>
   </blockquote>
-    <h4><a name="TMSF">5. MIOP_Strategy_Factory</a></h4>
+    <h4><a name="TMSF">5. TAO_MIOP_Resource_Factory</a></h4>
     This factory is located in the <code>TAO_PortableGroup</code> library and
-    uses the <a href="#TUPF">TAO_UIPMC_Protocol_Factory</a> (see above) to
-    manage its UDP sockets, you should also look at that factories configuration
-    options. The MIOP factory accepts it own options detailed below which
-    should be  specified between the two double-quotes shown here as a space
-    separated list; however none are required as all options take default
-    values if not specified. This factory can be loaded dynamically using a
-    service configurator directive of the form (all on one line):
+    manages UDP connection options shared between the TAO_DIOP_Protocol_Factory
+    and the <a href="TUPF">TAO_UIPMC_Protocol_Factory</a> (see above). It
+    accepts the options detailed below, which should be specified between the
+    two double-quotes shown here as a space-separated list; however none are
+    required as all options take default values if not specified. This factory
+    can be loaded dynamically using a service configurator directive of the
+    form (all on one line):
     <p><code>dynamic MIOP_Resource_Factory Service_Object *
         TAO_PortableGroup:_make_TAO_MIOP_Resource_Factory () ""</code></p>
     You would normally have to use other service configurator
@@ -1931,17 +1930,17 @@ bulk." </p>
         TAO_PortableGroup:_make_TAO_PortableGroup_Loader() ""<br>
         dynamic MIOP_Resource_Factory Service_Object *
         TAO_PortableGroup:_make_TAO_MIOP_Resource_Factory () ""</code></p>
-    Since MIOP uses UDP sockets (which is not a "reliable" transport unlike tcp/ip)
-    it is easy to configure MIOP in such a way that messages will not actually
-    reach the servant. The options below are intended to maximize MIOP reliability
-    but they must be used with care; users of MIOP must understand that large
-    messages are sent in fragments and they have to be reassembled by the server in
-    their entirety to be usable by the servant. If even a single data
-    fragment/packet is lost, the whole message cannot be reconstructed and will be
-    unusable. There is no way for the servant to even know it has missed such a
-    MIOP message, and being a one-way protocol, neither will the client be aware
-    that the message has been lost. Fragments can be lost due to a variety of
-    reasons:
+    Since DIOP and MIOP use UDP sockets (which is not a "reliable" transport unlike
+    TCP/IP), it is easy to configure them in such a way that messages will not
+    actually reach the servant. The options below are intended to maximize DIOP and
+    MIOP reliability, but they must be used with care; users of DIOP and MIOP must
+    understand that large messages are sent in fragments and they have to be
+    reassembled by the server in their entirety to be usable by the servant. If
+    even a single data fragment/packet is lost, the whole message cannot be
+    reconstructed and will be unusable. There is no way for the servant to even
+    know it has missed such a DIOP or MIOP message, and being a one-way protocol,
+    neither will the client be aware that the message has been lost. Fragments
+    can be lost due to a variety of reasons:
     <p></p>
     <ul>
       <li>

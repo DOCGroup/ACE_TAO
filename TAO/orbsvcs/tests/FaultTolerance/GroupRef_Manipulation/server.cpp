@@ -99,8 +99,6 @@ add_ft_prop (CORBA::ORB_ptr o,
                                   obj2,
                                   obj2);
     }
-
-  return;
 }
 
 void test_colocal (ForwardRequestTest::test_ptr server)
@@ -186,7 +184,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                               policies);
 
 
-
       PortableServer::ObjectId_var oid1 =
         first_poa->activate_object (&servant1);
 
@@ -255,7 +252,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // Run the ORB event loop.
       orb->run ();
 
-      root_poa->destroy (1, 1);
+      root_poa->destroy (true, true);
 
       orb->destroy ();
 

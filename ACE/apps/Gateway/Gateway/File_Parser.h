@@ -47,13 +47,12 @@ template <class ENTRY>
 class File_Parser
 {
 public:
-
   /// Destructor.
-  virtual ~File_Parser (void);
+  virtual ~File_Parser ();
 
   // = Open and Close the file specified
   int open (const ACE_TCHAR filename[]);
-  int close (void);
+  int close ();
 
   virtual FPRT::Return_Type read_entry (ENTRY &entry,
                                         int &line_number) = 0;
@@ -83,18 +82,12 @@ protected:
 
   /// Skips to the remainder of a line, e.g., when we find a comment
   /// character.
-  int skipline (void);
+  int skipline ();
 
   /// Pointer to the file we're reading.
   FILE *infile_;
 };
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "File_Parser.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("File_Parser.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #endif /* _FILE_PARSER */

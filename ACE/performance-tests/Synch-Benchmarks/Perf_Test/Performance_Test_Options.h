@@ -21,73 +21,73 @@
 class ACE_Svc_Export Performance_Test_Options
 {
 public:
-  Performance_Test_Options (void);
+  Performance_Test_Options ();
   void   parse_args (int argc, ACE_TCHAR *argv[]);
 
-  void   init (void);
+  void   init ();
 
-  void   start_timer (void);
-  void   stop_timer (void);
+  void   start_timer ();
+  void   stop_timer ();
 
   void   thr_count (size_t count);
-  size_t thr_count (void);
+  size_t thr_count ();
 
   void   pipe_addr (ACE_TCHAR pipe[]);
-  ACE_TCHAR *pipe_addr (void);
+  ACE_TCHAR *pipe_addr ();
 
   void   mapped_file (ACE_TCHAR filename[]);
-  ACE_TCHAR *mapped_file (void);
+  ACE_TCHAR *mapped_file ();
 
   void   service_entry (ACE_TCHAR *service_entry);
-  ACE_TCHAR *service_entry (void);
+  ACE_TCHAR *service_entry ();
 
   void   sleep_time (size_t count);
-  size_t sleep_time (void);
+  size_t sleep_time ();
 
   void   logical_connections (size_t count);
-  size_t logical_connections (void);
+  size_t logical_connections ();
 
   void   physical_connections (size_t count);
-  size_t physical_connections (void);
+  size_t physical_connections ();
 
   void   consecutive_ports (size_t count);
-  size_t consecutive_ports (void);
+  size_t consecutive_ports ();
 
   void   initial_queue_length (size_t length);
-  size_t initial_queue_length (void);
+  size_t initial_queue_length ();
 
   void   high_water_mark (size_t size);
-  size_t high_water_mark (void);
+  size_t high_water_mark ();
 
   void   low_water_mark (size_t size);
-  size_t low_water_mark (void);
+  size_t low_water_mark ();
 
   void   msg_size (size_t size);
-  size_t msg_size (void);
+  size_t msg_size ();
 
   void   iterations (size_t n);
-  size_t iterations (void);
+  size_t iterations ();
 
   void   n_lwps (size_t n);
-  size_t n_lwps (void);
+  size_t n_lwps ();
 
   void   t_flags (long flag);
-  long   t_flags (void);
+  long   t_flags ();
 
-  size_t count (void);
+  size_t count ();
 
-  int    debug (void);
-  int    verbose (void);
-  int    do_checksum (void);
-  int    do_generate (void);
-  int    do_ack (void);
-  int    do_delete (void);
-  int    do_eager_exit (void);
-  int    do_print_summary (void);
-  int    do_udp (void);
-  int    do_xdr (void);
-  int    do_zero_copy (void);
-  void   print_results (void);
+  int    debug ();
+  int    verbose ();
+  int    do_checksum ();
+  int    do_generate ();
+  int    do_ack ();
+  int    do_delete ();
+  int    do_eager_exit ();
+  int    do_print_summary ();
+  int    do_udp ();
+  int    do_xdr ();
+  int    do_zero_copy ();
+  void   print_results ();
 
   ACE_Atomic_Op<ACE_Thread_Mutex, size_t> msg_count;        // Keep track of number of messages atomically.
   int *thr_work_count;  // Count activity per-thread.

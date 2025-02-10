@@ -17,7 +17,7 @@ public:
   void DeleteExtra (const ServerSequence &seq);
 
   //FUZZ: disable check_for_lack_ACE_OS
-  void shutdown (void);
+  void shutdown ();
   //FUZZ: enable check_for_lack_ACE_OS
 
 private:
@@ -73,7 +73,6 @@ ServerServant::CreateExtra (CORBA::ULong len,
 }
 
 
-
 void
 ServerServant::DeleteExtra (const ServerSequence &seq)
 {
@@ -102,9 +101,9 @@ ServerServant::DeleteExtra (const ServerSequence &seq)
 }
 
 void
-ServerServant::shutdown (void)
+ServerServant::shutdown ()
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }
 
 /******************************************************/
@@ -200,7 +199,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - event loop finished\n"));
 
-      root_poa->destroy (1, 1);
+      root_poa->destroy (true, true);
 
       orb->destroy ();
     }

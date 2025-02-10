@@ -5,13 +5,13 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CosNaming::NamingContext_ptr
-TAO_Naming_Client::operator -> (void) const
+TAO_Naming_Client::operator -> () const
 {
   return this->naming_context_.ptr ();
 }
 
 CosNaming::NamingContext_ptr
-TAO_Naming_Client::get_context (void) const
+TAO_Naming_Client::get_context () const
 {
   // Must duplicate this pointer so it can be stored in a _var.
   return CosNaming::NamingContext::_duplicate (this->naming_context_.in ());
@@ -41,12 +41,12 @@ TAO_Naming_Client::init (CORBA::ORB_ptr orb, ACE_Time_Value *timeout)
   return 0;
 }
 
-TAO_Naming_Client::TAO_Naming_Client (void)
+TAO_Naming_Client::TAO_Naming_Client ()
 {
   // Do nothing
 }
 
-TAO_Naming_Client::~TAO_Naming_Client (void)
+TAO_Naming_Client::~TAO_Naming_Client ()
 {
   // Do nothing
 }

@@ -1,7 +1,6 @@
 // file      : XSCRT/ExtendedTypeInfo.ipp
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
 
-
 /*
  *  @@HACK: Visual Studio.
  *  I think the return value for operator== for type_info
@@ -46,11 +45,7 @@ namespace XSCRT
     return tid_->before (*other.tid_);
   }
 
-
   // ExtendedTypeInfo::BaseInfo
-  //
-  //
-
   inline
   ExtendedTypeInfo::BaseInfo::
   BaseInfo (Access::Value access, bool virtual_base, TypeId const& tid)
@@ -85,10 +80,7 @@ namespace XSCRT
     return virtual_base_;
   }
 
-
   // ExtendedTypeInfo
-  //
-  //
   inline
   ExtendedTypeInfo::
   ExtendedTypeInfo (TypeId const& tid)
@@ -126,9 +118,6 @@ namespace XSCRT
   }
 
   // ExtendedTypeInfoMap
-  //
-  //
-
   inline
   ExtendedTypeInfoMap&
   extended_type_info_map ()

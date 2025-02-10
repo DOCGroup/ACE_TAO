@@ -20,7 +20,7 @@ const char *Multicast_Manager::host_names[] =
 };
 
 void
-Multicast_Manager::insert_default_hosts (void)
+Multicast_Manager::insert_default_hosts ()
 {
   // Enter the static list of hosts into the dynamic table!
 
@@ -177,7 +177,7 @@ Host_Elem::Host_Elem (const char *h_name,
 }
 
 int
-Multicast_Manager::outstanding_hosts_remain (void)
+Multicast_Manager::outstanding_hosts_remain ()
 {
   return Multicast_Manager::received_host_count > 0;
 }

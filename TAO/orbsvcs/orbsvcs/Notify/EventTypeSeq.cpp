@@ -10,7 +10,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Notify_EventTypeSeq::TAO_Notify_EventTypeSeq (void)
+TAO_Notify_EventTypeSeq::TAO_Notify_EventTypeSeq ()
 {
 }
 
@@ -243,7 +243,7 @@ TAO_Notify_EventTypeSeq::intersection (const TAO_Notify_EventTypeSeq& rhs, const
 }
 
 void
-TAO_Notify_EventTypeSeq::dump (void) const
+TAO_Notify_EventTypeSeq::dump () const
 {
   TAO_Notify_EventTypeSeq::CONST_ITERATOR iter (*this);
 
@@ -303,7 +303,7 @@ TAO_Notify_EventTypeSeq::load_child (const ACE_CString &type, CORBA::Long id,
 }
 
 void
-TAO_Notify_EventTypeSeq::release (void)
+TAO_Notify_EventTypeSeq::release ()
 {
   delete this;
 }

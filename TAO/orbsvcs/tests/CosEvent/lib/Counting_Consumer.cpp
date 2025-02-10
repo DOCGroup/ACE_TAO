@@ -26,7 +26,7 @@ CEC_Counting_Consumer::connect (CosEventChannelAdmin::ConsumerAdmin_ptr consumer
 }
 
 void
-CEC_Counting_Consumer::disconnect (void)
+CEC_Counting_Consumer::disconnect ()
 {
   if (!CORBA::is_nil (this->supplier_proxy_.in ()))
     {
@@ -79,7 +79,7 @@ CEC_Counting_Consumer::push (const CORBA::Any&)
 }
 
 void
-CEC_Counting_Consumer::disconnect_push_consumer (void)
+CEC_Counting_Consumer::disconnect_push_consumer ()
 {
   this->disconnect_count++;
   this->supplier_proxy_ =
@@ -113,7 +113,7 @@ CEC_Pull_Counting_Consumer::connect (CosEventChannelAdmin::ConsumerAdmin_ptr con
 }
 
 void
-CEC_Pull_Counting_Consumer::disconnect (void)
+CEC_Pull_Counting_Consumer::disconnect ()
 {
   if (!CORBA::is_nil (this->supplier_proxy_.in ()))
     {
@@ -131,7 +131,7 @@ CEC_Pull_Counting_Consumer::disconnect (void)
 }
 
 CORBA::Any*
-CEC_Pull_Counting_Consumer::pull (void)
+CEC_Pull_Counting_Consumer::pull ()
 {
   if (CORBA::is_nil (this->supplier_proxy_.in ()))
     {
@@ -180,7 +180,7 @@ CEC_Pull_Counting_Consumer::dump_results (int expected_count, int tolerance)
 }
 
 void
-CEC_Pull_Counting_Consumer::disconnect_pull_consumer (void)
+CEC_Pull_Counting_Consumer::disconnect_pull_consumer ()
 {
   this->disconnect_count++;
   this->supplier_proxy_ =
@@ -214,20 +214,20 @@ CEC_Counting_Consumer_Task::svc ()
 }
 
 void
-CEC_Counting_Consumer_Task::stop (void)
+CEC_Counting_Consumer_Task::stop ()
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
   this->stop_flag_ = 1;
 }
 
 CORBA::ULong
-CEC_Counting_Consumer_Task::pull_count (void)
+CEC_Counting_Consumer_Task::pull_count ()
 {
   return this->pull_count_;
 }
 
 void
-CEC_Counting_Consumer_Task::run (void)
+CEC_Counting_Consumer_Task::run ()
 {
   CORBA::Any event;
   event <<= CORBA::Long(0);

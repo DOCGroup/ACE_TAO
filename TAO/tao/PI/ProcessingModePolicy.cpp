@@ -17,9 +17,9 @@ TAO_ProcessingModePolicy::TAO_ProcessingModePolicy
 }
 
 CORBA::Policy_ptr
-TAO_ProcessingModePolicy::copy (void)
+TAO_ProcessingModePolicy::copy ()
 {
-  TAO_ProcessingModePolicy *copy = 0;
+  TAO_ProcessingModePolicy *copy {};
   ACE_NEW_THROW_EX (copy,
                     TAO_ProcessingModePolicy (this->processing_mode_),
                     CORBA::NO_MEMORY ());
@@ -28,18 +28,18 @@ TAO_ProcessingModePolicy::copy (void)
 }
 
 void
-TAO_ProcessingModePolicy::destroy (void)
+TAO_ProcessingModePolicy::destroy ()
 {
 }
 
 PortableInterceptor::ProcessingMode
-TAO_ProcessingModePolicy::processing_mode (void)
+TAO_ProcessingModePolicy::processing_mode ()
 {
   return processing_mode_;
 }
 
 CORBA::PolicyType
-TAO_ProcessingModePolicy::policy_type (void)
+TAO_ProcessingModePolicy::policy_type ()
 {
   return PortableInterceptor::PROCESSING_MODE_POLICY_TYPE;
 }

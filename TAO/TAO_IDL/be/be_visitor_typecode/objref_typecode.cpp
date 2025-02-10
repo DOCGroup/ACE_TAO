@@ -30,7 +30,7 @@ TAO::be_visitor_objref_typecode::visit_interface (be_interface * node)
   static char const local_interface[]    = "local_interface";
   static char const objref[]             = "objref";
 
-  char const * kind = 0;
+  char const * kind = nullptr;
 
   if (dynamic_cast<be_component *> (node))
     kind = component;
@@ -65,9 +65,7 @@ TAO::be_visitor_objref_typecode::visit_i (char const * kind,
 {
   TAO_OutStream & os = *this->ctx_->stream ();
 
-  os << be_nl_2
-     << "// TAO_IDL - Generated from" << be_nl
-     << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (&os);
 
   // Generate the TypeCode instantiation.
   os

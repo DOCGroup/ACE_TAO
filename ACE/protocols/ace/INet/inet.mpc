@@ -3,7 +3,6 @@ project(INet) : acelib, ace_output, install {
   sharedname   = ACE_INet
   dynamicflags += ACE_INET_BUILD_DLL
   includes += $(ACE_ROOT)/protocols
-  avoids += wince
   avoids += old_stdstream
   avoids += exclude_inet
   avoids += ace_for_tao

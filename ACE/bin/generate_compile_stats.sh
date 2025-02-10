@@ -33,7 +33,7 @@ usage ()
   echo "--base       This option can be used to set the base root directory to"
   echo "             something other than the default \$ACE_ROOT."
   echo "--name       This option can be used to set the software title to something"
-  echo "             other than the default ACE+TAO+CIAO+DAnCE."
+  echo "             other than the default ACE+TAO."
   echo "--compiler   This option can be used to set the compiler to something"
   echo "             other than the default gcc."
   echo "input_file   This is the compilation log file."
@@ -737,7 +737,7 @@ create_index_page ()
   echo '<body text = "#000000" link="#000fff" vlink="#ff0f0f" bgcolor="#ffffff">'
   echo "<br><center><h1>$TITLE</h1></center><br><hr>"
   if [ $BASE_TITLE = $DEFAULT_TITLE ]; then
-    echo '<p>We are measuring ACE+TAO+CIAO+DAnCE metrics daily.'
+    echo '<p>We are measuring ACE+TAO metrics daily.'
   else
     echo '<p>'
   fi
@@ -747,8 +747,6 @@ create_index_page ()
   if [ $BASE_TITLE = $DEFAULT_TITLE ]; then
     echo "<li><a href=\"ace_${TYPE}.html\">ACE</a>"
     echo "<li><a href=\"tao_${TYPE}.html\">TAO</a>"
-    echo "<li><a href=\"ciao_${TYPE}.html\">CIAO</a>"
-    echo "<li><a href=\"dance_${TYPE}.html\">DAnCE</a>"
   else
     echo "<li><a href=\"all_${TYPE}.html\">ALL</a>"
   fi
@@ -788,7 +786,7 @@ create_index_page ()
   echo '<TABLE border="2"><TBODY>'
   for cfg_file in $CFG_FILES; do
     if [ -r $cfg_file ]; then
-      echo "<TR><TD>ACE+TAO+CIAO+DAnCE Configuration</TD><TD>`basename $cfg_file`</TD></TR>"
+      echo "<TR><TD>ACE+TAO Configuration</TD><TD>`basename $cfg_file`</TD></TR>"
       echo '<TR><TD colspan="2"><PRE>'
       cat $cfg_file
       echo '</PRE></TD></TR>'
@@ -834,14 +832,12 @@ create_index_page ()
 ###############################################################################
 create_page ()
 {
-  # always strip off "ACE___" / "TAO___" / "CIAO___"
+  # always strip off "ACE___" / "TAO___"
   local BASE=$1
   local TYPE=$2
   local EXT=""
   local BASE_NAME=${BASE#ACE___}
   local BASE_NAME=${BASE#TAO___}
-  local BASE_NAME=${BASE#CIAO___}
-  local BASE_NAME=${BASE#DAnCE___}
   local TITLE="${TYPE} metrics for ${BASE_NAME//___//}"
 
   if [ "$TYPE" = "Compilation" ]; then
@@ -885,10 +881,6 @@ create_page ()
         NAME=${i#ACE___}
         # strip off "TAO___" if it exists
         NAME=${i#TAO___}
-        # strip off "CIAO___" if it exists
-        NAME=${i#CIAO___}
-        # strip off "DAnCE___" if it exists
-        NAME=${i#DAnCE___}
         echo "<a href=\"${i}_${TYPE}.html\">${NAME//___//}</a>"
       elif [ -e "${DEST}/images/${i}_${TYPE}.png" ]; then
         # since you'll only have images if it's a composite, strip off the
@@ -975,19 +967,13 @@ create_html ()
   local ALL_OBJS=""
   local ACE_OBJS=""
   local TAO_OBJS=""
-  local CIAO_OBJS=""
-  local DAnCE_OBJS=""
 
   while read base colon files; do
     # create individual page for app/lib
 
     sort_list ${files} | create_page ${base} ${TYPE} \
       > ${DEST}/${base}_${TYPE}.html
-    if [ "${base}" != "${base#DAnCE}" ]; then
-      DAnCE_OBJS="${DAnCE_OBJS} ${base}"
-    elif [ "${base}" != "${base#CIAO}" ]; then
-      CIAO_OBJS="${CIAO_OBJS} ${base}"
-    elif [ "${base}" != "${base#TAO}" ]; then
+    if [ "${base}" != "${base#TAO}" ]; then
       TAO_OBJS="${TAO_OBJS} ${base}"
     elif [ "${base}" != "${base#ACE}" ]; then
       ACE_OBJS="${ACE_OBJS} ${base}"
@@ -1005,12 +991,6 @@ create_html ()
 
       name="tao_${TYPE}.html"
       sort_list ${TAO_OBJS} | create_page "TAO" ${TYPE} > ${DEST}/${name}
-
-      name="ciao_${TYPE}.html"
-      sort_list ${CIAO_OBJS} | create_page "CIAO" ${TYPE} > ${DEST}/${name}
-
-      name="dance_${TYPE}.html"
-      sort_list ${DAnCE_OBJS} | create_page "DAnCE" ${TYPE} > ${DEST}/${name}
     else
       name="all_${TYPE}.html"
       sort_list ${ALL_OBJS} | create_page $BASE_TITLE ${TYPE} > ${DEST}/${name}
@@ -1031,7 +1011,7 @@ DATE=""
 METRIC="Compilation"
 FUDGE_FACTOR=0
 BASE_ROOT=$ACE_ROOT
-DEFAULT_TITLE=ACE+TAO+CIAO+DAnCE
+DEFAULT_TITLE=ACE+TAO
 BASE_TITLE=$DEFAULT_TITLE
 COMPILER="gcc"
 

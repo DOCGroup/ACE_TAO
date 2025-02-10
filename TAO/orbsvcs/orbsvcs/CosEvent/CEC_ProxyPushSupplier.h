@@ -70,17 +70,17 @@ public:
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
   /// destructor...
-  virtual ~TAO_CEC_ProxyPushSupplier (void);
+  virtual ~TAO_CEC_ProxyPushSupplier ();
 
   /// Activate in the POA
   virtual void activate (
       CosEventChannelAdmin::ProxyPushSupplier_ptr &);
 
   /// Deactivate from the POA
-  virtual void deactivate (void);
+  virtual void deactivate ();
 
   /// Return 0 if no consumer is connected...
-  CORBA::Boolean is_connected (void) const;
+  CORBA::Boolean is_connected () const;
 
   /**
    * Return the consumer object reference. It returns nil() if it has
@@ -88,10 +88,10 @@ public:
    * NOTE: This method does not return a new reference!!! Doing so
    * will increase the locking overhead on the critical path.
    */
-  CosEventComm::PushConsumer_ptr consumer (void) const;
+  CosEventComm::PushConsumer_ptr consumer () const;
 
   /// The event channel is shutting down
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
   /// Internal methods to push an event to each consumer.
   virtual void push (const CORBA::Any &event);
@@ -119,16 +119,16 @@ public:
   // = The CosEventChannelAdmin::ProxyPushSupplier methods...
   virtual void connect_push_consumer (
                 CosEventComm::PushConsumer_ptr push_consumer);
-  virtual void disconnect_push_supplier (void);
+  virtual void disconnect_push_supplier ();
 
   /// Increment and decrement the reference count.
-  CORBA::ULong _incr_refcnt (void);
-  CORBA::ULong _decr_refcnt (void);
+  CORBA::ULong _incr_refcnt ();
+  CORBA::ULong _decr_refcnt ();
 
   // = The Servant methods
-  virtual PortableServer::POA_ptr _default_POA (void);
-  virtual void _add_ref (void);
-  virtual void _remove_ref (void);
+  virtual PortableServer::POA_ptr _default_POA ();
+  virtual void _add_ref ();
+  virtual void _remove_ref ();
 
 protected:
   /// Set the consumer, used by some implementations to change the
@@ -141,13 +141,13 @@ protected:
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
   /// The private version (without locking) of is_connected().
-  CORBA::Boolean is_connected_i (void) const;
+  CORBA::Boolean is_connected_i () const;
 
   /// Release the child and the consumer
-  void cleanup_i (void);
+  void cleanup_i ();
 
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
-  CORBA::Boolean is_typed_ec (void) const;
+  CORBA::Boolean is_typed_ec () const;
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
   /// Assigns the parameter to both consumer_ and nopolicy_consumer_, and

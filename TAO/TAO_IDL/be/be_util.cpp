@@ -34,7 +34,7 @@ be_util::gen_nested_namespace_begin (TAO_OutStream *os,
                                      be_module *node,
                                      bool skel)
 {
-  char *item_name = 0;
+  char *item_name = nullptr;
   bool first_level = true;
 
   for (UTL_IdListActiveIterator i (node->name ());
@@ -154,11 +154,11 @@ be_util::prep_be_arg (char *s)
   static const char stripped_filename[]    = "stripped_filename=";
   static const char no_fixed_err[]         = "no_fixed_err";
 
-  char* last = 0;
+  char* last = nullptr;
 
   for (char* arg = ACE_OS::strtok_r (s, ",", &last);
-       arg != 0;
-       arg = ACE_OS::strtok_r (0, ",", &last))
+       arg != nullptr;
+       arg = ACE_OS::strtok_r (nullptr, ",", &last))
     {
       if (ACE_OS::strstr (arg, arg_macro) == arg)
         {
@@ -279,7 +279,7 @@ be_util::prep_be_arg (char *s)
         }
       else if (ACE_OS::strstr (arg, obv_opt_accessor) == arg)
         {
-          be_global->obv_opt_accessor (1);
+          be_global->obv_opt_accessor (true);
         }
       else if (ACE_OS::strstr (arg, ciao_container_type) == arg)
         {
@@ -326,7 +326,7 @@ be_util::prep_be_arg (char *s)
 }
 
 void
-be_util::arg_post_proc (void)
+be_util::arg_post_proc ()
 {
   // Let us try to use Perfect Hashing Operation Lookup Strategy. Let
   // us check whether things are fine with GPERF.
@@ -384,7 +384,7 @@ be_util::arg_post_proc (void)
 }
 
 void
-be_util::usage (void)
+be_util::usage ()
 {
   ACE_DEBUG ((
       LM_DEBUG,
@@ -519,10 +519,6 @@ be_util::usage (void)
       ACE_TEXT (" -Wb,obv_opt_accessor\t\t\t\toptimizes access to base class ")
       ACE_TEXT ("data in valuetypes\n")
     ));
-#if (defined (ACE_HAS_VERSIONED_NAMESPACE)      \
-     && ACE_HAS_VERSIONED_NAMESPACE == 1)       \
-  || (defined (TAO_HAS_VERSIONED_NAMESPACE)      \
-     && TAO_HAS_VERSIONED_NAMESPACE == 1)
   ACE_DEBUG ((
       LM_DEBUG,
       ACE_TEXT (" -Wb,versioning_begin\t\t\tSet text that opens a ")
@@ -538,7 +534,6 @@ be_util::usage (void)
       ACE_TEXT (" -Wb,versioning_include\t\t\tSet text that will be used as include for ")
       ACE_TEXT ("a \"versioned\" namespace\n")
     ));
-#endif  /* ACE_HAS_VERSIONED_NAMESPACE || TAO_HAS_VERSIONED_NAMESPACE */
   ACE_DEBUG ((
       LM_DEBUG,
       ACE_TEXT (" -Wb,no_fixed_err\t\t\tDon't generate an error when the fixed")
@@ -940,14 +935,14 @@ be_util::usage (void)
 }
 
 AST_Generator *
-be_util::generator_init (void)
+be_util::generator_init ()
 {
   tao_cg = TAO_CODEGEN::instance ();
 
-  AST_Generator *gen = 0;
+  AST_Generator *gen = nullptr;
   ACE_NEW_RETURN (gen,
                   be_generator,
-                  0);
+                  nullptr);
 
   return gen;
 }
@@ -957,15 +952,15 @@ be_util::get_output_path (bool for_anyop,
                           bool for_skel,
                           bool for_exec)
 {
-  if (for_anyop && 0 != be_global->anyop_output_dir ())
+  if (for_anyop && nullptr != be_global->anyop_output_dir ())
     {
       return be_global->anyop_output_dir ();
     }
-  else if (for_skel && 0 != be_global->skel_output_dir ())
+  else if (for_skel && nullptr != be_global->skel_output_dir ())
     {
       return be_global->skel_output_dir ();
     }
-  else if (for_exec && 0 != be_global->exec_output_dir ())
+  else if (for_exec && nullptr != be_global->exec_output_dir ())
     {
       return be_global->exec_output_dir ();
     }
@@ -1008,7 +1003,7 @@ be_util::overwrite_ciao_exec_files ()
 void
 be_util::set_arg_seen_bit (be_type *bt)
 {
-  if (bt == 0)
+  if (bt == nullptr)
     {
       return;
     }
@@ -1017,9 +1012,9 @@ be_util::set_arg_seen_bit (be_type *bt)
     {
       case AST_Decl::NT_typedef:
         {
-          AST_Typedef *td = AST_Typedef::narrow_from_decl (bt);
+          AST_Typedef *td = dynamic_cast<AST_Typedef*> (bt);
           be_util::set_arg_seen_bit (
-                    be_type::narrow_from_decl (td->primitive_base_type ())
+                    dynamic_cast<be_type*> (td->primitive_base_type ())
                   );
           break;
         }
@@ -1049,8 +1044,8 @@ be_util::set_arg_seen_bit (be_type *bt)
       case AST_Decl::NT_struct_fwd:
       case AST_Decl::NT_union_fwd:
         {
-          AST_StructureFwd *fwd = AST_StructureFwd::narrow_from_decl (bt);
-          be_type *fd = be_type::narrow_from_decl (fwd->full_definition ());
+          AST_StructureFwd *fwd = dynamic_cast<AST_StructureFwd*> (bt);
+          be_type *fd = dynamic_cast<be_type*> (fwd->full_definition ());
           be_util::set_arg_seen_bit (fd);
           break;
         }
@@ -1061,7 +1056,7 @@ be_util::set_arg_seen_bit (be_type *bt)
       case AST_Decl::NT_string:
       case AST_Decl::NT_wstring:
         {
-          AST_String *str = AST_String::narrow_from_decl (bt);
+          AST_String *str = dynamic_cast<AST_String*> (bt);
 
           if (str->max_size ()->ev ()->u.ulval == 0)
             {
@@ -1090,7 +1085,7 @@ be_util::set_arg_seen_bit (be_type *bt)
         break;
       case AST_Decl::NT_pre_defined:
         {
-          AST_PredefinedType *pdt = AST_PredefinedType::narrow_from_decl (bt);
+          AST_PredefinedType *pdt = dynamic_cast<AST_PredefinedType*> (bt);
 
           switch (pdt->pt ())
             {

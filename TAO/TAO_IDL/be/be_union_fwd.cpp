@@ -34,12 +34,12 @@ be_union_fwd::be_union_fwd (AST_Union *dummy,
 {
 }
 
-be_union_fwd::~be_union_fwd (void)
+be_union_fwd::~be_union_fwd ()
 {
 }
 
 void
-be_union_fwd::destroy (void)
+be_union_fwd::destroy ()
 {
   this->be_structure_fwd::destroy ();
 }
@@ -49,7 +49,3 @@ be_union_fwd::accept (be_visitor *visitor)
 {
   return visitor->visit_union_fwd (this);
 }
-
-
-
-IMPL_NARROW_FROM_DECL (be_union_fwd)

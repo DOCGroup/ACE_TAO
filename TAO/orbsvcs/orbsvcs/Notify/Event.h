@@ -25,8 +25,6 @@
 #include "orbsvcs/CosNotifyFilterC.h"
 #include "orbsvcs/CosNotificationC.h"
 
-#include "ace/Copy_Disabled.h"
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Notify_Consumer;
@@ -39,15 +37,20 @@ class TAO_Notify_EventType;
  */
 class TAO_Notify_Serv_Export TAO_Notify_Event
     : public TAO_Notify_Refcountable
-    , private ACE_Copy_Disabled
 {
 public:
   typedef TAO_Notify_Refcountable_Guard_T<TAO_Notify_Event> Ptr;
 
   // Codes to distinguish marshaled events in persistent storage
   enum {MARSHAL_ANY=1,MARSHAL_STRUCTURED=2};
+
   /// Constructor
-  TAO_Notify_Event (void);
+  TAO_Notify_Event ();
+
+  TAO_Notify_Event (const TAO_Notify_Event &) = delete;
+  TAO_Notify_Event (TAO_Notify_Event &&) = delete;
+  TAO_Notify_Event &operator= (const TAO_Notify_Event &) = delete;
+  TAO_Notify_Event &operator= (TAO_Notify_Event &&) = delete;
 
   /// Destructor
   virtual ~TAO_Notify_Event ();
@@ -59,7 +62,7 @@ public:
   static void translate (const CosNotification::StructuredEvent& notification, CORBA::Any& any);
 
   /// Get the event type.
-  virtual const TAO_Notify_EventType& type (void) const = 0;
+  virtual const TAO_Notify_EventType& type () const = 0;
 
   /// Returns true if the filter matches.
   virtual CORBA::Boolean do_match (CosNotifyFilter::Filter_ptr filter) const = 0;
@@ -85,7 +88,7 @@ public:
   /// Return a pointer to a copy of this event on the heap.  The
   /// event is not owned by the caller, so it should not be deleted or
   /// released.
-  TAO_Notify_Event* queueable_copy (void) const;
+  TAO_Notify_Event* queueable_copy () const;
 
   /// marshal this event into a CDR buffer (for persistence)
   virtual void marshal (TAO_OutputCDR& cdr) const = 0;
@@ -95,16 +98,16 @@ public:
 
   ///= Accessors
   /// Priority
-  const TAO_Notify_Property_Short& priority (void) const;
+  const TAO_Notify_Property_Short& priority () const;
 
   /// Timeout
-  const TAO_Notify_Property_Time& timeout (void) const;
+  const TAO_Notify_Property_Time& timeout () const;
 
   /// Reliable
-  const TAO_Notify_Property_Boolean& reliable(void) const;
+  const TAO_Notify_Property_Boolean& reliable() const;
 
   /// Event creation time
-  const ACE_Time_Value& creation_time (void) const;
+  const ACE_Time_Value& creation_time () const;
 
 protected:
   /// = QoS properties
@@ -120,9 +123,9 @@ protected:
 
 private:
   /// Return a pointer to a copy of this event on the heap
-  virtual TAO_Notify_Event* copy (void) const = 0;
+  virtual TAO_Notify_Event* copy () const = 0;
 
-  virtual void release (void);
+  virtual void release ();
 
   mutable Ptr clone_;
   bool        is_on_heap_;

@@ -20,12 +20,10 @@
 #include "ace/Null_Mutex.h"
 
 
-
 static const size_t STRING_TABLE_ENTRIES = 3 * 2;
 static const size_t MAX_HASH = 6;
 
-typedef ACE_Hash_Map_Entry<const ACE_TCHAR *,
-                           const ACE_TCHAR *> HASH_STRING_ENTRY;
+using HASH_STRING_ENTRY = ACE_Hash_Map_Entry<const ACE_TCHAR *, const ACE_TCHAR *>;
 
 // @@ The following requires too much internal implementation
 // information about the <ACE_Hash_Map_Manager>.  We need to figure
@@ -35,29 +33,13 @@ static const size_t STRING_TABLE_SIZE =
 
 static ACE_Static_Allocator<STRING_TABLE_SIZE> ace_test_allocator;
 
-typedef ACE_Hash_Map_Manager_Ex<const ACE_TCHAR *,
-                                const ACE_TCHAR *,
-                                ACE_Hash<const ACE_TCHAR *>,
-                                ACE_Equal_To<const ACE_TCHAR *>,
-                                ACE_Null_Mutex> HASH_STRING_MAP;
+using HASH_STRING_MAP = ACE_Hash_Map_Manager_Ex<const ACE_TCHAR *, const ACE_TCHAR *, ACE_Hash<const ACE_TCHAR *>, ACE_Equal_To<const ACE_TCHAR *>, ACE_Null_Mutex>;
 
-typedef ACE_Hash_Map_Iterator_Ex<const ACE_TCHAR *,
-                                 const ACE_TCHAR *,
-                                 ACE_Hash<const ACE_TCHAR *>,
-                                 ACE_Equal_To<const ACE_TCHAR *>,
-                                 ACE_Null_Mutex> HASH_STRING_ITER;
+using HASH_STRING_ITER = ACE_Hash_Map_Iterator_Ex<const ACE_TCHAR *, const ACE_TCHAR *, ACE_Hash<const ACE_TCHAR *>, ACE_Equal_To<const ACE_TCHAR *>, ACE_Null_Mutex>;
 
-typedef ACE_Hash_Map_Const_Iterator_Ex<const ACE_TCHAR *,
-                                       const ACE_TCHAR *,
-                                       ACE_Hash<const ACE_TCHAR *>,
-                                       ACE_Equal_To<const ACE_TCHAR *>,
-                                       ACE_Null_Mutex> HASH_STRING_CONST_ITER;
+using HASH_STRING_CONST_ITER = ACE_Hash_Map_Const_Iterator_Ex<const ACE_TCHAR *, const ACE_TCHAR *, ACE_Hash<const ACE_TCHAR *>, ACE_Equal_To<const ACE_TCHAR *>, ACE_Null_Mutex>;
 
-typedef ACE_Hash_Map_Reverse_Iterator_Ex<const ACE_TCHAR *,
-                                         const ACE_TCHAR *,
-                                         ACE_Hash<const ACE_TCHAR *>,
-                                         ACE_Equal_To<const ACE_TCHAR *>,
-                                         ACE_Null_Mutex> HASH_STRING_REVERSE_ITER;
+using HASH_STRING_REVERSE_ITER = ACE_Hash_Map_Reverse_Iterator_Ex<const ACE_TCHAR *, const ACE_TCHAR *, ACE_Hash<const ACE_TCHAR *>, ACE_Equal_To<const ACE_TCHAR *>, ACE_Null_Mutex>;
 
 struct String_Table
 {
@@ -178,7 +160,7 @@ int test_two_allocators ()
 }
 
 static int
-run_test (void)
+run_test ()
 {
   ace_test_allocator.dump ();
 

@@ -13,7 +13,7 @@ public:
                     AMH_MiddleResponseHandler_ptr rh);
 
   //Destructor
-  virtual ~Inner_callback_i(void);
+  virtual ~Inner_callback_i();
 
   virtual void answer (const char * ami_return_val);
 

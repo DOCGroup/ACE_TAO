@@ -51,17 +51,9 @@ parse_args (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-typedef ACE_Hash_Map_Manager_Ex<ACE_UINT32,
-                                ACE_UINT32,
-                                ACE_Hash<ACE_UINT32>,
-                                ACE_Equal_To<ACE_UINT32>,
-                                ACE_SYNCH_NULL_MUTEX> HASH_MAP;
+using HASH_MAP = ACE_Hash_Map_Manager_Ex<ACE_UINT32, ACE_UINT32, ACE_Hash<ACE_UINT32>, ACE_Equal_To<ACE_UINT32>, ACE_MT_SYNCH::NULL_MUTEX>;
 
-typedef ACE_Hash_Map_Bucket_Iterator<ACE_UINT32,
-                                     ACE_UINT32,
-                                     ACE_Hash<ACE_UINT32>,
-                                     ACE_Equal_To<ACE_UINT32>,
-                                     ACE_SYNCH_NULL_MUTEX> HASH_MAP_BUCKET_ITERATOR;
+using HASH_MAP_BUCKET_ITERATOR = ACE_Hash_Map_Bucket_Iterator<ACE_UINT32, ACE_UINT32, ACE_Hash<ACE_UINT32>, ACE_Equal_To<ACE_UINT32>, ACE_MT_SYNCH::NULL_MUTEX>;
 
 int
 run_main (int argc, ACE_TCHAR *argv[])

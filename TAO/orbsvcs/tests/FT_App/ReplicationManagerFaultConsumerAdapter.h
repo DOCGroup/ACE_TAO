@@ -58,7 +58,7 @@ public:
   /**
    * Clean house for process shut down.
    */
-  int fini (void);
+  int fini ();
 
 
   size_t notifications() const;
@@ -66,7 +66,6 @@ public:
   /////////////////
   // Implementation
 private:
-
   ////////////////////
   // Forbidden methods
 private:
@@ -78,7 +77,6 @@ private:
   /////////////////////////
   // Implementation methods
 private:
-
   ///////////////
   // Data Members
 private:
@@ -142,7 +140,6 @@ private:
    */
   TAO::FT_FaultConsumer* p_fault_consumer_;
   PortableServer::ServantBase_var consumer_servant_;
-
 };
 #include /**/ <ace/post.h>
 

@@ -72,10 +72,10 @@ public:
                         Output_Device_Wrapper_Base *output_wrapper);
 
   /// Destructor.
-  virtual ~Bounded_Packet_Relay (void);
+  virtual ~Bounded_Packet_Relay ();
 
   /// Requests output be sent to output device.
-  int send_input (void);
+  int send_input ();
 
   /// Requests a transmission be started.
   int start_transmission (u_long packet_count,
@@ -86,7 +86,7 @@ public:
   int end_transmission (Transmission_Status status);
 
   /// Requests a report of statistics from the last transmission.
-  int report_statistics (void);
+  int report_statistics ();
 
   // = Command accessible entry points.
 
@@ -96,13 +96,13 @@ public:
   // = Accessors and mutators for relay settings
 
   /// Get high water mark for relay queue.
-  ACE_UINT32 queue_hwm (void);
+  ACE_UINT32 queue_hwm ();
 
   /// Set high water mark for relay queue.
   void queue_hwm (ACE_UINT32 hwm);
 
   /// Get low water mark for relay queue.
-  ACE_UINT32 queue_lwm (void);
+  ACE_UINT32 queue_lwm ();
 
   /// Set low water mark for relay queue.
   void queue_lwm (ACE_UINT32 lwm);
@@ -138,7 +138,7 @@ private:
   // = Transmission Statistics
 
   /// Returns string corresponding to current status.
-  const char *status_msg (void);
+  const char *status_msg ();
 
   /// Number of transmissions sent.
   u_long transmission_number_;
@@ -154,7 +154,6 @@ private:
 
   /// Ending time of the most recent transmission.
   ACE_Time_Value transmission_end_;
-
 };
 
 /**
@@ -204,10 +203,10 @@ public:
    * terminate its thread.  Should return 1 if it will do so, 0 if it
    * has already done so, or -1 if there is a problem doing so.
    */
-  int request_stop (void);
+  int request_stop ();
 
   /// This method runs the input device loop in the new thread.
-  virtual int svc (void);
+  virtual int svc ();
 
   /// Provides an abstract interface to allow modifying device
   /// settings.
@@ -216,7 +215,7 @@ public:
 protected:
   /// Creates a new message block, carrying data read from the
   /// underlying input device.
-  virtual ACE_Message_Block *create_input_message (void) = 0;
+  virtual ACE_Message_Block *create_input_message () = 0;
 
   /**
    * Sends a newly created message block, carrying data read from the
@@ -245,7 +244,6 @@ protected:
   /// Currently remaining count of messages to send before stopping
   /// (-1 indicates the device should not stop).
   long current_count_;
-
 };
 
 /**
@@ -264,8 +262,7 @@ protected:
 class Output_Device_Wrapper_Base
 {
 public:
-
-  virtual ~Output_Device_Wrapper_Base (void);
+  virtual ~Output_Device_Wrapper_Base ();
 
   /// Writes contents of the passed message block out to the underlying
   /// output device.

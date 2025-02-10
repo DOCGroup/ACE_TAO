@@ -31,7 +31,7 @@ public:
   Middle_i (CORBA::ORB_ptr orb, ThreeTier_ptr target);
   ~Middle_i ();
 
-  bool parse_args (int argc, ACE_TCHAR* argv[] );
+  bool parse_args (int argc, ACE_TCHAR* argv[]);
 
   //////////////////////////////////////
   /// Implement the ThreeTier interface

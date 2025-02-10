@@ -6,7 +6,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Priority_Mapping::~TAO_Priority_Mapping (void)
+TAO_Priority_Mapping::~TAO_Priority_Mapping ()
 {
 }
 

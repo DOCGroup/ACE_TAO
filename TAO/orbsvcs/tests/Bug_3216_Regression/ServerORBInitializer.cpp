@@ -6,27 +6,19 @@
 
 
 void
-Server_ORBInitializer::pre_init (
-    PortableInterceptor::ORBInitInfo_ptr
-    )
+Server_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr)
 {
-
 }
 
 void
-Server_ORBInitializer::post_init (
-    PortableInterceptor::ORBInitInfo_ptr info
-    )
+Server_ORBInitializer::post_init (PortableInterceptor::ORBInitInfo_ptr info)
 {
-  this->register_server_request_interceptors (info
-                                              );
-
+  this->register_server_request_interceptors (info);
 }
 
 void
 Server_ORBInitializer::register_server_request_interceptors (
-    PortableInterceptor::ORBInitInfo_ptr info
-    )
+    PortableInterceptor::ORBInitInfo_ptr info)
 {
   PortableInterceptor::ServerRequestInterceptor_ptr sri =
     PortableInterceptor::ServerRequestInterceptor::_nil ();
@@ -38,9 +30,5 @@ Server_ORBInitializer::register_server_request_interceptors (
   PortableInterceptor::ServerRequestInterceptor_var
     server_interceptor = sri;
 
-  info->add_server_request_interceptor (server_interceptor.in ()
-                                        );
-
+  info->add_server_request_interceptor (server_interceptor.in ());
 }
-
-

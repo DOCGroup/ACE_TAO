@@ -22,9 +22,9 @@ class JAWS_Concurrency_Base : public ACE_Task<ACE_SYNCH>
 
 {
 public:
-  JAWS_Concurrency_Base (void);
+  JAWS_Concurrency_Base ();
   virtual int put (ACE_Message_Block *mb, ACE_Time_Value *tv = 0);
-  virtual int svc (void);
+  virtual int svc ();
 };
 
 class JAWS_Dispatch_Policy
@@ -36,8 +36,8 @@ class JAWS_Dispatch_Policy
   //     model should be.  (For now, we always return the same model.)
 {
 public:
-  JAWS_Dispatch_Policy (void);
-  virtual ~JAWS_Dispatch_Policy (void);
+  JAWS_Dispatch_Policy ();
+  virtual ~JAWS_Dispatch_Policy ();
   virtual JAWS_Concurrency_Base * update (void *state = 0) = 0;
 };
 

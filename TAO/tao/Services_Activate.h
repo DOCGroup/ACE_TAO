@@ -45,7 +45,7 @@ class TAO_Export TAO_Services_Activate : public ACE_Service_Object
 {
 public:
   /// The destructor
-  virtual ~TAO_Services_Activate (void);
+  virtual ~TAO_Services_Activate ();
 
   /**
    * Create and activate the service callbacks into the orb.

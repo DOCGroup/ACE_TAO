@@ -16,10 +16,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_UIPMC_Mcast_Transport::TAO_UIPMC_Mcast_Transport (
   TAO_UIPMC_Mcast_Connection_Handler *handler,
-  TAO_ORB_Core *orb_core
-)
-  : TAO_Transport (IOP::TAG_UIPMC,
-                   orb_core)
+  TAO_ORB_Core *orb_core)
+  : TAO_Transport (IOP::TAG_UIPMC, orb_core)
   , connection_handler_ (handler)
 {
   // Replace the default wait strategy with our own
@@ -29,7 +27,7 @@ TAO_UIPMC_Mcast_Transport::TAO_UIPMC_Mcast_Transport (
            TAO_UIPMC_Wait_Never (this));
 }
 
-TAO_UIPMC_Mcast_Transport::~TAO_UIPMC_Mcast_Transport (void)
+TAO_UIPMC_Mcast_Transport::~TAO_UIPMC_Mcast_Transport ()
 {
   // Cleanup all packets.
   this->cleanup_packets (false);
@@ -81,67 +79,46 @@ TAO_UIPMC_Mcast_Transport::cleanup_packets (bool expired_only)
                           (*cur_iter).item ()->data_length ()));
             }
 
-          ACE_Auto_Ptr<TAO_PG::UIPMC_Recv_Packet> guard ((*cur_iter).item ());
+          std::unique_ptr<TAO_PG::UIPMC_Recv_Packet> guard ((*cur_iter).item ());
           this->incomplete_.unbind (cur_iter);
         }
     }
 }
 
 ACE_Event_Handler *
-TAO_UIPMC_Mcast_Transport::event_handler_i (void)
+TAO_UIPMC_Mcast_Transport::event_handler_i ()
 {
   return this->connection_handler_;
 }
 
 TAO_Connection_Handler *
-TAO_UIPMC_Mcast_Transport::connection_handler_i (void)
+TAO_UIPMC_Mcast_Transport::connection_handler_i ()
 {
   return this->connection_handler_;
 }
 
-ssize_t TAO_UIPMC_Mcast_Transport::send (
-  iovec *,
-  int,
-  size_t &,
-  ACE_Time_Value const *)
+ssize_t TAO_UIPMC_Mcast_Transport::send (iovec *, int, size_t &, ACE_Time_Value const *)
 {
   // Write the complete Message_Block chain to the connection.
   // Shouldn't ever be called on the server side.
-  ACE_ASSERT (0);
   return -1;
 }
 
-ssize_t TAO_UIPMC_Mcast_Transport::recv (
-  char *,
-  size_t,
-  ACE_Time_Value const *)
+ssize_t TAO_UIPMC_Mcast_Transport::recv (char *, size_t, ACE_Time_Value const *)
 {
   // Shouldn't ever be called. We use recv_all() with different semantics.
-  ACE_ASSERT (0);
   return -1;
 }
 
-int TAO_UIPMC_Mcast_Transport::send_request (
-  TAO_Stub *,
-  TAO_ORB_Core *,
-  TAO_OutputCDR &,
-  TAO_Message_Semantics,
-  ACE_Time_Value *)
+int TAO_UIPMC_Mcast_Transport::send_request (TAO_Stub *, TAO_ORB_Core *, TAO_OutputCDR &, TAO_Message_Semantics, ACE_Time_Value *)
 {
   // Shouldn't ever be called on the server side.
-  ACE_ASSERT (0);
   return -1;
 }
 
-int TAO_UIPMC_Mcast_Transport::send_message (
-  TAO_OutputCDR &,
-  TAO_Stub *,
-  TAO_ServerRequest *,
-  TAO_Message_Semantics,
-  ACE_Time_Value *)
+int TAO_UIPMC_Mcast_Transport::send_message (TAO_OutputCDR &, TAO_Stub *, TAO_ServerRequest *, TAO_Message_Semantics, ACE_Time_Value *)
 {
   // Shouldn't ever be called on the server side.
-  ACE_ASSERT (0);
   return -1;
 }
 
@@ -157,9 +134,7 @@ TAO_UIPMC_Mcast_Transport::recv_packet (
 {
   // We read the whole MIOP packet which is not longer than MIOP_MAX_DGRAM_SIZE.
   ssize_t const n =
-    this->connection_handler_->peer ().recv (buf,
-                                             len,
-                                             from_addr);
+    this->connection_handler_->peer ().recv (buf, len, from_addr);
 
   // There is nothing left in the socket buffer.
   if (n <= 0)
@@ -514,7 +489,7 @@ TAO_UIPMC_Mcast_Transport::handle_input (
     }
 
   // Grab the next completed MIOP message to process from the FIFO Queue.
-  ACE_Auto_Ptr<TAO_PG::UIPMC_Recv_Packet> complete_owner (this->recv_all (rh));
+  std::unique_ptr<TAO_PG::UIPMC_Recv_Packet> complete_owner (this->recv_all (rh));
   if (TAO_PG::UIPMC_Recv_Packet *complete = complete_owner.get ())
     {
       if (TAO_debug_level >= 9)
@@ -534,7 +509,7 @@ TAO_UIPMC_Mcast_Transport::handle_input (
                             TAO::VMCID,
                             ENOMEM),
                           CORBA::COMPLETED_NO));
-      ACE_Auto_Array_Ptr<char> owner_buffer (buffer);
+      std::unique_ptr<char[]> owner_buffer (buffer);
       ACE_Data_Block db (complete->data_length () + ACE_CDR::MAX_ALIGNMENT,
                          ACE_Message_Block::MB_DATA,
                          buffer,
@@ -605,7 +580,7 @@ TAO_UIPMC_Mcast_Transport::handle_input (
 }
 
 int
-TAO_UIPMC_Mcast_Transport::register_handler (void)
+TAO_UIPMC_Mcast_Transport::register_handler ()
 {
   // We never register the handler with the reactor
   // as we never need to be informed about any incoming data,

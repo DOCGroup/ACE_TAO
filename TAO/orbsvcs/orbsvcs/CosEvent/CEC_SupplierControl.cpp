@@ -2,22 +2,14 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_CEC_SupplierControl::TAO_CEC_SupplierControl (void)
-{
-}
-
-TAO_CEC_SupplierControl::~TAO_CEC_SupplierControl (void)
-{
-}
-
 int
-TAO_CEC_SupplierControl::activate (void)
+TAO_CEC_SupplierControl::activate ()
 {
   return 0;
 }
 
 int
-TAO_CEC_SupplierControl::shutdown (void)
+TAO_CEC_SupplierControl::shutdown ()
 {
   return 0;
 }

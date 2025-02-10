@@ -37,10 +37,10 @@ class TAO_Export TAO_Default_Client_Strategy_Factory
 {
 public:
   /// Constructor.
-  TAO_Default_Client_Strategy_Factory (void);
+  TAO_Default_Client_Strategy_Factory ();
 
   /// Destructor.
-  virtual ~TAO_Default_Client_Strategy_Factory (void);
+  virtual ~TAO_Default_Client_Strategy_Factory ();
 
   // = Service Configurator hooks.
   /// Dynamic linking hook
@@ -52,14 +52,14 @@ public:
   // = Check Client_Strategy_Factory.h for the documentation of the
   //   following methods.
   virtual TAO_Transport_Mux_Strategy *create_transport_mux_strategy (TAO_Transport *transport);
-  virtual ACE_Lock *create_transport_mux_strategy_lock (void);
-  virtual int reply_dispatcher_table_size (void) const;
-  virtual int allow_callback (void);
+  virtual ACE_Lock *create_transport_mux_strategy_lock ();
+  virtual int reply_dispatcher_table_size () const;
+  virtual int allow_callback ();
   virtual TAO_Wait_Strategy *create_wait_strategy (TAO_Transport *transport);
   virtual TAO_Connect_Strategy *create_connect_strategy (TAO_ORB_Core *);
-  virtual bool use_cleanup_options (void) const;
-  virtual Connect_Strategy connect_strategy (void) const;
-  virtual const TAO::Invocation_Retry_Params &invocation_retry_params (void) const;
+  virtual bool use_cleanup_options () const;
+  virtual Connect_Strategy connect_strategy () const;
+  virtual const TAO::Invocation_Retry_Params &invocation_retry_params () const;
   virtual Messaging::SyncScope sync_scope () const;
 
 protected:

@@ -7,15 +7,13 @@
 # include "tao/Condition.inl"
 #endif /* __ACE_INLINE__ */
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class MUTEX>
 TAO_Condition<MUTEX>::TAO_Condition (MUTEX &m)
-
   : mutex_ (&m),
     delete_lock_ (false),
-    cond_ (0)
+    cond_ (nullptr)
 {
   // @todo: Need to add the allocatore here..
   ACE_NEW (this->cond_,
@@ -23,14 +21,13 @@ TAO_Condition<MUTEX>::TAO_Condition (MUTEX &m)
 }
 
 template <class MUTEX>
-TAO_Condition<MUTEX>::TAO_Condition (void)
-    : mutex_ (0),
+TAO_Condition<MUTEX>::TAO_Condition ()
+    : mutex_ (nullptr),
       delete_lock_ (false),
-      cond_ (0)
+      cond_ (nullptr)
 
 {
   // @todo: Need to add the allocatore here..
-
   ACE_NEW (this->mutex_,
            MUTEX);
 
@@ -42,7 +39,7 @@ TAO_Condition<MUTEX>::TAO_Condition (void)
 
 
 template <class MUTEX>
-TAO_Condition<MUTEX>::~TAO_Condition (void)
+TAO_Condition<MUTEX>::~TAO_Condition ()
 {
   if (this->remove () == -1)
     TAOLIB_ERROR ((LM_ERROR,

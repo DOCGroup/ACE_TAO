@@ -32,8 +32,7 @@ public:
 
   // = SequencePushConsumer methods
   virtual void push_structured_events (
-        const CosNotification::EventBatch & notifications
-      );
+        const CosNotification::EventBatch & notifications);
 
 protected:
   Sequence* test_client_;
@@ -48,7 +47,7 @@ public:
   SequencePushSupplier (Sequence * test_client);
 
   /// Destructor.
-  virtual ~SequencePushSupplier (void);
+  virtual ~SequencePushSupplier ();
 
 protected:
   Sequence* test_client_;
@@ -60,8 +59,8 @@ class Sequence : public Notify_Test_Client
 {
 public:
   // Initialization and termination code.
-  Sequence (void);
-  virtual ~Sequence (void);
+  Sequence ();
+  virtual ~Sequence ();
 
   int parse_args (int argc,
                   ACE_TCHAR *argv[]) ;
@@ -71,20 +70,20 @@ public:
             ACE_TCHAR *argv []);
 
   /// Called when an event is received.
-  void on_event_received (void);
+  void on_event_received ();
 
   /// Run the test.
-  void run_test (void);
+  void run_test ();
 
   /// End the test.
-  void end_test (void);
+  void end_test ();
 
   /// check if we got the expected results.
-  int check_results (void);
+  int check_results ();
 
 protected:
   /// Create EC
-  void create_EC (void);
+  void create_EC ();
 
   /// Number of events to send
   int event_count_;

@@ -75,7 +75,7 @@ JAWS_Cache_Hash<EXT_ID,HASH_FUNC,EQ_FUNC>::JAWS_Cache_Hash (ACE_Allocator *alloc
 }
 
 template <class EXT_ID, class HASH_FUNC, class EQ_FUNC>
-JAWS_Cache_Hash<EXT_ID,HASH_FUNC,EQ_FUNC>::~JAWS_Cache_Hash (void)
+JAWS_Cache_Hash<EXT_ID,HASH_FUNC,EQ_FUNC>::~JAWS_Cache_Hash ()
 {
   if (this->hashtable_)
     {
@@ -83,14 +83,12 @@ JAWS_Cache_Hash<EXT_ID,HASH_FUNC,EQ_FUNC>::~JAWS_Cache_Hash (void)
         {
           if (this->hashtable_[i])
             {
-
               ACE_DES_FREE_TEMPLATE3(this->hashtable_[i],
                                      this->allocator_->free,
                                      JAWS_Hash_Bucket_Manager,
                                      EXT_ID,
                                      JAWS_Cache_Object *,
                                      EQ_FUNC);
-
 
 
 
@@ -224,11 +222,10 @@ JAWS_Cache_Hash<EXT_ID,HASH_FUNC,EQ_FUNC>::unbind (const EXT_ID &ext_id,
 
 
 template <class EXT_ID, class HASH_FUNC, class EQ_FUNC> size_t
-JAWS_Cache_Hash<EXT_ID,HASH_FUNC,EQ_FUNC>::size (void) const
+JAWS_Cache_Hash<EXT_ID,HASH_FUNC,EQ_FUNC>::size () const
 {
   return this->size_;
 }
-
 
 
 

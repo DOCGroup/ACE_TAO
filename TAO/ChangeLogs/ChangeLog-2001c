@@ -7984,11 +7984,11 @@ Wed Aug  1 16:05:36 2001  Carlos O'Ryan  <coryan@uci.edu>
         Thu Jul 26 16:50:46 2001  Carlos O'Ryan  <coryan@uci.edu>
 
         * Part of the fixes for
-          http://ace.cs.wustl.edu/bugzilla/show_bug.cgi?id=886
+          http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=886
 
           the changes also close the following bug:
 
-          http://ace.cs.wustl.edu/bugzilla/show_bug.cgi?id=296
+          http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=296
 
         * tao/Leader_Follower_Flushing_Strategy.h:
         * tao/Leader_Follower_Flushing_Strategy.cpp:

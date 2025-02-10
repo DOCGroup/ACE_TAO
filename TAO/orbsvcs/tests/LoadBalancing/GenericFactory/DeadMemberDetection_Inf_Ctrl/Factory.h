@@ -15,7 +15,6 @@ class Factory
   : public virtual POA_PortableGroup::GenericFactory
 {
 public:
-
   /// Constructor
   Factory (int id);
   /// creates a Test::Simple servant reference.
@@ -41,7 +40,6 @@ public:
   CORBA::Object_ptr get_object () const;
 
 private:
-
   /// The factory creation id.
   CORBA::ULong fcid_;
 

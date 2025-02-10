@@ -16,7 +16,7 @@ be_visitor_module_ih::be_visitor_module_ih (be_visitor_context *ctx)
 {
 }
 
-be_visitor_module_ih::~be_visitor_module_ih (void)
+be_visitor_module_ih::~be_visitor_module_ih ()
 {
 }
 

@@ -5,15 +5,14 @@
 #endif /* __ACE_INLINE__ */
 
 
-
-TAO_Notify_Tests_StructuredPushSupplier_Traits::TAO_Notify_Tests_StructuredPushSupplier_Traits (void)
+TAO_Notify_Tests_StructuredPushSupplier_Traits::TAO_Notify_Tests_StructuredPushSupplier_Traits ()
   :type_ (CosNotifyChannelAdmin::STRUCTURED_EVENT)
 {
 }
 
 /*******************************************************************/
 
-TAO_Notify_Tests_StructuredPushSupplier::TAO_Notify_Tests_StructuredPushSupplier (void)
+TAO_Notify_Tests_StructuredPushSupplier::TAO_Notify_Tests_StructuredPushSupplier ()
 {
 }
 
@@ -38,14 +37,14 @@ TAO_Notify_Tests_StructuredPushSupplier::connect_to_peer (Proxy_Traits::PTR prox
 }
 
 void
-TAO_Notify_Tests_StructuredPushSupplier::disconnect_from_proxy (void)
+TAO_Notify_Tests_StructuredPushSupplier::disconnect_from_proxy ()
 {
   ACE_DEBUG((LM_DEBUG, "\nPush Supplier disconnecting from consumer.\n"));
   this->proxy_->disconnect_structured_push_consumer ();
 }
 
 void
-TAO_Notify_Tests_StructuredPushSupplier::disconnect_structured_push_supplier (void)
+TAO_Notify_Tests_StructuredPushSupplier::disconnect_structured_push_supplier ()
 {
   bool this_method_used_only_by_notify_service = false;
   ACE_ASSERT(this_method_used_only_by_notify_service);

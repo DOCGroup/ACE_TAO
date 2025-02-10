@@ -4,7 +4,6 @@
 #include "Command_Processor.h"
 
 
-
 URL_Processing_Strategy::URL_Processing_Strategy (URL &url,
                                                   URL_Iterator &iterator)
   : url_ (url),
@@ -12,12 +11,12 @@ URL_Processing_Strategy::URL_Processing_Strategy (URL &url,
 {
 }
 
-URL_Processing_Strategy::~URL_Processing_Strategy (void)
+URL_Processing_Strategy::~URL_Processing_Strategy ()
 {
 }
 
 int
-URL_Processing_Strategy::destroy (void)
+URL_Processing_Strategy::destroy ()
 {
   // Commit suicide.
   delete this;
@@ -31,7 +30,7 @@ URL_Download_Strategy::URL_Download_Strategy (URL &url,
 }
 
 int
-URL_Download_Strategy::execute (void)
+URL_Download_Strategy::execute ()
 {
   ACE_CString buffer;
 
@@ -52,7 +51,7 @@ HTTP_Header_Processing_Strategy::HTTP_Header_Processing_Strategy (URL &url,
 }
 
 int
-HTTP_Header_Processing_Strategy::execute (void)
+HTTP_Header_Processing_Strategy::execute ()
 {
   // Set the get() position.Necessary since later a peek is done.
   if (this->url_.stream ().get_char () == 0)
@@ -88,7 +87,6 @@ HTTP_Header_Processing_Strategy::execute (void)
         }
       else
         {
-
           if (line.find ("text/html") != ACE_CString::npos)
             {
               ACE_CString url_content_type("text/html");
@@ -97,7 +95,6 @@ HTTP_Header_Processing_Strategy::execute (void)
         }
     }
   return 0;
-
 }
 
 HTML_Body_Validation_Strategy::HTML_Body_Validation_Strategy (URL &url,
@@ -109,7 +106,7 @@ HTML_Body_Validation_Strategy::HTML_Body_Validation_Strategy (URL &url,
 }
 
 int
-HTML_Body_Validation_Strategy::execute (void)
+HTML_Body_Validation_Strategy::execute ()
 {
   char host_name_buf[BUFSIZ + 1];
   ACE_CString host_name (host_name_buf);
@@ -187,7 +184,7 @@ HTML_Body_Validation_Strategy::execute (void)
 }
 
 URL_Iterator *
-URL_Validation_Visitation_Strategy_Factory::make_header_iterator (void)
+URL_Validation_Visitation_Strategy_Factory::make_header_iterator ()
 {
   URL_Iterator *i;
   ACE_NEW_RETURN (i,
@@ -197,7 +194,7 @@ URL_Validation_Visitation_Strategy_Factory::make_header_iterator (void)
 }
 
 URL_Iterator *
-URL_Validation_Visitation_Strategy_Factory::make_body_iterator (void)
+URL_Validation_Visitation_Strategy_Factory::make_body_iterator ()
 {
   URL_Iterator *i;
   ACE_NEW_RETURN (i,
@@ -230,18 +227,18 @@ URL_Validation_Visitation_Strategy_Factory::make_body_strategy (URL_Iterator &it
 }
 
 int
-URL_Validation_Visitation_Strategy_Factory::destroy (void)
+URL_Validation_Visitation_Strategy_Factory::destroy ()
 {
   // Commit suicide.
   delete this;
   return 0;
 }
 
-URL_Visitor::~URL_Visitor (void)
+URL_Visitor::~URL_Visitor ()
 {
 }
 
-URL_Validation_Visitor::URL_Validation_Visitor (void)
+URL_Validation_Visitor::URL_Validation_Visitor ()
 {
   ACE_NEW (this->caching_connect_strategy_,
            CACHED_CONNECT_STRATEGY (this->caching_strategy_));
@@ -255,10 +252,9 @@ URL_Validation_Visitor::URL_Validation_Visitor (void)
                 "%p %s\n"
                 "strategy connector creation failed"));
 
-
 }
 
-URL_Validation_Visitor::~URL_Validation_Visitor (void)
+URL_Validation_Visitor::~URL_Validation_Visitor ()
 {
   this->strat_connector_ = 0;
   if (this->caching_connect_strategy_ != 0)
@@ -266,7 +262,7 @@ URL_Validation_Visitor::~URL_Validation_Visitor (void)
 }
 
 URL_Validation_Visitor::URL_CACHE &
-URL_Validation_Visitor::url_cache (void)
+URL_Validation_Visitor::url_cache ()
 {
   return this->url_cache_;
 }
@@ -323,7 +319,6 @@ URL_Validation_Visitor::make_visitation_strategy_factory (URL &url)
   // HTTP URL.
   else
     {
-
       URL_Visitation_Strategy_Factory *vs;
       ACE_NEW_RETURN (vs,
                       URL_Validation_Visitation_Strategy_Factory (&url,
@@ -334,7 +329,7 @@ URL_Validation_Visitor::make_visitation_strategy_factory (URL &url)
 }
 
 int
-URL_Validation_Visitor::destroy (void)
+URL_Validation_Visitor::destroy ()
 {
   delete this->strat_connector_;
   // Commit suicide.
@@ -412,13 +407,12 @@ URL_Validation_Visitor::visit (HTTP_URL &http_url)
                            "%p\n",
                            "body execute"),
                           -1);
-
     }
   return 0;
 }
 
 int
-URL_Download_Visitation_Strategy_Factory::destroy (void)
+URL_Download_Visitation_Strategy_Factory::destroy ()
 {
   // Commit suicide.
   delete this;
@@ -426,13 +420,13 @@ URL_Download_Visitation_Strategy_Factory::destroy (void)
 }
 
 URL_Iterator *
-URL_Download_Visitation_Strategy_Factory::make_header_iterator (void)
+URL_Download_Visitation_Strategy_Factory::make_header_iterator ()
 {
   return 0;
 }
 
 URL_Iterator *
-URL_Download_Visitation_Strategy_Factory::make_body_iterator (void)
+URL_Download_Visitation_Strategy_Factory::make_body_iterator ()
 {
   URL_Iterator *i;
   ACE_NEW_RETURN (i,
@@ -466,7 +460,7 @@ URL_Visitation_Strategy_Factory::URL_Visitation_Strategy_Factory (URL *url)
 {
 }
 
-URL_Visitation_Strategy_Factory::~URL_Visitation_Strategy_Factory (void)
+URL_Visitation_Strategy_Factory::~URL_Visitation_Strategy_Factory ()
 {
 }
 
@@ -492,7 +486,6 @@ URL_Download_Visitor::make_visitation_strategy_factory (URL &url)
       int retval = url.send_request ();
       if (retval != -1)
         break;
-
     }
   // @@ Here's where we could check to see if the <url> was HTTP or
   // FTP, etc.  But for now we'll just assume that everything is an
@@ -502,11 +495,10 @@ URL_Download_Visitor::make_visitation_strategy_factory (URL &url)
                   URL_Download_Visitation_Strategy_Factory (&url),
                   0);
   return vs;
-
 }
 
 int
-URL_Download_Visitor::destroy (void)
+URL_Download_Visitor::destroy ()
 {
   // Commit suicide.
   delete this;

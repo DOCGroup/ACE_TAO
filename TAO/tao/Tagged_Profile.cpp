@@ -87,7 +87,7 @@ TAO_Tagged_Profile::unmarshall_object_key (TAO_InputCDR &input)
 CORBA::Boolean
 TAO_Tagged_Profile::unmarshall_object_key_i (TAO_InputCDR &input)
 {
-  CORBA::Boolean hdr_status = (CORBA::Boolean) input.good_bit ();
+  CORBA::Boolean hdr_status = input.good_bit ();
 
   CORBA::Long key_length = 0;
   hdr_status = hdr_status && input.read_long (key_length);
@@ -110,7 +110,7 @@ TAO_Tagged_Profile::unmarshall_object_key_i (TAO_InputCDR &input)
 CORBA::Boolean
 TAO_Tagged_Profile::unmarshall_iop_profile_i (TAO_InputCDR &input)
 {
-  CORBA::Boolean hdr_status = (CORBA::Boolean) input.good_bit ();
+  CORBA::Boolean hdr_status = input.good_bit ();
 
   // Extract into the IOP::Tagged profile.
   hdr_status &= input >> this->profile_;
@@ -121,7 +121,7 @@ TAO_Tagged_Profile::unmarshall_iop_profile_i (TAO_InputCDR &input)
 CORBA::Boolean
 TAO_Tagged_Profile::unmarshall_ref_addr_i (TAO_InputCDR &input)
 {
-  CORBA::Boolean hdr_status = (CORBA::Boolean) input.good_bit ();
+  CORBA::Boolean hdr_status = input.good_bit ();
 
   /*
    * The GIOP::IORAddressingInfo is defined as follows

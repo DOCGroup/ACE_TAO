@@ -84,7 +84,7 @@ Client_Task::make_iogr (const char* domain_id, CORBA::ULongLong group_id, CORBA:
 }
 
 /// Thread entry point
-int Client_Task::svc (void)
+int Client_Task::svc ()
 {
   try
     {
@@ -128,7 +128,7 @@ int Client_Task::svc (void)
 
       if (!collocated_server->_is_collocated())
         { // Collocation is disabled, just skip the test - it has no sense.
-          ACE_DEBUG ((LM_ERROR, "Test has no sense, because collocation is disabled.\n") );
+          ACE_DEBUG ((LM_ERROR, "Test has no sense, because collocation is disabled.\n"));
         }
       else
         {

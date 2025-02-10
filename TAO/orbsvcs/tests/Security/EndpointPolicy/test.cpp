@@ -181,7 +181,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     {
       ex._tao_print_exception ("cannot run server");
     }
-  root_poa->destroy (1, 1);
+  root_poa->destroy (true, true);
 
   orb->destroy ();
 

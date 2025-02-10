@@ -32,24 +32,24 @@ ACE_TSS_Connection::set_server_address (const ACE_INET_Addr &server_address)
 }
 
 // Necessary to make some compilers work...
-ACE_TSS_Connection::ACE_TSS_Connection (void)
+ACE_TSS_Connection::ACE_TSS_Connection ()
 {
   ACE_TRACE ("ACE_TSS_Connection::ACE_TSS_Connection");
 }
 
-ACE_TSS_Connection::~ACE_TSS_Connection (void)
+ACE_TSS_Connection::~ACE_TSS_Connection ()
 {
   ACE_TRACE ("ACE_TSS_Connection::~ACE_TSS_Connection");
 }
 
 ACE_SOCK_Stream *
-ACE_TSS_Connection::get_connection (void)
+ACE_TSS_Connection::get_connection ()
 {
   return ACE_TSS<ACE_SOCK_Stream>::operator-> ();
 }
 
 ACE_SOCK_Stream *
-ACE_TSS_Connection::make_TSS_TYPE (void) const
+ACE_TSS_Connection::make_TSS_TYPE () const
 {
   ACE_TRACE ("ACE_TSS_Connection::make_TSS_TYPE");
 
@@ -71,13 +71,13 @@ ACE_TSS_Connection::make_TSS_TYPE (void) const
   return stream;
 }
 
-ACE_TSS_Connection::operator ACE_SOCK_Stream *(void)
+ACE_TSS_Connection::operator ACE_SOCK_Stream *()
 {
   return this->get_connection ();
 }
 
 void
-ACE_TSS_Connection::dump (void) const
+ACE_TSS_Connection::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_TSS_Connection::dump");
@@ -91,12 +91,12 @@ ACE_TSS_Connection::dump (void) const
 #endif /* ACE_HAS_DUMP */
 }
 
-ACE_Remote_Token_Proxy::ACE_Remote_Token_Proxy (void)
+ACE_Remote_Token_Proxy::ACE_Remote_Token_Proxy ()
 {
   ACE_TRACE ("ACE_Remote_Token_Proxy::ACE_Remote_Token_Proxy");
 }
 
-ACE_Remote_Token_Proxy::~ACE_Remote_Token_Proxy (void)
+ACE_Remote_Token_Proxy::~ACE_Remote_Token_Proxy ()
 {
   ACE_TRACE ("ACE_Remote_Token_Proxy::~ACE_Remote_Token_Proxy");
 }
@@ -119,7 +119,7 @@ ACE_Remote_Token_Proxy::set_server_address (const ACE_INET_Addr &server_address)
 }
 
 int
-ACE_Remote_Token_Proxy::initiate_connection (void)
+ACE_Remote_Token_Proxy::initiate_connection ()
 {
   ACE_TRACE ("ACE_Remote_Token_Proxy::initiate_connection");
   if (token_ == 0)
@@ -377,7 +377,7 @@ ACE_Remote_Token_Proxy::token_acquired (ACE_TPQ_Entry *)
 }
 
 const ACE_TCHAR*
-ACE_Remote_Token_Proxy::owner_id (void)
+ACE_Remote_Token_Proxy::owner_id ()
 {
   ACE_TRACE ("ACE_Remote_Token_Proxy::owner_id");
   ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("owner_id called\n")));
@@ -386,7 +386,7 @@ ACE_Remote_Token_Proxy::owner_id (void)
 }
 
 void
-ACE_Remote_Token_Proxy::dump (void) const
+ACE_Remote_Token_Proxy::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Remote_Token_Proxy::dump");
@@ -401,7 +401,7 @@ ACE_Remote_Token_Proxy::dump (void) const
 }
 
 ACE_Token_Proxy *
-ACE_Remote_Mutex::clone (void) const
+ACE_Remote_Mutex::clone () const
 {
   ACE_Token_Proxy *temp;
   ACE_NEW_RETURN (temp,
@@ -423,7 +423,7 @@ ACE_Remote_Mutex::create_token (const ACE_TCHAR *name)
 }
 
 void
-ACE_Remote_Mutex::dump (void) const
+ACE_Remote_Mutex::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Remote_Mutex::dump");
@@ -446,13 +446,13 @@ ACE_Remote_RLock::create_token (const ACE_TCHAR *name)
 }
 
 int
-ACE_Remote_RLock::type (void) const
+ACE_Remote_RLock::type () const
 {
   return ACE_RW_Token::READER;
 }
 
 ACE_Token_Proxy *
-ACE_Remote_RLock::clone (void) const
+ACE_Remote_RLock::clone () const
 {
   ACE_Token_Proxy *temp = 0;
   ACE_NEW_RETURN (temp,
@@ -464,7 +464,7 @@ ACE_Remote_RLock::clone (void) const
 }
 
 void
-ACE_Remote_RLock::dump (void) const
+ACE_Remote_RLock::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Remote_RLock::dump");
@@ -488,13 +488,13 @@ ACE_Remote_WLock::create_token (const ACE_TCHAR *name)
 }
 
 int
-ACE_Remote_WLock::type (void) const
+ACE_Remote_WLock::type () const
 {
   return ACE_RW_Token::WRITER;
 }
 
 ACE_Token_Proxy *
-ACE_Remote_WLock::clone (void) const
+ACE_Remote_WLock::clone () const
 {
   ACE_Token_Proxy *temp = 0;
   ACE_NEW_RETURN (temp,
@@ -506,7 +506,7 @@ ACE_Remote_WLock::clone (void) const
 }
 
 void
-ACE_Remote_WLock::dump (void) const
+ACE_Remote_WLock::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Remote_WLock::dump");

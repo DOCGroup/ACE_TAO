@@ -11,7 +11,6 @@
 /* ------------------------------------------------------------------------ */
 
 
-
 /* Prototypes for SSL I/O functions */
 extern int SSL_Close(int);
 extern int SSL_Socket(int, int, int);

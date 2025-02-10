@@ -9,7 +9,6 @@
 #include "ace/Sig_Adapter.h"
 
 
-
 class Event_Handler : public ACE_Event_Handler
 {
 public:

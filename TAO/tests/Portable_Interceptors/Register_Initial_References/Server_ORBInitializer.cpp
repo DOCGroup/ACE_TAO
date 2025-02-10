@@ -4,7 +4,7 @@
 #include "tao/ORBInitializer_Registry.h"
 #include "tao/ORB_Constants.h"
 
-Server_ORBInitializer::Server_ORBInitializer (void)
+Server_ORBInitializer::Server_ORBInitializer ()
 {
 }
 

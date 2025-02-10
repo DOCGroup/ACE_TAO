@@ -26,7 +26,7 @@ TAO_Table_Adapter::TAO_Table_Adapter (TAO_ORB_Core &orb_core)
 {
 }
 
-TAO_Table_Adapter::~TAO_Table_Adapter (void)
+TAO_Table_Adapter::~TAO_Table_Adapter ()
 {
   delete this->lock_;
 }
@@ -35,18 +35,16 @@ TAO_Table_Adapter::~TAO_Table_Adapter (void)
 ACE_Lock *
 TAO_Table_Adapter::create_lock (TAO_SYNCH_MUTEX &thread_lock)
 {
-  ACE_Lock *the_lock = 0;
-  ACE_NEW_RETURN (the_lock,
-                  ACE_Lock_Adapter<TAO_SYNCH_MUTEX> (thread_lock),
-                  0);
+  ACE_Lock *the_lock = nullptr;
+  ACE_NEW_NORETURN (the_lock, ACE_Lock_Adapter<TAO_SYNCH_MUTEX> (thread_lock));
   return the_lock;
 }
 
 void
-TAO_Table_Adapter::open (void)
+TAO_Table_Adapter::open ()
 {
   ACE_GUARD (ACE_Lock, ace_mon, *this->lock_);
-  TAO_IOR_Table_Impl *impl = 0;
+  TAO_IOR_Table_Impl *impl = nullptr;
   ACE_NEW_THROW_EX (impl,
                     TAO_IOR_Table_Impl (),
                     CORBA::NO_MEMORY ());
@@ -60,7 +58,7 @@ TAO_Table_Adapter::close (int)
 {
   ACE_GUARD (ACE_Lock, ace_mon, *this->lock_);
   this->closed_ = true;
-  this->root_ = 0;
+  this->root_ = nullptr;
 }
 
 void
@@ -69,7 +67,7 @@ TAO_Table_Adapter::check_close (int)
 }
 
 int
-TAO_Table_Adapter::priority (void) const
+TAO_Table_Adapter::priority () const
 {
   return static_cast<int> (TAO_DEFAULT_ADAPTER_REGISTRY_SIZE);
 }
@@ -89,13 +87,13 @@ TAO_Table_Adapter::dispatch (TAO::ObjectKey &key,
 }
 
 const char *
-TAO_Table_Adapter::name (void) const
+TAO_Table_Adapter::name () const
 {
   return "IORTable";
 }
 
 CORBA::Object_ptr
-TAO_Table_Adapter::root (void)
+TAO_Table_Adapter::root ()
 {
   return CORBA::Object::_duplicate (this->root_.in());
 }
@@ -117,7 +115,6 @@ TAO_Table_Adapter::create_collocated_object (TAO_Stub *stub,
                                      stub->is_collocated (),
                                      stub->collocated_servant ()),
                       CORBA::Object::_nil ());
-
     }
 
   return result;
@@ -150,7 +147,6 @@ TAO_Table_Adapter::initialize_collocated_object (TAO_Stub *stub)
       // This call will set the appropriate collocation values
       // to correspond to the reference we found in the table.
       stub->add_forward_profiles (forward_to->_stubobj ()->base_profiles ());
-      stub->next_profile ();
     }
 
   // 0 for success
@@ -190,17 +186,15 @@ TAO_Table_Adapter::find_object (TAO::ObjectKey &key,
 
 // ****************************************************************
 
-TAO_Table_Adapter_Factory::TAO_Table_Adapter_Factory (void)
+TAO_Table_Adapter_Factory::TAO_Table_Adapter_Factory ()
 {
 }
 
 TAO_Adapter*
 TAO_Table_Adapter_Factory::create (TAO_ORB_Core *oc)
 {
-  TAO_Adapter* ptr = 0;
-  ACE_NEW_RETURN (ptr,
-                 TAO_Table_Adapter (*oc),
-                 0);
+  TAO_Adapter* ptr = nullptr;
+  ACE_NEW_NORETURN (ptr, TAO_Table_Adapter (*oc));
   return ptr;
 }
 

@@ -23,20 +23,20 @@ Test_DynUnion::Test_DynUnion (CORBA::ORB_var orb, int debug)
 {
 }
 
-Test_DynUnion::~Test_DynUnion (void)
+Test_DynUnion::~Test_DynUnion ()
 {
   CORBA::string_free (this->test_name_);
   this->test_name_ = 0;
 }
 
 const char*
-Test_DynUnion::test_name (void) const
+Test_DynUnion::test_name () const
 {
   return this->test_name_;
 }
 
 int
-Test_DynUnion::run_test (void)
+Test_DynUnion::run_test ()
 {
   Data data (this->orb_);
 

@@ -29,12 +29,12 @@ FileImpl::System::System (CORBA::ORB_ptr orb, PortableServer::POA_ptr poa)
   poa->set_servant (&this->fd_servant_);
 }
 
-FileImpl::System::~System (void)
+FileImpl::System::~System ()
 {
 }
 
 PortableServer::POA_ptr
-FileImpl::System::_default_POA (void)
+FileImpl::System::_default_POA ()
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
@@ -79,9 +79,9 @@ FileImpl::System::open (const char *file_name,
 }
 
 void
-FileImpl::System::shutdown (void)
+FileImpl::System::shutdown ()
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }
 
 // IDL File::Descriptor constructor
@@ -90,19 +90,19 @@ FileImpl::Descriptor::Descriptor (PortableServer::POA_ptr poa)
 {
 }
 
-FileImpl::Descriptor::~Descriptor (void)
+FileImpl::Descriptor::~Descriptor ()
 {
 }
 
 PortableServer::POA_ptr
-FileImpl::Descriptor::_default_POA (void)
+FileImpl::Descriptor::_default_POA ()
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
 
 //Extracts the ACE_HANDLE from the passed object reference
 ACE_HANDLE
-FileImpl::Descriptor::fd (void)
+FileImpl::Descriptor::fd ()
 {
   //
   // One way of getting our id.
@@ -202,7 +202,7 @@ FileImpl::Descriptor::lseek (CORBA::ULong offset,
 }
 
 void
-FileImpl::Descriptor::destroy (void)
+FileImpl::Descriptor::destroy ()
 {
   // Get the ACE_HANDLE for this object reference
   ACE_HANDLE file_descriptor = this->fd ();

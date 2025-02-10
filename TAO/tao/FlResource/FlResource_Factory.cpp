@@ -7,13 +7,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-  FlResource_Factory::FlResource_Factory (void)
+  FlResource_Factory::FlResource_Factory ()
     : reactor_impl_( 0 )
   {
   }
 
   ACE_Reactor_Impl *
-  FlResource_Factory::reactor_impl (void)
+  FlResource_Factory::reactor_impl ()
   {
     // synchronized by external locks
     if (!this->reactor_impl_)

@@ -2,7 +2,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
-TAO_EC_QOS_Info::TAO_EC_QOS_Info (void)
+TAO_EC_QOS_Info::TAO_EC_QOS_Info ()
   :  rt_info (-1),
      preemption_priority (0),
      timer_id_ (-1)

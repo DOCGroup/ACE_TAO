@@ -13,7 +13,7 @@ TAO_ExtInterfaceDef_i::TAO_ExtInterfaceDef_i (TAO_Repository_i *repo)
 {
 }
 
-TAO_ExtInterfaceDef_i::~TAO_ExtInterfaceDef_i (void)
+TAO_ExtInterfaceDef_i::~TAO_ExtInterfaceDef_i ()
 {
 }
 

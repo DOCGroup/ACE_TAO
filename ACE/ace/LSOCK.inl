@@ -4,7 +4,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 // Simple-minded constructor.
 
 ACE_INLINE
-ACE_LSOCK::ACE_LSOCK (void)
+ACE_LSOCK::ACE_LSOCK ()
   : aux_handle_ (ACE_INVALID_HANDLE)
 {
   ACE_TRACE ("ACE_LSOCK::ACE_LSOCK");
@@ -22,7 +22,7 @@ ACE_LSOCK::set_handle (ACE_HANDLE handle)
 // Gets the underlying file descriptor.
 
 ACE_INLINE ACE_HANDLE
-ACE_LSOCK::get_handle (void) const
+ACE_LSOCK::get_handle () const
 {
   ACE_TRACE ("ACE_LSOCK::get_handle");
   return this->aux_handle_;

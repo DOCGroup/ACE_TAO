@@ -31,21 +31,21 @@ class Supplier : public POA_RtecEventComm::PushSupplier
 {
 public:
   /// Constructor
-  Supplier (void);
+  Supplier ();
 
   /// Connect to the event channel
   void connect (RtecEventChannelAdmin::SupplierAdmin_ptr supplier_admin);
 
   /// Disconnect from the event channel
-  void disconnect (void);
+  void disconnect ();
 
   /// Push a single event
-  void perform_push (void);
+  void perform_push ();
 
   // = The RtecEventComm::PushSupplier methods
 
   /// The skeleton methods.
-  virtual void disconnect_push_supplier (void);
+  virtual void disconnect_push_supplier ();
 
 private:
   /// The proxy

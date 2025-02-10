@@ -51,7 +51,7 @@ be_visitor_arg_traits::be_visitor_arg_traits (const char *S,
 {
 }
 
-be_visitor_arg_traits::~be_visitor_arg_traits (void)
+be_visitor_arg_traits::~be_visitor_arg_traits ()
 {
   delete [] this->S_;
 }
@@ -61,9 +61,7 @@ be_visitor_arg_traits::visit_root (be_root *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2
-      << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (os);
 
   *os << be_nl
       << be_global->core_versioning_begin ();
@@ -141,8 +139,7 @@ be_visitor_arg_traits::visit_interface (be_interface *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (os);
 
   std::string guard_suffix =
     std::string (this->S_) + std::string ("arg_traits");
@@ -156,7 +153,7 @@ be_visitor_arg_traits::visit_interface (be_interface *node)
       << "class "
       << " " << this->S_ << "Arg_Traits< ::"
       << node->name () << ">" << be_idt_nl
-      << ": public" << be_idt << be_idt_nl
+      << ": public "
       << "Object_" << this->S_ << "Arg_Traits_T<" << be_idt << be_idt_nl
       << "::" << node->name () << "_ptr," << be_nl
       << "::" << node->name () << "_var," << be_nl
@@ -169,8 +166,7 @@ be_visitor_arg_traits::visit_interface (be_interface *node)
     }
 
   *os << "," << be_nl << this->insert_policy ()
-      << be_uidt_nl
-      << ">" << be_uidt << be_uidt << be_uidt << be_uidt_nl
+      << ">" << be_uidt << be_uidt << be_uidt_nl
       << "{" << be_nl
       << "};";
 
@@ -209,7 +205,7 @@ be_visitor_arg_traits::visit_interface_fwd (be_interface_fwd *node)
     }
 
   be_interface *fd =
-    be_interface::narrow_from_decl (node->full_definition ());
+    dynamic_cast<be_interface*> (node->full_definition ());
 
   // The logic in visit_interface() should handle what gets generated
   // and what doesn't.
@@ -245,9 +241,7 @@ be_visitor_arg_traits::visit_valuebox (be_valuebox *node)
 
   TAO_OutStream & os = *this->ctx_->stream ();
 
-  os << be_nl_2
-      << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (&os);
 
   os << be_nl_2
       << "template<>" << be_nl
@@ -301,9 +295,7 @@ be_visitor_arg_traits::visit_valuetype (be_valuetype *node)
 
   TAO_OutStream & os = *this->ctx_->stream ();
 
-  os << be_nl_2
-      << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (&os);
 
   std::string guard_suffix =
     std::string (this->S_) + std::string ("arg_traits");
@@ -368,7 +360,7 @@ be_visitor_arg_traits::visit_valuetype_fwd (be_valuetype_fwd *node)
     }
 
   be_valuetype *fd =
-    be_valuetype::narrow_from_decl (node->full_definition ());
+    dynamic_cast<be_valuetype*> (node->full_definition ());
 
   // The logic in visit_valuetype() should handle what gets generated
   // and what doesn't.
@@ -418,15 +410,14 @@ be_visitor_arg_traits::visit_operation (be_operation *node)
   // Arg_Traits<> template parameter.
   if (nt == AST_Decl::NT_string || nt == AST_Decl::NT_wstring)
     {
-      AST_String *str = AST_String::narrow_from_decl (rt);
+      AST_String *str = dynamic_cast<AST_String*> (rt);
       ACE_CDR::ULong bound = str->max_size ()->ev ()->u.ulval;
 
       if (bound > 0)
         {
           TAO_OutStream *os = this->ctx_->stream ();
 
-          *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-              << "// " << __FILE__ << ":" << __LINE__;
+          TAO_INSERT_COMMENT (os);
 
           std::string guard_suffix =
             std::string (this->S_) + std::string ("arg_traits");
@@ -484,14 +475,14 @@ be_visitor_arg_traits::visit_operation (be_operation *node)
 int
 be_visitor_arg_traits::visit_attribute (be_attribute *node)
 {
-  if (this->ctx_->alias () != 0 || this->generated (node))
+  if (this->ctx_->alias () != nullptr || this->generated (node))
     {
       return 0;
     }
 
-  AST_String *st = AST_String::narrow_from_decl (node->field_type ());
+  AST_String *st = dynamic_cast<AST_String*> (node->field_type ());
 
-  if (st == 0)
+  if (st == nullptr)
     {
       return 0;
     }
@@ -505,8 +496,7 @@ be_visitor_arg_traits::visit_attribute (be_attribute *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (os);
 
   std::string guard_suffix =
     std::string (this->S_) + std::string ("arg_traits");
@@ -559,7 +549,7 @@ be_visitor_arg_traits::visit_attribute (be_attribute *node)
 int
 be_visitor_arg_traits::visit_argument (be_argument *node)
 {
-  if (this->ctx_->alias () != 0 || this->generated (node))
+  if (this->ctx_->alias () != nullptr || this->generated (node))
     {
       return 0;
     }
@@ -575,7 +565,7 @@ be_visitor_arg_traits::visit_argument (be_argument *node)
       return 0;
     }
 
-  be_string *st = be_string::narrow_from_decl (bt);
+  be_string *st = dynamic_cast<be_string*> (bt);
   ACE_CDR::ULong bound = st->max_size ()->ev ()->u.ulval;
 
   if (bound == 0)
@@ -585,8 +575,7 @@ be_visitor_arg_traits::visit_argument (be_argument *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (os);
 
   std::string guard_suffix =
     std::string (this->S_) + std::string ("arg_traits");
@@ -674,13 +663,12 @@ be_visitor_arg_traits::visit_sequence (be_sequence *node)
   be_typedef *alias = this->ctx_->alias ();
 
   /// No arg traits for anonymous sequences.
-  if (alias == 0)
+  if (alias == nullptr)
     {
       return 0;
     }
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (os);
 
   bool use_vec = (node->unbounded () && be_global->alt_mapping ());
   UTL_ScopedName *sn = alias->name ();
@@ -741,7 +729,7 @@ be_visitor_arg_traits::visit_string (be_string *node)
   // since a bounded (w)string of the same length may be used or typedef'd
   // more than once.
 
-  if (alias == 0)
+  if (alias == nullptr)
     {
       os->gen_ifdef_macro (node->flat_name (), guard_suffix.c_str (), false);
     }
@@ -758,14 +746,14 @@ be_visitor_arg_traits::visit_string (be_string *node)
         }
 
       size_t bound_length = num_digits + 1;
-      char* bound_string = 0;
+      char* bound_string = nullptr;
       ACE_NEW_RETURN (bound_string, char[bound_length], -1) ;
       ACE_OS::sprintf (bound_string, ACE_UINT32_FORMAT_SPECIFIER_ASCII, bound);
 
       size_t cat_length = ACE_OS::strlen (alias->local_name ()->get_string ()) +
                           ACE_OS::strlen (bound_string) +
                           1;
-      char* cat_string = 0;
+      char* cat_string = nullptr;
       ACE_NEW_RETURN (cat_string, char[cat_length], -1) ;
       ACE_OS::strcpy (cat_string, alias->local_name ()->get_string ()) ;
       ACE_OS::strcat (cat_string, bound_string);
@@ -785,7 +773,7 @@ be_visitor_arg_traits::visit_string (be_string *node)
       *os << be_nl_2
           << "struct ";
 
-      if (alias == 0)
+      if (alias == nullptr)
         {
           *os << node->flat_name ();
         }
@@ -802,7 +790,7 @@ be_visitor_arg_traits::visit_string (be_string *node)
       << "class "
       << this->S_ << "Arg_Traits<";
 
-  if (0 == alias)
+  if (nullptr == alias)
     {
       *os << node->flat_name ();
     }
@@ -845,7 +833,7 @@ be_visitor_arg_traits::visit_array (be_array *node)
 
  // Add the alias check here because anonymous arrays can't be
  // operation arguments.
- if (this->generated (node) || this->ctx_->alias () == 0)
+ if (this->generated (node) || this->ctx_->alias () == nullptr)
     {
       return 0;
     }
@@ -898,8 +886,7 @@ be_visitor_arg_traits::visit_enum (be_enum *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (os);
 
   *os << be_nl_2
       << "template<>" << be_nl
@@ -941,8 +928,7 @@ be_visitor_arg_traits::visit_structure (be_structure *node)
   // multiple declarations.
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (os);
 
   *os << be_nl_2
       << "template<>" << be_nl
@@ -992,7 +978,7 @@ be_visitor_arg_traits::visit_structure (be_structure *node)
 int
 be_visitor_arg_traits::visit_field (be_field *node)
 {
-  be_type *bt = be_type::narrow_from_decl (node->field_type ());
+  be_type *bt = dynamic_cast<be_type*> (node->field_type ());
 
   if (!bt)
     {
@@ -1052,8 +1038,7 @@ be_visitor_arg_traits::visit_union (be_union *node)
   // multiple declarations.
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (os);
 
   *os << be_nl_2
       << "template<>" << be_nl
@@ -1106,7 +1091,7 @@ be_visitor_arg_traits::visit_union (be_union *node)
 int
 be_visitor_arg_traits::visit_union_branch (be_union_branch *node)
 {
-  be_type *bt = be_type::narrow_from_decl (node->field_type ());
+  be_type *bt = dynamic_cast<be_type*> (node->field_type ());
 
   if (!bt)
     {
@@ -1172,7 +1157,7 @@ be_visitor_arg_traits::visit_typedef (be_typedef *node)
                         -1);
     }
 
-  this->ctx_->alias (0);
+  this->ctx_->alias (nullptr);
   return 0;
 }
 
@@ -1212,7 +1197,7 @@ be_visitor_arg_traits::generated (be_decl *node) const
           case TAO_CodeGen::TAO_ROOT_SH:
             return node->srv_arg_traits_gen ();
           default:
-            return 0;
+            return false;
         }
     }
 
@@ -1242,7 +1227,7 @@ be_visitor_arg_traits::generated (be_decl *node,
 }
 
 const char *
-be_visitor_arg_traits::insert_policy (void)
+be_visitor_arg_traits::insert_policy ()
 {
   if (be_global->any_support ())
     {

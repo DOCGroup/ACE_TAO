@@ -32,7 +32,7 @@ Sender_StreamEndPoint::set_protocol_object (const char *,
   return 0;
 }
 
-Sender::Sender (void)
+Sender::Sender ()
   : sender_mmdevice_ (0),
     streamctrl_ (0),
     frame_count_ (0),
@@ -139,7 +139,7 @@ Sender::parse_args (int argc,
 
 // Method to get the object reference of the receiver
 int
-Sender::bind_to_receiver (void)
+Sender::bind_to_receiver ()
 {
   CosNaming::Name name (1);
   name.length (1);
@@ -290,7 +290,7 @@ Sender::init (int argc,
 
 // Method to send data at the specified rate
 int
-Sender::pace_data (void)
+Sender::pace_data ()
 {
   // The time that should lapse between two consecutive frames sent.
   ACE_Time_Value inter_frame_time;
@@ -387,16 +387,15 @@ Sender::pace_data (void)
                                "Sender::pace_data send\n"),
                               -1);
 
-            ACE_DEBUG ((LM_DEBUG,
-                        "Sender::pace_data frame %d was sent successfully %d\n",
-                        ++this->frame_count_,
-                        buffer_size));
+          ACE_DEBUG ((LM_DEBUG,
+                      "Sender::pace_data frame %d was sent successfully %d\n",
+                      ++this->frame_count_,
+                      buffer_size));
 
           ++this->frame_count_;
 
           // Reset the message block.
           this->mb_.reset ();
-
         } // end while
 
       // File reading is complete, destroy the stream.

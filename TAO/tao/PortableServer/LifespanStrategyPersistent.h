@@ -34,33 +34,30 @@ namespace TAO
     public:
       LifespanStrategyPersistent ();
 
-      virtual void strategy_init(TAO_Root_POA *poa);
+      void strategy_init(TAO_Root_POA *poa) override;
 
-      virtual void notify_startup (void);
+      void notify_startup () override;
 
-      virtual void notify_shutdown (void);
+      void notify_shutdown () override;
 
-      char key_type (void) const;
+      char key_type () const;
 
-      virtual CORBA::Boolean is_persistent (void) const;
+      CORBA::Boolean is_persistent () const override;
 
-      CORBA::ULong key_length (void) const;
+      CORBA::ULong key_length () const override;
 
-      virtual void create_key (CORBA::Octet *buffer, CORBA::ULong& starting_at);
+      void create_key (CORBA::Octet *buffer, CORBA::ULong& starting_at) override;
 
-      virtual bool
+      bool
       validate (CORBA::Boolean is_persistent,
-                const TAO::Portable_Server::Temporary_Creation_Time& creation_time) const;
+                const TAO::Portable_Server::Temporary_Creation_Time& creation_time) const override;
 
       /// Check the state of the POA.
-      virtual void check_state (void);
+      void check_state () override;
 
-      virtual ::PortableServer::LifespanPolicyValue type() const;
+      bool use_imr () const override;
 
-      virtual bool use_imr () const;
-
-      virtual CORBA::Object_ptr imr_key_to_object(const TAO::ObjectKey &key,
-                                                  const char *type_id) const;
+      CORBA::Object_ptr imr_key_to_object(const TAO::ObjectKey &key, const char *type_id) const override;
 
     private:
       bool use_imr_;

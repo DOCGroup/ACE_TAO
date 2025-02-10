@@ -42,7 +42,6 @@ typedef TAO_Priority_Mapping_Manager *TAO_Priority_Mapping_Manager_ptr;
 class TAO_RTCORBA_Export TAO_Priority_Mapping_Manager :
   public virtual ::CORBA::LocalObject
 {
-
 public:
   /// Constructor.
   TAO_Priority_Mapping_Manager (RTCORBA::PriorityMapping * mapping);
@@ -51,7 +50,7 @@ public:
   void mapping (RTCORBA::PriorityMapping * mapping);
 
   ///
-  RTCORBA::PriorityMapping *mapping (void);
+  RTCORBA::PriorityMapping *mapping ();
 
 public:
   typedef TAO_Priority_Mapping_Manager_ptr _ptr_type;
@@ -61,26 +60,23 @@ public:
   static TAO_Priority_Mapping_Manager_ptr _duplicate (TAO_Priority_Mapping_Manager_ptr obj);
   static TAO_Priority_Mapping_Manager_ptr _narrow (CORBA::Object_ptr obj);
 
-  static TAO_Priority_Mapping_Manager_ptr _nil (void)
+  static TAO_Priority_Mapping_Manager_ptr _nil ()
     {
-      return (TAO_Priority_Mapping_Manager_ptr)0;
+      return nullptr;
     }
 
-  virtual const char* _interface_repository_id (void) const;
+  virtual const char* _interface_repository_id () const;
 
 protected:
-
   /// Protected destructor to enforce proper memory management of this
   /// reference counted object.
-  ~TAO_Priority_Mapping_Manager (void);
+  ~TAO_Priority_Mapping_Manager ();
 
 private:
-
   TAO_Priority_Mapping_Manager (const TAO_Priority_Mapping_Manager &);
   void operator= (const TAO_Priority_Mapping_Manager &);
 
 private:
-
   TAO_Priority_Mapping *mapping_;
 };
 
@@ -88,37 +84,36 @@ class TAO_RTCORBA_Export TAO_Priority_Mapping_Manager_var
   : private TAO_Base_var
 {
 public:
-  TAO_Priority_Mapping_Manager_var (void); // default constructor
+  TAO_Priority_Mapping_Manager_var (); // default constructor
   TAO_Priority_Mapping_Manager_var (TAO_Priority_Mapping_Manager_ptr);
   TAO_Priority_Mapping_Manager_var (const TAO_Priority_Mapping_Manager_var &); // copy constructor
-  ~TAO_Priority_Mapping_Manager_var (void); // destructor
+  ~TAO_Priority_Mapping_Manager_var (); // destructor
 
   TAO_Priority_Mapping_Manager_var &operator= (TAO_Priority_Mapping_Manager_ptr);
   TAO_Priority_Mapping_Manager_var &operator= (const TAO_Priority_Mapping_Manager_var &);
-  TAO_Priority_Mapping_Manager_ptr operator-> (void) const;
+  TAO_Priority_Mapping_Manager_ptr operator-> () const;
 
   /// in, inout, out, _retn
   operator const TAO_Priority_Mapping_Manager_ptr &() const;
   operator TAO_Priority_Mapping_Manager_ptr &();
-  TAO_Priority_Mapping_Manager_ptr in (void) const;
-  TAO_Priority_Mapping_Manager_ptr &inout (void);
-  TAO_Priority_Mapping_Manager_ptr &out (void);
-  TAO_Priority_Mapping_Manager_ptr _retn (void);
-  TAO_Priority_Mapping_Manager_ptr ptr (void) const;
+  TAO_Priority_Mapping_Manager_ptr in () const;
+  TAO_Priority_Mapping_Manager_ptr &inout ();
+  TAO_Priority_Mapping_Manager_ptr &out ();
+  TAO_Priority_Mapping_Manager_ptr _retn ();
+  TAO_Priority_Mapping_Manager_ptr ptr () const;
 
   // Hooks used by template sequence and object manager classes
   // for non-defined forward declared interfaces.
   static TAO_Priority_Mapping_Manager_ptr duplicate (TAO_Priority_Mapping_Manager_ptr);
   static void release (TAO_Priority_Mapping_Manager_ptr);
-  static TAO_Priority_Mapping_Manager_ptr nil (void);
+  static TAO_Priority_Mapping_Manager_ptr nil ();
   static TAO_Priority_Mapping_Manager_ptr narrow (CORBA::Object * );
   static CORBA::Object * upcast (void *);
 
 private:
-  /// Unimplemented - prevents widening assignment.
   TAO_Priority_Mapping_Manager_ptr ptr_;
-  TAO_Priority_Mapping_Manager_var (const TAO_Base_var &rhs);
-  TAO_Priority_Mapping_Manager_var &operator= (const TAO_Base_var &rhs);
+  TAO_Priority_Mapping_Manager_var (const TAO_Base_var &rhs) = delete;
+  TAO_Priority_Mapping_Manager_var &operator= (const TAO_Base_var &rhs) = delete;
 };
 
 class TAO_RTCORBA_Export TAO_Priority_Mapping_Manager_out
@@ -131,8 +126,8 @@ public:
   TAO_Priority_Mapping_Manager_out &operator= (const TAO_Priority_Mapping_Manager_var &);
   TAO_Priority_Mapping_Manager_out &operator= (TAO_Priority_Mapping_Manager_ptr);
   operator TAO_Priority_Mapping_Manager_ptr &();
-  TAO_Priority_Mapping_Manager_ptr &ptr (void);
-  TAO_Priority_Mapping_Manager_ptr operator-> (void);
+  TAO_Priority_Mapping_Manager_ptr &ptr ();
+  TAO_Priority_Mapping_Manager_ptr operator-> ();
 
 private:
   TAO_Priority_Mapping_Manager_ptr &ptr_;

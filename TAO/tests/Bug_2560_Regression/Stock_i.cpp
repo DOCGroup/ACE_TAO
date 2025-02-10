@@ -38,14 +38,14 @@ Quoter_Stock_i::history ()
 
   // delay a little bit so we have chance to kill client
   // before this method returns
-  ACE_OS::sleep(5) ;
+  ACE_OS::sleep(5);
 
   const unsigned hsize = 200000 ;
-  hist->length(hsize) ;
-  for ( unsigned int i = 0 ; i < hsize ; ++ i ) {
-    hist[i] = double(i+1) ;
+  hist->length(hsize);
+  for (unsigned int i = 0 ; i < hsize ; ++ i) {
+    hist[i] = double(i+1);
   }
 
   ACE_DEBUG ((LM_DEBUG, "Returning method in server\n"));
-  return hist._retn() ;
+  return hist._retn();
 }

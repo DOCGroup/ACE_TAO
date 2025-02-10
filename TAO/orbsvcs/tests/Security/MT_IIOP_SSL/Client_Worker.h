@@ -30,17 +30,16 @@
  */
 class Client_Worker : public ACE_Task_Base
 {
-
 public:
   /// ctor
   Client_Worker (Simple_Server_ptr server, int niterations);
 
   /// thread entry point
-  virtual int svc (void);
+  virtual int svc ();
 
 private:
   /// Validate the connection
-  void validate_connection (void);
+  void validate_connection ();
 
 private:
   /// The server.

@@ -31,7 +31,6 @@ namespace
                           TAO::Invocation_Retry_Params &client_factory_params,
                           TAO::Invocation_Retry_Params &result)
   {
-
   // Retry delay
   if (command_line_params.init_retry_delay_ !=
       result.init_retry_delay_)
@@ -51,7 +50,6 @@ namespace
       client_factory_params.forward_on_reply_closed_limit_;
 
   // Forward on exception limits
-
   retry_limit_calc (TAO::FOE_OBJECT_NOT_EXIST,
                     command_line_params,
                     client_factory_params,
@@ -71,9 +69,7 @@ namespace
                     command_line_params,
                     client_factory_params,
                     result);
-
   }
-
 }
 
 TAO::Invocation_Retry_State::Invocation_Retry_State (TAO_Stub &stub)
@@ -174,6 +170,5 @@ TAO::Invocation_Retry_State::sleep () const
 {
   ACE_OS::sleep (this->retry_params_.init_retry_delay_);
 }
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL

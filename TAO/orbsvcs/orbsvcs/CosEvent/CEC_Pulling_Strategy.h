@@ -39,18 +39,18 @@ class TAO_Event_Serv_Export TAO_CEC_Pulling_Strategy
 {
 public:
   /// destructor...
-  virtual ~TAO_CEC_Pulling_Strategy (void);
+  virtual ~TAO_CEC_Pulling_Strategy ();
 
   /// Initialize all the data structures, activate any internal threads,
   /// etc.
-  virtual void activate (void) = 0;
+  virtual void activate () = 0;
 
   /**
    * Deactivate any internal threads and cleanup internal data
    * structures, it should only return once the threads have finished
    * their jobs.
    */
-  virtual void shutdown (void) = 0;
+  virtual void shutdown () = 0;
 
 #if 0
   /// Some strategies may want to keep track of connected consumers.

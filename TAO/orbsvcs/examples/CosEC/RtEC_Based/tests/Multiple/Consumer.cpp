@@ -50,7 +50,7 @@ Consumer::open (CosEventChannelAdmin::EventChannel_ptr event_channel)
 }
 
 void
-Consumer::close (void)
+Consumer::close ()
 {
   this->disconnect ();
 
@@ -59,7 +59,7 @@ Consumer::close (void)
 }
 
 void
-Consumer::connect (void)
+Consumer::connect ()
 {
   if (CORBA::is_nil (this->consumer_admin_.in ()))
     return;
@@ -74,7 +74,7 @@ Consumer::connect (void)
 }
 
 void
-Consumer::disconnect (void)
+Consumer::disconnect ()
 {
   if (CORBA::is_nil (this->supplier_proxy_.in ())
       || CORBA::is_nil (this->consumer_admin_.in ()))
@@ -113,7 +113,7 @@ Consumer::push (const CORBA::Any &)
 }
 
 void
-Consumer::disconnect_push_consumer (void)
+Consumer::disconnect_push_consumer ()
 {
   // Deactivate this object.
 
@@ -127,7 +127,7 @@ Consumer::disconnect_push_consumer (void)
 }
 
 int
-Consumer::init_Consumer (void)
+Consumer::init_Consumer ()
 {
   try
    {
@@ -137,7 +137,7 @@ Consumer::init_Consumer (void)
     }
   catch (const CORBA::Exception& ex)
     {
-      ex._tao_print_exception ("Exception in Consumer::connect (void)\n");
+      ex._tao_print_exception ("Exception in Consumer::connect ()\n");
       return -1;
     }
 

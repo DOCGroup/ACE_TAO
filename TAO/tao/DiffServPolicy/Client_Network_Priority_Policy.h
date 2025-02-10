@@ -45,7 +45,7 @@ class TAO_DiffServPolicy_Export TAO_Client_Network_Priority_Policy
 {
 public:
   /// Constructor.
-  TAO_Client_Network_Priority_Policy (void);
+  TAO_Client_Network_Priority_Policy ();
 
   /// Constructor.
   TAO_Client_Network_Priority_Policy (
@@ -58,33 +58,33 @@ public:
      const TAO_Client_Network_Priority_Policy &rhs);
 
   /// Returns a copy of <this>.
-  TAO_Client_Network_Priority_Policy *clone (void) const;
+  TAO_Client_Network_Priority_Policy *clone () const;
 
-  TAO::DiffservCodepoint request_diffserv_codepoint (void);
+  TAO::DiffservCodepoint request_diffserv_codepoint ();
 
   void request_diffserv_codepoint (TAO::DiffservCodepoint req_dscp);
 
-  TAO::DiffservCodepoint reply_diffserv_codepoint (void);
+  TAO::DiffservCodepoint reply_diffserv_codepoint ();
 
   void reply_diffserv_codepoint (TAO::DiffservCodepoint reply_dscp);
 
-  TAO::NetworkPriorityModel network_priority_model (void);
+  TAO::NetworkPriorityModel network_priority_model ();
 
   void network_priority_model (TAO::NetworkPriorityModel npm);
 
   static CORBA::Policy_ptr create (const CORBA::Any &val);
 
-  CORBA::PolicyType policy_type (void);
+  CORBA::PolicyType policy_type ();
 
-  CORBA::Policy_ptr copy (void);
+  CORBA::Policy_ptr copy ();
 
-  void destroy (void);
+  void destroy ();
 
   // Return the cached policy type for this policy.
-  TAO_Cached_Policy_Type _tao_cached_type (void) const;
+  TAO_Cached_Policy_Type _tao_cached_type () const;
 
   // Returns the scope at which this policy can be applied. See orbconf.h.
-  TAO_Policy_Scope _tao_scope (void) const;
+  TAO_Policy_Scope _tao_scope () const;
 
 private:
   /// The attribute

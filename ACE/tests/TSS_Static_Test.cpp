@@ -20,17 +20,16 @@
 #include "ace/Thread.h"
 
 
-
 #if defined (ACE_HAS_TSS_EMULATION)
 
 class Some_Object
 {
 public:
-  Some_Object (void);
-  ~Some_Object (void);
+  Some_Object ();
+  ~Some_Object ();
 };
 
-Some_Object::Some_Object (void)
+Some_Object::Some_Object ()
 {
   ACE::init ();
 
@@ -46,7 +45,7 @@ Some_Object::Some_Object (void)
 }
 
 
-Some_Object::~Some_Object (void)
+Some_Object::~Some_Object ()
 {
   ACE::fini ();
 }

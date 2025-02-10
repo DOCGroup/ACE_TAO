@@ -12,7 +12,7 @@ UIPMC_Object_Impl::UIPMC_Object_Impl (CORBA::ULong payload,
 {
 }
 
-UIPMC_Object_Impl::~UIPMC_Object_Impl (void)
+UIPMC_Object_Impl::~UIPMC_Object_Impl ()
 {
   if (this->received_.current_size () == 0)
     {
@@ -100,17 +100,17 @@ Hello_Impl::Hello_Impl (CORBA::ORB_ptr orb,
 }
 
 Test::UIPMC_Object_ptr
-Hello_Impl::get_object (void)
+Hello_Impl::get_object ()
 {
   return Test::UIPMC_Object::_duplicate (this->obj_.in ());
 }
 
 void
-Hello_Impl::shutdown (void)
+Hello_Impl::shutdown ()
 {
   try
     {
-      this->orb_->shutdown (0);
+      this->orb_->shutdown (false);
     }
   catch (const CORBA::Exception& ex)
     {

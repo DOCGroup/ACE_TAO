@@ -54,8 +54,8 @@ class TAO_Codeset_Export TAO_Codeset_Translator_Factory :
   public ACE_Service_Object
 {
 public:
-  TAO_Codeset_Translator_Factory ();
-  virtual ~TAO_Codeset_Translator_Factory ();
+  TAO_Codeset_Translator_Factory () = default;
+  virtual ~TAO_Codeset_Translator_Factory () = default;
   virtual int init (int argc, ACE_TCHAR *argv[]);
 
 protected:
@@ -63,22 +63,22 @@ protected:
   /// will have a translator that is based on either the Char or Wchar
   /// translator, so the compiler will select the appropriate call from
   /// assign().
-  void assign_i (TAO_InputCDR *, ACE_Char_Codeset_Translator* ) const;
+  void assign_i (TAO_InputCDR *, ACE_Char_Codeset_Translator*) const;
   /// Assign the translator to the supplied input CDR. The template instance
   /// will have a translator that is based on either the Char or Wchar
   /// translator, so the compiler will select the appropriate call from
   /// assign().
-  void assign_i (TAO_InputCDR *, ACE_WChar_Codeset_Translator* ) const;
+  void assign_i (TAO_InputCDR *, ACE_WChar_Codeset_Translator*) const;
   /// Assign the translator to the supplied output CDR. The template instance
   /// will have a translator that is based on either the Char or Wchar
   /// translator, so the compiler will select the appropriate call from
   /// assign().
-  void assign_i (TAO_OutputCDR *, ACE_Char_Codeset_Translator* ) const;
+  void assign_i (TAO_OutputCDR *, ACE_Char_Codeset_Translator*) const;
   /// Assign the translator to the supplied output CDR. The template instance
   /// will have a translator that is based on either the Char or Wchar
   /// translator, so the compiler will select the appropriate call from
   /// assign().
-  void assign_i (TAO_OutputCDR *, ACE_WChar_Codeset_Translator* ) const;
+  void assign_i (TAO_OutputCDR *, ACE_WChar_Codeset_Translator*) const;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

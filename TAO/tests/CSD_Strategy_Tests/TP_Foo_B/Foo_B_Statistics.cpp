@@ -19,12 +19,6 @@ Foo_B_Statistics::Foo_B_Statistics(unsigned num_remote_clients,
     }
 }
 
-
-Foo_B_Statistics::~Foo_B_Statistics()
-{
-}
-
-
 void
 Foo_B_Statistics::expected(unsigned op_num, unsigned count, In_Value_Type type)
 {

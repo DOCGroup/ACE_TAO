@@ -144,11 +144,10 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       orb->run (tv);
 
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
-      orb->shutdown (1);
+      orb->shutdown (true);
 
      // flow_spec.length (0);
      // stream_control->stop (flow_spec);
-
     }
   catch (const CORBA::Exception& ex)
     {

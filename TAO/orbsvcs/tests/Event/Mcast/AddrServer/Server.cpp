@@ -70,7 +70,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_ERROR ((LM_ERROR,
                   "Caught CORBA::Exception\n%C (%C)\n",
                   exc._name (),
-                  exc._rep_id ()) );
+                  exc._rep_id ()));
     }
 #else
   ACE_UNUSED_ARG (argc);

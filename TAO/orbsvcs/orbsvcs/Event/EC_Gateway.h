@@ -44,18 +44,18 @@ class TAO_RTEvent_Serv_Export TAO_EC_Gateway
 {
 public:
   /// Default constructor.
-  TAO_EC_Gateway (void);
+  TAO_EC_Gateway ();
 
   /// Destructor
-  virtual ~TAO_EC_Gateway (void);
+  virtual ~TAO_EC_Gateway ();
 
   /// The gateway must disconnect from all the relevant event channels,
   /// or any other communication media (such as multicast groups).
-  virtual void close (void) = 0;
+  virtual void close () = 0;
 
   /// Obtain and modify the observer handle.
   void observer_handle (RtecEventChannelAdmin::Observer_Handle h);
-  RtecEventChannelAdmin::Observer_Handle observer_handle (void) const;
+  RtecEventChannelAdmin::Observer_Handle observer_handle () const;
 
 private:
   RtecEventChannelAdmin::Observer_Handle handle_;

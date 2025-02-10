@@ -7,12 +7,11 @@
 #include "tao/BiDir_GIOP/BiDirGIOP.h"
 
 const ACE_TCHAR *ior_output_file = 0;
-int iterations = 10;
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("o:i:"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("o:"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -21,13 +20,9 @@ parse_args (int argc, ACE_TCHAR *argv[])
       case 'o':
         ior_output_file = get_opts.opt_arg ();
         break;
-      case 'i':
-        iterations = ACE_OS::atoi (get_opts.opt_arg ());
-        break;
       case '?':
       default:
-        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("usage: %s -o <iorfile>")
-                           ACE_TEXT ("-i <iterations>\n"), argv [0]),
+        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("usage: %s -o <iorfile>\n"), argv [0]),
                           -1);
       }
   // Indicates successful parsing of the command line
@@ -89,7 +84,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (parse_args (argc, argv) != 0)
         return 1;
 
-      Simple_Server_i server_impl (orb.in (), iterations);
+      Simple_Server_i server_impl (orb.in ());
 
       PortableServer::ObjectId_var id =
         PortableServer::string_to_ObjectId ("simple_server");
@@ -119,7 +114,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       ACE_Thread_Manager::instance ()->wait ();
 
-      root_poa->destroy (1, 1);
+      root_poa->destroy (true, true);
     }
   catch (const CORBA::Exception &excep)
     {

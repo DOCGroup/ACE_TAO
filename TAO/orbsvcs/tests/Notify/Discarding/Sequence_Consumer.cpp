@@ -157,7 +157,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     ACE_DEBUG((LM_DEBUG, "Consumer waiting for events...\n"));
 
-    client.ORB_run( );
+    client.ORB_run();
 
     ACE_DEBUG((LM_DEBUG, "Consumer done.\n"));
     consumer_1->disconnect();

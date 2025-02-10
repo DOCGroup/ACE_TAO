@@ -220,7 +220,7 @@ sub shutdown_server
     }
     # Shutting down any server object within the server will shutdown the whole server
     $TI->Arguments ($ti_cmd_base .
-                    "shutdown TestObject_a" );
+                    "shutdown TestObject_a");
     $TI_status = $TI->SpawnWaitKill ($ti->ProcessStartWaitInterval());
     if ($TI_status != 0  && $TI_status != 5) {
         print STDERR "ERROR: tao_imr shutdown returned $TI_status\n";
@@ -237,7 +237,7 @@ sub manual_start_server
     }
     # Shutting down any server object within the server will shutdown the whole server
     $TI->Arguments ($ti_cmd_base .
-                    "start TestObject_a" );
+                    "start TestObject_a");
     $TI_status = $TI->SpawnWaitKill ($ti->ProcessStartWaitInterval());
     if ($TI_status != 0) {
         print STDERR "ERROR: tao_imr start returned $TI_status\n";

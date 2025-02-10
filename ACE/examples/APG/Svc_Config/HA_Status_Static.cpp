@@ -81,7 +81,7 @@ HA_Status::init (int argc, ACE_TCHAR *argv[])
 
 // Listing 2 code/ch19
 int
-HA_Status::fini (void)
+HA_Status::fini ()
 {
   this->acceptor_.close ();
   return 0;

@@ -140,7 +140,7 @@ public:
   int preserve_designators (ACE_CHAR_T start, ACE_CHAR_T stop, int strip=1);
 
   /// Returns the next token.
-  ACE_CHAR_T *next (void);
+  ACE_CHAR_T *next ();
 
   enum {
     MAX_DELIMITERS=16,
@@ -226,13 +226,7 @@ typedef ACE_Tokenizer_T <ACE_TCHAR> ACE_Tokenizer;
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Tokenizer_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Tokenizer_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 

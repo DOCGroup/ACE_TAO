@@ -17,7 +17,7 @@ public:
   Server_Task (Test::Echo_ptr echo);
 
   /// Thread entry point
-  int svc (void);
+  int svc ();
 
 private:
   /// Reference to the test interface

@@ -1,6 +1,6 @@
 #include "Messenger_i.h"
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 #include "tao/IORTable/IORTable.h"
 

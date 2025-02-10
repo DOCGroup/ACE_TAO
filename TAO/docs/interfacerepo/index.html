@@ -132,8 +132,7 @@ ACE_wrappers/TAO/orbsvcs/tests/InterfaceRepo/IFR_Test.</li><p>
 
 <li> Code to support multicast discovery of the Interface Repository
 IOR has been added to TAO. Testing has been done using loopback on NT,
-loopback on Solaris, and remotely between these two platforms in both
-directions.</li><p>
+and remotely between these two platforms in both directions.</li><p>
 
 <li> Read/write locking option added to IFR service. This option should be
 used if the IFR service is started using a service config file that
@@ -155,7 +154,7 @@ directory under TAO/tao, taking its place alongside the other satellite librarie
 that have been created recently.</li><p>
 
 <li> IFR has been made compliant with the CORBA 2.4 version of Interface.idl.
-Two new IFR object classes have been added, AbstractInterfaceDef and 
+Two new IFR object classes have been added, AbstractInterfaceDef and
 LocalInterfaceDef. Some data structures have changed, as well as the signature
 of some operations.</li><p>
 
@@ -166,7 +165,7 @@ be built and linked if an application does not intend to call those functions. I
 it does, however, the application should have
 #include "tao/TypeCodeFactory_Adapter_Impl.h" or something similar in it somewhere,
 and also link to the TAO_TypeCodeFactory library. This will automatically load the
-library if it has been compiled. Please see the example in 
+library if it has been compiled. Please see the example in
 ACE_ROOT/TAO/examples/TypeCode_Creation.</li><p>
 
 <li> The CORBA::Object::_get_interface() method has been implemented. This method will
@@ -204,7 +203,7 @@ tao_ifr -ORBInitRef InterfaceRepository=corbaloc:iiop:[hostname]:[port]/Interfac
      associated POAs are created at IFR startup and destroyed at shutdown).
      </li><p>
 
-<li> IFR now supports valuetypes, components, homes and eventtypes. A test 
+<li> IFR now supports valuetypes, components, homes and eventtypes. A test
      for this support has been added in TAO/orbsvcs/tests/InterfaceRepo/IDL3_Test.
      </li><p>
 

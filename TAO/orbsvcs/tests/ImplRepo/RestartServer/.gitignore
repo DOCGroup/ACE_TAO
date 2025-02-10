@@ -1,2 +1,7 @@
 /MessengerClient
 /MessengerServer
+MessengerC.cpp
+MessengerC.h
+MessengerC.inl
+MessengerS.cpp
+MessengerS.h

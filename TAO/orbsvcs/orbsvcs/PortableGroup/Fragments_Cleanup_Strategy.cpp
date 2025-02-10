@@ -1,8 +1,7 @@
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/PortableGroup/Fragments_Cleanup_Strategy.h"
 #include "orbsvcs/PortableGroup/UIPMC_Transport_Recv_Packet.h"
-
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 #if !defined (__ACE_INLINE__)
 # include "orbsvcs/PortableGroup/Fragments_Cleanup_Strategy.inl"
@@ -69,15 +68,9 @@ namespace
 
 namespace TAO_PG
 {
-
-  Fragments_Cleanup_Strategy::~Fragments_Cleanup_Strategy (void)
-  {
-  }
-
   void
   Time_Bound_Fragments_Cleanup_Strategy::cleanup (
-    TAO_UIPMC_Mcast_Transport::Packets_Map &packets
-  )
+    TAO_UIPMC_Mcast_Transport::Packets_Map &packets)
   {
      // bound_ is in milliseconds.
      ACE_Time_Value const delay (0, 1000 * this->bound_);
@@ -108,15 +101,14 @@ namespace TAO_PG
                         (*cur_iter).key ()));
           }
 
-        ACE_Auto_Ptr<TAO_PG::UIPMC_Recv_Packet> guard ((*cur_iter).item ());
+        std::unique_ptr<TAO_PG::UIPMC_Recv_Packet> guard ((*cur_iter).item ());
         packets.unbind (cur_iter);
       }
   }
 
   void
   Number_Bound_Fragments_Cleanup_Strategy::cleanup (
-    TAO_UIPMC_Mcast_Transport::Packets_Map &packets
-  )
+    TAO_UIPMC_Mcast_Transport::Packets_Map &packets)
   {
     int const current_size = static_cast<int> (packets.current_size ());
 
@@ -126,7 +118,7 @@ namespace TAO_PG
 
     DESCRIPTOR_SET sorted_set;
     ACE_NEW (sorted_set, HASH_MAP_ENTRY*[current_size]);
-    ACE_Auto_Array_Ptr<HASH_MAP_ENTRY*> owner (sorted_set);
+    std::unique_ptr<HASH_MAP_ENTRY*[]> owner (sorted_set);
 
     HASH_MAP_ITER iter = packets.begin ();
 
@@ -159,15 +151,14 @@ namespace TAO_PG
                         sorted_set[i]->key ()));
           }
 
-        ACE_Auto_Ptr<TAO_PG::UIPMC_Recv_Packet> guard (sorted_set[i]->item ());
+        std::unique_ptr<TAO_PG::UIPMC_Recv_Packet> guard (sorted_set[i]->item ());
         packets.unbind (sorted_set[i]);
       }
   }
 
   void
   Memory_Bound_Fragments_Cleanup_Strategy::cleanup (
-    TAO_UIPMC_Mcast_Transport::Packets_Map &packets
-  )
+    TAO_UIPMC_Mcast_Transport::Packets_Map &packets)
   {
     // First we need to calculate the size of packets. Since we anyway run
     // this loop we can also cleanup broken packets.
@@ -190,7 +181,7 @@ namespace TAO_PG
                           (*cur_iter).item ()->data_length (),
                           (*cur_iter).key ()));
 
-            ACE_Auto_Ptr<TAO_PG::UIPMC_Recv_Packet> guard ((*cur_iter).item ());
+            std::unique_ptr<TAO_PG::UIPMC_Recv_Packet> guard ((*cur_iter).item ());
             packets.unbind (cur_iter);
           }
         else
@@ -205,7 +196,7 @@ namespace TAO_PG
 
     DESCRIPTOR_SET sorted_set;
     ACE_NEW (sorted_set, HASH_MAP_ENTRY*[current_size]);
-    ACE_Auto_Array_Ptr<HASH_MAP_ENTRY*> owner (sorted_set);
+    std::unique_ptr<HASH_MAP_ENTRY*[]> owner (sorted_set);
 
     iter = packets.begin ();
 
@@ -231,7 +222,7 @@ namespace TAO_PG
                       sorted_set[i]->key ()));
 
         size -= sorted_set[i]->item ()->data_length ();
-        ACE_Auto_Ptr<TAO_PG::UIPMC_Recv_Packet> guard (sorted_set[i]->item ());
+        std::unique_ptr<TAO_PG::UIPMC_Recv_Packet> guard (sorted_set[i]->item ());
         packets.unbind (sorted_set[i]);
       }
   }

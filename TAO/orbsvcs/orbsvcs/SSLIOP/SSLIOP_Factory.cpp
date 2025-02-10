@@ -230,7 +230,7 @@ TAO::SSLIOP::Protocol_Factory::pem_passwd_cb (char *buf, int size, int , void *t
   return len;
 }
 
-TAO::SSLIOP::Protocol_Factory::Protocol_Factory (void)
+TAO::SSLIOP::Protocol_Factory::Protocol_Factory ()
   :  TAO_Protocol_Factory (IOP::TAG_INTERNET_IOP),
      qop_ (::Security::SecQOPIntegrityAndConfidentiality),
      timeout_ (TAO::SSLIOP::ACCEPT_TIMEOUT),
@@ -238,7 +238,7 @@ TAO::SSLIOP::Protocol_Factory::Protocol_Factory (void)
 {
 }
 
-TAO::SSLIOP::Protocol_Factory::~Protocol_Factory (void)
+TAO::SSLIOP::Protocol_Factory::~Protocol_Factory ()
 {
 }
 
@@ -251,7 +251,7 @@ TAO::SSLIOP::Protocol_Factory::match_prefix (const ACE_CString &prefix)
 }
 
 const char *
-TAO::SSLIOP::Protocol_Factory::prefix (void) const
+TAO::SSLIOP::Protocol_Factory::prefix () const
 {
    // Note: This method doesn't seem to be used anywhere. Moreover,
    // keeping it may make things more confusing - a Factory can
@@ -261,13 +261,13 @@ TAO::SSLIOP::Protocol_Factory::prefix (void) const
 }
 
 char
-TAO::SSLIOP::Protocol_Factory::options_delimiter (void) const
+TAO::SSLIOP::Protocol_Factory::options_delimiter () const
 {
   return '/';
 }
 
 TAO_Acceptor *
-TAO::SSLIOP::Protocol_Factory::make_acceptor (void)
+TAO::SSLIOP::Protocol_Factory::make_acceptor ()
 {
   TAO_Acceptor *acceptor = 0;
 
@@ -336,7 +336,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
       ? SSL_MAX_SSL_SESSION_ID_LENGTH
       : sizeof session_id_context_;
 
-  // Note that this function returns 1, if the operation succeded.
+  // Note that this function returns 1, if the operation succeeded.
   // See SSL_CTX_set_session_id_context(3)
   if( 1 != ::SSL_CTX_set_session_id_context (ssl_ctx->context(),
                                              session_id_context_,
@@ -658,7 +658,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
               // a dh parameter file and we were unable to actually find it
               // and load from it.
               ORBSVCS_ERROR ((LM_ERROR,
-                              ACE_TEXT ("(%P|%t) - SSLIOP_Factory: ")
+                              ACE_TEXT ("TAO (%P|%t) - SSLIOP_Factory: ")
                               ACE_TEXT ("unable to set ")
                               ACE_TEXT ("DH parameters <%C>\n"),
                               dhparams_path.in () ));
@@ -668,7 +668,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
             {
               if (TAO_debug_level > 0)
                 ORBSVCS_DEBUG ((LM_INFO,
-                                ACE_TEXT ("(%P|%t) - SSLIOP_Factory: ")
+                                ACE_TEXT ("TAO (%P|%t) - SSLIOP_Factory: ")
                                 ACE_TEXT ("No DH parameters found in ")
                                 ACE_TEXT ("certificate <%C>; either none ")
                                 ACE_TEXT ("are needed (RSA) or problems ")
@@ -680,7 +680,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
         {
           if (TAO_debug_level > 0)
             ORBSVCS_DEBUG ((LM_INFO,
-                            ACE_TEXT ("(%P|%t) - SSLIOP loaded ")
+                            ACE_TEXT ("TAO (%P|%t) - SSLIOP loaded ")
                             ACE_TEXT ("Diffie-Hellman params ")
                             ACE_TEXT ("from %C\n"),
                             dhparams_path.in ()));
@@ -693,8 +693,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
   // in the underlying SSL_CTX.
   if (certificate_path.in() != 0)
     {
-      if (ssl_ctx->certificate (certificate_path.in(),
-                                certificate_type) != 0)
+      if (ssl_ctx->certificate (certificate_path.in(), certificate_type) != 0)
         {
           ORBSVCS_ERROR ((LM_ERROR,
                           ACE_TEXT ("TAO (%P|%t) - Unable to set ")
@@ -719,7 +718,6 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
     {
       if (ssl_ctx->private_key (private_key_path.in(), private_key_type) != 0)
         {
-
           ORBSVCS_ERROR ((LM_ERROR,
                           ACE_TEXT ("TAO (%P|%t) - Unable to set ")
                           ACE_TEXT ("SSL private key ")
@@ -797,7 +795,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
 }
 
 int
-TAO::SSLIOP::Protocol_Factory::register_orb_initializer (void)
+TAO::SSLIOP::Protocol_Factory::register_orb_initializer ()
 {
   try
     {
@@ -853,7 +851,7 @@ TAO::SSLIOP::Protocol_Factory::register_orb_initializer (void)
 
 
 TAO_Connector *
-TAO::SSLIOP::Protocol_Factory::make_connector (void)
+TAO::SSLIOP::Protocol_Factory::make_connector ()
 {
   TAO::SSLIOP::Connector *connector = 0;
 
@@ -864,7 +862,7 @@ TAO::SSLIOP::Protocol_Factory::make_connector (void)
 }
 
 int
-TAO::SSLIOP::Protocol_Factory::requires_explicit_endpoint (void) const
+TAO::SSLIOP::Protocol_Factory::requires_explicit_endpoint () const
 {
   return 0;
 }

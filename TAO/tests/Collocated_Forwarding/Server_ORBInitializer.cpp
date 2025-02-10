@@ -38,7 +38,7 @@ Server_ORBInitializer::post_init (
 }
 
 PortableInterceptor::ServerRequestInterceptor_ptr
-Server_ORBInitializer::server_interceptor (void)
+Server_ORBInitializer::server_interceptor ()
 {
   return
     PortableInterceptor::ServerRequestInterceptor::_duplicate (

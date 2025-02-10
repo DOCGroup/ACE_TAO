@@ -14,18 +14,18 @@ TAO_EnumDef_i::TAO_EnumDef_i (TAO_Repository_i *repo)
 {
 }
 
-TAO_EnumDef_i::~TAO_EnumDef_i (void)
+TAO_EnumDef_i::~TAO_EnumDef_i ()
 {
 }
 
 CORBA::DefinitionKind
-TAO_EnumDef_i::def_kind (void)
+TAO_EnumDef_i::def_kind ()
 {
   return CORBA::dk_Enum;
 }
 
 CORBA::TypeCode_ptr
-TAO_EnumDef_i::type (void)
+TAO_EnumDef_i::type ()
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::TypeCode::_nil ());
 
@@ -35,7 +35,7 @@ TAO_EnumDef_i::type (void)
 }
 
 CORBA::TypeCode_ptr
-TAO_EnumDef_i::type_i (void)
+TAO_EnumDef_i::type_i ()
 {
   ACE_TString id;
   this->repo_->config ()->get_string_value (this->section_key_,
@@ -55,7 +55,7 @@ TAO_EnumDef_i::type_i (void)
 }
 
 CORBA::EnumMemberSeq *
-TAO_EnumDef_i::members (void)
+TAO_EnumDef_i::members ()
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
@@ -65,7 +65,7 @@ TAO_EnumDef_i::members (void)
 }
 
 CORBA::EnumMemberSeq *
-TAO_EnumDef_i::members_i (void)
+TAO_EnumDef_i::members_i ()
 {
   u_int count = 0;
   this->repo_->config ()->get_integer_value (this->section_key_,

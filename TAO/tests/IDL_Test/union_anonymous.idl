@@ -1,0 +1,68 @@
+//=============================================================================
+/**
+ *  @file    union_anonymous.idl
+ *
+ *  This file contains examples of IDL code that has
+ *  caused problems in the past for the TAO IDL
+ *  compiler. This test is to make sure the problems
+ *  stay fixed.
+ *
+ *
+ *  @author Jeff Parsons <parsons@cs.wustl.edu> and TAO users.
+ */
+//=============================================================================
+
+// Tricky case of lookup for a recursive union. When defined
+// inside another datatype like this, the union is referenced
+// inside itself before the closing brace is seen, but not
+// declared yet.
+struct Element
+{
+  union ValueUnion switch (short)
+  {
+    case 0:
+      long lvalue;
+    case 1:
+      sequence<ValueUnion> VUValue;
+  } Value;
+};
+
+// Test for various kinds of declarations inside a union,
+// similar to the example in enum_in_struct.idl.
+typedef long NamedLongArray[10];
+
+union decl_heavy_union switch (short)
+{
+  case 1:
+    enum which
+    {
+      ZERO,
+      ONE,
+      TWO
+    } m_which;
+  case 2:
+    enum en
+    {
+      a,
+      b,
+      c
+    } m_en_arr[10];
+  case 3:
+    struct st
+    {
+      long a;
+      char b;
+    } m_st_arr[10];
+  case 4:
+    union un switch (long)
+    {
+      case 1: long a;
+      case 2: char b;
+    } m_un_arr[10];
+  // The following caused compile problems once
+  // when generating ostream ops
+  case 5:
+    NamedLongArray m_named_long_array;
+  case 6:
+    long m_anon_long_array[10];
+};

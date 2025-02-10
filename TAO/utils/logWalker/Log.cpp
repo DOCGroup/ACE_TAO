@@ -22,7 +22,7 @@ Log::Log (Session &session)
 {
 }
 
-Log::~Log (void)
+Log::~Log ()
 {
 }
 
@@ -151,7 +151,7 @@ Log::get_preamble ()
             if (this->procs_.get(first) == 0)
               first->proc_name(a2);
           }
-          //fallthru
+          ACE_FALLTHROUGH;
         default:
           {
             char ext[10];
@@ -213,7 +213,7 @@ Log::handle_msg_octets ()
 }
 
 void
-Log::parse_HEXDUMP_i (void)
+Log::parse_HEXDUMP_i ()
 {
   char *pos = ACE_OS::strstr (this->line_,"HEXDUMP");
   pos += 8;
@@ -232,7 +232,7 @@ Log::parse_HEXDUMP_i (void)
 }
 
 void
-Log::parse_dump_giop_msg_i (void)
+Log::parse_dump_giop_msg_i ()
 {
   int sending = ACE_OS::strstr (this->info_,"send") != 0 ? 0 : 1;
   int type =  ACE_OS::strstr (this->info_,"Request") != 0 ? 0 : 1;
@@ -342,7 +342,7 @@ Log::parse_dump_giop_msg_i (void)
 }
 
 void
-Log::parse_open_listener_i (void)
+Log::parse_open_listener_i ()
 {
   char *addr = ACE_OS::strchr(this->info_,'<') +1;
   char *c = ACE_OS::strchr(addr,'>');
@@ -352,7 +352,7 @@ Log::parse_open_listener_i (void)
 }
 
 void
-Log::parse_got_existing_i (void)
+Log::parse_got_existing_i ()
 {
   char *hpos = ACE_OS::strchr(this->info_,'[');
   long handle = ACE_OS::strtol(hpos+1,0,10);
@@ -370,7 +370,7 @@ Log::parse_got_existing_i (void)
 }
 
 void
-Log::parse_muxed_tms_i (void)
+Log::parse_muxed_tms_i ()
 {
   char *hpos = ACE_OS::strchr(this->info_,'[');
   long handle = ACE_OS::strtol(hpos+1,0,10);
@@ -395,7 +395,7 @@ Log::parse_muxed_tms_i (void)
 }
 
 void
-Log::parse_exclusive_tms_i (void)
+Log::parse_exclusive_tms_i ()
 {
   long handle = this->thr_->active_handle();
   PeerProcess *pp = this->hostproc_->find_peer(handle);
@@ -418,7 +418,7 @@ Log::parse_exclusive_tms_i (void)
 }
 
 void
-Log::parse_process_parsed_msgs_i (void)
+Log::parse_process_parsed_msgs_i ()
 {
   char *hpos = ACE_OS::strchr(this->info_, '[');
   long handle = ACE_OS::strtol(hpos+1, 0, 10);
@@ -442,7 +442,7 @@ Log::parse_process_parsed_msgs_i (void)
 }
 
 void
-Log::parse_wait_for_event_i (void)
+Log::parse_wait_for_event_i ()
 {
 //   char *pos = ACE_OS::strchr (this->info_,'[');
 //   long rid = ACE_OS::strtol(pos+1, 0, 10);
@@ -460,14 +460,14 @@ Log::parse_wait_for_event_i (void)
 }
 
 void
-Log::parse_wait_on_read_i (void)
+Log::parse_wait_on_read_i ()
 {
   PeerProcess *pp = this->thr_->incoming();
   this->thr_->exit_wait (pp, this->offset_);
 }
 
 void
-Log::parse_make_idle_i (void)
+Log::parse_make_idle_i ()
 {
   char *hpos = ACE_OS::strchr(this->info_,'[');
   long handle = ACE_OS::strtol(hpos+1,0,10);
@@ -484,7 +484,7 @@ Log::parse_make_idle_i (void)
 }
 
 void
-Log::parse_cleanup_queue_i (void)
+Log::parse_cleanup_queue_i ()
 {
   char *hpos = ACE_OS::strchr(this->info_,'[');
   long handle = ACE_OS::strtol(hpos+1,0,10);
@@ -555,7 +555,7 @@ Log::parse_cleanup_queue_i (void)
 }
 
 void
-Log::parse_complete_connection_i (void)
+Log::parse_complete_connection_i ()
 {
   if (ACE_OS::strstr (this->info_, "failed") == 0)
     return;
@@ -586,7 +586,7 @@ Log::parse_complete_connection_i (void)
 }
 
 void
-Log::parse_close_connection_i (void)
+Log::parse_close_connection_i ()
 {
   char *hpos = ACE_OS::strchr(this->info_,'[');
   long handle = ACE_OS::strtol(hpos+1,0,10);
@@ -713,7 +713,7 @@ Log::parse_handler_open_i (bool is_ssl)
 }
 
 void
-Log::parse_begin_connection_i (void)
+Log::parse_begin_connection_i ()
 {
   char *addr = ACE_OS::strchr(this->info_,'<') +1;
   char *c = ACE_OS::strchr(addr,'>');
@@ -731,16 +731,15 @@ Log::parse_begin_connection_i (void)
 }
 
 void
-Log::parse_connection_handler_ctor_i (void)
+Log::parse_connection_handler_ctor_i ()
 {
   // char *c = ACE_OS::strchr (this->info_, '[') + 1;
   // size_t handle = ACE_OS::strtol (c, 0, 10);
   // ACE_DEBUG ((LM_DEBUG,"%d: constructed new handler for %d\n", offset_, handle));
-
 }
 
 void
-Log::parse_local_addr_i (void)
+Log::parse_local_addr_i ()
 {
   char *addr = ACE_OS::strchr(this->info_,'<') +1;
   char *c = ACE_OS::strchr(addr,'>');
@@ -770,7 +769,7 @@ Log::parse_local_addr_i (void)
 }
 
 void
-Log::parse_connection_not_complete_i (void)
+Log::parse_connection_not_complete_i ()
 {
   PeerProcess *pp = this->thr_->pop_new_connection ();
   if (pp != 0)
@@ -783,7 +782,7 @@ Log::parse_connection_not_complete_i (void)
 }
 
 void
-Log::parse_open_as_server_i (void)
+Log::parse_open_as_server_i ()
 {
   // ACE_DEBUG ((LM_DEBUG,"%d: open_as_server: adding peer process\n", offset_));
 
@@ -791,7 +790,7 @@ Log::parse_open_as_server_i (void)
 }
 
 void
-Log::parse_iiop_connection_handler_ctor_i (void)
+Log::parse_iiop_connection_handler_ctor_i ()
 {
   PeerProcess *pp = this->thr_->peek_new_connection();
   if (pp == 0)
@@ -808,7 +807,7 @@ Log::parse_iiop_connection_handler_ctor_i (void)
 }
 
 void
-Log::parse_wait_for_connection_i (void)
+Log::parse_wait_for_connection_i ()
 {
   //  ACE_ERROR ((LM_ERROR,"%d: wait_for_connection, line = %s\n", this->offset_, this->info_));
   if (ACE_OS::strstr (this->info_,"Connection not complete") == 0)
@@ -873,13 +872,13 @@ Log::parse_wait_for_connection_i (void)
 }
 
 void
-Log::parse_post_open_i (void)
+Log::parse_post_open_i ()
 {
   //  ACE_ERROR ((LM_ERROR,"%d: post_open, line = %s\n", this->offset_, this->line_));
 }
 
 void
-Log::parse_notify_poa_helper_i (void)
+Log::parse_notify_poa_helper_i ()
 {
   Invocation *inv = this->thr_->current_invocation ();
   if (inv == 0)
@@ -903,7 +902,7 @@ Log::parse_notify_poa_helper_i (void)
 }
 
 void
-Log::parse_notify_object_i (void)
+Log::parse_notify_object_i ()
 {
   Invocation *inv = this->thr_->current_invocation ();
   if (inv == 0)
@@ -977,7 +976,7 @@ Log::parse_notify_object_i (void)
 }
 
 void
-Log::get_timestamp (void)
+Log::get_timestamp ()
 {
   const char *time_tok = ACE_OS::strchr (this->line_,'@');
   size_t len = (size_t)(time_tok - this->line_);
@@ -1010,7 +1009,7 @@ Log::get_timestamp (void)
 }
 
 void
-Log::parse_line (void)
+Log::parse_line ()
 {
   if (this->dump_target_ != 0)
     {

@@ -1,5 +1,3 @@
-
-
 This is a compile only test. If it compiles, it's passed.
 
 tao_idl choked on the annotation syntax of IDL4 (and DDS-XTypes)
@@ -12,5 +10,4 @@ because that syntax was unknown to its IDL grammar:
 
 The first patch for this bug adds a rule in the lexer to ignore the annotations
 by consuming them without action.
-Actual processing of annotations is still to be done.
-
+Actual processing of annotations still has to be done.

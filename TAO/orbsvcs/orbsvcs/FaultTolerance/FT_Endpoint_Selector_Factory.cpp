@@ -4,12 +4,12 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_FT_Endpoint_Selector_Factory::TAO_FT_Endpoint_Selector_Factory (void)
+TAO_FT_Endpoint_Selector_Factory::TAO_FT_Endpoint_Selector_Factory ()
   : ft_endpoint_selector_ (0)
 {
 }
 
-TAO_FT_Endpoint_Selector_Factory::~TAO_FT_Endpoint_Selector_Factory (void)
+TAO_FT_Endpoint_Selector_Factory::~TAO_FT_Endpoint_Selector_Factory ()
 {
   delete this->ft_endpoint_selector_;
 }

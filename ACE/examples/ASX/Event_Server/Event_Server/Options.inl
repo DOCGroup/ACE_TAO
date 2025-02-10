@@ -12,7 +12,7 @@ Options::supplier_port (u_short port)
 }
 
 inline u_short
-Options::supplier_port (void)
+Options::supplier_port ()
 {
   return this->supplier_port_;
 }
@@ -24,19 +24,19 @@ Options::consumer_port (u_short port)
 }
 
 inline u_short
-Options::consumer_port (void)
+Options::consumer_port ()
 {
   return this->consumer_port_;
 }
 
 inline void
-Options::start_timer (void)
+Options::start_timer ()
 {
   this->itimer_.start ();
 }
 
 inline void
-Options::stop_timer (void)
+Options::stop_timer ()
 {
   this->itimer_.stop ();
 }
@@ -48,7 +48,7 @@ Options::thr_count (size_t count)
 }
 
 inline size_t
-Options::thr_count (void)
+Options::thr_count ()
 {
   return this->thr_count_;
 }
@@ -60,7 +60,7 @@ Options::initial_queue_length (size_t length)
 }
 
 inline size_t
-Options::initial_queue_length (void)
+Options::initial_queue_length ()
 {
   return this->initial_queue_length_;
 }
@@ -72,7 +72,7 @@ Options::high_water_mark (size_t size)
 }
 
 inline size_t
-Options::high_water_mark (void)
+Options::high_water_mark ()
 {
   return this->high_water_mark_;
 }
@@ -84,7 +84,7 @@ Options::low_water_mark (size_t size)
 }
 
 inline size_t
-Options::low_water_mark (void)
+Options::low_water_mark ()
 {
   return this->low_water_mark_;
 }
@@ -96,7 +96,7 @@ Options::message_size (size_t size)
 }
 
 inline size_t
-Options::message_size (void)
+Options::message_size ()
 {
   return this->message_size_;
 }
@@ -108,7 +108,7 @@ Options::iterations (size_t n)
 }
 
 inline size_t
-Options::iterations (void)
+Options::iterations ()
 {
   return this->iterations_;
 }
@@ -120,19 +120,19 @@ Options::t_flags (long flag)
 }
 
 inline long
-Options::t_flags (void)
+Options::t_flags ()
 {
   return this->t_flags_;
 }
 
 inline int
-Options::debug (void)
+Options::debug ()
 {
   return this->debugging_;
 }
 
 inline int
-Options::verbose (void)
+Options::verbose ()
 {
   return this->verbosity_;
 }

@@ -34,7 +34,6 @@ namespace TAO
 {
   namespace HTIOP
   {
-
     /**
      * @class Completion_Handler
      *
@@ -45,7 +44,6 @@ namespace TAO
      * are known so the stream may be handed off to either an existing
      * session, or to a newly created one.
      */
-
     typedef TAO_Creation_Strategy<Connection_Handler> CREATION_STRATEGY2;
     typedef TAO_Concurrency_Strategy<Connection_Handler> CONCURRENCY_STRATEGY2;
 
@@ -53,7 +51,6 @@ namespace TAO
 
     class HTIOP_Export Completion_Handler : public COMPLETION_BASE
     {
-
     public:
       Completion_Handler (ACE_Thread_Manager* t = 0);
       /// Constructor.
@@ -61,7 +58,7 @@ namespace TAO
                           CORBA::Boolean = false);
 
       /// Destructor.
-      ~Completion_Handler (void);
+      ~Completion_Handler ();
 
       /// Called by the <Strategy_Acceptor> when the handler is completely
       /// connected. Argument is unused.
@@ -72,7 +69,7 @@ namespace TAO
        */
       virtual int handle_input (ACE_HANDLE);
 
-      virtual int resume_handler (void);
+      virtual int resume_handler ();
       virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask);
       //@}
 

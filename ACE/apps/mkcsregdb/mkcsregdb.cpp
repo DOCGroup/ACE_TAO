@@ -248,7 +248,6 @@ csdb_generator::init_output (const char *srcfile)
                       -1);
   outf_ = ACE_OS::fdopen (fd, "w");
 
-  ACE_OS::fprintf (outf_,"// $ID: $\n");
   ACE_OS::fprintf (outf_,"/*\n * Codeset registry DB, generated %s * source: %s\n",
                    ACE_OS::asctime (ACE_OS::localtime(&now)),
                    srcfile);
@@ -258,7 +257,7 @@ csdb_generator::init_output (const char *srcfile)
   ACE_OS::fprintf (outf_," * a text file containing all the desired codeset information, build and run\n");
   ACE_OS::fprintf (outf_," * mkcsregdb. The source is in $ACE_ROOT/apps/mkcsregdb. It will generate a new\n");
   ACE_OS::fprintf (outf_," * copy of this file, with the registry_db_ array properly initialized.\n */\n");
-  ACE_OS::fprintf (outf_,"\n#include \"ace/Codeset_Registry.h\"\n\n%s\n%s\n{\n",
+  ACE_OS::fprintf (outf_,"\n#include \"ace/Codeset_Registry.h\"\n\nACE_BEGIN_VERSIONED_NAMESPACE_DECL\n\n%s\n%s\n{\n",
                    "ACE_Codeset_Registry::registry_entry const",
                    "ACE_Codeset_Registry::registry_db_[] =");
   return 0;
@@ -302,7 +301,7 @@ csdb_generator::fini_output (const char *tgt)
   ACE_OS::sprintf (target,"%s/ace/%s",ace_src_,tgt);
   if (count_ == 0)
     write_dummy_entry();
-  ACE_OS::fprintf (outf_,"\n};\n\nsize_t const ACE_Codeset_Registry::num_registry_entries_ = %d;\n\n",count_);
+  ACE_OS::fprintf (outf_,"\n};\n\nsize_t const ACE_Codeset_Registry::num_registry_entries_ = %d;\n\nACE_END_VERSIONED_NAMESPACE_DECL\n",count_);
   ACE_OS::fclose (outf_);
   ACE_stat buf;
   if (ACE_OS::stat (target,&buf) == 0)

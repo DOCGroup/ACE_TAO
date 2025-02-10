@@ -42,10 +42,7 @@ namespace ACE_RMCast
     virtual void
     send (Message_ptr m);
 
-  // Sun C++ 5.4 can't handle private here.
-  //
-  // private:
-  public:
+  private:
     struct Descr
     {
       //@@ There should be no default c-tor.

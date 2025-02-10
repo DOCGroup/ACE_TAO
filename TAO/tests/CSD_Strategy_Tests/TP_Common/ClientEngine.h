@@ -1,5 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
-
 //=============================================================================
 /**
  *  @file    ClientEngine.h
@@ -18,19 +16,16 @@
 #include "ace/Synch.h"
 #include "ace/CORBA_macros.h"
 
-
 class ClientEngine;
 typedef TAO_Intrusive_Ref_Count_Handle<ClientEngine> ClientEngine_Handle;
 
-
 class CSD_TP_Test_Export ClientEngine : public TAO_Intrusive_Ref_Count_Base<TAO_SYNCH_MUTEX>
 {
-  public:
+public:
+  ClientEngine();
+  virtual ~ClientEngine();
 
-    ClientEngine();
-    virtual ~ClientEngine();
-
-    virtual bool execute(void) = 0;
+  virtual bool execute() = 0;
 };
 
 #endif

@@ -17,7 +17,6 @@
 #include "ace/OS_NS_errno.h"
 
 
-
 void
 siglistset (sigset_t x, int *sigset, int can_miss = 0)
 {

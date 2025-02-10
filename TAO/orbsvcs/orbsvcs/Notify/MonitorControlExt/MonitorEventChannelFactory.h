@@ -32,7 +32,7 @@ public:
   TAO_MonitorEventChannelFactory (const char* name);
 
   /// Remove the factory name from the factory names statistic
-  ~TAO_MonitorEventChannelFactory (void);
+  ~TAO_MonitorEventChannelFactory ();
 
   /// Create a named event channel and associate various statistic
   /// objects with it in the statistic registry
@@ -70,8 +70,8 @@ private:
   public:
     Unbinder (Map& map,
               const ACE_CString& name);
-    ~Unbinder (void);
-    void release (void);
+    ~Unbinder ();
+    void release ();
 
   private:
     Map& map_;

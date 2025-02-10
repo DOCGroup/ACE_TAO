@@ -38,17 +38,17 @@ public:
   typedef ACE_Unbounded_Set_Iterator<PROXY*> Iterator;
 
   /// Constructor
-  TAO_ESF_Proxy_List (void);
+  TAO_ESF_Proxy_List ();
 
   /// Return the first element in the collection, or end() if there
   /// are none
-  ACE_Unbounded_Set_Iterator<PROXY*> begin (void);
+  ACE_Unbounded_Set_Iterator<PROXY*> begin ();
 
   /// Return one past the last element in the collection
-  ACE_Unbounded_Set_Iterator<PROXY*> end (void);
+  ACE_Unbounded_Set_Iterator<PROXY*> end ();
 
   /// Return the number of elements in the collection
-  size_t size (void) const;
+  size_t size () const;
 
   /// Insert a new element to the collection
   void connected (PROXY *);
@@ -61,7 +61,7 @@ public:
 
   /// Shutdown the collection, i.e. remove all elements and release
   /// resources
-  void shutdown (void);
+  void shutdown ();
 
 private:
   /// The underlying implementation object
@@ -74,12 +74,6 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #include "orbsvcs/ESF/ESF_Proxy_List.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "orbsvcs/ESF/ESF_Proxy_List.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("ESF_Proxy_List.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #endif /* TAO_ESF_PROXY_LIST_H */

@@ -58,7 +58,6 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 
       throughput.sample (end - test_start,
                          end - start);
-
     }
 
   ACE_DEBUG ((LM_DEBUG, "Calibrating high resolution timer . . ."));

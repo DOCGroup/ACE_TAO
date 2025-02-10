@@ -36,7 +36,7 @@ public:
   be_visitor_args (be_visitor_context *ctx);
 
   /// destructor
-  virtual ~be_visitor_args (void);
+  virtual ~be_visitor_args ();
 
   //= helper
   /// helper that produces either a nested name for
@@ -45,7 +45,7 @@ public:
                                  const char *suffix = 0);
 
   /// return the direction of the argument node
-  virtual AST_Argument::Direction direction (void);
+  virtual AST_Argument::Direction direction ();
 
   /// must be overridden by derived classes
   virtual int visit_argument (be_argument *node);

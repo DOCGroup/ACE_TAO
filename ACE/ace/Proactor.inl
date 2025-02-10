@@ -2,7 +2,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE int
-ACE_Proactor::run_event_loop (void)
+ACE_Proactor::run_event_loop ()
 {
   ACE_TRACE ("ACE_Proactor::run_event_loop");
   ACE_Proactor * const p = ACE_Proactor::instance ();
@@ -27,7 +27,7 @@ ACE_Proactor::run_event_loop (ACE_Time_Value &tv)
 }
 
 ACE_INLINE int
-ACE_Proactor::reset_event_loop(void)
+ACE_Proactor::reset_event_loop()
 {
   ACE_TRACE ("ACE_Proactor::reset_event_loop");
   ACE_Proactor * const p = ACE_Proactor::instance ();
@@ -39,7 +39,7 @@ ACE_Proactor::reset_event_loop(void)
 }
 
 ACE_INLINE int
-ACE_Proactor::end_event_loop (void)
+ACE_Proactor::end_event_loop ()
 {
   ACE_TRACE ("ACE_Proactor::end_event_loop");
   ACE_Proactor * const p = ACE_Proactor::instance ();
@@ -51,7 +51,7 @@ ACE_Proactor::end_event_loop (void)
 }
 
 ACE_INLINE int
-ACE_Proactor::event_loop_done (void)
+ACE_Proactor::event_loop_done ()
 {
   ACE_TRACE ("ACE_Proactor::event_loop_done");
   ACE_Proactor * const p = ACE_Proactor::instance ();

@@ -41,10 +41,10 @@ class TAO_MonitorProxySupplier_T
 {
 public:
   /// Construct a monitor supplier admin
-  TAO_MonitorProxySupplier_T (void);
+  TAO_MonitorProxySupplier_T ();
 
   /// Remove the statistics for this event channel
-  virtual ~TAO_MonitorProxySupplier_T (void);
+  virtual ~TAO_MonitorProxySupplier_T ();
 
   /// Configure the statistics after construction
   /// @param admin the parent admin for this proxy
@@ -58,10 +58,10 @@ public:
   virtual void count_queue_overflow (bool local_overflow, bool global_overflow);
 
   /// Access to Statistics Name
-  ACE_CString & queue_item_stat_name (void);
+  ACE_CString & queue_item_stat_name ();
 
   /// Access to Statistics Name
-  ACE_CString & overflow_stat_name (void);
+  ACE_CString & overflow_stat_name ();
 
 private:
   ACE_CString base_stat_name_;
@@ -77,14 +77,7 @@ private:
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "orbsvcs/Notify/MonitorControlExt/MonitorProxySupplier_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#include "orbsvcs/Notify/MonitorControlExt/MonitorProxySupplier_T.cpp"
-#pragma implementation ("MonitorProxySupplier_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #endif // TAO_HAS_MONITOR_FRAMEWORK == 1
 

@@ -34,10 +34,8 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-#  if defined (ACE_HAS_STRING_CLASS)
 template <class STREAM> STREAM & operator>> (STREAM &stream, ACE_Quoted_String &str);
 template <class STREAM> STREAM & operator<< (STREAM &stream, ACE_Quoted_String &str);
-#  endif /* defined (ACE_HAS_STRING_CLASS) */
 
 template <class STREAM>
 class ACE_Streambuf_T : public ACE_Streambuf
@@ -70,7 +68,7 @@ public:
                           ACE_Time_Value *tv = 0);
 
 protected:
-  virtual ACE_HANDLE get_handle (void);
+  virtual ACE_HANDLE get_handle ();
 
   /// This will be our ACE_SOCK_Stream or similar object.
   STREAM *peer_;
@@ -121,11 +119,11 @@ public:
 
   /// We have to get rid of the <streambuf_> ourselves since we gave it
   /// to the <iostream> base class;
-  virtual ~ACE_IOStream (void);
+  virtual ~ACE_IOStream ();
 
   /// The only ambiguity in the multiple inheritance is the <close>
   /// function.
-  virtual int close (void);
+  virtual int close ();
 
   /**
    * Returns 1 if we're at the end of the <STREAM>, i.e., if the
@@ -135,9 +133,8 @@ public:
    * the return of <eof> and check it instead of calling <eof>
    * successively.
    */
-  int eof (void) const;
+  int eof () const;
 
-#  if defined (ACE_HAS_STRING_CLASS)
   /**
    * A simple string operator.  The base <iostream> has them for char*
    * but that isn't always the best thing for a <String>.  If we don't
@@ -148,7 +145,6 @@ public:
   /// The converse of the <String::put> operator.
   virtual ACE_IOStream<STREAM> &operator<< (ACE_IOStream_String &v);
 
-#  endif /* ACE_HAS_STRING_CLASS */
   // = Using the macros to provide get/set operators.
   GETPUT_FUNC_SET (ACE_IOStream<STREAM>)
 
@@ -170,14 +166,12 @@ public:
           if (good ())
               return 1;
         }
-#    if !defined (ACE_WIN32)
-      // MS VC++ 5.0 doesn't declare setstate.
       setstate (failbit);
-#    endif /* !ACE_WIN32 */
       return (0);
     }
-  virtual int ipfx0 (void)         {  return ipfx (0); }  // Optimized ipfx(0)
-  virtual int ipfx1 (void)                                // Optimized ipfx(1)
+  virtual int ipfx0 () // Optimized ipfx(0)
+    {  return ipfx (0); }
+  virtual int ipfx1 () // Optimized ipfx(1)
     {
       if (good ())
         {
@@ -186,32 +180,29 @@ public:
           if (good ())
               return 1;
         }
-#    if !defined (ACE_WIN32)
-      // MS VC++ 5.0 doesn't declare setstate.
       setstate (failbit);
-#    endif /* !ACE_WIN32 */
       return (0);
     }
-  virtual void isfx (void) {  return; }
-  virtual int opfx (void)
+  virtual void isfx () { return; }
+  virtual int opfx ()
     {
       if (good () && tie () != 0)
         tie ()->flush ();
       return good ();
     }
-  virtual void osfx (void) {  if (flags () & unitbuf) flush (); }
+  virtual void osfx () {  if (flags () & unitbuf) flush (); }
 #  else
 #    if defined (__GNUC__)
-  virtual int ipfx0 (void) { return iostream::ipfx0 (); }  // Optimized ipfx(0)
-  virtual int ipfx1 (void) { return iostream::ipfx1 (); }  // Optimized ipfx(1)
+  virtual int ipfx0 () { return iostream::ipfx0 (); }  // Optimized ipfx(0)
+  virtual int ipfx1 () { return iostream::ipfx1 (); }  // Optimized ipfx(1)
 #    else
-  virtual int ipfx0 (void) { return iostream::ipfx (0); }
-  virtual int ipfx1 (void) { return iostream::ipfx (1); }
+  virtual int ipfx0 () { return iostream::ipfx (0); }
+  virtual int ipfx1 () { return iostream::ipfx (1); }
 #    endif /* __GNUC__ */
   virtual int ipfx (int need = 0) {  return iostream::ipfx (need); }
-  virtual void isfx (void)        {  iostream::isfx (); }
-  virtual int opfx (void)         {  return iostream::opfx (); }
-  virtual void osfx (void)        {  iostream::osfx (); }
+  virtual void isfx ()        {  iostream::isfx (); }
+  virtual int opfx ()         {  return iostream::opfx (); }
+  virtual void osfx ()        {  iostream::osfx (); }
 #  endif /* ACE_LACKS_IOSTREAM_FX */
 
   /// Allow the programmer to provide a timeout for read operations.
@@ -224,17 +215,15 @@ protected:
   ACE_Streambuf_T<STREAM> *streambuf_;
 
 private:
-  // = Private methods.
-
   // We move these into the private section so that they cannot be
   // used by the application programmer.  This is necessary because
   // streambuf_ will be buffering IO on the STREAM object.  If these
   // functions were used in your program, there is a danger of getting
   // the datastream out of sync.
-  ACE_UNIMPLEMENTED_FUNC (ssize_t send (...))
-  ACE_UNIMPLEMENTED_FUNC (ssize_t recv (...))
-  ACE_UNIMPLEMENTED_FUNC (ssize_t send_n (...))
-  ACE_UNIMPLEMENTED_FUNC (ssize_t recv_n (...))
+  ssize_t send (...) = delete;
+  ssize_t recv (...) = delete;
+  ssize_t send_n (...) = delete;
+  ssize_t recv_n (...) = delete;
 };
 
 /**
@@ -254,7 +243,7 @@ template <class STREAM>
 class ACE_SOCK_Dgram_SC : public STREAM
 {
 public:
-  ACE_SOCK_Dgram_SC (void);
+  ACE_SOCK_Dgram_SC ();
   ACE_SOCK_Dgram_SC (STREAM &source,
                      ACE_INET_Addr &dest);
   ssize_t send_n (char *buf, ssize_t len);
@@ -277,18 +266,11 @@ protected:
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#  if defined (__ACE_INLINE__)
-#    include "ace/IOStream_T.inl"
-#  endif /* __ACE_INLINE__ */
+#if defined (__ACE_INLINE__)
+# include "ace/IOStream_T.inl"
+#endif /* __ACE_INLINE__ */
 
-#  if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#    include "ace/IOStream_T.cpp"
-#  endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#  if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#    pragma implementation ("IOStream_T.cpp")
-#  endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
-#endif /* ACE_LACKS_ACE_IOSTREAM */
+#include "ace/IOStream_T.cpp"
 
 #include /**/ "ace/post.h"
 #endif /* ACE_IOSTREAM_T_H */

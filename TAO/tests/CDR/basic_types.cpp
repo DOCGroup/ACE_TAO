@@ -24,7 +24,7 @@ static int nloops = 100;
 
 struct CDR_Test_Types
 {
-  CDR_Test_Types (void);
+  CDR_Test_Types ();
 
   CORBA::Octet o;
   CORBA::Short s;
@@ -40,7 +40,7 @@ struct CDR_Test_Types
   CORBA::Short a[ARRAY_SIZE];
 };
 
-CDR_Test_Types::CDR_Test_Types (void)
+CDR_Test_Types::CDR_Test_Types ()
   : o (1), s (2), l (4),
     str ("abc"), d (8)
 {

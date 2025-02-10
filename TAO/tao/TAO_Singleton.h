@@ -44,32 +44,29 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 template <class TYPE, class ACE_LOCK>
 class TAO_Singleton : public ACE_Cleanup
 {
-
 public:
   /// Global access point to the Singleton.
-  static TYPE *instance (void);
+  static TYPE *instance ();
 
   /// Cleanup method, used by @c ace_cleanup_destroyer to destroy the
   /// singleton.
-  virtual void cleanup (void *param = 0);
+  virtual void cleanup (void *param = nullptr);
 
   /// Dump the state of the object.
-  static void dump (void);
+  static void dump ();
 
 protected:
   /// Default constructor.
-  TAO_Singleton (void);
+  TAO_Singleton ();
 
   /// Contained instance.
   TYPE instance_;
 
-#if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
   /// Pointer to the Singleton (ACE_Cleanup) instance.
   static TAO_Singleton<TYPE, ACE_LOCK> *singleton_;
-#endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
 
   /// Get pointer to the TAO Singleton instance.
-  static TAO_Singleton<TYPE, ACE_LOCK> *&instance_i (void);
+  static TAO_Singleton<TYPE, ACE_LOCK> *&instance_i ();
 };
 
 /**
@@ -84,35 +81,36 @@ protected:
  * unloaded.
  */
 template <class TYPE, class ACE_LOCK>
-class TAO_TSS_Singleton : public ACE_Cleanup,
-                          private ACE_Copy_Disabled
+class TAO_TSS_Singleton : public ACE_Cleanup
 {
-
 public:
   /// Global access point to the Singleton.
-  static TYPE *instance (void);
+  static TYPE *instance ();
 
   /// Cleanup method, used by @c ace_cleanup_destroyer to destroy the
   /// singleton.
-  virtual void cleanup (void *param = 0);
+  virtual void cleanup (void *param = nullptr);
 
   /// Dump the state of the object.
-  static void dump (void);
+  static void dump ();
 
 protected:
   /// Default constructor.
-  TAO_TSS_Singleton (void);
+  TAO_TSS_Singleton ();
+
+  TAO_TSS_Singleton (const TAO_TSS_Singleton &) = delete;
+  TAO_TSS_Singleton (TAO_TSS_Singleton &&) = delete;
+  TAO_TSS_Singleton &operator= (const TAO_TSS_Singleton &) = delete;
+  TAO_TSS_Singleton &operator= (TAO_TSS_Singleton &&) = delete;
 
   /// Contained instance.
   ACE_TSS_TYPE (TYPE) instance_;
 
-#if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
   /// Pointer to the Singleton (ACE_Cleanup) instance.
   static TAO_TSS_Singleton<TYPE, ACE_LOCK> *singleton_;
-#endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
 
   /// Get pointer to the TAO TSS Singleton instance.
-  static TAO_TSS_Singleton<TYPE, ACE_LOCK> *&instance_i (void);
+  static TAO_TSS_Singleton<TYPE, ACE_LOCK> *&instance_i ();
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
@@ -121,14 +119,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #include "tao/TAO_Singleton.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "tao/TAO_Singleton.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("TAO_Singleton.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
-
 
 #include /**/ "ace/post.h"
 

@@ -1,5 +1,5 @@
 #include "ace/Get_Opt.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/OS_NS_errno.h"
 #include "ace/INet/FTP_URL.h"
 #include "ace/INet/FTP_ClientRequestHandler.h"
@@ -13,7 +13,7 @@ ACE_CString password;
 bool do_active = false;
 
 void
-usage (void)
+usage ()
 {
   std::cout << "usage: ftp_simple_wget [options] <url>\n";
   std::cout << "Executes an FTP download request and sends the result to STDOUT or file\n";
@@ -133,7 +133,7 @@ class My_FTP_RequestHandler
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv [])
 {
-  ACE_Auto_Ptr<std::ofstream> fout;
+  std::unique_ptr<std::ofstream> fout;
   std::ostream* sout = &std::cout;
 
   if (!parse_args (argc, argv))

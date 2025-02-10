@@ -9,7 +9,7 @@ Sender::Sender (CORBA::ORB_ptr orb)
 }
 
 void
-Sender::dump_results (void)
+Sender::dump_results ()
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
   ACE_DEBUG ((LM_DEBUG,
@@ -20,7 +20,7 @@ Sender::dump_results (void)
 }
 
 bool
-Sender::is_done (void) const
+Sender::is_done () const
 {
   return this->is_done_;
 }
@@ -44,7 +44,7 @@ Sender::get_data (CORBA::ULong size,
 }
 
 CORBA::Long
-Sender::get_event_count (void)
+Sender::get_event_count ()
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                     ace_mon,
@@ -55,13 +55,12 @@ Sender::get_event_count (void)
 
 
 void
-Sender::ping (void)
+Sender::ping ()
 {
-  return;
 }
 
 void
-Sender::shutdown (void)
+Sender::shutdown ()
 {
   if (this->is_done_ == false)
     {

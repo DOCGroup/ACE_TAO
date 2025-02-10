@@ -107,7 +107,7 @@ namespace TAO
   }
 
   ::Compression::CompressorFactorySeq *
-  CompressionManager::get_factories (void)
+  CompressionManager::get_factories ()
   {
     // todo
     return 0;

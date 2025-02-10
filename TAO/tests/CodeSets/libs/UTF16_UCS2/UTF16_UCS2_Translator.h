@@ -43,7 +43,7 @@ public:
   UTF16_UCS2_Translator (CONV_FRAME::CodeSetId tcs = ACE_CODESET_ID_ISO_UCS_2_LEVEL_1);
 
   /// Virtual destruction
-  virtual ~UTF16_UCS2_Translator (void);
+  virtual ~UTF16_UCS2_Translator ();
 
   // = Documented in $ACE_ROOT/ace/CDR_Stream.h
   virtual ACE_CDR::Boolean read_wchar (ACE_InputCDR &,
@@ -84,8 +84,6 @@ private:
 
 private:
   CONV_FRAME::CodeSetId tcs_;
-
-
 };
 
 #include /**/ "ace/post.h"

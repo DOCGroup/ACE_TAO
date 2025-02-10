@@ -48,10 +48,10 @@ class ACE_Export ACE_SOCK_IO : public ACE_SOCK
 {
 public:
   /// Constructor.
-  ACE_SOCK_IO (void);
+  ACE_SOCK_IO ();
 
   /// Destructor.
-  ~ACE_SOCK_IO (void);
+  ~ACE_SOCK_IO ();
 
   /// Recv an @a n byte buffer from the connected socket.
   ssize_t recv (void *buf,
@@ -119,7 +119,7 @@ public:
                 ACE_OVERLAPPED *overlapped) const;
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;

@@ -41,9 +41,7 @@ typedef int ACE_Protocol_ID;
  */
 class ACE_QoS_Export ACE_QoS_Session
 {
-
 public:
-
   enum RSVP_Event_Type
   {
     RSVP_PATH_EVENT,
@@ -64,17 +62,17 @@ public:
 
 
   /// to shutup g++.
-  virtual ~ACE_QoS_Session (void) {};
+  virtual ~ACE_QoS_Session () {};
 
   /// Open a QoS session [dest IP, dest port, Protocol ID].
   virtual int open (ACE_INET_Addr dest_addr,
                     ACE_Protocol_ID protocol_id) = 0;
 
   /// Close the QoS Session.
-  virtual int close (void) = 0;
+  virtual int close () = 0;
 
   /// Returns the QoS in the current session.
-  virtual ACE_QoS qos (void) const = 0;
+  virtual ACE_QoS qos () const = 0;
 
   /// Set QoS for the current session. The qos manager is used to
   /// confirm if this QoS session was subscribed to by the socket.
@@ -99,42 +97,42 @@ public:
    * underlying session. This method updates the QoS object associated
    * with this session.
    */
-  virtual int update_qos (void) = 0;
+  virtual int update_qos () = 0;
 
   /// Get/Set methods for the flags_.
-  virtual ACE_End_Point_Type flags (void) const = 0;
+  virtual ACE_End_Point_Type flags () const = 0;
   virtual void flags (const ACE_End_Point_Type flags) = 0;
 
   /// Get the session id.
-  virtual int session_id (void) const = 0;
+  virtual int session_id () const = 0;
 
   /// Set the session id.
   virtual void session_id (const int session_id) = 0;
 
   /// Get the file descriptor on which RSVP events will occur.
-  virtual ACE_HANDLE rsvp_events_handle (void) = 0;
+  virtual ACE_HANDLE rsvp_events_handle () = 0;
 
   virtual void  rsvp_event_type (RSVP_Event_Type event_type) = 0;
   ///Set the RAPI event that last occurred
 
-  virtual RSVP_Event_Type rsvp_event_type (void) = 0;
+  virtual RSVP_Event_Type rsvp_event_type () = 0;
   ///Get the RAPI event that last occurred
 
 
   /// Get the destination address for this session.
-  virtual ACE_INET_Addr dest_addr (void) const = 0;
+  virtual ACE_INET_Addr dest_addr () const = 0;
 
   /// Set the destination address for this session.
   virtual void dest_addr (const ACE_INET_Addr &dest_addr) = 0;
 
   /// Get the source port for this session.
-  virtual u_short source_port (void) const = 0;
+  virtual u_short source_port () const = 0;
 
   /// Set the source port for this session.
   virtual void source_port (const u_short &source_port) = 0;
 
   //Set the source host
-  virtual ACE_INET_Addr* source_addr (void) const = 0;
+  virtual ACE_INET_Addr* source_addr () const = 0;
 
   /// Set the source port for this session.
   virtual void source_addr (ACE_INET_Addr* source_addr) = 0;
@@ -145,10 +143,9 @@ public:
    * meaningful only when the underlying implementation has
    * versioning.
    */
-  virtual int version (void) = 0;
+  virtual int version () = 0;
 
 protected:
-
   /// Source port if this is a Sender session. Used for rapi_sender ().
   u_short source_port_;
 
@@ -172,7 +169,6 @@ protected:
 
   RSVP_Event_Type rsvp_event_type_;
   //Has the last rsvp event that occurred
-
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

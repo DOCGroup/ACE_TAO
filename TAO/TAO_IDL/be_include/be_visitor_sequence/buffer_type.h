@@ -31,7 +31,7 @@ public:
   be_visitor_sequence_buffer_type (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_sequence_buffer_type (void);
+  ~be_visitor_sequence_buffer_type ();
 
   // = Visitor methods.
   virtual int visit_predefined_type (be_predefined_type *node);
@@ -58,7 +58,6 @@ public:
 protected:
   /// helper that does the common job
   int visit_node (be_type *);
-
 };
 
 #endif /* _BE_VISITOR_SEQUENCE_BUFFER_TYPE_H_ */

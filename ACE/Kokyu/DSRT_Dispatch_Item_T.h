@@ -9,7 +9,6 @@
 #define DSRT_DISPATCH_ITEM_H
 #include /**/ "ace/pre.h"
 #include "ace/Bound_Ptr.h"
-#include "ace/Copy_Disabled.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -26,7 +25,7 @@ namespace Kokyu
    */
 
   template <class DSRT_Scheduler_Traits>
-  class DSRT_Dispatch_Item : private ACE_Copy_Disabled
+  class DSRT_Dispatch_Item
   {
     typedef typename
     DSRT_Scheduler_Traits::Guid_t Guid_t;
@@ -42,6 +41,11 @@ namespace Kokyu
 
   public:
     DSRT_Dispatch_Item (Guid_t guid, const DSRT_QoSDescriptor&);
+
+    DSRT_Dispatch_Item (const DSRT_Dispatch_Item &) = delete;
+    DSRT_Dispatch_Item (DSRT_Dispatch_Item &&) = delete;
+    DSRT_Dispatch_Item &operator= (const DSRT_Dispatch_Item &) = delete;
+    DSRT_Dispatch_Item &operator= (DSRT_Dispatch_Item &&) = delete;
 
     /// Get the guid.
     Guid_t guid ();
@@ -88,13 +92,7 @@ namespace Kokyu
 #include "DSRT_Dispatch_Item_T.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "DSRT_Dispatch_Item_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("DSRT_Dispatch_Item_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 #endif /* DSRT_DISPATCH_ITEM_H */

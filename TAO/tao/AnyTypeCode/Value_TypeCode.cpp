@@ -92,7 +92,7 @@ void
 TAO::TypeCode::Value<StringType,
                      TypeCodeType,
                      FieldArrayType,
-                     RefCountPolicy>::tao_duplicate (void)
+                     RefCountPolicy>::tao_duplicate ()
 {
   this->RefCountPolicy::add_ref ();
 }
@@ -105,7 +105,7 @@ void
 TAO::TypeCode::Value<StringType,
                      TypeCodeType,
                      FieldArrayType,
-                     RefCountPolicy>::tao_release (void)
+                     RefCountPolicy>::tao_release ()
 {
   this->RefCountPolicy::remove_ref ();
 }
@@ -118,7 +118,7 @@ const TypeCodeType&
 TAO::TypeCode::Value<StringType,
                      TypeCodeType,
                      FieldArrayType,
-                     RefCountPolicy>::concrete_base (void) const
+                     RefCountPolicy>::concrete_base () const
 {
   return concrete_base_;
 }
@@ -131,7 +131,7 @@ const FieldArrayType&
 TAO::TypeCode::Value<StringType,
                      TypeCodeType,
                      FieldArrayType,
-                     RefCountPolicy>::fields (void) const
+                     RefCountPolicy>::fields () const
 {
   return fields_;
 }
@@ -145,8 +145,7 @@ TAO::TypeCode::Value<StringType,
                      TypeCodeType,
                      FieldArrayType,
                      RefCountPolicy>::equal_i (
-  CORBA::TypeCode_ptr tc
-  ) const
+  CORBA::TypeCode_ptr tc) const
 {
   // None of these calls should throw since CORBA::TypeCode::equal()
   // verified that the TCKind is the same as our's prior to invoking
@@ -162,8 +161,7 @@ TAO::TypeCode::Value<StringType,
     tc->concrete_base_type ();
 
   CORBA::Boolean const equal_concrete_base_types =
-    this->equal (rhs_concrete_base_type.in ()
-                );
+    this->equal (rhs_concrete_base_type.in ());
 
   if (!equal_concrete_base_types)
     return false;
@@ -180,9 +178,7 @@ TAO::TypeCode::Value<StringType,
         this->fields_[i];
 
       CORBA::Visibility const lhs_visibility = lhs_field.visibility;
-      CORBA::Visibility const rhs_visibility =
-        tc->member_visibility (i
-                              );
+      CORBA::Visibility const rhs_visibility = tc->member_visibility (i);
 
       if (lhs_visibility != rhs_visibility)
         return false;
@@ -191,7 +187,7 @@ TAO::TypeCode::Value<StringType,
         Traits<StringType>::get_string (lhs_field.name);
       char const * const rhs_name = tc->member_name (i);
 
-      if (ACE_OS::strcmp (lhs_name, rhs_name) != 0)
+      if (std::strcmp (lhs_name, rhs_name) != 0)
         return false;
 
       CORBA::TypeCode_ptr const lhs_tc =
@@ -262,8 +258,7 @@ TAO::TypeCode::Value<StringType,
         tc->member_type (i);
 
       CORBA::Boolean const equiv_types =
-        lhs_tc->equivalent (rhs_tc.in ()
-                           );
+        lhs_tc->equivalent (rhs_tc.in ());
 
       if (!equiv_types)
         return false;
@@ -280,7 +275,7 @@ CORBA::TypeCode_ptr
 TAO::TypeCode::Value<StringType,
                      TypeCodeType,
                      FieldArrayType,
-                     RefCountPolicy>::get_compact_typecode_i (void) const
+                     RefCountPolicy>::get_compact_typecode_i () const
 {
   ACE_Array_Base<Value_Field<CORBA::String_var, CORBA::TypeCode_var> >
     tc_fields (this->nfields_);
@@ -300,8 +295,7 @@ TAO::TypeCode::Value<StringType,
           tc_fields[i].name = empty_name;
           tc_fields[i].type =
             Traits<StringType>::get_typecode (
-              this->fields_[i].type)->get_compact_typecode (
-                );
+              this->fields_[i].type)->get_compact_typecode ();
           tc_fields[i].visibility = this->fields_[i].visibility;
         }
     }
@@ -323,8 +317,7 @@ TAO::TypeCode::Value<StringType,
       this->type_modifier_,
       Traits<StringType>::get_typecode (this->concrete_base_),
       tc_fields,
-      this->nfields_
-     );
+      this->nfields_);
 }
 
 template <typename StringType,
@@ -335,7 +328,7 @@ char const *
 TAO::TypeCode::Value<StringType,
                      TypeCodeType,
                      FieldArrayType,
-                     RefCountPolicy>::id_i (void) const
+                     RefCountPolicy>::id_i () const
 {
   // Ownership is retained by the TypeCode, as required by the C++
   // mapping.
@@ -350,7 +343,7 @@ char const *
 TAO::TypeCode::Value<StringType,
                      TypeCodeType,
                      FieldArrayType,
-                     RefCountPolicy>::name_i (void) const
+                     RefCountPolicy>::name_i () const
 {
   // Ownership is retained by the TypeCode, as required by the C++
   // mapping.
@@ -365,7 +358,7 @@ CORBA::ULong
 TAO::TypeCode::Value<StringType,
                      TypeCodeType,
                      FieldArrayType,
-                     RefCountPolicy>::member_count_i (void) const
+                     RefCountPolicy>::member_count_i () const
 {
   return this->nfields_;
 }
@@ -430,7 +423,7 @@ CORBA::ValueModifier
 TAO::TypeCode::Value<StringType,
                      TypeCodeType,
                      FieldArrayType,
-                     RefCountPolicy>::type_modifier_i (void) const
+                     RefCountPolicy>::type_modifier_i () const
 {
   return this->type_modifier_;
 }
@@ -443,7 +436,7 @@ CORBA::TypeCode_ptr
 TAO::TypeCode::Value<StringType,
                      TypeCodeType,
                      FieldArrayType,
-                     RefCountPolicy>::concrete_base_type_i (void) const
+                     RefCountPolicy>::concrete_base_type_i () const
 {
   return
     CORBA::TypeCode::_duplicate (

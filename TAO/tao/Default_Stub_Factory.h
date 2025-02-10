@@ -41,12 +41,12 @@ class TAO_Export TAO_Default_Stub_Factory
 {
 public:
   /// Destructor.
-  virtual ~TAO_Default_Stub_Factory (void);
+  ~TAO_Default_Stub_Factory () override = default;
 
   /// Creates a Stub Object.
-  virtual TAO_Stub *create_stub (const char *repository_id,
-                                 const TAO_MProfile &profiles,
-                                 TAO_ORB_Core *orb_core);
+  TAO_Stub *create_stub (const char *repository_id,
+                         const TAO_MProfile &profiles,
+                         TAO_ORB_Core *orb_core) override;
 };
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO, TAO_Default_Stub_Factory)

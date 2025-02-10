@@ -7,12 +7,12 @@
 
 #include "LifeCycle.h"
 
-LifeCycle::LifeCycle (void)
+LifeCycle::LifeCycle ()
   : count_ (10)
 {
 }
 
-LifeCycle::~LifeCycle (void)
+LifeCycle::~LifeCycle ()
 {
 }
 
@@ -79,9 +79,7 @@ LifeCycle::init (int argc, ACE_TCHAR *argv[])
   CORBA::Object_var obj = rootNC->resolve (name);
 
   notify_factory_ =
-    CosNotifyChannelAdmin::EventChannelFactory::_narrow (
-        obj.in()
-      );
+    CosNotifyChannelAdmin::EventChannelFactory::_narrow (obj.in());
 
   if (CORBA::is_nil (notify_factory_.in ()))
     {
@@ -93,7 +91,7 @@ LifeCycle::init (int argc, ACE_TCHAR *argv[])
 }
 
 void
-LifeCycle::run_test(void)
+LifeCycle::run_test()
 {
   for (int i = 0; i < this->count_; ++i)
     {
@@ -112,7 +110,7 @@ LifeCycle::run_test(void)
 }
 
 void
-LifeCycle::create_ec (void)
+LifeCycle::create_ec ()
 {
   CosNotifyChannelAdmin::ChannelID id;
   CosNotification::QoSProperties initial_qos;
@@ -134,7 +132,7 @@ LifeCycle::create_ec (void)
 }
 
 void
-LifeCycle::create_supplier_admin (void)
+LifeCycle::create_supplier_admin ()
 {
   CosNotifyChannelAdmin::AdminID adminid;
   CosNotifyChannelAdmin::InterFilterGroupOperator ifgop =
@@ -156,7 +154,7 @@ LifeCycle::create_supplier_admin (void)
 }
 
 void
-LifeCycle::create_consumer_admin (void)
+LifeCycle::create_consumer_admin ()
 {
   CosNotifyChannelAdmin::AdminID adminid;
   CosNotifyChannelAdmin::InterFilterGroupOperator ifgop =
@@ -177,7 +175,7 @@ LifeCycle::create_consumer_admin (void)
 }
 
 void
-LifeCycle::destroy_supplier_admin (void)
+LifeCycle::destroy_supplier_admin ()
 {
   this->supplier_admin_->destroy ();
 
@@ -187,7 +185,7 @@ LifeCycle::destroy_supplier_admin (void)
 }
 
 void
-LifeCycle::destroy_consumer_admin (void)
+LifeCycle::destroy_consumer_admin ()
 {
   this->consumer_admin_->destroy ();
 
@@ -197,7 +195,7 @@ LifeCycle::destroy_consumer_admin (void)
 }
 
 void
-LifeCycle::destroy_ec (void)
+LifeCycle::destroy_ec ()
 {
   this->ec_->destroy ();
 

@@ -31,18 +31,16 @@
 class Server_Worker : public ACE_Task_Base
 {
 public:
-
   /// Constructor
   Server_Worker (CORBA::ORB_ptr orb);
 
   /// The thread entry point.
-  virtual int svc (void);
+  virtual int svc ();
 
 
 private:
   /// The ORB
   CORBA::ORB_var orb_;
-
 };
 
 #if defined(_MSC_VER)

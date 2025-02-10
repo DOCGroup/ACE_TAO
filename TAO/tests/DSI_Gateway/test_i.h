@@ -32,15 +32,15 @@ public:
                            Structure_out the_out_structure,
                            char *&name);
 
-   CORBA::Long test_val (void);
+   CORBA::Long test_val ();
 
    void test_val (CORBA::Long test_val);
 
-  void raise_user_exception (void);
+  void raise_user_exception ();
 
-  void raise_system_exception (void);
+  void raise_system_exception ();
 
-  void shutdown (void);
+  void shutdown ();
 
 private:
   // The ORB

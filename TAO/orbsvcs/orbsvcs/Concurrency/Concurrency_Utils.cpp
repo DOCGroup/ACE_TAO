@@ -16,7 +16,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Default constructor
-TAO_Concurrency_Server::TAO_Concurrency_Server (void)
+TAO_Concurrency_Server::TAO_Concurrency_Server ()
 {
 }
 
@@ -72,7 +72,7 @@ TAO_Concurrency_Server::init (CORBA::ORB_ptr orb,
 }
 
 int
-TAO_Concurrency_Server::fini (void)
+TAO_Concurrency_Server::fini ()
 {
   try
     {
@@ -95,12 +95,12 @@ TAO_Concurrency_Server::fini (void)
 }
 
 CC_LockSetFactory *
-TAO_Concurrency_Server::GetLockSetFactory(void)
+TAO_Concurrency_Server::GetLockSetFactory()
 {
   return &this->lock_set_factory_;
 }
 
-TAO_Concurrency_Server::~TAO_Concurrency_Server (void)
+TAO_Concurrency_Server::~TAO_Concurrency_Server ()
 {
 }
 

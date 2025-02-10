@@ -77,6 +77,8 @@ struct TestAnon {
 
 // 7.4.15.4.2 Applying Annotations
 
+const double dub = 6.78;
+
 @abc
 struct Annotated1 {
 
@@ -89,11 +91,10 @@ struct Annotated1 {
   @aa(L"bbcc") octet g;
   @ddee(4 + 5) octet h;
 
-  const double dub = 6.78;
   @ffgg(dub) octet i;
 
   @hhii(jj = FALSE) octet j;
-  @kkll(mm = 3, nn = 'oo') octet k;
+  @kkll(mm = 3, nn = 'o') octet k;
 };
 
 @bit_bound(8)

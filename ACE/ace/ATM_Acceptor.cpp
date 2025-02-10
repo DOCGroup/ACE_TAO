@@ -1,7 +1,5 @@
 #include "ace/ATM_Acceptor.h"
 
-
-
 #if defined (ACE_HAS_ATM)
 
 #if defined (ACE_HAS_LINUX_ATM)
@@ -12,7 +10,6 @@
 #include "ace/ATM_Acceptor.inl"
 #endif /* __ACE_INLINE__ */
 
-
 // Open versioned namespace, if enabled by the user.
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -21,12 +18,12 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_ATM_Acceptor)
 
-ACE_ATM_Acceptor::ACE_ATM_Acceptor (void)
+ACE_ATM_Acceptor::ACE_ATM_Acceptor ()
 {
   ACE_TRACE ("ACE_ATM_Acceptor::ACE_ATM_Acceptor");
 }
 
-ACE_ATM_Acceptor::~ACE_ATM_Acceptor (void)
+ACE_ATM_Acceptor::~ACE_ATM_Acceptor ()
 {
   ACE_TRACE ("ACE_ATM_Acceptor::~ACE_ATM_Acceptor");
 }

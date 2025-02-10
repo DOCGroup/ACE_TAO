@@ -43,7 +43,7 @@ public:
    * Specify the name of the attribute.
    */
   virtual int setName (const ACEXML_Char *n);
-  virtual const ACEXML_Char *getName (void);
+  virtual const ACEXML_Char *getName ();
 
   /**
    * Set the attribute type.
@@ -65,13 +65,13 @@ public:
    *
    * @retval 0 if the attribute is not a valid combo.
    */
-  virtual int validAttr (void);
+  virtual int validAttr ();
 
 
   /**
    * Dump the content of the attribute definition.
    */
-  virtual void dump (void);
+  virtual void dump ();
 private:
   /// Attribute name.
   ACEXML_String name_;
@@ -147,7 +147,7 @@ public:
   /**
    * Dump the content of the attribute definition.
    */
-  virtual void dump (void);
+  virtual void dump ();
 protected:
   /// The name of the element type these attributes applied.
   ACEXML_String element_name_;

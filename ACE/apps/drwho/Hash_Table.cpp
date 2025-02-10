@@ -4,7 +4,7 @@
 #include "ace/OS_Memory.h"
 #include "ace/OS_NS_string.h"
 
-Hash_Table::Hash_Table (void)
+Hash_Table::Hash_Table ()
   : current_ptr (0),
     current_index (0),
     hash_table_size (HASH_TABLE_SIZE)
@@ -19,7 +19,7 @@ Hash_Table::Hash_Table (void)
 // Iterate through the hash table returning one node at a time...
 
 Protocol_Record *
-Hash_Table::get_next_entry (void)
+Hash_Table::get_next_entry ()
 {
   // Reset the iterator if we are starting from the beginning.
 
@@ -48,14 +48,14 @@ Hash_Table::get_next_entry (void)
 }
 
 Protocol_Record *
-Hash_Table::get_each_entry (void)
+Hash_Table::get_each_entry ()
 {
   return this->get_next_entry ();
 }
 
 // Frees up all the dynamic memory in the hash table.
 
-Hash_Table::~Hash_Table (void)
+Hash_Table::~Hash_Table ()
 {
   if (Options::get_opt (Options::DEBUGGING))
     ACE_DEBUG ((LM_DEBUG,

@@ -2,7 +2,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
-TAO_CEC_Default_Factory::TAO_CEC_Default_Factory (void)
+TAO_CEC_Default_Factory::TAO_CEC_Default_Factory ()
   :  dispatching_ (TAO_CEC_DEFAULT_DISPATCHING),
      pulling_strategy_ (TAO_CEC_DEFAULT_PULLING_STRATEGY),
      consumer_collection_ (TAO_CEC_DEFAULT_CONSUMER_COLLECTION),

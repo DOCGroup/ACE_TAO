@@ -26,11 +26,11 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  *
  * @brief Specialize ACE_SOCK_Acceptor to lock around <accept>;
  *
- * This class is necessary since some OS platforms (e.g.,
- * Solaris 2.5) do not allow multiple threads/processes to
- * simultaneously call <accept> on the same listen-mode
- * port/socket.  Thus, we need to protect against multiple
- * concurrent accesses by using the appropriate type of lock.
+ * This class is necessary since some OS platforms do not allow
+ * multiple threads/processes to simultaneously call @c accept
+ * on the same listen-mode port/socket.  Thus, we need to
+ * protect against multiple concurrent accesses by using
+ * the appropriate type of lock.
  */
 template <class ACE_LOCK>
 class ACE_LOCK_SOCK_Acceptor : public ACE_SOCK_Acceptor
@@ -44,7 +44,7 @@ public:
               bool reset_new_handle = false) const;
 
   /// Return a reference to the lock.
-  ACE_LOCK &lock (void);
+  ACE_LOCK &lock ();
 
 protected:
   /// Type of locking mechanism.
@@ -53,13 +53,7 @@ protected:
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/LOCK_SOCK_Acceptor.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("LOCK_SOCK_Acceptor.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_LOCK_SOCK_ACCEPTOR_H */

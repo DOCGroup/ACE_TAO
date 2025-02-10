@@ -13,7 +13,7 @@ public:
   ~Message ()
   { }
 
-  RecordingDevice *recorder (void)
+  RecordingDevice *recorder ()
   {
     return this->device_;
   }
@@ -28,7 +28,7 @@ public:
     this->type_ = type;
   }
 
-  MessageType *type (void)
+  MessageType *type ()
   {
     return this->type_;
   }
@@ -38,7 +38,7 @@ public:
     this->id_ = id;
   }
 
-  CallerId *caller_id (void)
+  CallerId *caller_id ()
   {
     return this->id_;
   }
@@ -54,22 +54,22 @@ public:
     this->type_ = type;
   }
 
-  ACE_FILE_Addr &addr (void)
+  ACE_FILE_Addr &addr ()
   {
     return this->addr_;
   }
 
-  int is_text (void)
+  int is_text ()
   {
     return this->type_->is_text ();
   }
 
-  int is_audio (void)
+  int is_audio ()
   {
     return this->type_->is_audio ();
   }
 
-  int is_video (void)
+  int is_video ()
   {
     return this->type_->is_video ();
   }

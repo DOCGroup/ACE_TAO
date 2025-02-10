@@ -30,7 +30,7 @@ class be_visitor_component_scope : public be_visitor_scope
 protected:
   be_visitor_component_scope (be_visitor_context *ctx);
 
-  virtual ~be_visitor_component_scope (void);
+  virtual ~be_visitor_component_scope ();
 
 public:
   virtual int visit_extended_port (be_extended_port *node);
@@ -52,10 +52,10 @@ public:
   void node (be_component *c);
 
 protected:
-  void gen_svnt_entrypoint_decl (void);
-  void gen_svnt_entrypoint_defn (void);
-  void gen_exec_entrypoint_decl (void);
-  void gen_exec_entrypoint_defn (void);
+  void gen_svnt_entrypoint_decl ();
+  void gen_svnt_entrypoint_defn ();
+  void gen_exec_entrypoint_decl ();
+  void gen_exec_entrypoint_defn ();
 
 protected:
   be_component *node_;

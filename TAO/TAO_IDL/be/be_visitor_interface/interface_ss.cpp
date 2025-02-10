@@ -19,7 +19,7 @@ be_visitor_interface_ss::be_visitor_interface_ss (be_visitor_context *ctx)
 {
 }
 
-be_visitor_interface_ss::~be_visitor_interface_ss (void)
+be_visitor_interface_ss::~be_visitor_interface_ss ()
 {
 }
 
@@ -86,8 +86,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
 
   *os << be_nl_2;
 
-  *os << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (os);
 
   *os << be_nl_2;
 
@@ -108,44 +107,22 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
 
   *os << full_skel_name << "::"
       << local_name_prefix << node_local_name
-      << " (void)" << be_idt_nl;
+      << " ()";
 
-  *os << ": TAO_ServantBase ()" << be_uidt_nl;
+  if (node->nmembers () == 0)
+    {
+      *os << be_idt_nl << ": TAO_ServantBase ()" << be_uidt_nl;
+    }
+  else
+    {
+      *os << be_nl;
+    }
 
   // Default constructor body.
   *os << "{" << be_idt_nl
-      << "this->optable_ = &tao_" << flat_name
-      << "_optable;" << be_uidt_nl
+      << "this->optable_ = std::addressof (tao_" << flat_name
+      << "_optable);" << be_uidt_nl
       << "}" << be_nl_2;
-
-  // find if we are at the top scope or inside some module
-  *os << full_skel_name << "::"
-      << local_name_prefix << node_local_name << " ("
-      << "const " << local_name_prefix
-      << node_local_name << "& rhs)";
-
-  *os << be_idt_nl
-      << ": TAO_Abstract_ServantBase (rhs)," << be_nl
-      << "  TAO_ServantBase (rhs)";
-
-  if (this->generate_copy_ctor (node, os) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_visitor_interface_ss::")
-                         ACE_TEXT ("visit_interface - ")
-                         ACE_TEXT (" copy ctor generation failed\n")),
-                        -1);
-    }
-
-  *os << be_uidt_nl
-      << "{" << be_nl
-      << "}" << be_nl_2;
-
-  *os << full_skel_name << "::~"
-      << local_name_prefix << node_local_name
-      << " (void)" << be_nl;
-  *os << "{" << be_nl;
-  *os << "}" << be_nl;
 
   // Generate code for elements in the scope (e.g., operations).
   if (this->visit_scope (node) == -1)
@@ -159,8 +136,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
 
   *os << be_nl_2;
 
-  *os << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (os);
 
   *os << be_nl_2;
 
@@ -182,27 +158,20 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
                         -1);
     }
 
-  *os << "!ACE_OS::strcmp (" << be_idt << be_idt_nl
-      << "value," << be_nl
-      << "\"IDL:omg.org/CORBA/Object:1.0\"" << be_uidt_nl
-      << ")";
+  *os << "std::strcmp (value, \"IDL:omg.org/CORBA/Object:1.0\") == 0";
 
   if (node->has_mixed_parentage ())
     {
-      *os << " ||" << be_uidt_nl
-          << "!ACE_OS::strcmp (" << be_idt << be_idt_nl
-          << "value," << be_nl
-          << "\"IDL:omg.org/CORBA/AbstractBase:1.0\""
-          << be_uidt_nl
-          << ")";
+      *os << " ||" << be_nl
+          << "std::strcmp (value, \"IDL:omg.org/CORBA/AbstractBase:1.0\") == 0";
     }
 
-  *os << be_uidt << be_uidt_nl
+  *os << be_uidt_nl
       << ");" << be_uidt << be_uidt_nl
       << "}" << be_nl_2;
 
   *os << "const char* " << full_skel_name
-      << "::_interface_repository_id (void) const"
+      << "::_interface_repository_id () const"
       << be_nl;
   *os << "{" << be_idt_nl;
   *os << "return \"" << node->repoID () << "\";" << be_uidt_nl;
@@ -261,7 +230,7 @@ be_visitor_interface_ss::gen_abstract_ops_helper (
       return 0;
     }
 
-  AST_Decl *d = 0;
+  AST_Decl *d = nullptr;
   be_visitor_context ctx;
   ctx.stream (os);
   ctx.state (TAO_CodeGen::TAO_ROOT_SS);
@@ -272,7 +241,7 @@ be_visitor_interface_ss::gen_abstract_ops_helper (
     {
       d = si.item ();
 
-      if (d == 0)
+      if (d == nullptr)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("be_visitor_interface_ss::")
@@ -283,14 +252,14 @@ be_visitor_interface_ss::gen_abstract_ops_helper (
 
       AST_Decl::NodeType nt = d->node_type ();
 
-      UTL_ScopedName *item_new_name = 0;
-      UTL_ScopedName *new_name = 0;
+      UTL_ScopedName *item_new_name = nullptr;
+      UTL_ScopedName *new_name = nullptr;
 
       if (AST_Decl::NT_op == nt || AST_Decl::NT_attr == nt)
         {
           ACE_NEW_RETURN (item_new_name,
                           UTL_ScopedName (d->local_name ()->copy (),
-                                          0),
+                                          nullptr),
                           -1);
 
           new_name = (UTL_ScopedName *) node->name ()->copy ();
@@ -307,7 +276,7 @@ be_visitor_interface_ss::gen_abstract_ops_helper (
       // abstract interface in a concrete interface or component.
       if (AST_Decl::NT_op == nt)
         {
-          be_operation *op = be_operation::narrow_from_decl (d);
+          be_operation *op = dynamic_cast<be_operation*> (d);
           UTL_ScopedName *old_name =
             (UTL_ScopedName *) op->name ()->copy ();
           op->set_name (new_name);
@@ -324,10 +293,10 @@ be_visitor_interface_ss::gen_abstract_ops_helper (
       else if (AST_Decl::NT_attr == nt)
         {
           AST_Attribute *attr =
-            AST_Attribute::narrow_from_decl (d);
+            dynamic_cast<AST_Attribute*> (d);
           be_attribute new_attr (attr->readonly (),
                                  attr->field_type (),
-                                 0,
+                                 nullptr,
                                  attr->is_local (),
                                  attr->is_abstract ());
           new_attr.set_defined_in (node);
@@ -336,7 +305,7 @@ be_visitor_interface_ss::gen_abstract_ops_helper (
           UTL_ExceptList *get_exceptions =
             attr->get_get_exceptions ();
 
-          if (0 != get_exceptions)
+          if (nullptr != get_exceptions)
             {
               new_attr.be_add_get_exceptions (get_exceptions->copy ());
             }
@@ -344,14 +313,14 @@ be_visitor_interface_ss::gen_abstract_ops_helper (
           UTL_ExceptList *set_exceptions =
             attr->get_set_exceptions ();
 
-          if (0 != set_exceptions)
+          if (nullptr != set_exceptions)
             {
               new_attr.be_add_set_exceptions (set_exceptions->copy ());
             }
 
           be_visitor_attribute attr_visitor (&ctx);
           attr_visitor.visit_attribute (&new_attr);
-          ctx.attribute (0);
+          ctx.attribute (nullptr);
           new_attr.destroy ();
         }
     }
@@ -366,50 +335,37 @@ be_visitor_interface_ss::this_method (be_interface *node)
 
   *os << be_nl_2;
 
-  *os << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (os);
 
   *os << be_nl_2;
 
   // The _this () operation.
   *os << node->full_name () << " *" << be_nl
       << node->full_skel_name ()
-      << "::_this (void)" << be_nl
+      << "::_this ()" << be_nl
       << "{" << be_idt_nl
-      << "TAO_Stub *stub = this->_create_stub ();"
-      << be_nl_2
-      << "TAO_Stub_Auto_Ptr safe_stub (stub);" << be_nl;
+      << "TAO_Stub_Auto_Ptr stub (this->_create_stub ());"
+      << be_nl;
+
+  *os << "::CORBA::Boolean const _tao_opt_colloc = "
+      << "stub->servant_orb_var ()->orb_core ()->"
+      << "optimize_collocation_objects ();" << be_nl;
 
   /* Coverity whines about an unused return value from _nil() when
      initializing tmp.  Just use zero instead. */
-  *os << "::CORBA::Object_ptr tmp = CORBA::Object_ptr ();"
-      << be_nl_2;
+  *os << "::CORBA::Object_var obj = "
+      << "new (std::nothrow) ::CORBA::Object (stub.get (), _tao_opt_colloc, this);" << be_nl
+      << "if (obj.ptr ())" << be_idt_nl
+      << "{" << be_idt_nl;
 
-  *os << "::CORBA::Boolean const _tao_opt_colloc ="
-      << be_idt_nl
-      << "stub->servant_orb_var ()->orb_core ()->"
-      << "optimize_collocation_objects ();" << be_uidt_nl << be_nl;
-
-  *os << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
-      << "tmp," << be_nl
-      << "::CORBA::Object (stub, ";
-
-  *os << "_tao_opt_colloc";
-
-  *os << ", this)," << be_nl
-      << "0);" << be_uidt << be_uidt_nl << be_nl;
-
-  *os << "::CORBA::Object_var obj = tmp;" << be_nl
-      << "(void) safe_stub.release ();" << be_nl_2
-      << "typedef ::" << node->name () << " STUB_SCOPED_NAME;"
-      << be_nl
-      << "return" << be_idt_nl
-      << "TAO::Narrow_Utils<STUB_SCOPED_NAME>::unchecked_narrow ("
-      << be_idt << be_idt_nl
+  *os << "(void) stub.release ();" << be_nl
+      << "return "
+      << "TAO::Narrow_Utils<::" << node->name () << ">::unchecked_narrow ("
       << "obj.in ());";
 
-  *os << be_uidt << be_uidt << be_uidt << be_uidt_nl
-      << "}";
+  *os << be_uidt_nl
+      << "}"
+      << be_uidt_nl << "return {};" << be_uidt_nl << "}";
 }
 
 void
@@ -419,8 +375,7 @@ be_visitor_interface_ss::dispatch_method (be_interface *node)
 
   *os << be_nl_2;
 
-  *os << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (os);
 
   *os << be_nl_2;
 
@@ -453,11 +408,9 @@ be_visitor_interface_ss::generate_amh_classes (be_interface *node)
 int
 be_visitor_interface_ss::generate_proxy_classes (be_interface *node)
 {
-  be_visitor_context ctx = *this->ctx_;
-
   if (be_global->gen_direct_collocation ())
     {
-      ctx = *this->ctx_;
+      be_visitor_context ctx = *this->ctx_;
       ctx.state (TAO_CodeGen::TAO_INTERFACE_DIRECT_PROXY_IMPL_SS);
       be_visitor_interface_direct_proxy_impl_ss idpi_visitor (&ctx);
 
@@ -473,14 +426,6 @@ be_visitor_interface_ss::generate_proxy_classes (be_interface *node)
     }
 
   return 0;
-}
-
-int
-be_visitor_interface_ss::generate_copy_ctor (be_interface *node,
-                                             TAO_OutStream *os)
-{
-  return node->traverse_inheritance_graph (be_interface::copy_ctor_helper,
-                                           os);
 }
 
 ACE_CString

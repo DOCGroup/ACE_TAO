@@ -11,7 +11,7 @@ namespace TAO
   }
 
   ::Compression::CompressorId
-  CompressorFactory::compressor_id (void)
+  CompressorFactory::compressor_id ()
   {
     return compressor_id_;
   }

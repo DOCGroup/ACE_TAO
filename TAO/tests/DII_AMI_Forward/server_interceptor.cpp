@@ -5,7 +5,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/Thread.h"
 
-ForwardTest_Request_Interceptor::ForwardTest_Request_Interceptor (void)
+ForwardTest_Request_Interceptor::ForwardTest_Request_Interceptor ()
   : myname_ ("ForwardTest_Interceptor"),
     forward_location_ (CORBA::Object::_nil ()),
     forward_location_done_ (false)
@@ -19,7 +19,7 @@ ForwardTest_Request_Interceptor::ForwardTest_Request_Interceptor (CORBA::Object_
 {
 }
 
-ForwardTest_Request_Interceptor::~ForwardTest_Request_Interceptor (void)
+ForwardTest_Request_Interceptor::~ForwardTest_Request_Interceptor ()
 {
 }
 
@@ -36,13 +36,13 @@ ForwardTest_Request_Interceptor::forward_reference (CORBA::Object_ptr forward_lo
 }
 
 char *
-ForwardTest_Request_Interceptor::name (void)
+ForwardTest_Request_Interceptor::name ()
 {
   return CORBA::string_dup (this->myname_);
 }
 
 void
-ForwardTest_Request_Interceptor::destroy (void)
+ForwardTest_Request_Interceptor::destroy ()
 {
 }
 
@@ -62,8 +62,8 @@ ForwardTest_Request_Interceptor::receive_request_service_contexts (
   // locally on the server side as a side effect of another call,
   // meaning that the client hasn't added the service context yet.
   // Same goes for the shutdown call
-  if (ACE_OS_String::strcmp ("_is_a", operation.in ()) == 0 ||
-      ACE_OS_String::strcmp ("shutdown", operation.in ()) == 0)
+  if (ACE_OS::strcmp ("_is_a", operation.in ()) == 0 ||
+      ACE_OS::strcmp ("shutdown", operation.in ()) == 0)
     return;
 
   if (!forward_location_done_)
@@ -103,7 +103,6 @@ void
 ForwardTest_Request_Interceptor::send_other (
              PortableInterceptor::ServerRequestInfo_ptr ri)
 {
-
   // This will throw an exception if a location forward has not
   // occurred.  If an exception is thrown then something is wrong with
   // the PortableInterceptor::ForwardRequest support.

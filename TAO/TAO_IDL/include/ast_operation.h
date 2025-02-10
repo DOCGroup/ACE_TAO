@@ -1,4 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
 /*
 
 COPYRIGHT
@@ -90,28 +89,28 @@ public:
                  bool local,
                  bool abstract);
 
-  virtual ~AST_Operation (void);
+  virtual ~AST_Operation ();
 
   // Data Accessors.
 
-  AST_Type *return_type (void);
+  AST_Type *return_type ();
 
-  Flags flags (void);
+  Flags flags ();
 
-  UTL_StrList *context (void);
+  UTL_StrList *context ();
 
-  UTL_ExceptList *exceptions (void);
+  UTL_ExceptList *exceptions ();
 
   // Public operations.
 
-  bool void_return_type (void);
+  bool void_return_type ();
   /// Returns 1 if the operation has a void return type.
 
   /// Return the number of arguments
-  virtual int argument_count (void);
+  virtual int argument_count ();
 
   /// Return the flag indicating a request sends argument data
-  virtual bool has_in_arguments (void);
+  virtual bool has_in_arguments ();
 
   /// Count the number of arguments of a certain type.
   /**
@@ -125,21 +124,16 @@ public:
    */
   int count_arguments_with_direction (int direction_mask);
 
-  virtual int has_native (void);
+  virtual int has_native ();
   // Any of the arguments or the return value is a <native> type.
   // This is important because in that case no code should be
   // generated for the stubs.
-
-  // Narrowing.
-
-  DEF_NARROW_FROM_DECL(AST_Operation);
-  DEF_NARROW_FROM_SCOPE(AST_Operation);
 
   // AST Dumping.
   virtual void dump (ACE_OSTREAM_TYPE &o);
 
   // Cleanup function.
-  virtual void destroy (void);
+  virtual void destroy ();
 
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
@@ -148,6 +142,8 @@ public:
   UTL_ExceptList *be_add_exceptions (UTL_ExceptList *t);
 
   static AST_Decl::NodeType const NT;
+
+  virtual bool annotatable () const;
 
 protected:
   // Data.
@@ -175,12 +171,12 @@ protected:
 
   // Operations.
 
-  int compute_argument_attr (void);
+  int compute_argument_attr ();
   // Count the number of arguments.
 
   // Scope Management Protocol.
 
-  friend int tao_yyparse (void);
+  friend int tao_yyparse ();
   virtual AST_Argument *fe_add_argument (AST_Argument *a);
   virtual UTL_StrList *fe_add_context (UTL_StrList *c);
   virtual UTL_NameList *fe_add_exceptions (UTL_NameList *e);

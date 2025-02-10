@@ -50,13 +50,13 @@ test_i::method (CORBA::Long client_id,
 }
 
 PortableServer::POA_ptr
-test_i::_default_POA (void)
+test_i::_default_POA ()
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
 
 void
-test_i::shutdown (void)
+test_i::shutdown ()
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

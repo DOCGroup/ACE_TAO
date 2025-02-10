@@ -13,13 +13,13 @@ ServerRequestInterceptor::ServerRequestInterceptor (
 }
 
 char *
-ServerRequestInterceptor::name (void)
+ServerRequestInterceptor::name ()
 {
   return CORBA::string_dup ("ServerRequestInterceptor");
 }
 
 void
-ServerRequestInterceptor::destroy (void)
+ServerRequestInterceptor::destroy ()
 {
 }
 

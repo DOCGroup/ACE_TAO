@@ -29,7 +29,7 @@ public:
                   "Unable to set stdout to non-block."));
   }
 
-  ACE_HANDLE get_handle (void) const { return ACE_STDOUT; }
+  ACE_HANDLE get_handle () const { return ACE_STDOUT; }
 
   int handle_output (ACE_HANDLE)
   {

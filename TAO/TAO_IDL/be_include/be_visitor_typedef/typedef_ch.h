@@ -30,7 +30,7 @@ public:
   be_visitor_typedef_ch (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_typedef_ch (void);
+  ~be_visitor_typedef_ch ();
 
   /// visit typedef. We provide code for this method in the derived class
   virtual int visit_typedef (be_typedef *node);
@@ -58,6 +58,9 @@ public:
 
   /// visit a sequence
   virtual int visit_sequence (be_sequence *node);
+
+  /// visit a masp
+  virtual int visit_map (be_map *node);
 
   /// visit a structure
   virtual int visit_structure (be_structure *node);

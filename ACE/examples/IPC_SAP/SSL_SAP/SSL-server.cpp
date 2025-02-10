@@ -10,10 +10,8 @@
 
 #include "ace/SSL/SSL_SOCK_Acceptor.h"
 
-
-
 // Are we running verbosely?
-static int verbose = 0;
+static bool verbose = false;
 
 static void
 run_server (ACE_THR_FUNC server,
@@ -34,7 +32,6 @@ run_server (ACE_THR_FUNC server,
 }
 
 // Function entry point into the twoway server task.
-
 static ACE_THR_FUNC_RETURN
 twoway_server (void *arg)
 {

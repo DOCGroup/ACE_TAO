@@ -22,7 +22,7 @@ be_visitor_sequence_buffer_type::be_visitor_sequence_buffer_type (
 {
 }
 
-be_visitor_sequence_buffer_type::~be_visitor_sequence_buffer_type (void)
+be_visitor_sequence_buffer_type::~be_visitor_sequence_buffer_type ()
 {
 }
 
@@ -31,7 +31,7 @@ int
 be_visitor_sequence_buffer_type::visit_node (be_type *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  be_type *bt = 0;
+  be_type *bt = nullptr;
 
   if (this->ctx_->alias ())
     {
@@ -269,6 +269,6 @@ be_visitor_sequence_buffer_type::visit_typedef (be_typedef *node)
                         -1);
     }
 
-  this->ctx_->alias (0);
+  this->ctx_->alias (nullptr);
   return 0;
 }

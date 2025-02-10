@@ -48,7 +48,7 @@ namespace TAO
 // TAO_IDL - Generated from
 // be\be_visitor_exception/exception_cs.cpp:63
 
-CORBA::WrongTransaction::WrongTransaction (void)
+CORBA::WrongTransaction::WrongTransaction ()
   : CORBA::UserException (
         "IDL:omg.org/CORBA/WrongTransaction:1.0",
         "WrongTransaction"
@@ -56,7 +56,7 @@ CORBA::WrongTransaction::WrongTransaction (void)
 {
 }
 
-CORBA::WrongTransaction::~WrongTransaction (void)
+CORBA::WrongTransaction::~WrongTransaction ()
 {
 }
 
@@ -94,33 +94,32 @@ CORBA::WrongTransaction::_downcast (CORBA::Exception const *_tao_excp)
   return dynamic_cast<const WrongTransaction *> (_tao_excp);
 }
 
-CORBA::Exception *CORBA::WrongTransaction::_alloc (void)
+CORBA::Exception *CORBA::WrongTransaction::_alloc ()
 {
-  CORBA::Exception *retval = 0;
-  ACE_NEW_RETURN (retval, ::CORBA::WrongTransaction, 0);
+  CORBA::Exception *retval = nullptr;
+  ACE_NEW_RETURN (retval, ::CORBA::WrongTransaction, nullptr);
   return retval;
 }
 
 CORBA::Exception *
-CORBA::WrongTransaction::_tao_duplicate (void) const
+CORBA::WrongTransaction::_tao_duplicate () const
 {
-  CORBA::Exception *result = 0;
+  CORBA::Exception *result = nullptr;
   ACE_NEW_RETURN (
       result,
       ::CORBA::WrongTransaction (*this),
-      0
+      nullptr
     );
   return result;
 }
 
-void CORBA::WrongTransaction::_raise (void) const
+void CORBA::WrongTransaction::_raise () const
 {
   throw *this;
 }
 
 void CORBA::WrongTransaction::_tao_encode (
-    TAO_OutputCDR &cdr
-  ) const
+    TAO_OutputCDR &cdr) const
 {
   if (cdr << *this)
     {
@@ -143,13 +142,13 @@ void CORBA::WrongTransaction::_tao_decode (
 }
 
 // TAO extension - the virtual _type method.
-CORBA::TypeCode_ptr CORBA::WrongTransaction::_tao_type (void) const
+CORBA::TypeCode_ptr CORBA::WrongTransaction::_tao_type () const
 {
   TAO_AnyTypeCode_Adapter *adapter =
     ACE_Dynamic_Service<TAO_AnyTypeCode_Adapter>::instance (
         "AnyTypeCode_Adapter"
       );
-  if (adapter != 0)
+  if (adapter != nullptr)
     return adapter->_tao_type_WrongTransaction ();
   else
     {
@@ -157,7 +156,7 @@ CORBA::TypeCode_ptr CORBA::WrongTransaction::_tao_type (void) const
                   ACE_TEXT ("(%P|%t) %p\n"),
                   ACE_TEXT ("Unable to find the ")
                   ACE_TEXT ("AnyTypeCode Adapter instance")));
-      return 0;
+      return nullptr;
     }
 }
 

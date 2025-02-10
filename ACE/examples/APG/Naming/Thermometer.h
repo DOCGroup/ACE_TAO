@@ -12,7 +12,7 @@ public:
     : addr_(addr), threshold_(5)
   { }
 
-  float temperature (void)
+  float temperature ()
   {
     int success = ACE_OS::rand () % 10;
     if (success < this->threshold_)
@@ -26,12 +26,12 @@ public:
     return (float)itemp;
   }
 
-  const char *address (void)
+  const char *address ()
   {
     return this->addr_;
   }
 
-  void reset (void)
+  void reset ()
   {
     this->threshold_ = 4;
     ACE_DEBUG ((LM_ERROR, ACE_TEXT ("Resetting thermometer %C\n"),

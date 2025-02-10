@@ -5,13 +5,13 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE ACE_Lock &
-TAO_POA_Manager::lock (void)
+TAO_POA_Manager::lock ()
 {
   return this->lock_;
 }
 
 ACE_INLINE void
-TAO_POA_Manager::activate (void)
+TAO_POA_Manager::activate ()
 {
   // Lock access to the POAManager for the duration of this transaction
   TAO_OBJECT_ADAPTER_GUARD;
@@ -52,13 +52,13 @@ TAO_POA_Manager::deactivate (CORBA::Boolean etherealize_objects,
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
 ACE_INLINE PortableServer::POAManager::State
-TAO_POA_Manager::get_state_i (void)
+TAO_POA_Manager::get_state_i ()
 {
   return this->state_;
 }
 
 ACE_INLINE PortableServer::POAManager::State
-TAO_POA_Manager::get_state (void)
+TAO_POA_Manager::get_state ()
 {
   // Lock access to the POAManager for the duration of this transaction
   TAO_OBJECT_ADAPTER_GUARD_RETURN (this->state_);
@@ -67,7 +67,7 @@ TAO_POA_Manager::get_state (void)
 }
 
 ACE_INLINE char*
-TAO_POA_Manager::generate_manager_id (void) const
+TAO_POA_Manager::generate_manager_id () const
 {
   // The AdapterManagerId must be unique across all Adapter Managers
   // (e.g. POAManagers) within a given process.  To avoid locking
@@ -113,7 +113,7 @@ TAO_POA_Manager::generate_manager_id (void) const
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
 
 ACE_INLINE
-CORBA::PolicyList& TAO_POA_Manager::get_policies (void)
+CORBA::PolicyList& TAO_POA_Manager::get_policies ()
 {
   return this->policies_;
 }

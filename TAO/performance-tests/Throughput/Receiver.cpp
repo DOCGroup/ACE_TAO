@@ -2,7 +2,7 @@
 #include "Receiver.h"
 #include "ace/High_Res_Timer.h"
 
-Receiver::Receiver (void)
+Receiver::Receiver ()
   : start_time_ (0)
   , message_count_ (0)
   , byte_count_ (0)
@@ -38,7 +38,7 @@ Receiver::receive_data (const Test::Message &the_message)
 }
 
 void
-Receiver::done (void)
+Receiver::done ()
 {
   if (this->message_count_ == 0)
     {

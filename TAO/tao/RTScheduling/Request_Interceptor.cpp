@@ -53,7 +53,7 @@ Client_Interceptor::send_request (PortableInterceptor::ClientRequestInfo_ptr ri)
             TAOLIB_DEBUG ((LM_DEBUG,
                         "The Guid is %d %d\n",
                         id,
-                        TAO_RTScheduler_Current::guid_counter.value_i ()));
+                        TAO_RTScheduler_Current::guid_counter.load ()));
 
           // Create new DT.
           RTScheduling::DistributableThread_var dt =
@@ -66,7 +66,6 @@ Client_Interceptor::send_request (PortableInterceptor::ClientRequestInfo_ptr ri)
               TAOLIB_DEBUG ((LM_DEBUG,
                           "No Scheduling Segment Context\n"));
               throw ::CORBA::INTERNAL ();
-
             }
 
           // @@ Store implicit_sched_param in a var
@@ -90,7 +89,6 @@ Client_Interceptor::send_request (PortableInterceptor::ClientRequestInfo_ptr ri)
           // Install new current in the ORB.
           //current->implementation (new_current);
           tss->rtscheduler_current_impl_ = new_current;
-
         }
 
       // Scheduler populates the service context with
@@ -114,27 +112,31 @@ void
 Client_Interceptor::send_poll (PortableInterceptor::ClientRequestInfo_ptr ri)
 {
   if (TAO_debug_level > 0)
-    TAOLIB_DEBUG ((LM_DEBUG,
-                "Client_Interceptor::send_poll\n"));
+    {
+      TAOLIB_DEBUG ((LM_DEBUG,
+                  "Client_Interceptor::send_poll\n"));
+    }
 
-    TAO_RTScheduler_Current_i *current = 0;
+  TAO_RTScheduler_Current_i *current = 0;
 
-    TAO_TSS_Resources *tss = TAO_TSS_Resources::instance ();
+  TAO_TSS_Resources *tss = TAO_TSS_Resources::instance ();
 
-    current = static_cast<TAO_RTScheduler_Current_i *> (tss->rtscheduler_current_impl_);
-    if (current != 0)
-      {
-        RTScheduling::Scheduler_var scheduler = current->scheduler ();
-        scheduler->send_poll (ri);
-      }
+  current = static_cast<TAO_RTScheduler_Current_i *> (tss->rtscheduler_current_impl_);
+  if (current != 0)
+    {
+      RTScheduling::Scheduler_var scheduler = current->scheduler ();
+      scheduler->send_poll (ri);
+    }
 }
 
 void
 Client_Interceptor::receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri)
 {
   if (TAO_debug_level > 0)
-    TAOLIB_DEBUG ((LM_DEBUG,
-                "Client_Interceptor::receive_reply\n"));
+    {
+      TAOLIB_DEBUG ((LM_DEBUG,
+                  "Client_Interceptor::receive_reply\n"));
+    }
 
   TAO_RTScheduler_Current_i *current = 0;
 
@@ -152,8 +154,10 @@ void
 Client_Interceptor::receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri)
 {
   if (TAO_debug_level > 0)
-    TAOLIB_DEBUG ((LM_DEBUG,
-                "Client_Interceptor::receive_exception\n"));
+    {
+      TAOLIB_DEBUG ((LM_DEBUG,
+                  "Client_Interceptor::receive_exception\n"));
+    }
 
   TAO_TSS_Resources *tss = TAO_TSS_Resources::instance ();
 
@@ -165,7 +169,7 @@ Client_Interceptor::receive_exception (PortableInterceptor::ClientRequestInfo_pt
       if (ri == 0)
         {
           TAOLIB_ERROR ((LM_ERROR,
-                      "ri = 0\n"));
+                      "Client_Interceptor::receive_exception ri = 0\n"));
           return;
         }
 
@@ -208,8 +212,10 @@ void
 Client_Interceptor::receive_other (PortableInterceptor::ClientRequestInfo_ptr ri)
 {
   if (TAO_debug_level > 0)
-    TAOLIB_DEBUG ((LM_DEBUG,
-                "Client_Interceptor::receive_other\n"));
+    {
+      TAOLIB_DEBUG ((LM_DEBUG,
+                  "Client_Interceptor::receive_other\n"));
+    }
 
   TAO_RTScheduler_Current_i *current = 0;
 
@@ -224,13 +230,13 @@ Client_Interceptor::receive_other (PortableInterceptor::ClientRequestInfo_ptr ri
 }
 
 char*
-Client_Interceptor::name (void)
+Client_Interceptor::name ()
 {
-  return  CORBA::string_dup ("RTSchdeuler_Client_Interceptor");
+  return CORBA::string_dup ("RTSchdeuler_Client_Interceptor");
 }
 
 void
-Client_Interceptor::destroy (void)
+Client_Interceptor::destroy ()
 {
 }
 
@@ -247,18 +253,20 @@ Server_Interceptor::receive_request_service_contexts (
   PortableInterceptor::ServerRequestInfo_ptr)
 {
   if (TAO_debug_level > 0)
-    TAOLIB_DEBUG ((LM_DEBUG,
-                "Server_Interceptor::receive_request_service_contexts\n"));
-
+    {
+      TAOLIB_DEBUG ((LM_DEBUG,
+                  "Server_Interceptor::receive_request_service_contexts\n"));
+    }
 }
 
 void
-Server_Interceptor::receive_request (PortableInterceptor::ServerRequestInfo_ptr ri
-                                     )
+Server_Interceptor::receive_request (PortableInterceptor::ServerRequestInfo_ptr ri)
 {
   if (TAO_debug_level > 0)
-    TAOLIB_DEBUG ((LM_DEBUG,
-                "Server_Interceptor::receive_request\n"));
+    {
+      TAOLIB_DEBUG ((LM_DEBUG,
+                  "Server_Interceptor::receive_request\n"));
+    }
 
   IOP::ServiceContext_var serv_cxt;
 
@@ -358,8 +366,10 @@ void
 Server_Interceptor::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri)
 {
   if (TAO_debug_level > 0)
-    TAOLIB_DEBUG ((LM_DEBUG,
-                "Server_Interceptor::send_reply\n"));
+    {
+      TAOLIB_DEBUG ((LM_DEBUG,
+                  "Server_Interceptor::send_reply\n"));
+    }
 
   TAO_RTScheduler_Current_i *current = 0;
   TAO_RTScheduler_Current_i *prev_current = 0;
@@ -395,7 +405,6 @@ Server_Interceptor::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri)
 
       // Reset the previous current pointer.
       tss->rtscheduler_previous_current_impl_ = 0;
-
     }
   else TAOLIB_DEBUG ((LM_DEBUG,
                    "Send Reply Current is 0\n"));
@@ -405,8 +414,10 @@ void
 Server_Interceptor::send_exception (PortableInterceptor::ServerRequestInfo_ptr ri)
 {
   if (TAO_debug_level > 0)
-    TAOLIB_DEBUG ((LM_DEBUG,
-                "Server_Interceptor::send_exception\n"));
+    {
+      TAOLIB_DEBUG ((LM_DEBUG,
+                  "Server_Interceptor::send_exception\n"));
+    }
 
   TAO_RTScheduler_Current_i *current = 0;
 
@@ -428,8 +439,10 @@ void
 Server_Interceptor::send_other (PortableInterceptor::ServerRequestInfo_ptr ri)
 {
   if (TAO_debug_level > 0)
-    TAOLIB_DEBUG ((LM_DEBUG,
-                "Server_Interceptor::send_other\n"));
+    {
+      TAOLIB_DEBUG ((LM_DEBUG,
+                  "Server_Interceptor::send_other\n"));
+    }
 
   TAO_RTScheduler_Current_i *current = 0;
 
@@ -448,13 +461,13 @@ Server_Interceptor::send_other (PortableInterceptor::ServerRequestInfo_ptr ri)
 }
 
 char*
-Server_Interceptor::name (void)
+Server_Interceptor::name ()
 {
     return  CORBA::string_dup ("RTSchdeuler_Server_Interceptor");
 }
 
 void
-Server_Interceptor::destroy (void)
+Server_Interceptor::destroy ()
 {
 }
 

@@ -203,7 +203,7 @@ public:
 };
 
 #if defined (HummingBird_X)
-extern "C" void HCLXmInit (void);
+extern "C" void HCLXmInit ();
 #endif /* HummingBird_X */
 
 int

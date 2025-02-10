@@ -43,7 +43,7 @@ namespace TAO_PG
  */
 class TAO_PortableGroup_Export TAO_UIPMC_Mcast_Transport : public TAO_Transport
 {
-  // This is neccessary on some old compilers such as Studio 9 for SunOS
+  // This is necessary on some old compilers such as Studio 9 for SunOS
   // to let UIPMC_Recv_Packet_Cleanup_Guard access private cleanup_packets().
   friend class TAO_PG::UIPMC_Recv_Packet_Cleanup_Guard;
 
@@ -57,7 +57,7 @@ public:
                              TAO_ORB_Core *orb_core);
 
   /// Default destructor.
-  ~TAO_UIPMC_Mcast_Transport (void);
+  ~TAO_UIPMC_Mcast_Transport ();
 
   /// Look for the documentation in Transport.h.
   virtual int handle_input (TAO_Resume_Handle &rh,
@@ -69,8 +69,8 @@ protected:
    * These are implementations of template methods declared by TAO_Transport.
    */
   //@{
-  virtual ACE_Event_Handler *event_handler_i (void);
-  virtual TAO_Connection_Handler *connection_handler_i (void);
+  virtual ACE_Event_Handler *event_handler_i ();
+  virtual TAO_Connection_Handler *connection_handler_i ();
 
   /// Write the complete Message_Block chain to the connection.
   /// Shouldn't ever be called on the server side.
@@ -84,7 +84,7 @@ protected:
                         size_t,
                         ACE_Time_Value const *);
 
-  virtual int register_handler (void);
+  virtual int register_handler ();
 
 public:
   /// @@TODO: These methods IMHO should have more meaningful
@@ -115,7 +115,7 @@ private:
                      bool &stop_packet,
                      u_long &id_hash) const;
 
-  /// Return the next complete MIOP packet, possiably dequeueing
+  /// Return the next complete MIOP packet, possibly dequeueing
   /// as many as are available first from the socket.
   TAO_PG::UIPMC_Recv_Packet *recv_all (TAO_Resume_Handle &rh);
 

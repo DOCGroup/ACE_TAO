@@ -32,7 +32,7 @@ public:
 class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_SequencePushConsumer_Traits
 {
 public:
-  TAO_Notify_Tests_SequencePushConsumer_Traits (void);
+  TAO_Notify_Tests_SequencePushConsumer_Traits ();
 
   typedef CosNotifyComm::SequencePushConsumer INTERFACE;
   typedef CosNotifyComm::SequencePushConsumer_ptr PTR;
@@ -62,7 +62,7 @@ class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_SequencePushConsumer : public TAO_
 
 public:
   /// Constructor
-  TAO_Notify_Tests_SequencePushConsumer (void);
+  TAO_Notify_Tests_SequencePushConsumer ();
 
   /// Destructor
   virtual ~TAO_Notify_Tests_SequencePushConsumer ();
@@ -72,10 +72,10 @@ protected:
   virtual void connect_to_peer (Proxy_Traits::PTR proxy_ptr, Peer_Traits::PTR peer_ptr);
 
   /// Disconnect from proxy.
-  virtual void disconnect_from_proxy (void);
+  virtual void disconnect_from_proxy ();
 
   // = SequencePushConsumer methods
-  virtual void disconnect_sequence_push_consumer (void);
+  virtual void disconnect_sequence_push_consumer ();
 
  /// Default does nothing.
   virtual void push_structured_events (

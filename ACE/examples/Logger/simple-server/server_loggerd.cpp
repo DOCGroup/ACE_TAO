@@ -12,8 +12,6 @@
 #include "Logging_Acceptor.h"
 #include "Reactor_Singleton.h"
 
-
-
 static sig_atomic_t finished = 0;
 
 extern "C" void

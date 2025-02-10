@@ -78,7 +78,6 @@ void CSelectNSDialog::OnAdd()
   ACE_TCHAR* pIOR = new ACE_TCHAR[Value.length() + 1];
   ACE_OS::strcpy(pIOR, Value.c_str());
   m_Servers.SetItemData(pos, (DWORD)pIOR);
-
 }
 
 void CSelectNSDialog::OnRemove()
@@ -92,7 +91,7 @@ void CSelectNSDialog::OnRemove()
   delete (char*)m_Servers.GetItemData(index);
   CString Name;
   m_Servers.GetText(index, Name);
-  ACE_Configuration_Section_Key Section = m_pConfig->root_section();;
+  ACE_Configuration_Section_Key Section = m_pConfig->root_section();
   m_pConfig->remove_value(Section, Name);
   m_Servers.DeleteString(index);
 }
@@ -104,7 +103,7 @@ BOOL CSelectNSDialog::OnInitDialog()
   // TODO: Add extra initialization here
   HKEY hKey = ACE_Configuration_Win32Registry::resolve_key(HKEY_LOCAL_MACHINE, ACE_TEXT("Software\\TAO\\NamingViewer\\Servers"));
   m_pConfig = new ACE_Configuration_Win32Registry(hKey);
-  ACE_Configuration_Section_Key Section = m_pConfig->root_section();;
+  ACE_Configuration_Section_Key Section = m_pConfig->root_section();
   int index = 0;
   ACE_TString name;
   ACE_Configuration::VALUETYPE type;

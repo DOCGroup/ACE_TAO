@@ -41,10 +41,9 @@ class Iterator_Handler
   friend class Iterator_Handler_Friend;
 
 public:
-
   /// Constructor that creates a content iterator corresponding to the
   /// name of the file being retrieved from the web server.
-  Iterator_Handler (void);
+  Iterator_Handler ();
 
   virtual void next_chunk (CORBA::Boolean pending_data,
                    const Web_Server::Chunk_Type & chunk);
@@ -53,7 +52,7 @@ public:
       ::Messaging::ExceptionHolder *)
     {}
 
-  virtual void destroy (void);
+  virtual void destroy ();
 
   virtual void destroy_excep (
       ::Messaging::ExceptionHolder *)
@@ -72,24 +71,23 @@ public:
 private:
   /// Destructor (private to ensure that Iterator_Handler is allocated
   /// on the heap).
-  ~Iterator_Handler (void);
+  ~Iterator_Handler ();
 
   /// Initialize the Content Iterator used to retrieve the file.
   void initialize_content_iterator (const char *pathname,
                                     Web_Server::Iterator_Factory_ptr factory);
 
   /// Deactivate this reply handler.
-  void deactivate (void);
+  void deactivate ();
 
   /// Get the name of the viewer associated with the file being
   /// retrieved.
   int get_viewer (char *viewer, size_t length);
 
   /// Spawn an external view to display the retrieved file.
-  int spawn_viewer (void);
+  int spawn_viewer ();
 
 private:
-
   /// The Addr corresponding to the retrieved file.
   ACE_FILE_Addr file_;
 

@@ -16,7 +16,6 @@ class HTTP_Sink_Svc_Handler
   : public ACE_Svc_Handler <ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 {
 public:
-
   //FUZZ: disable check_for_lack_ACE_OS
   int open (void *)
   {
@@ -59,7 +58,6 @@ public:
     ->schedule_wakeup (handle, ACE_Event_Handler::READ_MASK);
     return 0;
   }
-
 };
 
 typedef ACE_Connector <HTTP_Sink_Svc_Handler, ACE_SOCK_CONNECTOR>
@@ -70,7 +68,6 @@ class HTTP_Make_Request_Event_Handler
   : public ACE_Event_Handler
 {
 public:
-
   HTTP_Make_Request_Event_Handler (const ACE_Time_Value &request_rate,
                                    int number_of_requests = -1,
                                    const char *website = 0)
@@ -121,7 +118,6 @@ public:
   }
 
 private:
-
   int number_of_requests_;
   int number_of_outstanding_requests_;
 
@@ -129,14 +125,12 @@ private:
   ACE_INET_Addr addr_;
 
   long timer_id_;
-
 };
 
 class Signal_Handler
   : public ACE_Event_Handler
 {
 public:
-
   int handle_signal (int signo, siginfo_t *, ucontext_t *)
   {
     switch (signo)
@@ -151,7 +145,6 @@ public:
 
     return 0;
   }
-
 };
 
 typedef ACE_Select_Reactor_Token_T<ACE_Noop_Token>

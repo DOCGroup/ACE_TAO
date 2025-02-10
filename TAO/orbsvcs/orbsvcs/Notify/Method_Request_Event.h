@@ -55,7 +55,6 @@ public:
   bool should_retry ();
 
 protected:
-
   /// The Event
   const TAO_Notify_Event * event_;
 
@@ -89,7 +88,7 @@ public:
   virtual ~TAO_Notify_Method_Request_Event_Queueable ();
 
   /// satisfy the pure virtual method.  Should never be called.
-  virtual int execute (void);
+  virtual int execute ();
 private:
   TAO_Notify_Event::Ptr event_var_;
 };

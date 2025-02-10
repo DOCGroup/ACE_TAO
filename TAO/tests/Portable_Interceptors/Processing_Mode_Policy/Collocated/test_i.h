@@ -20,7 +20,6 @@
  */
 class Visual_i : public POA_Test_Interceptors::Visual
 {
-
 public:
   /// ctor
   Visual_i (CORBA::ORB_ptr orb);
@@ -31,11 +30,11 @@ public:
                          CORBA::Long one,
                          CORBA::Long two);
 
-  void user (void);
+  void user ();
 
-  void system (void);
+  void system ();
 
-  void shutdown (void);
+  void shutdown ();
 
 private:
   /// The ORB pointer (for shutdown.)

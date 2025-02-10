@@ -149,7 +149,6 @@ Options_Manager::Options_Manager(int argc, ACE_TCHAR **argv, ACE_TCHAR const * c
             client_port            = ACE_OS::atoi(get_opt->opt_arg ());
             break;
           case 'i':{
-
             // The argument to this option is a comma-separated list
             // of dotted-decimal ipv4 addresses.
 
@@ -177,7 +176,6 @@ Options_Manager::Options_Manager(int argc, ACE_TCHAR **argv, ACE_TCHAR const * c
             // If this representation was not obtained, terminate with
             // an error.
             if (!aton_retval) {
-
               ACE_TCHAR error_message[Options_Manager::string_len + 100];
               ACE_OS::strcpy
                 (error_message,
@@ -214,7 +212,6 @@ Options_Manager::Options_Manager(int argc, ACE_TCHAR **argv, ACE_TCHAR const * c
             while (next_secondary_addr &&
                    num_secondary_connect_addrs <
                    max_num_secondary_connect_addrs) {
-
               // Get a pointer to the next comma in the list.
               ACE_TCHAR *next_next_secondary_addr = ACE_OS::strchr(next_secondary_addr, ',');
 
@@ -240,7 +237,6 @@ Options_Manager::Options_Manager(int argc, ACE_TCHAR **argv, ACE_TCHAR const * c
                 secondary_connect_addrs[num_secondary_connect_addrs++] =
                   ntohl(foo.s_addr);
               } else {
-
                 ACE_TCHAR error_message[Options_Manager::string_len + 100];
                 ACE_OS::strcpy
                   (error_message,
@@ -266,7 +262,6 @@ Options_Manager::Options_Manager(int argc, ACE_TCHAR **argv, ACE_TCHAR const * c
             server_port = ACE_OS::atoi(get_opt->opt_arg ());
             break;
           case 'a':{
-
             // The argument to this option is a comma-separated list
             // of dotted-decimal ipv4 addresses.
 
@@ -294,7 +289,6 @@ Options_Manager::Options_Manager(int argc, ACE_TCHAR **argv, ACE_TCHAR const * c
             // If this representation was not obtained, terminate with
             // an error.
             if (!aton_retval) {
-
               ACE_TCHAR error_message[Options_Manager::string_len + 100];
               ACE_OS::strcpy
                 (error_message,
@@ -331,7 +325,6 @@ Options_Manager::Options_Manager(int argc, ACE_TCHAR **argv, ACE_TCHAR const * c
             while (next_secondary_addr &&
                    num_secondary_accept_addrs <
                    max_num_secondary_accept_addrs) {
-
               // Get a pointer to the next comma in the list.
               ACE_TCHAR *next_next_secondary_addr = ACE_OS::strchr(next_secondary_addr, ',');
 
@@ -357,7 +350,6 @@ Options_Manager::Options_Manager(int argc, ACE_TCHAR **argv, ACE_TCHAR const * c
                 secondary_accept_addrs[num_secondary_accept_addrs++] =
                   ntohl(foo.s_addr);
               } else {
-
                 ACE_TCHAR error_message[Options_Manager::string_len + 100];
                 ACE_OS::strcpy
                   (error_message,
@@ -509,7 +501,6 @@ void Options_Manager::_show_usage(FILE* out, ACE_TCHAR const * const opts_set)
     ACE_OS::fprintf (out, "   -h   none           help\n");
 
     ACE_OS::fprintf (out, "\n");
-
   } else if (!ACE_OS::strcmp(ACE_TEXT ("server-opts"), opts_set)){
     ACE_OS::fprintf (out, "  Flag  Args           Option-Name                 Default\n"
                           "   -n   none           test-enable-nagle           NO NAGLING\n");
@@ -533,7 +524,6 @@ void Options_Manager::_show_usage(FILE* out, ACE_TCHAR const * const opts_set)
     ACE_OS::fprintf (out, "   -h   none           help\n");
 
     ACE_OS::fprintf (out, "\n");
-
   } else {
     ACE_OS::fprintf (out, "Invalid options set specified.\n");
   }

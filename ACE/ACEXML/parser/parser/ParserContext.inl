@@ -43,13 +43,13 @@ ACEXML_Parser_Context::operator= (const ACEXML_Parser_Context& src)
 
 
 ACEXML_INLINE ACEXML_InputSource*
-ACEXML_Parser_Context::getInputSource (void)
+ACEXML_Parser_Context::getInputSource ()
 {
   return this->instream_;
 }
 
 ACEXML_INLINE ACEXML_LocatorImpl*
-ACEXML_Parser_Context::getLocator (void)
+ACEXML_Parser_Context::getLocator ()
 {
   return this->locator_;
 }
@@ -67,7 +67,7 @@ ACEXML_Parser_Context::setLocator (ACEXML_LocatorImpl* locator)
 }
 
 ACEXML_INLINE void
-ACEXML_Parser_Context::reset (void)
+ACEXML_Parser_Context::reset ()
 {
   this->instream_ = 0;
   this->locator_ = 0;

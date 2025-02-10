@@ -13,7 +13,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_ALLOC_HOOK_DEFINE(ACE_SOCK_Stream)
 
 void
-ACE_SOCK_Stream::dump (void) const
+ACE_SOCK_Stream::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_SOCK_Stream::dump");
@@ -21,7 +21,7 @@ ACE_SOCK_Stream::dump (void) const
 }
 
 int
-ACE_SOCK_Stream::close (void)
+ACE_SOCK_Stream::close ()
 {
 #if defined (ACE_WIN32)
   // We need the following call to make things work correctly on

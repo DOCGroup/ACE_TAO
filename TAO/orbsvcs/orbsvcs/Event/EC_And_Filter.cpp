@@ -16,7 +16,7 @@ TAO_EC_And_Filter::TAO_EC_And_Filter (TAO_EC_Filter* children[],
     }
 }
 
-TAO_EC_And_Filter::~TAO_EC_And_Filter (void)
+TAO_EC_And_Filter::~TAO_EC_And_Filter ()
 {
   TAO_EC_Filter** end = this->children_ + this->n_;
   for (TAO_EC_Filter** i = this->children_;
@@ -24,27 +24,27 @@ TAO_EC_And_Filter::~TAO_EC_And_Filter (void)
        ++i)
     {
       delete *i;
-      *i = 0;
+      *i = nullptr;
     }
   delete[] this->children_;
-  this->children_ = 0;
+  this->children_ = nullptr;
   this->n_ = 0;
 }
 
 TAO_EC_Filter::ChildrenIterator
-TAO_EC_And_Filter::begin (void) const
+TAO_EC_And_Filter::begin () const
 {
   return this->children_;
 }
 
 TAO_EC_Filter::ChildrenIterator
-TAO_EC_And_Filter::end (void) const
+TAO_EC_And_Filter::end () const
 {
   return this->children_ + this->n_;
 }
 
 int
-TAO_EC_And_Filter::size (void) const
+TAO_EC_And_Filter::size () const
 {
   return static_cast<CORBA::ULong> (this->n_);
 }
@@ -62,7 +62,7 @@ TAO_EC_And_Filter::filter (const RtecEventComm::EventSet& event,
     }
 
   // All children accepted the event, push up...
-  if (this->parent () != 0)
+  if (this->parent () != nullptr)
     {
       this->parent ()->push (event, qos_info);
     }
@@ -83,7 +83,7 @@ TAO_EC_And_Filter::filter_nocopy (RtecEventComm::EventSet& event,
     }
 
   // All children accepted the event, push up...
-  if (this->parent () != 0)
+  if (this->parent () != nullptr)
     {
       this->parent ()->push (event, qos_info);
     }
@@ -104,7 +104,7 @@ TAO_EC_And_Filter::push_nocopy (RtecEventComm::EventSet&,
 }
 
 void
-TAO_EC_And_Filter::clear (void)
+TAO_EC_And_Filter::clear ()
 {
   ChildrenIterator end = this->end ();
   for (ChildrenIterator i = this->begin ();
@@ -116,7 +116,7 @@ TAO_EC_And_Filter::clear (void)
 }
 
 CORBA::ULong
-TAO_EC_And_Filter::max_event_size (void) const
+TAO_EC_And_Filter::max_event_size () const
 {
   CORBA::ULong n = 0;
   ChildrenIterator end = this->end ();

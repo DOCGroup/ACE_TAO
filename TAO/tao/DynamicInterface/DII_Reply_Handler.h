@@ -37,23 +37,23 @@ typedef TAO_DII_Reply_Handler* TAO_DII_Reply_Handler_ptr;
 class TAO_DynamicInterface_Export TAO_DII_Reply_Handler_var
 {
 public:
-  TAO_DII_Reply_Handler_var (void);
+  TAO_DII_Reply_Handler_var ();
   TAO_DII_Reply_Handler_var (TAO_DII_Reply_Handler_ptr);
   TAO_DII_Reply_Handler_var (const TAO_DII_Reply_Handler_var &);
-  ~TAO_DII_Reply_Handler_var (void);
+  ~TAO_DII_Reply_Handler_var ();
 
   TAO_DII_Reply_Handler_var &operator= (TAO_DII_Reply_Handler_ptr);
   TAO_DII_Reply_Handler_var &operator= (const TAO_DII_Reply_Handler_var &);
-  TAO_DII_Reply_Handler_ptr operator-> (void) const;
+  TAO_DII_Reply_Handler_ptr operator-> () const;
 
   operator const TAO_DII_Reply_Handler_ptr &() const;
   operator TAO_DII_Reply_Handler_ptr &();
 
-  TAO_DII_Reply_Handler_ptr in (void) const;
-  TAO_DII_Reply_Handler_ptr &inout (void);
-  TAO_DII_Reply_Handler_ptr &out (void);
-  TAO_DII_Reply_Handler_ptr _retn (void);
-  TAO_DII_Reply_Handler_ptr ptr (void) const;
+  TAO_DII_Reply_Handler_ptr in () const;
+  TAO_DII_Reply_Handler_ptr &inout ();
+  TAO_DII_Reply_Handler_ptr &out ();
+  TAO_DII_Reply_Handler_ptr _retn ();
+  TAO_DII_Reply_Handler_ptr ptr () const;
 
 private:
   TAO_DII_Reply_Handler_ptr ptr_;
@@ -71,8 +71,8 @@ class TAO_DynamicInterface_Export TAO_DII_Reply_Handler
   : public virtual ::CORBA::LocalObject
 {
 public:
-  TAO_DII_Reply_Handler ();
-  virtual ~TAO_DII_Reply_Handler (void);
+  TAO_DII_Reply_Handler () = default;
+  virtual ~TAO_DII_Reply_Handler ();
 
   /// Callback method for asynchronous requests.
   virtual void handle_response (TAO_InputCDR &incoming) = 0;
@@ -89,7 +89,7 @@ public:
 
   /// CORBA Object related methods
   static TAO_DII_Reply_Handler* _duplicate (TAO_DII_Reply_Handler_ptr);
-  static TAO_DII_Reply_Handler* _nil (void);
+  static TAO_DII_Reply_Handler* _nil ();
   static TAO_DII_Reply_Handler* _narrow (CORBA::Object_ptr);
   static TAO_DII_Reply_Handler* _unchecked_narrow (CORBA::Object_ptr);
 
@@ -98,11 +98,8 @@ public:
   typedef TAO_DII_Reply_Handler_ptr _ptr_type;
   typedef TAO_DII_Reply_Handler_var _var_type;
 
-#if defined (ACE_WIN32_VC14)
-  // Workaround for connect issue 1577211
-  ACE_UNIMPLEMENTED_FUNC (TAO_DII_Reply_Handler (const TAO_DII_Reply_Handler &))
-  ACE_UNIMPLEMENTED_FUNC (TAO_DII_Reply_Handler &operator = (const TAO_DII_Reply_Handler &))
-#endif
+  TAO_DII_Reply_Handler (const TAO_DII_Reply_Handler &) = delete;
+  TAO_DII_Reply_Handler &operator = (const TAO_DII_Reply_Handler &) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

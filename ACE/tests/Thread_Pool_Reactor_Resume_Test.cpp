@@ -39,11 +39,10 @@
 #include "ace/TP_Reactor.h"
 
 
-
 #if defined (ACE_HAS_THREADS) && !defined ACE_LACKS_ACCEPT
 
 #include "Thread_Pool_Reactor_Resume_Test.h"
-typedef ACE_Strategy_Acceptor <Request_Handler, ACE_SOCK_ACCEPTOR> ACCEPTOR;
+using ACCEPTOR = ACE_Strategy_Acceptor<Request_Handler, ACE_SOCK_Acceptor>;
 
 // Accepting end point.  This is actually "localhost:10010", but some
 // platform couldn't resolve the name so we use the IP address
@@ -57,7 +56,7 @@ static size_t svr_thrno = ACE_MAX_THREADS;
 // Default network parameters (MAX_BINDS and system buffers) are too small
 // for full test on some platforms; add platforms that can't handle too many
 // connection simultaneously here.
-#if defined (ACE_VXWORKS) || defined (ACE_HAS_PHARLAP)
+#if defined (ACE_VXWORKS)
 #define ACE_LOAD_FACTOR /2
 #else
 #define ACE_LOAD_FACTOR
@@ -149,12 +148,12 @@ Request_Handler::open (void *arg)
   return result;
 }
 
-Request_Handler::~Request_Handler (void)
+Request_Handler::~Request_Handler ()
 {
 }
 
 int
-Request_Handler::resume_handler (void)
+Request_Handler::resume_handler ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) resume_handler () called\n")));

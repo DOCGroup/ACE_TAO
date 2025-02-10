@@ -150,7 +150,7 @@ TAO::PICurrent_Impl::~PICurrent_Impl ()
     this->impending_change_callback_->convert_from_lazy_to_real_copy ();
 
   // If we have logically copied another table, ensure it is told about our
-  // demise so that it will not call our non-existant
+  // demise so that it will not call our non-existent
   // convert_from_lazy_to_real_copy() when it changes/destructs.
   if (0 != this->lazy_copy_)
     this->lazy_copy_->set_callback_for_impending_change (0);
@@ -171,7 +171,7 @@ TAO::PICurrent_Impl::~PICurrent_Impl ()
 }
 
 void
-TAO::PICurrent_Impl::push (void)
+TAO::PICurrent_Impl::push ()
 {
   if (this->orb_core_) // We have a stack to adjust
     {
@@ -197,7 +197,7 @@ TAO::PICurrent_Impl::push (void)
 }
 
 void
-TAO::PICurrent_Impl::pop (void)
+TAO::PICurrent_Impl::pop ()
 {
   if (this->orb_core_) // We have a stack to adjust
     {

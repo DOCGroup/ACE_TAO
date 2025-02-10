@@ -43,15 +43,15 @@ ACE_TMAIN(int, ACE_TCHAR *[])
 class Options
 {
 public:
-  Options (void);
-  ~Options (void);
+  Options ();
+  ~Options ();
 
   int run (int argc, ACE_TCHAR *argv[]);
 
 private:
   void parse_args (int argc,
                    ACE_TCHAR *argv[]);
-  void print_usage_and_die (void);
+  void print_usage_and_die ();
 
 private:
   ACE_TCHAR progname[128];
@@ -70,7 +70,7 @@ private:
 
 typedef ACE_Singleton<Options, ACE_Mutex> OPTIONS;
 
-Options::Options (void)
+Options::Options ()
   : opt_setargs (0),
     opt_args (0),
     opt_install (0),
@@ -86,13 +86,13 @@ Options::Options (void)
   ACE::init ();
 }
 
-Options::~Options (void)
+Options::~Options ()
 {
   ACE::fini ();
 }
 
 void
-Options::print_usage_and_die (void)
+Options::print_usage_and_die ()
 {
   ORBSVCS_DEBUG ((LM_INFO,
               ACE_TEXT("Usage: %s")

@@ -31,12 +31,12 @@ namespace TAO
 {
   class SSLIOP_Credentials;
 
-   namespace SSLIOP
-   {
-     typedef SSLIOP_Credentials* Credentials_ptr;
-     typedef TAO_Pseudo_Var_T<SSLIOP_Credentials> Credentials_var;
-     typedef TAO_Pseudo_Out_T<SSLIOP_Credentials> Credentials_out;
-   }
+  namespace SSLIOP
+  {
+    typedef SSLIOP_Credentials* Credentials_ptr;
+    typedef TAO_Pseudo_Var_T<SSLIOP_Credentials> Credentials_var;
+    typedef TAO_Pseudo_Out_T<SSLIOP_Credentials> Credentials_out;
+  }
 
     /**
      * @class SSLIOP_Credentials
@@ -72,13 +72,13 @@ namespace TAO
        * interface.
        */
       //@{
-      virtual char * creds_id (void);
+      virtual char * creds_id ();
 
-      virtual SecurityLevel3::CredentialsType creds_type (void) = 0;
+      virtual SecurityLevel3::CredentialsType creds_type () = 0;
 
       virtual SecurityLevel3::CredentialsUsage creds_usage ();
 
-      virtual TimeBase::UtcT expiry_time (void);
+      virtual TimeBase::UtcT expiry_time ();
 
       virtual SecurityLevel3::CredentialsState creds_state ();
 
@@ -95,7 +95,7 @@ namespace TAO
        * @note Caller owns the returned object.  Use a
        *       TAO::SSLIOP::X509_var.
        */
-      ::X509 *x509 (void);
+      ::X509 *x509 ();
       //@}
 
       /// Return a pointer to the underlying private key.
@@ -105,19 +105,19 @@ namespace TAO
        * @note Caller owns the returned object.  Use a
        *       TAO::SSLIOP::EVP_PKEY_var.
        */
-      ::EVP_PKEY *evp (void);
+      ::EVP_PKEY *evp ();
       //@}
 
       bool operator== (const SSLIOP_Credentials &rhs);
 
-      CORBA::ULong hash (void) const;
+      CORBA::ULong hash () const;
 
       // The static operations.
       static SSLIOP::Credentials_ptr _duplicate (SSLIOP::Credentials_ptr obj);
 
       static SSLIOP::Credentials_ptr _narrow (CORBA::Object_ptr obj);
 
-      static SSLIOP::Credentials_ptr _nil (void)
+      static SSLIOP::Credentials_ptr _nil ()
       {
         return (SSLIOP::Credentials_ptr) 0;
       }
@@ -125,16 +125,14 @@ namespace TAO
       //@}
 
     protected:
-
       /// Destructor.
       /**
        * Protected destructor to enforce proper memory management
        * through the reference counting  mechanism.
        */
-      ~SSLIOP_Credentials (void);
+      ~SSLIOP_Credentials ();
 
     protected:
-
       /// Reference to the X.509 certificate associated with this SSLIOP
       /// Credentials object.
       SSLIOP::X509_var x509_;
@@ -154,10 +152,7 @@ namespace TAO
 
       /// The validity of the Credentials.
       SecurityLevel3::CredentialsState creds_state_;
-
     };
-
-//   } // End SSLIOP namespace
 }   // End TAO namespace
 
 TAO_END_VERSIONED_NAMESPACE_DECL

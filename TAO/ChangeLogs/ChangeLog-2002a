@@ -126,8 +126,8 @@ Fri Jun 28 10:08:56 2002  Carlos O'Ryan  <coryan@atdesk.com>
 	  at run-time.  Check the following bugzilla entries for more
 	  info:
 
-	  http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1241
-	  http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=189
+	  http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=1241
+	  http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=189
 
 Fri Jun 28 07:31:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -252,7 +252,7 @@ Thu Jun 27 10:28:29 2002  Carlos O'Ryan  <coryan@atdesk.com>
 	  multiple threads to them.
 	  This solves bug 1241:
 
-	  http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1241
+	  http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=1241
 
 Thu Jun 27 07:30:12 2002  Johnny Willemsen  <jwillemsen@remedy.nl>
 
@@ -563,7 +563,7 @@ Mon Jun 17 12:43:07 2002  Carlos O'Ryan  <coryan@atdesk.com>
 	  expertise or time to review/fix SHMIOP, UIOP, SSLIOP or UIPMC.
 	  I am considering this change another partial fix to:
 
-	  http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1220
+	  http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=1220
 
 Mon Jun 17 10:51:03 2002  Carlos O'Ryan  <coryan@atdesk.com>
 
@@ -592,7 +592,7 @@ Fri Jun 14 13:58:56 2002  Carlos O'Ryan  <coryan@atdesk.com>
 
 	* The following ChangeLog entry describe my fixes for bug 1222:
 
-	  http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1222
+	  http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=1222
 
 	  The main changes to solve the problem were:
 
@@ -1199,7 +1199,7 @@ Tue May 28 20:24:16 CDT 2002 Pradeep Gore  <pradeep@oomworks.com>
 	* orbsvcs/orbsvcs/Notify/Notify_Event.h:
 	* orbsvcs/orbsvcs/Notify/Notify_ProxySupplier_T.cpp:
 
-	  Fix for bug: http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1134
+	  Fix for bug: http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=1134
 	  Proxy Suppliers are subscribed for all events (special) by default.
 
 	* orbsvcs/tests/Notify/Basic/Events_Test.cpp:
@@ -1696,7 +1696,7 @@ Thu May 23 13:34:35 2002  Carlos O'Ryan  <coryan@atdesk.com>
 	* tests/Nested_Upcall_Crash/scavenger.cpp:
 	* tests/Nested_Upcall_Crash/server.cpp:
 	  Commit new regression test for
-	  http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1202
+	  http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=1202
 
 Thu May 23 12:02:19 2002  Carlos O'Ryan  <coryan@atdesk.com>
 

@@ -1,7 +1,5 @@
 #include "Client_i.h"
 
-Client::~Client () {}
-
 void Client::reply (const char * msg)
 {
   this->reply_count_++;

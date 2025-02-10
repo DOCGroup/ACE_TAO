@@ -3,14 +3,14 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <typename T>
 ACE_INLINE
-TAO_Objref_Var_T<T>::TAO_Objref_Var_T (void)
+TAO_Objref_Var_T<T>::TAO_Objref_Var_T ()
   : ptr_ (TAO::Objref_Traits<T>::nil ())
 {
 }
 
 template <typename T>
 ACE_INLINE
-TAO_Objref_Var_T<T>::~TAO_Objref_Var_T (void)
+TAO_Objref_Var_T<T>::~TAO_Objref_Var_T ()
 {
   TAO::Objref_Traits<T>::release (this->ptr_);
 }
@@ -18,7 +18,7 @@ TAO_Objref_Var_T<T>::~TAO_Objref_Var_T (void)
 template <typename T>
 ACE_INLINE
 T *
-TAO_Objref_Var_T<T>::operator-> (void) const
+TAO_Objref_Var_T<T>::operator-> () const
 {
   return this->ptr_;
 }
@@ -40,7 +40,7 @@ TAO_Objref_Var_T<T>::operator T *& ()
 template <typename T>
 ACE_INLINE
 T *
-TAO_Objref_Var_T<T>::in (void) const
+TAO_Objref_Var_T<T>::in () const
 {
   return this->ptr_;
 }
@@ -48,7 +48,7 @@ TAO_Objref_Var_T<T>::in (void) const
 template <typename T>
 ACE_INLINE
 T *&
-TAO_Objref_Var_T<T>::inout (void)
+TAO_Objref_Var_T<T>::inout ()
 {
   return this->ptr_;
 }
@@ -56,7 +56,7 @@ TAO_Objref_Var_T<T>::inout (void)
 template <typename T>
 ACE_INLINE
 T *&
-TAO_Objref_Var_T<T>::out (void)
+TAO_Objref_Var_T<T>::out ()
 {
   TAO::Objref_Traits<T>::release (this->ptr_);
   this->ptr_ = TAO::Objref_Traits<T>::nil ();
@@ -66,7 +66,7 @@ TAO_Objref_Var_T<T>::out (void)
 template <typename T>
 ACE_INLINE
 T *
-TAO_Objref_Var_T<T>::_retn (void)
+TAO_Objref_Var_T<T>::_retn ()
 {
   T * val = this->ptr_;
   this->ptr_ = TAO::Objref_Traits<T>::nil ();
@@ -76,7 +76,7 @@ TAO_Objref_Var_T<T>::_retn (void)
 template <typename T>
 ACE_INLINE
 T *
-TAO_Objref_Var_T<T>::ptr (void) const
+TAO_Objref_Var_T<T>::ptr () const
 {
   return this->ptr_;
 }
@@ -84,7 +84,7 @@ TAO_Objref_Var_T<T>::ptr (void) const
 template <typename T>
 ACE_INLINE
 void
-TAO_Objref_Var_T<T>::free (void)
+TAO_Objref_Var_T<T>::free ()
 {
   TAO::Objref_Traits<T>::release (this->ptr_);
 }
@@ -154,7 +154,7 @@ TAO_Objref_Out_T<T>::operator= (T * p)
 template <typename T>
 ACE_INLINE
 T *&
-TAO_Objref_Out_T<T>::ptr (void)
+TAO_Objref_Out_T<T>::ptr ()
 {
   return this->ptr_;
 }
@@ -169,7 +169,7 @@ TAO_Objref_Out_T<T>::operator T *& ()
 template <typename T>
 ACE_INLINE
 T *
-TAO_Objref_Out_T<T>::operator-> (void)
+TAO_Objref_Out_T<T>::operator-> ()
 {
   return this->ptr_;
 }

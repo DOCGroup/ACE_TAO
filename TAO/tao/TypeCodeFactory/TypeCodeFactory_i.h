@@ -1,5 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
-
 //=============================================================================
 /**
  *  @file    TypeCodeFactory_i.h
@@ -37,7 +35,6 @@ namespace TAO
   }
 }
 
-
 class TAO_TypeCodeFactory_Export TAO_TypeCodeFactory_i
     : public virtual CORBA::TypeCodeFactory,
       public virtual ::CORBA::LocalObject
@@ -51,10 +48,10 @@ class TAO_TypeCodeFactory_Export TAO_TypeCodeFactory_i
  */
 public:
   /// ctor
-  TAO_TypeCodeFactory_i (void);
+  TAO_TypeCodeFactory_i ();
 
   /// dtor
-  ~TAO_TypeCodeFactory_i (void);
+  ~TAO_TypeCodeFactory_i ();
 
   /// = LocalObject methods
   static TAO_TypeCodeFactory_i *_narrow (CORBA::Object_ptr obj);

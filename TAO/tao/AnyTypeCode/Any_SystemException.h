@@ -50,7 +50,7 @@ namespace TAO
 
     Any_SystemException (CORBA::TypeCode_ptr);
 
-    virtual ~Any_SystemException (void);
+    virtual ~Any_SystemException ();
 
     static void insert (CORBA::Any &,
                         _tao_destructor,
@@ -71,8 +71,8 @@ namespace TAO
     virtual CORBA::Boolean marshal_value (TAO_OutputCDR &);
     CORBA::Boolean demarshal_value (TAO_InputCDR &);
 
-    virtual const void *value (void) const;
-    virtual void free_value (void);
+    virtual const void *value () const;
+    virtual void free_value ();
 
   protected:
     CORBA::SystemException *value_;

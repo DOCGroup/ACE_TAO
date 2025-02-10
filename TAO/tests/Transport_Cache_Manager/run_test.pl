@@ -11,8 +11,7 @@ use strict;
 my $final_result = 0;
 
 my @testsToRun = qw(Bug_3549_Regression
-               Bug_3558_Regression
-              );
+                    Bug_3558_Regression);
 
 foreach my $process (@testsToRun) {
 

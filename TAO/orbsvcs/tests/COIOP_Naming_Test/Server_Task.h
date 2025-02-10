@@ -28,7 +28,7 @@ public:
                ACE_Thread_Manager *thr_mgr);
 
   /// Thread entry point
-  int svc (void);
+  int svc ();
 
 private:
   CosNaming::NamingContext_var root_context_;

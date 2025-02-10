@@ -77,7 +77,7 @@ public:
   Client (A::AMI_Test_ptr server, int niterations);
 
   /// The thread entry point.
-  virtual int svc (void);
+  virtual int svc ();
 
   // private:
   /// Var for the AMI_Test object.
@@ -93,11 +93,11 @@ public:
 class Handler : public POA_A::AMI_AMI_TestHandler
 {
 public:
-  Handler (void) : request_ (0)
+  Handler () : request_ (0)
   {
   };
 
-  void foo (void)
+  void foo ()
     {
       int const reply = --number_of_replies;
 
@@ -152,7 +152,7 @@ public:
       ++request_;
     };
 
-  ~Handler (void)
+  ~Handler ()
   {
   };
 private:
@@ -254,8 +254,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "threads finished\n"));
 
-      root_poa->destroy (1,  // ethernalize objects
-                         0); // wait for completion
+      root_poa->destroy (true,  // ethernalize objects
+                         false); // wait for completion
 
       orb->destroy ();
     }
@@ -279,7 +279,7 @@ Client::Client (A::AMI_Test_ptr server,
 }
 
 int
-Client::svc (void)
+Client::svc ()
 {
   try
     {

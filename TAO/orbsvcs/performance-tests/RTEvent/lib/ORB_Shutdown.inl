@@ -11,7 +11,7 @@ ORB_Shutdown::operator () (CORBA::ORB_ptr orb)
 {
   try
     {
-      orb->shutdown (0);
+      orb->shutdown (false);
     }
   catch (const CORBA::Exception&){ };
 }

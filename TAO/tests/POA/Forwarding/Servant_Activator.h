@@ -41,7 +41,7 @@ public:
                             CORBA::Boolean remaining_activations);
 
   /// Object should be forwarded from now on.
-  void forward_requests (void);
+  void forward_requests ();
 
 private:
   CORBA::ORB_var orb_;

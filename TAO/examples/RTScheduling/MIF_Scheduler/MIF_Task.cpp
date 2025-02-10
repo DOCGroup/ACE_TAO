@@ -23,22 +23,21 @@ MIF_Task::MIF_Task (int importance,
   // create the stat object.
   ACE_NEW (task_stats_, Task_Stats);
   task_stats_->init (iter_);
-
 }
 
-MIF_Task::~MIF_Task (void)
+MIF_Task::~MIF_Task ()
 {
   delete task_stats_;
 }
 
 void
-MIF_Task::pre_activate (void)
+MIF_Task::pre_activate ()
 {
   DT_TEST::instance ()->scheduler ()->incr_thr_count ();
 }
 
 void
-MIF_Task::post_activate (void)
+MIF_Task::post_activate ()
 {
   DT_TEST::instance ()->scheduler ()->wait ();
 }
@@ -49,7 +48,6 @@ MIF_Task::activate_task (RTScheduling::Current_ptr current,
        long flags,
        ACE_Time_Value* base_time)
 {
-
   if (TAO_debug_level > 0)
     ACE_DEBUG ((LM_DEBUG,
     "MIF_Task::activate %d\n",
@@ -81,11 +79,10 @@ MIF_Task::activate_task (RTScheduling::Current_ptr current,
 }
 
 int
-MIF_Task::perform_task (void)
+MIF_Task::perform_task ()
 {
   try
     {
-
       ACE_TCHAR msg [BUFSIZ];
       ACE_OS::sprintf (msg,
                        ACE_TEXT("MIF_Task::perform_task ")
@@ -136,7 +133,6 @@ MIF_Task::perform_task (void)
 
               while (count_down_time > ACE_Time_Value::zero)
                 {
-
                   ACE::is_prime (prime_number,
                                  2,
                                  prime_number / 2);
@@ -146,7 +142,6 @@ MIF_Task::perform_task (void)
               current_->update_scheduling_segment (name,
                                                    sched_param.in (),
                                                    sched_param.in ());
-
             }
 
         }

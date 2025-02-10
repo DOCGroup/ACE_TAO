@@ -43,7 +43,6 @@ class Client_Request_Interceptor
     public virtual Request_Interceptor
 {
 public:
-
   /// Constructor.
   Client_Request_Interceptor (const char *name);
 
@@ -73,12 +72,10 @@ public:
   //@}
 
 private:
-
   // Returns 1 if the client-side test is currently being run, and 0
   // otherwise.
   CORBA::Boolean client_side_test (
     PortableInterceptor::ClientRequestInfo_ptr info);
-
 };
 
 #if defined(_MSC_VER)

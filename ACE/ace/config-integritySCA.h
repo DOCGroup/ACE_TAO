@@ -24,16 +24,9 @@
 #define ACE_LACKS_GETEGID
 #define ACE_LACKS_GETGID
 
-#define ACE_NEW_THROWS_EXCEPTIONS
-#define ACE_HAS_STANDARD_CPP_LIBRARY 1
-#define ACE_TEMPLATES_REQUIRE_SOURCE 1
 #define TAO_USE_SEQUENCE_TEMPLATES
-#define ACE_NEEDS_FUNC_DEFINITIONS
 #define _REENTRANT
 #define ACE_MT_SAFE 1
-
-// Compiler/platform has correctly prototyped header files.
-#define ACE_HAS_CPLUSPLUS_HEADERS
 
 #define ACE_HAS_SHM_OPEN
 
@@ -91,7 +84,6 @@
 #define ACE_LACKS_MKSTEMP
 #define ACE_LACKS_MPROTECT
 #define ACE_LACKS_MUTEXATTR_PSHARED
-#define ACE_LACKS_PIPE
 #define ACE_LACKS_RLIMIT
 #define ACE_LACKS_RECVMSG
 #define ACE_LACKS_RWLOCK_T
@@ -138,8 +130,6 @@
 
 /***** Not tied to standards AFAIK ****/
 #define ACE_LACKS_MADVISE /* paging optimization not needed with INTEGRITY */
-#define ACE_LACKS_MALLOC_H /* netbsd's just includes stdlib.h */
-#define ACE_LACKS_MEMORY_H /* netbsd's just includes string.h */
 #define ACE_LACKS_INTTYPES_H
 #define ACE_LACKS_SYS_RESOURCE_H
 #define ACE_LACKS_SYS_WAIT_H
@@ -181,7 +171,6 @@ extern "C"
 #define ACE_LACKS_READLINK
 #define ACE_LACKS_GETPPID
 #define NSIG (SIGRTMAX+1)
-#define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
 #define ACE_LACKS_CUSERID
 #define ACE_NEEDS_HUGE_THREAD_STACKSIZE 0x5000
 #define fileno(file) ((file)->io_channel) //Hack to get Svc_Conf_l.cpp compiled

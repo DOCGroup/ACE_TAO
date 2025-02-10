@@ -21,9 +21,8 @@
  */
 class PMS_Ruser : public PM_Server
 {
-
 public:
-  PMS_Ruser (void);
+  PMS_Ruser ();
 
 protected:
   virtual char *handle_protocol_entries (char *bp, Drwho_Node *hp);

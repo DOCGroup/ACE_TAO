@@ -11,7 +11,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_RT_Stub_Factory::~TAO_RT_Stub_Factory (void)
+TAO_RT_Stub_Factory::~TAO_RT_Stub_Factory ()
 {
 }
 

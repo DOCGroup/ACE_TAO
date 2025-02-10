@@ -3,20 +3,15 @@
 
 #include "tao/ORB_Core.h"
 
-Consumer_Input_Handler::Consumer_Input_Handler (void)
+Consumer_Input_Handler::Consumer_Input_Handler ()
   : receiver_handler_ (0),
     consumer_initiated_shutdown_ (0)
 {
   // No-Op.
 }
 
-Consumer_Input_Handler::~Consumer_Input_Handler (void)
-{
-  // No-Op.
-}
-
 int
-Consumer_Input_Handler::consumer_initiated_shutdown (void)
+Consumer_Input_Handler::consumer_initiated_shutdown ()
 {
   return this->consumer_initiated_shutdown_;
 }
@@ -28,7 +23,7 @@ Consumer_Input_Handler::consumer_initiated_shutdown (int c)
 }
 
 int
-Consumer_Input_Handler::close (void)
+Consumer_Input_Handler::close ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "closing down Consumer::Input_Handler\n"));

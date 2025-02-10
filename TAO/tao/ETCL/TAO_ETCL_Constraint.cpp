@@ -137,7 +137,7 @@ TAO_ETCL_Literal_Constraint::TAO_ETCL_Literal_Constraint (CORBA::Any * any)
     }
 }
 
-TAO_ETCL_Literal_Constraint::~TAO_ETCL_Literal_Constraint (void)
+TAO_ETCL_Literal_Constraint::~TAO_ETCL_Literal_Constraint ()
 {
   if (this->any_ != 0)
     {
@@ -151,12 +151,12 @@ TAO_ETCL_Literal_Constraint::operator= (const TAO_ETCL_Literal_Constraint& co)
   this->copy (co);
 }
 
-TAO_ETCL_Literal_Constraint::operator CORBA::Boolean (void) const
+TAO_ETCL_Literal_Constraint::operator CORBA::Boolean () const
 {
   return this->ETCL_Literal_Constraint::operator ACE_CDR::Boolean ();
 }
 
-TAO_ETCL_Literal_Constraint::operator CORBA::ULong (void) const
+TAO_ETCL_Literal_Constraint::operator CORBA::ULong () const
 {
   switch (this->type_)
   {
@@ -174,7 +174,7 @@ TAO_ETCL_Literal_Constraint::operator CORBA::ULong (void) const
   }
 }
 
-TAO_ETCL_Literal_Constraint::operator CORBA::Long (void) const
+TAO_ETCL_Literal_Constraint::operator CORBA::Long () const
 {
   switch (this->type_)
   {
@@ -192,7 +192,7 @@ TAO_ETCL_Literal_Constraint::operator CORBA::Long (void) const
   }
 }
 
-TAO_ETCL_Literal_Constraint::operator CORBA::Double (void) const
+TAO_ETCL_Literal_Constraint::operator CORBA::Double () const
 {
   switch (this->type_)
   {
@@ -210,7 +210,7 @@ TAO_ETCL_Literal_Constraint::operator CORBA::Double (void) const
   }
 }
 
-TAO_ETCL_Literal_Constraint::operator const char* (void) const
+TAO_ETCL_Literal_Constraint::operator const char* () const
 {
   switch (this->type_)
   {
@@ -228,7 +228,7 @@ TAO_ETCL_Literal_Constraint::operator const char* (void) const
   }
 }
 
-TAO_ETCL_Literal_Constraint::operator TAO::Any_Impl* (void) const
+TAO_ETCL_Literal_Constraint::operator TAO::Any_Impl* () const
 {
   return (this->type_ == ACE_ETCL_COMPONENT) ? this->any_ : 0;
 }
@@ -411,7 +411,7 @@ TAO_ETCL_Literal_Constraint::operator/ (const TAO_ETCL_Literal_Constraint & rhs)
 }
 
 TAO_ETCL_Literal_Constraint
-TAO_ETCL_Literal_Constraint::operator- (void)
+TAO_ETCL_Literal_Constraint::operator- ()
 {
   switch (this->type_)
   {

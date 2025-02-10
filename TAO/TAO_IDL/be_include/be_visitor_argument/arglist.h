@@ -35,7 +35,7 @@ public:
   be_visitor_args_arglist (be_visitor_context *ctx);
 
   /// destructor
-  virtual ~be_visitor_args_arglist (void);
+  virtual ~be_visitor_args_arglist ();
 
   /// visit the argument node
   virtual int visit_argument (be_argument *node);

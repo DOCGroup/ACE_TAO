@@ -23,7 +23,7 @@ namespace {
   class Lockable_File
   {
   public:
-    Lockable_File (void)
+    Lockable_File ()
       : file_lock_ (),
         file_ (0),
         flags_ (0),
@@ -46,12 +46,12 @@ namespace {
       init_fl(file, flags, unlink_in_destructor);
     }
 
-    ~Lockable_File (void)
+    ~Lockable_File ()
     {
       release ();
     }
 
-    void release (void)
+    void release ()
     {
       if (this->file_ != 0)
         {
@@ -61,7 +61,7 @@ namespace {
       this->locked_ = false;
     }
 
-    FILE* get_file (void)
+    FILE* get_file ()
     {
       lock ();
 
@@ -103,7 +103,7 @@ namespace {
 #endif
     }
 
-    void close_file (void)
+    void close_file ()
     {
       if (this->file_ == 0)
         return;
@@ -120,7 +120,7 @@ namespace {
 #endif
     }
 
-    void lock (void)
+    void lock ()
     {
 #if !defined (ACE_WIN32)
       if (this->locked_)
@@ -161,11 +161,7 @@ namespace {
 #endif
     }
 
-#if defined (ACE_HAS_CPP11)
     std::unique_ptr <ACE_File_Lock> file_lock_;
-#else
-    auto_ptr<ACE_File_Lock> file_lock_;
-#endif
     FILE* file_;
     int flags_;
     bool locked_;
@@ -252,7 +248,7 @@ Shared_Backing_Store::~Shared_Backing_Store()
 }
 
 void
-Shared_Backing_Store::shutdown (void)
+Shared_Backing_Store::shutdown ()
 {
   this->replicator_.stop ();
   this->replicator_.wait ();
@@ -540,7 +536,7 @@ Shared_Backing_Store::repo_mode() const
 }
 
 int
-Shared_Backing_Store::connect_replicas (void)
+Shared_Backing_Store::connect_replicas ()
 {
   ACE_CString replica_ior_file = this->replica_ior_filename (true);
   bool was_running = this->replicator_.init_peer (replica_ior_file);
@@ -899,7 +895,6 @@ Shared_Backing_Store::locator_service_ior (const char* peer_ior) const
   char* const combined_ior =
     this->orb_->object_to_string(locator_service.in ());
   return combined_ior;
-
 }
 
 void
@@ -1032,7 +1027,7 @@ Shared_Backing_Store::Update_Handler::handle_exception (ACE_HANDLE)
 }
 
 void
-Shared_Backing_Store::process_updates (void)
+Shared_Backing_Store::process_updates ()
 {
   //  ACE_GUARD (TAO_SYNCH_MUTEX, mon, this->sync_lock_);
   this->notified_ = false;

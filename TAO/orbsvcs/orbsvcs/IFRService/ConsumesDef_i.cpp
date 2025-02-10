@@ -13,12 +13,12 @@ TAO_ConsumesDef_i::TAO_ConsumesDef_i (
 {
 }
 
-TAO_ConsumesDef_i::~TAO_ConsumesDef_i (void)
+TAO_ConsumesDef_i::~TAO_ConsumesDef_i ()
 {
 }
 
 CORBA::DefinitionKind
-TAO_ConsumesDef_i::def_kind (void)
+TAO_ConsumesDef_i::def_kind ()
 {
   return CORBA::dk_Consumes;
 }

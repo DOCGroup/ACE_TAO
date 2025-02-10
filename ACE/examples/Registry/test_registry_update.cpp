@@ -21,7 +21,6 @@
 #include "ace/streams.h"
 
 
-
 // Name for application's naming context
 static ACE_Registry::Name application_context_name;
 

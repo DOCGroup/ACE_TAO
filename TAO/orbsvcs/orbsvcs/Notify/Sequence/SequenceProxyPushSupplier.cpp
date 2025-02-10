@@ -6,7 +6,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Notify_SequenceProxyPushSupplier::TAO_Notify_SequenceProxyPushSupplier (void)
+TAO_Notify_SequenceProxyPushSupplier::TAO_Notify_SequenceProxyPushSupplier ()
 {
 }
 
@@ -15,7 +15,7 @@ TAO_Notify_SequenceProxyPushSupplier::~TAO_Notify_SequenceProxyPushSupplier ()
 }
 
 void
-TAO_Notify_SequenceProxyPushSupplier::release (void)
+TAO_Notify_SequenceProxyPushSupplier::release ()
 {
   delete this;
   //@@ inform factory
@@ -37,7 +37,7 @@ TAO_Notify_SequenceProxyPushSupplier::connect_sequence_push_consumer (CosNotifyC
 }
 
 void
-TAO_Notify_SequenceProxyPushSupplier::disconnect_sequence_push_supplier (void)
+TAO_Notify_SequenceProxyPushSupplier::disconnect_sequence_push_supplier ()
 
 {
   TAO_Notify_SequenceProxyPushSupplier::Ptr guard( this );
@@ -46,13 +46,13 @@ TAO_Notify_SequenceProxyPushSupplier::disconnect_sequence_push_supplier (void)
 }
 
 CosNotifyChannelAdmin::ProxyType
-TAO_Notify_SequenceProxyPushSupplier::MyType (void)
+TAO_Notify_SequenceProxyPushSupplier::MyType ()
 {
   return CosNotifyChannelAdmin::PUSH_SEQUENCE;
 }
 
 const char *
-TAO_Notify_SequenceProxyPushSupplier::get_proxy_type_name (void) const
+TAO_Notify_SequenceProxyPushSupplier::get_proxy_type_name () const
 {
   return "sequence_proxy_push_supplier";
 }

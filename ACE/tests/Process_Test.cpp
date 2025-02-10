@@ -25,7 +25,7 @@
 static const char *proc_self_fd = "/proc/self/fd/";
 
 int
-test_setenv (void)
+test_setenv ()
 {
   int status = 0;
   ACE_Process_Options opts;
@@ -34,13 +34,7 @@ test_setenv (void)
     ACE_OS::strcat (bigval,
                     ACE_TEXT ("01234567890123456789012345678901234567890123456789"));
 #ifndef ACE_LACKS_VA_FUNCTIONS
-# if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
-  const ACE_TCHAR *fmt = ACE_TEXT ("%ls");
-# else
-  const ACE_TCHAR *fmt = ACE_TEXT ("%s");
-# endif
-
-  if (0 != opts.setenv (ACE_TEXT ("A"), fmt, bigval))
+  if (0 != opts.setenv (ACE_TEXT ("A"), ACE_TEXT ("%") ACE_TEXT_PRIs, bigval))
     {
       status = errno;
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("setenv")));
@@ -258,9 +252,7 @@ run_main (int argc, ACE_TCHAR *argv[])
       // Although most systems provide some mechanism to do this, the code
       // in this test uses Linux-specific techniques. Thus, although it
       // is possible to add the code for the checks on, for example,
-      // HP-UX (pstat_getproc, pstat_getpathname) and
-      // AIX (/proc is available, but there's no self and the fds are not links
-      // to the opened file names), the code isn't here at present.
+      // HP-UX (pstat_getproc, pstat_getpathname)
 #if defined (ACE_LACKS_FORK) || defined (ACE_LACKS_READLINK) || !defined(ACE_LINUX)
       ACE_ERROR ((LM_INFO,
                   ACE_TEXT ("The remainder of this test is not supported on this platform\n")));

@@ -44,7 +44,6 @@
 #define ACE_LACKS_REGEX_H
 #define ACE_LACKS_RENAME
 #define ACE_LACKS_SNPRINTF
-#define ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES
 #define ACE_LACKS_STRTOK_R
 #define ACE_LACKS_SYS_SELECT_H
 #define ACE_LACKS_TEMPNAM
@@ -54,7 +53,6 @@
 #if ACE_MT_SAFE == 1
   // Platform supports threads.
 # define ACE_HAS_NONCONST_PTHREAD_SIGMASK
-# define ACE_HAS_PTHREAD_SIGMASK_PROTOTYPE
 #endif /* ACE_MT_SAFE */
 
 #include /**/ "ace/post.h"

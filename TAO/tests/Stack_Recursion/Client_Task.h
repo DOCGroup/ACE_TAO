@@ -22,12 +22,11 @@ public:
                ACE_Thread_Manager *thr_mgr);
 
   /// Thread entry point
-  int svc (void);
+  int svc ();
 
 private:
-
   /// Simple pings to prune up the connections
-  void validate_connections (void);
+  void validate_connections ();
 
 private:
   /// Reference to the test interface

@@ -902,7 +902,7 @@ Routing_Slip::unmarshal (TAO_Notify_EventChannelFactory &ecf, TAO_InputCDR & cdr
 }
 
 void
-Routing_Slip::reconnect (void)
+Routing_Slip::reconnect ()
 {
   Routing_Slip_Guard guard (this->internals_);
   enter_state_saved (guard);

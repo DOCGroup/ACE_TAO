@@ -27,10 +27,6 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_Operation_Table_Timeprobe_Description,
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Linear_Search_OpTable::~TAO_Linear_Search_OpTable (void)
-{
-}
-
 int
 TAO_Linear_Search_OpTable::bind (const char *,
                                  const TAO::Operation_Skeletons )
@@ -46,7 +42,7 @@ TAO_Linear_Search_OpTable::find (const char *opname,
   ACE_FUNCTION_TIMEPROBE (TAO_LINEAR_SEARCH_OPTABLE_FIND_START);
 
   TAO_operation_db_entry const * const entry = lookup (opname);
-  if (entry == 0)
+  if (entry == nullptr)
     TAOLIB_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("TAO_Linear_Search_Table:find failed\n")),
                       -1);
@@ -67,7 +63,7 @@ TAO_Linear_Search_OpTable::find (const char *opname,
   ACE_FUNCTION_TIMEPROBE (TAO_LINEAR_SEARCH_OPTABLE_FIND_START);
 
   TAO_operation_db_entry const * const entry = lookup (opname);
-  if (entry == 0)
+  if (entry == nullptr)
     TAOLIB_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("TAO_Linear_Search_Table:find failed\n")),
                       -1);

@@ -63,32 +63,29 @@ public:
   void metadata (const Web_Server::Metadata_Type &metadata);
 
 private:
-
   /// Destructor must be private to ensure that this object is
   /// allocated on the heap.
-  ~Callback_i (void);
+  ~Callback_i ();
 
   /// Returns one if the metadata was received, and zero otherwise.
-  int metadata_received (void);
+  int metadata_received ();
 
   /// Returns one if the entire content was received, and zero
   /// otherwise.
-  int content_received (void);
+  int content_received ();
 
   /// Get the name of the viewer associated with the file being
   /// retrieved.
   int get_viewer (char *viewer, size_t length);
 
   /// Spawn an external view to display the retrieved file.
-  int spawn_viewer (void);
+  int spawn_viewer ();
 
 private:
-
   /// Deactivate this Callback servant.
-  void deactivate (void);
+  void deactivate ();
 
 private:
-
   /// The Addr corresponding to the retrieved file.
   ACE_FILE_Addr file_;
 

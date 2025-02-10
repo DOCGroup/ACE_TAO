@@ -34,13 +34,13 @@ class Consumer : public POA_RtecEventComm::PushConsumer
 {
 public:
   /// Constructor
-  Consumer (void);
+  Consumer ();
 
   // = The RtecEventComm::PushConsumer methods
 
   /// The skeleton methods.
   virtual void push (const RtecEventComm::EventSet& events);
-  virtual void disconnect_push_consumer (void);
+  virtual void disconnect_push_consumer ();
 };
 
 #endif /* CONSUMER_H */

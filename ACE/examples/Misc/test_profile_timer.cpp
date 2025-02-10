@@ -5,7 +5,6 @@
 #include "ace/OS_NS_unistd.h"
 
 
-
 static const int DEFAULT_ITERATIONS = 100000000;
 
 int

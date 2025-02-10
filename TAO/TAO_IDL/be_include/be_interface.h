@@ -50,15 +50,15 @@ public:
                 bool abstract);
 
   /// Destructor.
-  ~be_interface (void);
+  ~be_interface ();
 
   // Methods, which access the strategy.
 
   /// Return the local name.
-  const char *local_name (void);
+  const char *local_name ();
 
   /// Retrieve the fully scoped skel class name.
-  const char *full_skel_name (void);
+  const char *full_skel_name ();
 
   /// Retrieve the fully qualified collocated class name.
   const char *full_coll_name (int);
@@ -67,21 +67,21 @@ public:
   const char *local_coll_name (int);
 
   /// retrieve the name of the direct proxy implementation.
-  virtual const char *direct_proxy_impl_name (void);
+  virtual const char *direct_proxy_impl_name ();
 
   /// retrieve the fully qualified name of the direct proxy
   /// implementation.
-  virtual const char *full_direct_proxy_impl_name (void);
+  virtual const char *full_direct_proxy_impl_name ();
 
   /// Return the client scope that encloses the interface.
-  virtual const char *client_enclosing_scope (void);
+  virtual const char *client_enclosing_scope ();
 
   /// Return the "flattened" scope that encloses
   /// the interface.
-  virtual const char *flat_client_enclosing_scope (void);
+  virtual const char *flat_client_enclosing_scope ();
 
   /// Return the server scope that encloses the interface.
-  virtual const char *server_enclosing_scope (void);
+  virtual const char *server_enclosing_scope ();
 
   /// Retrieve skeleton name.
   const char *relative_skel_name (const char *skel_name);
@@ -107,7 +107,7 @@ public:
 
   /// Generate the declarations used by the template _var, _out
   /// classes for interfaces, and by sequence template classes.
-  void gen_var_out_seq_decls (void);
+  void gen_var_out_seq_decls ();
 
   // Each interface (to fix names "T") also defines two help classes,
   // the "collocated" class inherits from T, but delegates on the
@@ -148,27 +148,22 @@ public:
    * 0 => no
    * 1 => yes
    */
-  int in_mult_inheritance (void);
+  int in_mult_inheritance ();
 
   /// Set a new value.
   void in_mult_inheritance (int mi);
 
   /// Applies to interfaces, components, and homes.
-  bool has_rw_attributes (void) const;
+  bool has_rw_attributes () const;
 
   /// Pass along BE-specific member values when redefining a fwd decl.
   virtual void redefine (AST_Interface *from);
 
   /// Cleanup function.
-  virtual void destroy (void);
+  virtual void destroy ();
 
   // Visiting.
   virtual int accept (be_visitor *visitor);
-
-  // Narrowing.
-
-  DEF_NARROW_FROM_DECL (be_interface);
-  DEF_NARROW_FROM_SCOPE (be_interface);
 
   /// Helper method passed to the template method that generates code for the
   /// is_a method.
@@ -181,12 +176,6 @@ public:
   static int ami_handler_gen_optable_helper (be_interface *,
                                              be_interface *,
                                              TAO_OutStream *os);
-
-  /// Helper method passed to the template method to invoke ctors of all the
-  /// base classes.
-  static int copy_ctor_helper (be_interface *,
-                               be_interface *,
-                               TAO_OutStream *os);
 
   /// Helper method to determine if the interface node is involved in some kind
   /// of multiple inheritance or not. Required on the skeleton side.
@@ -242,10 +231,10 @@ public:
 
   /// Returns the original interface from which this one was created,
   /// applies only to implied IDL
-  be_interface *original_interface (void);
+  be_interface *original_interface ();
 
   /// Is EventConsumerBase our parent?
-  bool is_event_consumer (void);
+  bool is_event_consumer ();
 
   /**
    * Common code for facet generation, whether we are
@@ -257,14 +246,14 @@ public:
   /// Used with ami4ccm.
   int gen_ami4ccm_idl (TAO_OutStream *os);
 
-  bool is_ami_rh (void) const;
+  bool is_ami_rh () const;
   void is_ami_rh (bool val);
 
-  bool is_ami4ccm_rh (void) const;
+  bool is_ami4ccm_rh () const;
   void is_ami4ccm_rh (bool val);
 
   /// Accessors for the member.
-  bool dds_connector_traits_done (void) const;
+  bool dds_connector_traits_done () const;
   void dds_connector_traits_done (bool val);
 
   /// Generate the "public virtual" entries in the stub header.
@@ -432,7 +421,7 @@ public:
   /**
    * This is a no-op, simply put here to keep compilers happy.
    */
-  virtual ~TAO_IDL_Inheritance_Hierarchy_Worker (void);
+  virtual ~TAO_IDL_Inheritance_Hierarchy_Worker ();
 
   /// Define the method invoked during the inheritance traversal
   /**

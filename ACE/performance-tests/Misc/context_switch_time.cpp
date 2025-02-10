@@ -24,12 +24,6 @@
  *    from the one described in 1) above, and the result is divided by
  *    two to yield the context switch time.
  *
- * Notes:
- * On Solaris 2.5.1, it appears that the lowest context switching times,
- * at least on a single-CPU machine, are obtained _without_ creating new
- * LWPs for new threads (THR_NEW_LWP).  The -n option enables the use of
- * THR_NEW_LWP for testing.
- *
  * = CREATION DATE
  *  17 January 1997
  *
@@ -217,10 +211,6 @@ Suspend_Resume_Test::svc ()
 #endif /* ACE_DEBUG_CST */
 
   low_.ready ();
-
-  // For information:  the cost of the just the loop itself below,
-  // without the suspend and resume calls, on a 166 MHz Ultrasparc
-  // is about 12.3 nanoseconds per iteration.
 
   timer_.start ();
 
@@ -442,10 +432,6 @@ Ping_Suspend_Resume_Test::svc ()
                         ", high thread priority is %d\n",
               priority, high_priority));
 #endif /* ACE_DEBUG_CST */
-
-  // For information:  the cost of the just the loop itself below,
-  // without the suspend and resume calls, on a 166 MHz Ultrasparc
-  // is about 12.3 nanoseconds per iteration.
 
   timer_.start ();
 
@@ -998,10 +984,6 @@ Synchronized_Suspend_Resume_Test::svc ()
               ", high thread priority is %d\n",
               priority, high_priority));
 #endif /* ACE_DEBUG_CST */
-
-  // For information:  the cost of the just the loop itself below,
-  // without the suspend and resume calls, on a 166 MHz Ultrasparc
-  // is about 12.3 nanoseconds per iteration.
 
   ACE_UINT32 i;
 

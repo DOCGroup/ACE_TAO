@@ -31,7 +31,7 @@ TAO_Buffering_Constraint_Policy::TAO_Buffering_Constraint_Policy (const TAO_Buff
 }
 
 CORBA::PolicyType
-TAO_Buffering_Constraint_Policy::policy_type (void)
+TAO_Buffering_Constraint_Policy::policy_type ()
 {
   return TAO::BUFFERING_CONSTRAINT_POLICY_TYPE;
 }
@@ -53,7 +53,7 @@ TAO_Buffering_Constraint_Policy::create (const CORBA::Any& val)
 
 
 TAO_Buffering_Constraint_Policy *
-TAO_Buffering_Constraint_Policy::clone (void) const
+TAO_Buffering_Constraint_Policy::clone () const
 {
   TAO_Buffering_Constraint_Policy *copy = 0;
   ACE_NEW_RETURN (copy,
@@ -63,13 +63,13 @@ TAO_Buffering_Constraint_Policy::clone (void) const
 }
 
 TAO::BufferingConstraint
-TAO_Buffering_Constraint_Policy::buffering_constraint (void)
+TAO_Buffering_Constraint_Policy::buffering_constraint ()
 {
   return this->buffering_constraint_;
 }
 
 CORBA::Policy_ptr
-TAO_Buffering_Constraint_Policy::copy (void)
+TAO_Buffering_Constraint_Policy::copy ()
 {
   TAO_Buffering_Constraint_Policy* servant = 0;
   ACE_NEW_THROW_EX (servant,
@@ -80,12 +80,12 @@ TAO_Buffering_Constraint_Policy::copy (void)
 }
 
 void
-TAO_Buffering_Constraint_Policy::destroy (void)
+TAO_Buffering_Constraint_Policy::destroy ()
 {
 }
 
 TAO_Cached_Policy_Type
-TAO_Buffering_Constraint_Policy::_tao_cached_type (void) const
+TAO_Buffering_Constraint_Policy::_tao_cached_type () const
 {
   return TAO_CACHED_POLICY_BUFFERING_CONSTRAINT;
 }

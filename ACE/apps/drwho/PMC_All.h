@@ -21,15 +21,14 @@
  */
 class PMC_All : public PM_Client
 {
-
 protected:
   virtual Protocol_Record *insert_protocol_info (Protocol_Record &protocol_record);
   virtual int encode (char *packet, int &total_bytes);
   virtual int decode (char *packet, int &total_bytes);
 
 public:
-  PMC_All (void);
-  virtual void process (void);
+  PMC_All ();
+  virtual void process ();
 };
 
 #endif /* _PMC_ALL_H */

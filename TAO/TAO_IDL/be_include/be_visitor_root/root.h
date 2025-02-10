@@ -23,11 +23,10 @@
  */
 class be_visitor_root : public be_visitor_module
 {
-
 public:
   be_visitor_root (be_visitor_context *ctx);
 
-  ~be_visitor_root (void);
+  ~be_visitor_root ();
 
   /// This is the only method that differs from that of the
   /// be_visitor_module bass class.

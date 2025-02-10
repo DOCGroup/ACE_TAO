@@ -45,7 +45,7 @@ Hash_Table::Hash_Table (size_t s)
                   this->size_ * sizeof *this->table_);
 }
 
-Hash_Table::~Hash_Table (void)
+Hash_Table::~Hash_Table ()
 {
   if (option[DEBUGGING])
     {

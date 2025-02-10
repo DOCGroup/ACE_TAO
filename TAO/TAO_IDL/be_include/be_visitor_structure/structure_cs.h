@@ -29,7 +29,7 @@ public:
   be_visitor_structure_cs (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_structure_cs (void);
+  ~be_visitor_structure_cs ();
 
   /// visit structure.
   virtual int visit_structure (be_structure *node);

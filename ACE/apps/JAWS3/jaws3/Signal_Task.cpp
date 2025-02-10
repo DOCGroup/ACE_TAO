@@ -44,7 +44,6 @@ JAWS_Signal_Task_function (void *)
 #endif // !defined (ACE_WIN32)
         default:
           break;
-
         }
 
     }
@@ -53,7 +52,7 @@ JAWS_Signal_Task_function (void *)
 }
 
 
-JAWS_Signal_Task::JAWS_Signal_Task (void)
+JAWS_Signal_Task::JAWS_Signal_Task ()
 {
   // Set our signal mask.
   this->sigset_.empty_set ();

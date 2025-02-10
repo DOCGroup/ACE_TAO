@@ -36,7 +36,7 @@ TAO_AMH_DSI_Exception_Holder::~TAO_AMH_DSI_Exception_Holder ()
 }
 
 ::CORBA::ValueBase *
-TAO_AMH_DSI_Exception_Holder::_copy_value (void)
+TAO_AMH_DSI_Exception_Holder::_copy_value ()
 {
   ::CORBA::ValueBase *ret_val= 0;
   ACE_NEW_THROW_EX (
@@ -62,7 +62,7 @@ tao_TAO_AMH_DSI_Exception_Holder_remove_ref (TAO_AMH_DSI_Exception_Holder * p)
 }
 
 
-TAO_AMH_DSI_Exception_Holder_var::TAO_AMH_DSI_Exception_Holder_var (void)
+TAO_AMH_DSI_Exception_Holder_var::TAO_AMH_DSI_Exception_Holder_var ()
   : ptr_ (0)
 {
 }
@@ -80,7 +80,7 @@ TAO_AMH_DSI_Exception_Holder_var::TAO_AMH_DSI_Exception_Holder_var (
 }
 
 TAO_AMH_DSI_Exception_Holder *
-TAO_AMH_DSI_Exception_Holder_var::ptr (void) const
+TAO_AMH_DSI_Exception_Holder_var::ptr () const
 {
   return this->ptr_;
 }
@@ -92,7 +92,7 @@ TAO_AMH_DSI_Exception_Holder_var::TAO_AMH_DSI_Exception_Holder_var (
   this->ptr_ = p.ptr ();
 }
 
-TAO_AMH_DSI_Exception_Holder_var::~TAO_AMH_DSI_Exception_Holder_var (void)
+TAO_AMH_DSI_Exception_Holder_var::~TAO_AMH_DSI_Exception_Holder_var ()
 {
   CORBA::remove_ref (this->ptr_);
 }
@@ -120,8 +120,7 @@ TAO_AMH_DSI_Exception_Holder_var::operator= (
   return *this;
 }
 
-TAO_AMH_DSI_Exception_Holder_var::operator const TAO_AMH_DSI_Exception_Holder* (
-    ) const // cast
+TAO_AMH_DSI_Exception_Holder_var::operator const TAO_AMH_DSI_Exception_Holder* () const // cast
 {
   return this->ptr_;
 }
@@ -132,25 +131,25 @@ TAO_AMH_DSI_Exception_Holder_var::operator TAO_AMH_DSI_Exception_Holder*& ()
 }
 
 TAO_AMH_DSI_Exception_Holder *
-TAO_AMH_DSI_Exception_Holder_var::operator-> (void) const
+TAO_AMH_DSI_Exception_Holder_var::operator-> () const
 {
   return this->ptr_;
 }
 
 TAO_AMH_DSI_Exception_Holder *
-TAO_AMH_DSI_Exception_Holder_var::in (void) const
+TAO_AMH_DSI_Exception_Holder_var::in () const
 {
   return this->ptr_;
 }
 
 TAO_AMH_DSI_Exception_Holder *&
-TAO_AMH_DSI_Exception_Holder_var::inout (void)
+TAO_AMH_DSI_Exception_Holder_var::inout ()
 {
   return this->ptr_;
 }
 
 TAO_AMH_DSI_Exception_Holder *&
-TAO_AMH_DSI_Exception_Holder_var::out (void)
+TAO_AMH_DSI_Exception_Holder_var::out ()
 {
   CORBA::remove_ref (this->ptr_);
   this->ptr_ = 0;
@@ -158,7 +157,7 @@ TAO_AMH_DSI_Exception_Holder_var::out (void)
 }
 
 TAO_AMH_DSI_Exception_Holder *
-TAO_AMH_DSI_Exception_Holder_var::_retn (void)
+TAO_AMH_DSI_Exception_Holder_var::_retn ()
 {
   // yield ownership of managed obj reference
   TAO_AMH_DSI_Exception_Holder* tmp = this->ptr_;
@@ -230,13 +229,13 @@ TAO_AMH_DSI_Exception_Holder_out::operator TAO_AMH_DSI_Exception_Holder*& ()
 }
 
 TAO_AMH_DSI_Exception_Holder *&
-TAO_AMH_DSI_Exception_Holder_out::ptr (void) // ptr
+TAO_AMH_DSI_Exception_Holder_out::ptr () // ptr
 {
   return this->ptr_;
 }
 
 TAO_AMH_DSI_Exception_Holder *
-TAO_AMH_DSI_Exception_Holder_out::operator-> (void)
+TAO_AMH_DSI_Exception_Holder_out::operator-> ()
 {
   return this->ptr_;
 }
@@ -248,7 +247,7 @@ TAO_AMH_DSI_Exception_Holder::_downcast (CORBA::ValueBase * v)
 }
 
 const char *
-TAO_AMH_DSI_Exception_Holder::_tao_obv_repository_id (void) const
+TAO_AMH_DSI_Exception_Holder::_tao_obv_repository_id () const
 {
   return this->_tao_obv_static_repository_id ();
 }
@@ -275,8 +274,7 @@ TAO_AMH_DSI_Exception_Holder::_tao_unmarshal (
         base,
         TAO_AMH_DSI_Exception_Holder::_tao_obv_static_repository_id (),
         is_null_object,
-        is_indirected
-      );
+        is_indirected);
 
   ::CORBA::ValueBase_var owner (base);
 
@@ -302,19 +300,15 @@ TAO_AMH_DSI_Exception_Holder::_tao_unmarshal (
 void
 TAO_AMH_DSI_Exception_Holder::raise_invoke ()
 {
-#if defined (ACE_HAS_CPP11)
   std::unique_ptr< ::CORBA::Exception> safety (this->exception_);
-#else
-  auto_ptr< ::CORBA::Exception> safety (this->exception_);
-#endif /* ACE_HAS_CPP11 */
   this->exception_->_raise ();
 }
 
 // The pseudo-object _nil method.
 TAO_AMH_DSI_Response_Handler_ptr
-TAO_AMH_DSI_Response_Handler::_nil (void)
+TAO_AMH_DSI_Response_Handler::_nil ()
 {
-  return (TAO_AMH_DSI_Response_Handler_ptr) 0;
+  return nullptr;
 }
 
 
@@ -325,7 +319,7 @@ TAO_AMH_DSI_Response_Handler::TAO_AMH_DSI_Response_Handler (
 {
 }
 
-TAO_AMH_DSI_Response_Handler::~TAO_AMH_DSI_Response_Handler (void)
+TAO_AMH_DSI_Response_Handler::~TAO_AMH_DSI_Response_Handler ()
 {
 }
 
@@ -411,7 +405,7 @@ TAO_AMH_DSI_Response_Handler::gateway_exception_reply (
       this->_tao_out.write_char_array (encap.buffer (),
                                        ACE_Utils::truncate_cast<ACE_CDR::ULong> (encap.length ()));
       // This will prevent the marshaling of any parameters into this reply.
-      //  this->sent_gateway_exception_ = 1;
+      //  this->sent_gateway_exception_ = true;
       this->_tao_rh_send_reply ();
     }
   catch (const CORBA::Exception &)
@@ -456,7 +450,7 @@ TAO_AMH_DSI_Response_Handler::gateway_exception_reply (
   // to the original source of the reply.
     this->_tao_out.write_octet_array_mb (encap.start());
   // This will prevent the marshaling of any parameters into this reply.
-  //  this->sent_gateway_exception_ = 1;
+  //  this->sent_gateway_exception_ = true;
     this->_tao_rh_send_reply ();
   }
   catch (const CORBA::Exception &)
@@ -484,17 +478,17 @@ TAO_AMH_DSI_Response_Handler::_unchecked_narrow (CORBA::Object_ptr obj)
   if (CORBA::is_nil (obj))
     return TAO_AMH_DSI_Response_Handler::_nil ();
 
-  return dynamic_cast < TAO_AMH_DSI_Response_Handler_ptr > (obj);
+  return dynamic_cast <TAO_AMH_DSI_Response_Handler_ptr> (obj);
 }
 
 const char*
-TAO_AMH_DSI_Response_Handler::_interface_repository_id (void) const
+TAO_AMH_DSI_Response_Handler::_interface_repository_id () const
 {
   return 0;
 }
 
 CORBA::TypeCode_ptr
-TAO_AMH_DSI_Exception_Holder::_tao_type (void) const
+TAO_AMH_DSI_Exception_Holder::_tao_type () const
 {
   return 0;
 }

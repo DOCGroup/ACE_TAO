@@ -28,9 +28,9 @@ public:
 
 private:
   /// from the Fl_Gl_Window...
-  virtual void draw (void);
+  virtual void draw ();
 
-  virtual void draw_cube (void);
+  virtual void draw_cube ();
 
   /// The angles...
   CORBA::Long x_angle_;
@@ -60,7 +60,7 @@ public:
   // = The Simple_Server methods.
   void set_x_angle (CORBA::Long x);
   void set_y_angle (CORBA::Long y);
-  void shutdown (void);
+  void shutdown ();
 
 private:
   /// The ORB

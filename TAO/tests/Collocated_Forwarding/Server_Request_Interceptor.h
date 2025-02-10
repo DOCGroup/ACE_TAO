@@ -26,7 +26,6 @@ class Server_Request_Interceptor
     public virtual ::CORBA::LocalObject
 {
 public:
-
   /// Constructor.
   Server_Request_Interceptor (CORBA::ULong request_pass_count);
 
@@ -43,9 +42,9 @@ public:
    */
   //@{
   /// Return the name of this ServerRequestinterceptor.
-  virtual char * name (void);
+  virtual char * name ();
 
-  virtual void destroy (void);
+  virtual void destroy ();
 
   virtual void receive_request_service_contexts (
       PortableInterceptor::ServerRequestInfo_ptr ri);
@@ -64,7 +63,6 @@ public:
   //@}
 
 private:
-
   /// How much requests to pass thru before forwarding.
   CORBA::ULong request_pass_count_;
 

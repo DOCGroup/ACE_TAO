@@ -55,7 +55,7 @@ TAO_CEC_TypedEventChannel (const TAO_CEC_TypedEventChannel_Attributes& attr,
 }
 
 // Implementation skeleton destructor
-TAO_CEC_TypedEventChannel::~TAO_CEC_TypedEventChannel (void)
+TAO_CEC_TypedEventChannel::~TAO_CEC_TypedEventChannel ()
 {
   this->clear_ifr_cache ();
   this->interface_description_.close ();
@@ -73,7 +73,7 @@ TAO_CEC_TypedEventChannel::~TAO_CEC_TypedEventChannel (void)
 }
 
 void
-TAO_CEC_TypedEventChannel::activate (void)
+TAO_CEC_TypedEventChannel::activate ()
 {
   this->dispatching_->activate ();
   this->consumer_control_->activate ();
@@ -88,17 +88,16 @@ namespace
       : orb_ (CORBA::ORB::_duplicate (orb)) {}
     CORBA::ORB_var orb_;
 
-    virtual int handle_timeout (const ACE_Time_Value&, const void*)
+    int handle_timeout (const ACE_Time_Value&, const void*) override
     {
-      orb_->shutdown (1);
+      orb_->shutdown (true);
       return 0;
     }
-
   };
 }
 
 void
-TAO_CEC_TypedEventChannel::shutdown (void)
+TAO_CEC_TypedEventChannel::shutdown ()
 {
   this->dispatching_->shutdown ();
   this->supplier_control_->shutdown ();
@@ -200,7 +199,7 @@ TAO_CEC_TypedEventChannel::insert_into_ifr_cache (const char *operation_,
 
   CORBA::String_var operation = CORBA::string_dup (operation_);
 
-  int result = this->interface_description_.bind (operation.in (), parameters_);
+  int const result = this->interface_description_.bind (operation.in (), parameters_);
 
   if (result == 0)
     {
@@ -213,7 +212,7 @@ TAO_CEC_TypedEventChannel::insert_into_ifr_cache (const char *operation_,
 
 // Clear the ifr cache, freeing up all its contents.
 int
-TAO_CEC_TypedEventChannel::clear_ifr_cache (void)
+TAO_CEC_TypedEventChannel::clear_ifr_cache ()
 {
   for (Iterator i = this->interface_description_.begin ();
        i != this->interface_description_.end ();
@@ -222,7 +221,7 @@ TAO_CEC_TypedEventChannel::clear_ifr_cache (void)
       if (TAO_debug_level >= 10)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("***** Destroying operation %s from ifr cache *****\n"),
+                      ACE_TEXT ("***** Destroying operation %C from ifr cache *****\n"),
                       const_cast<char *> ((*i).ext_id_)));
         }
 
@@ -262,7 +261,7 @@ TAO_CEC_TypedEventChannel::cache_interface_description (const char *interface_)
           if (TAO_debug_level >= 10)
             {
               ORBSVCS_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("***** CORBA::InterfaceDef::_narrow failed for interface %s *****\n"),
+                          ACE_TEXT ("***** CORBA::InterfaceDef::_narrow failed for interface %C *****\n"),
                           interface_));
             }
           return -1;
@@ -280,7 +279,7 @@ TAO_CEC_TypedEventChannel::cache_interface_description (const char *interface_)
               for (CORBA::ULong base=0; base<fid->base_interfaces.length(); base++)
                 {
                   ORBSVCS_DEBUG ((LM_DEBUG,
-                              ACE_TEXT ("***** Base interface %s found on interface %s *****\n"),
+                              ACE_TEXT ("***** Base interface %C found on interface %C *****\n"),
                               static_cast<char const*>(fid->base_interfaces[base]),
                               interface_ ));
                 }
@@ -292,7 +291,7 @@ TAO_CEC_TypedEventChannel::cache_interface_description (const char *interface_)
               if (TAO_debug_level >= 10)
                 {
                   ORBSVCS_DEBUG ((LM_DEBUG,
-                              ACE_TEXT ("***** Operation %s found on interface %s, num params %d *****\n"),
+                              ACE_TEXT ("***** Operation %C found on interface %C, num params %d *****\n"),
                               fid->operations[oper].name.in(),
                               interface_,
                               fid->operations[oper].parameters.length() ));
@@ -322,7 +321,7 @@ TAO_CEC_TypedEventChannel::cache_interface_description (const char *interface_)
                   if (TAO_debug_level >= 10)
                     {
                       ORBSVCS_DEBUG ((LM_DEBUG,
-                                  ACE_TEXT ("***** Parameter %s found on operation %s *****\n"),
+                                  ACE_TEXT ("***** Parameter %C found on operation %C *****\n"),
                                   oper_params->parameters_[param].name_.in(),
                                   fid->operations[oper].name.in() ));
                     }
@@ -331,7 +330,7 @@ TAO_CEC_TypedEventChannel::cache_interface_description (const char *interface_)
               if (TAO_debug_level >= 10)
                 {
                   ORBSVCS_DEBUG ((LM_DEBUG,
-                              ACE_TEXT ("***** Adding operation %s with %d parameters to the IFR cache *****\n"),
+                              ACE_TEXT ("***** Adding operation %C with %d parameters to the IFR cache *****\n"),
                               fid->operations[oper].name.in(),
                               oper_params->num_params_ ));
                 }
@@ -502,7 +501,6 @@ TAO_CEC_TypedEventChannel::create_operation_list (TAO_CEC_Operation_Params *oper
 
   for (CORBA::ULong param=0; param<oper_params->num_params_; param++)
     {
-
       CORBA::Any any_1;
       any_1._tao_set_typecode(oper_params->parameters_[param].type_.in ());
 
@@ -522,19 +520,19 @@ TAO_CEC_TypedEventChannel::create_list (CORBA::Long count,
 
 // The CosTypedEventChannelAdmin::TypedEventChannel methods...
 CosTypedEventChannelAdmin::TypedConsumerAdmin_ptr
-TAO_CEC_TypedEventChannel::for_consumers (void)
+TAO_CEC_TypedEventChannel::for_consumers ()
 {
   return this->typed_consumer_admin_->_this ();
 }
 
 CosTypedEventChannelAdmin::TypedSupplierAdmin_ptr
-TAO_CEC_TypedEventChannel::for_suppliers (void)
+TAO_CEC_TypedEventChannel::for_suppliers ()
 {
   return this->typed_supplier_admin_->_this ();
 }
 
 void
-TAO_CEC_TypedEventChannel::destroy (void)
+TAO_CEC_TypedEventChannel::destroy ()
 {
   if (!destroyed_)
     {
@@ -544,8 +542,7 @@ TAO_CEC_TypedEventChannel::destroy (void)
 }
 
 CORBA::Policy_ptr
-TAO_CEC_TypedEventChannel::create_roundtrip_timeout_policy
-(const ACE_Time_Value &timeout)
+TAO_CEC_TypedEventChannel::create_roundtrip_timeout_policy (const ACE_Time_Value &timeout)
 {
   return this->factory_->create_roundtrip_timeout_policy (timeout);
 }

@@ -17,11 +17,11 @@ public:
   // = The skeleton methods
   virtual void receive_data (const Test::Payload &the_payload);
 
-  virtual void flush (void);
+  virtual void flush ();
 
-  virtual void sync (void);
+  virtual void sync ();
 
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
 private:
   /// Use an ORB reference to shutdown the application.

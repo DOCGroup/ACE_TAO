@@ -17,12 +17,8 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    RequestProcessingStrategyServantLocator::RequestProcessingStrategyServantLocator (void)
-    {
-    }
-
     void
-    RequestProcessingStrategyServantLocator::strategy_cleanup(void)
+    RequestProcessingStrategyServantLocator::strategy_cleanup()
     {
       {
         Non_Servant_Upcall non_servant_upcall (*this->poa_);
@@ -35,7 +31,7 @@ namespace TAO
     }
 
     PortableServer::ServantManager_ptr
-    RequestProcessingStrategyServantLocator::get_servant_manager (void)
+    RequestProcessingStrategyServantLocator::get_servant_manager ()
     {
       return PortableServer::ServantManager::_duplicate (this->servant_locator_.in ());
     }
@@ -60,19 +56,18 @@ namespace TAO
       this->validate_servant_manager (this->servant_locator_.in ());
     }
 
-    TAO_SERVANT_LOCATION
+    TAO_Servant_Location
     RequestProcessingStrategyServantLocator::locate_servant (
       const PortableServer::ObjectId &system_id,
       PortableServer::Servant &servant)
     {
-      TAO_SERVANT_LOCATION  location =
-        this->poa_->servant_present (system_id, servant);
+      TAO_Servant_Location  location = this->poa_->servant_present (system_id, servant);
 
-      if (location == TAO_SERVANT_NOT_FOUND)
+      if (location == TAO_Servant_Location::Not_Found)
         {
           if (!CORBA::is_nil (this->servant_locator_.in ()))
             {
-              location = TAO_SERVANT_MANAGER;
+              location = TAO_Servant_Location::Servant_Manager;
             }
         }
 
@@ -91,7 +86,7 @@ namespace TAO
                                                                   servant_upcall,
                                                                   poa_current_impl);
 
-      if (servant != 0)
+      if (servant != nullptr)
         {
           return servant;
         }
@@ -144,7 +139,7 @@ namespace TAO
                                            operation,
                                            cookie);
 
-      if (servant == 0)
+      if (servant == nullptr)
         {
           throw ::CORBA::OBJ_ADAPTER (CORBA::OMGVMCID | 7, CORBA::COMPLETED_NO);
         }

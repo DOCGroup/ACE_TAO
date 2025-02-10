@@ -10,12 +10,12 @@ Test_i::~Test_i()
 }
 
 void
-Test_i::test_method (void)
+Test_i::test_method ()
 {
 }
 
 void
-Test_i::shutdown (void)
+Test_i::shutdown ()
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

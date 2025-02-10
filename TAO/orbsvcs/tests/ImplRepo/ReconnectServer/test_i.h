@@ -12,12 +12,12 @@ class  Test_Dummy_i
 {
 public:
   // Constructor
-  Test_Dummy_i (void);
+  Test_Dummy_i ();
 
   // Destructor
-  virtual ~Test_Dummy_i (void);
+  virtual ~Test_Dummy_i ();
 
-  virtual  char * getMessage (void);
+  virtual  char * getMessage ();
 };
 
 class  Test_Time_i
@@ -25,14 +25,14 @@ class  Test_Time_i
 {
 public:
   // Constructor
-  Test_Time_i (void);
+  Test_Time_i ();
 
   // Destructor
-  virtual ~Test_Time_i (void);
+  virtual ~Test_Time_i ();
 
-  virtual ::CORBA::Long current_time (void);
+  virtual ::CORBA::Long current_time ();
 
-  virtual void shutdown (void);
+  virtual void shutdown ();
 };
 
 #endif /* IMR_RECONNECTSERVER_H  */

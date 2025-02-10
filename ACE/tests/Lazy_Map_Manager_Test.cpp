@@ -17,9 +17,8 @@
 #include "ace/Active_Map_Manager.h"
 
 
-
 // Simple map manager.
-typedef ACE_Map_Manager<int, int, ACE_Null_Mutex> LAZY_MAP;
+using LAZY_MAP = ACE_Map_Manager<int, int, ACE_Null_Mutex>;
 
 // Displaying the contents of a map manager.
 
@@ -64,7 +63,7 @@ display_map (LAZY_MAP &map)
 // Test for map manager.
 
 void
-map_test (void)
+map_test ()
 {
   // Map of size 3.
   LAZY_MAP map (3);
@@ -163,7 +162,7 @@ map_test (void)
 }
 
 // Simple active map manager.
-typedef ACE_Active_Map_Manager<int> ACTIVE_MAP;
+using ACTIVE_MAP = ACE_Active_Map_Manager<int>;
 
 // Displaying the contents of an active map manager.
 
@@ -209,7 +208,7 @@ display_map (ACTIVE_MAP &map)
 // Test for active map manager.
 
 void
-active_map_test (void)
+active_map_test ()
 {
   // Map of size 3.
   ACTIVE_MAP map (3);

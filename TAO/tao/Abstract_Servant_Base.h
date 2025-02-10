@@ -70,25 +70,25 @@ class TAO_Export TAO_Abstract_ServantBase
 {
 public:
   /// Destructor
-  virtual ~TAO_Abstract_ServantBase (void);
+  virtual ~TAO_Abstract_ServantBase ();
 
   /// Local implementation of the CORBA::Object::_is_a method.
   virtual CORBA::Boolean _is_a (const char* logical_type_id) = 0;
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
   /// Default @c _non_existent: always returns false.
-  virtual CORBA::Boolean _non_existent (void) = 0;
+  virtual CORBA::Boolean _non_existent () = 0;
 
 #if !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
   /// Query the Interface Repository.
-  virtual CORBA::InterfaceDef_ptr _get_interface (void) = 0;
+  virtual CORBA::InterfaceDef_ptr _get_interface () = 0;
 
   /// Default @c _get_component: always returns nil.
-  virtual CORBA::Object_ptr _get_component (void) = 0;
+  virtual CORBA::Object_ptr _get_component () = 0;
 #endif
 
   /// Default @c _repository_id
-  virtual char * _repository_id (void) = 0;
+  virtual char * _repository_id () = 0;
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
   //@{
@@ -96,21 +96,21 @@ public:
    * @name Reference Counting Operations
    */
   /// Increase reference count by one.
-  virtual void _add_ref (void) = 0;
+  virtual void _add_ref () = 0;
 
   /**
    * Decreases reference count by one; if the resulting reference
    * count equals zero, _remove_ref invokes delete on its this pointer
    * in order to destroy the servant.
    */
-  virtual void _remove_ref (void) = 0;
+  virtual void _remove_ref () = 0;
 
   /// Returns the current reference count value.
-  virtual CORBA::ULong _refcount_value (void) const = 0;
+  virtual CORBA::ULong _refcount_value () const = 0;
   //@}
 
   /// This is an auxiliary method for _this() and _narrow().
-  virtual TAO_Stub *_create_stub (void) = 0;
+  virtual TAO_Stub *_create_stub () = 0;
 
   /// Find an operation in the operation table and return a
   /// TAO_Skeleton which can be used to make upcalls
@@ -136,9 +136,8 @@ public:
                                      TAO::Collocation_Strategy strategy) = 0;
 
 protected:
-
   /// Default constructor, only derived classes can be created.
-  TAO_Abstract_ServantBase (void);
+  TAO_Abstract_ServantBase ();
 
   /// Copy constructor, protected so no instances can be created.
   TAO_Abstract_ServantBase (const TAO_Abstract_ServantBase &);
@@ -158,7 +157,7 @@ protected:
     TAO::Portable_Server::Servant_Upcall *servant_upcall) = 0;
 
   /// Get this interface's repository id (TAO specific).
-  virtual const char *_interface_repository_id (void) const = 0;
+  virtual const char *_interface_repository_id () const = 0;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

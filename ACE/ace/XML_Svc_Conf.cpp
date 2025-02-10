@@ -4,7 +4,7 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_XML_Svc_Conf::~ACE_XML_Svc_Conf (void)
+ACE_XML_Svc_Conf::~ACE_XML_Svc_Conf ()
 {
 }
 

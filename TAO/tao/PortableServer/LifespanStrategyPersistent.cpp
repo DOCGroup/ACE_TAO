@@ -31,13 +31,13 @@ namespace TAO
     }
 
     char
-    LifespanStrategyPersistent::key_type (void) const
+    LifespanStrategyPersistent::key_type () const
     {
       return 'P';
     }
 
     CORBA::Boolean
-    LifespanStrategyPersistent::is_persistent (void) const
+    LifespanStrategyPersistent::is_persistent () const
     {
       return true;
     }
@@ -59,21 +59,20 @@ namespace TAO
     }
 
     void
-    LifespanStrategyPersistent::notify_startup (void)
+    LifespanStrategyPersistent::notify_startup ()
     {
       if (this->use_imr_)
         {
           // The user specified that the ImR should be used.
           ImR_Client_Adapter *adapter =
             ACE_Dynamic_Service<ImR_Client_Adapter>::instance (
-              TAO_Root_POA::imr_client_adapter_name ()
-            );
+              TAO_Root_POA::imr_client_adapter_name ());
 
 #if !defined (TAO_AS_STATIC_LIBS)
           // In case we build shared, try to load the ImR Client library, in a
           // static build we just can't do this, so don't try it, lower layers
           // output an error then.
-          if (adapter == 0)
+          if (adapter == nullptr)
             {
               ACE_Service_Config::process_directive (
                 ACE_DYNAMIC_VERSIONED_SERVICE_DIRECTIVE(
@@ -86,7 +85,7 @@ namespace TAO
             }
 #endif /* !TAO_AS_STATIC_LIBS */
 
-          if (adapter != 0)
+          if (adapter != nullptr)
             {
               adapter->imr_notify_startup (this->poa_);
             }
@@ -105,14 +104,13 @@ namespace TAO
     }
 
     void
-    LifespanStrategyPersistent::notify_shutdown (void)
+    LifespanStrategyPersistent::notify_shutdown ()
     {
       ImR_Client_Adapter *adapter =
         ACE_Dynamic_Service<ImR_Client_Adapter>::instance (
-          TAO_Root_POA::imr_client_adapter_name ()
-        );
+          TAO_Root_POA::imr_client_adapter_name ());
 
-      if (adapter != 0)
+      if (adapter != nullptr)
         {
           adapter->imr_notify_shutdown (this->poa_);
         }
@@ -124,15 +122,9 @@ namespace TAO
     }
 
     void
-    LifespanStrategyPersistent::check_state (void)
+    LifespanStrategyPersistent::check_state ()
     {
       this->poa_->tao_poa_manager().check_state ();
-    }
-
-    ::PortableServer::LifespanPolicyValue
-    LifespanStrategyPersistent::type() const
-    {
-      return ::PortableServer::PERSISTENT;
     }
 
     bool
@@ -154,9 +146,8 @@ namespace TAO
       // The user specified that the ImR should be used.
       ImR_Client_Adapter *adapter =
         ACE_Dynamic_Service<ImR_Client_Adapter>::instance (
-          TAO_Root_POA::imr_client_adapter_name ()
-        );
-      if (adapter == 0)
+          TAO_Root_POA::imr_client_adapter_name ());
+      if (adapter == nullptr)
         {
           // couldn't load adapter, already reported error
           return CORBA::Object::_nil ();

@@ -39,11 +39,7 @@ ServantLocator::ServantLocator (CORBA::ORB_ptr orb,
   // to long first.
   //
   void *symbol = this->dll_.symbol (factory_function);
-#if defined (ACE_OPENVMS) && (!defined (__INITIAL_POINTER_SIZE) || (__INITIAL_POINTER_SIZE < 64))
-  int function = reinterpret_cast<int> (symbol);
-#else
   intptr_t function = reinterpret_cast<intptr_t> (symbol);
-#endif
 
   servant_supplier_ =
     reinterpret_cast<SERVANT_FACTORY> (function);
@@ -51,11 +47,7 @@ ServantLocator::ServantLocator (CORBA::ORB_ptr orb,
   // Obtain the symbol for the function which will destroy the
   // servant.
   symbol = this->dll_.symbol (garbage_collection_function);
-#if defined (ACE_OPENVMS) && (!defined (__INITIAL_POINTER_SIZE) || (__INITIAL_POINTER_SIZE < 64))
-  function = reinterpret_cast<int> (symbol);
-#else
   function = reinterpret_cast<intptr_t> (symbol);
-#endif
 
   servant_garbage_collector_ =
     reinterpret_cast<SERVANT_GARBAGE_COLLECTOR> (function);

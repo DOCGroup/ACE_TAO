@@ -9,7 +9,7 @@
 #include "jaws3/Protocol_Handler.h"
 #include "jaws3/Options.h"
 
-JAWS_TPOOL_Concurrency::JAWS_TPOOL_Concurrency (void)
+JAWS_TPOOL_Concurrency::JAWS_TPOOL_Concurrency ()
   : number_of_threads_ (5)
   , shutdown_task_ (0)
   , error_ (0)

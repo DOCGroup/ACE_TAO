@@ -55,15 +55,14 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) server - shutting down the ORB\n"));
 
-      orb->shutdown (1);
+      orb->shutdown (true);
 
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) Finished shutting down the ORB\n"));
 
-      root_poa->destroy (1, 1);
+      root_poa->destroy (true, true);
 
       orb->destroy ();
-
     }
   catch (const CORBA::Exception& ex)
     {

@@ -64,7 +64,6 @@ public:
   /// Read in a <Connection_Config_Info> entry.
   virtual FPRT::Return_Type read_entry (Connection_Config_Info &entry,
                                         int &line_number);
-
 };
 
 /**

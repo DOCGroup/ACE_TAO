@@ -2,7 +2,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
-ACE_SSL_SOCK_Acceptor::ACE_SSL_SOCK_Acceptor (void)
+ACE_SSL_SOCK_Acceptor::ACE_SSL_SOCK_Acceptor ()
   : acceptor_ ()
 {
   ACE_TRACE ("ACE_SSL_SOCK_Acceptor::ACE_SSL_SOCK_Acceptor");
@@ -75,7 +75,7 @@ ACE_SSL_SOCK_Acceptor::open (const ACE_Addr &local_sap,
 }
 
 ACE_INLINE int
-ACE_SSL_SOCK_Acceptor::close (void)
+ACE_SSL_SOCK_Acceptor::close ()
 {
   ACE_TRACE ("ACE_SSL_SOCK_Acceptor::close ()");
 

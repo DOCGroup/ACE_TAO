@@ -13,7 +13,7 @@ Messenger_i::Messenger_i (
   {
   }
 
-Messenger_i::~Messenger_i (void)
+Messenger_i::~Messenger_i ()
   {
   }
 
@@ -100,7 +100,7 @@ void Messenger_i::shutdown (
       //
       CORBA::Octet *buf =
         x509_defining_authority.get_buffer();
-      ACE_OS_String::memcpy( buf, x509, sizeof(x509));
+      ACE_OS::memcpy( buf, x509, sizeof(x509));
       //
       // Confirm the defining authority is "x509".
       //
@@ -137,7 +137,7 @@ void Messenger_i::shutdown (
     std::cout << std::endl;
 #endif
 
-    orb_->shutdown (0);
+    orb_->shutdown (false);
   }
   else
   {

@@ -23,7 +23,7 @@
 #include "ace/OS_NS_sys_socket.h"
 
 static char *
-time_stamp (void)
+time_stamp ()
 {
   time_t time_now;
   char *temp;
@@ -49,7 +49,7 @@ exit_server (int sig)
 // Returns TRUE if the program was started by INETD.
 
 static int
-started_by_inetd (void)
+started_by_inetd ()
 {
   sockaddr_in sin;
   int size = sizeof sin;
@@ -100,7 +100,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     do_drwho (smr_server);
   else
     {
-
       for (;;)
         do_drwho (smr_server);
 

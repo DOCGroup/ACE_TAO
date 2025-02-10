@@ -28,11 +28,7 @@ namespace
     {
       // ACE_thread_t is a pointer.  Cast to an intermediate integer
       // type large enough to hold a pointer.
-#if defined (ACE_OPENVMS) && (!defined (__INITIAL_POINTER_SIZE) || (__INITIAL_POINTER_SIZE < 64))
-      int const tmp = reinterpret_cast<int> (tid);
-#else
       intptr_t const tmp = reinterpret_cast<intptr_t> (tid);
-#endif
 
       // We assume sizeof(thread_id_type) >= sizeof(ace_thread_id_type).
       return (thread_id_type) tmp;

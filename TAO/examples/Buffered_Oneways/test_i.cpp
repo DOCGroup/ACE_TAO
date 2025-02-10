@@ -1,7 +1,6 @@
 #include "test_i.h"
 
 
-
 test_i::test_i (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
 {
@@ -16,7 +15,7 @@ test_i::method (CORBA::ULong request_number)
 }
 
 void
-test_i::shutdown (void)
+test_i::shutdown ()
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

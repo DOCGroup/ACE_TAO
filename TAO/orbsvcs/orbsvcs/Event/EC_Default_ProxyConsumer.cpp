@@ -14,10 +14,6 @@ TAO_EC_Default_ProxyPushConsumer::
 {
 }
 
-TAO_EC_Default_ProxyPushConsumer::~TAO_EC_Default_ProxyPushConsumer (void)
-{
-}
-
 void
 TAO_EC_Default_ProxyPushConsumer::connect_push_supplier (
       RtecEventComm::PushSupplier_ptr push_supplier,
@@ -60,7 +56,7 @@ TAO_EC_Default_ProxyPushConsumer::connect_push_supplier (
 
     this->supplier_ =
       RtecEventComm::PushSupplier::_duplicate (push_supplier);
-    this->connected_ = 1;
+    this->connected_ = true;
     this->qos_ = qos;
 
 #if TAO_EC_ENABLE_DEBUG_MESSAGES
@@ -104,7 +100,7 @@ TAO_EC_Default_ProxyPushConsumer::disconnect_push_consumer ()
 
     connected = this->is_connected_i ();
     supplier = this->supplier_._retn ();
-    this->connected_ = 0;
+    this->connected_ = false;
 
     if (connected)
       this->cleanup_i ();
@@ -133,19 +129,19 @@ TAO_EC_Default_ProxyPushConsumer::disconnect_push_consumer ()
 }
 
 PortableServer::POA_ptr
-TAO_EC_Default_ProxyPushConsumer::_default_POA (void)
+TAO_EC_Default_ProxyPushConsumer::_default_POA ()
 {
   return PortableServer::POA::_duplicate (this->default_POA_.in ());
 }
 
 void
-TAO_EC_Default_ProxyPushConsumer::_add_ref (void)
+TAO_EC_Default_ProxyPushConsumer::_add_ref ()
 {
   this->_incr_refcnt ();
 }
 
 void
-TAO_EC_Default_ProxyPushConsumer::_remove_ref (void)
+TAO_EC_Default_ProxyPushConsumer::_remove_ref ()
 {
   this->_decr_refcnt ();
 }
@@ -158,7 +154,7 @@ TAO_EC_Default_ProxyPushConsumer::activate (
 }
 
 PortableServer::ObjectId
-TAO_EC_Default_ProxyPushConsumer::object_id (void)
+TAO_EC_Default_ProxyPushConsumer::object_id ()
 {
   PortableServer::ObjectId_var result =
     this->default_POA_->servant_to_id (this);

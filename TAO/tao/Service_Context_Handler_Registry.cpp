@@ -49,7 +49,7 @@ TAO_Service_Context_Registry::generate_service_context (
   return result;
 }
 
-TAO_Service_Context_Registry::~TAO_Service_Context_Registry (void)
+TAO_Service_Context_Registry::~TAO_Service_Context_Registry ()
 {
   for (Table::iterator x = this->registry_.begin ();
        x != this->registry_.end ();

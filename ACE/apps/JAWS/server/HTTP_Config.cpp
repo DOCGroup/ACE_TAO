@@ -8,7 +8,7 @@
 HTTP_Config_Info *HTTP_Config::instance_ = 0;
 
 HTTP_Config_Info *
-HTTP_Config::instance (void)
+HTTP_Config::instance ()
 {
   if (HTTP_Config::instance_ == 0)
     {
@@ -24,7 +24,7 @@ HTTP_Config::instance (void)
   return HTTP_Config::instance_;
 }
 
-HTTP_Config_Info::HTTP_Config_Info (void)
+HTTP_Config_Info::HTTP_Config_Info ()
   : document_root_ (0),
     cgi_path_ (0),
     user_dir_ (0),
@@ -33,36 +33,36 @@ HTTP_Config_Info::HTTP_Config_Info (void)
 {
 }
 
-HTTP_Config_Info::~HTTP_Config_Info (void)
+HTTP_Config_Info::~HTTP_Config_Info ()
 {
 }
 
 const char *
-HTTP_Config_Info::document_root (void) const
+HTTP_Config_Info::document_root () const
 {
   return this->document_root_;
 }
 
 const char *
-HTTP_Config_Info::cgi_path (void) const
+HTTP_Config_Info::cgi_path () const
 {
   return this->cgi_path_;
 }
 
 const char *
-HTTP_Config_Info::user_dir (void) const
+HTTP_Config_Info::user_dir () const
 {
   return this->user_dir_;
 }
 
 const char *
-HTTP_Config_Info::dir_index (void) const
+HTTP_Config_Info::dir_index () const
 {
   return this->dir_index_;
 }
 
 int
-HTTP_Config_Info::proxy_flag (void) const
+HTTP_Config_Info::proxy_flag () const
 {
   return this->proxy_flag_;
 }

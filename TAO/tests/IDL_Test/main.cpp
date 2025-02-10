@@ -17,6 +17,7 @@
 #include "constantsC.h"
 #include "nested_scopeS.h"
 #include "typedefC.h"
+#include "expressionsC.h"
 
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_string.h"
@@ -79,8 +80,66 @@ struct something_handler
 {
 };
 
+template <typename Type>
+void
+expect_equals (int &error_count, const char *name, Type actual, Type expected)
+{
+  if (actual != expected)
+    {
+      *ACE_DEFAULT_LOG_STREAM
+        << "ERROR: For " << name << " expected: " << expected
+        << ", but got " << actual << "\n";
+      ++error_count;
+    }
+}
+
+void
+test_expressions (int &error_count)
+{
+  expect_equals<CORBA::Short> (error_count, "ShortValues::a", ShortValues::a, 6);
+  expect_equals<CORBA::Short> (error_count, "ShortValues::b", ShortValues::b, 3);
+  expect_equals<CORBA::Short> (error_count, "ShortValues::div", ShortValues::div, 2);
+  expect_equals<CORBA::Short> (error_count, "ShortValues::mul", ShortValues::mul, 18);
+  expect_equals<CORBA::Short> (error_count, "ShortValues::add", ShortValues::add, 9);
+  expect_equals<CORBA::Short> (error_count, "ShortValues::sub", ShortValues::sub, 3);
+  expect_equals<CORBA::Short> (error_count, "ShortValues::mod", ShortValues::mod, 0);
+
+  expect_equals<CORBA::Long> (error_count, "LongValues::a", LongValues::a, 6);
+  expect_equals<CORBA::Long> (error_count, "LongValues::b", LongValues::b, 3);
+  expect_equals<CORBA::Long> (error_count, "LongValues::div", LongValues::div, 2);
+  expect_equals<CORBA::Long> (error_count, "LongValues::mul", LongValues::mul, 18);
+  expect_equals<CORBA::Long> (error_count, "LongValues::add", LongValues::add, 9);
+  expect_equals<CORBA::Long> (error_count, "LongValues::sub", LongValues::sub, 3);
+  expect_equals<CORBA::Long> (error_count, "LongValues::mod", LongValues::mod, 0);
+
+  expect_equals<CORBA::Long> (error_count, "MixedIntValues::div", MixedIntValues::div, 2);
+  expect_equals<CORBA::Long> (error_count, "MixedIntValues::mul", MixedIntValues::mul, 18);
+  expect_equals<CORBA::Long> (error_count, "MixedIntValues::add", MixedIntValues::add, 9);
+  expect_equals<CORBA::Long> (error_count, "MixedIntValues::sub", MixedIntValues::sub, 3);
+  expect_equals<CORBA::Long> (error_count, "MixedIntValues::mod", MixedIntValues::mod, 0);
+
+  expect_equals<CORBA::Float> (error_count, "FloatValues::a", FloatValues::a, 6.0f);
+  expect_equals<CORBA::Float> (error_count, "FloatValues::b", FloatValues::b, 3.0f);
+  expect_equals<CORBA::Float> (error_count, "FloatValues::div", FloatValues::div, 2.0f);
+  expect_equals<CORBA::Float> (error_count, "FloatValues::mul", FloatValues::mul, 18.0f);
+  expect_equals<CORBA::Float> (error_count, "FloatValues::add", FloatValues::add, 9.0f);
+  expect_equals<CORBA::Float> (error_count, "FloatValues::sub", FloatValues::sub, 3.0f);
+
+  expect_equals<CORBA::Double> (error_count, "DoubleValues::a", DoubleValues::a, 6.0);
+  expect_equals<CORBA::Double> (error_count, "DoubleValues::b", DoubleValues::b, 3.0);
+  expect_equals<CORBA::Double> (error_count, "DoubleValues::div", DoubleValues::div, 2.0);
+  expect_equals<CORBA::Double> (error_count, "DoubleValues::mul", DoubleValues::mul, 18.0);
+  expect_equals<CORBA::Double> (error_count, "DoubleValues::add", DoubleValues::add, 9.0);
+  expect_equals<CORBA::Double> (error_count, "DoubleValues::sub", DoubleValues::sub, 3.0);
+
+  expect_equals<CORBA::Double> (error_count, "MixedFloatValues::div", MixedFloatValues::div, 2.0);
+  expect_equals<CORBA::Double> (error_count, "MixedFloatValues::mul", MixedFloatValues::mul, 18.0);
+  expect_equals<CORBA::Double> (error_count, "MixedFloatValues::add", MixedFloatValues::add, 9.0);
+  expect_equals<CORBA::Double> (error_count, "MixedFloatValues::sub", MixedFloatValues::sub, 3.0);
+}
+
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   int error_count = 0;
 
@@ -175,8 +234,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // Check whether the implementation of Dubble and Toil are generated
       CommaList::Dubble dub;
       CommaList::Toil toi;
-      dub.length(4);
-      toi.length(4);
+      dub.length (4);
+      toi.length (4);
 
       ciao_i c;
       id = root_poa->activate_object (&c);
@@ -326,7 +385,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         if (!dynamic_cast<POA_bug_1985_c::d::AMI_somethingHandler*> (&x))
           {
             ++error_count;
-            ACE_ERROR( (LM_ERROR,
+            ACE_ERROR ((LM_ERROR,
                        "mismatch in downcast for %C\n",
                         base[0]));
           }
@@ -353,8 +412,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       Field field;
       field.value.strValue (
-          CORBA::string_dup ("duplicate case label test string")
-        );
+          CORBA::string_dup ("duplicate case label test string"));
       field.value._d (FTYPE_VARCHAR);
       CORBA::Any any1;
       any1 <<= field;
@@ -415,5 +473,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       return 1;
     }
 
-  return error_count;
+  test_expressions (error_count);
+
+  return error_count ? 1 : 0;
 }

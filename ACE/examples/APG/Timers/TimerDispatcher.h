@@ -11,7 +11,7 @@
 class Timer_Dispatcher
 {
 public:
-  void wait_for_event (void);
+  void wait_for_event ();
 
   long schedule (ACE_Event_Handler *cb,
                  void *arg,

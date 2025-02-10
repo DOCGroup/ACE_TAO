@@ -3,7 +3,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
-TAO_Pluggable_Reply_Params_Base::TAO_Pluggable_Reply_Params_Base (void)
+TAO_Pluggable_Reply_Params_Base::TAO_Pluggable_Reply_Params_Base ()
   : svc_ctx_ (),
     request_id_ (0),
     is_dsi_ (0),
@@ -16,7 +16,7 @@ TAO_Pluggable_Reply_Params_Base::TAO_Pluggable_Reply_Params_Base (void)
 }
 
 ACE_INLINE GIOP::ReplyStatusType
-TAO_Pluggable_Reply_Params_Base::reply_status (void) const
+TAO_Pluggable_Reply_Params_Base::reply_status () const
 {
   return this->reply_status_;
 }
@@ -28,7 +28,7 @@ TAO_Pluggable_Reply_Params_Base::reply_status (GIOP::ReplyStatusType status)
 }
 
 ACE_INLINE GIOP::LocateStatusType
-TAO_Pluggable_Reply_Params_Base::locate_reply_status (void) const
+TAO_Pluggable_Reply_Params_Base::locate_reply_status () const
 {
   return this->locate_reply_status_;
 }
@@ -47,7 +47,7 @@ TAO_Pluggable_Reply_Params_Base::service_context_notowned (
 }
 
 ACE_INLINE IOP::ServiceContextList &
-TAO_Pluggable_Reply_Params_Base::service_context_notowned (void)
+TAO_Pluggable_Reply_Params_Base::service_context_notowned ()
 {
   return *this->service_context_;
 }

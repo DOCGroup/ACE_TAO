@@ -17,13 +17,8 @@
 // ***************************************************************************
 
 be_visitor_structure_cdr_op_ch::be_visitor_structure_cdr_op_ch (
-    be_visitor_context *ctx
-  )
+    be_visitor_context *ctx)
   : be_visitor_structure (ctx)
-{
-}
-
-be_visitor_structure_cdr_op_ch::~be_visitor_structure_cdr_op_ch (void)
 {
 }
 
@@ -39,8 +34,7 @@ be_visitor_structure_cdr_op_ch::visit_structure (be_structure *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   *os << be_global->core_versioning_begin () << be_nl;
 

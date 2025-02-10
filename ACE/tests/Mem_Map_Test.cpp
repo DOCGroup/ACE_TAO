@@ -22,7 +22,6 @@
 #include "ace/OS_Memory.h"
 
 
-
 #if !defined (ACE_LACKS_MMAP)
 
 static const char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";

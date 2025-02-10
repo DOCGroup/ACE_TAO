@@ -6,7 +6,6 @@
 #include "Options.h"
 
 
-
 Consumer_Router::Consumer_Router (Peer_Router_Context *prc)
   : Peer_Router (prc)
 {
@@ -59,7 +58,7 @@ Consumer_Router::close (u_long)
 // Handle incoming messages in a separate thread.
 
 int
-Consumer_Router::svc (void)
+Consumer_Router::svc ()
 {
   assert (this->is_writer ());
 
@@ -125,11 +124,6 @@ Consumer_Router::put (ACE_Message_Block *mb,
 }
 
 // Return information about the <Consumer_Router>.
-#if defined (ACE_WIN32) || !defined (ACE_USES_WCHAR)
-#  define FMTSTR  ACE_TEXT ("%s\t %d/%s %s (%s)\n")
-#else
-#  define FMTSTR  ACE_TEXT ("%ls\t %d/%ls %ls (%ls)\n")
-#endif /* ACE_WIN32 || !ACE_USES_WCHAR */
 
 int
 Consumer_Router::info (ACE_TCHAR **strp, size_t length) const
@@ -142,7 +136,11 @@ Consumer_Router::info (ACE_TCHAR **strp, size_t length) const
     return -1;
 
   ACE_OS::sprintf (buf,
-                   FMTSTR,
+                   ACE_TEXT ("%") ACE_TEXT_PRIs
+                   ACE_TEXT ("\t %d/%") ACE_TEXT_PRIs
+                   ACE_TEXT (" %") ACE_TEXT_PRIs
+                   ACE_TEXT (" (%") ACE_TEXT_PRIs
+                   ACE_TEXT (")\n"),
                    module_name,
                    addr.get_port_number (),
                    ACE_TEXT ("tcp"),

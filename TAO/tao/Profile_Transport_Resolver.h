@@ -73,7 +73,7 @@ namespace TAO
                                 TAO_Stub *stub,
                                 bool block = true);
 
-    ~Profile_Transport_Resolver (void);
+    ~Profile_Transport_Resolver ();
 
     /// Method where the bunch of the action takes place.
     /**
@@ -95,16 +95,16 @@ namespace TAO
     void profile (TAO_Profile *pfile);
 
     /// Accessor for profile.
-    TAO_Profile *profile (void) const;
+    TAO_Profile *profile () const;
 
     /// Accessor for TAO_Stub
-    TAO_Stub *stub (void) const;
+    TAO_Stub *stub () const;
 
     /// Accessor for the target in use
-    CORBA::Object *object (void) const;
+    CORBA::Object *object () const;
 
     /// Accessor for the transport reserved for this invocation.
-    TAO_Transport *transport (void) const;
+    TAO_Transport *transport () const;
 
     /// See if the transport cache has an available transport and
     /// use that one rather than trying to connect via the connector.
@@ -115,12 +115,12 @@ namespace TAO
 
     /// Accessor to indicate whether we should block while
     /// establishing a connection.
-    bool blocked_connect (void) const;
+    bool blocked_connect () const;
     //@}
 
     /// Signal to let the resolver know that the transport has been
     /// released back to the cache.
-    void transport_released (void) const;
+    void transport_released () const;
 
     /// This is a callback method used by the endpoint selectors to
     /// delegate the responsibility of reserving a transport from the
@@ -139,17 +139,16 @@ namespace TAO
     /// This method wraps a call to the orb core to see if parallel
     /// connection attempts are even desired. This is controlled by
     /// the -ORBUseParallelConnects 1|0 commandline option.
-    bool use_parallel_connect (void) const;
+    bool use_parallel_connect () const;
 
     /// Initialize the inconsistent policy list that this object has
     /// cached.
-    void init_inconsistent_policies (void);
+    void init_inconsistent_policies ();
 
-    CORBA::PolicyList *inconsistent_policies (void) const;
+    CORBA::PolicyList *inconsistent_policies () const;
 
-    CORBA::PolicyList *steal_inconsistent_policies (void);
+    CORBA::PolicyList *steal_inconsistent_policies ();
   private:
-
     /// Helper method to access get the connection timeout from the
     /// ORB.
     bool get_connection_timeout (ACE_Time_Value &max_wait_time);
@@ -181,12 +180,12 @@ namespace TAO
     /**
      * If current effective policies cause the invocation to raise
      * CORBA::INV_POLICY exception, the conflicting/problematic policies
-     * are stored in this list.  This is used by \param
-     * Object::_validate_connection method to inform clients about
+     * are stored in this list.  This is used by
+     * Object::_validate_connection() method to inform clients about
      * causes of invocation failure.
      * @par
-     * Conflicting policies are only stored in this list if \param
-     * init_inconsistent_policies method has been called prior to the
+     * Conflicting policies are only stored in this list if
+     * init_inconsistent_policies() method has been called prior to the
      * beginning of invocation.  This saves extra work of conflicting
      * policies 'logging' when it's not needed.
      *

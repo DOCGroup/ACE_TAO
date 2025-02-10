@@ -7,13 +7,13 @@
 #include "orbsvcs/IOR_Multicast.h"
 #include "tao/IORTable/IORTable.h"
 #include "tao/ORB_Core.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
-IFR_Service::IFR_Service (void)
+IFR_Service::IFR_Service ()
 {
 }
 
-IFR_Service::~IFR_Service (void)
+IFR_Service::~IFR_Service ()
 {
 }
 
@@ -45,7 +45,7 @@ IFR_Service::init (int argc,
 }
 
 int
-IFR_Service::run (void)
+IFR_Service::run ()
 {
   this->orb_->run (0);
 
@@ -53,7 +53,7 @@ IFR_Service::run (void)
 }
 
 int
-IFR_Service::fini (void)
+IFR_Service::fini ()
 {
   try
     {
@@ -68,7 +68,7 @@ IFR_Service::fini (void)
 }
 
 void
-IFR_Service::shutdown (void)
+IFR_Service::shutdown ()
 {
   this->orb_->shutdown ();
 }

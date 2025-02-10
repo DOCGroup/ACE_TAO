@@ -33,14 +33,12 @@
  */
 class Initiator_Server
 {
-
 public:
-
   /// Default constructor
-  Initiator_Server (void);
+  Initiator_Server ();
 
   /// Destructor
-  ~Initiator_Server (void);
+  ~Initiator_Server ();
 
   /// read in the IOR's for the two objects A and B
   int read_ior (ACE_TCHAR *filename, unsigned int A_B);
@@ -50,11 +48,11 @@ public:
             ACE_TCHAR **argv);
 
   /// Run the orb
-  int run (void);
+  int run ();
 
 private:
   /// Parses the commandline arguments.
-  int parse_args (void);
+  int parse_args ();
 
   /// The IOR of object A
   char * object_A_key_;

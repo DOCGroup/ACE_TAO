@@ -12,12 +12,12 @@ TAO_AbstractInterfaceDef_i::TAO_AbstractInterfaceDef_i (TAO_Repository_i *repo)
 {
 }
 
-TAO_AbstractInterfaceDef_i::~TAO_AbstractInterfaceDef_i (void)
+TAO_AbstractInterfaceDef_i::~TAO_AbstractInterfaceDef_i ()
 {
 }
 
 CORBA::DefinitionKind
-TAO_AbstractInterfaceDef_i::def_kind (void)
+TAO_AbstractInterfaceDef_i::def_kind ()
 {
   return CORBA::dk_AbstractInterface;
 }

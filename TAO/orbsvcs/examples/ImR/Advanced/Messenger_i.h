@@ -14,7 +14,7 @@ class  Messenger_i
 public:
   Messenger_i (CORBA::ORB_ptr orb, long instance);
 
-  virtual ~Messenger_i (void);
+  virtual ~Messenger_i ();
 
   virtual
   CORBA::Long send_message (

@@ -11,18 +11,18 @@ TAO_StringDef_i::TAO_StringDef_i (TAO_Repository_i *repo)
 {
 }
 
-TAO_StringDef_i::~TAO_StringDef_i (void)
+TAO_StringDef_i::~TAO_StringDef_i ()
 {
 }
 
 CORBA::DefinitionKind
-TAO_StringDef_i::def_kind (void)
+TAO_StringDef_i::def_kind ()
 {
   return CORBA::dk_String;
 }
 
 void
-TAO_StringDef_i::destroy (void)
+TAO_StringDef_i::destroy ()
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -32,7 +32,7 @@ TAO_StringDef_i::destroy (void)
 }
 
 void
-TAO_StringDef_i::destroy_i (void)
+TAO_StringDef_i::destroy_i ()
 {
   ACE_TString name;
   this->repo_->config ()->get_string_value (this->section_key_,
@@ -45,7 +45,7 @@ TAO_StringDef_i::destroy_i (void)
 }
 
 CORBA::TypeCode_ptr
-TAO_StringDef_i::type (void)
+TAO_StringDef_i::type ()
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::TypeCode::_nil ());
 
@@ -55,7 +55,7 @@ TAO_StringDef_i::type (void)
 }
 
 CORBA::TypeCode_ptr
-TAO_StringDef_i::type_i (void)
+TAO_StringDef_i::type_i ()
 {
   CORBA::ULong bound = this->bound_i ();
 
@@ -65,7 +65,7 @@ TAO_StringDef_i::type_i (void)
 }
 
 CORBA::ULong
-TAO_StringDef_i::bound (void)
+TAO_StringDef_i::bound ()
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
@@ -75,7 +75,7 @@ TAO_StringDef_i::bound (void)
 }
 
 CORBA::ULong
-TAO_StringDef_i::bound_i (void)
+TAO_StringDef_i::bound_i ()
 {
   u_int retval = 0;
   this->repo_->config ()->get_integer_value (this->section_key_,

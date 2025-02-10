@@ -23,7 +23,7 @@ TAO_DynamicImplementation::_is_a (const char *logical_type_id)
 }
 
 CORBA::Object_ptr
-TAO_DynamicImplementation::_this (void)
+TAO_DynamicImplementation::_this ()
 {
   // The _this() function returns a CORBA::Object_ptr for the target
   // object. Unlike _this() for static skeletons, its return type is
@@ -43,7 +43,7 @@ TAO_DynamicImplementation::_this (void)
 }
 
 CORBA::InterfaceDef_ptr
-TAO_DynamicImplementation::_get_interface (void)
+TAO_DynamicImplementation::_get_interface ()
 {
   TAO_IFR_Client_Adapter *adapter =
     ACE_Dynamic_Service<TAO_IFR_Client_Adapter>::instance (
@@ -62,7 +62,7 @@ TAO_DynamicImplementation::_get_interface (void)
 }
 
 const char *
-TAO_DynamicImplementation::_interface_repository_id (void) const
+TAO_DynamicImplementation::_interface_repository_id () const
 {
   // This should never be called.
   return 0;
@@ -76,7 +76,7 @@ TAO_DynamicImplementation::_downcast (const char *)
 }
 
 TAO_Stub *
-TAO_DynamicImplementation::_create_stub (void)
+TAO_DynamicImplementation::_create_stub ()
 {
   // If DynamicImplementation::_this() is invoked outside of the
   // context of a request invocation on a target object being served
@@ -173,7 +173,7 @@ TAO_DynamicImplementation::_dispatch (
 }
 
 CORBA::RepositoryId
-TAO_DynamicImplementation::get_id_from_primary_interface (void)
+TAO_DynamicImplementation::get_id_from_primary_interface ()
 {
   // If this method is called outside of the
   // context of a request invocation on a target object being served

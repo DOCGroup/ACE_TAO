@@ -1,7 +1,6 @@
 #include "nestea_server_i.h"
 
 
-
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {

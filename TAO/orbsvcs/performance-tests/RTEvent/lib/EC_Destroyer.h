@@ -31,7 +31,7 @@ public:
    * @todo This method could benefit from the error logging described
    * in Servant_var.cpp
    */
-  ~EC_Destroyer (void);
+  ~EC_Destroyer ();
 
 private:
   /// The event channel

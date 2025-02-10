@@ -5,7 +5,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class T>
 ACE_INLINE void
-PortableServer::Servant_var<T>::swap (Servant_var<T> & rhs) /* throw () */
+PortableServer::Servant_var<T>::swap (Servant_var<T> & rhs) /* noexcept */
 {
   std::swap (this->ptr_, rhs.ptr_);
 }
@@ -81,21 +81,21 @@ ACE_INLINE PortableServer::Servant_var<T>::operator void const * () const
 
 template <class T>
 ACE_INLINE T *
-PortableServer::Servant_var<T>::in (void) const
+PortableServer::Servant_var<T>::in () const
 {
   return this->ptr_;
 }
 
 template <class T>
 ACE_INLINE T *&
-PortableServer::Servant_var<T>::inout (void)
+PortableServer::Servant_var<T>::inout ()
 {
   return this->ptr_;
 }
 
 template <class T>
 ACE_INLINE T *&
-PortableServer::Servant_var<T>::out (void)
+PortableServer::Servant_var<T>::out ()
 {
   PortableServer::Servant_var<T> tmp;
   this->swap (tmp);
@@ -104,7 +104,7 @@ PortableServer::Servant_var<T>::out (void)
 
 template <class T>
 ACE_INLINE T *
-PortableServer::Servant_var<T>::_retn (void)
+PortableServer::Servant_var<T>::_retn ()
 {
   T * const rval = ptr_;
   this->ptr_ = 0;

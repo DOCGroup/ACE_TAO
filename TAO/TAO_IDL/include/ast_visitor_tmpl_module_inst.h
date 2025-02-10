@@ -38,7 +38,7 @@ public:
   ast_visitor_tmpl_module_inst (ast_visitor_context *ctx,
                                 bool ref_only = false);
 
-  virtual ~ast_visitor_tmpl_module_inst (void);
+  virtual ~ast_visitor_tmpl_module_inst ();
 
   virtual int visit_decl (AST_Decl *d);
   virtual int visit_scope (UTL_Scope *node);
@@ -71,6 +71,7 @@ public:
   virtual int visit_enum_val (AST_EnumVal *node);
   virtual int visit_array (AST_Array *node);
   virtual int visit_sequence (AST_Sequence *node);
+  virtual int visit_map (AST_Map *node);
   virtual int visit_string (AST_String *node);
   virtual int visit_native (AST_Native *node);
   virtual int visit_valuebox (AST_ValueBox *node);

@@ -25,7 +25,6 @@ public:
   void price_excep (::Messaging::ExceptionHolder *);
 
 private:
-
   int *response_count_;
 };
 

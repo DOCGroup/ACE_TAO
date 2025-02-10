@@ -13,13 +13,13 @@ class Payload_Receiver
   : public virtual POA_Test::Payload_Receiver
 {
 public:
-  Payload_Receiver (void);
+  Payload_Receiver ();
 
   // = The skeleton methods
   virtual void more_data (const Test::Payload &payload,
                           CORBA::Boolean maybe_lost);
 
-  virtual void ping (void);
+  virtual void ping ();
 
   int count (bool maybe_lost = false) const;
 

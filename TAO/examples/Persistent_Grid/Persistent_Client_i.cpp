@@ -5,7 +5,7 @@
 // This is the interface program that accesses the remote object
 
 // Constructor.
-Persistent_Client_i::Persistent_Client_i (void)
+Persistent_Client_i::Persistent_Client_i ()
   : height_ (0),
     width_ (0)
 {
@@ -13,7 +13,7 @@ Persistent_Client_i::Persistent_Client_i (void)
 }
 
 //Destructor.
-Persistent_Client_i::~Persistent_Client_i (void)
+Persistent_Client_i::~Persistent_Client_i ()
 {
   //no-op
 }

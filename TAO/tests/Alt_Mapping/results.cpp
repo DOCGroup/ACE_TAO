@@ -14,17 +14,17 @@
 #include "tao/debug.h"
 #include "ace/Log_Msg.h"
 
-Results::Results (void)
+Results::Results ()
 {
 }
 
-Results::~Results (void)
+Results::~Results ()
 {
   delete [] this->elapsed_time_;
 }
 
 void
-Results::print_stats (void)
+Results::print_stats ()
 {
   double
     avg_real_time = 0,
@@ -103,20 +103,20 @@ Results::print_exception (const char * /* call_name */)
 }
 
 void
-Results::start_timer (void)
+Results::start_timer ()
 {
   this->timer_.start ();
 }
 
 void
-Results::stop_timer (void)
+Results::stop_timer ()
 {
   this->timer_.stop ();
   this->timer_.elapsed_time (this->elapsed_time_[this->call_count_-1]);
 }
 
 CORBA::ULong
-Results::call_count (void)
+Results::call_count ()
 {
   return this->call_count_;
 }
@@ -128,7 +128,7 @@ Results::call_count (CORBA::ULong c)
 }
 
 CORBA::ULong
-Results::error_count (void)
+Results::error_count ()
 {
   return this->error_count_;
 }

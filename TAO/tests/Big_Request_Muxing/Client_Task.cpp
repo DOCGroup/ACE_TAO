@@ -28,7 +28,7 @@ Client_Task::Client_Task (ACE_Thread_Manager *thr_mgr,
 }
 
 bool
-Client_Task::done(void) const
+Client_Task::done() const
 {
   if (tasks_running_ == 0)
     return done_;
@@ -38,13 +38,13 @@ Client_Task::done(void) const
 }
 
 const char *
-Client_Task::ID (void) const
+Client_Task::ID () const
 {
   return id_.c_str ();
 }
 
 int
-Client_Task::svc (void)
+Client_Task::svc ()
 {
   ++tasks_running_;
   if (TAO_debug_level > 0)
@@ -138,7 +138,7 @@ Client_Task::svc (void)
 }
 
 void
-Client_Task::validate_connection (void)
+Client_Task::validate_connection ()
 {
   try
     {

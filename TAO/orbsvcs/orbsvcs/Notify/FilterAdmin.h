@@ -36,13 +36,12 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Notify_Serv_Export TAO_Notify_FilterAdmin
   : public TAO_Notify::Topology_Object
 {
-
  public:
   /// Constructor
-  TAO_Notify_FilterAdmin (void);
+  TAO_Notify_FilterAdmin ();
 
   /// Destructor
-  virtual ~TAO_Notify_FilterAdmin (void);
+  virtual ~TAO_Notify_FilterAdmin ();
 
   // = match operation on all the filters
   /// See if any of the filters match.
@@ -58,9 +57,9 @@ class TAO_Notify_Serv_Export TAO_Notify_FilterAdmin
 
   virtual CosNotifyFilter::Filter_ptr get_filter (CosNotifyFilter::FilterID filter);
 
-  virtual CosNotifyFilter::FilterIDSeq * get_all_filters (void);
+  virtual CosNotifyFilter::FilterIDSeq * get_all_filters ();
 
-  virtual void remove_all_filters (void);
+  virtual void remove_all_filters ();
 
 
   // TAO_Notify::Topology_Object
@@ -74,7 +73,7 @@ class TAO_Notify_Serv_Export TAO_Notify_FilterAdmin
  private:
   typedef ACE_Hash_Map_Manager <CosNotifyFilter::FilterID, CosNotifyFilter::Filter_var, ACE_SYNCH_NULL_MUTEX> FILTER_LIST;
 
-  virtual void release (void);
+  virtual void release ();
 
   /// Mutex to serialize access to data members.
   TAO_SYNCH_MUTEX lock_;

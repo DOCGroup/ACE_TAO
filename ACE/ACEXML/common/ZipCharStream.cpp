@@ -4,13 +4,13 @@
 #include "ace/ACE.h"
 
 
-ACEXML_ZipCharStream::ACEXML_ZipCharStream (void)
+ACEXML_ZipCharStream::ACEXML_ZipCharStream ()
   : filename_ (0), encoding_ (0), size_ (0), infile_ (0), pos_ (0),
     limit_ (0)
 {
 }
 
-ACEXML_ZipCharStream::~ACEXML_ZipCharStream (void)
+ACEXML_ZipCharStream::~ACEXML_ZipCharStream ()
 {
   this->close();
 }
@@ -33,7 +33,7 @@ ACEXML_ZipCharStream::open (const ACEXML_Char *name)
 }
 
 int
-ACEXML_ZipCharStream::determine_encoding (void)
+ACEXML_ZipCharStream::determine_encoding ()
 {
   if (this->infile_ == 0)
     return -1;
@@ -82,7 +82,7 @@ ACEXML_ZipCharStream::rewind()
 }
 
 int
-ACEXML_ZipCharStream::available (void)
+ACEXML_ZipCharStream::available ()
 {
   if (this->infile_ == 0)
     return -1;
@@ -93,7 +93,7 @@ ACEXML_ZipCharStream::available (void)
 }
 
 int
-ACEXML_ZipCharStream::close (void)
+ACEXML_ZipCharStream::close ()
 {
   if (this->infile_ != 0)
     {
@@ -182,7 +182,7 @@ ACEXML_ZipCharStream::get (ACEXML_Char& ch)
 
 
 int
-ACEXML_ZipCharStream::peek (void)
+ACEXML_ZipCharStream::peek ()
 {
 #if defined (ACE_USES_WCHAR)
   return this->peek_i();
@@ -192,13 +192,13 @@ ACEXML_ZipCharStream::peek (void)
 }
 
 const ACEXML_Char*
-ACEXML_ZipCharStream::getEncoding (void)
+ACEXML_ZipCharStream::getEncoding ()
 {
   return this->encoding_;
 }
 
 const ACEXML_Char*
-ACEXML_ZipCharStream::getSystemId (void)
+ACEXML_ZipCharStream::getSystemId ()
 {
   return this->filename_;
 }
@@ -226,9 +226,8 @@ ACEXML_ZipCharStream::get_i (ACEXML_Char& ch)
 }
 
 int
-ACEXML_ZipCharStream::peek_i (void)
+ACEXML_ZipCharStream::peek_i ()
 {
-
   // If we are reading a UTF-8 encoded file, just use the plain unget.
   if (ACE_OS::strcmp (this->encoding_, ACE_TEXT ("UTF-8")) == 0)
     return this->peekchar_i();
@@ -247,10 +246,5 @@ ACEXML_ZipCharStream::peek_i (void)
   return (BE ? input[0] << 8 | input[1] : input[1] << 8 | input[0]);
 }
 #endif /* ACE_USES_WCHAR */
-
-#else
-#if defined (__HP_aCC)
-static int shut_up_aCC = 0;
-#endif /* __HP_aCC */
 
 #endif /* USE_ZZIP */

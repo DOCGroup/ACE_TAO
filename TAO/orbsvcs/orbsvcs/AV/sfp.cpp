@@ -45,7 +45,7 @@ operator< (const TAO_SFP_Fragment_Node& left,
 // TAO_SFP_Base
 //------------------------------------------------------------
 
-TAO_SFP_Base::TAO_SFP_Base (void)
+TAO_SFP_Base::TAO_SFP_Base ()
 {
   TAO_OutputCDR output_cdr;
   flowProtocol::frameHeader frame_header;
@@ -649,7 +649,6 @@ TAO_SFP_Base::send_message (TAO_AV_Transport *transport,
       return -1;
     }
   return 1;
-
 }
 
 int
@@ -845,13 +844,13 @@ TAO_SFP_Object::TAO_SFP_Object (TAO_AV_Callback *callback,
   this->state_.static_frame_.size (2* this->transport_->mtu ());
 }
 
-TAO_SFP_Object::~TAO_SFP_Object (void)
+TAO_SFP_Object::~TAO_SFP_Object ()
 {
   //no-op
 }
 
 int
-TAO_SFP_Object::destroy (void)
+TAO_SFP_Object::destroy ()
 {
   int result = -1;
   TAO_OutputCDR out_stream;
@@ -1093,7 +1092,6 @@ TAO_SFP_Object::set_policies (const TAO_AV_PolicyList& policies)
       policy = policies[i];
       switch (policies[i]->type ())
         {
-
         case TAO_AV_SFP_CREDIT_POLICY:
           {
             TAO_AV_SFP_Credit_Policy *credit_policy =
@@ -1127,7 +1125,7 @@ TAO_SFP_Consumer_Object::TAO_SFP_Consumer_Object (TAO_AV_Callback *callback,
 }
 
 int
-TAO_SFP_Consumer_Object::handle_input (void)
+TAO_SFP_Consumer_Object::handle_input ()
 {
   if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"TAO_SFP_Consumer_Object::handle_input\n"));
   // This is the entry point for receiving data.
@@ -1177,7 +1175,7 @@ TAO_SFP_Producer_Object::TAO_SFP_Producer_Object (TAO_AV_Callback *callback,
 }
 
 int
-TAO_SFP_Producer_Object::handle_input (void)
+TAO_SFP_Producer_Object::handle_input ()
 {
   // A producer can only receive credit messages.
   int result;
@@ -1223,11 +1221,11 @@ TAO_SFP_Producer_Object::handle_input (void)
 }
 
 // TAO_AV_SFP_Factory
-TAO_AV_SFP_Factory::TAO_AV_SFP_Factory (void)
+TAO_AV_SFP_Factory::TAO_AV_SFP_Factory ()
 {
 }
 
-TAO_AV_SFP_Factory::~TAO_AV_SFP_Factory (void)
+TAO_AV_SFP_Factory::~TAO_AV_SFP_Factory ()
 {
 }
 
@@ -1270,7 +1268,6 @@ TAO_AV_SFP_Factory::make_protocol_object (TAO_FlowSpec_Entry *entry,
       break;
     case TAO_FlowSpec_Entry::TAO_AV_CONSUMER:
       {
-
         ACE_NEW_RETURN (object,
                         TAO_SFP_Consumer_Object (callback,
                                                  transport,
@@ -1293,7 +1290,7 @@ TAO_AV_SFP_Factory::make_protocol_object (TAO_FlowSpec_Entry *entry,
 // TAO_SFP_Frame_State
 //------------------------------------------------------------
 
-TAO_SFP_Frame_State::TAO_SFP_Frame_State (void)
+TAO_SFP_Frame_State::TAO_SFP_Frame_State ()
   :cdr (new ACE_Data_Block (ACE_CDR::DEFAULT_BUFSIZE,
                             ACE_Message_Block::MB_DATA,
                             0,
@@ -1309,13 +1306,13 @@ TAO_SFP_Frame_State::TAO_SFP_Frame_State (void)
 }
 
 CORBA::Boolean
-TAO_SFP_Frame_State::is_complete (void)
+TAO_SFP_Frame_State::is_complete ()
 {
   return (!this->more_fragments_) &&  (this->frame_block_);
 }
 
 int
-TAO_SFP_Frame_State::reset (void)
+TAO_SFP_Frame_State::reset ()
 {
   this->frame_block_ = 0;
   return 0;

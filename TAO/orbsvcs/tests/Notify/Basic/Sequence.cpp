@@ -5,7 +5,6 @@
 #include "Sequence.h"
 
 
-
 /***************************************************************************/
 
 SequencePushConsumer::SequencePushConsumer (Sequence *test_client)
@@ -37,19 +36,19 @@ SequencePushSupplier::SequencePushSupplier (
 {
 }
 
-SequencePushSupplier::~SequencePushSupplier (void)
+SequencePushSupplier::~SequencePushSupplier ()
 {
 }
 
 /***************************************************************************/
-Sequence::Sequence (void)
+Sequence::Sequence ()
   : event_count_ (15), supplier_batch_size_ (5), consumer_batch_size_ (3),
     pacing_ (2), order_policy_ (CosNotification::PriorityOrder), events_received_ (0),
     consumer_delay_ (1)
 {
 }
 
-Sequence::~Sequence (void)
+Sequence::~Sequence ()
 {
 }
 
@@ -189,7 +188,7 @@ Sequence::parse_args (int argc,
 }
 
 void
-Sequence::create_EC (void)
+Sequence::create_EC ()
 {
   CosNotifyChannelAdmin::ChannelID id;
 
@@ -200,7 +199,7 @@ Sequence::create_EC (void)
 }
 
 void
-Sequence::on_event_received (void)
+Sequence::on_event_received ()
 {
   if (TAO_debug_level)
     ACE_DEBUG ((LM_DEBUG,
@@ -214,7 +213,7 @@ Sequence::on_event_received (void)
 }
 
 void
-Sequence::run_test (void)
+Sequence::run_test ()
 {
   // operations:
   CosNotification::StructuredEvent event;
@@ -293,13 +292,13 @@ Sequence::run_test (void)
 }
 
 void
-Sequence::end_test (void)
+Sequence::end_test ()
 {
-  consumer_done( 0 );
+  consumer_done(0);
 }
 
 int
-Sequence::check_results (void)
+Sequence::check_results ()
 {
   // Destroy the channel.
   this->ec_->destroy ();
@@ -336,7 +335,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       events.run_test ();
 
-      events.ORB_run( );
+      events.ORB_run();
     }
   catch (const CORBA::Exception& se)
     {

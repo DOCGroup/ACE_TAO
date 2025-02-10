@@ -259,7 +259,7 @@ int main (int argc, char* argv[])
     // The application code goes here!
 
     // Destroy the POA, waiting until the destruction terminates
-    poa->destroy (1, 1);
+    poa->destroy (true, true);
     orb->destroy ();
   }
   catch (const CORBA::Exception &ex) {

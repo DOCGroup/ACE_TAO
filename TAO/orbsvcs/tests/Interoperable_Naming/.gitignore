@@ -1,1 +1,6 @@
 /client
+Web_ServerC.cpp
+Web_ServerC.h
+Web_ServerC.inl
+Web_ServerS.cpp
+Web_ServerS.h

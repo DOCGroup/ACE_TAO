@@ -27,14 +27,14 @@ public:
             PortableServer::POA_ptr poa);
 
   /// Access the history of samples
-  ACE_Sample_History &sample_history (void);
+  ACE_Sample_History &sample_history ();
 
   //@{
   /** @name The RtecEventComm::PushCallback methods
    */
   virtual void sample (Test::Timestamp the_timestamp);
 
-  PortableServer::POA_ptr _default_POA (void);
+  PortableServer::POA_ptr _default_POA ();
   //@}
 
 private:

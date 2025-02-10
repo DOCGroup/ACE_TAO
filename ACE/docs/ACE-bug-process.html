@@ -7,11 +7,11 @@
 <HR>
 <H3>ACE, TAO, CIAO, and DAnCE Bug Fixing Policies</H3>
 
-As <A HREF="http://www.dre.vanderbilt.edu/ACE/">ACE</A>, <A
-HREF="http://www.dre.vanderbilt.edu/TAO/">TAO</A>, <A
-HREF="http://www.dre.vanderbilt.edu/CIAO/">CIAO</A>, and DAnCE have grown in
+As <A HREF="https://www.dre.vanderbilt.edu/ACE/">ACE</A>, <A
+HREF="https://www.dre.vanderbilt.edu/TAO/">TAO</A>, <A
+HREF="https://www.dre.vanderbilt.edu/CIAO/">CIAO</A>, and DAnCE have grown in
 popularity the volume of mail on the <A
-HREF="http://www.dre.vanderbilt.edu/~schmidt/ACE-mail.html">mailing
+HREF="https://www.dre.vanderbilt.edu/~schmidt/ACE-mail.html">mailing
 lists</A> has grown
 considerably.  While this increase is healthy, and a natural
 consequence of the larger number of ACE, TAO, and CIAO users, it is
@@ -19,7 +19,7 @@ straining the resources of the researchers in the <A
 HREF="http://www.dre.vanderbilt.edu/~schmidt/ACE-members-i.html">DOC
 group</A> at Washington
 University, UC Irvine, and <A
-HREF="http://www.dre.vanderbilt.edu">ISIS</A> to respond to all the
+HREF="https://www.dre.vanderbilt.edu">ISIS</A> to respond to all the
 traffic immediately.  Prompt bug fixes from the DOC group also
 discourage the creation of a larger community of <A
 HREF="http://www.dre.vanderbilt.edu/~schmidt/ACE-members.html">users</A> and
@@ -37,8 +37,8 @@ a point to abide by the following policies:
 
 <UL>
 
-<LI> All bug reports to the <A
-HREF="http://www.dre.vanderbilt.edu/~schmidt/ACE-mail.html">mailing
+<LI> All bug reports to the  <A
+https://github.com/DOCGroup/ACE_TAO">github project
 lists</A> should be submitted using the appropriate bug report form in
 <A HREF="../PROBLEM-REPORT-FORM">$ACE_ROOT/PROBLEM-REPORT-FORM</A>
 (for ACE), <A
@@ -54,7 +54,7 @@ our policy for addressing these bug reports: <P>
 <OL>
 
 <LI> If a report is from someone <A
-HREF="http://www.dre.vanderbilt.edu/~schmidt/ACE-sponsors.html">sponsoring</A>
+HREF="https://www.dre.vanderbilt.edu/~schmidt/ACE-sponsors.html">sponsoring</A>
 our work we will respond to it in a very timely manner.  Please
 contact <A HREF="mailto:schmidt@dre.vanderbilt.edu">me</A> if you'd
 like to become a sponsor. <P>
@@ -81,33 +81,15 @@ sponsors. <P>
 
 We encourage bug reports for those without support to be posted
 initially to the <A
-HREF="http://www.dre.vanderbilt.edu/~schmidt/ACE-mail.html">ACE users</A>
-(<A HREF="mailto:ace-users@list.isis.vanderbilt.edu">ace-users@list.isis.vanderbilt.edu</A>),
-<A HREF="http://www.dre.vanderbilt.edu/~schmidt/TAO-mail.html">TAO users</A>
-(<A HREF="mailto:tao-users@list.isis.vanderbilt.edu">tao-users@list.isis.vanderbilt.edu</A>),
-and <A HREF="http://www.dre.vanderbilt.edu/~schmidt/TAO-mail.html">CIAO
-users</A> (<A
-HREF="mailto:ciao-users@list.isis.vanderbilt.edu">ciao-users@list.isis.vanderbilt.edu</A>)
-mailing lists, where the open-source user community may already have
-developed, or have an interest in developing, a solution.  <P>
+HREF="https://github.com/DOCGroup/ACE_TAO">github issues or discussions</A>.
+<P>
 
-<LI> While the core DOC group development team participates in this
-mailing list, we cannot response to all postings.  Therefore, if you
+<LI> While the core DOC group development team participates on github
+, we cannot response to all postings.  Therefore, if you
 post something and don't get a reply, please do the following:<P>
 
 <UL>
-<LI>
- Check to see whether your posting made it to the list through the list archives, which you
-  can see by checking out the <A
-    HREF="http://www.dre.vanderbilt.edu/~schmidt/ACE-mail.html">list archive</A> to see if your posting is visible. <P>
-
-<LI> If it's not visible, please make sure you're
-  <A HREF="http://www.dre.vanderbilt.edu/~schmidt/ACE-mail.html">subscribed
-to the mailing
-  list(s)</A> you sent the report to since we have a "members only" posting
-  requirement to minimize spam. <P>
-
-<LI> If it is visible and you haven't received a reply this probably means
+<LI> When you haven't received a reply this probably means
   that either no one knows the answer or no one has time to answer it.
   As always, if you need more predictable help please contact one of
   <A
@@ -145,8 +127,8 @@ support</A>.<P>
 <H3>Process for Submitting a Bug Fix</H3>
 
 We encourage other ACE, TAO, and CIAO users to continue to help
-provide fixes and advice in response to postings on the mailing lists
-and newsgroup.  If you have a patch that fixes a problem you've found
+provide fixes and advice in response to github issues and discussions.
+If you have a patch that fixes a problem you've found
 with our software here's the process for submitting it:
 
 <OL>
@@ -162,14 +144,9 @@ with our software here's the process for submitting it:
      will end up in the ATCD ChangeLog. When you have tested your changes at least on Windows
      and Linux prepare a <a href="https://help.github.com/articles/using-pull-requests/">pull request</a>.<P>
 
-<LI> Create a ``unified diff'' of all changes and put this into a github issue at <P>
+<LI> Create a github pull reuquest at <P>
 
   <A HREF="https://github.com/DOCGroup/ACE_TAO">https://github.com/DOCGroup/ACE_TAO</A> <P>
-
-  and send an email to the appropriate <A
-HREF="http://www.dre.vanderbilt.edu/~schmidt/ACE-mail.html">mailing
-list(s)</A> summarizing what the problem was and you've done to fix the
-problem. <P>
 
 <LI> If your patch is for a platform/compiler that aren't part of our
 <A HREF="http://www.dre.vanderbilt.edu/scoreboard">autobuild

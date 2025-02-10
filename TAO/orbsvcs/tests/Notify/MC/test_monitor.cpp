@@ -18,7 +18,6 @@ sorter (const void* a, const void* b)
 }
 
 
-
 // It's reasonable to assume that there is only one event channel
 // factory and that we know its name.
 class MonitorTestInterface_i: public virtual POA_MonitorTestInterface
@@ -39,7 +38,7 @@ public:
 private:
   void brain_dump (const char * context);
   void stat_dump (const char * statName);
-  void consumer_stats_check (void);
+  void consumer_stats_check ();
 private:
   ACE_CString base_;
   CosNotification::NotificationServiceMonitorControl_var nsm_;
@@ -130,7 +129,7 @@ MonitorTestInterface_i::running (MonitorTestInterface::Which proc)
       if (!ACE::is_equal (num.dlist[0].value, 0.0))
         ACE_ERROR ((LM_ERROR, "Monitor: ERROR: There should be no events queued\n"));
 
-        brain_dump ("Running Consumer");
+      brain_dump ("Running Consumer");
 
       break;
       }
@@ -149,7 +148,7 @@ MonitorTestInterface_i::running (MonitorTestInterface::Which proc)
       if (!ACE::is_equal (num.dlist[0].value, 1.0))
         ACE_ERROR ((LM_ERROR,
               "Monitor: ERROR: There should be only one SupplierAdmin\n"));
-        brain_dump ("Running Supplier");
+      brain_dump ("Running Supplier");
       break;
       }
     default:
@@ -280,7 +279,6 @@ MonitorTestInterface_i::stat_dump (const char * statName)
     }
   catch (const CORBA::Exception& ex)
     {
-
       ex._tao_print_exception (statName);
     }
 }

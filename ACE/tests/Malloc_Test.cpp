@@ -17,7 +17,7 @@
 #include "ace/Malloc_T.h"
 #include "ace/MMAP_Memory_Pool.h"
 #include "ace/Process.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/Process_Mutex.h"
 #include "ace/PI_Malloc.h"
 #include "ace/RW_Thread_Mutex.h"
@@ -28,14 +28,14 @@
 #if defined (ACE_HAS_PROCESS_SPAWN)
 
 #if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
-typedef ACE_Malloc_T<ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex, ACE_PI_Control_Block> MALLOC;
+using MALLOC = ACE_Malloc_T<ACE_MMAP_Memory_Pool, ACE_Process_Mutex, ACE_PI_Control_Block>;
 #else
 typedef ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex> MALLOC;
 #endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */
 #define MMAP_FILENAME ACE_TEXT ("test_file")
 #define MUTEX_NAME ACE_TEXT ("test_lock")
 
-#if !defined (ACE_LINUX) && !defined (ACE_OPENVMS) \
+#if !defined (ACE_LINUX) \
     && !defined (ACE_ANDROID) \
     && !(defined (ACE_WIN32) \
          && (defined (ghs) || defined (__MINGW32__) )) \
@@ -70,7 +70,7 @@ static const void *PARENT_BASE_ADDR = ACE_DEFAULT_BASE_ADDR;
 // processes.  So, though the whole PI pointer thing is tested here,
 // it isn't actually using multiple address ranges.
 
-#if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 && !defined (HPUX))
+#if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
 # define CHILD_ADDR_DELTA (1024*1024)
 #else
 # define CHILD_ADDR_DELTA 0
@@ -87,20 +87,11 @@ static const void *CHILD_BASE_ADDR =
 static MALLOC *
 myallocator (const void *base_addr = 0)
 {
-  static auto_ptr<MALLOC> static_allocator;
+  static std::unique_ptr<MALLOC> static_allocator;
 
   if (static_allocator.get () == 0)
     {
-
-#if defined (ACE_HAS_WINCE) || defined (ACE_OPENVMS)
-      // WinCE cannot do fixed base, ever.
-      ACE_UNUSED_ARG (base_addr);
-      ACE_MMAP_Memory_Pool_Options options
-        (0,
-         ACE_MMAP_Memory_Pool_Options::NEVER_FIXED);
-#else
       ACE_MMAP_Memory_Pool_Options options (base_addr);
-#endif /* ACE_HAS_WINCE */
 
 #if !defined (ACE_TEST_REMAP_ON_FAULT)
       options.minimum_bytes_ = 512 * 1024;
@@ -109,7 +100,7 @@ myallocator (const void *base_addr = 0)
       MALLOC *ptr = new MALLOC (MMAP_FILENAME,
                                 MUTEX_NAME,
                                 &options);
-      ACE_auto_ptr_reset (static_allocator, ptr);
+      static_allocator.reset (ptr);
     }
   return static_allocator.get ();
 }
@@ -119,15 +110,7 @@ init_test (const void *base_addr = 0)
 {
   // Cleanup the MMAP file so we won't trip over the leftover mmap
   // file from the previous crash.
-#if defined (ACE_HAS_WINCE) || defined (ACE_OPENVMS)
-  // WinCE cannot do fixed base, ever.
-  ACE_UNUSED_ARG (base_addr);
-  ACE_MMAP_Memory_Pool_Options options
-    (0,
-     ACE_MMAP_Memory_Pool_Options::NEVER_FIXED);
-#else
   ACE_MMAP_Memory_Pool_Options options (base_addr);
-#endif /* ACE_HAS_WINCE */
   //FUZZ: disable check_for_lack_ACE_OS
   ACE_MMAP_Memory_Pool mmap (MMAP_FILENAME, &options);
   //FUZZ: enable check_for_lack_ACE_OS
@@ -279,7 +262,7 @@ parent (Test_Data *data)
 }
 
 static int
-child (void)
+child ()
 {
   void *bar = 0;
   // Perform "busy waiting" here until the parent stores data under a
@@ -308,11 +291,11 @@ child (void)
 // virtual address on every 32 bit process.  On WinNT/2k, memory above
 // 2Gb is reserved for the system.  So, we need to check at runtime
 // (we want an ACE_HAS_WINNT4 == 0 ace to run on either).
-// To catch any odd case arising from Pharlap and/or WinCE, do the
+// To catch any odd case arising from Pharlap, do the
 // run time check and run the NT4-or-better code unless we're on
 // CE or something other than NT4 (Pharlap reports itself as NT 3.51).
 static void
-get_base_addrs (void)
+get_base_addrs ()
 {
 #   if defined(__clang__)
 #     pragma clang diagnostic push
@@ -358,12 +341,10 @@ run_main (int argc, ACE_TCHAR *argv[])
       // No arguments means we're the parent process.
       ACE_Process_Options options (1);
 
-#if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
-      static const ACE_TCHAR* format = ACE_TEXT ("%ls%ls%ls");
-#else
-      static const ACE_TCHAR* format = ACE_TEXT ("%s%s%s");
-#endif /* !ACE_WIN32 && ACE_USES_WCHAR */
-      options.command_line (format, EXE_LOCATION,
+      options.command_line (ACE_TEXT ("%") ACE_TEXT_PRIs
+                            ACE_TEXT ("%") ACE_TEXT_PRIs
+                            ACE_TEXT ("%") ACE_TEXT_PRIs,
+                            EXE_LOCATION,
                             argc > 0 ? argv[0] : ACE_TEXT ("Malloc_Test"),
                             ACE_TEXT (" run_as_test"));
 

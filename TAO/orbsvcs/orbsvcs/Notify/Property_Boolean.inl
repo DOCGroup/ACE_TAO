@@ -39,19 +39,19 @@ TAO_Notify_Property_Boolean::operator!= (const CORBA::Boolean &rhs) const
 
 ACE_INLINE
 const char *
-TAO_Notify_Property_Boolean::name (void) const
+TAO_Notify_Property_Boolean::name () const
 {
   return this->name_;
 }
 
 ACE_INLINE CORBA::Boolean
-TAO_Notify_Property_Boolean::value (void) const
+TAO_Notify_Property_Boolean::value () const
 {
   return this->value_;
 }
 
 ACE_INLINE CORBA::Boolean
-TAO_Notify_Property_Boolean::is_valid (void) const
+TAO_Notify_Property_Boolean::is_valid () const
 {
   return this->valid_;
 }

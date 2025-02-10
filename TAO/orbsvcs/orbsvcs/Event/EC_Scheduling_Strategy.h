@@ -47,7 +47,7 @@ class TAO_RTEvent_Serv_Export TAO_EC_Scheduling_Strategy
 {
 public:
   /// Destructor
-  virtual ~TAO_EC_Scheduling_Strategy (void);
+  virtual ~TAO_EC_Scheduling_Strategy ();
 
   /// Add all the dependencies between @a supplier and @a consumer
   virtual void add_proxy_supplier_dependencies (
@@ -59,7 +59,6 @@ public:
   virtual void schedule_event (const RtecEventComm::EventSet &event,
                                TAO_EC_ProxyPushConsumer *consumer,
                                TAO_EC_Supplier_Filter *filter) = 0;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

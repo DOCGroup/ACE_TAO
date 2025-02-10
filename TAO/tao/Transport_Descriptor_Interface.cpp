@@ -8,7 +8,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Transport_Descriptor_Interface::~TAO_Transport_Descriptor_Interface (void)
+TAO_Transport_Descriptor_Interface::~TAO_Transport_Descriptor_Interface ()
 {
   if (this->release_)
     {
@@ -23,7 +23,7 @@ TAO_Transport_Descriptor_Interface::reset_endpoint (TAO_Endpoint *ep)
   if (this->release_)
     return false;
 
-  for (TAO_Endpoint *ptr = this->endpoint_; ptr != 0; ptr = ptr->next())
+  for (TAO_Endpoint *ptr = this->endpoint_; ptr != nullptr; ptr = ptr->next())
 
     if (ptr == ep)
       {

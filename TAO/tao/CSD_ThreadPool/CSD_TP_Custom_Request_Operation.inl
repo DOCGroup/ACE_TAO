@@ -12,7 +12,7 @@ TAO::CSD::TP_Custom_Request_Operation::TP_Custom_Request_Operation
 
 ACE_INLINE
 void
-TAO::CSD::TP_Custom_Request_Operation::execute (void)
+TAO::CSD::TP_Custom_Request_Operation::execute ()
 {
   this->execute_i();
 }

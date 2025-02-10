@@ -8,7 +8,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_PG
 {
-
   UIPMC_Recv_Packet_Cleanup_Guard::UIPMC_Recv_Packet_Cleanup_Guard (
     TAO_UIPMC_Mcast_Transport *transport
   )
@@ -16,20 +15,20 @@ namespace TAO_PG
   {
   }
 
-  UIPMC_Recv_Packet_Cleanup_Guard::~UIPMC_Recv_Packet_Cleanup_Guard (void)
+  UIPMC_Recv_Packet_Cleanup_Guard::~UIPMC_Recv_Packet_Cleanup_Guard ()
   {
     // Cleanup only expired packets.
     this->transport_->cleanup_packets (true);
   }
 
-  UIPMC_Recv_Packet::UIPMC_Recv_Packet (void)
+  UIPMC_Recv_Packet::UIPMC_Recv_Packet ()
     : last_fragment_id_ (0)
     , data_length_ (0)
     , started_ (ACE_OS::gettimeofday ())
   {
   }
 
-  UIPMC_Recv_Packet::~UIPMC_Recv_Packet (void)
+  UIPMC_Recv_Packet::~UIPMC_Recv_Packet ()
   {
     for (Fragments_Map::iterator iter = this->fragments_.begin ();
          iter != this->fragments_.end ();
@@ -100,13 +99,13 @@ namespace TAO_PG
   }
 
   ACE_Time_Value const &
-  UIPMC_Recv_Packet::started (void) const
+  UIPMC_Recv_Packet::started () const
   {
     return this->started_;
   }
 
   CORBA::ULong
-  UIPMC_Recv_Packet::data_length (void) const
+  UIPMC_Recv_Packet::data_length () const
   {
     return this->data_length_;
   }

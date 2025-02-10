@@ -694,7 +694,6 @@ int
 TAO_Log_Constraint_Visitor::visit_binary_expr (
     ETCL_Binary_Expr *binary_expr)
 {
-
   // Evaluate the constraint
   int bin_op_type = binary_expr->type ();
 

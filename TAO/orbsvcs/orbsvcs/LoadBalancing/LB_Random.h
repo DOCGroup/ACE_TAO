@@ -35,7 +35,6 @@ class TAO_LB_Random
   : public virtual POA_CosLoadBalancing::Strategy
 {
 public:
-
   /// Constructor.
   /**
    * Seeds the OS' random number generator.
@@ -48,7 +47,7 @@ public:
    * Methods required by the CosLoadBalancing::Strategy interface.
    */
   //@{
-  virtual char * name (void);
+  virtual char * name ();
 
   virtual CosLoadBalancing::Properties * get_properties ();
 
@@ -85,13 +84,11 @@ public:
    * If supported by the platform, initialization code will only run
    * once for a given process.
    */
-  static void init (void);
+  static void init ();
 
 private:
-
   /// This servant's default POA.
   PortableServer::POA_var poa_;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

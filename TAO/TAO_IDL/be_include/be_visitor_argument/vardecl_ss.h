@@ -14,10 +14,6 @@
 #ifndef _BE_VISITOR_ARGUMENT_VARDECL_SS_H_
 #define _BE_VISITOR_ARGUMENT_VARDECL_SS_H_
 
-// ************************************************************
-// class be_visitor_args_vardecl_ss
-// ************************************************************
-
 /**
  * @class be_visitor_args_vardecl_ss
  *
@@ -32,7 +28,7 @@ public:
   be_visitor_args_vardecl_ss (be_visitor_context *ctx);
 
   /// destructor
-  virtual ~be_visitor_args_vardecl_ss (void);
+  virtual ~be_visitor_args_vardecl_ss ();
 
   /// visit the argument node
   virtual int visit_argument (be_argument *node);
@@ -93,7 +89,6 @@ public:
  private:
   int emit_common (be_type *node);
   int emit_common2 (be_type *node);
-
 };
 
 #endif /* _BE_VISITOR_ARGUMENT_VARDECL_SS_H_ */

@@ -8,14 +8,14 @@ Client_Task::Client_Task (CORBA::ORB_ptr orb)
 }
 
 void
-Client_Task::terminate_loop (void)
+Client_Task::terminate_loop ()
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
   this->terminate_loop_ = 1;
 }
 
 int
-Client_Task::svc (void)
+Client_Task::svc ()
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Starting client task\n"));
   try

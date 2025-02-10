@@ -18,7 +18,6 @@ parse_args (int argc, ACE_TCHAR *argv[])
   while ((c = get_opts ()) != -1)
     switch (c)
       {
-
       case 'k':
         ior = get_opts.opt_arg ();
         break;

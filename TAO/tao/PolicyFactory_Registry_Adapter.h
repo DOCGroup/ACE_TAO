@@ -53,7 +53,7 @@ namespace TAO
   class TAO_Export PolicyFactory_Registry_Adapter
   {
   public:
-    virtual ~PolicyFactory_Registry_Adapter (void);
+    virtual ~PolicyFactory_Registry_Adapter ();
 
     /// Register a PolicyFactory with the underlying PolicyFactory
     /// sequence.  This method should only be called during ORB

@@ -59,7 +59,7 @@ module TAO_IOP
    */
   local interface TAO_IOR_Property
   {
-    /// Operation that would set the required properties in the <ior>
+    /// Operation that would set the required properties in the @a ior
     /// as needed by the service.
     boolean set_property (inout Object ior)
       raises (Invalid_IOR);
@@ -70,13 +70,13 @@ module TAO_IOP
                          in Object ior2)
       raises (Duplicate, NotFound);
 
-    /// Returns the ior  of the primary from <ior> if it has been
+    /// Returns the ior of the primary from @a ior if it has been
     /// set. Else returns a NotFound exception
     Object get_primary (in Object ior)
       raises (NotFound);
 
     /// Returns a true or false depending on whether a primary member
-    /// has been set in <ior>
+    /// has been set in @a ior
     boolean is_primary_set (in Object ior);
 
     /// If any of the IOR's within the IOGR has a primary tag, just
@@ -91,15 +91,15 @@ module TAO_IOP
    * @brief Allows applications to manipulate object references.
    *
    * Manipulating Object References.  While this interface does not
-   * assume the use of CORBA complient IOPs, the IOP termonology is
+   * assume the use of CORBA complaint IOPs, the IOP terminology is
    * used throughout.
    * Object references (Object) are used since they encapsulate the
    * notion of object references and IORs.
    * Note, an IOR contains one or more profiles and a profile can be
    * considered to represent the location or route to a specific instance
    * of an object.
-   * A profile may also contain supplimentary information useful for
-   * differrent services such as security.
+   * A profile may also contain supplementary information useful for
+   * different services such as security.
    * All Object references may have multiple profiles
    */
   local interface TAO_IOR_Manipulation
@@ -123,7 +123,7 @@ module TAO_IOP
                            in Object ior2)
         raises (EmptyProfileList, Duplicate, Invalid_IOR);
 
-      // Any profile in ior1 which matches at least one profile in ior2
+      // Any profile in @a ior1 which matches at least one profile in @a ior2
       // will be removed.  Returns a new object reference
       Object remove_profiles (in Object ior1,
                               in Object ior2)
@@ -171,7 +171,7 @@ module TAO_IOP
       boolean is_primary_set (in TAO_IOR_Property prop,
                               in Object ior);
 
-      /// Returns number of profiles which are in both ior1 and ior2.
+      /// Returns number of profiles which are in both @a ior1 and @a ior2.
       unsigned long is_in_ior(in Object ior1, in Object ior2)
         raises (NotFound);
 

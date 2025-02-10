@@ -23,12 +23,12 @@ AST_Native::AST_Native (UTL_ScopedName *n)
 {
 }
 
-AST_Native::~AST_Native (void)
+AST_Native::~AST_Native ()
 {
 }
 
 void
-AST_Native::destroy (void)
+AST_Native::destroy ()
 {
   this->AST_Exception::destroy ();
 }
@@ -45,7 +45,3 @@ AST_Native::ast_accept (ast_visitor *visitor)
 {
   return visitor->visit_native (this);
 }
-
-
-
-IMPL_NARROW_FROM_DECL(AST_Native)

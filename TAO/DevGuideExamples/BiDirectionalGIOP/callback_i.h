@@ -8,11 +8,11 @@ class  Callback_i : public virtual POA_Callback
 public:
   Callback_i (CORBA::ORB_ptr orb);
 
-  virtual ~Callback_i (void);
+  virtual ~Callback_i () = default;
 
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
-  virtual void callback_method (void);
+  virtual void callback_method ();
 
 private:
   CORBA::ORB_var orb_;

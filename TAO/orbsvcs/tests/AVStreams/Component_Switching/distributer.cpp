@@ -9,7 +9,7 @@
 typedef ACE_Unmanaged_Singleton<Distributer, ACE_Null_Mutex> DISTRIBUTER;
 
 // constructor.
-Signal_Handler::Signal_Handler (void)
+Signal_Handler::Signal_Handler ()
 {
 }
 
@@ -23,7 +23,6 @@ Signal_Handler::handle_signal (int signum, siginfo_t *, ucontext_t*)
                     "In the signal handler\n"));
 
       DISTRIBUTER::instance ()->done (1);
-
     }
   return 0;
 }
@@ -119,25 +118,22 @@ Distributer_Receiver_StreamEndPoint::handle_connection_requested (AVStreams::flo
 
           ///Destroy old stream with the same flowname.
           connection_manager.destroy (flowname);
-
         }
 
       /// Store the related streamctrl.
       connection_manager.add_streamctrl (flowname.c_str (), this);
-
     }
   return true;
-
 }
 
 
-Distributer_Receiver_Callback::Distributer_Receiver_Callback (void)
+Distributer_Receiver_Callback::Distributer_Receiver_Callback ()
   : frame_count_ (1)
 {
 }
 
 ACE_CString &
-Distributer_Receiver_Callback::flowname (void)
+Distributer_Receiver_Callback::flowname ()
 {
   return this->flowname_;
 }
@@ -181,7 +177,7 @@ Distributer_Receiver_Callback::receive_frame (ACE_Message_Block *frame,
 }
 
 int
-Distributer_Receiver_Callback::handle_destroy (void)
+Distributer_Receiver_Callback::handle_destroy ()
 {
   /// Called when the sender requests the stream to be shutdown.
   ACE_DEBUG ((LM_DEBUG,
@@ -196,7 +192,7 @@ Distributer_Receiver_Callback::handle_destroy (void)
 }
 
 ACE_CString &
-Distributer_Sender_Callback::flowname (void)
+Distributer_Sender_Callback::flowname ()
 {
   return this->flowname_;
 }
@@ -208,7 +204,7 @@ Distributer_Sender_Callback::flowname (const ACE_CString &flowname)
 }
 
 int
-Distributer_Sender_Callback::handle_destroy (void)
+Distributer_Sender_Callback::handle_destroy ()
 {
   /// Called when the sender requests the stream to be shutdown.
 
@@ -224,7 +220,7 @@ Distributer_Sender_Callback::handle_destroy (void)
   return 0;
 }
 
-Distributer::Distributer (void)
+Distributer::Distributer ()
   : distributer_receiver_mmdevice_ (0),
     sender_name_ ("sender"),
     distributer_name_ ("distributer"),
@@ -233,18 +229,18 @@ Distributer::Distributer (void)
 {
 }
 
-Distributer::~Distributer (void)
+Distributer::~Distributer ()
 {
 }
 
 void
-Distributer::stream_created (void)
+Distributer::stream_created ()
 {
   ++this->stream_count_;
 }
 
 void
-Distributer::stream_destroyed (void)
+Distributer::stream_destroyed ()
 {
   --this->stream_count_;
 
@@ -254,7 +250,7 @@ Distributer::stream_destroyed (void)
 
 
 Connection_Manager &
-Distributer::connection_manager (void)
+Distributer::connection_manager ()
 {
   return this->connection_manager_;
 }
@@ -368,13 +364,13 @@ Distributer::init (int argc,
 }
 
 bool
-Distributer::done (void) const
+Distributer::done () const
 {
   return this->done_;
 }
 
 void
-Distributer::shut_down (void)
+Distributer::shut_down ()
 {
   try
     {
@@ -391,7 +387,6 @@ Distributer::shut_down (void)
                                                                      sender_mmdevice.in ());
 
     //  DISTRIBUTER::instance ()->connection_manager ().destroy ();
-
     }
   catch (const CORBA::Exception& ex)
     {
@@ -439,14 +434,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           if (wp)
           {
             orb->perform_work ();
-
           }
         }
 
       DISTRIBUTER::instance ()->shut_down ();
 
-//      orb->shutdown(1);
-
+//      orb->shutdown(true);
     }
   catch (const CORBA::Exception& ex)
     {

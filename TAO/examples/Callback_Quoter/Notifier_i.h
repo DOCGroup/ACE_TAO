@@ -38,34 +38,30 @@ class Notifier_i : public POA_Notifier
 {
 public:
   /// Constructor.
-  Notifier_i (void);
+  Notifier_i () = default;
 
   /// Destructor.
-  ~Notifier_i (void);
+  ~Notifier_i () = default;
 
   /// Register a distributed callback handler that is invoked when the
   /// given stock reaches the desired threshold value.
-  virtual void register_callback (const char *stock_name,
-                                  CORBA::Long threshold_value,
-                                  Callback_Quoter::Consumer_ptr consumer_handler);
+  void register_callback (const char *stock_name,
+                          CORBA::Long threshold_value,
+                          Callback_Quoter::Consumer_ptr consumer_handler) override;
 
   /// Remove the consumer object.
-  virtual void unregister_callback (Callback_Quoter::Consumer_ptr consumer_handler);
+  void unregister_callback (Callback_Quoter::Consumer_ptr consumer_handler) override;
+
 
   /// Get the market status.
-  virtual void market_status (const char *stock_name,
-                              CORBA::Long stock_value);
+  void market_status (const char *stock_name, CORBA::Long stock_value) override;
 
   /// Get the orb pointer.
   void orb (CORBA::ORB_ptr orb);
 
   /// Shutdown the Notifier.
-  virtual void shutdown (void);
+  void shutdown () override;
 
-  // CONSUMER_MAP* get_consumer_map_ptr ();
-  // Returns the consumer map ptr.
-
-  //private:
 public:
   /// The ORB manager.
   CORBA::ORB_var orb_;
@@ -88,11 +84,9 @@ public:
     CORBA::Long desired_value_;
   };
 
-  typedef ACE_Unbounded_Set<Consumer_Data>
-          CONSUMERS;
+  typedef ACE_Unbounded_Set<Consumer_Data> CONSUMERS;
 
-  typedef ACE_Hash_Map_Manager<ACE_CString, CONSUMERS *, ACE_Null_Mutex>
-          CONSUMER_MAP;
+  typedef ACE_Hash_Map_Manager<ACE_CString, CONSUMERS *, ACE_Null_Mutex> CONSUMER_MAP;
 
   /// This is the hash map with each hash_entry consisting of the stockname
   /// and an unbounded set of consumer object pointer and the desired stockvalue.
@@ -100,9 +94,7 @@ public:
 
   ///This marks the exit of the notifier. This should be taken care of
   /// before the consumer tries to unregister after the notifier quits.
-  int notifier_exited_;
-
-
+  int notifier_exited_ {0};
 };
 
 #endif /* NOTIFIER_I_H */

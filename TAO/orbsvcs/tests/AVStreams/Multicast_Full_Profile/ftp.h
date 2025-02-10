@@ -16,7 +16,7 @@ class FTP_Client_Producer
   :public virtual TAO_FlowProducer
 {
 public:
-  FTP_Client_Producer (void);
+  FTP_Client_Producer ();
   virtual int get_callback (const char *flowname,
                             TAO_AV_Callback *&callback);
   int set_protocol_object (const char *flowname,
@@ -29,9 +29,9 @@ class FTP_Client_Callback
   :public TAO_AV_Callback
 {
 public:
-  FTP_Client_Callback (void);
+  FTP_Client_Callback ();
   virtual int handle_timeout (void *arg);
-  virtual int handle_end_stream (void);
+  virtual int handle_end_stream ();
   virtual void get_timeout (ACE_Time_Value *&tv,
                             void *&arg);
   //  virtual int get_frame (ACE_Message_Block *&block,TAO_AV_frame_info *&frame_info);
@@ -50,15 +50,15 @@ typedef TAO_FDev <FTP_Client_Producer,TAO_FlowConsumer> FTP_Client_FDev;
 class Client
 {
 public:
-  Client (void);
+  Client ();
   int init (int argc, ACE_TCHAR *argv[]);
-  int run (void);
-  FILE *file (void);
-  char *flowname (void);
-  TAO_StreamCtrl* streamctrl (void);
-  AVStreams::protocolSpec protocols (void);
-  const char *format (void);
-  const char *address (void);
+  int run ();
+  FILE *file ();
+  char *flowname ();
+  TAO_StreamCtrl* streamctrl ();
+  AVStreams::protocolSpec protocols ();
+  const char *format ();
+  const char *address ();
 private:
   int parse_args (int argc, ACE_TCHAR *argv[]);
   int bind_to_server (const char *name);

@@ -1,0 +1,503 @@
+commit e8c833ce42e602930aaa9da4f19e39559f54059c
+Merge: 4a5270d6292 54e1cd9fb57
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon May 3 16:09:52 2021 +0200
+
+    Merge pull request #1497 from jwillemsen/jwi-taonews
+    
+    List changes
+
+commit 54e1cd9fb5797060b125dc6123e92bcad49ca968
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon May 3 16:09:16 2021 +0200
+
+    List changes
+    
+        * TAO/NEWS:
+
+commit f968d5916066fad70d5fa8c6c30b5d9a7e573a8d
+Merge: 158c653cd69 61cf0ceadf1
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Apr 30 17:17:26 2021 +0200
+
+    Merge branch 'master' into jwi-hashoverride
+
+commit 158c653cd69fc21eebf39b03e779d80d865bfeb9
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Apr 30 17:17:13 2021 +0200
+
+    Mark also the generated hash operation with override
+    
+        * TAO/TAO_IDL/be/be_interface.cpp:
+        * TAO/tao/PortableServer/Operation_Table_Perfect_Hash.h:
+
+commit e46edfd9ff99e54a5bffbbf93fc8aefac0134ce0
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Apr 30 14:53:22 2021 +0200
+
+    Generate execute operation with override
+    
+        * TAO/TAO_IDL/be/be_visitor_operation/upcall_command_ss.cpp:
+
+commit f250f6afd0be9024db716148084569b6fd6201df
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Apr 30 10:40:19 2021 +0200
+
+    Removed support for ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES, only set by the config file for LynxOS178 for gcc2.96 which is ancient
+    
+        * ACE/ace/README:
+        * ACE/ace/Singleton.cpp:
+        * ACE/ace/Singleton.h:
+        * ACE/ace/config-lynxos-178.h:
+        * ACE/netsvcs/lib/Log_Message_Receiver.cpp:
+        * ACE/netsvcs/lib/Log_Message_Receiver.h:
+        * ACE/netsvcs/lib/Server_Logging_Handler_T.cpp:
+        * ACE/netsvcs/lib/Server_Logging_Handler_T.h:
+        * TAO/tao/TAO_Singleton.cpp:
+        * TAO/tao/TAO_Singleton.h:
+
+commit ff216a0df9679117e068903a337dc10c98ab78c5
+Merge: 8697db3db42 0057e52b28a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Apr 29 18:33:21 2021 +0200
+
+    Merge pull request #1490 from jwillemsen/jwi-taoidl-hashtableoverride
+    
+    Add override to the generated lookup operation
+
+commit 8697db3db42dc5fc6a2071cf41991efed94c673b
+Merge: 9e52a9c1f71 66a3eaf1fe0
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Apr 29 18:33:15 2021 +0200
+
+    Merge pull request #1489 from jwillemsen/jwi-usedelete
+    
+    Make use of delete to make sure an operation can't be called
+
+commit 9e52a9c1f715032921da09ce5fa8bd543ed24f47
+Merge: fb9a4a0fab2 91a68ccacfc
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Apr 29 18:33:07 2021 +0200
+
+    Merge pull request #1488 from jwillemsen/jwi-avnullwarning
+    
+    Corrected null check, only when it is non null
+
+commit fb9a4a0fab263d90bcfdbfef4be5a4b4dd1eb6d7
+Merge: 10f275eb348 e34b94be98c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Apr 29 18:33:00 2021 +0200
+
+    Merge pull request #1487 from jwillemsen/jwi-autoptrunimpl
+    
+    Removed not used auto_ptr member, use delete, layout changes, fixed typos
+
+commit 0057e52b28a77857b7628b393735e20386784609
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Apr 29 14:11:09 2021 +0200
+
+    Add override to the generated lookup operation
+    
+        * TAO/TAO_IDL/be/be_interface.cpp:
+
+commit 66a3eaf1fe0675d8be285268029fa3f3998f8334
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Apr 29 12:50:52 2021 +0200
+
+    Make use of std::addressof
+    
+        * TAO/TAO_IDL/be/be_visitor_interface/tie_ss.cpp:
+
+commit 1720f78a38854ae2808f17eaf446f84f925ceefd
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Apr 29 12:41:32 2021 +0200
+
+    Make use of delete/default
+    
+        * TAO/TAO_IDL/be/be_visitor_interface/tie_sh.cpp:
+        * TAO/tao/DynamicAny/DynAnyFactory.h:
+        * TAO/tao/DynamicInterface/Context.cpp:
+        * TAO/tao/DynamicInterface/Context.h:
+        * TAO/tao/DynamicInterface/Context.inl:
+        * TAO/tao/DynamicInterface/DII_Reply_Dispatcher.cpp:
+        * TAO/tao/DynamicInterface/DII_Reply_Dispatcher.h:
+        * TAO/tao/Invocation_Adapter.h:
+
+commit 6f3e147d990d4252f251dde60e5730e1c3009dfe
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Apr 29 12:34:31 2021 +0200
+
+    Make use of delete to make sure an operation can't be called
+    
+        * ACE/ace/TP_Reactor.h:
+        * TAO/tao/Collocated_Invocation.h:
+        * TAO/tao/DynamicInterface/DII_Arguments.h:
+        * TAO/tao/DynamicInterface/DII_Arguments.inl:
+        * TAO/tao/DynamicInterface/DII_Invocation.h:
+        * TAO/tao/DynamicInterface/DII_Invocation_Adapter.h:
+        * TAO/tao/DynamicInterface/DII_Reply_Handler.cpp:
+        * TAO/tao/DynamicInterface/DII_Reply_Handler.h:
+        * TAO/tao/DynamicInterface/Dynamic_Adapter_Impl.h:
+        * TAO/tao/DynamicInterface/ExceptionList.h:
+        * TAO/tao/Messaging/Asynch_Invocation_Adapter.h:
+        * TAO/tao/Valuetype/AbstractBase_Invocation_Adapter.h:
+
+commit d48393410c37be7ff5fff6e224d175f58abdaa4a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Apr 29 12:04:50 2021 +0200
+
+    Use override, removed redundant void
+    
+        * TAO/tao/RTScheduling/Current.h:
+        * TAO/tao/RTScheduling/RTScheduler_Initializer.h:
+        * TAO/tao/RTScheduling/RTScheduler_Loader.h:
+        * TAO/tao/RTScheduling/RTScheduler_Manager.h:
+        * TAO/tao/RTScheduling/Request_Interceptor.h:
+
+commit a59ef0359679f03b619cc20be072cad263a6b852
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Apr 29 11:59:45 2021 +0200
+
+    Removed redundant void, use delete, layout changes
+    
+        * TAO/tao/RTScheduling/Current.cpp:
+        * TAO/tao/RTScheduling/Current.h:
+        * TAO/tao/RTScheduling/Distributable_Thread.h:
+        * TAO/tao/RTScheduling/RTScheduler.cpp:
+        * TAO/tao/RTScheduling/RTScheduler.h:
+        * TAO/tao/RTScheduling/RTScheduler_Loader.h:
+        * TAO/tao/RTScheduling/RTScheduler_Manager.cpp:
+        * TAO/tao/RTScheduling/RTScheduler_Manager.h:
+
+commit 9096ce55d62cafdcc3304420ec2e87b464205a71
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Apr 29 11:54:08 2021 +0200
+
+    Fixed compile error
+    
+        * TAO/tao/RTScheduling/Request_Interceptor.cpp:
+
+commit 91a68ccacfc09fcf6d98aaa36f5fd4d3fa68c82f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Apr 29 11:52:44 2021 +0200
+
+    Various layout changes
+    
+        * TAO/orbsvcs/orbsvcs/AV/AVStreams_i.h:
+        * TAO/orbsvcs/orbsvcs/AV/Endpoint_Strategy.h:
+        * TAO/orbsvcs/orbsvcs/AV/Endpoint_Strategy_T.h:
+        * TAO/orbsvcs/orbsvcs/AV/Fill_ACE_QoS.h:
+        * TAO/orbsvcs/orbsvcs/AV/FlowSpec_Entry.h:
+        * TAO/orbsvcs/orbsvcs/AV/Flows_T.h:
+        * TAO/orbsvcs/orbsvcs/AV/MCast.h:
+        * TAO/orbsvcs/orbsvcs/AV/Policy.h:
+        * TAO/orbsvcs/orbsvcs/AV/RTCP.h:
+        * TAO/orbsvcs/orbsvcs/AV/RTCP_Channel.h:
+        * TAO/orbsvcs/orbsvcs/AV/RTP.h:
+        * TAO/orbsvcs/orbsvcs/AV/TCP.h:
+        * TAO/orbsvcs/orbsvcs/AV/Transport.h:
+        * TAO/orbsvcs/orbsvcs/AV/UDP.cpp:
+        * TAO/orbsvcs/orbsvcs/AV/UDP.h:
+        * TAO/orbsvcs/orbsvcs/AV/default_resource.h:
+        * TAO/orbsvcs/orbsvcs/AV/media_timer.h:
+        * TAO/orbsvcs/orbsvcs/AV/sfp.h:
+
+commit f56b19454dcf14fc2b53f53d4e0b55b22bbba456
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Apr 29 11:43:10 2021 +0200
+
+    Corrected null check, only when it is non null
+    
+        * TAO/orbsvcs/orbsvcs/AV/Transport.cpp:
+
+commit e34b94be98ca81f5a9640b896e1cf983bb3ea768
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Apr 29 11:35:23 2021 +0200
+
+    Make use of delete
+    
+        * ACE/performance-tests/TCP/tcp_test.cpp:
+        * ACE/performance-tests/UDP/udp_test.cpp:
+        * ACE/tests/Token_Strategy_Test.cpp:
+        * TAO/orbsvcs/examples/ImR/Combined_Service/dynserver.h:
+
+commit ae4bd945a234a175b54dafb1cb54678b7cc67639
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Apr 29 11:34:48 2021 +0200
+
+    Removed not used auto_ptr member, use delete instead of ACE_UNIMPLEMENTED_FUNC, layout changes, fixed typos in comments
+    
+        * ACE/examples/ASX/UPIPE_Event_Server/Peer_Router.h:
+        * ACE/netsvcs/lib/Log_Message_Receiver.h:
+        * ACE/performance-tests/TCP/tcp_test.cpp:
+        * TAO/orbsvcs/Trading_Service/README:
+        * TAO/orbsvcs/Trading_Service/Trading_Server.cpp:
+        * TAO/orbsvcs/Trading_Service/Trading_Service.cpp:
+        * TAO/orbsvcs/Trading_Service/Trading_Service.h:
+        * TAO/orbsvcs/orbsvcs/AV/AVStreams_i.h:
+        * TAO/orbsvcs/orbsvcs/Trader/Constraint_Interpreter.cpp:
+        * TAO/orbsvcs/orbsvcs/Trader/Constraint_Interpreter.h:
+        * TAO/orbsvcs/orbsvcs/Trader/Constraint_Nodes.h:
+        * TAO/orbsvcs/orbsvcs/Trader/Constraint_Visitors.h:
+        * TAO/orbsvcs/orbsvcs/Trader/Offer_Database.h:
+        * TAO/orbsvcs/orbsvcs/Trader/Trader.h:
+        * TAO/orbsvcs/orbsvcs/Trader/Trader_Constraint_Visitors.h:
+        * TAO/orbsvcs/orbsvcs/Trader/Trader_Interfaces.h:
+        * TAO/orbsvcs/orbsvcs/Trader/Trader_T.h:
+        * TAO/orbsvcs/orbsvcs/Trader/Trader_Utils.h:
+        * TAO/orbsvcs/orbsvcs/Trader/Trading_Loader.cpp:
+        * TAO/orbsvcs/orbsvcs/Trader/Trading_Loader.h:
+        * TAO/orbsvcs/tests/Trading/Simple_Dynamic.h:
+        * TAO/tao/RTCORBA/Network_Priority_Mapping_Manager.h:
+        * TAO/tao/RTCORBA/Priority_Mapping_Manager.h:
+        * TAO/tao/RTScheduling/RTScheduler_Manager.h:
+
+commit d7c2c70f375caf8bb135d84462b9b702cf01b932
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Apr 29 11:19:09 2021 +0200
+
+    Fixed misleading indent warning
+    
+        * TAO/tao/RTScheduling/Request_Interceptor.cpp:
+
+commit 2446b519893f6bebc1da64891752c3d718d00c7d
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Tue Apr 27 12:45:22 2021 -0500
+
+    Remove Support Macro
+
+commit c733aaf4ca00fa2f380452eba76815805711e239
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Mon Apr 26 21:57:47 2021 -0500
+
+    Support C++ Keywords in DCPS_DATA_SEQUENCE_TYPE
+    
+    Made for https://github.com/objectcomputing/OpenDDS/pull/2608
+
+commit ac8caeed1f3db9239e84ccc79f5cf3a1f952a6d7
+Merge: 7f76346bc32 292114e68b4
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Apr 23 21:35:27 2021 +0200
+
+    Merge pull request #1480 from jwillemsen/jwi-minorcleanup
+    
+    Minor cleanup, layout changes, use nullptr
+
+commit 292114e68b44623de91c107d989a83fb0d183d29
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Apr 23 14:37:28 2021 +0200
+
+    Minor cleanup, layout changes, use nullptr
+    
+        * ACE/ACEXML/common/HttpCharStream.cpp:
+        * ACE/ACEXML/common/HttpCharStream.h:
+        * ACE/ACEXML/common/URL_Addr.cpp:
+        * ACE/ACEXML/common/XML_Codecs.cpp:
+        * ACE/Kokyu/Default_Dispatcher_Impl.cpp:
+        * ACE/Kokyu/Kokyu.cpp:
+        * ACE/ace/Asynch_IO.h:
+        * ACE/ace/Local_Memory_Pool.cpp:
+        * ACE/ace/Parse_Node.h:
+        * ACE/ace/Proactor.cpp:
+        * ACE/ace/Thread_Manager.cpp:
+        * ACE/tests/Priority_Reactor_Test.cpp:
+        * TAO/tao/Stub.h:
+        * TAO/tao/Stub.inl:
+
+commit 2dbe4e39da5fb319a4f85f840f49d99a9fff17f8
+Author: Timothy Simpson <simpsont@objectcomputing.com>
+Date:   Fri Apr 16 09:23:17 2021 -0500
+
+    fix wstring coerce leak in tao_idl
+
+commit 7fa0188744a75dc77e9d5ddf9626ed1a851c31e1
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Wed Apr 7 23:30:22 2021 -0500
+
+    Defer Including rules.tao.GNU for gnuace
+    
+    Alternative fix for
+    https://github.com/objectcomputing/OpenDDS/pull/2559. See there for
+    details.
+    
+    https://github.com/DOCGroup/ACE_TAO/pull/1296 changed the order of
+    includes of rules make files to effectively being how the base projects
+    that set them are included. This can lead to the order of
+    `GNUACE_PROJECT_VERSION ?=` being set differently than what the case was
+    in ACE6/TAO2. The result in OpenDDS is that so library files get TAO's
+    version number.
+    
+    This tires to fix that by including `tao.rules.GNU` at a marker after
+    the `extension` marker.
+
+commit 0ac144a73290156a3916cbf04fa96cac583b7d2a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Mar 27 08:28:19 2021 +0100
+
+    Fixed warning
+
+commit df92428febdcd8225514e0f70855833bb2fb0005
+Merge: 770305187e0 e6675814c2a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Mar 24 09:59:36 2021 +0100
+
+    Merge pull request #1460 from jwillemsen/jwi-interror
+    
+    Use bool instead of int for error variable
+
+commit e6675814c2a0667c7caba5abcecb7e1a457e207e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Mar 23 11:10:58 2021 +0100
+
+    Remove redundant void
+    
+        * TAO/orbsvcs/orbsvcs/Naming/FaultTolerant/FT_Naming_Server.h:
+
+commit 6e13193f8e9260d0a1dad3a7206d761439aa97b2
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Mar 19 11:47:24 2021 +0100
+
+    Layout/void cleanup
+    
+        * TAO/orbsvcs/orbsvcs/Naming/Entries.h:
+        * TAO/orbsvcs/orbsvcs/Naming/FaultTolerant/FT_PG_Group_Factory.cpp:
+        * TAO/orbsvcs/orbsvcs/Naming/Naming_Loader.h:
+        * TAO/orbsvcs/orbsvcs/Naming/Naming_Server.h:
+        * TAO/orbsvcs/orbsvcs/Naming/Persistent_Context_Index.h:
+        * TAO/orbsvcs/orbsvcs/Naming/Persistent_Naming_Context.h:
+        * TAO/orbsvcs/orbsvcs/Naming/Persistent_Naming_Context_Factory.h:
+        * TAO/orbsvcs/orbsvcs/Naming/Storable_Naming_Context_Activator.h:
+        * TAO/orbsvcs/orbsvcs/Naming/Storable_Naming_Context_Factory.h:
+
+commit 02377257f10464b70fae5302936bfd3a69169caf
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Mar 19 11:44:01 2021 +0100
+
+    Small doxygen changes and use default for copy/assignment operator
+    
+        * TAO/orbsvcs/orbsvcs/Trader/Trader_Utils.cpp:
+        * TAO/orbsvcs/orbsvcs/Trader/Trader_Utils.h:
+
+commit c22e1496f305f0fef210445f3e371b1c987ba318
+Merge: adc3b318495 09ae013e2b0
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Mar 17 14:28:53 2021 +0100
+
+    Merge pull request #1458 from jwillemsen/jwi-cleanup
+    
+    Minor cleanup
+
+commit adc3b3184957de087fb84f045a7e4ba7287e1270
+Merge: 5f9ccb42bc0 104d9f8a30c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Mar 17 14:28:21 2021 +0100
+
+    Merge pull request #1457 from jwillemsen/jwi-redundantvoid
+    
+    Removed redundant void
+
+commit 5f9ccb42bc00bd6e0eee5907f5046c10ea4404eb
+Merge: 81493d4f7c8 78045a2ee2b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Mar 17 14:28:05 2021 +0100
+
+    Merge pull request #1456 from jwillemsen/jwi-github
+    
+    Refer to github issues/discussions instead of the mailing lists and some bool changes
+
+commit 09ae013e2b0237107f34eef9d34695c75cf287c3
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Mar 17 12:03:34 2021 +0100
+
+    Cleanup
+
+commit 05ec4d3db0f7b68581bccff74b59df95ede3d819
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Mar 17 11:57:23 2021 +0100
+
+    Minor cleanup
+
+commit 104d9f8a30c479fe661883b295f120ab035645d9
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Mar 17 10:52:29 2021 +0100
+
+    Removed redundant void
+
+commit 78045a2ee2bee3a4521af3606d671f644e409fc2
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Mar 17 10:41:37 2021 +0100
+
+    bool changes
+
+commit fe0a8e3c6c8bf1d10a71d1eee6a956c3560bd562
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Mar 17 10:37:15 2021 +0100
+
+    bool changes
+
+commit ba2bcbfe87a34a9f401b69e2cb69fad0e12201d4
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Mar 17 09:29:49 2021 +0100
+
+    Update to github
+    
+        * TAO/docs/minimumTAO.html:
+        * TAO/orbsvcs/Naming_Service/README:
+
+commit c4002d0ec12ea841bfdb11eb881f1ece2e06d2e3
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Mar 17 09:09:44 2021 +0100
+
+    Refer to github issues/discussions instead of the mailing lists
+    
+        * ACE/ACE-INSTALL.html:
+        * ACE/ASNMP/README:
+        * ACE/PROBLEM-REPORT-FORM:
+        * ACE/README:
+        * ACE/VERSION.txt:
+        * ACE/ace/High_Res_Timer.cpp:
+        * ACE/docs/ACE-bug-process.html:
+        * ACE/docs/ACE-guidelines.html:
+        * ACE/docs/ACE-subsets.html:
+        * ACE/docs/bczar/bczar.html:
+        * ACE/tests/README:
+        * TAO/PROBLEM-REPORT-FORM:
+        * TAO/README:
+        * TAO/TAO-INSTALL.html:
+        * TAO/VERSION.txt:
+        * TAO/docs/implrepo/paper.html:
+        * TAO/docs/rtcorba/status.html:
+        * TAO/orbsvcs/ImplRepo_Service/README:
+        * TAO/orbsvcs/tests/Property/README:
+
+commit ecba7cd70564cb56433aedb0f6e0b487178d9981
+Merge: 30b2290d728 2d22ad2099d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Mar 15 18:32:13 2021 +0100
+
+    Merge pull request #1454 from jwillemsen/master
+    
+    Prepare for next release
+
+commit 2d22ad2099d46d44fa05778313a8d4c9c4a4eba3
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Mar 15 18:31:41 2021 +0100
+
+    Prepare for next release
+    
+        * ACE/NEWS:
+        * TAO/NEWS:
+
+commit 43d78f7c66c6724ec9e4dcf9710641a26d4ce568
+Author: Johnny Willemsen <johnny@jwillemsen.nl>
+Date:   Mon Mar 15 11:29:37 2021 +0100
+
+    Revert "Add include of OS_NS_string.h, seems it was pulled in implicitly in t…"
+
+commit 4d3608a999123643afdd58c81c1dc22af8074146
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Mar 15 10:37:02 2021 +0100
+
+    Add include of OS_NS_string.h, seems it was pulled in implicitly in the past
+    
+        * TAO/tao/Unbounded_Octet_Sequence_T.h:

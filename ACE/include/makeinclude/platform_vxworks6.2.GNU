@@ -58,7 +58,6 @@ ifeq ("$(WIND_HOST_TYPE)","x86-win32")
   PWD=$(subst \,/,$(shell pwd))
   ACE_ROOT:=$(subst \,/,$(ACE_ROOT))
   TAO_ROOT:=$(subst \,/,$(TAO_ROOT))
-  CIAO_ROOT:=$(subst \,/,$(CIAO_ROOT))
   HOST_ROOT:=$(subst \,/,$(HOST_ROOT))
   override RM=rm -f
 endif # x86-win32
@@ -67,13 +66,10 @@ ifneq (,$(HOST_ROOT))
 TAO_IDLFLAGS += -g $(HOST_ROOT)/bin/ace_gperf
 ifeq ("$(WIND_HOST_TYPE)","x86-win32")
   TAO_IDL = $(HOST_ROOT)/bin/tao_idl.exe
-  TAO_IDL3_TO_IDL2 = $(HOST_ROOT)/bin/tao_idl3_to_idl2.exe
 else
   TAO_IDL = $(HOST_ROOT)/bin/tao_idl
-  TAO_IDL3_TO_IDL2 = $(HOST_ROOT)/bin/tao_idl3_to_idl2
 endif
 TAO_IDL_DEP = $(TAO_IDL)
-TAO_IDL3_TO_IDL2_DEP = $(TAO_IDL3_TO_IDL2)
 endif
 
 HOST_DIR = $(WIND_BASE)/host/$(WIND_HOST_TYPE)

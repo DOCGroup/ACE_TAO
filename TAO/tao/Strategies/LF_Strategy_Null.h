@@ -31,28 +31,24 @@ class TAO_Strategies_Export TAO_LF_Strategy_Null : public TAO_LF_Strategy
 {
 public:
   /// Constructor
-  TAO_LF_Strategy_Null (void);
+  TAO_LF_Strategy_Null () = default;
 
   //@{
   /** @name Virtual Methods
    *
    * Please check the documentation in TAO_LF_Strategy
    */
-  virtual ~TAO_LF_Strategy_Null (void);
+  ~TAO_LF_Strategy_Null () override = default;
 
-  virtual void set_upcall_thread (TAO_Leader_Follower &);
-  virtual int set_event_loop_thread (ACE_Time_Value *max_wait_time,
-                                     TAO_Leader_Follower &);
-  virtual void reset_event_loop_thread (int call_reset,
-                                        TAO_Leader_Follower &);
+  void set_upcall_thread (TAO_Leader_Follower &) override;
+  int set_event_loop_thread (ACE_Time_Value *max_wait_time,
+                             TAO_Leader_Follower &) override;
+  void reset_event_loop_thread (int call_reset,
+                                TAO_Leader_Follower &) override;
   //@}
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
-
-#if defined (__ACE_INLINE__)
-# include "tao/Strategies/LF_Strategy_Null.inl"
-#endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
 #endif  /* TAO_LF_STRATEGY_NULL_H */

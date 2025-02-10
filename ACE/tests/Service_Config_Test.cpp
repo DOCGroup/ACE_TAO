@@ -55,7 +55,7 @@ class Test_Singleton
 {
 public:
   static Test_Singleton *instance (u_short variety);
-  ~Test_Singleton (void);
+  ~Test_Singleton ();
 
 private:
   u_short variety_;
@@ -111,7 +111,7 @@ Test_Singleton::Test_Singleton (u_short variety)
 // We can't reliably use ACE_Log_Msg in a destructor that is called by
 // ACE_Object_Manager.  Yet.
 
-Test_Singleton::~Test_Singleton (void)
+Test_Singleton::~Test_Singleton ()
 {
   /* ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Test_Singleton %u dtor\n"), variety_)); */
 
@@ -183,7 +183,7 @@ testLoadingServiceConfFileAndProcessNo (int argc, ACE_TCHAR *argv[])
   // Configurator file appropriate to the platform.
   // For example, Windows Unicode uses UTF-16.
   //
-  //          iconv(1) found on Linux and Solaris, for example, can
+  //          iconv(1) found on Linux, for example, can
   //          be used to convert between encodings.
   //
   //          Byte ordering is also an issue, so we should be
@@ -285,7 +285,7 @@ testLoadingServiceConfFile (int argc, ACE_TCHAR *argv[])
   // Configurator file appropriate to the platform.
   // For example, Windows Unicode uses UTF-16.
   //
-  //          iconv(1) found on Linux and Solaris, for example, can
+  //          iconv(1) found on Linux, for example, can
   //          be used to convert between encodings.
   //
   //          Byte ordering is also an issue, so we should be
@@ -676,7 +676,7 @@ testNonACEThread ()
 
   u_int errors_before = error;
 
-#if defined (ACE_HAS_WTHREADS) && !defined (ACE_HAS_WINCE)
+#if defined (ACE_HAS_WTHREADS)
   HANDLE thr_h = (HANDLE)_beginthreadex (0,
                                          0,
                                          &nonacethreadentry,

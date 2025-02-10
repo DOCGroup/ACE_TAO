@@ -9,13 +9,13 @@ Simple_Server_i::Simple_Server_i (CORBA::ORB_ptr orb, const char* key)
 {
 }
 
-Simple_Server_i::Simple_Server_i (void)
+Simple_Server_i::Simple_Server_i ()
   : orb_ (0)
 {
 }
 
 char*
-Simple_Server_i::remote_call (void)
+Simple_Server_i::remote_call ()
 {
   ACE_DEBUG ((LM_DEBUG, "SERVER(%C)> executing remote_call()\n", _key.in()));
 
@@ -37,7 +37,7 @@ Simple_Server_i::shutdown (const char* key)
   int still_alive = 1;
   if (!ACE_OS::strcmp (_key.in(), key))
     {
-       this->orb_->shutdown (0);
+       this->orb_->shutdown (false);
        still_alive = 0;
     }
 

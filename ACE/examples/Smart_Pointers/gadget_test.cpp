@@ -7,13 +7,13 @@
  */
 //=============================================================================
 
-#include "ace/Auto_Ptr.h"
 #include "ace/Refcounted_Auto_Ptr.h"
 #include "ace/Unbounded_Queue.h"
 #include "Gadget.h"
 #include "Gadget_Factory.h"
 #include "Gadget_Part.h"
 #include "Gadget_Part_Factory.h"
+#include <memory>
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {

@@ -1,12 +1,12 @@
 #include "FP_Scheduler.h"
-#include "ace/Atomic_Op.h"
 #include "tao/RTScheduling/Request_Interceptor.h"
 #include "test.h"
+#include <atomic>
 
-ACE_Atomic_Op<TAO_SYNCH_MUTEX, long> server_guid_counter;
+std::atomic<long> server_guid_counter;
 
 RTCORBA::Priority
-Segment_Sched_Param_Policy::value (void)
+Segment_Sched_Param_Policy::value ()
 {
   return this->value_;
 }
@@ -18,7 +18,7 @@ Segment_Sched_Param_Policy::value (RTCORBA::Priority value)
 }
 
 CORBA::Policy_ptr
-Segment_Sched_Param_Policy::copy (void)
+Segment_Sched_Param_Policy::copy ()
 {
   Segment_Sched_Param_Policy *copy = 0;
   ACE_NEW_THROW_EX (copy,
@@ -31,13 +31,13 @@ Segment_Sched_Param_Policy::copy (void)
 }
 
 CORBA::PolicyType
-Segment_Sched_Param_Policy::policy_type (void)
+Segment_Sched_Param_Policy::policy_type ()
 {
   return 0;
 }
 
 void
-Segment_Sched_Param_Policy::destroy (void)
+Segment_Sched_Param_Policy::destroy ()
 {
 }
 
@@ -57,7 +57,7 @@ Fixed_Priority_Scheduler::Fixed_Priority_Scheduler (CORBA::ORB_ptr orb)
     }
 }
 
-Fixed_Priority_Scheduler::~Fixed_Priority_Scheduler (void)
+Fixed_Priority_Scheduler::~Fixed_Priority_Scheduler ()
 {
 }
 
@@ -76,7 +76,6 @@ Fixed_Priority_Scheduler::create_segment_scheduling_parameter (RTCORBA::Priority
   segment_policy->value (segment_priority);
 
   return segment_policy;
-
 }
 
 
@@ -110,7 +109,6 @@ Fixed_Priority_Scheduler::update_scheduling_segment (const RTScheduling::Current
                                       name,
                                       sched_param,
                                       implicit_sched_param);
-
 }
 
 void
@@ -130,7 +128,6 @@ Fixed_Priority_Scheduler::end_nested_scheduling_segment (const RTScheduling::Cur
 void
 Fixed_Priority_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr request_info)
 {
-
   int priority;
   ACE_hthread_t current;
   ACE_Thread::self (current);
@@ -152,7 +149,6 @@ Fixed_Priority_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_p
                   sizeof (size_t));
   request_info->add_request_service_context (*srv_con,
                                              0);
-
 }
 
 void
@@ -243,7 +239,7 @@ Fixed_Priority_Scheduler::cancel (const RTScheduling::Current::IdType &)
 }
 
 CORBA::PolicyList*
-Fixed_Priority_Scheduler::scheduling_policies (void)
+Fixed_Priority_Scheduler::scheduling_policies ()
 {
   return 0;
 }
@@ -254,13 +250,13 @@ Fixed_Priority_Scheduler::scheduling_policies (const CORBA::PolicyList &)
 }
 
 CORBA::PolicyList*
-Fixed_Priority_Scheduler::poa_policies (void)
+Fixed_Priority_Scheduler::poa_policies ()
 {
   return 0;
 }
 
 char *
-Fixed_Priority_Scheduler::scheduling_discipline_name (void)
+Fixed_Priority_Scheduler::scheduling_discipline_name ()
 {
   return 0;
 }

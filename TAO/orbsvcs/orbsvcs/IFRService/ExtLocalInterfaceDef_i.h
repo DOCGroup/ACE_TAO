@@ -46,7 +46,7 @@ public:
   TAO_ExtLocalInterfaceDef_i (TAO_Repository_i *repo);
 
   /// Destructor
-  virtual ~TAO_ExtLocalInterfaceDef_i (void);
+  virtual ~TAO_ExtLocalInterfaceDef_i ();
 
   virtual void destroy ();
 };

@@ -8,12 +8,12 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_HANDLE
-TAO_IOR_Multicast::get_handle (void) const
+TAO_IOR_Multicast::get_handle () const
 {
   return this->mcast_dgram_.get_handle ();
 }
 
-TAO_IOR_Multicast::TAO_IOR_Multicast (void)
+TAO_IOR_Multicast::TAO_IOR_Multicast ()
   : service_id_ ((TAO_Service_ID) 0)
 {
 }
@@ -32,7 +32,7 @@ TAO_IOR_Multicast::TAO_IOR_Multicast (const char *ior,
                 ACE_TEXT ("TAO_IOR_Multicast")));
 }
 
-TAO_IOR_Multicast::~TAO_IOR_Multicast (void)
+TAO_IOR_Multicast::~TAO_IOR_Multicast ()
 {
   if (ior_.length() > 0 && this->mcast_dgram_.leave (this->mcast_addr_) == -1)
     {

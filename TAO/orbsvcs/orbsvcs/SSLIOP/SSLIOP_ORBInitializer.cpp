@@ -15,7 +15,7 @@
 #include "tao/PI/ORBInitInfo.h"
 #include "tao/debug.h"
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -169,7 +169,7 @@ TAO::SSLIOP::ORBInitializer::post_init (
                     TAO::SSLIOP::CredentialsAcquirerFactory,
                     CORBA::NO_MEMORY ());
 
-  auto_ptr<TAO::SSLIOP::CredentialsAcquirerFactory> safe_factory;
+  std::unique_ptr<TAO::SSLIOP::CredentialsAcquirerFactory> safe_factory;
 
   tao_curator->register_acquirer_factory ("SL3TLS", factory);
 

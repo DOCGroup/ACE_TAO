@@ -6,7 +6,7 @@
 #include "ace/Signal.h"
 #include "Peer.h"
 
-Peer_Handler::Peer_Handler (void)
+Peer_Handler::Peer_Handler ()
   : connection_id_ (-1),  // Maybe it's better than 0.
     msg_frag_ (0),
     total_bytes_ (0)
@@ -106,7 +106,7 @@ Peer_Handler::transmit (ACE_Message_Block *mb,
 // Read events from stdin and send them to the gatewayd.
 
 int
-Peer_Handler::transmit_stdin (void)
+Peer_Handler::transmit_stdin ()
 {
   // If return value is -1, then first_time_ must be reset to 1.
   int result = 0;
@@ -247,7 +247,7 @@ Peer_Handler::handle_output (ACE_HANDLE)
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("%p\n"),
                       ACE_TEXT ("transmission failure in handle_output")));
-          /* FALLTHROUGH */
+          ACE_FALLTHROUGH;
         default: // Sent the whole thing.
           // If we succeed in writing the entire event (or we did not
           // fail due to EWOULDBLOCK) then check if there are more
@@ -419,14 +419,14 @@ Peer_Handler::recv (ACE_Message_Block *&mb)
       if (errno == EWOULDBLOCK)
         // This might happen if only the header came through.
         return -1;
-      // fallthrough
+      ACE_FALLTHROUGH;
     case 0: // Premature EOF.
       if (data_bytes_left_to_read)
       {
       this->msg_frag_ = this->msg_frag_->release ();
       return 0;
       }
-      // fallthrough
+      ACE_FALLTHROUGH;
     default:
       // Set the write pointer at 1 past the end of the event.
       this->msg_frag_->wr_ptr (data_received);
@@ -482,7 +482,7 @@ Peer_Handler::handle_input (ACE_HANDLE sd)
 // Action that receives our connection id from the Gateway.
 
 int
-Peer_Handler::await_connection_id (void)
+Peer_Handler::await_connection_id ()
 {
   ssize_t n = this->peer ().recv (&this->connection_id_,
                                   sizeof this->connection_id_);
@@ -543,7 +543,7 @@ Peer_Handler::await_connection_id (void)
 }
 
 int
-Peer_Handler::subscribe (void)
+Peer_Handler::subscribe ()
 {
   ACE_Message_Block *mb = 0;
 
@@ -562,7 +562,7 @@ Peer_Handler::subscribe (void)
 // Action that receives events from the Gateway.
 
 int
-Peer_Handler::await_events (void)
+Peer_Handler::await_events ()
 {
   ACE_Message_Block *mb = 0;
 
@@ -619,7 +619,7 @@ Peer_Handler::handle_timeout (const ACE_Time_Value &,
   return this->handle_close ();
 }
 
-Peer_Handler::~Peer_Handler (void)
+Peer_Handler::~Peer_Handler ()
 {
   // Shut down the handler.
   this->handle_close ();
@@ -692,13 +692,13 @@ Peer_Acceptor::start (u_short port)
   return 0;
 }
 
-Peer_Acceptor::Peer_Acceptor (void)
+Peer_Acceptor::Peer_Acceptor ()
   : peer_handler_ (0)
 {
 }
 
 int
-Peer_Acceptor::close (void)
+Peer_Acceptor::close ()
 {
   // Will trigger a delete.
   if (this->peer_handler_ != 0)
@@ -822,7 +822,7 @@ Peer_Factory::info (ACE_TCHAR **strp, size_t length) const
 // the peer.
 
 int
-Peer_Factory::fini (void)
+Peer_Factory::fini ()
 {
   this->consumer_acceptor_.close ();
   this->supplier_acceptor_.close ();

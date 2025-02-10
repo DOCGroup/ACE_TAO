@@ -1,5 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
-
 //=============================================================================
 /**
  *  @file     Servant_Manager.h
@@ -9,7 +7,6 @@
  *  @author  Kirthika Parameswaran <kirthika@cs.wustl.edu>
  */
 //=============================================================================
-
 
 #ifndef SERVANT_MANAGER_H
 #define SERVANT_MANAGER_H
@@ -51,7 +48,7 @@ public:
   ServantManager_i (CORBA::ORB_ptr orb);
 
   /// Destruction.
-   ~ServantManager_i (void);
+   ~ServantManager_i ();
 
   /**
    * Returns an ObjectId when given an DLL name and the factory method
@@ -111,6 +108,5 @@ public:
    * using the unique ObjectId as key.
    */
   SERVANT_MAP servant_map_;
-
 };
 #endif /* SERVANT_MANAGER_H */

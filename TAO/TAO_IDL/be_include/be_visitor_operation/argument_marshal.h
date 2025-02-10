@@ -31,7 +31,7 @@ public:
   be_visitor_operation_argument_marshal (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_operation_argument_marshal (void);
+  ~be_visitor_operation_argument_marshal ();
 
   /// stuff to o/p before each element of the scope is handled
   virtual int pre_process (be_decl *bd);

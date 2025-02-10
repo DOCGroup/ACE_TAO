@@ -14,13 +14,13 @@
 be_visitor_facet_exs::be_visitor_facet_exs (
       be_visitor_context *ctx)
   : be_visitor_component_scope (ctx),
-    op_scope_ (0),
+    op_scope_ (nullptr),
     comment_start_border_ ("/**"),
     comment_end_border_ (" */")
 {
 }
 
-be_visitor_facet_exs::~be_visitor_facet_exs (void)
+be_visitor_facet_exs::~be_visitor_facet_exs ()
 {
 }
 
@@ -55,7 +55,7 @@ be_visitor_facet_exs::visit_attribute (be_attribute *node)
     }
 
   be_decl *attr_scope =
-    be_decl::narrow_from_decl (ScopeAsDecl (node->defined_in ()));
+    dynamic_cast<be_decl*> (ScopeAsDecl (node->defined_in ()));
 
   nt = attr_scope->node_type ();
 
@@ -106,7 +106,7 @@ be_visitor_facet_exs::visit_provides (be_provides *node)
 
   os_ << be_nl_2
       << lname << "_exec_i::~" << lname
-      << "_exec_i (void)" << be_nl
+      << "_exec_i ()" << be_nl
       << "{" << be_nl
       << "}";
 
@@ -115,7 +115,7 @@ be_visitor_facet_exs::visit_provides (be_provides *node)
   if (impl->node_type () == AST_Decl::NT_interface)
     {
       be_interface *intf =
-        be_interface::narrow_from_decl (impl);
+        dynamic_cast<be_interface*> (impl);
 
       os_ << be_nl_2
           << "// Operations from ::" << intf->full_name ();

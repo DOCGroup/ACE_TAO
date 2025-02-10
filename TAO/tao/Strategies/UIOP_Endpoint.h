@@ -41,14 +41,14 @@ public:
   friend class TAO_UIOP_Profile;
 
   /// Default constructor.
-  TAO_UIOP_Endpoint (void);
+  TAO_UIOP_Endpoint ();
 
   /// Constructor.
   TAO_UIOP_Endpoint (const ACE_UNIX_Addr &addr,
                      CORBA::Short priority = TAO_INVALID_PRIORITY);
 
   /// Destructor.
-  ~TAO_UIOP_Endpoint (void);
+  ~TAO_UIOP_Endpoint () = default;
 
   /**
    * @name TAO_Endpoint Methods
@@ -56,29 +56,28 @@ public:
    * Please check the documentation in Endpoint.h for details.
    */
   //@{
-  virtual TAO_Endpoint *next (void);
+  virtual TAO_Endpoint *next ();
   virtual int addr_to_string (char *buffer, size_t length);
-  virtual TAO_Endpoint *duplicate (void);
+  virtual TAO_Endpoint *duplicate ();
 
   /// Return true if this endpoint is equivalent to @a other_endpoint.  Two
   /// endpoints are equivalent if their rendezvous points are the same.
   CORBA::Boolean is_equivalent (const TAO_Endpoint *other_endpoint);
 
   /// Return a hash value for this object.
-  virtual CORBA::ULong hash (void);
+  virtual CORBA::ULong hash ();
   //@}
 
   // = UIOP_Endpoint-specific methods.
 
   /// Return a reference to the <object_addr>.
-  const ACE_UNIX_Addr &object_addr (void) const;
+  const ACE_UNIX_Addr &object_addr () const;
 
   /// Return a pointer to the rendezvous point string.
   /// This object maintains ownership of the returned string.
-  const char *rendezvous_point (void) const;
+  const char *rendezvous_point () const;
 
 private:
-
   /// Cached instance of <ACE_UNIX_Addr> for use in making
   /// invocations, etc.
   ACE_UNIX_Addr object_addr_;

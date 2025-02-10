@@ -39,16 +39,13 @@ namespace TAO
   class TAO_FlResource_Export FlResource_Factory : public GUIResource_Factory
   {
   public:
-
     FlResource_Factory ();
 
   protected:
-
     /// Create or obtain current reactor implementation
-    virtual ACE_Reactor_Impl *reactor_impl (void);
+    virtual ACE_Reactor_Impl *reactor_impl ();
 
   private:
-
     /// Reactor created by this factory.
     ACE_FlReactor *reactor_impl_;
   };

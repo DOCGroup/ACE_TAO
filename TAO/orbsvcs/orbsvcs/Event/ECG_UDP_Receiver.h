@@ -71,7 +71,7 @@ class TAO_ECG_UDP_Out_Endpoint;
 class TAO_RTEvent_Serv_Export TAO_ECG_UDP_Receiver_Disconnect_Command
 {
 public:
-  TAO_ECG_UDP_Receiver_Disconnect_Command (void);
+  TAO_ECG_UDP_Receiver_Disconnect_Command ();
   TAO_ECG_UDP_Receiver_Disconnect_Command (
               RtecEventChannelAdmin::ProxyPushConsumer_ptr proxy);
 
@@ -81,10 +81,9 @@ public:
   TAO_ECG_UDP_Receiver_Disconnect_Command &
    operator= (const TAO_ECG_UDP_Receiver_Disconnect_Command & rhs);
 
-  void execute (void);
+  void execute ();
 
 private:
-
   RtecEventChannelAdmin::ProxyPushConsumer_var proxy_;
 };
 
@@ -104,16 +103,14 @@ class TAO_RTEvent_Serv_Export TAO_ECG_UDP_Receiver :
   , public virtual TAO_ECG_Dgram_Handler
 {
 public:
-
   /// Initialization and termination methods.
   //@{
-
   /// Create a new TAO_ECG_UDP_Receiver object.
   /// (Constructor access is restricted to insure that all
   /// TAO_ECG_UDP_Receiver objects are heap-allocated.)
   static PortableServer::Servant_var<TAO_ECG_UDP_Receiver> create (CORBA::Boolean perform_crc = 0);
 
-  ~TAO_ECG_UDP_Receiver (void);
+  ~TAO_ECG_UDP_Receiver ();
 
   /**
    * @param lcl_ec Event Channel to which we will act as a supplier of events.
@@ -157,7 +154,7 @@ public:
    * result in decrementing of the reference count (due to
    * deactivation) and deletion of the object.
    */
-  void shutdown (void);
+  void shutdown ();
   //@}
 
   /// Accessor.
@@ -174,7 +171,7 @@ public:
   /// The PushSupplier idl method.
   /// Invokes shutdown (), which may result in the object being deleted, if
   /// refcounting is used to manage its lifetime.
-  virtual void disconnect_push_supplier (void);
+  virtual void disconnect_push_supplier ();
 
   /// TAO_ECG_Dgram_Handler method.
   /**
@@ -186,13 +183,11 @@ public:
   virtual int handle_input (ACE_SOCK_Dgram& dgram);
 
 protected:
-
   /// Constructor (protected).  Clients can create new
   /// TAO_ECG_UDP_Receiver objects using the static create() method.
   TAO_ECG_UDP_Receiver (CORBA::Boolean perform_crc = false);
 
 private:
-
   /// Helpers for the connect() method.
   //@{
   // Establishes connection to the Event Channel for the first time.

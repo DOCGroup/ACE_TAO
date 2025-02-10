@@ -47,10 +47,10 @@ int run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("CDR_Fixed_Test"));
 
-  typedef ACE_CDR::Fixed Fixed;
-  typedef ACE_CDR::LongLong LongLong;
-  typedef ACE_CDR::ULongLong ULongLong;
-  typedef ACE_CDR::LongDouble LongDouble;
+  using Fixed = ACE_CDR::Fixed;
+  using LongLong = ACE_CDR::LongLong;
+  using ULongLong = ACE_CDR::ULongLong;
+  using LongDouble = ACE_CDR::LongDouble;
 
   const Fixed f1 = Fixed::from_integer (LongLong (-1234567890l)),
     f2 = Fixed::from_integer (ULongLong (987654321ul)),

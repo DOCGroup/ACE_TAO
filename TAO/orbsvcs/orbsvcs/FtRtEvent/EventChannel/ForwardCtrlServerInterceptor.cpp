@@ -67,12 +67,12 @@ ForwardCtrlServerInterceptor::~ForwardCtrlServerInterceptor()
 {
 }
 
-char * ForwardCtrlServerInterceptor::name (void)
+char * ForwardCtrlServerInterceptor::name ()
 {
   return CORBA::string_dup("ForwardCtrlServerInterceptor");
 }
 
-void ForwardCtrlServerInterceptor::destroy (void)
+void ForwardCtrlServerInterceptor::destroy ()
 {
 }
 
@@ -120,7 +120,6 @@ FT::ObjectGroupRefVersion get_ft_group_version(IOP::ServiceContext_var service_c
 
   return fgvsc.object_group_ref_version;
 }
-
 
 
 void ForwardCtrlServerInterceptor::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri)

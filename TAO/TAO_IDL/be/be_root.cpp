@@ -31,12 +31,12 @@ be_root::be_root (UTL_ScopedName *n)
 {
 }
 
-be_root::~be_root (void)
+be_root::~be_root ()
 {
 }
 
 void
-be_root::destroy (void)
+be_root::destroy ()
 {
   // Call the destroy methods of our base classes.
 
@@ -54,8 +54,3 @@ be_root::accept (be_visitor *visitor)
 {
   return visitor->visit_root (this);
 }
-
-
-
-IMPL_NARROW_FROM_DECL (be_root)
-IMPL_NARROW_FROM_SCOPE (be_root)

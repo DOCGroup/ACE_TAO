@@ -3,7 +3,7 @@
 #include "tao/debug.h"
 #include "ace/OS_NS_stdio.h"
 
-Cubit_Server::Cubit_Server (void)
+Cubit_Server::Cubit_Server ()
   : ior_output_file_ (0),
     orb_manager_ (),
     factory_impl_ (0),
@@ -14,7 +14,7 @@ Cubit_Server::Cubit_Server (void)
 }
 
 int
-Cubit_Server::parse_args (void)
+Cubit_Server::parse_args ()
 {
   ACE_Get_Opt get_opts (argc_, argv_, ACE_TEXT("df:"));
   int c;
@@ -100,7 +100,7 @@ Cubit_Server::init (int argc,
 }
 
 int
-Cubit_Server::run (void)
+Cubit_Server::run ()
 {
   if (this->orb_manager_.run () == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -109,7 +109,7 @@ Cubit_Server::run (void)
   return 0;
 }
 
-Cubit_Server::~Cubit_Server (void)
+Cubit_Server::~Cubit_Server ()
 {
   delete this->factory_impl_;
 }

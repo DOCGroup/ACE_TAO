@@ -15,30 +15,28 @@ class Task_Stats;
 class DT_Test :public ACE_Task <ACE_SYNCH>
 {
  public:
+  DT_Test ();
 
-  DT_Test (void);
-
-  void check_supported_priorities (void);
+  void check_supported_priorities ();
 
   int init (int argc, ACE_TCHAR *argv []);
 
   void run (int argc, ACE_TCHAR *argv []);
 
   void dt_creator (FP_DT_Creator* dt_creator);
-  FP_DT_Creator* dt_creator (void);
+  FP_DT_Creator* dt_creator ();
 
-  Fixed_Priority_Scheduler* scheduler (void);
+  Fixed_Priority_Scheduler* scheduler ();
 
-  int activate_task (void);
+  int activate_task ();
 
-  CORBA::ORB_ptr orb (void);
+  CORBA::ORB_ptr orb ();
 
   ACE_hrtime_t base_t;
 
   protected:
   /// task svc
-  virtual int svc (void);
-
+  virtual int svc ();
 
 
  private:
@@ -55,7 +53,6 @@ class DT_Test :public ACE_Task <ACE_SYNCH>
   RTCORBA::RTORB_var rt_orb_;
   /// Reference to the root poa.
   PortableServer::POA_var root_poa_;
-
 };
 
 typedef ACE_Singleton <DT_Test, TAO_SYNCH_MUTEX> DT_TEST;

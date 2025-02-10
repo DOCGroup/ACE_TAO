@@ -7,7 +7,7 @@
 
 #include "tao/Monitor/Monitor.h"
 
-#include "orbsvcs/orbsvcs/Notify/MonitorControl/Control.h"
+#include "orbsvcs/Notify/MonitorControl/Control.h"
 
 #include "ace/Hash_Map_Manager_T.h"
 
@@ -39,10 +39,10 @@ public:
   };
 
   /// Return the singleton instance of the registry
-  static TAO_Control_Registry* instance (void);
+  static TAO_Control_Registry* instance ();
 
   /// Empty out the map of objects
-  ~TAO_Control_Registry (void);
+  ~TAO_Control_Registry ();
 
   /// Adds an object to the map.
   /// Throws Map_Error if the object is null or if there
@@ -57,7 +57,7 @@ public:
   bool remove (const ACE_CString& name);
 
   /// Returns a list of names stored in the registry
-  const NameList& names (void);
+  const NameList& names ();
 
   /// Gets an object from the map
   /// Returns the object if it is successfully located.

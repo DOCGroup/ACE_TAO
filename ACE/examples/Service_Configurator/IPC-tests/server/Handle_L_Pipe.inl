@@ -5,12 +5,12 @@
 #include "ace/OS_NS_unistd.h"
 
 ACE_INLINE
-Handle_L_Pipe::~Handle_L_Pipe (void)
+Handle_L_Pipe::~Handle_L_Pipe ()
 {
 }
 
 ACE_INLINE
-Handle_L_Pipe::Handle_L_Pipe (void)
+Handle_L_Pipe::Handle_L_Pipe ()
 {
 }
 
@@ -73,14 +73,14 @@ Handle_L_Pipe::init (int argc, ACE_TCHAR *argv[])
 }
 
 ACE_INLINE int
-Handle_L_Pipe::fini (void)
+Handle_L_Pipe::fini ()
 {
   return ACE_Reactor::instance ()->remove_handler
     (this, ACE_Event_Handler::ACCEPT_MASK);
 }
 
 ACE_INLINE int
-Handle_L_Pipe::get_handle (void) const
+Handle_L_Pipe::get_handle () const
 {
   return ACE_LSOCK_Acceptor::get_handle ();
 }

@@ -65,7 +65,7 @@ template <class HANDLER>
 class ACE_Asynch_Acceptor : public ACE_Handler
       ...
 protected:
-  virtual HANDLER *make_handler (void)
+  virtual HANDLER *make_handler ()
   {
     return new HANDLER;
   }
@@ -79,7 +79,7 @@ public:
   virtual int init (int argc, ACE_TCHAR *argv[]);
 
   // Terminates object when dynamic unlinking occurs.
-  virtual int fini (void);
+  virtual int fini ();
 };
 
 #endif /* __HA_PROACTIVE_STATUS_H */

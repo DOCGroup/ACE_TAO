@@ -27,20 +27,20 @@ namespace ACE
     }
 
     void
-    BSD_Network_Interface_Monitor::update_i (void)
+    BSD_Network_Interface_Monitor::update_i ()
     {
       this->fetch(this->value_);
       this->value_ -= this->start_;
     }
 
     void
-    BSD_Network_Interface_Monitor::clear_impl (void)
+    BSD_Network_Interface_Monitor::clear_impl ()
     {
       this->init();
     }
 
     void
-    BSD_Network_Interface_Monitor::init (void)
+    BSD_Network_Interface_Monitor::init ()
     {
       this->fetch(this->start_);
       this->value_ = 0UL;

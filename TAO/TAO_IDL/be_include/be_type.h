@@ -28,14 +28,14 @@ public:
   be_type (AST_Decl::NodeType nt,
            UTL_ScopedName *n);
 
-  virtual ~be_type (void);
+  virtual ~be_type ();
 
   /**
    * Return the typecode name. When both, the prefix and the suffix
    * are non null, it computes and returns a tc name. Else, it also
    * stores the result in a member variable.
    */
-  UTL_ScopedName *tc_name (void);
+  UTL_ScopedName *tc_name ();
 
   /// Type name of a node used when generating declarations for smart
   /// proxies.
@@ -44,7 +44,7 @@ public:
                                            const char *prefix = 0);
 
   /// Compute the value of the member.
-  void gen_fwd_helper_name (void);
+  void gen_fwd_helper_name ();
 
   /// No-op, overridden in derived classes.
   virtual void gen_ostream_operator (TAO_OutStream *os,
@@ -57,7 +57,7 @@ public:
                                             bool accessor = false);
 
   /// Accessor to the member.
-  const char *fwd_helper_name (void) const;
+  const char *fwd_helper_name () const;
   void fwd_helper_name (const char *name);
 
   /// Generate _var and _out typedefs for structs and unions.
@@ -67,11 +67,15 @@ public:
   void gen_stub_decls (TAO_OutStream *os);
 
   /// Accessors for the member.
-  bool seen_in_sequence (void) const;
+  bool seen_in_sequence () const;
   virtual void seen_in_sequence (bool val);
 
   /// Accessors for the member.
-  bool seen_in_operation (void) const;
+  bool seen_in_map () const;
+  virtual void seen_in_map (bool val);
+
+  /// Accessors for the member.
+  bool seen_in_operation () const;
   virtual void seen_in_operation (bool val);
 
   /**
@@ -80,21 +84,17 @@ public:
    * recursive simply using "base_type->node_type()" will not work, so
    * the most "unaliased" type is needed.
    */
-  virtual AST_Decl::NodeType base_node_type (void) const;
+  virtual AST_Decl::NodeType base_node_type () const;
 
   /// Clean up allocated members.
-  virtual void destroy (void);
+  virtual void destroy ();
 
   // Visiting.
   virtual int accept (be_visitor* visitor);
 
-  // Narrowing.
-
-  DEF_NARROW_FROM_DECL (be_type);
-
 protected:
   /// Computes the fully scoped typecode name.
-  virtual void compute_tc_name (void);
+  virtual void compute_tc_name ();
 
   /// Typecode name.
   UTL_ScopedName *tc_name_;
@@ -107,6 +107,9 @@ protected:
 
   /// Has this declaration been used as a sequence element?
   bool seen_in_sequence_;
+
+  /// Has this declaration been used as a map element?
+  bool seen_in_map_;
 
   /// Has this declaration been used as a return type or parameter?
   bool seen_in_operation_;

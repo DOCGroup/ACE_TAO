@@ -6,14 +6,12 @@
 #include "ace/MEM_Stream.inl"
 #endif /* __ACE_INLINE__ */
 
-
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_MEM_Stream)
 
 void
-ACE_MEM_Stream::dump (void) const
+ACE_MEM_Stream::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_MEM_Stream::dump");
@@ -21,7 +19,7 @@ ACE_MEM_Stream::dump (void) const
 }
 
 int
-ACE_MEM_Stream::close (void)
+ACE_MEM_Stream::close ()
 {
   this->send ((char *)0, 0);
 

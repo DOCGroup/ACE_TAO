@@ -1,5 +1,5 @@
 // -*- MPC -*-
-project(TAO_IDL_BE) : acelib, conv_lib, tao_output, tao_vc8warnings, tao_idl_fe {
+project(TAO_IDL_BE) : acelib, install_lib, tao_rules, tao_output, tao_vc8warnings, tao_idl_fe {
   sharedname   = TAO_IDL_BE
   dynamicflags += TAO_IDL_BE_BUILD_DLL
   includes    += $(TAO_ROOT)
@@ -35,6 +35,7 @@ project(TAO_IDL_BE) : acelib, conv_lib, tao_output, tao_vc8warnings, tao_idl_fe 
       be/be_visitor_operation
       be/be_visitor_root
       be/be_visitor_sequence
+      be/be_visitor_map
       be/be_visitor_structure
       be/be_visitor_structure_fwd
       be/be_visitor_typecode
@@ -53,7 +54,7 @@ project(TAO_IDL_BE) : acelib, conv_lib, tao_output, tao_vc8warnings, tao_idl_fe 
   }
 }
 
-project(TAO_IDL_BE_VIS_A) : acelib, conv_lib, tao_output, tao_vc8warnings, tao_idl_fe {
+project(TAO_IDL_BE_VIS_A) : acelib, install_lib, tao_rules, tao_output, tao_vc8warnings, tao_idl_fe {
   sharedname   = TAO_IDL_BE_VIS_A
   dynamicflags += TAO_IDL_BE_BUILD_DLL
   after       += TAO_IDL_BE
@@ -82,7 +83,7 @@ project(TAO_IDL_BE_VIS_A) : acelib, conv_lib, tao_output, tao_vc8warnings, tao_i
   }
 }
 
-project(TAO_IDL_BE_VIS_C) : acelib, conv_lib, tao_output, tao_vc8warnings, tao_idl_fe {
+project(TAO_IDL_BE_VIS_C) : acelib, install_lib, tao_rules, tao_output, tao_vc8warnings, tao_idl_fe {
   sharedname   = TAO_IDL_BE_VIS_C
   dynamicflags += TAO_IDL_BE_BUILD_DLL
   after       += TAO_IDL_BE_VIS_A
@@ -112,7 +113,7 @@ project(TAO_IDL_BE_VIS_C) : acelib, conv_lib, tao_output, tao_vc8warnings, tao_i
   }
 }
 
-project(TAO_IDL_BE_VIS_E) : acelib, conv_lib, tao_output, tao_vc8warnings, tao_idl_fe {
+project(TAO_IDL_BE_VIS_E) : acelib, install_lib, tao_rules, tao_output, tao_vc8warnings, tao_idl_fe {
   sharedname   = TAO_IDL_BE_VIS_E
   dynamicflags += TAO_IDL_BE_BUILD_DLL
   after       += TAO_IDL_BE_VIS_C
@@ -142,7 +143,7 @@ project(TAO_IDL_BE_VIS_E) : acelib, conv_lib, tao_output, tao_vc8warnings, tao_i
   }
 }
 
-project(TAO_IDL_BE_VIS_I) : acelib, conv_lib, tao_output, tao_vc8warnings, tao_idl_fe {
+project(TAO_IDL_BE_VIS_I) : acelib, install_lib, tao_rules, tao_output, tao_vc8warnings, tao_idl_fe {
   sharedname   = TAO_IDL_BE_VIS_I
   dynamicflags += TAO_IDL_BE_BUILD_DLL
   after       += TAO_IDL_BE_VIS_E
@@ -172,7 +173,7 @@ project(TAO_IDL_BE_VIS_I) : acelib, conv_lib, tao_output, tao_vc8warnings, tao_i
   }
 }
 
-project(TAO_IDL_BE_VIS_O) : acelib, conv_lib, tao_output, tao_vc8warnings, tao_idl_fe {
+project(TAO_IDL_BE_VIS_O) : acelib, install_lib, tao_rules, tao_output, tao_vc8warnings, tao_idl_fe {
   sharedname   = TAO_IDL_BE_VIS_O
   dynamicflags += TAO_IDL_BE_BUILD_DLL
   after       += TAO_IDL_BE_VIS_I
@@ -200,7 +201,7 @@ project(TAO_IDL_BE_VIS_O) : acelib, conv_lib, tao_output, tao_vc8warnings, tao_i
   }
 }
 
-project(TAO_IDL_BE_VIS_S) : acelib, conv_lib, tao_output, tao_vc8warnings, tao_idl_fe {
+project(TAO_IDL_BE_VIS_S) : acelib, install_lib, tao_rules, tao_output, tao_vc8warnings, tao_idl_fe {
   sharedname   = TAO_IDL_BE_VIS_S
   dynamicflags += TAO_IDL_BE_BUILD_DLL
   after       += TAO_IDL_BE_VIS_O
@@ -219,6 +220,7 @@ project(TAO_IDL_BE_VIS_S) : acelib, conv_lib, tao_output, tao_vc8warnings, tao_i
   Source_Files {
     conditional(prop:static) {
       be/be_visitor_sequence
+      be/be_visitor_map
       be/be_visitor_structure
       be/be_visitor_structure_fwd
       be/be_visitor_typecode
@@ -231,7 +233,7 @@ project(TAO_IDL_BE_VIS_S) : acelib, conv_lib, tao_output, tao_vc8warnings, tao_i
   }
 }
 
-project(TAO_IDL_BE_VIS_U) : acelib, conv_lib, tao_output, tao_vc8warnings, tao_idl_fe {
+project(TAO_IDL_BE_VIS_U) : acelib, install_lib, tao_rules, tao_output, tao_vc8warnings, tao_idl_fe {
   sharedname   = TAO_IDL_BE_VIS_U
   dynamicflags += TAO_IDL_BE_BUILD_DLL
   after       += TAO_IDL_BE_VIS_S
@@ -260,7 +262,7 @@ project(TAO_IDL_BE_VIS_U) : acelib, conv_lib, tao_output, tao_vc8warnings, tao_i
   }
 }
 
-project(TAO_IDL_BE_VIS_V) : acelib, conv_lib, tao_output, tao_vc8warnings, tao_idl_fe {
+project(TAO_IDL_BE_VIS_V) : acelib, install_lib, tao_rules, tao_output, tao_vc8warnings, tao_idl_fe {
   sharedname   = TAO_IDL_BE_VIS_V
   dynamicflags += TAO_IDL_BE_BUILD_DLL
   after       += TAO_IDL_BE_VIS_U
@@ -278,10 +280,10 @@ project(TAO_IDL_BE_VIS_V) : acelib, conv_lib, tao_output, tao_vc8warnings, tao_i
 
   Source_Files {
     conditional(prop:static) {
-    be/be_visitor_valuebox
-    be/be_visitor_valuetype
-    be/be_visitor_valuetype_fwd
-  }
+      be/be_visitor_valuebox
+      be/be_visitor_valuetype
+      be/be_visitor_valuetype_fwd
+    }
   }
 
   Header_Files {

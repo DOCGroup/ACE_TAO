@@ -28,7 +28,7 @@ class Supplier : public POA_CosEventComm::PushSupplier
 {
 public:
   /// Constructor
-  Supplier (void);
+  Supplier ();
 
   /// Run the test
   int run (int argc, ACE_TCHAR* argv[]);
@@ -36,7 +36,7 @@ public:
   // = The CosEventComm::PushSupplier methods
 
   /// The skeleton methods.
-  virtual void disconnect_push_supplier (void);
+  virtual void disconnect_push_supplier ();
 
 private:
 };

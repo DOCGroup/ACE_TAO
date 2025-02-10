@@ -1,0 +1,51 @@
+typedef wchar wchar_t;
+const wchar wchar_const = L'u';
+union WcharUnion switch (wchar_t) {
+/* TODO: https://github.com/DOCGroup/ACE_TAO/issues/1284
+case L'\u0':
+  boolean b;
+*/
+case L'i':
+  int32 i32;
+case wchar_const:
+  uint32 u32;
+/* TODO: https://github.com/DOCGroup/ACE_TAO/issues/1284
+case L'\uffff':
+  string s;
+*/
+};
+
+typedef octet octet_t;
+const octet octet_const = 1;
+union OctetUnion switch (octet_t) {
+case 0:
+  octet a;
+case octet_const:
+  octet b;
+case 255:
+  octet c;
+};
+
+typedef uint8 uint8_t;
+const uint8 uint8_const = 1;
+union Uint8Union switch (uint8_t) {
+case 0:
+  uint8 a;
+case uint8_const:
+  uint8 b;
+case 255:
+  uint8 c;
+};
+
+typedef int8 int8_t;
+const int8 int8_const = 1;
+union Int8Union switch (int8_t) {
+case -128:
+  int8 a;
+case 0:
+  int8 b;
+case int8_const:
+  int8 c;
+case 127:
+  int8 d;
+};

@@ -28,17 +28,17 @@
  * A template server definition. This template can be used by
  * single server/client projects for definition of their
  * server/clients.  See the directories time, bank, echo for
- * further details of implemenatation.
+ * further details of implementation.
  */
 template <class Servant>
 class Server
 {
 public:
   /// Constructor.
-  Server (void);
+  Server ();
 
   /// Destructor.
-  ~Server (void);
+  ~Server () = default;
 
   /// Initialize the Server state - parsing arguments and waiting.
   /// interface_name is the name used to register the Servant.
@@ -51,7 +51,7 @@ public:
   int register_name (const char *name);
 
   /// Run the orb.
-  int run (void);
+  int run ();
 
   /// Ignore this method if you are not testing the InterOperable
   /// Naming Service.
@@ -59,7 +59,7 @@ public:
 
 private:
   /// Parses the commandline arguments.
-  int parse_args (void);
+  int parse_args ();
 
   /// A holder of the servant that does ref counting for him.
   typedef TAO_Intrusive_Ref_Count_Handle<Servant> Servant_var;
@@ -102,10 +102,10 @@ class Client
 {
 public:
   /// Constructor.
-  Client (void);
+  Client ();
 
   /// Destructor.
-  ~Client (void);
+  ~Client ();
 
   /// Initialize the client communication endpoint with server.
   int init (const char *name, int argc, ACE_TCHAR *argv[]);
@@ -114,7 +114,7 @@ public:
   ServerInterface *operator-> () { return server_.in (); }
 
   /// Returns the shutdown flag.
-  int do_shutdown (void);
+  int do_shutdown ();
 
   /// Fills in the shutdwon flag.
   void do_shutdown (int);
@@ -122,7 +122,7 @@ public:
   /// Initialize naming service
   int obtain_initial_references (const char *name);
 
-  CORBA::ORB_ptr orb (void)
+  CORBA::ORB_ptr orb ()
     {
       return CORBA::ORB::_duplicate (this->orb_.in ());
     }
@@ -132,7 +132,7 @@ private:
   int read_ior (ACE_TCHAR *filename);
 
   /// Parses the arguments passed on the command line.
-  int parse_args (void);
+  int parse_args ();
 
   /// Remember our orb.
   CORBA::ORB_var orb_;
@@ -141,10 +141,10 @@ private:
   TAO_Naming_Client naming_client_;
 
   /// # of arguments on the command line.
-  int argc_;
+  int argc_ {};
 
   /// arguments from command line.
-  ACE_TCHAR **argv_;
+  ACE_TCHAR **argv_ {};
 
   /// IOR of the obj ref of the server.
   ACE_CString ior_;
@@ -160,11 +160,6 @@ private:
   int do_shutdown_;
 };
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "Simple_util.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Simple_util.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #endif /* TAO_UTIL_H */

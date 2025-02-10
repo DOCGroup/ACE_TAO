@@ -17,7 +17,7 @@ TAO_On_Demand_Fragmentation_Strategy::TAO_On_Demand_Fragmentation_Strategy (
 }
 
 TAO_On_Demand_Fragmentation_Strategy::~TAO_On_Demand_Fragmentation_Strategy (
-  void)
+  )
 {
 }
 
@@ -27,7 +27,7 @@ TAO_On_Demand_Fragmentation_Strategy::fragment (
   ACE_CDR::ULong pending_alignment,
   ACE_CDR::ULong pending_length)
 {
-  if (this->transport_ == 0)
+  if (this->transport_ == nullptr)
     return 0;  // No transport.  Can't fragment.
 
   TAO_GIOP_Message_Version giop_version;
@@ -80,7 +80,7 @@ TAO_On_Demand_Fragmentation_Strategy::fragment (
       // bit.
       if (this->transport_->send_message (cdr,
                                           cdr.stub (),
-                                          0,
+                                          nullptr,
                                           cdr.message_semantics (),
                                           cdr.timeout ()) == -1
 

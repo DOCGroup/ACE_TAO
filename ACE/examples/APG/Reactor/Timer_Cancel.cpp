@@ -19,7 +19,6 @@ public:
                 ACE_OS::ctime(&epoch)));
     return 0;
   }
-
 };
 
 #if !defined (ACE_LACKS_UNIX_SIGNALS)
@@ -35,9 +34,7 @@ public:
   {
   }
 
-  int handle_signal (int sig,
-                     siginfo_t * = 0,
-                     ucontext_t * = 0)
+  int handle_signal (int sig, siginfo_t * = 0, ucontext_t * = 0)
   {
     if (sig == SIGINT)
       {

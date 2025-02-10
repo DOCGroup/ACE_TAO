@@ -27,7 +27,7 @@ class be_visitor_home_exh : public be_visitor_scope
 public:
   be_visitor_home_exh (be_visitor_context *ctx);
 
-  ~be_visitor_home_exh (void);
+  ~be_visitor_home_exh ();
 
   virtual int visit_home (be_home *node);
   virtual int visit_operation (be_operation *node);
@@ -41,9 +41,9 @@ public:
                                   TAO_OutStream *);
 
 private:
-  int gen_exec_class (void);
+  int gen_exec_class ();
 
-  void gen_entrypoint (void);
+  void gen_entrypoint ();
 
 private:
   be_home *node_;

@@ -18,12 +18,12 @@ Base_Server::Base_Server (int &argc, ACE_TCHAR **argv)
 {
 }
 
-Base_Server::~Base_Server (void)
+Base_Server::~Base_Server ()
 {
 }
 
 int
-Base_Server::parse_args (void)
+Base_Server::parse_args ()
 {
   // *** To get correct behaviour, set ** POSIXLY_CORECT=1 ** on Linux
   // systems!!! ***
@@ -64,7 +64,7 @@ Base_Server::parse_args (void)
 }
 
 void
-Base_Server::try_RT_scheduling (void)
+Base_Server::try_RT_scheduling ()
 {
   int priority =
     (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO)
@@ -72,7 +72,7 @@ Base_Server::try_RT_scheduling (void)
   priority = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO,
                                               priority);
 
-  // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
+  // Enable FIFO scheduling
   if (ACE_OS::sched_params (ACE_Sched_Params (ACE_SCHED_FIFO,
                                               priority,
                                               ACE_SCOPE_PROCESS)) != 0)
@@ -90,7 +90,7 @@ Base_Server::try_RT_scheduling (void)
 }
 
 int
-Base_Server::shutdown_orb_and_poa (void)
+Base_Server::shutdown_orb_and_poa ()
 {
   try
     {
@@ -112,7 +112,7 @@ Base_Server::shutdown_orb_and_poa (void)
 }
 
 int
-Base_Server::start_orb_and_poa (void)
+Base_Server::start_orb_and_poa ()
 {
   try
     {
@@ -165,7 +165,7 @@ Base_Server::register_servant (AMH_Servant *servant)
 
 
 void
-Base_Server::run_event_loop (void)
+Base_Server::run_event_loop ()
 {
   try
     {

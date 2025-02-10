@@ -477,7 +477,7 @@ sub scale_test
     }
 
     print "Stopping servers\n";
-    do_ti_command (0, $srv_count, 1, "shutdown", "-q" );
+    do_ti_command (0, $srv_count, 1, "shutdown", "-q");
     wait_for_servers ();
 
     my $test_time = time() - $start_time;

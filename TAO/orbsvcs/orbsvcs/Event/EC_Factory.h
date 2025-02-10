@@ -67,8 +67,8 @@ class TAO_RTEvent_Serv_Export TAO_EC_Factory : public ACE_Service_Object
 {
 public:
   /// destructor...
-  TAO_EC_Factory (void);
-  virtual ~TAO_EC_Factory (void);
+  TAO_EC_Factory ();
+  virtual ~TAO_EC_Factory ();
 
   /// Create and destroy the dispatching module.
   virtual TAO_EC_Dispatching*
@@ -144,9 +144,9 @@ public:
 
   /// Create and destroy the locking strategies for both
   /// ProxyPushConsumers and ProxyPushSuppliers
-  virtual ACE_Lock* create_consumer_lock (void) = 0;
+  virtual ACE_Lock* create_consumer_lock () = 0;
   virtual void destroy_consumer_lock (ACE_Lock*) = 0;
-  virtual ACE_Lock* create_supplier_lock (void) = 0;
+  virtual ACE_Lock* create_supplier_lock () = 0;
   virtual void destroy_supplier_lock (ACE_Lock*) = 0;
 
   /// The ConsumerControl and SupplierControl strategies are used to

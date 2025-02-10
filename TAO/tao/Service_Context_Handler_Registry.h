@@ -35,7 +35,7 @@ class TAO_Export TAO_Service_Context_Registry
   public:
     /// Destructor
 
-    ~TAO_Service_Context_Registry (void);
+    ~TAO_Service_Context_Registry ();
 
     /**
      * Bind a new entry in the registry

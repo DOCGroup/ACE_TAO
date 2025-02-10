@@ -59,13 +59,12 @@ namespace TAO
     LocateRequest_Invocation_Adapter (CORBA::Object_ptr target);
 
     /// Start the invocation on the target
-    void invoke (void);
+    void invoke ();
 
     /// Accessor to the inconsistent policy list
-    CORBA::PolicyList *get_inconsistent_policies (void);
+    CORBA::PolicyList *get_inconsistent_policies ();
 
   private:
-
     bool get_timeout (ACE_Time_Value &val);
 
     /// Helper method that takes care of setting the profiles within

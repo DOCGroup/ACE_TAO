@@ -48,27 +48,22 @@
 // Counting_Service and Options in here
 #include "Process_Strategy_Test.h"
 
-// This test does not function properly when fork() is used on HP-UX
-#if defined(__hpux)
-#define ACE_LACKS_FORK
-#endif /* __hpux */
-
 ACE_SINGLETON_TEMPLATE_INSTANTIATE(ACE_Singleton, Options, ACE_Null_Mutex);
 
 // Define a <Strategy_Acceptor> that's parameterized by the
 // <Counting_Service>.
 
-typedef ACE_Strategy_Acceptor <Counting_Service, ACE_SOCK_ACCEPTOR> ACCEPTOR;
+using ACCEPTOR = ACE_Strategy_Acceptor<Counting_Service, ACE_SOCK_Acceptor>;
 
 // Create an Options Singleton.
-typedef ACE_Singleton<Options, ACE_Null_Mutex> OPTIONS;
+using OPTIONS = ACE_Singleton<Options, ACE_Null_Mutex>;
 
 // counter for connections
 static size_t connections = 0;
 
 // Use this to show down the process gracefully.
 void
-connection_completed (void)
+connection_completed ()
 {
   // Increment connection counter.
   ++connections;
@@ -93,7 +88,7 @@ Process_Strategy::Process_Strategy (size_t n_processes,
 
 // Destructor.  g++ 2.7.2.3 gets very confused ("Internal compiler
 // error") without it.
-Process_Strategy::~Process_Strategy (void)
+Process_Strategy::~Process_Strategy ()
 {
 }
 
@@ -115,24 +110,24 @@ Process_Strategy::activate_svc_handler (Counting_Service *svc_handler,
 }
 
 ACE_File_Lock &
-Options::file_lock (void)
+Options::file_lock ()
 {
   return this->file_lock_;
 }
 
 ACE_Concurrency_Strategy <Counting_Service> *
-Options::concurrency_strategy (void)
+Options::concurrency_strategy ()
 {
   return this->concurrency_strategy_;
 }
 
 const ACE_TCHAR *
-Options::filename (void)
+Options::filename ()
 {
   return this->filename_;
 }
 
-Options::Options (void)
+Options::Options ()
   :
   // Choose to use processes by default.
 #if !defined (ACE_LACKS_FORK)
@@ -145,7 +140,7 @@ Options::Options (void)
 {
 }
 
-Options::~Options (void)
+Options::~Options ()
 {
   delete this->concurrency_strategy_;
 }
@@ -261,7 +256,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 Options::Concurrency_Type
-Options::concurrency_type (void)
+Options::concurrency_type ()
 {
   return this->concurrency_type_;
 }
@@ -282,7 +277,7 @@ Counting_Service::Counting_Service (ACE_Thread_Manager *)
 // client.
 
 int
-Counting_Service::read (void)
+Counting_Service::read ()
 {
   ACE_READ_GUARD_RETURN (ACE_File_Lock, ace_mon, OPTIONS::instance ()->file_lock (), -1);
 
@@ -317,7 +312,7 @@ Counting_Service::read (void)
 // Increment the current value in the shared file by 1.
 
 int
-Counting_Service::inc (void)
+Counting_Service::inc ()
 {
   ACE_WRITE_GUARD_RETURN (ACE_File_Lock, ace_mon,
                           OPTIONS::instance ()->file_lock (), -1);
@@ -361,13 +356,6 @@ Counting_Service::handle_input (ACE_HANDLE)
 {
   char buf[BUFSIZ];
   ACE_Time_Value* timeout = 0;
-#if defined (__hpux)
-  // Even though we're in handle_input, there seems to be a
-  // situation on HP-UX where there is nothing to recv just yet.
-  // So, we recv() with a timeout and everything works.
-  ACE_Time_Value hpux_timeout (3);
-  timeout = &hpux_timeout;
-#endif /* __hpux */
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P|%t) reading from peer on %d\n"),
@@ -409,7 +397,7 @@ Counting_Service::handle_input (ACE_HANDLE)
 }
 
 int
-Counting_Service::svc (void)
+Counting_Service::svc ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P|%t) handling thread\n")));
@@ -605,7 +593,7 @@ client (void *arg)
 // Have all connections been serviced?
 
 int
-done (void)
+done ()
 {
   return connections == ACE_MAX_ITERATIONS + 1;
 }

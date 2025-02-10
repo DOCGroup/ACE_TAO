@@ -41,7 +41,7 @@ namespace TAO_Notify
   }
 
   void
-  XML_Saver::close (void)
+  XML_Saver::close ()
   {
     if (this->close_out_ && this->output_ != 0)
     {

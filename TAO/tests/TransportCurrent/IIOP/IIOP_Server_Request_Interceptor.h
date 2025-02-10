@@ -27,18 +27,16 @@
 
 namespace Test
 {
-
   class IIOP_Server_Request_Interceptor
     : public virtual Test::Server_Request_Interceptor
     , public virtual ::CORBA::LocalObject
   {
   public:
-
     /// Constructor.
     IIOP_Server_Request_Interceptor (const char* orbid, TEST test);
 
     /// Destructor.
-    virtual ~IIOP_Server_Request_Interceptor ();
+    virtual ~IIOP_Server_Request_Interceptor () = default;
 
     /// queries the status of the test
     virtual bool self_test ();
@@ -53,7 +51,7 @@ namespace Test
      */
     //@{
     /// Return the name of this ServerRequestinterceptor.
-    virtual char * name (void);
+    virtual char * name ();
 
     /// incomming interception point
     virtual void receive_request_service_contexts (PortableInterceptor::ServerRequestInfo_ptr);
@@ -69,7 +67,6 @@ namespace Test
     //@}
 
   protected:
-
     /// process incomming requests context
     void inbound_process_context
     (PortableInterceptor::ServerRequestInfo_ptr ri);
@@ -87,7 +84,6 @@ namespace Test
     TAO::Transport::IIOP::Current_ptr resolve_iiop_transport_current (const char* orbid);
 
   private:
-
     /// transport ID dtata structure
     typedef struct EP {
       CORBA::UShort port_;
@@ -112,21 +108,15 @@ namespace Test
       {
         return !(this->operator== (ep));
       };
-
     } EndPoint;
 
   private:
-
     /// IIOPTraits test status
     bool iiop_test_successful_;
-
-    /// Multi-threaded test status
-    bool mult_thr_test_successful_;
 
     /// Endpoints hash table
     EndPoint endPoints_[1001];
   };
-
 } // namespace Test
 
 #endif  /* ISERVER_REQUEST_INTERCEPTOR_H */

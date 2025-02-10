@@ -147,7 +147,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     constraints[0].constraint_expr = CORBA::string_dup(
       "$data == 1 or $data == 2 or $data == 4");
 
-    filter->add_constraints(constraints);
+    CosNotifyFilter::ConstraintInfoSeq_var cons_info = filter->add_constraints(constraints);
 
     pps->add_filter(filter.in());
 

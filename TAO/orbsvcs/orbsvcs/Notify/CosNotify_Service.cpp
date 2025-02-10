@@ -13,11 +13,11 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_CosNotify_Service::TAO_CosNotify_Service (void)
+TAO_CosNotify_Service::TAO_CosNotify_Service ()
 {
 }
 
-TAO_CosNotify_Service::~TAO_CosNotify_Service (void)
+TAO_CosNotify_Service::~TAO_CosNotify_Service ()
 {
 }
 
@@ -292,7 +292,7 @@ TAO_CosNotify_Service::set_threads (CosNotification::QoSProperties &qos, int thr
 }
 
 int
-TAO_CosNotify_Service::fini (void)
+TAO_CosNotify_Service::fini ()
 {
   if (TAO_Notify_PROPERTIES::instance()->separate_dispatching_orb())
     {
@@ -331,7 +331,6 @@ TAO_CosNotify_Service::init_service (CORBA::ORB_ptr orb)
         }
 
       this->init_i2 (orb, TAO_Notify_PROPERTIES::instance()->dispatching_orb());
-
     }
   else
     {
@@ -449,7 +448,7 @@ TAO_CosNotify_Service::init_i2 (CORBA::ORB_ptr orb, CORBA::ORB_ptr dispatching_o
 }
 
 TAO_Notify_Factory*
-TAO_CosNotify_Service::create_factory (void)
+TAO_CosNotify_Service::create_factory ()
 {
   TAO_Notify_Factory* factory = ACE_Dynamic_Service<TAO_Notify_Factory>::instance ("TAO_Notify_Factory");
   if (factory == 0)
@@ -462,7 +461,7 @@ TAO_CosNotify_Service::create_factory (void)
 }
 
 TAO_Notify_Builder*
-TAO_CosNotify_Service::create_builder (void)
+TAO_CosNotify_Service::create_builder ()
 {
   TAO_Notify_Builder* builder = 0;
   ACE_NEW_THROW_EX (builder,
@@ -486,14 +485,14 @@ TAO_CosNotify_Service::remove (TAO_Notify_EventChannelFactory* /*ecf*/)
 }
 
 TAO_Notify_Factory&
-TAO_CosNotify_Service::factory (void)
+TAO_CosNotify_Service::factory ()
 {
   ACE_ASSERT( this->factory_.get() != 0 );
   return *this->factory_;
 }
 
 TAO_Notify_Builder&
-TAO_CosNotify_Service::builder (void)
+TAO_CosNotify_Service::builder ()
 {
   ACE_ASSERT( this->builder_.get() != 0 );
   return *this->builder_;

@@ -1,0 +1,228 @@
+commit 11fa72370c0df47e0d2195955585f70b7b1d8dde
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 17 10:04:18 2020 +0200
+
+    ACE+TAO-6_5_11
+
+commit 7efc569616aa24652f316d6865fd92477b100f64
+Merge: ba59fafa3df 189d83abb52
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 13 18:43:34 2020 +0200
+
+    Merge pull request #1192 from jwillemsen/jwi-news
+    
+    List changes for next release
+
+commit 189d83abb521e09c430a423273ea74cfd90774da
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 13 17:06:46 2020 +0200
+
+    List TAO change
+    
+        * TAO/NEWS:
+
+commit bdd8646769bb0d8ae0b9b4c8f3bcc9b18ea84492
+Merge: acd0ae9e29a 49cc1db8abe
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 13 16:29:36 2020 +0200
+
+    Merge pull request #1184 from jwillemsen/jwi-exportop-628571
+    
+    Export TAO::ORB::default_svc_conf_entries so that it can be used according to t…
+
+commit 3f58c71fbc520ed1bd96c94cbdb43e911f924e0c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 13 13:53:22 2020 +0200
+
+    Extend default_svc_conf_entries documentation
+    
+        * TAO/tao/TAO_Internal.h:
+
+commit 7b58f9bc3ed08329f40f11f155cad3d7b8d1f2e4
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 13 13:16:48 2020 +0200
+
+    Fixed bugzilla 1214, only set the args which are set, makes it possible to only set one of directives
+    
+        * TAO/tao/TAO_Internal.cpp:
+
+commit f1f400942b2c70cd2dcf60af2102b89d4328290b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 13 11:36:05 2020 +0200
+
+    Export default_svc_conf_entries so that it can be used according to the documentation, fixes debian bug #628571
+    
+        * TAO/docs/configurations.html:
+        * TAO/tao/TAO_Internal.h:
+
+commit fa519f628c37c88aa3406a9f1100cfe599a3b392
+Merge: b9f92010342 c0359095a62
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Wed Aug 5 08:58:41 2020 -0500
+
+    Merge pull request #1165 from knutpett/eval_memory
+    
+    TAO_IDL: Memory management for eval
+
+commit 570bea802eb8bfaa66f21dd3a3f42b0dd2a10e6f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jul 31 10:41:28 2020 +0200
+
+    Reducen indent
+
+commit 80276cca0df86f6f83834f13e7fce48230dac8fd
+Author: Kamil Sokolowski <ksokolowski95@gmail.com>
+Date:   Thu Jul 30 20:33:03 2020 +0200
+
+    removed trailing spaces
+
+commit 405c82f37cc0ed868d40c9ff01bc8178b1d9c7a5
+Author: Kamil Sokolowski <ksokolowski95@gmail.com>
+Date:   Thu Jul 30 17:59:53 2020 +0200
+
+    Added version check for deprecated function in OpenSSL 3.0
+
+commit c0359095a621b4a595691aab1b17b65d3880af40
+Author: Knut Petter Svendsen <knut@altuma.no>
+Date:   Thu Jul 30 15:55:38 2020 +0200
+
+    Remove the helper function pseudo_filename
+    
+    UTL_String does not have a copy constructor so we cannot return
+    a copy from the helper function. Reverted to how it was earlier.
+    It worked by accident on linux with gcc, but not with visual studio.
+
+commit c670c2326841ae7a23227b24fb38f6cc23452702
+Author: Knut Petter Svendsen <knut@altuma.no>
+Date:   Tue Jul 28 16:42:43 2020 +0200
+
+    Break lines and add const
+
+commit 376cb40d4c4870ac67670c3118320ec7863b654d
+Author: Knut P <knut@altuma.no>
+Date:   Tue Jul 28 16:14:40 2020 +0200
+
+    Update TAO/TAO_IDL/util/utl_global.cpp
+    
+    Co-authored-by: Adam Mitz <mitza@objectcomputing.com>
+
+commit d8003817d0127bced4269fc88465a86a841abcf9
+Author: Knut Petter Svendsen <knut@altuma.no>
+Date:   Tue Jul 28 13:04:40 2020 +0200
+
+    Fixup after review
+    
+    Fixed comments and improved some names.
+
+commit 91a7b0528ebeabb58d19e4875510973c613cce3c
+Author: Knut Petter Svendsen <knut@altuma.no>
+Date:   Mon Jul 27 16:30:21 2020 +0200
+
+    Remove code to provoke bug
+
+commit fcf42d47b9616baf47dc47db3cf15c8e6a13a25f
+Author: Knut Petter Svendsen <knut@altuma.no>
+Date:   Mon Jul 27 16:29:42 2020 +0200
+
+    OldState needs to work on a copy of idl_global->filename() to prevent segfault
+
+commit b15d36b9ac6d8028ae30039d1c961d01baf961bb
+Author: Knut Petter Svendsen <knut@altuma.no>
+Date:   Mon Jul 27 16:29:13 2020 +0200
+
+    Extract helper function
+
+commit 3bb51a2c0ea16829154344f8f5f74e4427bbe4a5
+Author: Knut Petter Svendsen <knut@altuma.no>
+Date:   Mon Jul 27 15:55:51 2020 +0200
+
+    Provoke bug in OldState helper class
+    
+    OldState helper class has a bug related to memory handling.
+    old_filename should take a copy of idl_global->file_name ()
+    since set_filename() destroys the old value.
+    
+    The problem surfaces if OldState is instanciated multiple times.
+    This can happen if the code calling on IDL_GlobalData::eval()
+    has a similar mechanism as OldState.
+
+commit ade2a4b9b6726bcaa788947080905a072a5dfed6
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Jul 19 10:15:21 2020 +0200
+
+    Reduce amount of statics generated, just generate the count directly.
+    
+        * TAO/TAO_IDL/be/be_visitor_operation/ami_handler_reply_stub_operation_cs.cpp:
+        * TAO/TAO_IDL/be/be_visitor_operation/exceptlist_ss.cpp:
+        * TAO/TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
+
+commit d71083edb72d0c9f14927eb2e7fc6726e80ad74f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jul 9 14:11:24 2020 +0200
+
+    Generate constants directly in the code where used instead of static consts
+    
+        * TAO/TAO_IDL/be/be_visitor_operation/exceptlist_ss.cpp:
+        * TAO/TAO_IDL/be/be_visitor_operation/operation_ss.cpp:
+
+commit e12455c59d999fc6706194e6e2223837ee224a8d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jul 1 12:28:04 2020 +0200
+
+    Fixed parameter not used warning
+    
+        * TAO/tao/CDR.h:
+
+commit 037fcd8b25dbbe9a5b57ff5a59a9d1c7ca2ee07c
+Merge: 8cc0b1f3410 bd23b03031b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jul 1 11:13:06 2020 +0200
+
+    Merge pull request #1150 from jwillemsen/jwi-doxygenup
+    
+    Upgrade all doxygen configuration files to latest version
+
+commit 8cc0b1f34106e692404198d5b4a16e5b5ca86684
+Merge: 0cce89f364e f20acf19c37
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jul 1 11:12:44 2020 +0200
+
+    Merge pull request #1148 from jwillemsen/jwi-iorman
+    
+    Layout and doxygen changes
+
+commit bd23b03031b3cdda2f9d58b24ba133028b46cbb2
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jul 1 10:00:11 2020 +0200
+
+    Upgrade all doxygen configuration files to latest version
+
+commit 9196f33769b5b74d6b5710c24a8013769c66dd10
+Merge: abde397eed9 d388f1d41d4
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jul 1 09:57:42 2020 +0200
+
+    Merge branch 'master' into jwi-acetaox510
+
+commit f20acf19c37678e792335427a5fb8f97ba9545bf
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jun 30 12:16:41 2020 +0200
+
+    Layout and doxygen changes
+    
+        * TAO/tao/IORManipulation/IOR.pidl:
+        * TAO/tao/IORManipulation/IORManipulation.cpp:
+        * TAO/tao/IORManipulation/IORManipulation.h:
+
+commit 34ea5c270d25eaa2dc58296494074b065a7cc35e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jun 26 13:59:51 2020 +0200
+
+    Make x.5.10 public available
+    
+        * ACE/NEWS:
+        * ACE/bin/diff-builds-and-group-fixed-tests-only.sh:
+        * ACE/docs/Download.html:
+        * ACE/docs/bczar/bczar.html:
+        * ACE/etc/index.html:
+        * TAO/NEWS:

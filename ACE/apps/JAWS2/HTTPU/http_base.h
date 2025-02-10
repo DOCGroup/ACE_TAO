@@ -15,9 +15,8 @@
 class HTTPU_Export HTTP_Base : public HTTP_SCode_Base
 {
 public:
-
-  HTTP_Base (void);
-  virtual ~HTTP_Base (void);
+  HTTP_Base ();
+  virtual ~HTTP_Base ();
 
   virtual int receive (ACE_Message_Block &mb);
   virtual int deliver (ACE_Message_Block &mb);
@@ -25,27 +24,26 @@ public:
   virtual int receive_payload (ACE_Message_Block &mb);
   virtual int receive_payload (ACE_Message_Block &mb, long length);
 
-  const char * payload (void);
-  unsigned long payload_size (void);
+  const char * payload ();
+  unsigned long payload_size ();
 
-  int status (void) const;
-  const char *line (void) const;
-  HTTP_Headers *http_headers (void);
-  JAWS_Headers *headers (void);
+  int status () const;
+  const char *line () const;
+  HTTP_Headers *http_headers ();
+  JAWS_Headers *headers ();
 
   int build_headers (JAWS_Headers *new_headers);
   // takes a set of new headers that will replace existing headers or
   // be added to the header list if there is no corresponding one to replace.
 
-  void dump (void);
+  void dump ();
 
 protected:
-
-  virtual void parse_line (void) = 0;
+  virtual void parse_line () = 0;
   // Hook into the receive function to do specialized parsing of initial line.
   // Sets the status_ variable.
 
-  virtual int espouse_line (void) = 0;
+  virtual int espouse_line () = 0;
   // Hook into the deliver function to do specialized initial line creation.
   // Returns 0 for success and -1 for failure.
 
@@ -61,7 +59,6 @@ protected:
   // Return 1 if line successfully parsed.
 
 protected:
-
   int status_;
   char *line_;
   int deliver_state_;
@@ -70,7 +67,6 @@ protected:
   JAWS_Header_Table_Iterator iter_;
   ACE_Message_Block *mb_;
   ACE_Message_Block payload_;
-
 };
 
 

@@ -13,6 +13,7 @@
 #endif /* __ACE_INLINE__ */
 
 #include "ace/os_include/os_netdb.h"
+#include <cstring>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -55,7 +56,7 @@ TAO_SHMIOP_Endpoint::TAO_SHMIOP_Endpoint (const char *host,
     this->host_ = host;
 }
 
-TAO_SHMIOP_Endpoint::TAO_SHMIOP_Endpoint (void)
+TAO_SHMIOP_Endpoint::TAO_SHMIOP_Endpoint ()
   : TAO_Endpoint (TAO_TAG_SHMEM_PROFILE)
     , host_ ()
     , port_ (0)
@@ -81,7 +82,7 @@ TAO_SHMIOP_Endpoint::TAO_SHMIOP_Endpoint (const char *host,
   this->priority (priority);
 }
 
-TAO_SHMIOP_Endpoint::~TAO_SHMIOP_Endpoint (void)
+TAO_SHMIOP_Endpoint::~TAO_SHMIOP_Endpoint ()
 {
 }
 
@@ -129,7 +130,7 @@ TAO_SHMIOP_Endpoint::addr_to_string (char *buffer, size_t length)
   size_t actual_len =
     ACE_OS::strlen (this->host_.in ()) // chars in host name
     + sizeof (':')                     // delimiter
-    + ACE_OS::strlen ("65536")         // max port
+    + std::strlen ("65536")         // max port
     + sizeof ('\0');
 
   if (length < actual_len)
@@ -150,13 +151,13 @@ TAO_SHMIOP_Endpoint::host (const char *h)
 }
 
 TAO_Endpoint *
-TAO_SHMIOP_Endpoint::next (void)
+TAO_SHMIOP_Endpoint::next ()
 {
   return this->next_;
 }
 
 TAO_Endpoint *
-TAO_SHMIOP_Endpoint::duplicate (void)
+TAO_SHMIOP_Endpoint::duplicate ()
 {
   TAO_SHMIOP_Endpoint *endpoint = 0;
   ACE_NEW_RETURN (endpoint,
@@ -185,7 +186,7 @@ TAO_SHMIOP_Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint)
 }
 
 CORBA::ULong
-TAO_SHMIOP_Endpoint::hash (void)
+TAO_SHMIOP_Endpoint::hash ()
 {
   if (this->hash_val_ != 0)
     return this->hash_val_;
@@ -207,7 +208,7 @@ TAO_SHMIOP_Endpoint::hash (void)
 }
 
 const ACE_INET_Addr &
-TAO_SHMIOP_Endpoint::object_addr (void) const
+TAO_SHMIOP_Endpoint::object_addr () const
 {
   // The object_addr_ is initialized here, rather than at IOR decode
   // time for several reasons:

@@ -10,18 +10,16 @@ class CSD_TP_Foo_B_Export Callback_i
                               : public virtual POA_Callback
 {
   public:
-
     Callback_i();
 
     virtual ~Callback_i();
 
-    virtual void test_method(void);
+    virtual void test_method();
 
     void gather_stats(Foo_B_Statistics& stats);
 
 
   private:
-
      unsigned num_callbacks_;
 };
 

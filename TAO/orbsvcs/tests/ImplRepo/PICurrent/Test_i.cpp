@@ -18,7 +18,7 @@ Test_i::Test_i (Terminator &terminator)
 }
 
 // Implementation skeleton destructor
-Test_i::~Test_i (void)
+Test_i::~Test_i ()
 {
 }
 

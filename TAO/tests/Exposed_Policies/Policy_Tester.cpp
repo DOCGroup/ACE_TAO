@@ -16,19 +16,8 @@
 #include "tao/ORB_Constants.h"
 #include "tao/ORB_Core.h"
 
-Policy_Tester::Policy_Tester (void)
-  : rt_object_properties_ (0),
-    rt_poa_properties_ (0)
-{
-  // No_Op
-}
-
-Policy_Tester::~Policy_Tester (void)
-{
-}
-
 void
-Policy_Tester::run (void)
+Policy_Tester::run ()
 {
   PortableServer::POAManager_var poa_manager =
     this->child_poa_->the_POAManager ();
@@ -127,7 +116,7 @@ Policy_Tester::check_reference (CORBA::Object_ptr object,
 
 
 int
-Policy_Tester::create_objects (void)
+Policy_Tester::create_objects ()
 {
   CORBA::PolicyList poa_policy_list;
   poa_policy_list.length (3);
@@ -255,7 +244,7 @@ Policy_Tester::create_objects (void)
 }
 
 void
-Policy_Tester::shutdown (void)
+Policy_Tester::shutdown ()
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

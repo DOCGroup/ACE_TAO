@@ -27,16 +27,16 @@ class be_visitor_component_ami_rh_ex_base
   //
 public:
   be_visitor_component_ami_rh_ex_base (be_visitor_context *ctx);
-  ~be_visitor_component_ami_rh_ex_base (void);
+  ~be_visitor_component_ami_rh_ex_base ();
 
   virtual int post_process (be_decl *node);
 
 protected:
-  void init (void);
+  void init ();
   void gen_excep_op (const char *prefix,
                      be_decl *node,
                      bool for_defn);
-  virtual void gen_op_body (void);
+  virtual void gen_op_body ();
   int gen_attr_op (be_attribute *node, bool for_defn);
 
 protected:

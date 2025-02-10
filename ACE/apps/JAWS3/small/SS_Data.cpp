@@ -8,19 +8,19 @@ TeraSS_Data::TeraSS_Data (TeraSS_Service_Handler *sh)
 }
 
 ACE_SOCK_Stream &
-TeraSS_Data::peer (void)
+TeraSS_Data::peer ()
 {
   return this->sh_->peer ();
 }
 
 ACE_Message_Block &
-TeraSS_Data::mb (void)
+TeraSS_Data::mb ()
 {
   return this->mb_;
 }
 
 ACE_FILE_IO &
-TeraSS_Data::file_io (void)
+TeraSS_Data::file_io ()
 {
   return this->file_io_;
 }

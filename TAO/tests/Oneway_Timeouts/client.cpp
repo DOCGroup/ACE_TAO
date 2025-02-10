@@ -301,7 +301,6 @@ namespace
   }
 
 
-
 void reset_buffering (ORB_ptr orb)
 {
   Object_var obj = orb->resolve_initial_references ("PolicyCurrent");
@@ -321,7 +320,6 @@ void reset_buffering (ORB_ptr orb)
 
 int ACE_TMAIN (int ac, ACE_TCHAR *av[])
 {
-
   ACE_Time_Value before = ACE_High_Res_Timer::gettimeofday_hr ();
 
   int num_requests_sent = 0;
@@ -494,7 +492,7 @@ int ACE_TMAIN (int ac, ACE_TCHAR *av[])
           tmp_tester->test2 (-1);
         }
 
-      orb->shutdown (1);
+      orb->shutdown (true);
 
       orb->destroy ();
 
@@ -514,7 +512,7 @@ int ACE_TMAIN (int ac, ACE_TCHAR *av[])
         {
           ACE_Time_Value after = ACE_High_Res_Timer::gettimeofday_hr ();
           long ms = (after - before).msec ();
-          if ( (use_twoway || !use_sync_scope)
+          if ((use_twoway || !use_sync_scope)
               && request_timeout > 0
               && request_timeout < connect_timeout)
             {
@@ -553,7 +551,7 @@ int ACE_TMAIN (int ac, ACE_TCHAR *av[])
         {
           ACE_Time_Value after = ACE_High_Res_Timer::gettimeofday_hr ();
           long ms = (after - before).msec ();
-          if ( (use_twoway || !use_sync_scope)
+          if ((use_twoway || !use_sync_scope)
               && request_timeout > 0
               && request_timeout < connect_timeout)
             {

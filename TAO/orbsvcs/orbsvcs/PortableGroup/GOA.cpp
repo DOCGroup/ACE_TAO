@@ -9,8 +9,6 @@
 #include "tao/Profile.h"
 #include "tao/CDR.h"
 
-#include "ace/Auto_Ptr.h"
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 PortableServer::ObjectId *
@@ -82,7 +80,7 @@ TAO_GOA::TAO_GOA (const TAO_Root_POA::String &name,
 {
 }
 
-TAO_GOA::~TAO_GOA (void)
+TAO_GOA::~TAO_GOA ()
 {
 }
 
@@ -211,7 +209,7 @@ TAO_GOA::create_request_processing_policy (PortableServer::RequestProcessingPoli
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
 char *
-TAO_GOA::the_name (void)
+TAO_GOA::the_name ()
 {
   char * name =
     this->TAO_Regular_POA::the_name ();
@@ -219,7 +217,7 @@ TAO_GOA::the_name (void)
 }
 
 PortableServer::POA_ptr
-TAO_GOA::the_parent (void)
+TAO_GOA::the_parent ()
 {
   PortableServer::POA_ptr parent =
     this->TAO_Regular_POA::the_parent ();
@@ -227,7 +225,7 @@ TAO_GOA::the_parent (void)
 }
 
 PortableServer::POAList *
-TAO_GOA::the_children (void)
+TAO_GOA::the_children ()
 {
   PortableServer::POAList *children =
     this->TAO_Regular_POA::the_children ();
@@ -235,7 +233,7 @@ TAO_GOA::the_children (void)
 }
 
 PortableServer::POAManager_ptr
-TAO_GOA::the_POAManager (void)
+TAO_GOA::the_POAManager ()
 {
   PortableServer::POAManager_ptr poa_manager =
     this->TAO_Regular_POA::the_POAManager ();
@@ -246,7 +244,7 @@ TAO_GOA::the_POAManager (void)
 #if (TAO_HAS_MINIMUM_POA == 0)
 
 PortableServer::AdapterActivator_ptr
-TAO_GOA::the_activator (void)
+TAO_GOA::the_activator ()
 {
   PortableServer::AdapterActivator_ptr activator =
     this->TAO_Regular_POA::the_activator ();
@@ -260,7 +258,7 @@ TAO_GOA::the_activator (PortableServer::AdapterActivator_ptr adapter_activator)
 }
 
 PortableServer::ServantManager_ptr
-TAO_GOA::get_servant_manager (void)
+TAO_GOA::get_servant_manager ()
 {
   PortableServer::ServantManager_ptr servant_manager =
     this->TAO_Regular_POA::get_servant_manager ();
@@ -274,7 +272,7 @@ TAO_GOA::set_servant_manager (PortableServer::ServantManager_ptr imgr)
 }
 
 PortableServer::Servant
-TAO_GOA::get_servant (void)
+TAO_GOA::get_servant ()
 {
   PortableServer::Servant servant =
     this->TAO_Regular_POA::get_servant ();
@@ -378,7 +376,7 @@ TAO_GOA::id_to_reference (const PortableServer::ObjectId &oid)
 }
 
 CORBA::OctetSeq *
-TAO_GOA::id (void)
+TAO_GOA::id ()
 {
   return this->TAO_Regular_POA::id ();
 }

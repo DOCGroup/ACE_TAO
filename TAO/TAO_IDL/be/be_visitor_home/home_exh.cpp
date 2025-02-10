@@ -13,14 +13,14 @@
 
 be_visitor_home_exh::be_visitor_home_exh (be_visitor_context *ctx)
   : be_visitor_scope (ctx),
-    node_ (0),
-    comp_ (0),
+    node_ (nullptr),
+    comp_ (nullptr),
     os_ (*ctx->stream ()),
     export_macro_ (be_global->exec_export_macro ())
 {
 }
 
-be_visitor_home_exh::~be_visitor_home_exh (void)
+be_visitor_home_exh::~be_visitor_home_exh ()
 {
 }
 
@@ -35,8 +35,7 @@ be_visitor_home_exh::visit_home (be_home *node)
   node_ = node;
   comp_ = node_->managed_component ();
 
-  /// CIDL-generated namespace used 'CIDL_' + composition name.
-  /// Now we use 'CIAO_' + component's flat name.
+  /// Use 'CIAO_' + component's flat name.
   os_ << be_nl_2
       << "namespace CIAO_" << comp_->flat_name () << "_Impl" << be_nl
       << "{" << be_idt;
@@ -99,7 +98,7 @@ be_visitor_home_exh::visit_factory (be_factory *node)
 }
 
 int
-be_visitor_home_exh::gen_exec_class (void)
+be_visitor_home_exh::gen_exec_class ()
 {
   // We don't want a '_cxx_' prefix here.
   const char *lname =
@@ -120,15 +119,15 @@ be_visitor_home_exh::gen_exec_class (void)
 
   os_ << be_nl
       << "/// Constructor" << be_nl
-      << lname << "_exec_i (void);";
+      << lname << "_exec_i ();";
 
   os_ << be_nl_2
       << "/// Destructor" << be_nl
-      << "virtual ~" << lname << "_exec_i (void);";
+      << "virtual ~" << lname << "_exec_i ();";
 
   be_home *h = node_;
 
-  while (h != 0)
+  while (h != nullptr)
     {
       if (this->visit_scope (h) != 0)
         {
@@ -144,7 +143,7 @@ be_visitor_home_exh::gen_exec_class (void)
           // A closure of all the supported interfaces is stored
           // in the base class 'pd_inherits_flat' member.
           be_interface *bi =
-            be_interface::narrow_from_decl (h->inherits ()[i]);
+            dynamic_cast<be_interface*> (h->inherits ()[i]);
 
           int status =
             bi->traverse_inheritance_graph (
@@ -163,14 +162,14 @@ be_visitor_home_exh::gen_exec_class (void)
             }
         }
 
-      h = be_home::narrow_from_decl (h->base_home ());
+      h = dynamic_cast<be_home*> (h->base_home ());
     }
 
   os_ << be_nl_2
       << "/// Factory method";
 
   os_ << be_nl
-      << "virtual ::Components::EnterpriseComponent_ptr create (void);";
+      << "virtual ::Components::EnterpriseComponent_ptr create ();";
 
   os_ << be_uidt_nl
       << "};";
@@ -179,14 +178,14 @@ be_visitor_home_exh::gen_exec_class (void)
 }
 
 void
-be_visitor_home_exh::gen_entrypoint (void)
+be_visitor_home_exh::gen_entrypoint ()
 {
   os_ << be_nl_2
       << "/// Factory method for " << node_->full_name () << be_nl
       << "extern \"C\" " << export_macro_.c_str ()
       << " ::Components::HomeExecutorBase_ptr" << be_nl
       << "create_" << node_->flat_name ()
-      << "_Impl (void);";
+      << "_Impl ();";
 }
 
 int

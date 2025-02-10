@@ -17,7 +17,7 @@ be_visitor_root_cnh::be_visitor_root_cnh (be_visitor_context *ctx)
 {
 }
 
-be_visitor_root_cnh::~be_visitor_root_cnh (void)
+be_visitor_root_cnh::~be_visitor_root_cnh ()
 {
 }
 
@@ -46,7 +46,7 @@ be_visitor_root_cnh::visit_root (be_root *node)
 }
 
 int
-be_visitor_root_cnh::init (void)
+be_visitor_root_cnh::init ()
 {
   // First open the client-side header file for writing.
   int status =

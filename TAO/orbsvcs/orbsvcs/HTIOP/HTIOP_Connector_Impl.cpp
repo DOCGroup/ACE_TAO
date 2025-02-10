@@ -15,7 +15,6 @@ Connect_Creation_Strategy (ACE_Thread_Manager* t,
     orb_core_ (orb_core),
     arg_ (arg)
 {
-
 }
 
 template <class SVC_HANDLER> int

@@ -27,14 +27,14 @@ Receiver::receive_data (const Test::Payload &payload)
 }
 
 CORBA::Long
-Receiver::get_event_count (void)
+Receiver::get_event_count ()
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, 0);
   return this->message_count_;
 }
 
 void
-Receiver::shutdown (void)
+Receiver::shutdown ()
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

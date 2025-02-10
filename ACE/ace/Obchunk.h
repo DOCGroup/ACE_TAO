@@ -36,10 +36,10 @@ public:
   ACE_Obchunk (size_t size);
 
   /// Dtor.
-  ~ACE_Obchunk (void);
+  ~ACE_Obchunk () = default;
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -65,10 +65,6 @@ public:
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
-
-#if defined (__ACE_INLINE__)
-#include "ace/Obchunk.inl"
-#endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_OBCHUNK_H */

@@ -3,7 +3,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_PG_Default_Property_Validator::TAO_PG_Default_Property_Validator (void)
+TAO_PG_Default_Property_Validator::TAO_PG_Default_Property_Validator ()
   : membership_ (1),
     factories_ (1)
 {
@@ -12,10 +12,6 @@ TAO_PG_Default_Property_Validator::TAO_PG_Default_Property_Validator (void)
 
   this->factories_.length (1);
   this->factories_[0].id = CORBA::string_dup ("org.omg.PortableGroup.Factories");
-}
-
-TAO_PG_Default_Property_Validator::~TAO_PG_Default_Property_Validator (void)
-{
 }
 
 void

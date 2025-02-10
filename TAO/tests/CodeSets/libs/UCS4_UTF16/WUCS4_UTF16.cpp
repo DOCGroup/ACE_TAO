@@ -54,9 +54,6 @@ static const unsigned long ACE_UTF16_RAW_END = 0x00010000LU;
 // largest value that can be represented in UTF16 + 1
 static const unsigned long ACE_UTF16_END = 0x00110000LU;
 
-// largest value that can be represented in UTF-32 + 1
-static const unsigned long ACE_UTF32_END = 0x80000000LU;
-
 static const unsigned short ACE_UNICODE_SUBSTITUTE_CHARACTER = 0xFFFDU;
 static const unsigned short ACE_UNICODE_BOM_CORRECT = 0xFEFFU;
 static const unsigned short ACE_UNICODE_BOM_SWAPPED = 0xFFFEU;
@@ -96,8 +93,7 @@ convert_surrogate_pair (ACE_UTF16_T high, ACE_UTF16_T low)
 {
   return static_cast<ACE_CDR::WChar> (((high - ACE_UTF16_SURROGATE_HIGH_BEGIN) << ACE_UTF16_SURROGATE_HIGH_SHIFT)
     + (low - ACE_UTF16_SURROGATE_LOW_BEGIN)
-    + ACE_UTF16_SURROGATE_OFFSET
-    );
+    + ACE_UTF16_SURROGATE_OFFSET);
 }
 
 /// load wchar from utf16 buffer
@@ -213,14 +209,12 @@ size_t count_potential_surrogates (
 /////////////////////////////
 // WUCS4_UTF16 implementation
 
-WUCS4_UTF16::WUCS4_UTF16 (void)
+WUCS4_UTF16::WUCS4_UTF16 ()
 {
-
 }
 
-WUCS4_UTF16::~WUCS4_UTF16 (void)
+WUCS4_UTF16::~WUCS4_UTF16 ()
 {
-
 }
 
 // = Documented in $ACE_ROOT/ace/CDR_Stream.h
@@ -270,7 +264,7 @@ WUCS4_UTF16::read_wchar (ACE_InputCDR &cdr, ACE_CDR::WChar &x)
             if (! this->read_2 (cdr, &low))
               {
                 cdr.reset_byte_order (old_bo);
-                return 0;;
+                return 0;
               }
             if (low < ACE_UTF16_SURROGATE_LOW_BEGIN
               || low >= ACE_UTF16_SURROGATE_LOW_END)
@@ -390,7 +384,6 @@ WUCS4_UTF16::read_wchar_array_i (ACE_InputCDR & cdr,
       return 1;
     }
   return 0;
-
 }
 
 

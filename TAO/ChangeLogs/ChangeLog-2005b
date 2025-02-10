@@ -12076,7 +12076,7 @@ Fri Aug 26 23:48:25 2005  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
         Fix for bug
 
-        http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=2224
+        http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=2224
 
         * tao/Client_Strategy_Factory.cpp:
         * tao/Client_Strategy_Factory.h:

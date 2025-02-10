@@ -54,7 +54,7 @@ class Worker : public ACE_Task_Base
 {
 public:
   Worker (CORBA::ORB_ptr);
-  virtual int svc (void);
+  virtual int svc ();
 
 private:
   // The ORB
@@ -71,7 +71,7 @@ Worker::Worker (CORBA::ORB_ptr orb)
 /// Test referencing the TC data *inside* the context of a client-side
 /// interceptor
 int
-Worker::svc (void)
+Worker::svc ()
 {
   try
     {
@@ -85,7 +85,6 @@ Worker::svc (void)
 }
 
 
-
 /// Main driver
 
 int
@@ -93,7 +92,6 @@ server_main (int argc,
              ACE_TCHAR *argv[],
              Test::Server_Request_Interceptor *cri)
 {
-
 #if TAO_HAS_TRANSPORT_CURRENT == 1
 
   try
@@ -195,7 +193,6 @@ server_main (int argc,
       server->shutdown ();
 
       orb->destroy ();
-
     }
   catch (const CORBA::Exception& ex)
     {

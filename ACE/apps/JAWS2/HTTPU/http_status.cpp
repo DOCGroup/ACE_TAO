@@ -53,19 +53,19 @@ HTTP_SCode::operator[] (int i) const
 }
 
 HTTP_SCode *
-HTTP_SCode::instance (void)
+HTTP_SCode::instance ()
 {
   return HTTP_SCode_Singleton::instance ();
 }
 
 void
-HTTP_SCode::dump (void)
+HTTP_SCode::dump ()
 {
   for (int i = 0; i < SC_TABLE_SIZE; i++)
     ACE_DEBUG ((LM_DEBUG, "%s\n", this->table_[i]));
 }
 
-HTTP_SCode::HTTP_SCode (void)
+HTTP_SCode::HTTP_SCode ()
 {
   int i;
   for (i = 0; i < SC_TABLE_SIZE; i++)
@@ -75,7 +75,7 @@ HTTP_SCode::HTTP_SCode (void)
     }
 }
 
-HTTP_SCode::~HTTP_SCode (void)
+HTTP_SCode::~HTTP_SCode ()
 {
 }
 

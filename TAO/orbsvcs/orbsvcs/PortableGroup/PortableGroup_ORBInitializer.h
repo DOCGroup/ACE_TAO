@@ -38,10 +38,9 @@ class TAO_PortableGroup_Export TAO_PortableGroup_ORBInitializer :
   public virtual ::CORBA::LocalObject
 {
 public:
-  virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info);
+  void pre_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 
-  virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info);
-
+  void post_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

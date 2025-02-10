@@ -1,6 +1,6 @@
 // -*- C++ -*-
 #include "test_i.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 A_i::A_i (CORBA::ORB_ptr orb,
           CORBA::ValueFactoryBase *vtp_factory)
@@ -149,7 +149,7 @@ A_i::arr_method (::Test::A::FailOn where,
 
   ::Test::arr_bd_str_slice *res =
     ::Test::arr_bd_str_alloc ();
-  ACE_Auto_Ptr< ::Test::arr_bd_str_slice> safe (res);
+  std::unique_ptr< ::Test::arr_bd_str_slice> safe (res);
 
   switch (where)
     {
@@ -184,7 +184,7 @@ A_i::arr_method_s (::Test::A::FailOn where,
 
   ::Test::arr_bds_str_slice *res =
     ::Test::arr_bds_str_alloc ();
-  ACE_Auto_Ptr< ::Test::arr_bds_str_slice > safe (res);
+  std::unique_ptr< ::Test::arr_bds_str_slice > safe (res);
 
   switch (where)
     {
@@ -452,5 +452,5 @@ A_i::exc_method (::Test::string_field f)
 void
 A_i::shutdown ()
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

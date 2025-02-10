@@ -12,7 +12,7 @@ ACE_FIFO::get_local_addr (const ACE_TCHAR *&r) const
 }
 
 ACE_INLINE int
-ACE_FIFO::remove (void)
+ACE_FIFO::remove ()
 {
   ACE_TRACE ("ACE_FIFO::remove");
   int const result = this->close ();

@@ -86,7 +86,6 @@ namespace TAO
     class Case_T : public Case<StringType, TypeCodeType>
     {
     public:
-
       /// Constructor.
       Case_T (DiscriminatorType member_label,
               char const * member_name,
@@ -108,20 +107,17 @@ namespace TAO
        * @see @c TAO::TypeCode::Case
        */
       //@{
-      Case<StringType, TypeCodeType> * clone (void) const;
-      virtual CORBA::Any * label (void) const;
+      Case<StringType, TypeCodeType> * clone () const;
+      virtual CORBA::Any * label () const;
       virtual bool marshal_label (TAO_OutputCDR & cdr) const;
       virtual bool equal_label (CORBA::ULong index,
                                 CORBA::TypeCode_ptr tc) const;
       //@}
 
     private:
-
       /// IDL @c union case/member label value.
       DiscriminatorType const label_;
-
     };
-
   }  // End namespace TypeCode
 }  // End namespace TAO
 
@@ -131,13 +127,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 # include "tao/AnyTypeCode/TypeCode_Case_T.inl"
 #endif /* __ACE_INLINE__ */
 
-#ifdef ACE_TEMPLATES_REQUIRE_SOURCE
-# include "tao/AnyTypeCode/TypeCode_Case_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#ifdef ACE_TEMPLATES_REQUIRE_PRAGMA
-# pragma implementation ("TypeCode_Case_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
+#include "tao/AnyTypeCode/TypeCode_Case_T.cpp"
 
 #include /**/ "ace/post.h"
 

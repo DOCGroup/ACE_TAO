@@ -15,7 +15,7 @@ TAO_Offer_Exporter (CosTrading::Lookup_ptr lookup_if,
   this->admin_ = lookup_if->admin_if ();
 }
 
-TAO_Offer_Exporter::~TAO_Offer_Exporter (void)
+TAO_Offer_Exporter::~TAO_Offer_Exporter ()
 {
   while (! this->clean_up_.is_empty ())
     {
@@ -26,7 +26,7 @@ TAO_Offer_Exporter::~TAO_Offer_Exporter (void)
 }
 
 void
-TAO_Offer_Exporter::export_offers (void)
+TAO_Offer_Exporter::export_offers ()
 {
   ACE_DEBUG ((LM_DEBUG, "*** TAO_Offer_Exporter::Exporting offers.\n"));
 
@@ -88,7 +88,7 @@ TAO_Offer_Exporter::export_to (CosTrading::Register_ptr reg)
 }
 
 void
-TAO_Offer_Exporter::export_offers_to_all (void)
+TAO_Offer_Exporter::export_offers_to_all ()
 {
   ACE_DEBUG ((LM_DEBUG, "*** TAO_Offer_Exporter::Exporting to all.\n"));
 
@@ -152,7 +152,7 @@ TAO_Offer_Exporter::export_offers_to_all (void)
 
 
 void
-TAO_Offer_Exporter::withdraw_offers (void)
+TAO_Offer_Exporter::withdraw_offers ()
 {
   ACE_DEBUG ((LM_DEBUG, "*** TAO_Offer_Exporter::Withdrawing all offers.\n"));
 
@@ -179,7 +179,7 @@ TAO_Offer_Exporter::withdraw_offers (void)
 }
 
 void
-TAO_Offer_Exporter::describe_offers (void)
+TAO_Offer_Exporter::describe_offers ()
 {
   ACE_DEBUG ((LM_DEBUG, "*** TAO_Offer_Exporter::Describing all offers.\n"));
 
@@ -218,7 +218,7 @@ TAO_Offer_Exporter::describe_offers (void)
 }
 
 void
-TAO_Offer_Exporter::modify_offers (void)
+TAO_Offer_Exporter::modify_offers ()
 {
   ACE_DEBUG ((LM_DEBUG, "*** TAO_Offer_Exporter::Modifying all offers.\n"));
 
@@ -257,7 +257,7 @@ TAO_Offer_Exporter::modify_offers (void)
 
 void
 TAO_Offer_Exporter::
-withdraw_offers_using_constraints (void)
+withdraw_offers_using_constraints ()
 {
   ACE_DEBUG ((LM_DEBUG, "*** TAO_Offer_Exporter::Withdrawing with constraint.\n"));
 
@@ -289,7 +289,7 @@ withdraw_offers_using_constraints (void)
 }
 
 CosTrading::OfferIdSeq*
-TAO_Offer_Exporter::grab_offerids (void)
+TAO_Offer_Exporter::grab_offerids ()
 {
   if (this->verbose_)
     ACE_DEBUG ((LM_DEBUG, "TAO_Offer_Exporter::Grabbing all offer ids.\n"));
@@ -350,7 +350,7 @@ TAO_Offer_Exporter::grab_offerids (void)
 }
 
 void
-TAO_Offer_Exporter::create_offers (void)
+TAO_Offer_Exporter::create_offers ()
 {
   ACE_DEBUG ((LM_DEBUG, "*** TAO_Offer_Exporter::Creating offers.\n"));
   const int QUEUE_SIZE = 4;

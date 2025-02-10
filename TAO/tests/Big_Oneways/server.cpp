@@ -171,7 +171,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
             }
 
           session_list[j]->start (other_sessions);
-
         }
 
       ACE_DEBUG ((LM_DEBUG ,"done\n"));
@@ -196,7 +195,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       for (j = 0; j != peer_count; ++j)
         {
           session_list[j]->destroy ();
-
         }
 
       ACE_DEBUG ((LM_DEBUG, "Shutdown all peers . . .\n"));
@@ -205,7 +203,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_OS::sleep (5); // Allow the shutdown message to be processed.
       ACE_DEBUG ((LM_DEBUG, "Shutdown poa and orb . . .\n"));
 
-      root_poa->destroy (1, 1);
+      root_poa->destroy (true, true);
 
       orb->destroy ();
     }

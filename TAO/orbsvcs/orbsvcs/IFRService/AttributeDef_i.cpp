@@ -3,7 +3,6 @@
 #include "orbsvcs/IFRService/IDLType_i.h"
 #include "orbsvcs/IFRService/ExceptionDef_i.h"
 #include "orbsvcs/IFRService/IFR_Service_Utils.h"
-#include "ace/Auto_Ptr.h"
 #include "ace/SString.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -14,18 +13,18 @@ TAO_AttributeDef_i::TAO_AttributeDef_i (TAO_Repository_i *repo)
 {
 }
 
-TAO_AttributeDef_i::~TAO_AttributeDef_i (void)
+TAO_AttributeDef_i::~TAO_AttributeDef_i ()
 {
 }
 
 CORBA::DefinitionKind
-TAO_AttributeDef_i::def_kind (void)
+TAO_AttributeDef_i::def_kind ()
 {
   return CORBA::dk_Attribute;
 }
 
 CORBA::Contained::Description *
-TAO_AttributeDef_i::describe (void)
+TAO_AttributeDef_i::describe ()
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
@@ -35,7 +34,7 @@ TAO_AttributeDef_i::describe (void)
 }
 
 CORBA::Contained::Description *
-TAO_AttributeDef_i::describe_i (void)
+TAO_AttributeDef_i::describe_i ()
 {
   CORBA::Contained::Description *desc_ptr = 0;
   ACE_NEW_THROW_EX (desc_ptr,
@@ -58,7 +57,7 @@ TAO_AttributeDef_i::describe_i (void)
 }
 
 CORBA::TypeCode_ptr
-TAO_AttributeDef_i::type (void)
+TAO_AttributeDef_i::type ()
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::TypeCode::_nil ());
 
@@ -68,7 +67,7 @@ TAO_AttributeDef_i::type (void)
 }
 
 CORBA::TypeCode_ptr
-TAO_AttributeDef_i::type_i (void)
+TAO_AttributeDef_i::type_i ()
 {
   ACE_TString type_path;
   this->repo_->config ()->get_string_value (this->section_key_,
@@ -83,7 +82,7 @@ TAO_AttributeDef_i::type_i (void)
 }
 
 CORBA::IDLType_ptr
-TAO_AttributeDef_i::type_def (void)
+TAO_AttributeDef_i::type_def ()
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::IDLType::_nil ());
 
@@ -93,7 +92,7 @@ TAO_AttributeDef_i::type_def (void)
 }
 
 CORBA::IDLType_ptr
-TAO_AttributeDef_i::type_def_i (void)
+TAO_AttributeDef_i::type_def_i ()
 {
   ACE_TString type_path;
   this->repo_->config ()->get_string_value (this->section_key_,
@@ -131,7 +130,7 @@ TAO_AttributeDef_i::type_def_i (CORBA::IDLType_ptr type_def)
 }
 
 CORBA::AttributeMode
-TAO_AttributeDef_i::mode (void)
+TAO_AttributeDef_i::mode ()
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::ATTR_NORMAL);
 
@@ -141,7 +140,7 @@ TAO_AttributeDef_i::mode (void)
 }
 
 CORBA::AttributeMode
-TAO_AttributeDef_i::mode_i (void)
+TAO_AttributeDef_i::mode_i ()
 {
   u_int mode = 0;
   this->repo_->config ()->get_integer_value (this->section_key_,
@@ -192,7 +191,7 @@ TAO_AttributeDef_i::make_description (
 }
 
 CORBA::ExceptionDefSeq *
-TAO_AttributeDef_i::get_exceptions (void)
+TAO_AttributeDef_i::get_exceptions ()
 {
   ACE_Unbounded_Queue<ACE_TString> path_queue;
   int index = 0;
@@ -263,7 +262,7 @@ TAO_AttributeDef_i::get_exceptions (void)
 }
 
 CORBA::ExceptionDefSeq *
-TAO_AttributeDef_i::put_exceptions (void)
+TAO_AttributeDef_i::put_exceptions ()
 {
   ACE_Unbounded_Queue<ACE_TString> path_queue;
   int index = 0;

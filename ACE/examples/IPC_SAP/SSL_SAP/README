@@ -1,5 +1,3 @@
-
-
 This directory contains groups of client and server test programs that
 exercise the various C++ wrappers for SSL sockets.  In general, the
 test programs do more or less the same thing -- the client establishes

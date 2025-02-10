@@ -23,7 +23,7 @@ be_visitor_executor_ami_exh::be_visitor_executor_ami_exh (
   export_macro_ = be_global->conn_export_macro ();
 }
 
-be_visitor_executor_ami_exh::~be_visitor_executor_ami_exh (void)
+be_visitor_executor_ami_exh::~be_visitor_executor_ami_exh ()
 {
 }
 
@@ -43,9 +43,9 @@ be_visitor_executor_ami_exh::visit_connector (be_connector *node)
       << be_uidt << be_uidt_nl
       << "{" << be_nl
       << "public:" << be_idt_nl
-      << scope->local_name () << suffix << " (void);" << be_nl
+      << scope->local_name () << suffix << " ();" << be_nl
       << "virtual ~" << scope->local_name () << suffix
-      << " (void);";
+      << " ();";
 
   if (this->visit_scope (node) == -1)
     {
@@ -65,11 +65,11 @@ be_visitor_executor_ami_exh::visit_connector (be_connector *node)
       << "::Components::" << be_global->ciao_container_type ()
       << "Context_ptr ctx);"
       << be_nl_2
-      << "virtual void configuration_complete (void);"
+      << "virtual void configuration_complete ();"
       << be_nl_2
-      << "virtual void ccm_activate (void);" << be_nl
-      << "virtual void ccm_passivate (void);" << be_nl
-      << "virtual void ccm_remove (void);";
+      << "virtual void ccm_activate ();" << be_nl
+      << "virtual void ccm_passivate ();" << be_nl
+      << "virtual void ccm_remove ();";
 
   os_ << be_uidt_nl << be_nl
       << "private:" << be_idt_nl;
@@ -85,7 +85,7 @@ be_visitor_executor_ami_exh::visit_connector (be_connector *node)
   ACE_CString half_stripped_name (
     connector_name.substr (0, connector_name.find ("_Connector")));
 
-  os_ << half_stripped_name.c_str () <<  "_exec_i *facet_exec_0_;" << be_nl;;
+  os_ << half_stripped_name.c_str () <<  "_exec_i *facet_exec_0_;" << be_nl;
 
   ACE_CString double_stripped_name (
      half_stripped_name.substr (ACE_OS::strlen ("AMI4CCM_")));
@@ -116,7 +116,7 @@ be_visitor_executor_ami_exh::visit_provides (be_provides *node)
   AST_Decl *d = i.item ();
 
   os_ << d->local_name () << "_"
-      << node->local_name () << " (void);";
+      << node->local_name () << " ();";
 
   return 0;
 }

@@ -95,7 +95,7 @@ AST_Structure::AST_Structure (UTL_ScopedName *n,
     UTL_Scope (AST_Decl::NT_struct),
     member_count_ (-1),
     local_struct_ (-1),
-    fwd_decl_ (0)
+    fwd_decl_ (nullptr)
 {
 }
 
@@ -114,11 +114,11 @@ AST_Structure::AST_Structure (AST_Decl::NodeType nt,
     UTL_Scope (nt),
     member_count_ (-1),
     local_struct_ (-1),
-    fwd_decl_ (0)
+    fwd_decl_ (nullptr)
 {
 }
 
-AST_Structure::~AST_Structure (void)
+AST_Structure::~AST_Structure ()
 {
   destroy ();
 }
@@ -159,9 +159,9 @@ AST_Structure::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
            !si.is_done ();
            si.next ())
         {
-          AST_Field *field = AST_Field::narrow_from_decl (si.item ());
+          AST_Field *field = dynamic_cast<AST_Field*> (si.item ());
 
-          if (field == 0)
+          if (field == nullptr)
             // This will be an enum value or other legitimate non-field
             // member - in any case, no recursion.
             {
@@ -172,11 +172,11 @@ AST_Structure::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
 
           if (type->node_type () == AST_Decl::NT_typedef)
             {
-              AST_Typedef *td = AST_Typedef::narrow_from_decl (type);
+              AST_Typedef *td = dynamic_cast<AST_Typedef*> (type);
               type = td->primitive_base_type ();
             }
 
-          if (type == 0)
+          if (type == nullptr)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
                                  ACE_TEXT ("(%N:%l) AST_Structure::")
@@ -202,7 +202,7 @@ AST_Structure::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
 }
 
 int
-AST_Structure::member_count (void)
+AST_Structure::member_count ()
 {
   if (this->member_count_ == -1)
     {
@@ -213,7 +213,7 @@ AST_Structure::member_count (void)
 }
 
 ACE_CDR::ULong
-AST_Structure::nfields (void) const
+AST_Structure::nfields () const
 {
   return ACE_Utils::truncate_cast<ACE_CDR::ULong> (this->fields_.size ());
 }
@@ -226,7 +226,7 @@ AST_Structure::field (AST_Field **&result,
 }
 
 bool
-AST_Structure::is_local (void)
+AST_Structure::is_local ()
 {
   if (this->local_struct_ == -1)
     {
@@ -259,7 +259,7 @@ AST_Structure::is_local (void)
 }
 
 int
-AST_Structure::contains_wstring (void)
+AST_Structure::contains_wstring ()
 {
   if (this->contains_wstring_ == -1)
     {
@@ -281,13 +281,13 @@ AST_Structure::contains_wstring (void)
 }
 
 bool
-AST_Structure::is_defined (void)
+AST_Structure::is_defined ()
 {
-  return 0 == this->fwd_decl_ || this->fwd_decl_->is_defined ();
+  return nullptr == this->fwd_decl_ || this->fwd_decl_->is_defined ();
 }
 
 bool
-AST_Structure::legal_for_primary_key (void) const
+AST_Structure::legal_for_primary_key () const
 {
   bool retval = true;
 
@@ -300,9 +300,9 @@ AST_Structure::legal_for_primary_key (void) const
           !si.is_done ();
           si.next ())
         {
-          AST_Field *f = AST_Field::narrow_from_decl (si.item ());
+          AST_Field *f = dynamic_cast<AST_Field*> (si.item ());
 
-          if (f != 0 && !f->field_type ()->legal_for_primary_key ())
+          if (f != nullptr && !f->field_type ()->legal_for_primary_key ())
             {
               retval = false;
               break;
@@ -316,7 +316,7 @@ AST_Structure::legal_for_primary_key (void) const
 }
 
 AST_StructureFwd *
-AST_Structure::fwd_decl (void) const
+AST_Structure::fwd_decl () const
 {
   return this->fwd_decl_;
 }
@@ -328,7 +328,7 @@ AST_Structure::fwd_decl (AST_StructureFwd *node)
 }
 
 ACE_Unbounded_Queue<AST_Field *> &
-AST_Structure::fields (void)
+AST_Structure::fields ()
 {
   return this->fields_;
 }
@@ -350,17 +350,13 @@ AST_Structure::fe_add_structure (AST_Structure *t)
 AST_Union *
 AST_Structure::fe_add_union (AST_Union *t)
 {
-  return
-    AST_Union::narrow_from_decl (
-      this->fe_add_full_struct_type (t));
+  return dynamic_cast<AST_Union*> (this->fe_add_full_struct_type (t));
 }
 
 AST_Enum *
 AST_Structure::fe_add_enum (AST_Enum *t)
 {
-  return
-    AST_Enum::narrow_from_decl (
-      this->fe_add_decl (t));
+  return dynamic_cast<AST_Enum*> (this->fe_add_decl (t));
 }
 
 // Add this AST_EnumVal node (an enumerator declaration) to this scope.
@@ -370,14 +366,12 @@ AST_Structure::fe_add_enum (AST_Enum *t)
 AST_EnumVal *
 AST_Structure::fe_add_enum_val (AST_EnumVal *t)
 {
-  return
-    AST_EnumVal::narrow_from_decl (
-      this->fe_add_decl (t));
+  return dynamic_cast<AST_EnumVal*> (this->fe_add_decl (t));
 }
 
 // Compute total number of members.
 int
-AST_Structure::compute_member_count (void)
+AST_Structure::compute_member_count ()
 {
   this->member_count_ = 0;
 
@@ -418,7 +412,7 @@ void
 AST_Structure::fwd_redefinition_helper (AST_Structure *&i,
                                         UTL_Scope *s)
 {
-  if (i == 0)
+  if (i == nullptr)
     {
       return;
     }
@@ -428,9 +422,9 @@ AST_Structure::fwd_redefinition_helper (AST_Structure *&i,
   AST_Decl *d =
     s->lookup_by_name_local (i->local_name (), false);
 
-  AST_Structure *fd = 0;
+  AST_Structure *fd = nullptr;
 
-  if (d != 0)
+  if (d != nullptr)
     {
       // Full definition must have the same prefix as the forward declaration.
       if (ACE_OS::strcmp (i->prefix (), d->prefix ()) != 0)
@@ -450,7 +444,7 @@ AST_Structure::fwd_redefinition_helper (AST_Structure *&i,
           || nt == AST_Decl::NT_union_fwd)
         {
           AST_StructureFwd *fwd_def =
-            AST_StructureFwd::narrow_from_decl (d);
+            dynamic_cast<AST_StructureFwd*> (d);
 
           fd = fwd_def->full_definition ();
         }
@@ -458,11 +452,11 @@ AST_Structure::fwd_redefinition_helper (AST_Structure *&i,
       else if (nt == AST_Decl::NT_struct
                || nt == AST_Decl::NT_union)
         {
-          fd = AST_Structure::narrow_from_decl (d);
+          fd = dynamic_cast<AST_Structure*> (d);
         }
 
       // Successful?
-      if (fd == 0)
+      if (fd == nullptr)
         {
           // Should we give an error here?
           // No, look in fe_add_interface.
@@ -498,7 +492,7 @@ AST_Structure::fwd_redefinition_helper (AST_Structure *&i,
               fd->redefine (i);
               AST_StructureFwd *fwd = fd->fwd_decl ();
 
-              if (0 != fwd)
+              if (nullptr != fwd)
                 {
                   // So the fwd decl won't destroy us at cleanup time.
                   // Unlike interfaces, valuetypes and components, it's
@@ -538,7 +532,7 @@ AST_Structure::redefine (AST_Structure *from)
 
 // Compute the size type of the node in question.
 int
-AST_Structure::compute_size_type (void)
+AST_Structure::compute_size_type ()
 {
   for (UTL_ScopeActiveIterator si (this, UTL_Scope::IK_decls);
        !si.is_done ();
@@ -552,10 +546,10 @@ AST_Structure::compute_size_type (void)
           continue;
         }
 
-      AST_Field *f = AST_Field::narrow_from_decl (d);
+      AST_Field *f = dynamic_cast<AST_Field*> (d);
       AST_Type *t = f->field_type ();
 
-      if (t != 0)
+      if (t != nullptr)
         {
           this->size_type (t->size_type ());
 
@@ -566,7 +560,7 @@ AST_Structure::compute_size_type (void)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "WARNING (%N:%l) be_structure::compute_size_type - "
-                      "narrow_from_decl returned 0\n"));
+                      "dynamic_cast returned 0\n"));
         }
     }
 
@@ -580,14 +574,11 @@ AST_Structure::ast_accept (ast_visitor *visitor)
 }
 
 void
-AST_Structure::destroy (void)
+AST_Structure::destroy ()
 {
   this->AST_ConcreteType::destroy ();
   this->UTL_Scope::destroy ();
 }
-
-IMPL_NARROW_FROM_DECL(AST_Structure)
-IMPL_NARROW_FROM_SCOPE(AST_Structure)
 
 bool AST_Structure::annotatable () const
 {
@@ -600,7 +591,7 @@ AST_Structure::operator[] (const size_t index)
   size_t count = member_count_ <= 0 ? 0 : member_count_;
   if (index >= count)
     {
-      return 0;
+      return nullptr;
     }
   size_t i = 0;
   for (UTL_ScopeActiveIterator si (this, UTL_Scope::IK_decls);
@@ -613,7 +604,7 @@ AST_Structure::operator[] (const size_t index)
         }
       i++;
     }
-  return 0;
+  return nullptr;
 }
 
 AST_Decl *
@@ -629,5 +620,5 @@ AST_Structure::operator[] (const char* name)
         return field;
       }
     }
-  return 0;
+  return nullptr;
 }

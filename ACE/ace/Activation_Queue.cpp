@@ -14,7 +14,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_ALLOC_HOOK_DEFINE (ACE_Activation_Queue)
 
 void
-ACE_Activation_Queue::dump (void) const
+ACE_Activation_Queue::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
@@ -74,7 +74,7 @@ ACE_Activation_Queue::queue (ACE_Message_Queue<ACE_SYNCH> *q)
   queue_ = q;
 }
 
-ACE_Activation_Queue::~ACE_Activation_Queue (void)
+ACE_Activation_Queue::~ACE_Activation_Queue ()
 {
   if (this->delete_queue_)
     delete this->queue_;

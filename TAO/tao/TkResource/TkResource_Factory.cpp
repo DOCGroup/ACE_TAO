@@ -6,14 +6,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-
-  TkResource_Factory::TkResource_Factory (void)
+  TkResource_Factory::TkResource_Factory ()
     : reactor_impl_ (0)
   {
   }
 
   ACE_Reactor_Impl *
-  TkResource_Factory::reactor_impl (void)
+  TkResource_Factory::reactor_impl ()
   {
     // synchronized by external locks
     if (!this->reactor_impl_)

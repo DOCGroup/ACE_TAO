@@ -42,10 +42,10 @@ public:
   TAO_Seq_Out_T &operator= (T *);
 
   operator T *& ();
-  T * operator-> (void);
+  T * operator-> ();
 
   T_elem operator[] (CORBA::ULong index);
-  T *& ptr (void);
+  T *& ptr ();
 
 private:
   T *& ptr_;
@@ -59,13 +59,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #include "tao/Seq_Out_T.inl"
 #endif /* defined INLINE */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "tao/Seq_Out_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Seq_Out_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 #endif /* TAO_SEQ_OUT_T_H */

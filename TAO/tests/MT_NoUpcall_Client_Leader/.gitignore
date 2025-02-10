@@ -1,0 +1,7 @@
+/client
+/server
+/SharedIntfC.cpp
+/SharedIntfC.h
+/SharedIntfC.inl
+/SharedIntfS.cpp
+/SharedIntfS.h

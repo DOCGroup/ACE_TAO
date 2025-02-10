@@ -13,9 +13,9 @@ public:
   Hello (PortableServer::POA_ptr poa);
 
   // = The skeleton methods
-  virtual void print_hello_world (void);
+  virtual void print_hello_world ();
 
-  PortableServer::POA_ptr _default_POA (void);
+  PortableServer::POA_ptr _default_POA ();
 
 private:
   PortableServer::POA_var poa_;

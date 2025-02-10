@@ -9,12 +9,12 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_HTTP_Client::TAO_HTTP_Client (void)
-  : filename_ (0)
+TAO_HTTP_Client::TAO_HTTP_Client ()
+  : filename_ (nullptr)
 {
 }
 
-TAO_HTTP_Client::~TAO_HTTP_Client (void)
+TAO_HTTP_Client::~TAO_HTTP_Client ()
 {
   this->close ();
 }
@@ -43,16 +43,15 @@ TAO_HTTP_Client::read (ACE_Message_Block *mb)
     }
 
   return ACE_Utils::truncate_cast<int> (HTTP_reader.byte_count ());
-
 }
 
 int
-TAO_HTTP_Client::close (void)
+TAO_HTTP_Client::close ()
 {
   if (this->filename_)
     {
       ACE_OS::free ((void *) this->filename_);
-      this->filename_ = 0;
+      this->filename_ = nullptr;
     }
   return 0;
 }

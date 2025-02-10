@@ -39,7 +39,7 @@ class TAO_DynamicAny_Export TAO_DynAnyFactory
 {
 public:
   /// Constructor.
-  TAO_DynAnyFactory (void);
+  TAO_DynAnyFactory ();
 
   // = The DynamicAnyFactory methods.
   virtual DynamicAny::DynAny_ptr create_dyn_any (const CORBA::Any & value);
@@ -67,9 +67,8 @@ public:
   static CORBA::TypeCode_ptr strip_alias (CORBA::TypeCode_ptr tc);
 
 private:
-  // Not allowed.
-  TAO_DynAnyFactory (const TAO_DynAnyFactory &src);
-  TAO_DynAnyFactory &operator= (const TAO_DynAnyFactory &src);
+  TAO_DynAnyFactory (const TAO_DynAnyFactory &src) = delete;
+  TAO_DynAnyFactory &operator= (const TAO_DynAnyFactory &src) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -2,22 +2,22 @@
  reports, etc., to the TAO developers and interested users.
  Send it to tao-bugs@list.isis.vanderbilt.edu, you must be subscribed
  to the list in order to be able to post to it. If you are using OCI
- or PrismTech's versions of TAO do not send bugs to this mailing list, but
+ or MicroFocus's versions of TAO do not send bugs to this mailing list, but
  instead contact those companies for support.  Please also send your
  PRF as plain ASCII text, _not_ uuencoded or as an attachment.
 
- We prefer that all bug reports be submitted through our bug tracking
- system.  See $ACE_ROOT/docs/usage-bugzilla.html for more information
+ We prefer that all bug reports be submitted through github issues.
+ See https://github.com/DOCGroup/ACE_TAO/issues for more information
  about how to do this.  If you are unsure as to whether your problem
  is a real bug or not then please submit your question to the mailing
  list using the following form.  Not using the problem report form
  will make it harder or impossible to identify the problem, and in
  many cases we will be unable to help at all.  Also please try to
- browse bugzilla and the ChangeLog files to find out if your problem
- has been solved in a more recent version of TAO.
+ browse the existing github issues and the ChangeLog files to find
+ out if your problem has been solved in a more recent version of TAO.
 
  To subscribe to the list see
-  http://www.dre.vanderbilt.edu/~schmidt/ACE-mail.html
+  https://www.dre.vanderbilt.edu/~schmidt/ACE-mail.html
 
  Replace/remove all the explanatory text in brackets before mailing.
 
@@ -40,8 +40,8 @@
 To: tao-bugs@list.isis.vanderbilt.edu
 Subject: [area]: [synopsis]
 
-    TAO VERSION: 2.5.6
-    ACE VERSION: 6.5.6
+    TAO VERSION: 4.0.2
+    ACE VERSION: 8.0.2
 
     HOST MACHINE and OPERATING SYSTEM:
         If on Windows based OS's, which version of WINSOCK do you

@@ -17,7 +17,7 @@ public:
         ::Test::Fls_out fstruct,
         ::Test::Vls_out vstruct);
 
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
 private:
   /// Use an ORB reference to convert strings to objects and shutdown

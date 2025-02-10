@@ -6,7 +6,7 @@ A Regression test for ACE QoS features.
 This test implements a simple Receiver-Sender program that ensures
 Quality of Service (QoS) guarantees on the underlying network before
 transmitting data. The program tests the ACE QoS APIs/features. The
-test works for Winsock2 APIs on Win2K as well as RAPI on Solaris.
+test works for Winsock2 APIs on Win2K.
 
 In addition it dynamically changes the receiver flow spec which in
 turn changes the RESV messages sent.

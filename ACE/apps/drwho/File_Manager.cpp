@@ -4,7 +4,7 @@
 #include "ace/OS_NS_ctype.h"
 #include "File_Manager.h"
 
-File_Manager::File_Manager (void)
+File_Manager::File_Manager ()
   : number_of_friends (0),
     max_key_length (0),
     buffer_ptr (0),
@@ -69,7 +69,7 @@ File_Manager::get_login_and_real_name (const char *&login_name, const char *&rea
 // Open up the yp passwd file and slurp all the users in!
 
 int
-File_Manager::open_passwd_file (void)
+File_Manager::open_passwd_file ()
 {
   char *filename = const_cast<char *> ("passwd-XXXXXX");
   ACE_HANDLE f = ACE_OS::mkstemp (filename);

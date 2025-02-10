@@ -1,4 +1,3 @@
-
 //=============================================================================
 /**
  *  @file    childbirth_time.cpp
@@ -28,7 +27,7 @@
  *                on UN*X platform.
  *
  *            -t: Measure the performance of native thread creation
- *                mechanisms.  On Solaris, this is thr_create ().
+ *                mechanisms.
  *                On NT, this is CreateThread ().  Currently, only
  *                these two platforms are implemented.
  *
@@ -46,16 +45,11 @@
  *            -e: Exec a program after fork ().  This option has no
  *                effect on NT.
  *
- * = CREATION DATE
- *    June 29, 1997
- *
  *  @author   Nanbor Wang
  */
 //=============================================================================
 
-
 // Process Creation profiling
-
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_main.h"
 #include "ace/Get_Opt.h"
@@ -74,13 +68,20 @@
 
 size_t MULTIPLY_FACTOR = 10;
 typedef double (*Profiler)(size_t);
-static int do_exec_after_fork = 0;
+static bool do_exec_after_fork = false;
 
 /// do nothing thread function
+#if defined (ACE_HAS_WTHREADS)
+DWORD WINAPI ace_empty (LPVOID)
+{
+  return 0;
+}
+#else
 extern "C" void *ace_empty (void*)
 {
   return 0;
 }
+#endif
 
 static double
 prof_ace_process (size_t iteration)
@@ -94,7 +95,7 @@ prof_ace_process (size_t iteration)
 
       iteration *= MULTIPLY_FACTOR;
 
-      if (do_exec_after_fork == 0)
+      if (!do_exec_after_fork)
         popt.creation_flags (ACE_Process_Options::NO_EXEC);
 
       ACE_Profile_Timer ptimer;
@@ -111,7 +112,7 @@ prof_ace_process (size_t iteration)
 
           if (result == -1)
             ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "process.spawn"), -1);
-          else if (do_exec_after_fork == 0 && result == 0)
+          else if (!do_exec_after_fork && result == 0)
             ACE_OS::exit (0) ;
           else
             {
@@ -170,7 +171,7 @@ prof_fork (size_t iteration)
 static double
 prof_native_thread (size_t iteration)
 {
-#if defined (ACE_HAS_THREADS)  && (defined (ACE_HAS_WTHREADS) || defined (ACE_HAS_STHREADS))
+#if defined (ACE_HAS_THREADS) && defined (ACE_HAS_WTHREADS)
   if (iteration != 0)
     {
       ACE_Profile_Timer ptimer;
@@ -190,14 +191,6 @@ prof_native_thread (size_t iteration)
                                   0,
                                   CREATE_SUSPENDED,
                                   0) == 0)
-#elif defined (ACE_HAS_STHREADS)
-                //FUZZ: disable check_for_lack_ACE_OS
-                if (::thr_create (0,
-                                  0,
-                                  &ace_empty,
-                                  0,
-                                  THR_SUSPENDED,
-                                  0) != 0)
 #endif
                   ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "CreateThread"), -1);
                 //FUZZ: enable check_for_lack_ACE_OS
@@ -334,7 +327,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
   int c;
   size_t iteration = 10;
   Profiler profiler = 0;
-  const char *profile_name = 0 ;
+  const char *profile_name = 0;
 
   while ((c=get_opt ()) != -1)
     {
@@ -374,7 +367,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
           ACE_High_Res_Timer::get_env_global_scale_factor ();
           break;
         case 'e':
-          do_exec_after_fork = 1;
+          do_exec_after_fork = true;
           break;
         default:
           break;
@@ -388,7 +381,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
       double time = profiler (iteration);
       if (time > 0)
         ACE_DEBUG ((LM_DEBUG,
-                    "Average performance of %d iterations of %s: %.0f usec\n",
+                    "Average performance of %d iterations of %C: %.0f usec\n",
                     iteration * MULTIPLY_FACTOR, profile_name, time * 1e6));
     }
   return 0;

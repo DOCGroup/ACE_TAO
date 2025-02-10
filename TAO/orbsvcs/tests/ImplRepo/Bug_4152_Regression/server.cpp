@@ -16,7 +16,7 @@ class ORB_Runner : public ACE_Task_Base
 {
 public:
   explicit ORB_Runner (CORBA::ORB_ptr orb) : orb_(CORBA::ORB::_duplicate(orb)) {}
-  int svc (void)
+  int svc ()
   {
     this->orb_->run ();
     return 0;
@@ -49,7 +49,7 @@ createPOAs(ACE_CString &base)
 }
 
 void
-activatePOAs (void)
+activatePOAs ()
 {
   PortableServer::POAManager_var mgr = root_poa->the_POAManager ();
   mgr->activate ();

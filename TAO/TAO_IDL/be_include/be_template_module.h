@@ -32,14 +32,11 @@ public:
     UTL_ScopedName *n,
     FE_Utils::T_PARAMLIST_INFO *template_params);
 
-  virtual ~be_template_module (void);
+  virtual ~be_template_module ();
 
-  virtual void destroy (void);
+  virtual void destroy ();
 
   virtual int accept (be_visitor *visitor);
-
-  DEF_NARROW_FROM_DECL (be_template_module);
-  DEF_NARROW_FROM_SCOPE (be_template_module);
 };
 
 #endif /* TAO_BE_TEMPLATE_MODULE_H */

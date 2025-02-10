@@ -25,7 +25,6 @@ namespace TAO
 {
   namespace Utils
   {
-
     /**
      * @struct ORB_Destroyer_Functor
      *
@@ -36,7 +35,7 @@ namespace TAO
       typedef CORBA::ORB_ptr argument;
 
       /// Destroy the ORB
-      void operator() (CORBA::ORB_ptr orb) throw ();
+      void operator() (CORBA::ORB_ptr orb) noexcept;
     };
 
     /**
@@ -49,7 +48,6 @@ namespace TAO
       CORBA::ORB,
       ORB_Destroyer_Functor>
     ORB_Destroyer;
-
   } // namespace Utils
 } // namespace TAO
 

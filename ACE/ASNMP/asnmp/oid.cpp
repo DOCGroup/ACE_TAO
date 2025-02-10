@@ -27,7 +27,7 @@
   derivatives based upon this software code base.
 =====================================================================*/
 
-//---------[ external C libaries used ]--------------------------------
+//---------[ external C libraries used ]--------------------------------
 
 #include "asnmp/oid.h"                  // include def for oid class
 #include "ace/OS_NS_string.h"
@@ -40,7 +40,7 @@ enum Defs {SNMPBUFFSIZE=300,
 
 #define NO_MEM_STR "ERROR: Oid::to_string: memory allocation failure"
 
-//=============[Oid::get_syntax(void)]====================================
+//=============[Oid::get_syntax()]====================================
 SmiUINT32 Oid::get_syntax()
 {
   return sNMP_SYNTAX_OID;
@@ -732,7 +732,6 @@ int Oid::OidToStr( SmiLPOID srcOid, unsigned long size,
 
   // loop through and build up a string
   for (index=0; index < srcOid->len; index++) {
-
     // convert data element to a string
     if (ACE_OS::sprintf( szNumber,"%lu", srcOid->ptr[index]) == -1)
       return -1;

@@ -12,7 +12,6 @@ my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 fail
 
 $number_of_clients = 4;
 $status = 0;
-$continuous = ($^O eq 'hpux');
 
 @configurations =
     ({
@@ -56,10 +55,6 @@ sub run_clients
 }
 
 $SV = $server->CreateProcess ("server");
-
-if ($continuous) {
-    $SV->Arguments ("-ORBSvcConf continuous$PerlACE::svcconf_ext");
-}
 
 $SV->Spawn ();
 

@@ -16,10 +16,6 @@
 #  include "ace/Handle_Set.h"
 # endif /* ACE_USES_FIFO_SEM */
 
-#if defined (ACE_HAS_PRIOCNTL)
-#  include /**/ <sys/priocntl.h>
-#endif /* ACE_HAS_PRIOCNTL */
-
 #if defined (ACE_HAS_ALLOC_HOOKS)
 # include "ace/Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
@@ -30,7 +26,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_LACKS_COND_T) && defined (ACE_HAS_THREADS)
 ACE_INLINE long
-ACE_cond_t::waiters (void) const
+ACE_cond_t::waiters () const
 {
   return this->waiters_;
 }
@@ -143,24 +139,24 @@ ACE_OS::condattr_init (ACE_condattr_t &attributes, int type)
 #   if defined (ACE_HAS_PTHREADS)
   int result = -1;
 
-#   if !defined (ACE_LACKS_CONDATTR)
-#     if defined (ACE_PTHREAD_CONDATTR_T_INITIALIZE)
+#     if !defined (ACE_LACKS_CONDATTR)
+#       if defined (ACE_PTHREAD_CONDATTR_T_INITIALIZE)
   /* Tests show that VxWorks 6.x pthread lib does not only
     * require zeroing of mutex/condition objects to function correctly
     * but also of the attribute objects.
     */
   ACE_OS::memset (&attributes, 0, sizeof (attributes));
-#     endif
+#       endif
   if (
       ACE_ADAPT_RETVAL (pthread_condattr_init (&attributes), result) == 0
-#     if defined (_POSIX_THREAD_PROCESS_SHARED) && !defined (ACE_LACKS_CONDATTR_PSHARED)
+#       if defined (_POSIX_THREAD_PROCESS_SHARED) && !defined (ACE_LACKS_CONDATTR_PSHARED)
       && ACE_ADAPT_RETVAL (pthread_condattr_setpshared (&attributes, type),
                            result) == 0
-#     endif /* _POSIX_THREAD_PROCESS_SHARED && ! ACE_LACKS_CONDATTR_PSHARED */
+#       endif /* _POSIX_THREAD_PROCESS_SHARED && ! ACE_LACKS_CONDATTR_PSHARED */
       )
-#   else
+#     else
   if (type == USYNC_THREAD)
-#   endif /* !ACE_LACKS_CONDATTR */
+#     endif /* !ACE_LACKS_CONDATTR */
      result = 0;
   else
     {
@@ -218,31 +214,17 @@ ACE_OS::condattr_synctype (ACE_condattr_t &attributes, int& type)
 ACE_INLINE int
 ACE_OS::condattr_setclock (ACE_condattr_t &attributes, clockid_t clock_id)
 {
-# if defined (ACE_HAS_THREADS)
-#   if defined (ACE_HAS_PTHREADS) && !defined (ACE_LACKS_CONDATTR)
+#if defined (ACE_HAS_CONDATTR_SETCLOCK) && !defined (ACE_LACKS_CONDATTR_SETCLOCK)
   int result = -1;
-
-#   if defined (_POSIX_CLOCK_SELECTION) && !defined (ACE_LACKS_CONDATTR_SETCLOCK)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_condattr_setclock (&attributes, clock_id),
                                        result),
-                     int, -1);
-#   else
-  ACE_UNUSED_ARG (clock_id);
-  ACE_UNUSED_ARG (attributes);
-#   endif /* _POSIX_CLOCK_SELECTION) && !ACE_LACKS_CONDATTR_SETCLOCK */
-
+                     int);
   return result;
-#   else
+#else
   ACE_UNUSED_ARG (clock_id);
   ACE_UNUSED_ARG (attributes);
   ACE_NOTSUP_RETURN (-1);
-#   endif /* ACE_HAS_PTHREADS && !ACE_LACKS_CONDATTR */
-
-# else
-  ACE_UNUSED_ARG (clock_id);
-  ACE_UNUSED_ARG (attributes);
-  ACE_NOTSUP_RETURN (-1);
-# endif /* ACE_HAS_THREADS */
+#endif
 }
 
 #if !defined (ACE_LACKS_COND_T)
@@ -260,16 +242,11 @@ ACE_OS::cond_broadcast (ACE_cond_t *cv)
   int result;
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_cond_broadcast (cv),
                                        result),
-                     int, -1);
-#   elif defined (ACE_HAS_STHREADS)
-  int result;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::cond_broadcast (cv),
-                                       result),
-                     int, -1);
+                     int);
 #   elif defined (ACE_HAS_WTHREADS) && defined (ACE_HAS_WTHREADS_CONDITION_VARIABLE)
   ::WakeAllConditionVariable  (cv);
   return 0;
-#   endif /* ACE_HAS_STHREADS */
+#   endif /* ACE_HAS_PTHREADS */
 # else
   ACE_UNUSED_ARG (cv);
   ACE_NOTSUP_RETURN (-1);
@@ -283,14 +260,11 @@ ACE_OS::cond_destroy (ACE_cond_t *cv)
 # if defined (ACE_HAS_THREADS)
 #   if defined (ACE_HAS_PTHREADS)
   int result;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_cond_destroy (cv), result), int, -1);
-#   elif defined (ACE_HAS_STHREADS)
-  int result;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::cond_destroy (cv), result), int, -1);
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_cond_destroy (cv), result), int);
 #   elif defined (ACE_HAS_WTHREADS) && defined (ACE_HAS_WTHREADS_CONDITION_VARIABLE)
   // Windows doesn't have a destroy
   return 0;
-#   endif /* ACE_HAS_STHREADS */
+#   endif /* ACE_HAS_PTHREADS */
 # else
   ACE_UNUSED_ARG (cv);
   ACE_NOTSUP_RETURN (-1);
@@ -326,17 +300,10 @@ ACE_OS::cond_init (ACE_cond_t *cv,
      result = -1;       // ACE_ADAPT_RETVAL used it for intermediate status
 
   return result;
-#   elif defined (ACE_HAS_STHREADS)
-  int result;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::cond_init (cv,
-                                                    attributes.type,
-                                                    arg),
-                                       result),
-                     int, -1);
 #   elif defined (ACE_HAS_WTHREADS) && defined (ACE_HAS_WTHREADS_CONDITION_VARIABLE)
     ::InitializeConditionVariable (cv);
     return 0;
-#   endif /* ACE_HAS_PTHREADS vs. ACE_HAS_STHREADS */
+#   endif /* ACE_HAS_PTHREADS */
 # else
   ACE_UNUSED_ARG (cv);
   ACE_UNUSED_ARG (attributes);
@@ -373,14 +340,11 @@ ACE_OS::cond_signal (ACE_cond_t *cv)
 #   if defined (ACE_HAS_PTHREADS)
   int result;
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_cond_signal (cv), result),
-                     int, -1);
-#   elif defined (ACE_HAS_STHREADS)
-  int result;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::cond_signal (cv), result), int, -1);
+                     int);
 #   elif defined (ACE_HAS_WTHREADS) && defined (ACE_HAS_WTHREADS_CONDITION_VARIABLE)
   ::WakeConditionVariable (cv);
   return 0;
-#   endif /* ACE_HAS_STHREADS */
+#   endif /* ACE_HAS_PTHREADS */
 # else
   ACE_UNUSED_ARG (cv);
   ACE_NOTSUP_RETURN (-1);
@@ -396,15 +360,11 @@ ACE_OS::cond_wait (ACE_cond_t *cv,
 #   if defined (ACE_HAS_PTHREADS)
   int result;
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_cond_wait (cv, external_mutex), result),
-                     int, -1);
-#   elif defined (ACE_HAS_STHREADS)
-  int result;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::cond_wait (cv, external_mutex), result),
-                     int, -1);
+                     int);
 #   elif defined (ACE_HAS_WTHREADS) && defined (ACE_HAS_WTHREADS_CONDITION_VARIABLE)
   int result;
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::SleepConditionVariableCS (cv, &external_mutex->thr_mutex_, INFINITE), result),
-                     int, -1);
+                     int);
 #   endif /* ACE_HAS_PTHREADS */
 # else
   ACE_UNUSED_ARG (cv);
@@ -433,21 +393,13 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
                                 : pthread_cond_timedwait (cv, external_mutex,
                                                             (ACE_TIMESPEC_PTR) &ts),
                                 result),
-              int, -1, result);
-  // We need to adjust this to make the POSIX and Solaris return
-  // values consistent.  EAGAIN is from Pthreads DRAFT4 (HP-UX 10.20 and down)
+              int, result);
+  // We need to adjust this to make the POSIX return
+  // values consistent.  EAGAIN is from Pthreads DRAFT4
   if (result == -1 &&
       (errno == ETIMEDOUT || errno == EAGAIN))
     errno = ETIME;
 
-#   elif defined (ACE_HAS_STHREADS)
-  ACE_OSCALL (ACE_ADAPT_RETVAL (timeout == 0
-                                ? ::cond_wait (cv, external_mutex)
-                                : ::cond_timedwait (cv,
-                                                    external_mutex,
-                                                    (timestruc_t*)&ts),
-                                result),
-              int, -1, result);
 #   elif defined (ACE_HAS_WTHREADS) && defined (ACE_HAS_WTHREADS_CONDITION_VARIABLE)
   int msec_timeout = 0;
   if (timeout != 0)
@@ -461,10 +413,10 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
 
   ACE_OSCALL (ACE_ADAPT_RETVAL (::SleepConditionVariableCS (cv, &external_mutex->thr_mutex_, msec_timeout),
                                 result),
-              int, -1, result);
+              int, result);
 
   return result;
-#   endif /* ACE_HAS_STHREADS */
+#   endif /* ACE_HAS_PTHREADS */
   if (timeout != 0)
     timeout->set (ts); // Update the time value before returning.
 
@@ -582,19 +534,10 @@ ACE_OS::event_init (ACE_event_t *event,
 #endif /* ACE_HAS_WCHAR */
 
 ACE_INLINE long
-ACE_OS::priority_control (ACE_idtype_t idtype, ACE_id_t identifier, int cmd, void *arg)
+ACE_OS::priority_control (ACE_idtype_t /*idtype*/, ACE_id_t /*identifier*/, int /*cmd*/, void * /*arg*/)
 {
   ACE_OS_TRACE ("ACE_OS::priority_control");
-#if defined (ACE_HAS_PRIOCNTL)
-  ACE_OSCALL_RETURN (priocntl (idtype, identifier, cmd, static_cast<caddr_t> (arg)),
-                     long, -1);
-#else  /* ! ACE_HAS_PRIOCNTL*/
-  ACE_UNUSED_ARG (idtype);
-  ACE_UNUSED_ARG (identifier);
-  ACE_UNUSED_ARG (cmd);
-  ACE_UNUSED_ARG (arg);
   ACE_NOTSUP_RETURN (-1);
-#endif /* ! ACE_HAS_PRIOCNTL*/
 }
 
 // This method is used to prepare the recursive mutex for releasing
@@ -624,15 +567,7 @@ ACE_OS::recursive_mutex_cond_unlock (ACE_recursive_thread_mutex_t *m,
   // Windows variants that depend on existing values and limits.
 
   state.relock_count_ = 0;
-  while (
-#      if !defined (ACE_HAS_WINCE)
-         m->LockCount > 0 && m->RecursionCount > 1
-#      else
-         // WinCE doesn't have RecursionCount and the LockCount semantic
-         // Mobile 5 has it 1-indexed.
-         m->LockCount > 1
-#      endif /* ACE_HAS_WINCE */
-         )
+  while (m->LockCount > 0 && m->RecursionCount > 1)
     {
       // This may fail if the current thread doesn't own the mutex. If it
       // does fail, it'll be on the first try, so don't worry about resetting
@@ -1042,10 +977,10 @@ ACE_OS::rw_rdlock (ACE_rwlock_t *rw)
   int result;
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_rwlock_rdlock (rw),
                                        result),
-                     int, -1);
-#  else /* Solaris */
+                     int);
+#  else /* ACE_HAS_PTHREADS_UNIX98_EXT */
   int result;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::rw_rdlock (rw), result), int, -1);
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::rw_rdlock (rw), result), int);
 #  endif /* ACE_HAS_PTHREADS_UNIX98_EXT */
 # else /* NT, POSIX, and VxWorks don't support this natively. */
 #   if defined (ACE_HAS_PTHREADS)
@@ -1093,10 +1028,10 @@ ACE_OS::rw_tryrdlock (ACE_rwlock_t *rw)
   int result;
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_rwlock_tryrdlock (rw),
                                        result),
-                     int, -1);
-#  else /* Solaris */
+                     int);
+#  else /* ACE_HAS_PTHREADS_UNIX98_EXT */
   int result;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::rw_tryrdlock (rw), result), int, -1);
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::rw_tryrdlock (rw), result), int);
 #  endif /* ACE_HAS_PTHREADS_UNIX98_EXT */
 # else /* NT, POSIX, and VxWorks don't support this natively. */
   int result = -1;
@@ -1136,10 +1071,10 @@ ACE_OS::rw_trywrlock (ACE_rwlock_t *rw)
   int result;
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_rwlock_trywrlock (rw),
                                        result),
-                     int, -1);
-#  else /* Solaris */
+                     int);
+#  else /* ACE_HAS_PTHREADS_UNIX98_EXT */
   int result;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::rw_trywrlock (rw), result), int, -1);
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::rw_trywrlock (rw), result), int);
 #  endif /* ACE_HAS_PTHREADS_UNIX98_EXT */
 # else /* NT, POSIX, and VxWorks don't support this natively. */
   int result = -1;
@@ -1184,10 +1119,9 @@ ACE_OS::rw_trywrlock_upgrade (ACE_rwlock_t *rw)
   int result;
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_rwlock_trywrlock (rw),
                                        result),
-                     int, -1);
+                     int);
 # elif !defined (ACE_LACKS_RWLOCK_T)
-  // Some native rwlocks, such as those on Solaris, don't
-  // support the upgrade feature . . .
+  // Some native rwlocks
   ACE_UNUSED_ARG (rw);
   ACE_NOTSUP_RETURN (-1);
 # else /* NT, POSIX, and VxWorks don't support this natively. */
@@ -1257,10 +1191,10 @@ ACE_OS::rw_unlock (ACE_rwlock_t *rw)
   int result;
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_rwlock_unlock (rw),
                                        result),
-                     int, -1);
-#  else /* Solaris */
+                     int);
+#  else /* ACE_HAS_PTHREADS_UNIX98_EXT */
   int result;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::rw_unlock (rw), result), int, -1);
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::rw_unlock (rw), result), int);
 #  endif /* ACE_HAS_PTHREADS_UNIX98_EXT */
 # else /* NT, POSIX, and VxWorks don't support this natively. */
   if (ACE_OS::mutex_lock (&rw->lock_) == -1)
@@ -1316,10 +1250,10 @@ ACE_OS::rw_wrlock (ACE_rwlock_t *rw)
   int result;
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_rwlock_wrlock (rw),
                                        result),
-                     int, -1);
-#  else /* Solaris */
+                     int);
+#  else /* ACE_HAS_PTHREADS_UNIX98_EXT */
   int result;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::rw_wrlock (rw), result), int, -1);
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::rw_wrlock (rw), result), int);
 #  endif /* ACE_HAS_PTHREADS_UNIX98_EXT */
 # else /* NT, POSIX, and VxWorks don't support this natively. */
 #   if defined (ACE_HAS_PTHREADS)
@@ -1369,17 +1303,17 @@ ACE_OS::rwlock_destroy (ACE_rwlock_t *rw)
   int result;
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_rwlock_destroy (rw),
                                        result),
-                     int, -1);
-#  else /* Solaris */
+                     int);
+#  else /* ACE_HAS_PTHREADS_UNIX98_EXT */
   int result;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::rwlock_destroy (rw), result), int, -1);
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::rwlock_destroy (rw), result), int);
 #  endif /* ACE_HAS_PTHREADS_UNIX98_EXT */
 # else /* NT, POSIX, and VxWorks don't support this natively. */
   ACE_OS::mutex_destroy (&rw->lock_);
   ACE_OS::cond_destroy (&rw->waiting_readers_);
   ACE_OS::cond_destroy (&rw->waiting_important_writer_);
   return ACE_OS::cond_destroy (&rw->waiting_writers_);
-# endif /* ACE_HAS_STHREADS && !defined (ACE_LACKS_RWLOCK_T) */
+# endif /* !defined (ACE_LACKS_RWLOCK_T) */
 #else
   ACE_UNUSED_ARG (rw);
   ACE_NOTSUP_RETURN (-1);
@@ -1417,7 +1351,7 @@ ACE_OS::rwlock_init (ACE_rwlock_t *rw,
   type = type;
   name = name;
   int result;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::rwlock_init (rw, type, arg), result), int, -1);
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::rwlock_init (rw, type, arg), result), int);
 #  endif /* ACE_HAS_PTHREADS_UNIX98_EXT */
 }
 #endif /* ACE_HAS_THREADS && !defined (ACE_LACKS_RWLOCK_T) */
@@ -1438,7 +1372,7 @@ ACE_OS::sema_destroy (ACE_sema_t *s)
       // Only destroy the semaphore if we're the ones who
       // initialized it.
 #  if !defined (ACE_LACKS_SEM_DESTROY)
-      ACE_OSCALL (::sem_destroy (s->sema_),int, -1, result);
+      ACE_OSCALL (::sem_destroy (s->sema_),int, result);
 #  endif /* ACE_LACKS_SEM_DESTROY */
       ACE_OS::shm_unlink (s->name_);
       delete s->name_;
@@ -1454,13 +1388,13 @@ ACE_OS::sema_destroy (ACE_sema_t *s)
 #else
       ACE_OS::free ((void *) s->name_);
 #endif /* ACE_HAS_ALLOC_HOOKS */
-      ACE_OSCALL_RETURN (::sem_close (s->sema_), int, -1);
+      return ::sem_close (s->sema_);
     }
 # endif /*  ACE_LACKS_NAMED_POSIX_SEM */
   else
     {
 # if !defined (ACE_LACKS_UNNAMED_SEMAPHORE) && !defined (ACE_LACKS_SEM_DESTROY)
-      ACE_OSCALL (::sem_destroy (s->sema_), int, -1, result);
+      ACE_OSCALL (::sem_destroy (s->sema_), int, result);
 # endif /* !ACE_LACKS_UNNAMED_SEMAPHORE  && !ACE_LACKS_SEM_DESTROY */
 # if defined (ACE_LACKS_NAMED_POSIX_SEM)
       if (s->new_sema_)
@@ -1489,28 +1423,18 @@ ACE_OS::sema_destroy (ACE_sema_t *s)
   int r2 = ACE_OS::close (s->fd_[1]);      /* ignore error */
   return r0 != 0 || r1 != 0 || r2 != 0 ? -1 : 0;
 #elif defined (ACE_HAS_THREADS)
-# if defined (ACE_HAS_STHREADS)
-  int result;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::sema_destroy (s), result), int, -1);
-# elif defined (ACE_HAS_PTHREADS)
+# if defined (ACE_HAS_PTHREADS)
   int r1 = ACE_OS::mutex_destroy (&s->lock_);
   int r2 = ACE_OS::cond_destroy (&s->count_nonzero_);
   return r1 != 0 || r2 != 0 ? -1 : 0;
 # elif defined (ACE_HAS_WTHREADS)
-#  if !defined (ACE_USES_WINCE_SEMA_SIMULATION)
   ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::CloseHandle (*s), ace_result_), int, -1);
-#  else /* ACE_USES_WINCE_SEMA_SIMULATION */
-  // Free up underlying objects of the simulated semaphore.
-  int const r1 = ACE_OS::thread_mutex_destroy (&s->lock_);
-  int const r2 = ACE_OS::event_destroy (&s->count_nonzero_);
-  return r1 != 0 || r2 != 0 ? -1 : 0;
-#  endif /* ACE_USES_WINCE_SEMA_SIMULATION */
 # elif defined (ACE_VXWORKS)
   int result;
-  ACE_OSCALL (::semDelete (s->sema_), int, -1, result);
+  ACE_OSCALL (::semDelete (s->sema_), int, result);
   s->sema_ = 0;
   return result;
-# endif /* ACE_HAS_STHREADS */
+# endif /* ACE_HAS_PTHREADS */
 #else
   ACE_UNUSED_ARG (s);
   ACE_NOTSUP_RETURN (-1);
@@ -1519,7 +1443,6 @@ ACE_OS::sema_destroy (ACE_sema_t *s)
 
 // NOTE: The previous four function definitions must appear before
 // ACE_OS::sema_init ().
-
 ACE_INLINE int
 ACE_OS::sema_init (ACE_sema_t *s,
                    u_int count,
@@ -1631,23 +1554,6 @@ ACE_OS::sema_init (ACE_sema_t *s,
 #  else
   if (name)
     {
-#    if defined (sun) || defined (HPUX)
-      // Solaris and HP-UX require the name to start with a slash. Solaris
-      // further requires that there be no other slashes than the first.
-      const char *last_slash = ACE_OS::strrchr (name, '/');
-      char name2[MAXPATHLEN];
-      if (0 == last_slash)
-        {
-          ACE_OS::strcpy (name2, "/");
-          ACE_OS::strcat (name2, name);
-          name = name2;
-        }
-#      if defined (sun)
-      else
-        name = last_slash;         // Chop off chars preceding last slash
-#      endif /* sun */
-#    endif /* sun || HPUX */
-
       ACE_ALLOCATOR_RETURN (s->name_,
                             ACE_OS::strdup (name),
                             -1);
@@ -1680,9 +1586,7 @@ ACE_OS::sema_init (ACE_sema_t *s,
       s->new_sema_ = true;
 #   endif /* ACE_LACKS_NAMED_POSIX_SEM */
       ACE_OS::memset(s->sema_, 0, sizeof(*s->sema_));
-      ACE_OSCALL_RETURN (::sem_init (s->sema_,
-                                     type != USYNC_THREAD,
-                                     count), int, -1);
+      return ::sem_init (s->sema_, type != USYNC_THREAD, count);
 #  endif /* ACE_LACKS_UNNAMED_SEMAPHORE */
     }
 
@@ -1772,15 +1676,7 @@ ACE_OS::sema_init (ACE_sema_t *s,
 
   return 0;
 #elif defined (ACE_HAS_THREADS)
-#  if defined (ACE_HAS_STHREADS)
-  ACE_UNUSED_ARG (name);
-  ACE_UNUSED_ARG (max);
-  ACE_UNUSED_ARG (sa);
-  ACE_UNUSED_ARG (attributes);
-  int result;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::sema_init (s, count, type, arg), result),
-                     int, -1);
-#  elif defined (ACE_HAS_PTHREADS)
+#  if defined (ACE_HAS_PTHREADS)
   ACE_UNUSED_ARG (max);
   ACE_UNUSED_ARG (sa);
   int result = -1;
@@ -1807,7 +1703,6 @@ ACE_OS::sema_init (ACE_sema_t *s,
   return result;
 #  elif defined (ACE_HAS_WTHREADS)
   ACE_UNUSED_ARG (attributes);
-#    if ! defined (ACE_USES_WINCE_SEMA_SIMULATION)
   ACE_UNUSED_ARG (type);
   ACE_UNUSED_ARG (arg);
   // Create the semaphore with its value initialized to <count> and
@@ -1829,40 +1724,6 @@ ACE_OS::sema_init (ACE_sema_t *s,
       ACE_OS::set_errno_to_last_error ();
       return 0;
     }
-#    else /* ACE_USES_WINCE_SEMA_SIMULATION */
-  int result = -1;
-
-  // Initialize internal object for semaphore simulation.
-  // Grab the lock as soon as possible when we initializing
-  // the semaphore count.  Notice that we initialize the
-  // event object as "manually reset" so we can amortize the
-  // cost for singling/reseting the event.
-  // @@ I changed the mutex type to thread_mutex.  Notice that this
-  // is basically a CriticalSection object and doesn't not has
-  // any security attribute whatsoever.  However, since this
-  // semaphore implementation only works within a process, there
-  // shouldn't any security issue at all.
-  if (ACE_OS::thread_mutex_init (&s->lock_, type, name, (ACE_mutexattr_t *)arg) == 0
-      && ACE_OS::event_init (&s->count_nonzero_, 1,
-                             count > 0, type, name, arg, sa) == 0
-      && ACE_OS::thread_mutex_lock (&s->lock_) == 0)
-    {
-      s->count_ = count;
-
-      if (ACE_OS::thread_mutex_unlock (&s->lock_) == 0)
-        result = 0;
-    }
-
-  // Destroy the internal objects if we didn't initialize
-  // either of them successfully.  Don't bother to check
-  // for errors.
-  if (result == -1)
-    {
-      ACE_OS::thread_mutex_destroy (&s->lock_);
-      ACE_OS::event_destroy (&s->count_nonzero_);
-    }
-  return result;
-#    endif /* ACE_USES_WINCE_SEMA_SIMULATION */
 #  elif defined (ACE_VXWORKS)
   ACE_UNUSED_ARG (attributes);
   ACE_UNUSED_ARG (name);
@@ -1872,7 +1733,7 @@ ACE_OS::sema_init (ACE_sema_t *s,
   s->name_ = 0;
   s->sema_ = ::semCCreate (type, count);
   return s->sema_ ? 0 : -1;
-#  endif /* ACE_HAS_STHREADS */
+#  endif /* ACE_HAS_PTHREADS */
 #else
   ACE_UNUSED_ARG (s);
   ACE_UNUSED_ARG (count);
@@ -1912,7 +1773,6 @@ ACE_OS::sema_init (ACE_sema_t *s,
 {
 # if defined (ACE_HAS_WTHREADS)
   ACE_UNUSED_ARG (attributes);
-#   if ! defined (ACE_USES_WINCE_SEMA_SIMULATION)
   ACE_UNUSED_ARG (type);
   ACE_UNUSED_ARG (arg);
   // Create the semaphore with its value initialized to <count> and
@@ -1934,40 +1794,6 @@ ACE_OS::sema_init (ACE_sema_t *s,
       ACE_OS::set_errno_to_last_error ();
       return 0;
     }
-#   else /* ACE_USES_WINCE_SEMA_SIMULATION */
-  int result = -1;
-
-  // Initialize internal object for semaphore simulation.
-  // Grab the lock as soon as possible when we initializing
-  // the semaphore count.  Notice that we initialize the
-  // event object as "manually reset" so we can amortize the
-  // cost for singling/reseting the event.
-  // @@ I changed the mutex type to thread_mutex.  Notice that this
-  // is basically a CriticalSection object and doesn't not has
-  // any security attribute whatsoever.  However, since this
-  // semaphore implementation only works within a process, there
-  // shouldn't any security issue at all.
-  if (ACE_OS::thread_mutex_init (&s->lock_, type, name, (ACE_mutexattr_t *)arg) == 0
-      && ACE_OS::event_init (&s->count_nonzero_, 1,
-                             count > 0, type, name, arg, sa) == 0
-      && ACE_OS::thread_mutex_lock (&s->lock_) == 0)
-    {
-      s->count_ = count;
-
-      if (ACE_OS::thread_mutex_unlock (&s->lock_) == 0)
-        result = 0;
-    }
-
-  // Destroy the internal objects if we didn't initialize
-  // either of them successfully.  Don't bother to check
-  // for errors.
-  if (result == -1)
-    {
-      ACE_OS::thread_mutex_destroy (&s->lock_);
-      ACE_OS::event_destroy (&s->count_nonzero_);
-    }
-  return result;
-#   endif /* ACE_USES_WINCE_SEMA_SIMULATION */
 # else /* ACE_HAS_WTHREADS */
   // Just call the normal char version.
   return ACE_OS::sema_init (s, count, type, attributes, ACE_Wide_To_Ascii (name).char_rep (), arg, max, sa);
@@ -1990,7 +1816,7 @@ ACE_INLINE int
 ACE_OS::sema_unlink (const char *name)
 {
 #if defined (ACE_HAS_POSIX_SEM) && !defined (ACE_LACKS_SEM_UNLINK)
-  ACE_OSCALL_RETURN (::sem_unlink (name), int, -1);
+  return ::sem_unlink (name);
 #else
   ACE_UNUSED_ARG (name);
   ACE_NOTSUP_RETURN (-1);
@@ -2003,7 +1829,7 @@ ACE_OS::sema_post (ACE_sema_t *s)
   ACE_OS_TRACE ("ACE_OS::sema_post");
 # if defined (ACE_HAS_POSIX_SEM)
 #   if defined (ACE_HAS_POSIX_SEM_TIMEOUT) || defined (ACE_DISABLE_POSIX_SEM_TIMEOUT_EMULATION)
-  ACE_OSCALL_RETURN (::sem_post (s->sema_), int, -1);
+  return ::sem_post (s->sema_);
 #   else
   int result = -1;
 
@@ -2022,10 +1848,7 @@ ACE_OS::sema_post (ACE_sema_t *s)
     return 0;
   return -1;
 # elif defined (ACE_HAS_THREADS)
-#   if defined (ACE_HAS_STHREADS)
-  int result;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::sema_post (s), result), int, -1);
-#   elif defined (ACE_HAS_PTHREADS)
+#   if defined (ACE_HAS_PTHREADS)
   int result = -1;
 
   if (ACE_OS::mutex_lock (&s->lock_) == 0)
@@ -2041,32 +1864,12 @@ ACE_OS::sema_post (ACE_sema_t *s)
     }
   return result;
 #   elif defined (ACE_HAS_WTHREADS)
-#     if !defined (ACE_USES_WINCE_SEMA_SIMULATION)
   ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::ReleaseSemaphore (*s, 1, 0),
                                           ace_result_),
                         int, -1);
-#     else /* ACE_USES_WINCE_SEMA_SIMULATION */
-  int result = -1;
-
-  // Since we are simulating semaphores, we need to update semaphore
-  // count manually.  Grab the lock to prevent race condition first.
-  if (ACE_OS::thread_mutex_lock (&s->lock_) == 0)
-    {
-      // Check the original state of event object.  Single the event
-      // object in transition from semaphore not available to
-      // semaphore available.
-      if (s->count_++ <= 0)
-        result = ACE_OS::event_signal (&s->count_nonzero_);
-      else
-        result = 0;
-
-      ACE_OS::thread_mutex_unlock (&s->lock_);
-    }
-  return result;
-#     endif /* ACE_USES_WINCE_SEMA_SIMULATION */
 #   elif defined (ACE_VXWORKS)
-  ACE_OSCALL_RETURN (::semGive (s->sema_), int, -1);
-#   endif /* ACE_HAS_STHREADS */
+  return ::semGive (s->sema_);
+#   endif /* ACE_HAS_PTHREADS */
 # else
   ACE_UNUSED_ARG (s);
   ACE_NOTSUP_RETURN (-1);
@@ -2076,16 +1879,16 @@ ACE_OS::sema_post (ACE_sema_t *s)
 ACE_INLINE int
 ACE_OS::sema_post (ACE_sema_t *s, u_int release_count)
 {
-#if defined (ACE_WIN32) && !defined (ACE_USES_WINCE_SEMA_SIMULATION)
+#if defined (ACE_WIN32)
   // Win32 supports this natively.
   ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::ReleaseSemaphore (*s, release_count, 0),
                                           ace_result_), int, -1);
 #else
   // On POSIX platforms we need to emulate this ourselves.
   // @@ We can optimize on this implementation.  However,
-  // the semaphore promitive on Win32 doesn't allow one
+  // the semaphore primitive on Win32 doesn't allow one
   // to increase a semaphore to more than the count it was
-  // first initialized.  Posix and solaris don't seem to have
+  // first initialized.  Posix doesn't seem to have
   // this restriction.  Should we impose the restriction in
   // our semaphore simulation?
   for (size_t i = 0; i < release_count; i++)
@@ -2102,7 +1905,7 @@ ACE_OS::sema_trywait (ACE_sema_t *s)
   ACE_OS_TRACE ("ACE_OS::sema_trywait");
 # if defined (ACE_HAS_POSIX_SEM)
   // POSIX semaphores set errno to EAGAIN if trywait fails
-  ACE_OSCALL_RETURN (::sem_trywait (s->sema_), int, -1);
+  return ::sem_trywait (s->sema_);
 # elif defined (ACE_USES_FIFO_SEM)
   char  c;
   int     rc, flags;
@@ -2126,14 +1929,7 @@ ACE_OS::sema_trywait (ACE_sema_t *s)
 
   return rc == 1 ? 0 : (-1);
 # elif defined (ACE_HAS_THREADS)
-#   if defined (ACE_HAS_STHREADS)
-  // STHREADS semaphores set errno to EBUSY if trywait fails.
-  int result;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::sema_trywait (s),
-                                       result),
-                     int, -1);
-#   elif defined (ACE_HAS_PTHREADS)
-
+#   if defined (ACE_HAS_PTHREADS)
   int result = -1;
 
   if (ACE_OS::mutex_lock (&s->lock_) == 0)
@@ -2150,7 +1946,6 @@ ACE_OS::sema_trywait (ACE_sema_t *s)
     }
   return result;
 #   elif defined (ACE_HAS_WTHREADS)
-#     if !defined (ACE_USES_WINCE_SEMA_SIMULATION)
   DWORD result = ::WaitForSingleObject (*s, 0);
 
   if (result == WAIT_OBJECT_0)
@@ -2164,41 +1959,6 @@ ACE_OS::sema_trywait (ACE_sema_t *s)
       // This is a hack, we need to find an appropriate mapping...
       return -1;
     }
-#     else /* ACE_USES_WINCE_SEMA_SIMULATION */
-  // Check the status of semaphore first.  Return immediately
-  // if the semaphore is not available and avoid grabing the
-  // lock.
-  DWORD result = ::WaitForSingleObject (s->count_nonzero_, 0);
-
-  if (result == WAIT_OBJECT_0)  // Proceed when it is available.
-    {
-      ACE_OS::thread_mutex_lock (&s->lock_);
-
-      // Need to double check if the semaphore is still available.
-      // The double checking scheme will slightly affect the
-      // efficiency if most of the time semaphores are not blocked.
-      result = ::WaitForSingleObject (s->count_nonzero_, 0);
-      if (result == WAIT_OBJECT_0)
-        {
-          // Adjust the semaphore count.  Only update the event
-          // object status when the state changed.
-          s->count_--;
-          if (s->count_ <= 0)
-            ACE_OS::event_reset (&s->count_nonzero_);
-          result = 0;
-        }
-
-      ACE_OS::thread_mutex_unlock (&s->lock_);
-    }
-
-  // Translate error message to errno used by ACE.
-  if (result == WAIT_TIMEOUT)
-    errno = EBUSY;
-  else
-    ACE_OS::set_errno_to_last_error ();
-  // This is taken from the hack above. ;)
-  return -1;
-#     endif /* ACE_USES_WINCE_SEMA_SIMULATION */
 #   elif defined (ACE_VXWORKS)
   if (::semTake (s->sema_, NO_WAIT) == ERROR)
     if (errno == S_objLib_OBJ_UNAVAILABLE)
@@ -2213,7 +1973,7 @@ ACE_OS::sema_trywait (ACE_sema_t *s)
   else
     // got the semaphore
     return 0;
-#   endif /* ACE_HAS_STHREADS */
+#   endif /* ACE_HAS_PTHREADS */
 # else
   ACE_UNUSED_ARG (s);
   ACE_NOTSUP_RETURN (-1);
@@ -2225,17 +1985,14 @@ ACE_OS::sema_wait (ACE_sema_t *s)
 {
   ACE_OS_TRACE ("ACE_OS::sema_wait");
 # if defined (ACE_HAS_POSIX_SEM)
-  ACE_OSCALL_RETURN (::sem_wait (s->sema_), int, -1);
+  return ::sem_wait (s->sema_);
 # elif defined (ACE_USES_FIFO_SEM)
   char c;
   if (ACE_OS::read (s->fd_[0], &c, sizeof (char)) == 1)
     return 0;
   return -1;
 # elif defined (ACE_HAS_THREADS)
-#   if defined (ACE_HAS_STHREADS)
-  int result;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::sema_wait (s), result), int, -1);
-#   elif defined (ACE_HAS_PTHREADS)
+#   if defined (ACE_HAS_PTHREADS)
   int result = 0;
 
   ACE_PTHREAD_CLEANUP_PUSH (&s->lock_);
@@ -2269,7 +2026,6 @@ ACE_OS::sema_wait (ACE_sema_t *s)
   return result < 0 ? -1 : result;
 
 #   elif defined (ACE_HAS_WTHREADS)
-#     if !defined (ACE_USES_WINCE_SEMA_SIMULATION)
   switch (::WaitForSingleObject (*s, INFINITE))
     {
     case WAIT_OBJECT_0:
@@ -2280,49 +2036,9 @@ ACE_OS::sema_wait (ACE_sema_t *s)
       return -1;
     }
   /* NOTREACHED */
-#     else /* ACE_USES_WINCE_SEMA_SIMULATION */
-  // Timed wait.
-  int result = -1;
-  for (;;)
-    // Check if the semaphore is avialable or not and wait forever.
-    // Don't bother to grab the lock if it is not available (to avoid
-    // deadlock.)
-    switch (::WaitForSingleObject (s->count_nonzero_, INFINITE))
-      {
-      case WAIT_OBJECT_0:
-        ACE_OS::thread_mutex_lock (&s->lock_);
-
-        // Need to double check if the semaphore is still available.
-        // This time, we shouldn't wait at all.
-        if (::WaitForSingleObject (s->count_nonzero_, 0) == WAIT_OBJECT_0)
-          {
-            // Decrease the internal counter.  Only update the event
-            // object's status when the state changed.
-            s->count_--;
-            if (s->count_ <= 0)
-              ACE_OS::event_reset (&s->count_nonzero_);
-            result = 0;
-          }
-
-        ACE_OS::thread_mutex_unlock (&s->lock_);
-        // if we didn't get a hold on the semaphore, the result won't
-        // be 0 and thus, we'll start from the beginning again.
-        if (result == 0)
-          return 0;
-        break;
-
-      default:
-        // Since we wait indefinitely, anything other than
-        // WAIT_OBJECT_O indicates an error.
-        ACE_OS::set_errno_to_last_error ();
-        // This is taken from the hack above. ;)
-        return -1;
-      }
-  /* NOTREACHED */
-#     endif /* ACE_USES_WINCE_SEMA_SIMULATION */
 #   elif defined (ACE_VXWORKS)
-  ACE_OSCALL_RETURN (::semTake (s->sema_, WAIT_FOREVER), int, -1);
-#   endif /* ACE_HAS_STHREADS */
+  return ::semTake (s->sema_, WAIT_FOREVER);
+#   endif /* ACE_HAS_PTHREADS */
 # else
   ACE_UNUSED_ARG (s);
   ACE_NOTSUP_RETURN (-1);
@@ -2338,7 +2054,7 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
   int rc;
   timespec_t ts;
   ts = tv; // Calls ACE_Time_Value::operator timespec_t().
-  ACE_OSCALL (::sem_timedwait (s->sema_, &ts), int, -1, rc);
+  ACE_OSCALL (::sem_timedwait (s->sema_, &ts), int, rc);
   if (rc == -1 && errno == ETIMEDOUT)
     errno = ETIME;  /* POSIX returns ETIMEDOUT but we need ETIME */
   return rc;
@@ -2379,10 +2095,6 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
 
       if (expired)
         error = ETIME;
-
-#     if defined (ACE_LACKS_COND_TIMEDWAIT_RESET)
-      tv = tv.now ();
-#     endif /* ACE_LACKS_COND_TIMEDWAIT_RESET */
     }
 
   if (result != -2)
@@ -2427,11 +2139,7 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
 
   return -1;
 # elif defined (ACE_HAS_THREADS)
-#   if defined (ACE_HAS_STHREADS)
-  ACE_UNUSED_ARG (s);
-  ACE_UNUSED_ARG (tv);
-  ACE_NOTSUP_RETURN (-1);
-#   elif defined (ACE_HAS_PTHREADS)
+#   if defined (ACE_HAS_PTHREADS)
   int result = 0;
   ACE_Errno_Guard error (errno);
 
@@ -2461,9 +2169,6 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
 
   if (result == 0)
     {
-#     if defined (ACE_LACKS_COND_TIMEDWAIT_RESET)
-      tv = tv.now ();
-#     endif /* ACE_LACKS_COND_TIMEDWAIT_RESET */
       --s->count_;
     }
 
@@ -2472,7 +2177,6 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
   ACE_PTHREAD_CLEANUP_POP (0);
   return result < 0 ? -1 : result;
 #   elif defined (ACE_HAS_WTHREADS)
-#     if !defined (ACE_USES_WINCE_SEMA_SIMULATION)
   int msec_timeout;
 
   if (tv == ACE_Time_Value::zero)
@@ -2506,85 +2210,13 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
       return -1;
     }
   /* NOTREACHED */
-#     else /* ACE_USES_WINCE_SEMA_SIMULATION */
-  // Note that in this mode, the acquire is done in two steps, and
-  // we may get signaled but cannot grab the semaphore before
-  // timeout.  In that case, we'll need to restart the process with
-  // updated timeout value.
-
-  // tv is an absolute time, but we need relative to work with the Windows
-  // API. Also, some users have become accustomed to using a 0 time value
-  // as a shortcut for "now", which works on non-Windows because 0 is
-  // always earlier than now. However, the need to convert to relative time
-  // means we need to watch out for this case.
-  ACE_Time_Value relative_time (ACE_Time_Value::zero);
-  if (tv != ACE_Time_Value::zero)
-    relative_time = tv.to_relative_time ();
-  int result = -1;
-
-  // While we are not timeout yet. >= 0 will let this go through once
-  // and if not able to get the object, it should hit WAIT_TIMEOUT
-  // right away.
-  while (relative_time >= ACE_Time_Value::zero)
-    {
-      // Wait for our turn to get the object.
-      switch (::WaitForSingleObject (s->count_nonzero_, relative_time.msec ()))
-        {
-        case WAIT_OBJECT_0:
-          ACE_OS::thread_mutex_lock (&s->lock_);
-
-          // Need to double check if the semaphore is still available.
-          // We can only do a "try lock" styled wait here to avoid
-          // blocking threads that want to signal the semaphore.
-          if (::WaitForSingleObject (s->count_nonzero_, 0) == WAIT_OBJECT_0)
-            {
-              // As before, only reset the object when the semaphore
-              // is no longer available.
-              s->count_--;
-              if (s->count_ <= 0)
-                ACE_OS::event_reset (&s->count_nonzero_);
-              result = 0;
-            }
-
-          ACE_OS::thread_mutex_unlock (&s->lock_);
-
-          // Only return when we successfully get the semaphore.
-          if (result == 0)
-            {
-              tv = tv.now ();     // Update to time acquired
-              return 0;
-            }
-          break;
-
-          // We have timed out.
-        case WAIT_TIMEOUT:
-          errno = ETIME;
-          return -1;
-
-          // What?
-        default:
-          ACE_OS::set_errno_to_last_error ();
-          // This is taken from the hack above. ;)
-          return -1;
-        };
-
-      // Haven't been able to get the semaphore yet, update the
-      // timeout value to reflect the remaining time we want to wait.
-      // in case of tv == 0 relative_time will now be < 0 and we will be out of time
-      relative_time = tv.to_relative_time ();
-    }
-
-  // We have timed out.
-  errno = ETIME;
-  return -1;
-#     endif /* ACE_USES_WINCE_SEMA_SIMULATION */
 #   elif defined (ACE_VXWORKS)
   // Note that we must convert between absolute time (which is
   // passed as a parameter) and relative time (which is what
   // the system call expects).
   ACE_Time_Value relative_time = tv.to_relative_time ();
 
-  int ticks_per_sec = ::sysClkRateGet ();
+  _Vx_freq_t const ticks_per_sec = ::sysClkRateGet ();
 
   int ticks = relative_time.sec () * ticks_per_sec +
               relative_time.usec () * ticks_per_sec / ACE_ONE_SECOND_IN_USECS;
@@ -2603,7 +2235,7 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
       tv = tv.now ();  // Update to time acquired
       return 0;
     }
-#   endif /* ACE_HAS_STHREADS */
+#   endif /* ACE_HAS_PTHREADS */
 # else
   ACE_UNUSED_ARG (s);
   ACE_UNUSED_ARG (tv);
@@ -2622,7 +2254,7 @@ ACE_OS::semctl (int int_id, int semnum, int cmd, semun value)
 {
   ACE_OS_TRACE ("ACE_OS::semctl");
 #if defined (ACE_HAS_SYSV_IPC)
-  ACE_OSCALL_RETURN (::semctl (int_id, semnum, cmd, value), int, -1);
+  return ::semctl (int_id, semnum, cmd, value);
 #else
   ACE_UNUSED_ARG (int_id);
   ACE_UNUSED_ARG (semnum);
@@ -2638,7 +2270,7 @@ ACE_OS::semget (key_t key, int nsems, int flags)
 {
   ACE_OS_TRACE ("ACE_OS::semget");
 #if defined (ACE_HAS_SYSV_IPC)
-  ACE_OSCALL_RETURN (::semget (key, nsems, flags), int, -1);
+  return ::semget (key, nsems, flags);
 #else
   ACE_UNUSED_ARG (key);
   ACE_UNUSED_ARG (nsems);
@@ -2653,7 +2285,7 @@ ACE_OS::semop (int int_id, struct sembuf *sops, size_t nsops)
 {
   ACE_OS_TRACE ("ACE_OS::semop");
 #if defined (ACE_HAS_SYSV_IPC)
-  ACE_OSCALL_RETURN (::semop (int_id, sops, nsops), int, -1);
+  return ::semop (int_id, sops, nsops);
 #else
   ACE_UNUSED_ARG (int_id);
   ACE_UNUSED_ARG (sops);
@@ -2679,8 +2311,7 @@ ACE_OS::sigtimedwait (const sigset_t *sset,
       tsp = &ts;
     }
 
-  ACE_OSCALL_RETURN (::sigtimedwait (sset, info, tsp),
-                     int, -1);
+  return ::sigtimedwait (sset, info, tsp);
 #else
     ACE_UNUSED_ARG (sset);
     ACE_UNUSED_ARG (info);
@@ -2700,14 +2331,6 @@ ACE_OS::sigwait (sigset_t *sset, int *sig)
 # if (defined (__FreeBSD__) && (__FreeBSD__ < 3))
     ACE_UNUSED_ARG (sset);
     ACE_NOTSUP_RETURN (-1);
-# elif defined (ACE_HAS_STHREADS)
-   # if (_POSIX_C_SOURCE - 0 >= 199506L) || defined (_POSIX_PTHREAD_SEMANTICS)
-     errno = ::sigwait (sset, sig);
-     return errno == 0  ?  *sig  :  -1;
-   #else
-     *sig = ::sigwait (sset);
-     return *sig;
-   #endif /* _POSIX_C_SOURCE - 0 >= 199506L || _POSIX_PTHREAD_SEMANTICS */
 # elif defined (ACE_HAS_PTHREADS)
 #   if defined (CYGWIN32)
       // Cygwin has sigwait definition, but it is not implemented
@@ -2743,7 +2366,7 @@ ACE_OS::sigwaitinfo (const sigset_t *sset,
   // If this isn't true somewhere, let me know and I'll fix this.
   // -Steve Huston <shuston@riverace.com>.
 #if defined (ACE_HAS_SIGTIMEDWAIT)
-  ACE_OSCALL_RETURN (::sigwaitinfo (sset, info), int, -1);
+  return ::sigwaitinfo (sset, info);
 #else
   ACE_UNUSED_ARG (sset);
   ACE_UNUSED_ARG (info);
@@ -2760,9 +2383,9 @@ ACE_OS::thr_cancel (ACE_thread_t thr_id)
   int result;
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_cancel (thr_id),
                                         result),
-                      int, -1);
+                      int);
 # elif defined (ACE_HAS_VXTHREADS)
-  ACE_OSCALL_RETURN (::taskDelete (thr_id), int, -1);
+  return ::taskDelete (thr_id);
 # else /* Could be ACE_HAS_PTHREADS && ACE_LACKS_PTHREAD_CANCEL */
   ACE_UNUSED_ARG (thr_id);
   ACE_NOTSUP_RETURN (-1);
@@ -2795,25 +2418,22 @@ ACE_OS::thr_continue (ACE_hthread_t target_thread)
 {
   ACE_OS_TRACE ("ACE_OS::thr_continue");
 #if defined (ACE_HAS_THREADS)
-# if defined (ACE_HAS_STHREADS)
-  int result;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_continue (target_thread), result), int, -1);
-# elif defined (ACE_HAS_PTHREADS)
+# if defined (ACE_HAS_PTHREADS)
 #  if defined (ACE_HAS_PTHREAD_CONTINUE)
   int result;
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_continue (target_thread),
                                        result),
-                     int, -1);
+                     int);
 #  elif defined (ACE_HAS_PTHREAD_CONTINUE_NP)
   int result;
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_continue_np (target_thread),
                                        result),
-                     int, -1);
+                     int);
 #  elif defined (ACE_HAS_PTHREAD_RESUME_NP)
   int result;
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_resume_np (target_thread),
                                        result),
-                     int, -1);
+                     int);
 #  else
   ACE_UNUSED_ARG (target_thread);
   ACE_NOTSUP_RETURN (-1);
@@ -2825,8 +2445,8 @@ ACE_OS::thr_continue (ACE_hthread_t target_thread)
   else
     return 0;
 # elif defined (ACE_HAS_VXTHREADS)
-  ACE_OSCALL_RETURN (::taskResume (target_thread), int, -1);
-# endif /* ACE_HAS_STHREADS */
+  return ::taskResume (target_thread);
+# endif /* ACE_HAS_PTHREADS */
 #else
   ACE_UNUSED_ARG (target_thread);
   ACE_NOTSUP_RETURN (-1);
@@ -2834,17 +2454,15 @@ ACE_OS::thr_continue (ACE_hthread_t target_thread)
 }
 
 ACE_INLINE int
-ACE_OS::thr_getconcurrency (void)
+ACE_OS::thr_getconcurrency ()
 {
   ACE_OS_TRACE ("ACE_OS::thr_getconcurrency");
 #if defined (ACE_HAS_THREADS)
-# if defined (ACE_HAS_STHREADS)
-  return ::thr_getconcurrency ();
-# elif defined (ACE_HAS_PTHREADS) && defined (ACE_HAS_PTHREAD_GETCONCURRENCY)
+# if defined (ACE_HAS_PTHREADS) && defined (ACE_HAS_PTHREAD_GETCONCURRENCY)
   return pthread_getconcurrency ();
 # else
   ACE_NOTSUP_RETURN (-1);
-# endif /* ACE_HAS_STHREADS */
+# endif /* ACE_HAS_PTHREADS */
 #else
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_HAS_THREADS */
@@ -2864,46 +2482,25 @@ ACE_OS::thr_getprio (ACE_hthread_t ht_id, int &priority, int &policy)
 
   ACE_OSCALL (ACE_ADAPT_RETVAL (pthread_getschedparam (ht_id, &policy, &param),
                                 result), int,
-              -1, result);
+              result);
   priority = param.sched_priority;
   return result;
-# elif defined (ACE_HAS_STHREADS)
-  int result;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_getprio (ht_id, &priority), result), int, -1);
 # elif defined (ACE_HAS_WTHREADS)
   ACE_Errno_Guard error (errno);
-
-#   if defined (ACE_HAS_WINCE) && !defined (ACE_LACKS_CE_THREAD_PRIORITY)
-  priority = ::CeGetThreadPriority (ht_id);
-#   else
   priority = ::GetThreadPriority (ht_id);
-#   endif /* defined (ACE_HAS_WINCE) && !defined (ACE_LACKS_CE_THREAD_PRIORITY) */
-
-#   if defined (ACE_HAS_PHARLAP)
-#     if defined (ACE_PHARLAP_LABVIEW_RT)
-  policy = ACE_SCHED_FIFO;
-#     else
-  DWORD timeslice = ::EtsGetTimeSlice ();
-  policy = timeslice == 0 ? ACE_SCHED_OTHER : ACE_SCHED_FIFO;
-#     endif /* ACE_PHARLAP_LABVIEW_RT */
-#   elif !defined (ACE_HAS_WINCE)
-  DWORD priority_class = ::GetPriorityClass (::GetCurrentProcess ());
+  DWORD const priority_class = ::GetPriorityClass (::GetCurrentProcess ());
   if (priority_class == 0 && (error = ::GetLastError ()) != NO_ERROR)
     ACE_FAIL_RETURN (-1);
 
-  policy =
-    (priority_class ==
-     REALTIME_PRIORITY_CLASS) ? ACE_SCHED_FIFO : ACE_SCHED_OTHER;
-#   endif /* ACE_HAS_PHARLAP */
-
+  policy = (priority_class == REALTIME_PRIORITY_CLASS) ? ACE_SCHED_FIFO : ACE_SCHED_OTHER;
   return 0;
 # elif defined (ACE_HAS_VXTHREADS)
-  ACE_OSCALL_RETURN (::taskPriorityGet (ht_id, &priority), int, -1);
+  return ::taskPriorityGet (ht_id, &priority);
 # else
   ACE_UNUSED_ARG (ht_id);
   ACE_UNUSED_ARG (priority);
   ACE_NOTSUP_RETURN (-1);
-# endif /* ACE_HAS_STHREADS */
+# endif /* ACE_HAS_PTHREADS */
 #else
   ACE_UNUSED_ARG (ht_id);
   ACE_UNUSED_ARG (priority);
@@ -2927,9 +2524,6 @@ ACE_OS::thr_getspecific_native (ACE_OS_thread_key_t key, void **data)
 # if defined (ACE_HAS_PTHREADS)
     *data = pthread_getspecific (key);
     return 0;
-# elif defined (ACE_HAS_STHREADS)
-    int result;
-    ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_getspecific (key, data), result), int, -1);
 # elif defined (ACE_HAS_WTHREADS)
   *data = ::TlsGetValue (key);
   if (*data == 0 && ::GetLastError () != NO_ERROR)
@@ -2985,11 +2579,7 @@ ACE_OS::thr_join (ACE_hthread_t thr_handle,
 {
   ACE_OS_TRACE ("ACE_OS::thr_join");
 #if defined (ACE_HAS_THREADS)
-# if defined (ACE_HAS_STHREADS)
-  int result;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_join (thr_handle, 0, status), result),
-                     int, -1);
-# elif defined (ACE_HAS_PTHREADS)
+# if defined (ACE_HAS_PTHREADS)
 #  if defined (ACE_LACKS_PTHREAD_JOIN)
   ACE_UNUSED_ARG (thr_handle);
   ACE_UNUSED_ARG (status);
@@ -2997,7 +2587,7 @@ ACE_OS::thr_join (ACE_hthread_t thr_handle,
 #  else
   int result;
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_join (thr_handle, status), result),
-                     int, -1);
+                     int);
 #  endif /* ACE_LACKS_PTHREAD_JOIN */
 # elif defined (ACE_HAS_WTHREADS)
   // Waiting on the calling thread will deadlock, so try to avoid that. The
@@ -3034,7 +2624,7 @@ ACE_OS::thr_join (ACE_hthread_t thr_handle,
   ACE_UNUSED_ARG (thr_handle);
   ACE_UNUSED_ARG (status);
   ACE_NOTSUP_RETURN (-1);
-# endif /* ACE_HAS_STHREADS */
+# endif /* ACE_HAS_PTHREADS */
 #else
   ACE_UNUSED_ARG (thr_handle);
   ACE_UNUSED_ARG (status);
@@ -3049,11 +2639,7 @@ ACE_OS::thr_join (ACE_thread_t waiter_id,
 {
   ACE_OS_TRACE ("ACE_OS::thr_join");
 #if defined (ACE_HAS_THREADS)
-# if defined (ACE_HAS_STHREADS)
-  int result;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_join (waiter_id, thr_id, status), result),
-                     int, -1);
-# elif defined (ACE_HAS_PTHREADS)
+# if defined (ACE_HAS_PTHREADS)
 #  if defined (ACE_LACKS_PTHREAD_JOIN)
   ACE_UNUSED_ARG (waiter_id);
   ACE_UNUSED_ARG (thr_id);
@@ -3063,7 +2649,7 @@ ACE_OS::thr_join (ACE_thread_t waiter_id,
   ACE_UNUSED_ARG (thr_id);
   int result;
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_join (waiter_id, status), result),
-                     int, -1);
+                     int);
 #  endif /* ACE_LACKS_PTHREAD_JOIN */
 # elif defined (ACE_HAS_WTHREADS)
   ACE_UNUSED_ARG (waiter_id);
@@ -3073,7 +2659,7 @@ ACE_OS::thr_join (ACE_thread_t waiter_id,
   // This could be implemented if the DLL-Main function or the
   // task exit base class some log the threads which have exited
   ACE_NOTSUP_RETURN (-1);
-# endif /* ACE_HAS_STHREADS */
+# endif /* ACE_HAS_PTHREADS */
 #else
   ACE_UNUSED_ARG (waiter_id);
   ACE_UNUSED_ARG (thr_id);
@@ -3097,22 +2683,17 @@ ACE_OS::thr_kill (ACE_thread_t thr_id, int signum)
   int result;
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_kill (thr_id, signum),
                                        result),
-                     int, -1);
+                     int);
 #   endif /* ACE_LACKS_PTHREAD_KILL */
-# elif defined (ACE_HAS_STHREADS)
-  int result;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_kill (thr_id, signum),
-                                       result),
-                     int, -1);
 # elif defined (ACE_HAS_VXTHREADS)
   //FUZZ: disable check_for_lack_ACE_OS
-  ACE_OSCALL_RETURN (::kill (thr_id, signum), int, -1);
+  return ::kill (thr_id, signum);
   //FUZZ: enable check_for_lack_ACE_OS
 # else
   ACE_UNUSED_ARG (thr_id);
   ACE_UNUSED_ARG (signum);
   ACE_NOTSUP_RETURN (-1);
-# endif /* ACE_HAS_STHREADS */
+# endif /* ACE_HAS_PTHREADS */
 #else
   ACE_UNUSED_ARG (thr_id);
   ACE_UNUSED_ARG (signum);
@@ -3121,18 +2702,11 @@ ACE_OS::thr_kill (ACE_thread_t thr_id, int signum)
 }
 
 ACE_INLINE size_t
-ACE_OS::thr_min_stack (void)
+ACE_OS::thr_min_stack ()
 {
   ACE_OS_TRACE ("ACE_OS::thr_min_stack");
 #if defined (ACE_HAS_THREADS)
-# if defined (ACE_HAS_STHREADS)
-#   if defined (ACE_HAS_THR_MINSTACK)
-  // Tandem did some weirdo mangling of STHREAD names...
-  return ::thr_minstack ();
-#   else
-  return ::thr_min_stack ();
-#   endif /* !ACE_HAS_THR_MINSTACK */
-# elif defined (ACE_HAS_PTHREADS)
+# if defined (ACE_HAS_PTHREADS)
 #   if defined (_SC_THREAD_STACK_MIN)
   return (size_t) ACE_OS::sysconf (_SC_THREAD_STACK_MIN);
 #   elif defined (PTHREAD_STACK_MIN)
@@ -3150,11 +2724,11 @@ ACE_OS::thr_min_stack (void)
 
   ACE_OSCALL (ACE_ADAPT_RETVAL (::taskInfoGet (tid, &taskDesc),
                                 status),
-              STATUS, -1, status);
+              STATUS, status);
   return status == OK ? taskDesc.td_stackSize : 0;
 # else /* Should not happen... */
   ACE_NOTSUP_RETURN (0);
-# endif /* ACE_HAS_STHREADS */
+# endif /* ACE_HAS_PTHREADS */
 #else
   ACE_NOTSUP_RETURN (0);
 #endif /* ACE_HAS_THREADS */
@@ -3192,28 +2766,36 @@ ACE_OS::thr_gettid (char buffer[], size_t buffer_length)
     static_cast<int> (ACE_OS::thr_gettid ()));
 }
 
+ACE_INLINE pid_t
+ACE_OS::thr_gettid ()
+{
+#ifdef ACE_HAS_GETTID
+  return syscall (SYS_gettid);
+#else
+  ACE_NOTSUP_RETURN (-1);
+#endif
+}
+
 ACE_INLINE ACE_thread_t
-ACE_OS::thr_self (void)
+ACE_OS::thr_self ()
 {
   // ACE_OS_TRACE ("ACE_OS::thr_self");
 #if defined (ACE_HAS_THREADS)
 # if defined (ACE_HAS_PTHREADS)
   // Note, don't use "::" here since the following call is often a macro.
   return pthread_self ();
-# elif defined (ACE_HAS_STHREADS)
-  ACE_OSCALL_RETURN (::thr_self (), int, -1);
 # elif defined (ACE_HAS_WTHREADS)
   return ::GetCurrentThreadId ();
 # elif defined (ACE_HAS_VXTHREADS)
   return ::taskIdSelf ();
-# endif /* ACE_HAS_STHREADS */
+# endif /* ACE_HAS_PTHREADS */
 #else
   return 1; // Might as well make it the first thread ;-)
 #endif /* ACE_HAS_THREADS */
 }
 
 ACE_INLINE const char*
-ACE_OS::thr_name (void)
+ACE_OS::thr_name ()
 {
 #if defined (ACE_HAS_THREADS)
 #if defined (ACE_HAS_VXTHREADS)
@@ -3236,13 +2818,11 @@ ACE_OS::thr_self (ACE_hthread_t &self)
   self = pthread_self ();
 # elif defined (ACE_HAS_THREAD_SELF)
   self = ::thread_self ();
-# elif defined (ACE_HAS_STHREADS)
-  self = ::thr_self ();
 # elif defined (ACE_HAS_WTHREADS)
   self = ::GetCurrentThread ();
 # elif defined (ACE_HAS_VXTHREADS)
   self = ::taskIdSelf ();
-# endif /* ACE_HAS_STHREADS */
+# endif /* ACE_HAS_PTHREADS */
 #else
   self = 1; // Might as well make it the main thread ;-)
 #endif /* ACE_HAS_THREADS */
@@ -3271,7 +2851,7 @@ ACE_OS::thr_setcancelstate (int new_state, int *old_state)
   ACE_OSCALL (ACE_ADAPT_RETVAL (pthread_setcancelstate (local_new,
                                                         &local_old),
                                 result),
-              int, -1, result);
+              int, result);
   if (result == -1)
     return -1;
   switch (local_old)
@@ -3284,10 +2864,6 @@ ACE_OS::thr_setcancelstate (int new_state, int *old_state)
       break;
     }
   return result;
-# elif defined (ACE_HAS_STHREADS)
-  ACE_UNUSED_ARG (new_state);
-  ACE_UNUSED_ARG (old_state);
-  ACE_NOTSUP_RETURN (-1);
 # elif defined (ACE_HAS_WTHREADS)
   ACE_UNUSED_ARG (new_state);
   ACE_UNUSED_ARG (old_state);
@@ -3327,7 +2903,7 @@ ACE_OS::thr_setcanceltype (int new_type, int *old_type)
   ACE_OSCALL (ACE_ADAPT_RETVAL (pthread_setcanceltype (local_new,
                                                        &local_old),
                                 result),
-              int, -1, result);
+              int, result);
   if (result == -1)
     return -1;
   switch (local_old)
@@ -3357,20 +2933,13 @@ ACE_OS::thr_setconcurrency (int hint)
 {
   ACE_OS_TRACE ("ACE_OS::thr_setconcurrency");
 #if defined (ACE_HAS_THREADS)
-# if defined (ACE_HAS_STHREADS)
+# if defined (ACE_HAS_PTHREADS) && defined (ACE_HAS_PTHREAD_SETCONCURRENCY)
   int result;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_setconcurrency (hint),
-                                       result),
-                     int, -1);
-# elif defined (ACE_HAS_PTHREADS) && defined (ACE_HAS_PTHREAD_SETCONCURRENCY)
-  int result;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_setconcurrency (hint),
-                                       result),
-                     int, -1);
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_setconcurrency (hint), result), int);
 # else
   ACE_UNUSED_ARG (hint);
   ACE_NOTSUP_RETURN (-1);
-# endif /* ACE_HAS_STHREADS */
+# endif /* ACE_HAS_PTHREADS */
 #else
   ACE_UNUSED_ARG (hint);
   ACE_NOTSUP_RETURN (-1);
@@ -3395,9 +2964,7 @@ ACE_OS::thr_setprio (ACE_hthread_t ht_id, int priority, int policy)
   // pthread_getschedparam().
   if (policy == -1)
     {
-      ACE_OSCALL (ACE_ADAPT_RETVAL (pthread_getschedparam (ht_id, &policy, &param),
-                                    result),
-                  int, -1, result);
+      ACE_OSCALL (ACE_ADAPT_RETVAL (pthread_getschedparam (ht_id, &policy, &param), result), int, result);
       if (result == -1)
         return result;
     }
@@ -3408,32 +2975,19 @@ ACE_OS::thr_setprio (ACE_hthread_t ht_id, int priority, int policy)
                                                               policy,
                                                               &param),
                                        result),
-                     int, -1);
-# elif defined (ACE_HAS_STHREADS)
-  int result;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_setprio (ht_id, priority),
-                                       result),
-                     int, -1);
+                     int);
 # elif defined (ACE_HAS_WTHREADS)
-
-#   if defined (ACE_HAS_WINCE) && !defined (ACE_LACKS_CE_THREAD_PRIORITY)
-  ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::CeSetThreadPriority (ht_id, priority),
-                                          ace_result_),
-                        int, -1);
-#   else
   ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::SetThreadPriority (ht_id, priority),
                                           ace_result_),
                         int, -1);
-#   endif /* defined (ACE_HAS_WINCE) && !defined (ACE_LACKS_CE_THREAD_PRIORITY) */
-
 # elif defined (ACE_HAS_VXTHREADS)
-  ACE_OSCALL_RETURN (::taskPrioritySet (ht_id, priority), int, -1);
+  ACE_OSCALL_RETURN (::taskPrioritySet (ht_id, priority), int);
 # else
   // For example, platforms that support Pthreads but LACK_SETSCHED.
   ACE_UNUSED_ARG (ht_id);
   ACE_UNUSED_ARG (priority);
   ACE_NOTSUP_RETURN (-1);
-# endif /* ACE_HAS_STHREADS */
+# endif /* ACE_HAS_PTHREADS */
 #else
   ACE_UNUSED_ARG (ht_id);
   ACE_UNUSED_ARG (priority);
@@ -3449,7 +3003,7 @@ ACE_OS::thr_sigsetmask (int how,
   ACE_OS_TRACE ("ACE_OS::thr_sigsetmask");
 #if defined (ACE_HAS_THREADS)
 # if defined (ACE_LACKS_PTHREAD_THR_SIGSETMASK)
-  // DCE threads and Solaris 2.4 have no such function.
+  // DCE threads
   ACE_UNUSED_ARG (osm);
   ACE_UNUSED_ARG (nsm);
   ACE_UNUSED_ARG (how);
@@ -3457,28 +3011,16 @@ ACE_OS::thr_sigsetmask (int how,
   ACE_NOTSUP_RETURN (-1);
 # elif defined (ACE_HAS_SIGTHREADMASK)
   int result;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::sigthreadmask (how, nsm, osm),
-                                       result), int, -1);
-# elif defined (ACE_HAS_STHREADS)
-  int result;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_sigsetmask (how, nsm, osm),
-                                       result),
-                     int, -1);
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::sigthreadmask (how, nsm, osm), result), int);
 # elif defined (ACE_HAS_PTHREADS)
 #   if !defined (ACE_LACKS_PTHREAD_SIGMASK)
   int result;
   //FUZZ: disable check_for_lack_ACE_OS
 #    if defined (ACE_HAS_NONCONST_PTHREAD_SIGMASK)
   sigset_t *ncnsm = const_cast<sigset_t *>(nsm);
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_sigmask (how, ncnsm, osm),
-                                       result),
-                     int,
-                     -1);
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_sigmask (how, ncnsm, osm), result), int);
 #    else
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_sigmask (how, nsm, osm),
-                                       result),
-                     int,
-                     -1);
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_sigmask (how, nsm, osm), result), int);
 #    endif /* ACE_HAS_NONCONST__PTHREAD_SIGMASK */
   //FUZZ: enable check_for_lack_ACE_OS
 #   endif /* !ACE_LACKS_PTHREAD_SIGMASK */
@@ -3534,20 +3076,13 @@ ACE_OS::thr_suspend (ACE_hthread_t target_thread)
 {
   ACE_OS_TRACE ("ACE_OS::thr_suspend");
 #if defined (ACE_HAS_THREADS)
-# if defined (ACE_HAS_STHREADS)
-  int result;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_suspend (target_thread), result), int, -1);
-# elif defined (ACE_HAS_PTHREADS)
+# if defined (ACE_HAS_PTHREADS)
 #  if defined (ACE_HAS_PTHREAD_SUSPEND)
   int result;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_suspend (target_thread),
-                                       result),
-                     int, -1);
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_suspend (target_thread), result), int);
 #  elif defined (ACE_HAS_PTHREAD_SUSPEND_NP)
   int result;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_suspend_np (target_thread),
-                                       result),
-                     int, -1);
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_suspend_np (target_thread), result), int);
 #  else
   ACE_UNUSED_ARG (target_thread);
   ACE_NOTSUP_RETURN (-1);
@@ -3559,8 +3094,8 @@ ACE_OS::thr_suspend (ACE_hthread_t target_thread)
     ACE_FAIL_RETURN (-1);
   /* NOTREACHED */
 # elif defined (ACE_HAS_VXTHREADS)
-  ACE_OSCALL_RETURN (::taskSuspend (target_thread), int, -1);
-# endif /* ACE_HAS_STHREADS */
+  return ::taskSuspend (target_thread);
+# endif /* ACE_HAS_PTHREADS */
 #else
   ACE_UNUSED_ARG (target_thread);
   ACE_NOTSUP_RETURN (-1);
@@ -3568,15 +3103,12 @@ ACE_OS::thr_suspend (ACE_hthread_t target_thread)
 }
 
 ACE_INLINE void
-ACE_OS::thr_testcancel (void)
+ACE_OS::thr_testcancel ()
 {
   ACE_OS_TRACE ("ACE_OS::thr_testcancel");
 #if defined (ACE_HAS_THREADS)
 # if defined (ACE_HAS_PTHREADS) && !defined (ACE_LACKS_PTHREAD_CANCEL)
   pthread_testcancel ();
-# elif defined (ACE_HAS_STHREADS)
-# elif defined (ACE_HAS_WTHREADS)
-# elif defined (ACE_HAS_VXTHREADS)
 # else
   // no-op:  can't use ACE_NOTSUP_RETURN because there is no return value
 # endif /* ACE_HAS_PTHREADS */
@@ -3585,14 +3117,12 @@ ACE_OS::thr_testcancel (void)
 }
 
 ACE_INLINE void
-ACE_OS::thr_yield (void)
+ACE_OS::thr_yield ()
 {
   ACE_OS_TRACE ("ACE_OS::thr_yield");
 #if defined (ACE_HAS_THREADS)
 # if defined (ACE_HAS_PTHREADS)
   ::sched_yield ();
-# elif defined (ACE_HAS_STHREADS)
-  ::thr_yield ();
 # elif defined (ACE_HAS_WTHREADS)
   ::Sleep (0);
 # elif defined (ACE_HAS_VXTHREADS)
@@ -3601,7 +3131,7 @@ ACE_OS::thr_yield (void)
   // Now, it does seem to work.  The context_switch_time test
   // works fine with task_delay set to 0.
   ::taskDelay (0);
-# endif /* ACE_HAS_STHREADS */
+# endif /* ACE_HAS_PTHREADS */
 #else
   ;
 #endif /* ACE_HAS_THREADS */
@@ -3649,13 +3179,13 @@ ACE_OS::thread_mutex_init (ACE_thread_mutex_t *m,
     }
   return 0;
 
-# elif defined (ACE_HAS_STHREADS) || defined (ACE_HAS_PTHREADS)
+# elif defined (ACE_HAS_PTHREADS)
   // Force the use of USYNC_THREAD!
   return ACE_OS::mutex_init (m, USYNC_THREAD, name, arg, 0, lock_type);
 # elif defined (ACE_HAS_VXTHREADS)
   return mutex_init (m, lock_type, name, arg);
 
-# endif /* ACE_HAS_STHREADS || ACE_HAS_PTHREADS */
+# endif /* ACE_HAS_PTHREADS */
 
 #else
   ACE_UNUSED_ARG (m);
@@ -3692,12 +3222,12 @@ ACE_OS::thread_mutex_init (ACE_thread_mutex_t *m,
     }
   return 0;
 
-# elif defined (ACE_HAS_STHREADS) || defined (ACE_HAS_PTHREADS)
+# elif defined (ACE_HAS_PTHREADS)
   // Force the use of USYNC_THREAD!
   return ACE_OS::mutex_init (m, USYNC_THREAD, name, arg, 0, lock_type);
 # elif defined (ACE_HAS_VXTHREADS)
   return mutex_init (m, lock_type, name, arg);
-# endif /* ACE_HAS_STHREADS || ACE_HAS_PTHREADS */
+# endif /* ACE_HAS_PTHREADS */
 #else
   ACE_UNUSED_ARG (m);
   ACE_UNUSED_ARG (lock_type);
@@ -3767,7 +3297,7 @@ ACE_OS::thread_mutex_trylock (ACE_thread_mutex_t *m)
 # if defined (ACE_HAS_WTHREADS)
 #   if defined (ACE_HAS_WIN32_TRYLOCK)
   BOOL result = ::TryEnterCriticalSection (m);
-  if (result == TRUE)
+  if (result)
     {
       return 0;
     }
@@ -3780,7 +3310,7 @@ ACE_OS::thread_mutex_trylock (ACE_thread_mutex_t *m)
   ACE_UNUSED_ARG (m);
   ACE_NOTSUP_RETURN (-1);
 #   endif /* ACE_HAS_WIN32_TRYLOCK */
-# elif defined (ACE_HAS_STHREADS) || defined (ACE_HAS_PTHREADS) || defined (ACE_VXWORKS)
+# elif defined (ACE_HAS_PTHREADS) || defined (ACE_VXWORKS)
   return ACE_OS::mutex_trylock (m);
 #endif /* Threads variety case */
 
@@ -3813,14 +3343,14 @@ ACE_OS::thread_mutex_unlock (ACE_thread_mutex_t *m)
 
 ACE_INLINE
 int
-ACE_OS_Thread_Mutex_Guard::acquire (void)
+ACE_OS_Thread_Mutex_Guard::acquire ()
 {
   return owner_ = ACE_OS::thread_mutex_lock (&lock_);
 }
 
 ACE_INLINE
 int
-ACE_OS_Thread_Mutex_Guard::release (void)
+ACE_OS_Thread_Mutex_Guard::release ()
 {
   if (owner_ == -1)
     return 0;
@@ -3849,14 +3379,14 @@ ACE_OS_Thread_Mutex_Guard::~ACE_OS_Thread_Mutex_Guard ()
 
 ACE_INLINE
 int
-ACE_OS_Recursive_Thread_Mutex_Guard::acquire (void)
+ACE_OS_Recursive_Thread_Mutex_Guard::acquire ()
 {
   return owner_ = ACE_OS::recursive_mutex_lock (&lock_);
 }
 
 ACE_INLINE
 int
-ACE_OS_Recursive_Thread_Mutex_Guard::release (void)
+ACE_OS_Recursive_Thread_Mutex_Guard::release ()
 {
   if (owner_ == -1)
     return 0;
@@ -3916,7 +3446,7 @@ ACE_Thread_ID::operator= (const ACE_Thread_ID &id)
 }
 
 ACE_INLINE
-ACE_Thread_ID::ACE_Thread_ID (void)
+ACE_Thread_ID::ACE_Thread_ID ()
   : thread_id_ (ACE_OS::thr_self ())
 {
   ACE_OS::thr_self (thread_handle_);
@@ -3924,7 +3454,7 @@ ACE_Thread_ID::ACE_Thread_ID (void)
 
 ACE_INLINE
 ACE_thread_t
-ACE_Thread_ID::id (void) const
+ACE_Thread_ID::id () const
 {
   return this->thread_id_;
 }
@@ -3936,7 +3466,7 @@ ACE_Thread_ID::id (ACE_thread_t thread_id)
 }
 
 ACE_INLINE ACE_hthread_t
-ACE_Thread_ID::handle (void) const
+ACE_Thread_ID::handle () const
 {
   return this->thread_handle_;
 }
@@ -3964,7 +3494,7 @@ ACE_Thread_ID::operator!= (const ACE_Thread_ID &rhs) const
 #if !defined (ACE_WIN32)
 
 ACE_INLINE
-ACE_event_t::ACE_event_t (void) :
+ACE_event_t::ACE_event_t () :
   name_ (0),
   eventdata_ (0)
 {

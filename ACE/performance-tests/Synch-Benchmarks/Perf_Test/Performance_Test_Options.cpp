@@ -7,7 +7,7 @@
 Performance_Test_Options performance_test_options;
 
 size_t
-Performance_Test_Options::count (void)
+Performance_Test_Options::count ()
 {
   size_t total = 0;
 
@@ -28,13 +28,13 @@ Performance_Test_Options::count (void)
 }
 
 void
-Performance_Test_Options::init (void)
+Performance_Test_Options::init ()
 {
   for (int i = 0; i < this->thr_wc_size; i++)
     this->thr_work_count[i] = 0;
 }
 
-Performance_Test_Options::Performance_Test_Options (void)
+Performance_Test_Options::Performance_Test_Options ()
                  : thr_wc_size (10000),
                    _service_entry (0),
                    _mapped_file (0),
@@ -280,7 +280,7 @@ Performance_Test_Options::parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 void
-Performance_Test_Options::print_results (void)
+Performance_Test_Options::print_results ()
 {
   ACE_Profile_Timer::ACE_Elapsed_Time et;
   this->_itimer.elapsed_time (et);

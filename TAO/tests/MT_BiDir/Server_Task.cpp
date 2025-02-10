@@ -20,7 +20,7 @@ Server_Task::Server_Task (Sender_i *sender,
 }
 
 int
-Server_Task::svc (void)
+Server_Task::svc ()
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Wait for the Event\n"));
 
@@ -28,7 +28,6 @@ Server_Task::svc (void)
   /// Yes, wait on event twice. One for making sure that we have got
   /// all the clients  come and register with us.
   this->event_.wait ();
-
 
 
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Start doing some work....\n"));

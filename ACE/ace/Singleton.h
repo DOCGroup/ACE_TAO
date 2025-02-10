@@ -78,35 +78,33 @@ class ACE_Singleton : public ACE_Cleanup
 {
 public:
   /// Global access point to the Singleton.
-  static TYPE *instance (void);
+  static TYPE *instance ();
 
   /// Cleanup method, used by @c ace_cleanup_destroyer to destroy the
   /// ACE_Singleton.
-  virtual void cleanup (void *param = 0);
+  virtual void cleanup (void *param = nullptr);
 
   /// Explicitly delete the Singleton instance.
-  static void close (void);
+  static void close ();
 
   /// Dump the state of the object.
-  static void dump (void);
+  static void dump ();
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
   /// Default constructor.
-  ACE_Singleton (void);
+  ACE_Singleton ();
 
   /// Contained instance.
   TYPE instance_;
 
-#if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
   /// Pointer to the Singleton (ACE_Cleanup) instance.
   static ACE_Singleton<TYPE, ACE_LOCK> *singleton_;
-#endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
 
   /// Get pointer to the Singleton instance.
-  static ACE_Singleton<TYPE, ACE_LOCK> *&instance_i (void);
+  static ACE_Singleton<TYPE, ACE_LOCK> *&instance_i ();
 };
 
 /**
@@ -131,28 +129,26 @@ class ACE_Unmanaged_Singleton : public ACE_Singleton <TYPE, ACE_LOCK>
 {
 public:
   /// Global access point to the Singleton.
-  static TYPE *instance (void);
+  static TYPE *instance ();
 
   /// Explicitly delete the Singleton instance.
-  static void close (void);
+  static void close ();
 
   /// Dump the state of the object.
-  static void dump (void);
+  static void dump ();
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
   /// Default constructor.
-  ACE_Unmanaged_Singleton (void);
+  ACE_Unmanaged_Singleton ();
 
-#if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
   /// Pointer to the Singleton (ACE_Cleanup) instance.
   static ACE_Unmanaged_Singleton<TYPE, ACE_LOCK> *singleton_;
-#endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
 
   /// Get pointer to the Singleton instance.
-  static ACE_Unmanaged_Singleton<TYPE, ACE_LOCK> *&instance_i (void);
+  static ACE_Unmanaged_Singleton<TYPE, ACE_LOCK> *&instance_i ();
 };
 
 /**
@@ -178,35 +174,33 @@ class ACE_TSS_Singleton : public ACE_Cleanup
 {
 public:
   /// Global access point to the singleton.
-  static TYPE *instance (void);
+  static TYPE *instance ();
 
   /// Cleanup method, used by <ace_cleanup_destroyer> to destroy the
   /// singleton.
-  virtual void cleanup (void *param = 0);
+  virtual void cleanup (void *param = nullptr);
 
   /// Dump the state of the object.
-  static void dump (void);
+  static void dump ();
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
   /// Default constructor.
-  ACE_TSS_Singleton (void);
+  ACE_TSS_Singleton ();
 
   /// Contained instance.
   ACE_TSS_TYPE (TYPE) instance_;
 
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_TSS_Singleton<TYPE,ACE_LOCK> &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_TSS_Singleton (const ACE_TSS_Singleton<TYPE,ACE_LOCK> &))
+  void operator= (const ACE_TSS_Singleton<TYPE,ACE_LOCK> &) = delete;
+  ACE_TSS_Singleton (const ACE_TSS_Singleton<TYPE,ACE_LOCK> &) = delete;
 
-#if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
   /// Pointer to the Singleton (ACE_Cleanup) instance.
   static ACE_TSS_Singleton<TYPE, ACE_LOCK> *singleton_;
-#endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
 
   /// Get pointer to the TSS Singleton instance.
-  static ACE_TSS_Singleton<TYPE, ACE_LOCK> *&instance_i (void);
+  static ACE_TSS_Singleton<TYPE, ACE_LOCK> *&instance_i ();
 };
 
 /**
@@ -227,28 +221,26 @@ class ACE_Unmanaged_TSS_Singleton : public ACE_TSS_Singleton <TYPE, ACE_LOCK>
 {
 public:
   /// Global access point to the singleton.
-  static TYPE *instance (void);
+  static TYPE *instance ();
 
   /// Explicitly delete the singleton instance.
-  static void close (void);
+  static void close ();
 
   /// Dump the state of the object.
-  static void dump (void);
+  static void dump ();
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
   /// Default constructor.
-  ACE_Unmanaged_TSS_Singleton (void);
+  ACE_Unmanaged_TSS_Singleton ();
 
-#if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
   /// Pointer to the Singleton (ACE_Cleanup) instance.
   static ACE_Unmanaged_TSS_Singleton<TYPE, ACE_LOCK> *singleton_;
-#endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
 
   /// Get pointer to the Singleton instance.
-  static ACE_Unmanaged_TSS_Singleton<TYPE, ACE_LOCK> *&instance_i (void);
+  static ACE_Unmanaged_TSS_Singleton<TYPE, ACE_LOCK> *&instance_i ();
 };
 
 /**
@@ -279,50 +271,48 @@ template <class TYPE, class ACE_LOCK>
 class ACE_DLL_Singleton_T
 {
 public:
-  //void cleanup (void *param = 0);
+  //void cleanup (void *param = nullptr);
 
   /// Global access point to the Singleton.
-  static TYPE *instance (void);
+  static TYPE *instance ();
 
   /// Explicitly delete the Singleton instance.
-  static void close (void);
+  static void close ();
 
-  static void close_singleton (void);
+  static void close_singleton ();
 
   /// Dump the state of the object.
-  static void dump (void);
+  static void dump ();
 
-  const ACE_TCHAR *dll_name (void);
+  const ACE_TCHAR *dll_name ();
 
-  const ACE_TCHAR *name (void);
+  const ACE_TCHAR *name ();
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
   /// Default constructor.
-  ACE_DLL_Singleton_T (void);
+  ACE_DLL_Singleton_T ();
 
   /// Destructor.
-  ~ACE_DLL_Singleton_T (void);
+  ~ACE_DLL_Singleton_T ();
 
   /// Contained instance.
   TYPE instance_;
 
-#if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
   /// Pointer to the Singleton instance.
   static ACE_DLL_Singleton_T<TYPE, ACE_LOCK> *singleton_;
-#endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
 
   /// Get pointer to the singleton instance.
-  static ACE_DLL_Singleton_T<TYPE, ACE_LOCK> *&instance_i (void);
+  static ACE_DLL_Singleton_T<TYPE, ACE_LOCK> *&instance_i ();
 };
 
 template <class TYPE>
 class ACE_DLL_Singleton_Adapter_T : public TYPE
 {
 public:
-  const ACE_TCHAR *dll_name (void);
+  const ACE_TCHAR *dll_name ();
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -334,13 +324,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #include "ace/Singleton.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Singleton.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Singleton.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_SINGLETON_H */

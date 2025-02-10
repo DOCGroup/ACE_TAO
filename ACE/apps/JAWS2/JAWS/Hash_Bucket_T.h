@@ -29,7 +29,7 @@ public:
   JAWS_Hash_Bucket_Item (JAWS_Hash_Bucket_Item<EXT_ID, INT_ID> *next = 0,
                          JAWS_Hash_Bucket_Item<EXT_ID, INT_ID> *prev = 0);
 
-  ~JAWS_Hash_Bucket_Item (void);
+  ~JAWS_Hash_Bucket_Item ();
   // Destructor.
 
   EXT_ID ext_id_;
@@ -43,7 +43,6 @@ public:
 
   JAWS_Hash_Bucket_Item<EXT_ID, INT_ID> *prev_;
   // Pointer to the prev item in the bucket of overflow nodes.
-
 };
 
 
@@ -60,11 +59,10 @@ class JAWS_Hash_Bucket_DLCStack
   friend class JAWS_Hash_Bucket_DLCStack_Iterator<EXT_ID, INT_ID>;
 
 public:
-
   JAWS_Hash_Bucket_DLCStack (ACE_Allocator *alloc = 0);
-  ~JAWS_Hash_Bucket_DLCStack (void);
+  ~JAWS_Hash_Bucket_DLCStack ();
 
-  int is_empty (void) const;
+  int is_empty () const;
   // Returns 1 if the container is empty, otherwise returns 0.
 
   JAWS_Hash_Bucket_Item<EXT_ID, INT_ID> *push (const EXT_ID &ext_id,
@@ -72,12 +70,12 @@ public:
   // Adds <new_item> to the head of the list.
   // Returns the new item that was inserted.
 
-  JAWS_Hash_Bucket_Item<EXT_ID, INT_ID> *pop (void);
+  JAWS_Hash_Bucket_Item<EXT_ID, INT_ID> *pop ();
   // Removes and returns the first <item> in the list.  Returns
   // internal node's address on success, 0 if the queue was empty.
   // This method will *not* free the internal node.
 
-  void reset (void);
+  void reset ();
   // Reset the <JAWS_Hash_Bucket_DLCStack> to be empty.
   // Notice that since no one is interested in the items within,
   // This operation will delete all items.
@@ -90,10 +88,8 @@ public:
   ACE_Allocator *allocator_;
 
 private:
-
   JAWS_Hash_Bucket_Item<EXT_ID, INT_ID> *head_;
   JAWS_Hash_Bucket_Item<EXT_ID, INT_ID> *tail_;
-
 };
 
 
@@ -101,23 +97,22 @@ template <class EXT_ID, class INT_ID>
 class JAWS_Hash_Bucket_DLCStack_Iterator
 {
 public:
-
   JAWS_Hash_Bucket_DLCStack_Iterator (const JAWS_HASH_BUCKET_DLCSTACK &dlcstack);
 
-  int first (void);
+  int first ();
   // Moves to first element in the set, clears done flag.  Returns 0
   // if empty, 1 otherwise.
 
-  int last (void);
+  int last ();
   // Moves to last element in the set, clears done flag.  Returns 0 if
   // empty, 1 otherwise.
 
-  int advance (void);
+  int advance ();
   // Move forward by one element of set.  Returns 0 if empty or we end
   // up being the first element in the set, 1 otherwise.  If advance
   // takes us to the first element, done is set to true.
 
-  int revert (void);
+  int revert ();
   // Move backward by one element of set.  Returns 0 if empty or we
   // end up being the last element in the set, 1 otherwise.  If revert
   // takes us to the last element, done is set to true.
@@ -131,7 +126,7 @@ public:
   // Pass back the previous item.  Returns 0 if done is true, 1
   // otherwise.
 
-  int done (void) const;
+  int done () const;
   // Returns 1 if done_ flag is set, 0 otherwise.  done_ flag is set
   // if next takes us to first element or prev takes us to last
   // element.
@@ -151,8 +146,8 @@ public:
   JAWS_Hash_Bucket_Manager (ACE_Allocator *alloc = 0);
   int open (ACE_Allocator *alloc = 0);
 
-  ~JAWS_Hash_Bucket_Manager (void);
-  int close (void);
+  ~JAWS_Hash_Bucket_Manager ();
+  int close ();
 
   int find (const EXT_ID &ext_id) const;
   int find (const EXT_ID &ext_id, INT_ID &int_id) const;
@@ -185,20 +180,14 @@ public:
   // if unbind succeeds, -1 otherwise.
 
 protected:
-
   JAWS_Hash_Bucket_Item<EXT_ID, INT_ID> *find_i (const EXT_ID &ext_id) const;
   // Returns the item associated with ext_id if found in list.
   // Returns NULL if not found.
 
 private:
-
   JAWS_Hash_Bucket_DLCStack<EXT_ID, INT_ID> dlcstack_;
-
 };
 
-
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "JAWS/Hash_Bucket_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #endif /* JAWS_HASH_BUCKET_T_H */

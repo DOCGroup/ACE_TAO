@@ -113,16 +113,13 @@ module PortableServer
 #endif
 #       if ! defined (CORBA_E_COMPACT) && ! defined (CORBA_E_MICRO) && !defined (TAO_HAS_MINIMUM_POA)
     ImplicitActivationPolicy create_implicit_activation_policy (
-        in ImplicitActivationPolicyValue value
-      );
+        in ImplicitActivationPolicyValue value);
 
     ServantRetentionPolicy create_servant_retention_policy (
-        in ServantRetentionPolicyValue value
-      );
+        in ServantRetentionPolicyValue value);
 
     RequestProcessingPolicy create_request_processing_policy (
-        in RequestProcessingPolicyValue value
-      );
+        in RequestProcessingPolicyValue value);
 #       endif
 
     // POA attributes

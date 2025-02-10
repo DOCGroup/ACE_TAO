@@ -33,7 +33,6 @@ public:
 
 // Implementation
 protected:
-
   // Generated message map functions
   //{{AFX_MSG(ViewIORDialog)
   virtual BOOL OnInitDialog();

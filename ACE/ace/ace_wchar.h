@@ -35,18 +35,10 @@
 #     include /**/ <wchar.h>
 #     include /**/ <wctype.h>
 #   endif
-# elif defined (ACE_OPENVMS)
-#   include /**/ <wchar.h>
-#   include /**/ <wctype.h>
-# elif defined (ACE_HAS_STANDARD_CPP_LIBRARY) && \
-    (ACE_HAS_STANDARD_CPP_LIBRARY != 0)
+# else
 #   include /**/ <cwchar>
 #   include /**/ <cwctype>
-# elif defined (ACE_HAS_WINCE)
-#   include /**/ <wtypes.h>
-# else
-#   include /**/ <wchar.h>
-# endif /* ACE_HAS_STANDARD_CPP_LIBRARY */
+# endif /* ACE_VXWORKS */
 #endif /* ACE_HAS_WCHAR */
 
 #if defined (ACE_HAS_ICONV)
@@ -94,6 +86,11 @@ typedef char ACE_ANTI_TCHAR;
 # define ACE_TEXT_CHAR_TO_TCHAR(STRING) ACE_Ascii_To_Wide (STRING).wchar_rep ()
 # define ACE_TEXT_WCHAR_TO_TCHAR(STRING) STRING
 # define ACE_TEXT_ANTI_TO_TCHAR(STRING) ACE_Ascii_To_Wide (STRING).wchar_rep ()
+# if !defined (ACE_WIN32)
+#   define ACE_TEXT_PRIs ACE_TEXT("ls")
+# else
+#   define ACE_TEXT_PRIs ACE_TEXT("s")
+# endif
 #else /* ACE_USES_WCHAR */
 typedef char ACE_TCHAR;
 typedef wchar_t ACE_ANTI_TCHAR;
@@ -103,6 +100,7 @@ typedef wchar_t ACE_ANTI_TCHAR;
 # define ACE_TEXT_CHAR_TO_TCHAR(STRING) STRING
 # define ACE_TEXT_WCHAR_TO_TCHAR(STRING) ACE_Wide_To_Ascii (STRING).char_rep ()
 # define ACE_TEXT_ANTI_TO_TCHAR(STRING) ACE_Wide_To_Ascii (STRING).char_rep ()
+# define ACE_TEXT_PRIs ACE_TEXT("s")
 #endif /* ACE_USES_WCHAR */
 
 // The OS_String module defines some wide-char functions that are not
@@ -150,10 +148,10 @@ public:
   ACE_Wide_To_Ascii (const wchar_t *s);
 
   /// Destructor will free up the memory.
-  ~ACE_Wide_To_Ascii (void);
+  ~ACE_Wide_To_Ascii ();
 
   /// Return the internal char* representation.
-  char *char_rep (void);
+  char *char_rep ();
 
   /// Converts an wchar_t string to ascii and returns a new string.
   static char *convert (const wchar_t *wstr);
@@ -167,7 +165,7 @@ private:
 #endif /* ACE_HAS_ICONV */
 
   /// Disallow these operation.
-  ACE_Wide_To_Ascii (void);
+  ACE_Wide_To_Ascii ();
   ACE_Wide_To_Ascii (ACE_Wide_To_Ascii &);
   ACE_Wide_To_Ascii& operator= (ACE_Wide_To_Ascii &);
 };
@@ -188,10 +186,10 @@ public:
   ACE_Ascii_To_Wide (const char *s);
 
   /// Destructor will free up the memory.
-  ~ACE_Ascii_To_Wide (void);
+  ~ACE_Ascii_To_Wide ();
 
   /// Return the internal wchar* representation.
-  wchar_t *wchar_rep (void);
+  wchar_t *wchar_rep ();
 
   /// Converts an char string to unicode/wide and returns a new string.
   static wchar_t *convert (const char *str);
@@ -205,9 +203,9 @@ private:
 #endif /* ACE_HAS_ICONV */
 
   /// Disallow these operation.
-  ACE_Ascii_To_Wide (void);
-  ACE_Ascii_To_Wide (ACE_Ascii_To_Wide &);
-  ACE_Ascii_To_Wide operator= (ACE_Ascii_To_Wide &);
+  ACE_Ascii_To_Wide () = delete;
+  ACE_Ascii_To_Wide (ACE_Ascii_To_Wide &) = delete;
+  ACE_Ascii_To_Wide operator= (ACE_Ascii_To_Wide &) = delete;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

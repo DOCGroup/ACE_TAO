@@ -16,7 +16,7 @@ be_visitor_interface::be_visitor_interface (be_visitor_context *ctx)
 {
 }
 
-be_visitor_interface::~be_visitor_interface (void)
+be_visitor_interface::~be_visitor_interface ()
 {
 }
 
@@ -35,9 +35,9 @@ be_visitor_interface::visit_scope (be_scope *node)
       return -1;
     }
 
-  be_interface *intf = be_interface::narrow_from_scope (node);
+  be_interface *intf = dynamic_cast<be_interface*> (node);
 
-  if (intf == 0)
+  if (intf == nullptr)
     {
       return 0;
     }
@@ -52,7 +52,7 @@ be_visitor_interface::visit_scope (be_scope *node)
       return 0;
     }
 
-  be_interface::tao_code_emitter helper = 0;
+  be_interface::tao_code_emitter helper = nullptr;
 
   switch (this->ctx_->state ())
     {
@@ -84,7 +84,7 @@ be_visitor_interface::visit_scope (be_scope *node)
         break;
     }
 
-  if (helper == 0)
+  if (helper == nullptr)
     {
       return 0;
     }
@@ -113,7 +113,7 @@ int
 be_visitor_interface::is_amh_rh_node (be_interface *node)
 {
    //If, is implied-IDL
-  if (node->original_interface () != 0)
+  if (node->original_interface () != nullptr)
     {
       // and the name starts with AMH
       if (ACE_OS::strncmp (node->local_name (), "AMH", 3) == 0)
@@ -130,7 +130,7 @@ void
 be_visitor_interface::add_abstract_op_args (AST_Operation *old_op,
                                             be_operation &new_op)
 {
-  AST_Decl *d = 0;
+  AST_Decl *d = nullptr;
 
   for (UTL_ScopeActiveIterator si (old_op, UTL_Scope::IK_decls);
        !si.is_done ();
@@ -142,7 +142,7 @@ be_visitor_interface::add_abstract_op_args (AST_Operation *old_op,
 
   UTL_ExceptList *excep_list = old_op->exceptions ();
 
-  if (0 != excep_list)
+  if (nullptr != excep_list)
     {
       new_op.be_add_exceptions (excep_list->copy ());
     }

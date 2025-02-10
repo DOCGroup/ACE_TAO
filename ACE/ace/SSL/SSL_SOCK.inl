@@ -10,7 +10,7 @@ ACE_SSL_SOCK::set_handle (ACE_HANDLE fd)
 }
 
 ACE_INLINE ACE_HANDLE
-ACE_SSL_SOCK::get_handle (void) const
+ACE_SSL_SOCK::get_handle () const
 {
   // return this->ssl_ ? (ACE_HANDLE) ::SSL_get_fd (this->ssl_) : ACE_INVALID_HANDLE;
   return this->ACE_SOCK::get_handle ();

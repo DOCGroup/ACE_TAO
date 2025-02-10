@@ -21,7 +21,7 @@ class Alt_Resource_Factory_Export My_Resource_Factory
 {
 public:
   /// Return the @c ACE_Reactor that will be utilized by the ORB.
-  virtual ACE_Reactor *get_reactor (void);
+  virtual ACE_Reactor *get_reactor ();
 };
 
 ACE_FACTORY_DECLARE (Alt_Resource_Factory, My_Resource_Factory)
@@ -39,10 +39,10 @@ public:
   virtual int init (int argc, ACE_TCHAR *argv[]);
 
   /// Shutdown the @c TAO_ORB_Manager.
-  virtual int fini (void);
+  virtual int fini ();
 
   /// Concurrency hook.
-  virtual int svc (void);
+  virtual int svc ();
 
 public:
   /// ORB pseudo-reference.
@@ -66,7 +66,7 @@ class ACE_Svc_Export Time_Date_Servant : public ACE_Service_Object
 {
 public:
   /// Constructor.
-  Time_Date_Servant (void);
+  Time_Date_Servant ();
 
   /// Initialize the @c Time_Date servant.
   virtual int init (int argc, ACE_TCHAR *argv[]);

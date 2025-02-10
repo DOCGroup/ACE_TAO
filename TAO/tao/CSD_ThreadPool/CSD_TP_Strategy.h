@@ -32,7 +32,6 @@ namespace TAO
 {
   namespace CSD
   {
-
     class TP_Strategy;
     typedef TAO_Intrusive_Ref_Count_Handle<TP_Strategy> TP_Strategy_Handle;
 
@@ -56,7 +55,6 @@ namespace TAO
       : public Strategy_Base
     {
     public:
-
       /// Constructor.
       TP_Strategy(Thread_Counter  num_threads = 1,
                   bool     serialize_servants = true);
@@ -102,7 +100,6 @@ namespace TAO
       void cancel_requests(PortableServer::Servant servant);
 
     protected:
-
       /// Handle the dispatching of a remote request.
       ///
       /// This will cause a new "request" object to be created and pushed
@@ -148,7 +145,6 @@ namespace TAO
                                      const PortableServer::ObjectId& oid);
 
     private:
-
       /**
       * Helper method that is responsible for looking up the servant
       * state object in the servant state map *if* the "serialize
@@ -184,7 +180,6 @@ namespace TAO
       /// "serialize servants" flag is set to true.
       TP_Servant_State_Map servant_state_map_;
     };
-
   }
 }
 

@@ -68,7 +68,6 @@ typedef unsigned short                  ushort;
 #define MAXPATHLEN                      512
 
 
-
 #else /* not WIN32 */
 #define NETREAD(sock, buf, len)         read(sock, buf, len)
 #define NETWRITE(sock, buf, len)        write(sock, buf, len)
@@ -102,7 +101,7 @@ typedef int                             SOCKET;
 
 #ifdef WIN32
 int     getopt(int argc, char ** argv, char *opts);
-int     getpid(void);
+int     getpid();
 int     gettimeofday(struct timeval *curTimeP);
 int     random_number(int max);
 SOCKET  rexec(const char **hostname, NETPORT port, char *username, char *password,

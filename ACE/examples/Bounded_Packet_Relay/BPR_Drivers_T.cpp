@@ -21,11 +21,10 @@
 #include "ace/OS_NS_unistd.h"
 
 
-
 // Constructor.
 
 template <class TQ>
-Bounded_Packet_Relay_Driver<TQ>::Bounded_Packet_Relay_Driver (void)
+Bounded_Packet_Relay_Driver<TQ>::Bounded_Packet_Relay_Driver ()
   : packet_count_cmd_ (0),
     arrival_period_cmd_ (0),
     transmit_period_cmd_ (0),
@@ -46,7 +45,7 @@ Bounded_Packet_Relay_Driver<TQ>::Bounded_Packet_Relay_Driver (void)
 // Destructor.
 
 template <class TQ>
-Bounded_Packet_Relay_Driver<TQ>::~Bounded_Packet_Relay_Driver (void)
+Bounded_Packet_Relay_Driver<TQ>::~Bounded_Packet_Relay_Driver ()
 {
   // delete all instantiated command objects
   delete packet_count_cmd_;
@@ -187,7 +186,7 @@ Bounded_Packet_Relay_Driver<TQ>::parse_commands (const char *buf)
 // Runs the test.
 
 template <class TQ> int
-Bounded_Packet_Relay_Driver<TQ>::run (void)
+Bounded_Packet_Relay_Driver<TQ>::run ()
 {
   this->init ();
 
@@ -203,7 +202,7 @@ Bounded_Packet_Relay_Driver<TQ>::run (void)
 // Gets the next request from the user input.
 
 template <class TQ> int
-Bounded_Packet_Relay_Driver<TQ>::get_next_request (void)
+Bounded_Packet_Relay_Driver<TQ>::get_next_request ()
 {
   char buf[BUFSIZ];
 
@@ -232,7 +231,7 @@ Bounded_Packet_Relay_Driver<TQ>::read_input (char *buf, size_t bufsiz)
 // Get count of packets to send in a transmission.
 
 template <class TQ> u_long
-Bounded_Packet_Relay_Driver<TQ>::packet_count (void)
+Bounded_Packet_Relay_Driver<TQ>::packet_count ()
 {
   return packet_count_;
 }
@@ -248,7 +247,7 @@ Bounded_Packet_Relay_Driver<TQ>::packet_count (u_long pc)
 // Get rate at which input packets are to arrive.
 
 template <class TQ> u_long
-Bounded_Packet_Relay_Driver<TQ>::arrival_period (void)
+Bounded_Packet_Relay_Driver<TQ>::arrival_period ()
 {
   return arrival_period_;
 }
@@ -264,7 +263,7 @@ Bounded_Packet_Relay_Driver<TQ>::arrival_period (u_long ap)
 // Get rate at which packets are to be relayed (usec).
 
 template <class TQ> u_long
-Bounded_Packet_Relay_Driver<TQ>::send_period (void)
+Bounded_Packet_Relay_Driver<TQ>::send_period ()
 {
   return send_period_;
 }
@@ -280,7 +279,7 @@ Bounded_Packet_Relay_Driver<TQ>::send_period (u_long sp)
 // Get limit on the duration of the transmission (usec).
 
 template <class TQ> u_long
-Bounded_Packet_Relay_Driver<TQ>::duration_limit (void)
+Bounded_Packet_Relay_Driver<TQ>::duration_limit ()
 {
   return duration_limit_;
 }
@@ -295,7 +294,7 @@ Bounded_Packet_Relay_Driver<TQ>::duration_limit (u_long dl)
 // Get logging level.
 
 template <class TQ> int
-Bounded_Packet_Relay_Driver<TQ>::logging_level (void)
+Bounded_Packet_Relay_Driver<TQ>::logging_level ()
 {
   return logging_level_;
 }

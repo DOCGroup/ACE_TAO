@@ -64,8 +64,7 @@ namespace
 
     static void remove ()
     {
-      const NestedNamingContexts *const pThisOne= pBottom;
-      delete pThisOne; // i.e. delete pBottom; Attempt to stop over-optimisation by BORLAND
+      delete pBottom;
     }
 
     static size_t hasBeenSeen (const CosNaming::NamingContext_ptr nc)

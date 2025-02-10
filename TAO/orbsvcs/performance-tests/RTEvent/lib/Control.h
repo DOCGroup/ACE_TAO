@@ -29,14 +29,14 @@ public:
            PortableServer::POA_ptr poa);
 
   /// Destructor
-  virtual ~Control (void);
+  virtual ~Control ();
 
   //@{
   /** @name The Federated_Test::Control methods
    */
   virtual void join (Federated_Test::Peer_ptr peer);
 
-  virtual PortableServer::POA_ptr _default_POA (void);
+  virtual PortableServer::POA_ptr _default_POA ();
   //@}
 
 private:

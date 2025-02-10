@@ -62,7 +62,6 @@ client_thread(void *data)
 }
 
 int driver(char *id, int total_num, float requests_sec, char *url1, float p1, char *url2, float p2, char *url3, float p3, int tcp_nodelay, int sockbufsiz) {
-
   // construct the client parameters packet
 
   Client_Parameters::tcp_nodelay = tcp_nodelay;

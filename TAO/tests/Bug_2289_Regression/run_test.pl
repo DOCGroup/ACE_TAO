@@ -18,7 +18,7 @@ foreach $i (@ARGV) {
 }
 
 # We want the server to run on a fixed port
-$port = PerlACE::uniqueid () + 10001;  # This can't be 10000 for Chorus 4.0
+$port = PerlACE::uniqueid () + 10001;
 
 my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
 my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";

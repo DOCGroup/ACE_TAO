@@ -23,9 +23,9 @@
 class ECT_Throughput : public ECT_Driver
 {
 public:
-  ECT_Throughput (void);
+  ECT_Throughput ();
 
-  virtual ~ECT_Throughput (void);
+  virtual ~ECT_Throughput ();
 
   enum {
     MAX_CONSUMERS = 16,
@@ -48,18 +48,18 @@ private:
 
   void connect_consumers (RtecScheduler::Scheduler_ptr scheduler,
                           RtecEventChannelAdmin::EventChannel_ptr local_ec);
-  void disconnect_consumers (void);
+  void disconnect_consumers ();
   // Connect and disconnect the consumers.
 
   void connect_suppliers (RtecScheduler::Scheduler_ptr scheduler,
                           RtecEventChannelAdmin::EventChannel_ptr local_ec);
-  void disconnect_suppliers (void);
+  void disconnect_suppliers ();
   // Connect the suppliers.
 
-  void activate_suppliers (void);
+  void activate_suppliers ();
   // Activate the suppliers, i.e. they start generating events.
 
-  void dump_results (void);
+  void dump_results ();
   // Dump the results for each supplier.
 
 private:

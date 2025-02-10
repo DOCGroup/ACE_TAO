@@ -3,23 +3,23 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_CEC_Dispatching::~TAO_CEC_Dispatching (void)
+TAO_CEC_Dispatching::~TAO_CEC_Dispatching ()
 {
 }
 
 // ****************************************************************
 
-TAO_CEC_Reactive_Dispatching::TAO_CEC_Reactive_Dispatching (void)
+TAO_CEC_Reactive_Dispatching::TAO_CEC_Reactive_Dispatching ()
 {
 }
 
 void
-TAO_CEC_Reactive_Dispatching::activate (void)
+TAO_CEC_Reactive_Dispatching::activate ()
 {
 }
 
 void
-TAO_CEC_Reactive_Dispatching::shutdown (void)
+TAO_CEC_Reactive_Dispatching::shutdown ()
 {
 }
 

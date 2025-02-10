@@ -25,7 +25,7 @@
  * Returns 1 on error, 0 on AOK.
  */
 
-int node_init(void);
+int node_init();
 
 /*
  * Check the expiration date against The Now.
@@ -33,13 +33,13 @@ int node_init(void);
  * Returns 1 on error, 0 on AOK.
  */
 
-int node_check(void);
+int node_check();
 
 /*
  * So how we doin, license
  *
  * Returns 1 on error, 0 on AOK
  */
-int node_status(void);
+int node_status();
 
 #endif

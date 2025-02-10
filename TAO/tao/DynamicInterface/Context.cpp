@@ -10,23 +10,14 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-CORBA::Context::Context (void)
-  : refcount_ (1)
-{
-}
-
-CORBA::Context::~Context (void)
-{
-}
-
 CORBA::ULong
-CORBA::Context::_incr_refcount (void)
+CORBA::Context::_incr_refcount ()
 {
   return ++refcount_;
 }
 
 CORBA::ULong
-CORBA::Context::_decr_refcount (void)
+CORBA::Context::_decr_refcount ()
 {
   CORBA::ULong const new_count = --this->refcount_;
 
@@ -37,13 +28,13 @@ CORBA::Context::_decr_refcount (void)
 }
 
 const char *
-CORBA::Context::context_name (void) const
+CORBA::Context::context_name () const
 {
   throw ::CORBA::NO_IMPLEMENT (TAO::VMCID, CORBA::COMPLETED_NO);
 }
 
 CORBA::Context_ptr
-CORBA::Context::parent (void) const
+CORBA::Context::parent () const
 {
   throw ::CORBA::NO_IMPLEMENT (TAO::VMCID, CORBA::COMPLETED_NO);
 }
@@ -92,7 +83,7 @@ CORBA::ContextList::ContextList (CORBA::ULong len, char* *ctx_list)
     }
 }
 
-CORBA::ContextList::~ContextList (void)
+CORBA::ContextList::~ContextList ()
 {
   for (CORBA::ULong i = 0; i < this->count (); ++i)
     {
@@ -141,14 +132,14 @@ CORBA::ContextList::remove (CORBA::ULong)
 }
 
 CORBA::ContextList_ptr
-CORBA::ContextList::_duplicate (void)
+CORBA::ContextList::_duplicate ()
 {
   ++this->refcount_;
   return this;
 }
 
 void
-CORBA::ContextList::_destroy (void)
+CORBA::ContextList::_destroy ()
 {
   CORBA::ULong const current = --this->refcount_;
 
@@ -159,13 +150,13 @@ CORBA::ContextList::_destroy (void)
 }
 
 void
-CORBA::ContextList::_incr_refcount (void)
+CORBA::ContextList::_incr_refcount ()
 {
   ++this->refcount_;
 }
 
 void
-CORBA::ContextList::_decr_refcount (void)
+CORBA::ContextList::_decr_refcount ()
 {
   --this->refcount_;
 

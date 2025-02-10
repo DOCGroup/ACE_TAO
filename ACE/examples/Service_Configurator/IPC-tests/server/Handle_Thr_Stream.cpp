@@ -21,12 +21,12 @@
 #define PR_ST_2 ACE_PEER_STREAM_2
 
 template <class SVH, PR_AC_1>
-Handle_Thr_Acceptor<SVH, PR_AC_2>::~Handle_Thr_Acceptor (void)
+Handle_Thr_Acceptor<SVH, PR_AC_2>::~Handle_Thr_Acceptor ()
 {
 }
 
 template <class SVH, PR_AC_1>
-Handle_Thr_Acceptor<SVH, PR_AC_2>::Handle_Thr_Acceptor (void)
+Handle_Thr_Acceptor<SVH, PR_AC_2>::Handle_Thr_Acceptor ()
   : thr_flags_ (THR_DETACHED | THR_NEW_LWP)
 {
 }
@@ -98,7 +98,7 @@ Handle_Thr_Acceptor<SVH, PR_AC_2>::init (int argc, ACE_TCHAR *argv[])
 }
 
 template <class SVH, PR_AC_1> int
-Handle_Thr_Acceptor<SVH, PR_AC_2>::fini (void)
+Handle_Thr_Acceptor<SVH, PR_AC_2>::fini ()
 {
   return ACE_Reactor::instance ()->remove_handler
     (this, ACE_Event_Handler::ACCEPT_MASK);
@@ -141,7 +141,7 @@ CLI_Stream<PR_ST_2>::open (void *)
 }
 
 template <PR_ST_1> int
-CLI_Stream<PR_ST_2>::svc (void)
+CLI_Stream<PR_ST_2>::svc ()
 {
   char buf[BUFSIZ];
   char login_name[ACE_MAX_USERID];

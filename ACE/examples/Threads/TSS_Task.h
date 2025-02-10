@@ -22,9 +22,8 @@
 class Test_Task
 {
 public:
-
-  Test_Task (void);
-  ~Test_Task (void);
+  Test_Task ();
+  ~Test_Task ();
 
   int open (void *arg);
 

@@ -10,7 +10,7 @@ TAO::SL3::SecurityManager::SecurityManager (
 {
 }
 
-TAO::SL3::SecurityManager::~SecurityManager (void)
+TAO::SL3::SecurityManager::~SecurityManager ()
 {
 }
 

@@ -11,18 +11,13 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_POA_Policy_Set::TAO_POA_Policy_Set (void)
+TAO_POA_Policy_Set::TAO_POA_Policy_Set ()
   : impl_ (TAO_POLICY_POA_SCOPE)
 {
 }
 
 TAO_POA_Policy_Set::TAO_POA_Policy_Set (const TAO_POA_Policy_Set &rhs)
-  :
-    impl_ (rhs.impl_)
-{
-}
-
-TAO_POA_Policy_Set::~TAO_POA_Policy_Set (void)
+  : impl_ (rhs.impl_)
 {
 }
 

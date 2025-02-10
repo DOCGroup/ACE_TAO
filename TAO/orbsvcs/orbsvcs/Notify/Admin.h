@@ -57,14 +57,14 @@ public:
                       bool experienced_timeout);
 
   /// Access Admin FilterAdmin.
-  TAO_Notify_FilterAdmin& filter_admin (void);
+  TAO_Notify_FilterAdmin& filter_admin ();
 
   /// Set Filter operator
   void filter_operator (
       CosNotifyChannelAdmin::InterFilterGroupOperator filter_operator);
 
   /// Access Filter operator
-  CosNotifyChannelAdmin::InterFilterGroupOperator filter_operator (void);
+  CosNotifyChannelAdmin::InterFilterGroupOperator filter_operator ();
 
   /// Obtain the Admin's subscribed types.
   void subscribed_types (TAO_Notify_EventTypeSeq& subscribed_types);
@@ -72,12 +72,12 @@ public:
   TAO_Notify_EventChannel * event_channel () const;
 
   /// Shutdown
-  virtual int shutdown (void);
+  virtual int shutdown ();
 
   virtual void save_persistent (TAO_Notify::Topology_Saver& saver);
   virtual TAO_Notify::Topology_Object* load_child (const ACE_CString &type,
     CORBA::Long id, const TAO_Notify::NVPList& attrs);
-  virtual void reconnect (void);
+  virtual void reconnect ();
 
   virtual void validate ();
 
@@ -87,7 +87,7 @@ public:
 
 protected:
   void save_attrs (TAO_Notify::NVPList& attrs);
-  virtual const char * get_admin_type_name (void) const = 0;
+  virtual const char * get_admin_type_name () const = 0;
 
   typedef TAO_Notify_Container_T<TAO_Notify_Proxy> TAO_Notify_Proxy_Container;
 
@@ -112,7 +112,7 @@ private:
   void remove (TAO_Notify_Proxy *proxy);
 
   /// The Proxy Container.
-  ACE_Auto_Ptr< TAO_Notify_Proxy_Container > proxy_container_;
+  std::unique_ptr< TAO_Notify_Proxy_Container > proxy_container_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

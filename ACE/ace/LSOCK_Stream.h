@@ -47,7 +47,7 @@ public:
                     ACE_HANDLE &handle);
 
   /// Get handle.
-  ACE_HANDLE get_handle (void) const;
+  ACE_HANDLE get_handle () const;
 
   /// Overrides set_handle() from the base classes.
   void set_handle (ACE_HANDLE fd);
@@ -56,7 +56,7 @@ public:
   typedef ACE_UNIX_Addr PEER_ADDR;
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;

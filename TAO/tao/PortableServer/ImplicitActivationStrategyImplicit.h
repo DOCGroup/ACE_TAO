@@ -12,14 +12,11 @@
 #define TAO_IMPLICITACTIVATIONSTRATEGYIMPLICIT_H
 #include /**/ "ace/pre.h"
 
-#include "tao/PortableServer/portableserver_export.h"
+#include "tao/PortableServer/ImplicitActivationStrategy.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-#include "tao/PortableServer/ImplicitActivationStrategy.h"
-#include "ace/Service_Config.h"
 
 #if !defined (CORBA_E_MICRO) && !defined (CORBA_E_COMPACT)
 
@@ -29,17 +26,13 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    class TAO_PortableServer_Export ImplicitActivationStrategyImplicit
-      : public ImplicitActivationStrategy
+    class ImplicitActivationStrategyImplicit : public ImplicitActivationStrategy
     {
     public:
-      virtual bool allow_implicit_activation (void) const;
+      bool allow_implicit_activation () const override;
     };
   }
 }
-
-ACE_STATIC_SVC_DECLARE_EXPORT (TAO_PortableServer, ImplicitActivationStrategyImplicit)
-ACE_FACTORY_DECLARE (TAO_PortableServer, ImplicitActivationStrategyImplicit)
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

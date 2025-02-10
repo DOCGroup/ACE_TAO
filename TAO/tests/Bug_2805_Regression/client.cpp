@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
 #include "ace/Atomic_Op.h"
@@ -80,7 +79,7 @@ public:
   Client (A::AMI_Test_ptr server, int niterations);
 
   /// The thread entry point.
-  virtual int svc (void);
+  virtual int svc ();
 
   // private:
   /// Var for the AMI_Test object.
@@ -96,9 +95,7 @@ public:
 class Handler : public POA_A::AMI_AMI_TestHandler
 {
 public:
-  Handler (void)
-  {
-  };
+  Handler () = default;
 
   void foo (CORBA::Long result,
             CORBA::Long out_l)
@@ -124,7 +121,6 @@ public:
 
    void foo_excep (::Messaging::ExceptionHolder * excep_holder)
     {
-
       ACE_DEBUG ((LM_DEBUG,
                   "Callback method <foo_excep> called:\n"));
       try
@@ -150,7 +146,7 @@ public:
                   "Callback method <get_yadda_excep> called:\n"));
     };
 
-  void set_yadda (void)
+  void set_yadda ()
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Callback method <set_yadda> called:\n"));
@@ -161,9 +157,7 @@ public:
       ACE_DEBUG ((LM_DEBUG,
                   "Callback method <set_yadda_excep> called:\n"));
     };
-  ~Handler (void)
-  {
-  };
+  ~Handler () = default;
 
   void inout_arg_test (const char *)
   {
@@ -271,8 +265,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "threads finished\n"));
 
-      root_poa->destroy (1,  // ethernalize objects
-                         0);  // wait for completion
+      root_poa->destroy (true,  // ethernalize objects
+                         false);  // wait for completion
 
       orb->destroy ();
     }
@@ -296,7 +290,7 @@ Client::Client (A::AMI_Test_ptr server,
 }
 
 int
-Client::svc (void)
+Client::svc ()
 {
   try
     {

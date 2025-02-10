@@ -32,7 +32,7 @@ public:
   /**
    * It is a no-op, but it shuts up g++
    */
-  ~SyncScope_Setup (void);
+  ~SyncScope_Setup ();
 
 private:
   /// Implement the shared code between both constructors

@@ -97,7 +97,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // Done with the Content_Iterator, so destroy it.
       contents->destroy ();
 
-      orb->shutdown (0);
+      orb->shutdown (false);
 
       // orb->destroy ();
     }

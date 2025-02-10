@@ -33,13 +33,7 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-#if defined __SUNPRO_CC && !defined _RWSTD_ALLOCATOR
-# define ACE_ARRAY_MAP_DEFAULT_ALLOCATOR(K, V) std::allocator_interface< \
-                                                 std::allocator<void>,   \
-                                                 std::pair<K, V> >
-#else
-# define ACE_ARRAY_MAP_DEFAULT_ALLOCATOR(K, V) std::allocator<std::pair<K, V> >
-#endif
+#define ACE_ARRAY_MAP_DEFAULT_ALLOCATOR(K, V) std::allocator<std::pair<K, V> >
 
 /**
  * @class ACE_Array_Map
@@ -92,11 +86,10 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  *       -# operator=
  */
 template<typename Key, typename Value, class EqualTo = std::equal_to<Key>,
-         class Alloc = ACE_ARRAY_MAP_DEFAULT_ALLOCATOR (Key, Value) >
+         class Alloc = std::allocator<std::pair<Key,Value>>>
 class ACE_Array_Map
 {
 public:
-
   // STL-style typedefs/traits.
   typedef Key                                    key_type;
   typedef Value                                  mapped_type;
@@ -111,7 +104,8 @@ public:
   typedef value_type const *                     const_iterator;
   typedef ptrdiff_t                              difference_type;
   typedef size_t                                 size_type;
-  ACE_DECLARE_STL_REVERSE_ITERATORS
+  typedef std::reverse_iterator<iterator>        reverse_iterator;
+  typedef std::reverse_iterator<const_iterator>  const_reverse_iterator;
 
   /// Default Constructor.
   /**
@@ -126,7 +120,7 @@ public:
   ACE_Array_Map & operator= (ACE_Array_Map const & map);
 
   /// Destructor.
-  ~ACE_Array_Map (void);
+  ~ACE_Array_Map ();
 
   /**
    * @name Forward Iterator Accessors
@@ -134,10 +128,10 @@ public:
    * Forward iterator accessors.
    */
   //@{
-  iterator begin (void);
-  iterator end   (void);
-  const_iterator begin (void) const;
-  const_iterator end   (void) const;
+  iterator begin ();
+  iterator end   ();
+  const_iterator begin () const;
+  const_iterator end   () const;
   //@}
 
   /**
@@ -146,30 +140,30 @@ public:
    * Reverse iterator accessors.
    */
   //@{
-  reverse_iterator rbegin (void);
-  reverse_iterator rend   (void);
-  const_reverse_iterator rbegin (void) const;
-  const_reverse_iterator rend   (void) const;
+  reverse_iterator rbegin ();
+  reverse_iterator rend   ();
+  const_reverse_iterator rbegin () const;
+  const_reverse_iterator rend   () const;
   //@}
 
   /// Return current size of map.
   /**
    * @return The number of elements in the map.
    */
-  size_type size (void) const;
+  size_type size () const;
 
   /// Maximum number of elements the map can hold.
-  size_type max_size (void) const;
+  size_type max_size () const;
 
   /// Return @c true if the map is empty, else @c false.
-  bool is_empty (void) const;  // ACE style
+  bool is_empty () const;  // ACE style
 
   /**
    * Return @c true if the map is empty, else @c false.  We recommend
    * using @c is_empty() instead since it's more consistent with the
    * ACE container naming conventions.
    */
-  bool empty (void) const;  // STL style
+  bool empty () const;  // STL style
 
   /// Swap the contents of this map with the given @a map in an
   /// exception-safe manner.
@@ -209,7 +203,7 @@ public:
   /**
    * @note This a constant time (O(1)) operation.
    */
-  void clear (void);
+  void clear ();
 
   /**
    * @name Search Operations
@@ -249,11 +243,9 @@ public:
   allocator_type get_allocator() const { return alloc_; }
 
 private:
-
   /// Increase size of underlying buffer by @a s.
   void grow (size_type s);
 
-private:
   /// The allocator.
   allocator_type alloc_;
 
@@ -290,13 +282,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 # include "ace/Array_Map.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-# include "ace/Array_Map.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Array_Map.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
+#include "ace/Array_Map.cpp"
 
 #include /**/ "ace/post.h"
 

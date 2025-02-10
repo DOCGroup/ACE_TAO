@@ -39,15 +39,19 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * using the ACE_Future_Set::next_readable() method.
  */
 template <class T>
-class ACE_Future_Set : public ACE_Future_Observer<T>,
-                       private ACE_Copy_Disabled
+class ACE_Future_Set : public ACE_Future_Observer<T>
 {
 public:
   /// Constructor.
   ACE_Future_Set (ACE_Message_Queue<ACE_SYNCH> *future_notification_queue_ = 0);
 
+  ACE_Future_Set (const ACE_Future_Set &) = delete;
+  ACE_Future_Set (ACE_Future_Set &&) = delete;
+  ACE_Future_Set &operator= (const ACE_Future_Set &) = delete;
+  ACE_Future_Set &operator= (ACE_Future_Set &&) = delete;
+
   /// Destructor.
-  ~ACE_Future_Set (void);
+  ~ACE_Future_Set ();
 
   /**
    * Return 1 if their are no ACE_Future objects left on its queue and
@@ -59,7 +63,7 @@ public:
    * ACE_Future_Set via the ACE_Future_Set::next_readable() method,
    * or when the ACE_Future_Set has not been assigned any subjects.
    */
-  int is_empty (void) const;
+  int is_empty () const;
 
   /**
    * Enqueus the given ACE_Future into this objects queue when it is
@@ -126,13 +130,7 @@ private:
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Future_Set.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Future_Set.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #endif /* ACE_HAS_THREADS */
 #include /**/ "ace/post.h"

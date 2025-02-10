@@ -39,16 +39,16 @@ namespace ACE
     class ACE_Export Size_Monitor : public Monitor_Base
     {
     public:
-      Size_Monitor (void);
+      Size_Monitor ();
       Size_Monitor (const char* name);
-      virtual ~Size_Monitor (void);
+      ~Size_Monitor () override = default;
 
       /// Implemented by the most-derived class. Does the actual
       /// work of fetching the monitored value.
-      virtual void update (void);
+      void update () override;
 
       /// Reset function.
-      virtual void clear (void);
+      void clear () override;
     };
   }
 }

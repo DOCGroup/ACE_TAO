@@ -23,10 +23,9 @@ int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   int priority = ACE_THR_PRI_FIFO_DEF;
-  priority = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO,
-                                              priority);
+  priority = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO, priority);
 
-  // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
+  // Enable FIFO scheduling
   if (ACE_OS::sched_params (ACE_Sched_Params (ACE_SCHED_FIFO,
                                               priority,
                                               ACE_SCOPE_PROCESS)) != 0)

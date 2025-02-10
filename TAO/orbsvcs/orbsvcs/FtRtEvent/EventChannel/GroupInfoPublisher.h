@@ -16,7 +16,7 @@
 #include "ace/Vector_T.h"
 #include "ace/Singleton.h"
 #include "ace/Synch.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -38,8 +38,7 @@ public:
     BackupList backups;
   };
 
-  typedef auto_ptr<Info> Info_ptr;
-  friend class ACE_Singleton<GroupInfoPublisherBase, TAO_SYNCH_MUTEX>;
+  typedef std::unique_ptr<Info> Info_ptr;
 
   void subscribe(TAO_FTEC_Become_Primary_Listener* listener);
   void set_naming_context(CosNaming::NamingContext_var naming_context);
@@ -61,19 +60,19 @@ public:
 
   void object_id(const char* oid);
   void name(const char* nam);
-
-private:
   GroupInfoPublisherBase();
 
+private:
   CosNaming::NamingContext_var naming_context_;
   typedef ACE_Vector<TAO_FTEC_Become_Primary_Listener*, 2> Subscribers;
-  Subscribers  subscribers_;
+  Subscribers subscribers_;
   PortableServer::ObjectId object_id_;
   CosNaming::Name name_;
   Info_ptr info_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_FTRTEC_SINGLETON_DECLARE(ACE_Singleton, GroupInfoPublisherBase, TAO_SYNCH_MUTEX)

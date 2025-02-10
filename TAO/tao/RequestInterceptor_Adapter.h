@@ -35,9 +35,9 @@ namespace TAO
   class TAO_Export RequestInterceptor_Adapter
   {
   public:
-    virtual ~RequestInterceptor_Adapter (void);
+    virtual ~RequestInterceptor_Adapter ();
 
-    virtual void destroy_interceptors (void) = 0;
+    virtual void destroy_interceptors () = 0;
 
     virtual void popTSC (TAO_ORB_Core *orb_core_) = 0;
     virtual void pushTSC (TAO_ORB_Core *orb_core_) = 0;

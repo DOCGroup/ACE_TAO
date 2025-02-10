@@ -50,7 +50,6 @@ parse_args (int argc, ACE_TCHAR *argv[])
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-
   Manager manager;
 
   try
@@ -76,7 +75,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-Manager::Manager (void)
+Manager::Manager ()
   :orb_ (0),
    new_poa_var_ (0)
 {
@@ -143,9 +142,8 @@ Manager::init (int argc, ACE_TCHAR *argv[])
 }
 
 int
-Manager::activate_servant (void)
+Manager::activate_servant ()
 {
-
   ACE_NEW_THROW_EX (this->servant_locator_,
                     Servant_Locator (this->orb_.in ()),
                     CORBA::NO_MEMORY ());
@@ -170,7 +168,7 @@ Manager::activate_servant (void)
 }
 
 int
-Manager::make_iors_register (void)
+Manager::make_iors_register ()
 {
   // First  server
   CORBA::Object_var object_primary =
@@ -246,7 +244,7 @@ Manager::make_iors_register (void)
 }
 
 int
-Manager::run (void)
+Manager::run ()
 {
   this->orb_->run ();
 

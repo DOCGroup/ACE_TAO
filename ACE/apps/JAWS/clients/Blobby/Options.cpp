@@ -7,9 +7,8 @@
 Options *Options::instance_ = 0;
 
 Options *
-Options::instance (void)
+Options::instance ()
 {
-
   if (Options::instance_ == 0)
     Options::instance_ = new Options;
 
@@ -50,7 +49,6 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
       case 'o':
         this->offset_ = ACE_OS::atoi (get_opt.opt_arg ());
         break;
-        // Usage fallthrough.
       default:
         ACE_DEBUG ((LM_DEBUG, "%s -h hostname -f filename -[r/w] [-p port] [-l length] [-o offset] [-d]\n", argv[0]));
         ACE_OS::exit (1);
@@ -66,7 +64,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
 
 }
 
-Options::Options (void)
+Options::Options ()
   : hostname_ (0),
     port_ (ACE_DEFAULT_HTTP_SERVER_PORT),
     filename_ (0),

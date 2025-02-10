@@ -18,7 +18,7 @@ Server_Task::get_reference ()
 }
 
 int
-Server_Task::svc (void)
+Server_Task::svc ()
 {
  try
    {
@@ -63,7 +63,7 @@ Server_Task::svc (void)
 
      this->sorb_->run ();
 
-     root_poa->destroy (1, 1);
+     root_poa->destroy (true, true);
 
      this->sorb_->destroy ();
    }

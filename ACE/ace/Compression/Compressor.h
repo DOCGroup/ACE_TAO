@@ -22,7 +22,6 @@
 #include "ace/Guard_T.h"
 #include "ace/Thread_Mutex.h"
 #include "ace/Synch_Traits.h"
-#include "ace/Copy_Disabled.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -48,10 +47,9 @@ enum ACE_CompressorId
 class ACE_Compression_Export ACE_Compressor
 {
 public:
+  ACE_CompressorId get_compressor_id() const;
 
-  ACE_CompressorId    get_compressor_id(void) const;
-
-  ACE_UINT32          get_compression_level(void) const;
+  ACE_UINT32 get_compression_level() const;
 
   /**
     * Compress the @a in_ptr buffer for @a in_len into the
@@ -66,10 +64,10 @@ public:
     * for the possibility that a reduced compressed length
     * is not possible.
     */
-  virtual ACE_UINT64 compress( const void *in_ptr,
-                                ACE_UINT64 in_len,
-                                void *out_ptr,
-                                ACE_UINT64 max_out_len ) = 0;
+  virtual ACE_UINT64 compress(const void *in_ptr,
+                              ACE_UINT64 in_len,
+                              void *out_ptr,
+                              ACE_UINT64 max_out_len) = 0;
 
   /**
     * DeCompress the @a in_ptr buffer for @a in_len into the
@@ -79,52 +77,52 @@ public:
     * otherwise the return value will indicate the resultant
     * @a out_ptr decompressed buffer length.
     */
-  virtual ACE_UINT64 decompress( const void *in_ptr,
-                                  ACE_UINT64 in_len,
-                                  void *out_ptr,
-                                  ACE_UINT64 max_out_len ) = 0;
+  virtual ACE_UINT64 decompress(const void *in_ptr,
+                                ACE_UINT64 in_len,
+                                void *out_ptr,
+                                ACE_UINT64 max_out_len) = 0;
 
   /**
     *  Return the current compressed bytes statistics counter.
     */
-  virtual ACE_UINT64  compressed_bytes(void) const;
+  virtual ACE_UINT64 compressed_bytes() const;
 
   /**
     *  Return the current uncompressed bytes statistics counter.
     */
-  virtual ACE_UINT64  uncompressed_bytes(void) const;
+  virtual ACE_UINT64 uncompressed_bytes() const;
 
   /**
     *  Return the current compression ratio statistics.
     */
-  virtual float       compression_ratio(void) const;
+  virtual float compression_ratio() const;
 
   /**
     *  Reset the statistics to zero.
     */
-  virtual void        reset_stats(void);
+  virtual void reset_stats();
 
-  virtual ~ACE_Compressor (void);
+  virtual ~ACE_Compressor () = default;
 
 protected:
   ACE_Compressor(ACE_CompressorId compressor_id,
-                  ACE_UINT32 compression_level = 0); // Must be inherited.
+                 ACE_UINT32 compression_level = 0); // Must be inherited.
 
-  virtual void update_stats(  ACE_UINT64 uncompressed_bytes,
-                              ACE_UINT64 compressed_bytes );
+  virtual void update_stats(ACE_UINT64 uncompressed_bytes,
+                            ACE_UINT64 compressed_bytes);
 
 private:
   ACE_CompressorId    compressor_id_;
   ACE_UINT32          compression_level_;
 
-  // Ensure we can lock with imutability (i.e. const)
+  // Ensure we can lock with immutability (i.e. const)
   mutable ACE_SYNCH_MUTEX mutex_;
 
   ACE_UINT64          compressed_bytes_;
   ACE_UINT64          uncompressed_bytes_;
 
-  ACE_UNIMPLEMENTED_FUNC (ACE_Compressor (const ACE_Compressor&))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Compressor& operator= (const ACE_Compressor&))
+  ACE_Compressor (const ACE_Compressor&) = delete;
+  ACE_Compressor& operator= (const ACE_Compressor&) = delete;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

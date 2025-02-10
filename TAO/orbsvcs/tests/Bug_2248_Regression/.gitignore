@@ -1,2 +1,12 @@
 /client
 /server
+testC.cpp
+testC.h
+testC.inl
+testS.cpp
+testS.h
+testsC.cpp
+testsC.h
+testsC.inl
+testsS.cpp
+testsS.h

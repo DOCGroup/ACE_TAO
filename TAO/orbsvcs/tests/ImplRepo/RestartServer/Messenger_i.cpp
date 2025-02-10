@@ -21,7 +21,7 @@ Messenger_i::Messenger_i (CORBA::ORB_ptr orb, Terminator &terminator)
 }
 
 // Implementation skeleton destructor
-Messenger_i::~Messenger_i (void)
+Messenger_i::~Messenger_i ()
 {
 }
 
@@ -47,7 +47,7 @@ Messenger_i::abort (CORBA::Short delay_secs)
 }
 
 void
-Messenger_i::shutdown (void)
+Messenger_i::shutdown ()
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

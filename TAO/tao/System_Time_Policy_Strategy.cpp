@@ -13,15 +13,15 @@ TAO_System_Time_Policy_Strategy::~TAO_System_Time_Policy_Strategy ()
 {
 }
 
-ACE_Timer_Queue * TAO_System_Time_Policy_Strategy::create_timer_queue (void)
+ACE_Timer_Queue * TAO_System_Time_Policy_Strategy::create_timer_queue ()
 {
-  ACE_Timer_Queue * tmq = 0;
+  ACE_Timer_Queue * tmq = nullptr;
 
   typedef ACE_Timer_Heap_T<ACE_Event_Handler *,
                            ACE_Event_Handler_Handle_Timeout_Upcall,
                            ACE_SYNCH_RECURSIVE_MUTEX,
                            ACE_System_Time_Policy> timer_queue_type;
-  ACE_NEW_RETURN (tmq, timer_queue_type (), 0);
+  ACE_NEW_RETURN (tmq, timer_queue_type (), nullptr);
 
   return tmq;
 }
@@ -32,7 +32,7 @@ TAO_System_Time_Policy_Strategy::destroy_timer_queue (ACE_Timer_Queue *tmq)
   delete tmq;
 }
 
-ACE_Dynamic_Time_Policy_Base * TAO_System_Time_Policy_Strategy::get_time_policy (void)
+ACE_Dynamic_Time_Policy_Base * TAO_System_Time_Policy_Strategy::get_time_policy ()
 {
   return &time_policy_;
 }

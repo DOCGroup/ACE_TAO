@@ -40,19 +40,19 @@ public:
   TAO_ExtAttributeDef_i (TAO_Repository_i *repo);
 
   /// Destructor
-  virtual ~TAO_ExtAttributeDef_i (void);
+  virtual ~TAO_ExtAttributeDef_i ();
 
-  virtual CORBA::ExcDescriptionSeq *get_exceptions (void);
+  virtual CORBA::ExcDescriptionSeq *get_exceptions ();
 
-  CORBA::ExcDescriptionSeq *get_exceptions_i (void);
+  CORBA::ExcDescriptionSeq *get_exceptions_i ();
 
   virtual void get_exceptions (const CORBA::ExcDescriptionSeq &get_exceptions);
 
   void get_exceptions_i (const CORBA::ExcDescriptionSeq &get_exceptions);
 
-  virtual CORBA::ExcDescriptionSeq *set_exceptions (void);
+  virtual CORBA::ExcDescriptionSeq *set_exceptions ();
 
-  CORBA::ExcDescriptionSeq *set_exceptions_i (void);
+  CORBA::ExcDescriptionSeq *set_exceptions_i ();
 
   virtual void set_exceptions (
       const CORBA::ExcDescriptionSeq &set_exceptions);
@@ -60,9 +60,9 @@ public:
   void set_exceptions_i (
       const CORBA::ExcDescriptionSeq &set_exceptions);
 
-  virtual CORBA::ExtAttributeDescription *describe_attribute (void);
+  virtual CORBA::ExtAttributeDescription *describe_attribute ();
 
-  CORBA::ExtAttributeDescription *describe_attribute_i (void);
+  CORBA::ExtAttributeDescription *describe_attribute_i ();
 
   // Utility function that fills sequence elements for a
   // ComponentDescription.

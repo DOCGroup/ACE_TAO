@@ -15,13 +15,13 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
 // ****************************************************************
 
-EC_Connect::EC_Connect (void)
+EC_Connect::EC_Connect ()
   : order_ (0)
 {
 }
 
 void
-EC_Connect::execute_test (void)
+EC_Connect::execute_test ()
 {
   // this->EC_Driver::execute_test ();
 }
@@ -70,7 +70,7 @@ EC_Connect::parse_args (int& argc, ACE_TCHAR* argv[])
 }
 
 void
-EC_Connect::print_usage (void)
+EC_Connect::print_usage ()
 {
   this->EC_Driver::print_usage ();
 
@@ -81,7 +81,7 @@ EC_Connect::print_usage (void)
 }
 
 void
-EC_Connect::print_args (void) const
+EC_Connect::print_args () const
 {
   this->EC_Driver::print_args ();
 
@@ -92,7 +92,7 @@ EC_Connect::print_args (void) const
 }
 
 void
-EC_Connect::dump_results (void)
+EC_Connect::dump_results ()
 {
   ACE_High_Res_Timer::global_scale_factor_type gsf =
     ACE_High_Res_Timer::global_scale_factor ();
@@ -142,7 +142,7 @@ EC_Connect::allocate_supplier (int i)
 }
 
 void
-EC_Connect::connect_clients (void)
+EC_Connect::connect_clients ()
 {
   this->start_time_ = ACE_OS::gethrtime ();
   switch (this->order_)
@@ -187,7 +187,7 @@ EC_Connect::connect_clients (void)
 }
 
 void
-EC_Connect::disconnect_clients (void)
+EC_Connect::disconnect_clients ()
 {
   switch (this->order_)
     {
@@ -247,7 +247,7 @@ EC_Connect::disconnect_clients (void)
 }
 
 void
-EC_Connect::disconnect_consumers (void)
+EC_Connect::disconnect_consumers ()
 {
   ACE_hrtime_t start_time = ACE_OS::gethrtime ();
   for (int i = 0; i < this->n_consumers_; ++i)
@@ -269,7 +269,7 @@ EC_Connect::disconnect_consumers (void)
 }
 
 void
-EC_Connect::disconnect_suppliers (void)
+EC_Connect::disconnect_suppliers ()
 {
   ACE_hrtime_t start_time = ACE_OS::gethrtime ();
   for (int i = 0; i < this->n_suppliers_; ++i)

@@ -158,19 +158,12 @@ namespace ACE
         typedef SSLSock_IStreamBase<ACE_NULL_SYNCH> SSLSock_IStream;
         typedef SSLSock_OStreamBase<ACE_NULL_SYNCH> SSLSock_OStream;
         typedef SSLSock_IOStreamBase<ACE_NULL_SYNCH> SSLSock_IOStream;
-
       }
   }
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/INet/SSLSock_IOStream.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("SSLSock_IOStream.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_IOS_SSLSOCK_IOSTREAM_H */

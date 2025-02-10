@@ -92,8 +92,6 @@ int run_main (int, ACE_TCHAR *[])
 
   // Run the test with a varying number of secondary addresses
   for (i = 0; i <= num_secondaries; ++i)  {
-
-
     /****** Clear the in_out array and test subject ******/
 
 
@@ -135,7 +133,6 @@ int run_main (int, ACE_TCHAR *[])
     // secondary addresses.
     size_t returned_num_secondaries = addr.get_num_secondary_addresses();
     if (returned_num_secondaries == num_secondaries) {
-
       // Set a stay_out element to the state that we expect to see
       // from every in_out element after the in_out array is passed to
       // the accessor of the test subject.
@@ -146,9 +143,7 @@ int run_main (int, ACE_TCHAR *[])
 
       // Check that the in_out array matches stay_out element
       for (j = 0; j < num_secondaries; ++j) {
-
         if (in_out[j] != stay_out[0]) {
-
           ACE_TCHAR in_out_string[100];
           ACE_TCHAR stay_out_string[100];
 
@@ -172,9 +167,7 @@ int run_main (int, ACE_TCHAR *[])
       for (j = 0, pointer = in_out_sockaddr;
            j < num_secondaries + 1;
            ++j, ++pointer) {
-
         if (ACE_OS::memcmp(pointer, stay_out[0].get_addr(), sizeof(sockaddr))) {
-
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("Failed get_addresses check\n")));
 
@@ -183,14 +176,12 @@ int run_main (int, ACE_TCHAR *[])
       }
 
     } else {
-
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("Failed get_num_secondary_addresses check\n")
                     ACE_TEXT ("%d != %d\n"),
                     returned_num_secondaries,
                     num_secondaries));
         status = 1;
-
     }
 
 
@@ -230,7 +221,6 @@ int run_main (int, ACE_TCHAR *[])
     // secondary addresses.
     returned_num_secondaries = addr.get_num_secondary_addresses();
     if (returned_num_secondaries == i) {
-
       // Initialize the stay_out array with the secondary addresses
       for (j = 0; j < i; ++j) {
         stay_out[j].set(port, secondary_dotted_decimals[j]);
@@ -241,9 +231,7 @@ int run_main (int, ACE_TCHAR *[])
 
       // Check that the in_out array matches stay_out array
       for (j = 0; j < i; ++j) {
-
         if (in_out[j] != stay_out[j]) {
-
           ACE_TCHAR in_out_string[100];
           ACE_TCHAR stay_out_string[100];
 
@@ -266,13 +254,11 @@ int run_main (int, ACE_TCHAR *[])
       // Check that the primary address in the in_out_sockaddr array
       // matches the primary address reported by the superclass
       if (ACE_OS::memcmp(in_out_sockaddr, addr.get_addr(), sizeof(sockaddr))) {
-
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("Failed second get_addresses check ")
                       ACE_TEXT ("(for primary address)\n")));
 
           status = 1;
-
       }
 
       // Check that the secondary addresses in the in_out_sockaddr
@@ -280,9 +266,7 @@ int run_main (int, ACE_TCHAR *[])
       for (j = 1, pointer = &in_out_sockaddr[1];
            j < i + 1;
            ++j, ++pointer) {
-
         if (ACE_OS::memcmp(pointer, stay_out[j-1].get_addr(), sizeof(sockaddr))) {
-
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("Failed second get_addresses check ")
                       ACE_TEXT ("(for secondary addresses)\n")));
@@ -292,7 +276,6 @@ int run_main (int, ACE_TCHAR *[])
       }
 
     } else {
-
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("Failed second get_num_secondary_addresses check\n")
                   ACE_TEXT ("%d != %d\n"),
@@ -339,7 +322,6 @@ int run_main (int, ACE_TCHAR *[])
     // secondary addresses.
     returned_num_secondaries = addr.get_num_secondary_addresses();
     if (returned_num_secondaries == num_secondaries) {
-
       // Set a stay_out element to the state that we expect to see
       // from every in_out element after the in_out array is passed to
       // the accessor of the test subject.
@@ -350,9 +332,7 @@ int run_main (int, ACE_TCHAR *[])
 
       // Check that the in_out array matches stay_out array
       for (j = 0; j < num_secondaries; ++j) {
-
         if (in_out[j] != stay_out[0]) {
-
           ACE_TCHAR in_out_string[100];
           ACE_TCHAR stay_out_string[100];
 
@@ -370,14 +350,12 @@ int run_main (int, ACE_TCHAR *[])
       }
 
     } else {
-
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("Failed third get_num_secondary_addresses check\n")
                     ACE_TEXT ("%d != %d\n"),
                     returned_num_secondaries,
                     num_secondaries));
         status = 1;
-
     }
 
 
@@ -415,7 +393,6 @@ int run_main (int, ACE_TCHAR *[])
     // secondary addresses.
     returned_num_secondaries = addr.get_num_secondary_addresses();
     if (returned_num_secondaries == i) {
-
       // Initialize the stay_out array with the secondary addresses
       for (j = 0; j < i; ++j) {
         stay_out[j].set(port, secondary_addr32[j]);
@@ -426,9 +403,7 @@ int run_main (int, ACE_TCHAR *[])
 
       // Check that the in_out array matches stay_out array
       for (j = 0; j < i; ++j) {
-
         if (in_out[j] != stay_out[j]) {
-
           ACE_TCHAR in_out_string[100];
           ACE_TCHAR stay_out_string[100];
 
@@ -446,7 +421,6 @@ int run_main (int, ACE_TCHAR *[])
       }
 
     } else {
-
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("Failed forth get_num_secondary_addresses check\n")
                   ACE_TEXT ("%d != %d\n"),

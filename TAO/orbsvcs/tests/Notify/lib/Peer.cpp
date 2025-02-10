@@ -9,7 +9,7 @@
 #include "Options_Parser.h"
 #include "orbsvcs/NotifyExtC.h"
 
-TAO_Notify_Tests_Peer::TAO_Notify_Tests_Peer (void)
+TAO_Notify_Tests_Peer::TAO_Notify_Tests_Peer ()
   : poa_name_ (TAO_Notify_Tests_Name::root_poa)
   , ifgop_ (CosNotifyChannelAdmin::OR_OP)
 {
@@ -75,7 +75,7 @@ TAO_Notify_Tests_Peer::set_name (ACE_CString& name)
 }
 
 const ACE_CString&
-TAO_Notify_Tests_Peer::get_name (void)
+TAO_Notify_Tests_Peer::get_name ()
 {
   return this->name_;
 }

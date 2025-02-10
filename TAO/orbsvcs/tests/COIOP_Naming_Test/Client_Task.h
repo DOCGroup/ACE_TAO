@@ -15,7 +15,6 @@
 class Client_Task : public ACE_Task_Base
 {
 public:
-
   /// Constructor
   Client_Task (CosNaming::NamingContext_ptr root_context,
                CORBA::ORB_ptr corb,
@@ -23,7 +22,7 @@ public:
                CORBA::Boolean result);
 
   /// Thread entry point
-  int svc (void);
+  int svc ();
 
 private:
   CosNaming::NamingContext_var root_context_;

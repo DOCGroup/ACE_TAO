@@ -39,83 +39,83 @@ class TAO_Notify_Serv_Export TAO_Notify_Properties
 {
 public:
   /// Constructor
-  TAO_Notify_Properties (void);
+  TAO_Notify_Properties ();
 
   /// Destructor
   ~TAO_Notify_Properties ();
 
   /// Return a singleton instance of this class.
-  static TAO_Notify_Properties * instance (void);
+  static TAO_Notify_Properties * instance ();
 
-  static void close (void);
+  static void close ();
 
   // = Property Accessors
-  TAO_Notify_Factory* factory (void);
+  TAO_Notify_Factory* factory ();
   void factory (TAO_Notify_Factory* factory);
 
-  TAO_Notify_Builder* builder (void);
+  TAO_Notify_Builder* builder ();
   void builder (TAO_Notify_Builder* builder);
 
-  CORBA::ORB_ptr orb (void);
+  CORBA::ORB_ptr orb ();
   void orb (CORBA::ORB_ptr orb);
-  CORBA::ORB_ptr dispatching_orb (void);
+  CORBA::ORB_ptr dispatching_orb ();
   void dispatching_orb (CORBA::ORB_ptr dispatching_orb);
 
-  PortableServer::POA_ptr default_poa (void);
+  PortableServer::POA_ptr default_poa ();
   void default_poa (PortableServer::POA_ptr default_poa);
 
-  CORBA::Boolean asynch_updates (void);
+  CORBA::Boolean asynch_updates ();
   void asynch_updates (CORBA::Boolean asynch_updates);
 
-  bool allow_reconnect (void);
+  bool allow_reconnect ();
   void allow_reconnect (bool b);
-  bool validate_client (void);
+  bool validate_client ();
   void validate_client (bool b);
-  ACE_Time_Value validate_client_delay (void);
+  ACE_Time_Value validate_client_delay ();
   void validate_client_delay (ACE_Time_Value b);
-  ACE_Time_Value validate_client_interval (void);
+  ACE_Time_Value validate_client_interval ();
   void validate_client_interval (ACE_Time_Value b);
 
   // Turn on/off update messages.
-  CORBA::Boolean updates (void);
+  CORBA::Boolean updates ();
   void updates (CORBA::Boolean updates);
-  bool separate_dispatching_orb (void);
+  bool separate_dispatching_orb ();
   void separate_dispatching_orb (bool b);
 
   // The QoS Property that must be applied to each newly created Event Channel
-  const CosNotification::QoSProperties& default_event_channel_qos_properties (void);
+  const CosNotification::QoSProperties& default_event_channel_qos_properties ();
 
   // Set the default EC QoS Property.
   void default_event_channel_qos_properties (const CosNotification::QoSProperties &ec_qos);
 
   // The QoS Property that must be applied to each newly created Supplier Admin
-  const CosNotification::QoSProperties& default_supplier_admin_qos_properties (void);
+  const CosNotification::QoSProperties& default_supplier_admin_qos_properties ();
 
   // Set the default SA QoS Property.
   void default_supplier_admin_qos_properties (const CosNotification::QoSProperties &sa_qos);
 
   // The QoS Property that must be applied to each newly created Consumer Admin
-  const CosNotification::QoSProperties& default_consumer_admin_qos_properties (void);
+  const CosNotification::QoSProperties& default_consumer_admin_qos_properties ();
 
   // Set the default CA QoS Property.
   void default_consumer_admin_qos_properties (const CosNotification::QoSProperties &ca_qos);
 
   // The QoS Property that must be applied to each newly created Proxy Supplier
-  const CosNotification::QoSProperties& default_proxy_supplier_qos_properties (void);
+  const CosNotification::QoSProperties& default_proxy_supplier_qos_properties ();
 
   // Set the default PS QoS Property.
   void default_proxy_supplier_qos_properties (const CosNotification::QoSProperties &ps_qos);
 
   // The QoS Property that must be applied to each newly created Proxy Consumer
-  const CosNotification::QoSProperties& default_proxy_consumer_qos_properties (void);
+  const CosNotification::QoSProperties& default_proxy_consumer_qos_properties ();
 
   // Set the default PC QoS Property.
   void default_proxy_consumer_qos_properties (const CosNotification::QoSProperties &pc_qos);
 
-  CosNotifyChannelAdmin::InterFilterGroupOperator defaultConsumerAdminFilterOp (void);
+  CosNotifyChannelAdmin::InterFilterGroupOperator defaultConsumerAdminFilterOp ();
   void defaultConsumerAdminFilterOp (CosNotifyChannelAdmin::InterFilterGroupOperator op);
 
-  CosNotifyChannelAdmin::InterFilterGroupOperator defaultSupplierAdminFilterOp (void);
+  CosNotifyChannelAdmin::InterFilterGroupOperator defaultSupplierAdminFilterOp ();
   void defaultSupplierAdminFilterOp (CosNotifyChannelAdmin::InterFilterGroupOperator op);
 
 protected:

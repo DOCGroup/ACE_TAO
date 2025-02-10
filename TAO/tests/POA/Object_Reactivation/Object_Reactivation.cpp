@@ -50,7 +50,7 @@ class test_i : public POA_test
 public:
   test_i (ACE_Auto_Event &event);
 
-  void deactivate_self (void);
+  void deactivate_self ();
 
 private:
   ACE_Auto_Event &event_;
@@ -62,7 +62,7 @@ test_i::test_i (ACE_Auto_Event &event)
 }
 
 void
-test_i::deactivate_self (void)
+test_i::deactivate_self ()
 {
   PortableServer::POA_var poa = this->_default_POA ();
 
@@ -95,7 +95,7 @@ public:
              PortableServer::Servant servant,
              const ACE_CString &task_id,
              const PortableServer::ObjectId &id);
-  int svc (void);
+  int svc ();
 
 private:
   test_var test_;
@@ -122,7 +122,7 @@ Activator::Activator (test_ptr t,
 }
 
 int
-Activator::svc (void)
+Activator::svc ()
 {
   if (debug)
     ACE_DEBUG ((LM_DEBUG, "(%t) Waiting for deactivation to complete\n"));
@@ -162,7 +162,7 @@ class Deactivator : public ACE_Task_Base
 {
 public:
   Deactivator (test_ptr t);
-  int svc (void);
+  int svc ();
 
 private:
   test_var test_;
@@ -174,7 +174,7 @@ Deactivator::Deactivator (test_ptr t)
 }
 
 int
-Deactivator::svc (void)
+Deactivator::svc ()
 {
   try
     {
@@ -191,7 +191,6 @@ Deactivator::svc (void)
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-
   try
     {
       // Initialize the ORB first.
@@ -271,8 +270,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (result != 0)
         return result;
 
-      root_poa->destroy (1,
-                         1);
+      root_poa->destroy (true, true);
 
       orb->destroy ();
     }

@@ -18,7 +18,7 @@
 #include "ace/os_include/os_ctype.h"
 
 #if !defined (__GNUG__)
-# include "ace/Auto_Ptr.h"
+# include <memory>
 #endif
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -34,7 +34,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 # define ACE_TEMPORARY_STRING(X,SIZE) \
    char* X = 0; \
    char X ## buf[ACE_YY_BUF_SIZE]; \
-   ACE_Auto_Ptr<char> X ## bufp (0); \
+   std::unique_ptr<char> X ## bufp (nullptr); \
    if (SIZE > ACE_YY_BUF_SIZE) { \
      X ## bufp.reset (new char[SIZE]); \
      X = X ## bufp.get (); \
@@ -48,7 +48,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 #define ACE_NO_STATE -1
 #define ACE_COMMENT 0
 
-#if defined (_MSC_VER) && (_MSC_VER >= 1400)
+#if defined (_MSC_VER)
 // Visual Studio .NET 2005 (VC8) issues warning C4351 for input_ in the
 // constructor initializer list below. Since we like the warned-of new
 // behavior (input_ elements will be default-initialized), squash the
@@ -59,7 +59,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 struct ace_yy_buffer_state
 {
-  ace_yy_buffer_state (void)
+  ace_yy_buffer_state ()
    : input_ (),
      index_ (0),
      size_ (0),
@@ -73,11 +73,11 @@ struct ace_yy_buffer_state
 #endif /* ACE_USES_WCHAR */
   {
   }
-#if defined (_MSC_VER) && (_MSC_VER >= 1400)
+#if defined (_MSC_VER)
 #  pragma warning (pop)
 #endif /* VC8 */
 
-  ~ace_yy_buffer_state (void)
+  ~ace_yy_buffer_state ()
   {
 #if defined (ACE_USES_WCHAR)
     delete converter_;
@@ -119,7 +119,6 @@ ace_yylex (YYSTYPE *ace_yylval, void *YYLEX_PARAM)
                             -1));
 
   return ACE_Svc_Conf_Lexer::yylex (ace_yylval, ACE_SVC_CONF_PARAM);
-
 }
 
 void

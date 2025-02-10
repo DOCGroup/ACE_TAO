@@ -47,19 +47,17 @@ TAO_LB_ObjectReferenceFactory::TAO_LB_ObjectReferenceFactory (
 }
 
 ::CORBA::ValueBase *
-TAO_LB_ObjectReferenceFactory::_copy_value (void)
+TAO_LB_ObjectReferenceFactory::_copy_value ()
 {
   ::CORBA::ValueBase *ret_val= 0;
-  // Not implimented
+  // Not implemented
   return ret_val;
 }
 
-TAO_LB_ObjectReferenceFactory::~TAO_LB_ObjectReferenceFactory (void)
+TAO_LB_ObjectReferenceFactory::~TAO_LB_ObjectReferenceFactory ()
 {
   // No need to call CORBA::remove_ref() on this->old_orf_.  It is a
   // "_var" object, meaning that will be done automatically.
-
-
   if (!CORBA::is_nil (this->lm_.in ()))
     {
       const CORBA::ULong len = this->fcids_.size ();
@@ -132,7 +130,6 @@ TAO_LB_ObjectReferenceFactory::make_object (
                   "TAO_LB_ObjectReferenceFactory::""make_object");
 
               throw CORBA::BAD_INV_ORDER ();
-
             }
           catch (const PortableGroup::ObjectNotAdded& ex)
             {

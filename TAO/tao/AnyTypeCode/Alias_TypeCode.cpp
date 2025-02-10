@@ -62,7 +62,7 @@ template<typename StringType,
 void
 TAO::TypeCode::Alias<StringType,
                      TypeCodeType,
-                     RefCountPolicy>::tao_duplicate (void)
+                     RefCountPolicy>::tao_duplicate ()
 {
   this->RefCountPolicy::add_ref ();
 }
@@ -73,7 +73,7 @@ template<typename StringType,
 void
 TAO::TypeCode::Alias<StringType,
                      TypeCodeType,
-                     RefCountPolicy>::tao_release (void)
+                     RefCountPolicy>::tao_release ()
 {
   this->RefCountPolicy::remove_ref ();
 }
@@ -117,7 +117,7 @@ template<typename StringType,
 CORBA::TypeCode_ptr
 TAO::TypeCode::Alias<StringType,
                      TypeCodeType,
-                     RefCountPolicy>::get_compact_typecode_i (void) const
+                     RefCountPolicy>::get_compact_typecode_i () const
 {
   TAO_TypeCodeFactory_Adapter * const adapter =
     ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
@@ -152,7 +152,7 @@ template<typename StringType,
 char const *
 TAO::TypeCode::Alias<StringType,
                      TypeCodeType,
-                     RefCountPolicy>::id_i (void) const
+                     RefCountPolicy>::id_i () const
 {
   // Ownership is retained by the TypeCode, as required by the C++
   // mapping.
@@ -165,7 +165,7 @@ template<typename StringType,
 char const *
 TAO::TypeCode::Alias<StringType,
                      TypeCodeType,
-                     RefCountPolicy>::name_i (void) const
+                     RefCountPolicy>::name_i () const
 {
   // Ownership is retained by the TypeCode, as required by the C++
   // mapping.
@@ -178,7 +178,7 @@ template<typename StringType,
 CORBA::TypeCode_ptr
 TAO::TypeCode::Alias<StringType,
                      TypeCodeType,
-                     RefCountPolicy>::content_type_i (void) const
+                     RefCountPolicy>::content_type_i () const
 {
   return
      CORBA::TypeCode::_duplicate (

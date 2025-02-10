@@ -47,7 +47,7 @@ class ASNMP_Export SnmpUInt32 : public SnmpSyntax
 {
 public:
   /// default constructor
-  SnmpUInt32 (const unsigned long i = 0);
+  explicit SnmpUInt32 (const unsigned long i = 0);
 
   /// copy constructor
   SnmpUInt32( const SnmpUInt32 &c);

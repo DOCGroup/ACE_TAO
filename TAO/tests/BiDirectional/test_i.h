@@ -28,15 +28,14 @@ public:
   Callback_i (CORBA::ORB_ptr orb);
 
   /// Safe way to shutdown
-  void shutdown (void);
+  void shutdown ();
 
   /// The callback method
-  void callback_method (void);
+  void callback_method ();
 
 private:
   /// The orb
   CORBA::ORB_var orb_;
-
 };
 
 /**
@@ -57,9 +56,9 @@ public:
 
   void callback_object (Callback_ptr callback);
 
-  void shutdown (void);
+  void shutdown ();
 
-  int call_client (void);
+  int call_client ();
 
 private:
   /// The ORB

@@ -16,7 +16,7 @@ be_visitor_operation_ih::be_visitor_operation_ih (be_visitor_context *ctx)
 {
 }
 
-be_visitor_operation_ih::~be_visitor_operation_ih (void)
+be_visitor_operation_ih::~be_visitor_operation_ih ()
 {
 }
 
@@ -36,15 +36,14 @@ be_visitor_operation_ih::visit_operation (be_operation *node)
 
   if (be_global->gen_impl_debug_info ())
     {
-      *os << "// TAO_IDL - Generated from" << be_nl
-          << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+      TAO_INSERT_COMMENT (os);
     }
 
   // every operation is declared virtual in the client code
   *os << "virtual" << be_nl;
 
   // STEP I: generate the return type
-  be_type *bt = be_type::narrow_from_decl (node->return_type ());
+  be_type *bt = dynamic_cast<be_type*> (node->return_type ());
 
   if (!bt)
     {

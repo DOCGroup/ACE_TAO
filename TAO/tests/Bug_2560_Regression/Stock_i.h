@@ -16,7 +16,7 @@ public:
   CORBA::Double price ();
   Quoter::Stock::StockHistory * history ();
 
-  static void set_default_POA ( PortableServer::POA_ptr poa )
+  static void set_default_POA (PortableServer::POA_ptr poa)
   {
     Quoter_Stock_i::_poa = PortableServer::POA::_duplicate (poa);
   }

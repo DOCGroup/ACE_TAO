@@ -44,7 +44,7 @@ public:
   TAO_DynSequence_i (CORBA::Boolean allow_truncation=true);
 
   /// Destructor.
-  ~TAO_DynSequence_i (void);
+  ~TAO_DynSequence_i ();
 
   /// Initialize using just a TypeCode.
   void init (CORBA::TypeCode_ptr tc);
@@ -57,15 +57,15 @@ public:
 
   // = Functions specific to DynSequence.
 
-  virtual CORBA::ULong get_length (void);
+  virtual CORBA::ULong get_length ();
 
   virtual void set_length (CORBA::ULong len);
 
-  virtual DynamicAny::AnySeq * get_elements (void);
+  virtual DynamicAny::AnySeq * get_elements ();
 
   virtual void set_elements (const DynamicAny::AnySeq & value);
 
-  virtual DynamicAny::DynAnySeq * get_elements_as_dyn_any (void);
+  virtual DynamicAny::DynAnySeq * get_elements_as_dyn_any ();
 
   virtual void set_elements_as_dyn_any (const DynamicAny::DynAnySeq & value);
 
@@ -74,20 +74,20 @@ public:
 
   virtual void from_any (const CORBA::Any & value);
 
-  virtual CORBA::Any * to_any (void);
+  virtual CORBA::Any * to_any ();
 
   virtual CORBA::Boolean equal (DynamicAny::DynAny_ptr dyn_any);
 
-  virtual void destroy (void);
+  virtual void destroy ();
 
-  virtual DynamicAny::DynAny_ptr current_component (void);
+  virtual DynamicAny::DynAny_ptr current_component ();
 
 private:
   // Utility, turns the type of elements contained in the sequence.
-  CORBA::TypeCode_ptr get_element_type (void);
+  CORBA::TypeCode_ptr get_element_type ();
 
   // Called by both versions of init().
-  void init_common (void);
+  void init_common ();
 
   // = Use copy() or assign() instead of these
   TAO_DynSequence_i (const TAO_DynSequence_i &src);

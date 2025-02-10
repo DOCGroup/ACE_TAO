@@ -6,7 +6,7 @@ Callback_i::Callback_i (int expected_samples)
 }
 
 ACE_INLINE ACE_Sample_History&
-Callback_i::sample_history (void)
+Callback_i::sample_history ()
 {
   return this->history_;
 }

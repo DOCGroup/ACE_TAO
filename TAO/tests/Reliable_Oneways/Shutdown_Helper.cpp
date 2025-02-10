@@ -6,7 +6,7 @@ Shutdown_Helper::Shutdown_Helper (CORBA::ORB_ptr orb)
 }
 
 void
-Shutdown_Helper::shutdown (void)
+Shutdown_Helper::shutdown ()
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

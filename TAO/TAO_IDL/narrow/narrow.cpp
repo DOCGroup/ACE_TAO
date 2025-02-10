@@ -86,51 +86,51 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 TAO_IDL_FE_Export AST_Decl *
 ScopeAsDecl (UTL_Scope *s)
 {
-  if (s == 0)
+  if (s == nullptr)
     {
-      return 0;
+      return nullptr;
     }
 
   switch (s->scope_node_type ())
   {
     case AST_Decl::NT_module:
-      return AST_Module::narrow_from_scope (s);
+      return dynamic_cast<AST_Module*> (s);
     case AST_Decl::NT_root:
-      return AST_Root::narrow_from_scope (s);
+      return dynamic_cast<AST_Root*> (s);
     case AST_Decl::NT_interface:
-      return AST_Interface::narrow_from_scope (s);
+      return dynamic_cast<AST_Interface*> (s);
     case AST_Decl::NT_valuetype:
-      return AST_ValueType::narrow_from_scope (s);
+      return dynamic_cast<AST_ValueType*> (s);
     case AST_Decl::NT_eventtype:
-      return AST_EventType::narrow_from_scope (s);
+      return dynamic_cast<AST_EventType*> (s);
     case AST_Decl::NT_component:
-      return AST_Component::narrow_from_scope (s);
+      return dynamic_cast<AST_Component*> (s);
     case AST_Decl::NT_porttype:
-      return AST_PortType::narrow_from_scope (s);
+      return dynamic_cast<AST_PortType*> (s);
     case AST_Decl::NT_connector:
-      return AST_Connector::narrow_from_scope (s);
+      return dynamic_cast<AST_Connector*> (s);
     case AST_Decl::NT_home:
-      return AST_Home::narrow_from_scope (s);
+      return dynamic_cast<AST_Home*> (s);
     case AST_Decl::NT_op:
-      return AST_Operation::narrow_from_scope (s);
+      return dynamic_cast<AST_Operation*> (s);
     case AST_Decl::NT_factory:
-      return AST_Factory::narrow_from_scope (s);
+      return dynamic_cast<AST_Factory*> (s);
     case AST_Decl::NT_finder:
-      return AST_Finder::narrow_from_scope (s);
+      return dynamic_cast<AST_Finder*> (s);
     case AST_Decl::NT_except:
-      return AST_Exception::narrow_from_scope (s);
+      return dynamic_cast<AST_Exception*> (s);
     case AST_Decl::NT_union:
-      return AST_Union::narrow_from_scope (s);
+      return dynamic_cast<AST_Union*> (s);
     case AST_Decl::NT_struct:
-      return AST_Structure::narrow_from_scope (s);
+      return dynamic_cast<AST_Structure*> (s);
     case AST_Decl::NT_enum:
-      return AST_Enum::narrow_from_scope (s);
+      return dynamic_cast<AST_Enum*> (s);
     case AST_Decl::NT_annotation_decl:
-      return AST_Annotation_Decl::narrow_from_scope (s);
+      return dynamic_cast<AST_Annotation_Decl*> (s);
     case AST_Decl::NT_annotation_appl:
-      return AST_Annotation_Appl::narrow_from_scope (s);
+      return dynamic_cast<AST_Annotation_Appl*> (s);
     default:
-      return 0;
+      return nullptr;
   }
 }
 
@@ -140,9 +140,9 @@ ScopeAsDecl (UTL_Scope *s)
 TAO_IDL_FE_Export UTL_Scope *
 DeclAsScope (AST_Decl *d)
 {
-  if (d == 0)
+  if (d == nullptr)
     {
-      return 0;
+      return nullptr;
     }
 
   switch (d->node_type ())
@@ -152,41 +152,41 @@ DeclAsScope (AST_Decl *d)
        * Resolve forward declared interface by looking at full_definition()
        * field and iterating
        */
-      d = (AST_InterfaceFwd::narrow_from_decl (d))->full_definition ();
-      // fallthrough
+      d = (dynamic_cast<AST_InterfaceFwd*> (d))->full_definition ();
+      ACE_FALLTHROUGH;
     case AST_Decl::NT_interface:
-      return AST_Interface::narrow_from_decl (d);
+      return dynamic_cast<AST_Interface*> (d);
     case AST_Decl::NT_valuetype:
-      return AST_ValueType::narrow_from_decl (d);
+      return dynamic_cast<AST_ValueType*> (d);
     case AST_Decl::NT_eventtype:
-      return AST_EventType::narrow_from_decl (d);
+      return dynamic_cast<AST_EventType*> (d);
     case AST_Decl::NT_component:
-      return AST_Component::narrow_from_decl (d);
+      return dynamic_cast<AST_Component*> (d);
     case AST_Decl::NT_porttype:
-      return AST_PortType::narrow_from_decl (d);
+      return dynamic_cast<AST_PortType*> (d);
     case AST_Decl::NT_connector:
-      return AST_Connector::narrow_from_decl (d);
+      return dynamic_cast<AST_Connector*> (d);
     case AST_Decl::NT_home:
-      return AST_Home::narrow_from_decl (d);
+      return dynamic_cast<AST_Home*> (d);
     case AST_Decl::NT_module:
-      return AST_Module::narrow_from_decl (d);
+      return dynamic_cast<AST_Module*> (d);
     case AST_Decl::NT_root:
-      return AST_Root::narrow_from_decl (d);
+      return dynamic_cast<AST_Root*> (d);
     case AST_Decl::NT_except:
-      return AST_Exception::narrow_from_decl (d);
+      return dynamic_cast<AST_Exception*> (d);
     case AST_Decl::NT_union:
-      return AST_Union::narrow_from_decl (d);
+      return dynamic_cast<AST_Union*> (d);
     case AST_Decl::NT_struct:
-      return AST_Structure::narrow_from_decl (d);
+      return dynamic_cast<AST_Structure*> (d);
     case AST_Decl::NT_enum:
-      return AST_Enum::narrow_from_decl (d);
+      return dynamic_cast<AST_Enum*> (d);
     case AST_Decl::NT_op:
-      return AST_Operation::narrow_from_decl (d);
+      return dynamic_cast<AST_Operation*> (d);
     case AST_Decl::NT_factory:
-      return AST_Factory::narrow_from_decl (d);
+      return dynamic_cast<AST_Factory*> (d);
     case AST_Decl::NT_finder:
-      return AST_Finder::narrow_from_decl (d);
+      return dynamic_cast<AST_Finder*> (d);
     default:
-      return 0;
+      return nullptr;
   }
 }

@@ -11,18 +11,18 @@ test_i::test_i (CORBA::ORB_ptr orb,
 }
 
 PortableServer::POA_ptr
-test_i::_default_POA (void)
+test_i::_default_POA ()
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
 
 void
-test_i::method (void)
+test_i::method ()
 {
 }
 
 void
-test_i::oneway_method (void)
+test_i::oneway_method ()
 {
 }
 
@@ -57,9 +57,9 @@ test_i::timed_oneway_method (CORBA::ULong timeout)
 }
 
 void
-test_i::shutdown (void)
+test_i::shutdown ()
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }
 
 

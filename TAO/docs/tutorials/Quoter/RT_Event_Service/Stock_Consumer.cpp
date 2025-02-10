@@ -47,7 +47,7 @@ Stock_Consumer::push (const RtecEventComm::EventSet &data)
 }
 
 void
-Stock_Consumer::disconnect_push_consumer (void)
+Stock_Consumer::disconnect_push_consumer ()
 {
   this->supplier_proxy_ =
     RtecEventChannelAdmin::ProxyPushSupplier::_nil ();

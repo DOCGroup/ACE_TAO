@@ -31,22 +31,19 @@ public:
         const char * id,
         ::OBV_TruncatableTest::BaseValue * iv,
         ::OBV_TruncatableTest::BaseValue_out ov,
-        char *& desc
-      );
+        char *& desc);
 
   virtual void op2 (
         ::OBV_TruncatableTest::TValue1 * iv,
         const char * id,
         ::OBV_TruncatableTest::TValue1_out ov,
-        char *& desc
-      );
+        char *& desc);
 
   virtual void op3 (
         const char * id,
         ::OBV_TruncatableTest::TValue4 * iv,
         ::OBV_TruncatableTest::TValue4_out ov,
-        char *& desc
-      );
+        char *& desc);
 
   virtual ::OBV_TruncatableTest::BaseValue * op4 (
       const char * id,
@@ -55,16 +52,14 @@ public:
       ::OBV_TruncatableTest::TValue4 * iv2,
       ::OBV_TruncatableTest::TValue4 * iv3,
       ::OBV_TruncatableTest::TValue1 * iv4,
-      char *& desc
-    );
+      char *& desc);
 
   virtual void op5 (const CORBA::Any& val,
                     const char * id,
                     ::OBV_TruncatableTest::TValue1_out ov,
-                    char *& desc
- );
+                    char *& desc);
 
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
 private:
   /// The ORB

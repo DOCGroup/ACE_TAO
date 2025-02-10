@@ -45,9 +45,9 @@ public:
   virtual ~FTRT_ClientORB_Interceptor ();
 
   /// Canonical name of the interceptor.
-  virtual char * name (void);
+  virtual char * name ();
 
-  virtual void destroy (void);
+  virtual void destroy ();
 
   virtual void send_poll (PortableInterceptor::ClientRequestInfo_ptr);
 

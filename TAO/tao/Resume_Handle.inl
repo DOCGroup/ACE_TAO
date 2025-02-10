@@ -12,7 +12,7 @@ TAO_Resume_Handle::TAO_Resume_Handle (TAO_ORB_Core *orb_core,
 }
 
 ACE_INLINE
-TAO_Resume_Handle::~TAO_Resume_Handle (void)
+TAO_Resume_Handle::~TAO_Resume_Handle ()
 {
   if (this->flag_ == TAO_HANDLE_RESUMABLE)
     this->resume_handle ();

@@ -25,16 +25,16 @@ class Object_A_i : public POA_Object_A
 {
 public:
   /// Constructor.
-  Object_A_i (void);
+  Object_A_i ();
 
   /// Destructor.
-  virtual ~Object_A_i (void);
+  virtual ~Object_A_i ();
 
   virtual void foo (Initiator_ptr theInitiator_ptr);
 
-  virtual void finish (void);
+  virtual void finish ();
 
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
   unsigned long finish_two_way_call_;
 };

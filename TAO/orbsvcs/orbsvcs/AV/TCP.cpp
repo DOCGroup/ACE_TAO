@@ -12,7 +12,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 // TAO_AV_TCP_Transport
 //------------------------------------------------------------
 
-TAO_AV_TCP_Transport::TAO_AV_TCP_Transport (void)
+TAO_AV_TCP_Transport::TAO_AV_TCP_Transport ()
   :handler_ (0)
 {
 }
@@ -22,7 +22,7 @@ TAO_AV_TCP_Transport::TAO_AV_TCP_Transport (TAO_AV_TCP_Flow_Handler *handler)
 {
 }
 
-TAO_AV_TCP_Transport::~TAO_AV_TCP_Transport (void)
+TAO_AV_TCP_Transport::~TAO_AV_TCP_Transport ()
 {
 }
 
@@ -33,19 +33,19 @@ TAO_AV_TCP_Transport::open (ACE_Addr * /*address*/)
 }
 
 int
-TAO_AV_TCP_Transport::close (void)
+TAO_AV_TCP_Transport::close ()
 {
   return 0;
 }
 
 int
-TAO_AV_TCP_Transport::mtu (void)
+TAO_AV_TCP_Transport::mtu ()
 {
   return -1;
 }
 
 ACE_Addr*
-TAO_AV_TCP_Transport::get_peer_addr (void)
+TAO_AV_TCP_Transport::get_peer_addr ()
 {
   return 0;
 }
@@ -153,11 +153,11 @@ TAO_AV_TCP_Transport::recv (iovec *iov,
 // TAO_AV_TCP_Protocol_Factory
 //------------------------------------------------------------
 
-TAO_AV_TCP_Factory::TAO_AV_TCP_Factory (void)
+TAO_AV_TCP_Factory::TAO_AV_TCP_Factory ()
 {
 }
 
-TAO_AV_TCP_Factory::~TAO_AV_TCP_Factory (void)
+TAO_AV_TCP_Factory::~TAO_AV_TCP_Factory ()
 {
 }
 
@@ -177,7 +177,7 @@ TAO_AV_TCP_Factory::match_protocol (const char *protocol_string)
 }
 
 TAO_AV_Acceptor*
-TAO_AV_TCP_Factory::make_acceptor (void)
+TAO_AV_TCP_Factory::make_acceptor ()
 {
   if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"TAO_AV_TCP_Factory::make_acceptor "));
   TAO_AV_Acceptor *acceptor = 0;
@@ -188,7 +188,7 @@ TAO_AV_TCP_Factory::make_acceptor (void)
 }
 
 TAO_AV_Connector*
-TAO_AV_TCP_Factory::make_connector (void)
+TAO_AV_TCP_Factory::make_connector ()
 {
   if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"TAO_AV_TCP_Factory::make_connector "));
   TAO_AV_Connector *connector = 0;
@@ -203,7 +203,7 @@ TAO_AV_TCP_Factory::make_connector (void)
 //------------------------------------------------------------
 
 int
-TAO_AV_TCP_Object::handle_input (void)
+TAO_AV_TCP_Object::handle_input ()
 {
   int n = this->transport_->recv (this->frame_.rd_ptr (),
                                   this->frame_.size ());
@@ -249,12 +249,12 @@ TAO_AV_TCP_Object::TAO_AV_TCP_Object (TAO_AV_Callback *callback,
   this->frame_.size (BUFSIZ);
 }
 
-TAO_AV_TCP_Object::~TAO_AV_TCP_Object (void)
+TAO_AV_TCP_Object::~TAO_AV_TCP_Object ()
 {
   // No-op
 }
 int
-TAO_AV_TCP_Object::destroy (void)
+TAO_AV_TCP_Object::destroy ()
 {
   this->callback_->handle_destroy ();
   delete this;
@@ -264,11 +264,11 @@ TAO_AV_TCP_Object::destroy (void)
 //------------------------------------------------------------
 // TAO_AV_TCP_Flow_Factory
 //------------------------------------------------------------
-TAO_AV_TCP_Flow_Factory::TAO_AV_TCP_Flow_Factory (void)
+TAO_AV_TCP_Flow_Factory::TAO_AV_TCP_Flow_Factory ()
 {
 }
 
-TAO_AV_TCP_Flow_Factory::~TAO_AV_TCP_Flow_Factory (void)
+TAO_AV_TCP_Flow_Factory::~TAO_AV_TCP_Flow_Factory ()
 {
 }
 
@@ -357,11 +357,11 @@ TAO_AV_TCP_Base_Connector::connector_connect (TAO_AV_TCP_Flow_Handler *&handler,
 //------------------------------------------------------------
 // TAO_AV_TCP_Connector
 //------------------------------------------------------------
-TAO_AV_TCP_Connector::TAO_AV_TCP_Connector (void)
+TAO_AV_TCP_Connector::TAO_AV_TCP_Connector ()
 {
 }
 
-TAO_AV_TCP_Connector::~TAO_AV_TCP_Connector (void)
+TAO_AV_TCP_Connector::~TAO_AV_TCP_Connector ()
 {
 }
 
@@ -431,7 +431,7 @@ TAO_AV_TCP_Connector::connect (TAO_FlowSpec_Entry *entry,
 }
 
 int
-TAO_AV_TCP_Connector::close (void)
+TAO_AV_TCP_Connector::close ()
 {
   return 0;
 }
@@ -473,11 +473,11 @@ TAO_AV_TCP_Base_Acceptor::make_svc_handler (TAO_AV_TCP_Flow_Handler *&handler)
 // TAO_AV_TCP_Acceptor
 //------------------------------------------------------------
 
-TAO_AV_TCP_Acceptor::TAO_AV_TCP_Acceptor (void)
+TAO_AV_TCP_Acceptor::TAO_AV_TCP_Acceptor ()
 {
 }
 
-TAO_AV_TCP_Acceptor::~TAO_AV_TCP_Acceptor (void)
+TAO_AV_TCP_Acceptor::~TAO_AV_TCP_Acceptor ()
 {
 }
 
@@ -612,7 +612,7 @@ TAO_AV_TCP_Acceptor::open_default (TAO_Base_StreamEndPoint *endpoint,
 
 
 int
-TAO_AV_TCP_Acceptor::close (void)
+TAO_AV_TCP_Acceptor::close ()
 {
   return 0;
 }
@@ -628,13 +628,13 @@ TAO_AV_TCP_Flow_Handler::TAO_AV_TCP_Flow_Handler (TAO_AV_Callback * /*callback*/
            TAO_AV_TCP_Transport (this));
 }
 
-TAO_AV_TCP_Flow_Handler::~TAO_AV_TCP_Flow_Handler (void)
+TAO_AV_TCP_Flow_Handler::~TAO_AV_TCP_Flow_Handler ()
 {
   delete this->transport_;
 }
 
 TAO_AV_Transport *
-TAO_AV_TCP_Flow_Handler::transport (void)
+TAO_AV_TCP_Flow_Handler::transport ()
 {
   return this->transport_;
 }
@@ -642,7 +642,6 @@ TAO_AV_TCP_Flow_Handler::transport (void)
 int
 TAO_AV_TCP_Flow_Handler::open (void * /*arg*/)
 {
-
 #if defined (TCP_NODELAY)
   int nodelay = 1;
 

@@ -22,15 +22,15 @@
 class ACE_Svc_Export Handle_L_Pipe : public ACE_Service_Object, public ACE_LSOCK_Acceptor
 {
 public:
-  Handle_L_Pipe (void);
-  ~Handle_L_Pipe (void);
+  Handle_L_Pipe ();
+  ~Handle_L_Pipe ();
   virtual int init (int argc, ACE_TCHAR *argv[]);
   virtual int info (ACE_TCHAR **, size_t) const;
-  virtual int fini (void);
+  virtual int fini ();
 
 private:
   int open (const ACE_UNIX_Addr &suap, int async = 0);
-  virtual ACE_HANDLE get_handle (void) const;
+  virtual ACE_HANDLE get_handle () const;
   virtual int handle_input (ACE_HANDLE fd);
   virtual int handle_close (ACE_HANDLE fd, ACE_Reactor_Mask);
 

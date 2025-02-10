@@ -1,6 +1,5 @@
 // -*- MPC -*-
 project : acelib {
-  avoids   += wince
   avoids   += old_stdstream
   avoids   += exclude_inet
   avoids   += ace_for_tao
@@ -9,4 +8,4 @@ project : acelib {
   libs     += ACE_INet
   includes += $(ACE_ROOT)/protocols
 }
- 
+

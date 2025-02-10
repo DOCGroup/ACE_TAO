@@ -11,8 +11,6 @@ namespace XMLSchema
   namespace Traversal
   {
     // Automatic traversal of IDREFs.
-    //
-    //
     struct IDREF :
     XSCRT::Traversal::Traverser<XMLSchema::IDREF_Base, XSCRT::Type>
     {

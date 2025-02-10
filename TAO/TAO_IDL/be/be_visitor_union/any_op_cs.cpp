@@ -17,7 +17,7 @@ be_visitor_union_any_op_cs::be_visitor_union_any_op_cs (
 {
 }
 
-be_visitor_union_any_op_cs::~be_visitor_union_any_op_cs (void)
+be_visitor_union_any_op_cs::~be_visitor_union_any_op_cs ()
 {
 }
 
@@ -32,9 +32,7 @@ be_visitor_union_any_op_cs::visit_union (be_union *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2
-      << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   *os << be_global->core_versioning_begin () << be_nl;
 
@@ -70,94 +68,7 @@ be_visitor_union_any_op_cs::visit_union (be_union *node)
 
   *os << be_global->core_versioning_end () << be_nl;
 
-  be_module *module = 0;
-
-  AST_Decl *decl = node;
-  if (decl->is_nested ())
-    {
-      if (node->defined_in ()->scope_node_type () == AST_Decl::NT_interface)
-        {
-          be_interface *intf = 0;
-          intf = be_interface::narrow_from_scope (node->defined_in ());
-          decl = intf;
-        }
-
-      if (decl->defined_in ()->scope_node_type () == AST_Decl::NT_module)
-        {
-          module = be_module::narrow_from_scope (decl->defined_in ());
-
-          if (!module)
-            {
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 "be_visitor_valuebox_any_op_cs::"
-                                 "visit_valuebox - "
-                                 "Error parsing nested name\n"),
-                                -1);
-            }
-
-          // Some compilers handle "any" operators in a namespace corresponding
-          // to their module, others do not.
-          *os << "\n\n#if defined (ACE_ANY_OPS_USE_NAMESPACE)\n";
-
-          be_util::gen_nested_namespace_begin (os, module);
-
-          // Copying insertion.
-          *os << "/// Copying insertion." << be_nl
-              << "void operator<<= (" << be_idt_nl
-              << "::CORBA::Any &_tao_any," << be_nl
-              << "const ::" << node->name () << " &_tao_elem)"
-              << be_uidt_nl
-              << "{" << be_idt_nl
-              << "TAO::Any_Dual_Impl_T< ::" << node->name () << ">::insert_copy ("
-              << be_idt_nl
-              << "_tao_any," << be_nl
-              << "::" << node->name () << "::_tao_any_destructor," << be_nl
-              << "::" << node->tc_name () << "," << be_nl
-              << "_tao_elem);"
-              << be_uidt << be_uidt_nl
-              << "}" << be_nl_2;
-
-          // Non-copying insertion.
-          *os << "/// Non-copying insertion." << be_nl
-              << "void operator<<= (" << be_idt_nl
-              << "::CORBA::Any &_tao_any," << be_nl
-              << "::" << node->name () << " *_tao_elem)"
-              << be_uidt_nl
-              << "{" << be_idt_nl
-              << "TAO::Any_Dual_Impl_T< ::" << node->name () << ">::insert ("
-              << be_idt_nl
-              << "_tao_any," << be_nl
-              << "::" << node->name () << "::_tao_any_destructor," << be_nl
-              << "::" << node->tc_name () << "," << be_nl
-              << "_tao_elem);" << be_uidt
-              << be_uidt_nl
-              << "}" << be_nl_2;
-
-          // Extraction to const pointer.
-          *os << "/// Extraction to const pointer." << be_nl
-              << "::CORBA::Boolean operator>>= (" << be_idt_nl
-              << "const ::CORBA::Any &_tao_any," << be_nl
-              << "const ::" << node->name () << " *&_tao_elem)"
-              << be_uidt_nl
-              << "{" << be_idt_nl
-              << "return TAO::Any_Dual_Impl_T< ::" << node->name () << ">::extract ("
-              << be_idt_nl
-              << "_tao_any," << be_nl
-              << "::" << node->name () << "::_tao_any_destructor," << be_nl
-              << "::" << node->tc_name () << "," << be_nl
-              << "_tao_elem);" << be_uidt
-              << be_uidt_nl
-              << "}";
-
-          be_util::gen_nested_namespace_end (os, module);
-
-          // Emit #else.
-          *os << be_nl_2
-              << "#else\n";
-        }
-    }
-
-  *os << be_global->core_versioning_begin () << be_nl;
+  *os << be_global->anyops_versioning_begin () << be_nl;
 
   // Copying insertion.
   *os << "/// Copying insertion." << be_nl
@@ -207,12 +118,7 @@ be_visitor_union_any_op_cs::visit_union (be_union *node)
       << be_uidt_nl
       << "}";
 
-  *os << be_global->core_versioning_end () << be_nl;
-
-  if (module != 0)
-    {
-      *os << "\n\n#endif";
-    }
+  *os << be_global->anyops_versioning_end () << be_nl;
 
   be_visitor_context ctx (*this->ctx_);
   for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_localtypes);
@@ -221,8 +127,8 @@ be_visitor_union_any_op_cs::visit_union (be_union *node)
     {
       AST_Decl *d = si.item ();
 
-      be_enum *e = be_enum::narrow_from_decl (d);
-      if (e != 0)
+      be_enum *e = dynamic_cast<be_enum*> (d);
+      if (e != nullptr)
         {
           be_visitor_enum_any_op_cs visitor (&ctx);
 
@@ -247,14 +153,14 @@ be_visitor_union_any_op_cs::visit_union (be_union *node)
                         -1);
     }
 
-  node->cli_stub_any_op_gen (1);
+  node->cli_stub_any_op_gen (true);
   return 0;
 }
 
 int
 be_visitor_union_any_op_cs::visit_union_branch (be_union_branch *node)
 {
-  be_type *bt = be_type::narrow_from_decl (node->field_type ());
+  be_type *bt = dynamic_cast<be_type*> (node->field_type ());
 
   if (!bt)
     {

@@ -36,7 +36,7 @@ TAO_Optimized_Connection_Endpoint_Selector (const ACE_Time_Value &tv)
 }
 
 TAO_Optimized_Connection_Endpoint_Selector::
-~TAO_Optimized_Connection_Endpoint_Selector (void)
+~TAO_Optimized_Connection_Endpoint_Selector ()
 {
 }
 
@@ -123,7 +123,6 @@ TAO_Optimized_Connection_Endpoint_Selector::select_endpoint
         }
       while (stub->next_profile_retry () != 0);
     }
-
 
 
   // at this point, we do not have an existing transport, so we must

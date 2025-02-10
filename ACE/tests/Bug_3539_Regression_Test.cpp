@@ -13,7 +13,7 @@
 
 #include "test_config.h"
 #include "TSS_Test_Errno.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/TSS_T.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Atomic_Op_T.h"
@@ -85,7 +85,7 @@ run_main (int, ACE_TCHAR *[])
   {
     ObjectWithTSS *o = 0;
     ACE_NEW_RETURN (o, ObjectWithTSS, 1);
-    ACE_Auto_Ptr<ObjectWithTSS> owner (o);
+    std::unique_ptr<ObjectWithTSS> owner (o);
 
     if (ACE_Thread_Manager::instance ()->spawn_n
         (threads,

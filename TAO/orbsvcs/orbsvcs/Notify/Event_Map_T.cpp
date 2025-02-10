@@ -14,10 +14,9 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class PROXY, class ACE_LOCK>
-TAO_Notify_Event_Map_T<PROXY, ACE_LOCK>::TAO_Notify_Event_Map_T (void)
+TAO_Notify_Event_Map_T<PROXY, ACE_LOCK>::TAO_Notify_Event_Map_T ()
   :proxy_count_ (0)
 {
-
 }
 
 template <class PROXY, class ACE_LOCK>
@@ -26,7 +25,7 @@ TAO_Notify_Event_Map_T<PROXY, ACE_LOCK>::~TAO_Notify_Event_Map_T ()
 }
 
 template <class PROXY, class ACE_LOCK> void
-TAO_Notify_Event_Map_T<PROXY, ACE_LOCK>::init (void)
+TAO_Notify_Event_Map_T<PROXY, ACE_LOCK>::init ()
 {
   this->broadcast_entry_.init ();
 

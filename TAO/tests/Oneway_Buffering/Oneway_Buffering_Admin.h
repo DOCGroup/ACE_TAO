@@ -20,9 +20,9 @@ public:
 
   virtual void request_received (CORBA::ULong payload_length);
 
-  virtual void flush (void);
+  virtual void flush ();
 
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
 private:
   /// Use an ORB reference to shutdown the application.

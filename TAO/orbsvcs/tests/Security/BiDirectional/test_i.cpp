@@ -10,12 +10,11 @@
 #endif /* __ACE_INLINE__ */
 
 
-
 void
-Callback_i::shutdown (void)
+Callback_i::shutdown ()
 {
   ACE_DEBUG ((LM_DEBUG, "Performing clean shutdown\n"));
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }
 
 void
@@ -49,7 +48,7 @@ Simple_Server_i::callback_object (Callback_ptr callback
 }
 
 int
-Simple_Server_i::call_client (void)
+Simple_Server_i::call_client ()
 {
   size_t pre_call_connections =
     this->orb_->orb_core ()->lane_resources ().transport_cache ().current_size ();
@@ -87,7 +86,7 @@ Simple_Server_i::call_client (void)
 
 
 void
-Simple_Server_i::shutdown (void)
+Simple_Server_i::shutdown ()
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

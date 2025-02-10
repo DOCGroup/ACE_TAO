@@ -39,7 +39,6 @@ ACE_HEAP_LCHILD (size_t X)
 }
 
 // Constructor that takes in an <ACE_Timer_Heap_T> to iterate over.
-
 template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY>
 ACE_Timer_Heap_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::ACE_Timer_Heap_Iterator_T (
   Heap & heap)
@@ -49,42 +48,33 @@ ACE_Timer_Heap_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::ACE_Timer_Heap_
   this->first ();
 }
 
-template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY>
-ACE_Timer_Heap_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::~ACE_Timer_Heap_Iterator_T (void)
-{
-}
-
 // Positions the iterator at the first node in the heap array
-
 template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY>
 void
-ACE_Timer_Heap_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::first (void)
+ACE_Timer_Heap_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::first ()
 {
   this->position_ = 0;
 }
 
 // Positions the iterator at the next node in the heap array
-
 template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY>
 void
-ACE_Timer_Heap_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::next (void)
+ACE_Timer_Heap_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::next ()
 {
   if (this->position_ != this->timer_heap_.cur_size_)
     ++this->position_;
 }
 
 // Returns true the <position_> is at the end of the heap array
-
 template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY> bool
-ACE_Timer_Heap_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::isdone (void) const
+ACE_Timer_Heap_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::isdone () const
 {
   return this->position_ == this->timer_heap_.cur_size_;
 }
 
 // Returns the node at the current position in the heap or 0 if at the end
-
 template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY> ACE_Timer_Node_T<TYPE> *
-ACE_Timer_Heap_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::item (void)
+ACE_Timer_Heap_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::item ()
 {
   if (this->position_ != this->timer_heap_.cur_size_)
     return this->timer_heap_.heap_[this->position_];
@@ -109,6 +99,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::ACE_Timer_Heap_T (
     max_size_ (size),
     cur_size_ (0),
     cur_limbo_ (0),
+    iterator_ (nullptr),
     timer_ids_curr_ (0),
     timer_ids_min_free_ (0),
     preallocated_nodes_ (0),
@@ -222,7 +213,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::ACE_Timer_Heap_T (
 }
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY>
-ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::~ACE_Timer_Heap_T (void)
+ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::~ACE_Timer_Heap_T ()
 {
   ACE_TRACE ("ACE_Timer_Heap_T::~ACE_Timer_Heap_T");
 
@@ -258,7 +249,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::~ACE_Timer_Heap_T (void)
 }
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY> int
-ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::close (void)
+ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::close ()
 {
   ACE_TRACE ("ACE_Timer_Heap_T::close");
 
@@ -284,7 +275,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::close (void)
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY>
 long
-ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::pop_freelist (void)
+ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::pop_freelist ()
 {
   ACE_TRACE ("ACE_Timer_Heap_T::pop_freelist");
 
@@ -342,7 +333,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::push_freelist (long old_
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY>
 long
-ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::timer_id (void)
+ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::timer_id ()
 {
   ACE_TRACE ("ACE_Timer_Heap_T::timer_id");
 
@@ -354,7 +345,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::timer_id (void)
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY>
 bool
-ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::is_empty (void) const
+ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::is_empty () const
 {
   ACE_TRACE ("ACE_Timer_Heap_T::is_empty");
 
@@ -363,7 +354,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::is_empty (void) const
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY>
 ACE_Timer_Queue_Iterator_T<TYPE> &
-ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::iter (void)
+ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::iter ()
 {
   this->iterator_->first ();
   return *this->iterator_;
@@ -372,7 +363,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::iter (void)
 // Returns earliest time in a non-empty queue.
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY> const ACE_Time_Value &
-ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::earliest_time (void) const
+ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::earliest_time () const
 {
   ACE_TRACE ("ACE_Timer_Heap_T::earliest_time");
   return this->heap_[0]->get_timer_value ();
@@ -380,7 +371,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::earliest_time (void) con
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY>
 void
-ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::dump (void) const
+ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Timer_Heap_T::dump");
@@ -562,7 +553,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::insert (
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY>
 void
-ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::grow_heap (void)
+ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::grow_heap ()
 {
   // All the containers will double in size from max_size_.
   size_t new_size = this->max_size_ * 2;
@@ -682,7 +673,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::reschedule (
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY>
 ACE_Timer_Node_T<TYPE> *
-ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::alloc_node (void)
+ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::alloc_node ()
 {
   ACE_Timer_Node_T<TYPE> *temp = 0;
 
@@ -920,7 +911,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::cancel (const TYPE &type
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY>
 ACE_Timer_Node_T <TYPE> *
-ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::remove_first (void)
+ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::remove_first ()
 {
   ACE_TRACE ("ACE_Timer_Heap_T::remove_first");
 
@@ -932,7 +923,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::remove_first (void)
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY>
 ACE_Timer_Node_T <TYPE> *
-ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::get_first (void)
+ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::get_first ()
 {
   ACE_TRACE ("ACE_Timer_Heap_T::get_first");
 

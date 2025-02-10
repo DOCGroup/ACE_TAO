@@ -23,14 +23,6 @@
 
 #if defined (ACE_HAS_PDH_H) && !defined (ACE_LACKS_PDH_H)
 #include "ace/Monitor_Control/Windows_Monitor.h"
-#elif defined (ACE_HAS_KSTAT)
-/// There is apparently no way to query the number of threads on the
-/// Solaris platform. The only benchmark I've seen had to put hooks
-/// in the thread creation functions to keep track of the highest
-/// thread ID, then check all the IDs less than that to see if the
-/// threads still exist. Since we don't have that option in this
-/// framework, which is to be used by existing applications, this
-/// particular OS monitor is left unimplemented on Solaris.
 #endif
 
 #include "ace/Monitor_Control/Monitor_Control_export.h"
@@ -56,14 +48,14 @@ namespace ACE
       Num_Threads_Monitor (const char* name);
 
       /// Implementation of the pure virtual method.
-      virtual void update (void);
+      virtual void update ();
 
       /// Stores the default name, used if none is supplied by the user.
-      static const char* default_name (void);
+      static const char* default_name ();
 
     private:
       /// Overridden reset, calls platform-specific reset.
-      virtual void clear_i (void);
+      virtual void clear_i ();
 
     private:
       static const char* default_name_;

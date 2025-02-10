@@ -16,7 +16,7 @@ OrbRunner::~OrbRunner()
 
 
 void
-OrbRunner::run(void)
+OrbRunner::run()
 {
   ACE_ASSERT(this->num_orb_threads_ > 0);
 

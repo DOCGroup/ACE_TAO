@@ -2,11 +2,10 @@
 #include "ace/Log_Msg.h"
 
 
-
 #include "LookupManager.h"
 #include "Name.h"
 
-TAO_Notify_Tests_Filter_Command::TAO_Notify_Tests_Filter_Command (void)
+TAO_Notify_Tests_Filter_Command::TAO_Notify_Tests_Filter_Command ()
 {
 }
 
@@ -15,13 +14,13 @@ TAO_Notify_Tests_Filter_Command::~TAO_Notify_Tests_Filter_Command ()
 }
 
 const char*
-TAO_Notify_Tests_Filter_Command::get_name (void)
+TAO_Notify_Tests_Filter_Command::get_name ()
 {
   return TAO_Notify_Tests_Filter_Command::name ();
 }
 
 const char*
-TAO_Notify_Tests_Filter_Command::name (void)
+TAO_Notify_Tests_Filter_Command::name ()
 {
   return TAO_Notify_Tests_Name::filter_command;
 }
@@ -96,7 +95,7 @@ TAO_Notify_Tests_Filter_Command::init (ACE_Arg_Shifter& arg_shifter)
 }
 
 void
-TAO_Notify_Tests_Filter_Command::handle_create_filter_factory (void)
+TAO_Notify_Tests_Filter_Command::handle_create_filter_factory ()
 {
   CosNotifyChannelAdmin::EventChannel_var ec;
 
@@ -109,7 +108,7 @@ TAO_Notify_Tests_Filter_Command::handle_create_filter_factory (void)
 }
 
 void
-TAO_Notify_Tests_Filter_Command::handle_create_filter (void)
+TAO_Notify_Tests_Filter_Command::handle_create_filter ()
 {
   CosNotifyFilter::FilterFactory_var ff;
 
@@ -122,7 +121,7 @@ TAO_Notify_Tests_Filter_Command::handle_create_filter (void)
 }
 
 void
-TAO_Notify_Tests_Filter_Command::handle_add_constraint (void)
+TAO_Notify_Tests_Filter_Command::handle_add_constraint ()
 {
   CosNotifyFilter::Filter_var filter;
 
@@ -135,11 +134,11 @@ TAO_Notify_Tests_Filter_Command::handle_add_constraint (void)
   constraint_list[0].constraint_expr = CORBA::string_dup (this->constraint_.c_str ());
 
   ACE_DEBUG ((LM_DEBUG, "Adding constraint %s\n", this->constraint_.c_str ()));
-  filter->add_constraints (constraint_list);
+  CosNotifyFilter::ConstraintInfoSeq_var cons_info = filter->add_constraints (constraint_list);
 }
 
 void
-TAO_Notify_Tests_Filter_Command::handle_add_filter (void)
+TAO_Notify_Tests_Filter_Command::handle_add_filter ()
 {
   CosNotifyFilter::Filter_var filter;
 
@@ -153,7 +152,7 @@ TAO_Notify_Tests_Filter_Command::handle_add_filter (void)
 }
 
 void
-TAO_Notify_Tests_Filter_Command::handle_destroy_filter (void)
+TAO_Notify_Tests_Filter_Command::handle_destroy_filter ()
 {
   CosNotifyFilter::Filter_var filter;
 
@@ -163,7 +162,7 @@ TAO_Notify_Tests_Filter_Command::handle_destroy_filter (void)
 }
 
 void
-TAO_Notify_Tests_Filter_Command::execute_i (void)
+TAO_Notify_Tests_Filter_Command::execute_i ()
 {
   if (this->command_ == CREATE_FACTORY)
     {

@@ -2,7 +2,6 @@
 project : ace_etcl_parser {
   after += Monitor_Control
   libs += ACE_Monitor_Control
-  avoids += wince
 
   specific (prop:microsoft) {
     lit_libs += pdh

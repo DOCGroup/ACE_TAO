@@ -26,13 +26,13 @@ TAO_LB_IORInterceptor::TAO_LB_IORInterceptor (
 }
 
 char *
-TAO_LB_IORInterceptor::name (void)
+TAO_LB_IORInterceptor::name ()
 {
   return CORBA::string_dup ("TAO_LB_IORInterceptor");
 }
 
 void
-TAO_LB_IORInterceptor::destroy (void)
+TAO_LB_IORInterceptor::destroy ()
 {
   // Force the LoadManager reference to be released since the ORB's
   // lifetime is tied to object reference lifetimes.
@@ -101,7 +101,7 @@ TAO_LB_IORInterceptor::adapter_state_changed (
 }
 
 void
-TAO_LB_IORInterceptor::register_load_alert (void)
+TAO_LB_IORInterceptor::register_load_alert ()
 {
   {
     ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->lock_);

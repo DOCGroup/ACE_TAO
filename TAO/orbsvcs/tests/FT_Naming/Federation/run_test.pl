@@ -113,11 +113,11 @@ my $ns2_backup_args = "--backup -ORBListenEndPoints $ns_backup_endpoint2 ".
                       "-c $ns2_iorfile -g $nm2_iorfile ".
                       "-r $name_dir2";
 
-$NS1_PRIMARY = $ns1->CreateProcess($tao_ft_naming, $ns1_primary_args );
-$NS1_BACKUP  = $ns1->CreateProcess($tao_ft_naming, $ns1_backup_args );
+$NS1_PRIMARY = $ns1->CreateProcess($tao_ft_naming, $ns1_primary_args);
+$NS1_BACKUP  = $ns1->CreateProcess($tao_ft_naming, $ns1_backup_args);
 
-$NS2_PRIMARY = $ns2->CreateProcess($tao_ft_naming, $ns2_primary_args );
-$NS2_BACKUP  = $ns2->CreateProcess($tao_ft_naming, $ns2_backup_args );
+$NS2_PRIMARY = $ns2->CreateProcess($tao_ft_naming, $ns2_primary_args);
+$NS2_BACKUP  = $ns2->CreateProcess($tao_ft_naming, $ns2_backup_args);
 
 my $replica_primary_ior     = "ns_replica_primary.ior";
 my $ns1_replica_primary_ior = "$name_dir1/$replica_primary_ior";

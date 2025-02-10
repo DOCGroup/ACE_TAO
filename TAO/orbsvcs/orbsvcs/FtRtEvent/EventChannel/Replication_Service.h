@@ -43,7 +43,7 @@ namespace FTRTEC
     /**
      * Used for checking if the incoming replication message is out of sequence.
      */
-    void check_validity(void);
+    void check_validity();
 
     typedef void (FtRtecEventChannelAdmin::EventChannelFacade::*RollbackOperation)
       (const FtRtecEventChannelAdmin::ObjectId&);
@@ -64,9 +64,9 @@ namespace FTRTEC
     void add_member(const FTRT::ManagerInfo & info,
                     CORBA::ULong object_group_ref_version);
 
-    int  acquire_read (void);
-    int  acquire_write (void);
-    int  release (void);
+    int  acquire_read ();
+    int  acquire_write ();
+    int  release ();
 
     int threads() const;
   };

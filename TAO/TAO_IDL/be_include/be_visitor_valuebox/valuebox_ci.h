@@ -29,7 +29,7 @@ public:
   be_visitor_valuebox_ci (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_valuebox_ci (void);
+  ~be_visitor_valuebox_ci ();
 
   /// visit valuebox.
   virtual int visit_valuebox (be_valuebox *node);
@@ -66,7 +66,7 @@ private:
                             const char * type_suffix,
                             bool is_any);
 
-  void emit_default_constructor (void);
+  void emit_default_constructor ();
 
   void emit_default_constructor_alloc (be_decl *node);
 
@@ -75,7 +75,7 @@ private:
 
   void emit_constructor_one_arg_alloc (be_decl *node);
 
-  void emit_copy_constructor (void);
+  void emit_copy_constructor ();
 
   void emit_copy_constructor_alloc (be_decl *node);
 

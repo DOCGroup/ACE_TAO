@@ -5,7 +5,6 @@
 #include "Supplier_Router.h"
 
 
-
 #if defined (ACE_HAS_THREADS)
 
 typedef Acceptor_Factory<Supplier_Handler, SUPPLIER_KEY> SUPPLIER_FACTORY;
@@ -33,7 +32,7 @@ Supplier_Router::Supplier_Router (ACE_Thread_Manager *tm)
 // Handle incoming messages in a separate thread..
 
 int
-Supplier_Router::svc (void)
+Supplier_Router::svc ()
 {
   ACE_ASSERT (this->is_writer ());
 
@@ -116,13 +115,10 @@ Supplier_Router::info (ACE_TCHAR **strp, size_t length) const
   if (sa.get_local_addr (addr) == -1)
     return -1;
 
-#if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
-# define FMTSTR ACE_TEXT ("%ls\t %ls/ %ls")
-#else
-# define FMTSTR ACE_TEXT ("%s\t %s/ %s")
-#endif
-
-  ACE_OS::sprintf (buf, FMTSTR,
+  ACE_OS::sprintf (buf,
+                   ACE_TEXT ("%") ACE_TEXT_PRIs
+                   ACE_TEXT ("\t %") ACE_TEXT_PRIs
+                   ACE_TEXT ("/ %") ACE_TEXT_PRIs,
                    module_name, ACE_TEXT ("upipe"),
                    ACE_TEXT ("# supplier router\n"));
 

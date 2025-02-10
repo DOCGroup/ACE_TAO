@@ -4,7 +4,7 @@
 /**
  *  @file   config-macros.h
  *
- *  @author (Originally in OS.h)Doug Schmidt <d.schmidt@vanderbilt.edu>
+ *  @author Doug Schmidt <d.schmidt@vanderbilt.edu>
  *  @author Jesper S. M|ller<stophph@diku.dk>
  *  @author and a cast of thousands...
  *
@@ -78,14 +78,13 @@
 
 # if defined (ACE_HAS_VALGRIND)
 #   define ACE_INITIALIZE_MEMORY_BEFORE_USE
-#   define ACE_LACKS_DLCLOSE
 # endif /* ACE_HAS_VALGRIND */
 
 // =========================================================================
-// Perfect Multicast filting refers to RFC 3376, where a socket is only
+// Perfect Multicast filtering refers to RFC 3376, where a socket is only
 // delivered dgrams for groups joined even if it didn't bind the group
 // address.  We turn this option off by default, although most OS's
-// except for Windows and Solaris probably lack perfect filtering.
+// except for Windows probably lack perfect filtering.
 // =========================================================================
 
 # if !defined (ACE_LACKS_PERFECT_MULTICAST_FILTERING)
@@ -102,14 +101,13 @@
 
 # if !defined (ACE_HAS_PROCESS_SPAWN)
 #   if !defined (ACE_LACKS_FORK) || \
-       (defined (ACE_WIN32) && !defined (ACE_HAS_PHARLAP)) || \
-       defined (ACE_WINCE) || defined (ACE_OPENVMS)
+       (defined (ACE_WIN32))
 #     define ACE_HAS_PROCESS_SPAWN 1
 #   endif
 # endif /* ACE_HAS_PROCESS_SPAWN */
 
 # if !defined (ACE_HAS_DYNAMIC_LINKING)
-#   if defined (ACE_HAS_SVR4_DYNAMIC_LINKING) || defined (ACE_WIN32) || defined (ACE_VXWORKS) || defined (__hpux)
+#   if defined (ACE_HAS_SVR4_DYNAMIC_LINKING) || defined (ACE_WIN32) || defined (ACE_VXWORKS)
 #     define ACE_HAS_DYNAMIC_LINKING 1
 #   endif
 # endif /* ACE_HAS_DYNAMIC_LINKING */
@@ -235,17 +233,6 @@
 
 #   define ACE_sap_any_cast(TYPE)                                      reinterpret_cast<TYPE> (const_cast<ACE_Addr &> (ACE_Addr::sap_any))
 
-# if !defined (ACE_CAST_CONST)
-    // Sun CC 4.2, for example, requires const in reinterpret casts of
-    // data members in const member functions.  But, other compilers
-    // complain about the useless const.  This keeps everyone happy.
-#   if defined (__SUNPRO_CC)
-#     define ACE_CAST_CONST const
-#   else  /* ! __SUNPRO_CC */
-#     define ACE_CAST_CONST
-#   endif /* ! __SUNPRO_CC */
-# endif /* ! ACE_CAST_CONST */
-
 // ============================================================================
 // Compiler Silencing macros
 //
@@ -254,28 +241,28 @@
 // ============================================================================
 
 #if !defined (ACE_UNUSED_ARG)
-# if defined (__GNUC__) && ((__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 2))) || (defined (__BORLANDC__) && defined (__clang__))
+# if defined (__GNUC__) || defined (__BORLANDC__)
 #   define ACE_UNUSED_ARG(a) (void) (a)
-# elif defined (__GNUC__) || defined (ghs) || defined (__hpux) || defined (__DECCXX) || defined (__rational__) || defined (__USLC__) || defined (ACE_RM544) || defined (__DCC__) || defined (__PGI) || defined (__TANDEM)
+# elif defined (ghs) || defined (__rational__) || defined (__USLC__) || defined (__DCC__) || defined (__PGI)
 // Some compilers complain about "statement with no effect" with (a).
 // This eliminates the warnings, and no code is generated for the null
 // conditional statement.  @note that may only be true if -O is enabled,
 // such as with GreenHills (ghs) 1.8.8.
 #  define ACE_UNUSED_ARG(a) do {/* null */} while (&a == 0)
-# elif defined (__DMC__)
-   #define ACE_UNUSED_ID(identifier)
-   template <class T>
-   inline void ACE_UNUSED_ARG(const T& ACE_UNUSED_ID(t)) { }
-# else /* ghs || __GNUC__ || ..... */
+# else /* ghs ..... */
 #  define ACE_UNUSED_ARG(a) (a)
-# endif /* ghs || __GNUC__ || ..... */
+# endif /* ghs ..... */
 #endif /* !ACE_UNUSED_ARG */
 
-#if defined (_MSC_VER) || defined (ghs) || defined (__DECCXX) || defined(__BORLANDC__) || defined (ACE_RM544) || defined (__USLC__) || defined (__DCC__) || defined (__PGI) || defined (__TANDEM) || (defined (__HP_aCC) && (__HP_aCC < 39000 || __HP_aCC >= 60500)) || defined (__IAR_SYSTEMS_ICC__)
+#if defined (_MSC_VER) || defined (ghs) || defined(__BORLANDC__) || defined (__USLC__) || defined (__DCC__) || defined (__PGI) || defined (__IAR_SYSTEMS_ICC__)
 # define ACE_NOTREACHED(a)
 #else  /* ghs || ..... */
 # define ACE_NOTREACHED(a) a
 #endif /* ghs || ..... */
+
+#if !defined ACE_FALLTHROUGH
+#  define ACE_FALLTHROUGH [[fallthrough]]
+#endif /* ACE_FALLTHROUGH */
 
 // ============================================================================
 // ACE_ALLOC_HOOK* macros
@@ -287,12 +274,12 @@
 #  define ACE_ALLOC_HOOK_DECLARE \
   void *operator new (size_t bytes); \
   void *operator new (size_t bytes, void *ptr); \
-  void *operator new (size_t bytes, const std::nothrow_t &) throw (); \
+  void *operator new (size_t bytes, const std::nothrow_t &) noexcept; \
   void operator delete (void *ptr); \
   void operator delete (void *ptr, const std::nothrow_t &); \
   void *operator new[] (size_t size); \
   void operator delete[] (void *ptr); \
-  void *operator new[] (size_t size, const std::nothrow_t &) throw (); \
+  void *operator new[] (size_t size, const std::nothrow_t &) noexcept; \
   void operator delete[] (void *ptr, const std::nothrow_t &)
 
 #  define ACE_GENERIC_ALLOCS(MAKE_PREFIX, CLASS) \
@@ -305,7 +292,7 @@
   }                                                               \
   MAKE_PREFIX (void *, CLASS)::operator new (size_t, void *ptr) { return ptr; }\
   MAKE_PREFIX (void *, CLASS)::operator new (size_t bytes, \
-                                             const std::nothrow_t &) throw () \
+                                             const std::nothrow_t &) noexcept \
   { return ACE_Allocator::instance ()->malloc (bytes); } \
   MAKE_PREFIX (void, CLASS)::operator delete (void *ptr) \
   { if (ptr) ACE_Allocator::instance ()->free (ptr); } \
@@ -322,7 +309,7 @@
   MAKE_PREFIX (void, CLASS)::operator delete[] (void *ptr) \
   { if (ptr) ACE_Allocator::instance ()->free (ptr); } \
   MAKE_PREFIX (void *, CLASS)::operator new[] (size_t size, \
-                                               const std::nothrow_t &) throw ()\
+                                               const std::nothrow_t &) noexcept\
   { return ACE_Allocator::instance ()->malloc (size); } \
   MAKE_PREFIX (void, CLASS)::operator delete[] (void *ptr, \
                                                 const std::nothrow_t &) \
@@ -476,11 +463,11 @@
  */
 // ============================================================================
 
-#define ACE_OSCALL_RETURN(X,TYPE,FAILVALUE) \
+#define ACE_OSCALL_RETURN(X,TYPE) \
   do \
     return (TYPE) (X); \
   while (0)
-#define ACE_OSCALL(X,TYPE,FAILVALUE,RESULT) \
+#define ACE_OSCALL(X,TYPE,RESULT) \
   do \
     RESULT = (TYPE) (X); \
   while (0)
@@ -601,7 +588,7 @@ typedef ACE_THR_FUNC_RETURN (*ACE_THR_C_FUNC)(void *);
 // Add this macro you one of your cpp file in your dll.  X should
 // be either ACE_DLL_UNLOAD_POLICY_DEFAULT or ACE_DLL_UNLOAD_POLICY_LAZY.
 #define ACE_DLL_UNLOAD_POLICY(CLS,X) \
-extern "C" u_long CLS##_Export _get_dll_unload_policy (void) \
+extern "C" u_long CLS##_Export _get_dll_unload_policy () \
   { return X;}
 
 // ============================================================================
@@ -686,7 +673,7 @@ extern "C" u_long CLS##_Export _get_dll_unload_policy (void) \
 #endif
 
 #ifndef ACE_DEPRECATED
-# define ACE_DEPRECATED
+# define ACE_DEPRECATED [[deprecated]]
 #endif
 
 #ifndef ACE_HAS_REACTOR_NOTIFICATION_QUEUE
@@ -698,6 +685,33 @@ extern "C" u_long CLS##_Export _get_dll_unload_policy (void) \
 // process-shared condition variable (which always requires a mutex too).
 #if defined ACE_LACKS_MUTEXATTR_PSHARED && !defined ACE_LACKS_CONDATTR_PSHARED
 # define ACE_LACKS_CONDATTR_PSHARED
+#endif
+
+#ifdef ACE_LACKS_CONDATTR_SETCLOCK
+#  ifdef ACE_HAS_CONDATTR_SETCLOCK
+#    undef ACE_HAS_CONDATTR_SETCLOCK
+#  endif
+#  ifdef ACE_HAS_POSIX_MONOTONIC_CONDITIONS
+#    undef ACE_HAS_POSIX_MONOTONIC_CONDITIONS
+#  endif
+#  ifdef ACE_HAS_MONOTONIC_CONDITIONS
+#    undef ACE_HAS_MONOTONIC_CONDITIONS
+#  endif
+#endif
+
+#if defined (ACE_HAS_CLOCK_GETTIME_MONOTONIC) && !defined (ACE_LACKS_CLOCK_MONOTONIC)
+#  ifndef ACE_HAS_MONOTONIC_TIME_POLICY
+#    define ACE_HAS_MONOTONIC_TIME_POLICY
+#  endif
+#endif
+
+#ifndef ACE_GCC_NO_RETURN
+#  define ACE_GCC_NO_RETURN
+#endif
+
+// ACE_OS::readdir_r was removed in ACE7
+#ifndef ACE_LACKS_READDIR_R
+#  define ACE_LACKS_READDIR_R
 #endif
 
 #endif /* ACE_CONFIG_MACROS_H */

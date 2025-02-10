@@ -53,12 +53,11 @@ class TAO_LF_Event;
 class TAO_Export TAO_Connect_Strategy
 {
 public:
-
   /// Constructor
   TAO_Connect_Strategy (TAO_ORB_Core *orb);
 
   /// Destructor
-  virtual ~TAO_Connect_Strategy (void);
+  virtual ~TAO_Connect_Strategy () = default;
 
   /// Obtain the synch options that can be passed to ACE_Connector
   /**
@@ -94,7 +93,6 @@ protected:
 
   /// Cached copy of the ORB core pointer
   TAO_ORB_Core * const orb_core_;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

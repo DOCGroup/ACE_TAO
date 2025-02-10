@@ -41,7 +41,7 @@ class TAO_Export TAO_Network_Priority_Protocols_Hooks
 {
 public:
   /// destructor
-  virtual ~TAO_Network_Priority_Protocols_Hooks (void);
+  virtual ~TAO_Network_Priority_Protocols_Hooks ();
 
   virtual void init_hooks (TAO_ORB_Core *orb_core) = 0;
 

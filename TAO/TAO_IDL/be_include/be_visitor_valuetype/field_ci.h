@@ -31,7 +31,7 @@ public:
   be_visitor_valuetype_field_ci (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_valuetype_field_ci (void);
+  ~be_visitor_valuetype_field_ci ();
 
   /// visit the field node
   virtual int visit_field (be_field *node);

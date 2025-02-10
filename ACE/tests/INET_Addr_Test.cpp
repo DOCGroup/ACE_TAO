@@ -51,7 +51,7 @@ static int check_type_consistency (const ACE_INET_Addr &addr)
   return 0;
 }
 
-static bool test_tao_use (void)
+static bool test_tao_use ()
 {
   char host[256];
   if (::gethostname (host, 255) != 0)
@@ -85,7 +85,7 @@ static bool test_tao_use (void)
   return true;
 }
 
-static bool test_port_assignment (void)
+static bool test_port_assignment ()
 {
 #if defined (ACE_HAS_IPV6)
   ACE_INET_Addr addr1 (static_cast<unsigned short> (0), ACE_IPV6_ANY, AF_INET6);
@@ -110,9 +110,8 @@ static bool test_port_assignment (void)
   return true;
 }
 
-static bool test_multiple (void)
+static bool test_multiple ()
 {
-
   bool success = true;
 
   // Check the behavior when there are multiple addresses assigned to a name.
@@ -155,6 +154,43 @@ static bool test_multiple (void)
   if (count <= 1)
     success = false;
 #endif /* ACE_HAS_IPV6 */
+
+  return success;
+}
+
+static bool test_port_names()
+{
+  bool success = true;
+
+  ACE_INET_Addr addr;
+
+#if defined (ACE_LACKS_GETSERVBYNAME)
+  // Since we don't have getservbyname, the call to set should fail.
+  // Check that the call does in fact fail.
+  if (addr.set("telnet") == 0)
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("set with 'telnet' succeeded (expected failure)\n")));
+      success = false;
+    }
+#else
+  if (addr.set("telnet") != 0)
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("set with 'telnet' failed (expected success)\n")));
+      success = false;
+    }
+
+  if (addr != ACE_INET_Addr("0.0.0.0:23"))
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("set with 'telnet' failed to yield correct address\n")));
+      success = false;
+    }
+#endif /* ACE_LACKS_GETSERVBYNAME */
+
+  if (addr.set("not a port name") == 0)
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("set with 'not a port name' succeeded (expected failure)\n")));
+      success = false;
+    }
 
   return success;
 }
@@ -249,11 +285,6 @@ int run_main (int, ACE_TCHAR *[])
                     static_cast<const struct sockaddr_in6*> (addr_port.get_addr());
                   const struct sockaddr_in6 *check_in6 =
                     static_cast<const struct sockaddr_in6*> (check.get_addr());
-# if defined(AIX)
-
-                  ACE_ERROR((LM_ERROR, ACE_TEXT ("  addr_port_in6->sin6_len=%d, check_in6->sin6_len=%d\n")
-                    , (int)addr_port_in6->sin6_len, (int)check_in6->sin6_len));
-# endif
 
                   ACE_ERROR((LM_ERROR, ACE_TEXT ("  addr_port_in6->sin6_family=%d, check_in6->sin6_family=%d\n")
                     , (int)addr_port_in6->sin6_family, (int)check_in6->sin6_family));
@@ -566,6 +597,9 @@ int run_main (int, ACE_TCHAR *[])
                   ACE_TEXT ("Address equality check failed after assignment\n")));
       status = 1;
     }
+
+  if (!test_port_names ())
+    status = 1;
 
   ACE_END_TEST;
 

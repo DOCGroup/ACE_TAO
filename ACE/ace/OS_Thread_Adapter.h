@@ -44,26 +44,24 @@ public:
   ACE_OS_Thread_Adapter (ACE_THR_FUNC user_func,
                          void *arg,
                          ACE_THR_C_FUNC entry_point = (ACE_THR_C_FUNC) ACE_THREAD_ADAPTER_NAME
-# if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
+#if defined (ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS)
                          , ACE_SEH_EXCEPT_HANDLER selector = 0
                          , ACE_SEH_EXCEPT_HANDLER handler = 0
-# endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
-                         , long cancel_flags = 0
-                         );
+#endif /* ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS */
+                         , long cancel_flags = 0);
 
   /**
    * Execute the @a user_func_ with the @a arg.  This function deletes
    * @c this, thereby rendering the object useless after the call
    * returns.
    */
-  virtual ACE_THR_FUNC_RETURN invoke (void);
+  virtual ACE_THR_FUNC_RETURN invoke ();
 
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-
   /// Ensure that this object is allocated on the heap.
-  ~ACE_OS_Thread_Adapter (void);
+  ~ACE_OS_Thread_Adapter ();
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

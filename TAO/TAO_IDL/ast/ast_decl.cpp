@@ -62,27 +62,27 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 */
 
-#include "ast_interface.h"
-#include "ast_module.h"
-#include "ast_array.h"
-#include "ast_field.h"
-#include "ast_structure.h"
-#include "ast_sequence.h"
-#include "ast_string.h"
-#include "ast_typedef.h"
-#include "ast_visitor.h"
-#include "global_extern.h"
-#include "nr_extern.h"
-#include "utl_identifier.h"
-#include "utl_string.h"
-#include "utl_scope.h"
-#include "utl_err.h"
-#include "ace/OS_NS_stdio.h"
-#include "ast_annotation_appl.h"
-#include "utl_indenter.h"
+#include <ast_interface.h>
+#include <ast_module.h>
+#include <ast_array.h>
+#include <ast_field.h>
+#include <ast_structure.h>
+#include <ast_sequence.h>
+#include <ast_string.h>
+#include <ast_typedef.h>
+#include <ast_visitor.h>
+#include <global_extern.h>
+#include <nr_extern.h>
+#include <utl_identifier.h>
+#include <utl_string.h>
+#include <utl_scope.h>
+#include <utl_err.h>
+#include <ast_annotation_appl.h>
+#include <utl_indenter.h>
 
 // FUZZ: disable check_for_streams_include
-#include "ace/streams.h"
+#include <ace/streams.h>
+#include <ace/OS_NS_stdio.h>
 
 COMMON_Base::COMMON_Base (bool local,
                           bool abstract)
@@ -91,17 +91,17 @@ COMMON_Base::COMMON_Base (bool local,
 {
 }
 
-COMMON_Base::~COMMON_Base (void)
+COMMON_Base::~COMMON_Base ()
 {
 }
 
 void
-COMMON_Base::destroy (void)
+COMMON_Base::destroy ()
 {
 }
 
 bool
-COMMON_Base::is_local (void)
+COMMON_Base::is_local ()
 {
   return this->is_local_;
 }
@@ -113,7 +113,7 @@ COMMON_Base::is_local (bool val)
 }
 
 bool
-COMMON_Base::is_abstract (void) const
+COMMON_Base::is_abstract () const
 {
   return this->is_abstract_;
 }
@@ -128,28 +128,28 @@ AST_Decl::AST_Decl (NodeType nt,
                     UTL_ScopedName *n,
                     bool anonymous)
   : COMMON_Base (),
-    repoID_ (0),
-    flat_name_ (0),
+    repoID_ (nullptr),
+    flat_name_ (nullptr),
     contains_wstring_ (-1),
-    annotation_appls_ (0),
+    annotation_appls_ (nullptr),
     builtin_ (idl_global->in_eval_),
     pd_imported (idl_global->imported ()),
     pd_in_main_file (idl_global->in_main_file ()),
     pd_defined_in (idl_global->scopes ().depth () > 0
                      ? idl_global->scopes ().top ()
-                     : 0),
+                     : nullptr),
     pd_node_type (nt),
     pd_line (idl_global->lineno ()),
-    pd_name (0),
-    pd_local_name (n ? n->last_component ()->copy () : 0),
-    pd_original_local_name (0),
-    full_name_ (0),
-    prefix_ (0),
-    version_ (0),
+    pd_name (nullptr),
+    pd_local_name (n ? n->last_component ()->copy () : nullptr),
+    pd_original_local_name (nullptr),
+    full_name_ (nullptr),
+    prefix_ (nullptr),
+    version_ (nullptr),
     anonymous_ (anonymous),
     typeid_set_ (false),
-    last_referenced_as_ (0),
-    prefix_scope_ (0),
+    last_referenced_as_ (nullptr),
+    prefix_scope_ (nullptr),
     in_tmpl_mod_not_aliased_ (idl_global->in_tmpl_mod_no_alias ())
 {
   // If this is the root node, the filename won't have been set yet.
@@ -158,7 +158,7 @@ AST_Decl::AST_Decl (NodeType nt,
 
   this->compute_full_name (n);
 
-  char *prefix = 0;
+  char *prefix = nullptr;
   idl_global->pragma_prefixes ().top (prefix);
   this->prefix_ = ACE::strnew (prefix ? prefix : "");
 
@@ -175,28 +175,28 @@ AST_Decl::AST_Decl (
   UTL_ScopedName *name,
   AST_Decl *other)
   : COMMON_Base (),
-    repoID_ (0),
-    flat_name_ (0),
+    repoID_ (nullptr),
+    flat_name_ (nullptr),
     contains_wstring_ (-1),
-    annotation_appls_ (0),
+    annotation_appls_ (nullptr),
     builtin_ (idl_global->in_eval_),
     pd_imported (idl_global->imported ()),
     pd_in_main_file (idl_global->in_main_file ()),
     pd_defined_in (idl_global->scopes ().depth () > 0
                      ? idl_global->scopes ().top ()
-                     : 0),
+                     : nullptr),
     pd_node_type (other->node_type ()),
     pd_line (idl_global->lineno ()),
-    pd_name (0),
-    pd_local_name (name ? name->last_component ()->copy () : 0),
-    pd_original_local_name (0),
-    full_name_ (0),
-    prefix_ (0),
-    version_ (0),
+    pd_name (nullptr),
+    pd_local_name (name ? name->last_component ()->copy () : nullptr),
+    pd_original_local_name (nullptr),
+    full_name_ (nullptr),
+    prefix_ (nullptr),
+    version_ (nullptr),
     anonymous_ (other->anonymous ()),
     typeid_set_ (false),
-    last_referenced_as_ (0),
-    prefix_scope_ (0),
+    last_referenced_as_ (nullptr),
+    prefix_scope_ (nullptr),
     in_tmpl_mod_not_aliased_ (idl_global->in_tmpl_mod_no_alias ())
 {
   // If this is the root node, the filename won't have been set yet.
@@ -205,7 +205,7 @@ AST_Decl::AST_Decl (
 
   this->compute_full_name (name);
 
-  char *prefix = 0;
+  char *prefix = nullptr;
   idl_global->pragma_prefixes ().top (prefix);
   this->prefix_ = ACE::strnew (prefix ? prefix : "");
 
@@ -218,59 +218,59 @@ AST_Decl::AST_Decl (
   this->compute_repoID ();
 }
 
-AST_Decl::~AST_Decl (void)
+AST_Decl::~AST_Decl ()
 {
 }
 
 void
-AST_Decl::destroy (void)
+AST_Decl::destroy ()
 {
   // These are not set for the root node.
   if (this->pd_name)
     {
       this->pd_name->destroy ();
       delete this->pd_name;
-      this->pd_name = 0;
+      this->pd_name = nullptr;
     }
 
   if (this->pd_local_name)
     {
       this->pd_local_name->destroy ();
       delete this->pd_local_name;
-      this->pd_local_name = 0;
+      this->pd_local_name = nullptr;
     }
 
   if (this->pd_original_local_name)
     {
       this->pd_original_local_name->destroy ();
       delete this->pd_original_local_name;
-      this->pd_original_local_name = 0;
+      this->pd_original_local_name = nullptr;
     }
 
   if (this->last_referenced_as_)
     {
       this->last_referenced_as_->destroy ();
       delete this->last_referenced_as_;
-      this->last_referenced_as_ = 0;
+      this->last_referenced_as_ = nullptr;
     }
 
   delete [] this->full_name_;
-  this->full_name_ = 0;
+  this->full_name_ = nullptr;
 
   delete [] this->repoID_;
-  this->repoID_ = 0;
+  this->repoID_ = nullptr;
 
   delete [] this->prefix_;
-  this->prefix_ = 0;
+  this->prefix_ = nullptr;
 
   delete [] this->version_;
-  this->version_ = 0;
+  this->version_ = nullptr;
 
   delete [] this->flat_name_;
-  this->flat_name_ = 0;
+  this->flat_name_ = nullptr;
 
   delete annotation_appls_;
-  annotation_appls_ = 0;
+  annotation_appls_ = nullptr;
 }
 
 AST_Decl *
@@ -282,7 +282,7 @@ AST_Decl::adjust_found (
 }
 
 bool
-AST_Decl::is_fwd (void)
+AST_Decl::is_fwd ()
 {
   return false; // Not a fwd declared type (by default)
 }
@@ -309,11 +309,11 @@ AST_Decl::compute_full_name (UTL_ScopedName *n)
     }
 
   // Initialize this name to 0.
-  this->pd_name = 0;
+  this->pd_name = nullptr;
 
   // OK, not global. So copy name of containing scope, then
   // smash last cdr of copy with new component
-  UTL_ScopedName *cn = 0;
+  UTL_ScopedName *cn = nullptr;
   AST_Decl *d = ScopeAsDecl (this->defined_in ());
   if (d)
     {
@@ -328,15 +328,15 @@ AST_Decl::compute_full_name (UTL_ScopedName *n)
     {
       if (this->pd_name)
         {
-          UTL_ScopedName *conc_name = 0;
+          UTL_ScopedName *conc_name = nullptr;
           ACE_NEW (conc_name,
-                   UTL_ScopedName (this->pd_local_name->copy (), 0));
+                   UTL_ScopedName (this->pd_local_name->copy (), nullptr));
           this->pd_name->nconc (conc_name);
         }
       else
         {
           ACE_NEW (this->pd_name,
-                   UTL_ScopedName (this->pd_local_name->copy (), 0));
+                   UTL_ScopedName (this->pd_local_name->copy (), nullptr));
         }
     }
 }
@@ -362,7 +362,7 @@ AST_Decl::set_prefix_with_typeprefix_r (const char *value,
     }
 
   delete [] this->repoID_;
-  this->repoID_ = 0;
+  this->repoID_ = nullptr;
   this->prefix (value);
   this->prefix_scope_ = appeared_in;
 
@@ -385,7 +385,7 @@ AST_Decl::set_prefix_with_typeprefix_r (const char *value,
   // This will recursively catch all previous openings of a module.
   if (this->node_type () == AST_Decl::NT_module)
     {
-      AST_Module *m = AST_Module::narrow_from_decl (this);
+      AST_Module *m = dynamic_cast<AST_Module*> (this);
       while (!!(m = m->previous_opening ()))
         {
           for (UTL_ScopeActiveIterator si (m, UTL_Scope::IK_decls);
@@ -408,14 +408,14 @@ AST_Decl::set_prefix_with_typeprefix_r (const char *value,
 
 // Compute stringified fully scoped name.
 void
-AST_Decl::compute_full_name (void)
+AST_Decl::compute_full_name ()
 {
   if (!this->full_name_)
     {
       size_t namelen = 0;
       long first = true;
       long second = false;
-      char *name = 0;
+      char *name = nullptr;
 
       for (UTL_IdListActiveIterator i (this->name ());
            !i.is_done ();
@@ -486,7 +486,7 @@ AST_Decl::compute_full_name (void)
 
 // Compute stringified repository ID.
 void
-AST_Decl::compute_repoID (void)
+AST_Decl::compute_repoID ()
 {
   if (this->repoID_)
     {
@@ -496,10 +496,10 @@ AST_Decl::compute_repoID (void)
   size_t namelen = 4; // for the prefix "IDL:"
   long first = true;
   long second = false;
-  char *name = 0;
+  char *name = nullptr;
   const char *prefix = (this->prefix_ ? this->prefix_ : "");
   UTL_Scope *scope = this->defined_in ();
-  const char *parent_prefix = 0;
+  const char *parent_prefix = nullptr;
 
   // If our prefix is empty, we check to see if an ancestor has one.
   while (scope && !ACE_OS::strcmp (prefix, ""))
@@ -647,7 +647,7 @@ AST_Decl::compute_repoID (void)
 // Public operations.
 
 const char *
-AST_Decl::flat_name (void)
+AST_Decl::flat_name ()
 {
   if (!this->flat_name_)
     {
@@ -659,14 +659,14 @@ AST_Decl::flat_name (void)
 
 // Compute stringified flattened fully scoped name.
 void
-AST_Decl::compute_flat_name (void)
+AST_Decl::compute_flat_name ()
 {
-  if (this->flat_name_ == 0)
+  if (this->flat_name_ == nullptr)
     {
       size_t namelen = 0;
       long first = true;
       long second = false;
-      char *item_name = 0;
+      char *item_name = nullptr;
 
       // In the first loop, compute the total length.
       for (UTL_IdListActiveIterator i (this->name ());
@@ -704,7 +704,7 @@ AST_Decl::compute_flat_name (void)
 
           tmp->destroy ();
           delete tmp;
-          tmp = 0;
+          tmp = nullptr;
         }
 
       ACE_NEW (this->flat_name_, char [namelen + 1]);
@@ -747,7 +747,7 @@ AST_Decl::compute_flat_name (void)
 
           tmp->destroy ();
           delete tmp;
-          tmp = 0;
+          tmp = nullptr;
         }
     }
 }
@@ -800,6 +800,9 @@ AST_Decl::node_type_to_string (NodeType nt)
 
     case NT_sequence:
       return "sequence";
+
+    case NT_map:
+      return "map";
 
     case NT_typedef:
       return "typedef";
@@ -867,7 +870,7 @@ AST_Decl::has_ancestor (AST_Decl *s)
           return true;
         }
 
-      AST_Module *m = AST_Module::narrow_from_decl (s);
+      AST_Module *m = dynamic_cast<AST_Module*> (s);
       if (m)
         {
           while (!!(m = m->previous_opening ()))
@@ -881,7 +884,7 @@ AST_Decl::has_ancestor (AST_Decl *s)
 
       work = work->pd_defined_in ?
              ScopeAsDecl (work->pd_defined_in) :
-             0;
+             nullptr;
     } while (work);
 
   return false;
@@ -895,20 +898,20 @@ AST_Decl::is_child (AST_Decl *s)
       AST_Decl *d = ScopeAsDecl (this->defined_in ());
       if (!d)
         {
-          return 0;
+          return false;
         }
 
       if (!ACE_OS::strcmp (d->full_name (), s->full_name ()))
         {
-          return 1;
+          return true;
         }
     }
 
-  return 0; // Not a child.
+  return false; // Not a child.
 }
 
 bool
-AST_Decl::is_nested (void)
+AST_Decl::is_nested ()
 {
   AST_Decl *d = ScopeAsDecl (this->defined_in ());
 
@@ -941,7 +944,7 @@ AST_Decl::ast_accept (ast_visitor *visitor)
 // Data accessors.
 
 const char *
-AST_Decl::full_name (void)
+AST_Decl::full_name ()
 {
   if (!this->full_name_)
     {
@@ -952,7 +955,7 @@ AST_Decl::full_name (void)
 }
 
 const char *
-AST_Decl::repoID (void)
+AST_Decl::repoID ()
 {
   if (this->pd_node_type == NT_root)
     {
@@ -976,7 +979,7 @@ AST_Decl::repoID (char *value)
 }
 
 const char *
-AST_Decl::prefix (void)
+AST_Decl::prefix ()
 {
   return this->prefix_;
 }
@@ -989,7 +992,7 @@ AST_Decl::prefix (const char *value)
 }
 
 const char *
-AST_Decl::version (void)
+AST_Decl::version ()
 {
   if (!this->version_)
     {
@@ -998,8 +1001,8 @@ AST_Decl::version (void)
 
       // All forms of repo id should contain two colons, the
       // version coming after the second one.
-      const char *tail1 = 0;
-      const char *tail2 = 0;
+      const char *tail1 = nullptr;
+      const char *tail2 = nullptr;
 
       if (repo_id)
         {
@@ -1055,7 +1058,7 @@ AST_Decl::version (char *value)
 }
 
 bool
-AST_Decl::anonymous (void) const
+AST_Decl::anonymous () const
 {
   return this->anonymous_;
 }
@@ -1067,7 +1070,7 @@ AST_Decl::anonymous (bool val)
 }
 
 bool
-AST_Decl::typeid_set (void) const
+AST_Decl::typeid_set () const
 {
   return this->typeid_set_;
 }
@@ -1127,7 +1130,7 @@ AST_Decl::set_id_with_typeid (char *value)
     }
 
   delete [] this->repoID_;
-  this->repoID_ = 0;
+  this->repoID_ = nullptr;
   this->repoID (ACE::strnew (value));
   this->typeid_set_ = true;
 }
@@ -1157,7 +1160,7 @@ AST_Decl::set_prefix_with_typeprefix (const char *value)
 }
 
 bool
-AST_Decl::imported (void)
+AST_Decl::imported ()
 {
   return this->pd_imported;
 }
@@ -1169,7 +1172,7 @@ AST_Decl::set_imported (bool is_it)
 }
 
 bool
-AST_Decl::in_main_file (void)
+AST_Decl::in_main_file ()
 {
   return this->pd_in_main_file;
 }
@@ -1181,7 +1184,7 @@ AST_Decl::set_in_main_file (bool is_it)
 }
 
 UTL_Scope *
-AST_Decl::defined_in (void)
+AST_Decl::defined_in ()
 {
   return this->pd_defined_in;
 }
@@ -1193,13 +1196,13 @@ AST_Decl::set_defined_in (UTL_Scope *s)
 }
 
 AST_Decl::NodeType
-AST_Decl::node_type (void)
+AST_Decl::node_type ()
 {
   return this->pd_node_type;
 }
 
 long
-AST_Decl::line (void)
+AST_Decl::line ()
 {
   return this->pd_line;
 }
@@ -1211,7 +1214,7 @@ AST_Decl::set_line (long l)
 }
 
 ACE_CString &
-AST_Decl::file_name (void)
+AST_Decl::file_name ()
 {
   return this->pd_file_name;
 }
@@ -1223,7 +1226,7 @@ AST_Decl::set_file_name (ACE_CString s)
 }
 
 UTL_ScopedName *
-AST_Decl::name (void)
+AST_Decl::name ()
 {
   return this->pd_name;
 }
@@ -1239,7 +1242,7 @@ AST_Decl::compute_name (const char *prefix,
 {
   if (!prefix || !suffix)
     {
-      return 0;
+      return nullptr;
     }
 
   // Prepare prefix_<local_name>_suffix string.
@@ -1252,19 +1255,19 @@ AST_Decl::compute_name (const char *prefix,
   result_local_str += suffix_str;
 
   // Identifier for the resulting local name.
-  Identifier *result_local_id = 0;
+  Identifier *result_local_id = nullptr;
   ACE_NEW_RETURN (result_local_id,
                   Identifier (result_local_str.c_str ()),
-                  0);
+                  nullptr);
 
   // UTL_Scoped name for the resulting local name.
-  UTL_ScopedName *result_local_name = 0;
+  UTL_ScopedName *result_local_name = nullptr;
   ACE_NEW_RETURN (result_local_name,
-                  UTL_ScopedName (result_local_id, 0),
-                  0);
+                  UTL_ScopedName (result_local_id, nullptr),
+                  nullptr);
 
   // Global scope?
-  UTL_ScopedName *result_name = 0;
+  UTL_ScopedName *result_name = nullptr;
   if (!this->defined_in ())
     {
       result_name = result_local_name;
@@ -1333,18 +1336,18 @@ AST_Decl::set_name (UTL_ScopedName *n)
 
       // These will be recomputed on demand.
       delete [] this->flat_name_;
-      this->flat_name_ = 0;
+      this->flat_name_ = nullptr;
 
       delete [] this->full_name_;
-      this->full_name_ = 0;
+      this->full_name_ = nullptr;
 
       delete [] this->repoID_;
-      this->repoID_ = 0;
+      this->repoID_ = nullptr;
     }
 }
 
 Identifier *
-AST_Decl::local_name (void)
+AST_Decl::local_name () const
 {
   return this->pd_local_name;
 }
@@ -1367,7 +1370,7 @@ AST_Decl::compute_local_name (const char *prefix,
 {
   if (!prefix || !suffix)
     {
-      return 0;
+      return nullptr;
     }
 
   // Init the result with prefix.
@@ -1380,10 +1383,10 @@ AST_Decl::compute_local_name (const char *prefix,
   result_str += ACE_CString (suffix);
 
   // Identifier for the resulting local name.
-  Identifier *result_id = 0;
+  Identifier *result_id = nullptr;
   ACE_NEW_RETURN (result_id,
                   Identifier (result_str.c_str ()),
-                  0);
+                  nullptr);
 
   return result_id;
 }
@@ -1417,13 +1420,13 @@ AST_Decl::original_local_name (Identifier *local_name)
 }
 
 Identifier *
-AST_Decl::original_local_name (void)
+AST_Decl::original_local_name ()
 {
   return this->pd_original_local_name;
 }
 
 bool
-AST_Decl::is_defined (void)
+AST_Decl::is_defined ()
 {
   // AST_Interface, AST_Structure, and AST_Union will
   // override this, as will AST_InterfaceFwd, etc.
@@ -1431,7 +1434,7 @@ AST_Decl::is_defined (void)
 }
 
 UTL_ScopedName *
-AST_Decl::last_referenced_as (void) const
+AST_Decl::last_referenced_as () const
 {
   return this->last_referenced_as_;
 }
@@ -1449,7 +1452,7 @@ AST_Decl::last_referenced_as (UTL_ScopedName *n)
 }
 
 UTL_Scope *
-AST_Decl::prefix_scope (void)
+AST_Decl::prefix_scope ()
 {
   return this->prefix_scope_;
 }
@@ -1462,7 +1465,7 @@ AST_Decl::prefix_scope (UTL_Scope *s)
 
 // Container types will override this.
 int
-AST_Decl::contains_wstring (void)
+AST_Decl::contains_wstring ()
 {
   if (this->contains_wstring_ == -1)
     {
@@ -1470,7 +1473,7 @@ AST_Decl::contains_wstring (void)
         {
         case AST_Decl::NT_array:
           {
-            AST_Array *a = AST_Array::narrow_from_decl (this);
+            AST_Array *a = dynamic_cast<AST_Array*> (this);
             this->contains_wstring_ = a->base_type ()->contains_wstring ();
             break;
           }
@@ -1479,14 +1482,14 @@ AST_Decl::contains_wstring (void)
         case AST_Decl::NT_struct:
         case AST_Decl::NT_union:
           {
-            AST_Structure *s = AST_Structure::narrow_from_decl (this);
+            AST_Structure *s = dynamic_cast<AST_Structure*> (this);
             this->contains_wstring_ = s->contains_wstring ();
             break;
           }
 
         case AST_Decl::NT_sequence:
           {
-            AST_Sequence *s = AST_Sequence::narrow_from_decl (this);
+            AST_Sequence *s = dynamic_cast<AST_Sequence*> (this);
             this->contains_wstring_ = s->base_type ()->contains_wstring ();
             break;
           }
@@ -1495,14 +1498,14 @@ AST_Decl::contains_wstring (void)
         case AST_Decl::NT_field:
         case AST_Decl::NT_union_branch:
           {
-            AST_Field *f = AST_Field::narrow_from_decl (this);
+            AST_Field *f = dynamic_cast<AST_Field*> (this);
             this->contains_wstring_ = f->field_type ()->contains_wstring ();
             break;
           }
 
         case AST_Decl::NT_typedef:
           {
-            AST_Typedef *td = AST_Typedef::narrow_from_decl (this);
+            AST_Typedef *td = dynamic_cast<AST_Typedef*> (this);
             this->contains_wstring_ =
               td->primitive_base_type ()->contains_wstring ();
             break;
@@ -1536,11 +1539,11 @@ AST_Decl::masking_checks (AST_Decl *mod)
       return true;
     }
 
-  AST_Module *me_mod = AST_Module::narrow_from_decl (this);
+  AST_Module *me_mod = dynamic_cast<AST_Module*> (this);
 
-  if (me_mod != 0)
+  if (me_mod != nullptr)
     {
-      AST_Module *po_mod = AST_Module::narrow_from_decl (mod);
+      AST_Module *po_mod = dynamic_cast<AST_Module*> (mod);
       if (po_mod)
         {
           while (!!(po_mod = po_mod->previous_opening ()))
@@ -1557,7 +1560,7 @@ AST_Decl::masking_checks (AST_Decl *mod)
 }
 
 bool
-AST_Decl::in_tmpl_mod_not_aliased (void) const
+AST_Decl::in_tmpl_mod_not_aliased () const
 {
   return this->in_tmpl_mod_not_aliased_;
 }
@@ -1567,11 +1570,6 @@ AST_Decl::in_tmpl_mod_not_aliased (bool val)
 {
   this->in_tmpl_mod_not_aliased_ = val;
 }
-
-//Narrowing methods for AST_Decl.
-
-IMPL_NARROW_FROM_DECL(AST_Decl)
-
 
 void
 AST_Decl::annotation_appls (const AST_Annotation_Appls &annotations)
@@ -1643,7 +1641,7 @@ operator<< (ACE_OSTREAM_TYPE &o, AST_Decl &d)
 bool
 AST_Decl::annotatable () const
 {
-  return false;
+  return true;
 }
 
 bool

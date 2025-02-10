@@ -21,7 +21,7 @@ static const ACE_TCHAR *rendezvous_fifo = ACE_TEXT("/tmp/foo_fifo");
 static const ACE_TCHAR *file_name = ACE_TEXT("./local_data");
 
 static void
-print_usage_and_die (void)
+print_usage_and_die ()
 {
   ACE_ERROR ((LM_ERROR,
               "usage: %s [-d] [-f rendezvous_fifo]\n",

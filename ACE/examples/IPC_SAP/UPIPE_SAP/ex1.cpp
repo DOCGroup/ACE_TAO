@@ -18,7 +18,6 @@
 #include "ace/UPIPE_Connector.h"
 
 
-
 #if defined (ACE_HAS_THREADS)
 
 // Global pattern

@@ -2,7 +2,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE CORBA::Boolean
-TAO_Notify_Proxy::updates_off (void)
+TAO_Notify_Proxy::updates_off ()
 {
   return this->updates_off_;
 }

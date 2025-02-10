@@ -37,9 +37,4 @@ ACE_Event_T<TIME_POLICY>::ACE_Event_T (int manual_reset,
                 ACE_TEXT ("ACE_Event_T<TIME_POLICY>::ACE_Event_T")));
 }
 
-template <class TIME_POLICY>
-ACE_Event_T<TIME_POLICY>::~ACE_Event_T (void)
-{
-}
-
 ACE_END_VERSIONED_NAMESPACE_DECL

@@ -44,7 +44,7 @@
     </P>
     <P>
       The Build Czar is empowered to set up more builds on his own for his
-      convenience. This <a href="https://raw.githubusercontent.com/DOCGroup/autobuild/master/README">
+      convenience. This <a href="https://github.com/DOCGroup/autobuild/blob/master/README.md">
         page </a>has a step by step instructions on how to do that.
     </P>
     <P>
@@ -97,17 +97,17 @@
           Make sure your release system has all the needed tools. This can be achieved on Fedora
           using:
           <ul>
-            <li><code>yum install perl screen automake doxygen bzip2 tar gzip openssh graphviz zip libtool GitPython</code></li>
+            <li><code>yum install perl screen automake doxygen bzip2 tar gzip openssh graphviz zip libtool GitPython python3</code></li>
             <li><code>yum update</code></li>
           </ul>
           or on OpenSuSE
           <ul>
-            <li><code>zypper install perl screen automake doxygen bzip2 tar gzip openssh graphviz zip libtool python-gitpython</code></li>
+            <li><code>zypper install perl screen automake doxygen bzip2 tar gzip openssh graphviz zip libtool python-gitpython python3</code></li>
             <li><code>zypper update</code></li>
           </ul>
           If you want to perform a full build with qt support, than run:
           <ul>
-            <li><code>yum install deltarpm ntp rubygem-rmagick bison xerces-c-devel psmisc yum-utils gdb unzip glibc-devel libasan bison redhat-lsb perl-Pod-Usage rubygems clang make patch libcgroup-devel ant setuptool system-config-network-tui system-config-firewall-tui lcov gnuplot java-1.8.0-openjdk perl screen automake doxygen bzip2 tar gzip openssh graphviz zip libtool gcc-c++ boost-devel valgrind openssl-devel gcc qt4 fltk-devel bzip2-devel rsync openssl lzo-devel zziplib-devel acpid acpi nfs-utils java xerces-c xerces-c-devel mc qt qt-devel icecream ruby ruby-devel lksctp-tools-devel git telnet GitPython NetworkManager wget mailx</code></li>
+            <li><code>yum install deltarpm ntp rubygem-rmagick bison xerces-c-devel psmisc yum-utils gdb unzip glibc-devel libasan bison redhat-lsb perl-Pod-Usage rubygems clang make patch libcgroup-devel ant setuptool system-config-network-tui system-config-firewall-tui lcov gnuplot java-1.8.0-openjdk perl screen automake doxygen bzip2 tar gzip openssh graphviz zip libtool gcc-c++ boost-devel valgrind openssl-devel gcc qt4 fltk-devel bzip2-devel rsync openssl lzo-devel zziplib-devel acpid acpi nfs-utils java xerces-c xerces-c-devel mc qt qt-devel icecream ruby ruby-devel lksctp-tools-devel git telnet GitPython NetworkManager wget mailx python3</code></li>
           </ul>
           For some optional i686 packages run
           <ul>
@@ -132,13 +132,18 @@
               <li>
                 <code>git clone https://github.com/DOCGroup/ACE_TAO.git ACE_TAO</code></li>
               <li>
-                <code>git clone https://github.com/DOCGroup/ACE_TAO.git MPC</code></li>
+                <code>git clone https://github.com/DOCGroup/MPC.git MPC</code></li>
             </ul>
         </ul>
         <li>
           Set $DOC_ROOT to point to the new workspace you checked out.</li>
         <li>
           Change directories to <tt>$DOC_ROOT</tt>
+        </li>
+        <li>
+          Checkout the correct branch you want to release on, the default is <code>master</code>
+          but you can also check out an different branch <code>ace6tao2</code> for the ACE 6.x/TAO 2.x
+          releases.
         </li>
         <li>
           Tag the release by executing<br>
@@ -156,17 +161,13 @@
         they were in before the release process started and then checked back into git:<br>
         <ul>
           <code>
-            <li>
-              ACE/PROBLEM-REPORT-FORM</li>
-            <li>
-              ACE/VERSION</li>
-            <li>
-              ACE/TAO/PROBLEM-REPORT-FORM</li>
-            <li>
-              TAO/VERSION</li>
-            <li>
-              TAO/tao/Version.h</li>
-            ace/Version.h</li> </code>
+            <li>ACE/PROBLEM-REPORT-FORM</li>
+            <li>ACE/VERSION.txt</li>
+            <li>TAO/PROBLEM-REPORT-FORM</li>
+            <li>TAO/VERSION.txt</li>
+            <li>TAO/tao/Version.h</li>
+            <li>ace/Version.h</li>
+          </code>
         </ul>
     The tag will also need to be removed (both in Middleware and MPC):
     ACE+TAO-X_Y_Z (where X is the ACE Major version number, and Y & Z are the
@@ -181,7 +182,7 @@
       <li>
         Create the kits by executing<br>
         <code>ACE/bin/make_release.py --kit</code><br>
-        This will take somewhere around 2-4 hours to complete.
+        This will take somewhere around 1 hours to complete.
         <ul>
           <li>
             These commands only tags and creates the kits for the software itself, not
@@ -204,6 +205,7 @@
         git clone https://github.com/DOCGroup/ACE_TAO.git ACE_TAO<br>
         git clone https://github.com/DOCGroup/MPC.git MPC<br>
         cd ACE_TAO<br>
+        git checkout master</br>
         ACE/bin/make_release.py --micro --update --verbose<br>
         ACE/bin/make_release.py --micro --tag --verbose<br>
         ACE/bin/make_release.py --micro --push --verbose<br>
@@ -221,6 +223,12 @@
       <code>scp $DOC_ROOT/package-&lt;PID&gt;/ACE*
         bczar@download.dre.vanderbilt.edu:/export/www/download.dre/ACE+TAO-distribution<br>
       </code>
+      When releasing from a branch of master the resulting packages shouldn't be uploaded to
+      <code>ACE+TAO-distribution</code> but <b>only</b> the versioned packages should be
+      uploaded to <code>bczar@download.dre.vanderbilt.edu:/export/www/download.dre/previous_versions</code>
+      using
+      <code>scp $DOC_ROOT/package-&lt;PID&gt;/ACE*6*
+        bczar@download.dre.vanderbilt.edu:/export/www/download.dre/previous_versions</code>
       <li>
         After the repository is tagged you can also start generating the doxygen
         documentation in parallel with the kit generation above.<br>
@@ -245,9 +253,9 @@
           as working directory
           <li>
             Update the workspace with the right version tag (replace the X_Y_Z with the ACE
-            version number being released e.g. 5_6_7)
+            version number being released e.g. 7_0_5)
             <br>
-            <code>git clone https://github.com/DOCGroup/ACE_TAO.git --depth 1 --branch ACE+TAO-6_4_5 ACE_TAO</code><br>
+            <code>git clone https://github.com/DOCGroup/ACE_TAO.git --depth 1 --branch ACE+TAO-7_0_5 ACE_TAO</code><br>
           </li>
           <li>Change to the ACE_TAO directory using <br>
           cd ACE_TAO</li>
@@ -278,7 +286,7 @@
         rm -rf doxygen<br>
         mkdir doxygen<br>
         cd doxygen<br>
-        git clone https://github.com/DOCGroup/ACE_TAO.git --depth 1 --branch ACE+TAO-6_5_6 ACE_TAO<br>
+        git clone https://github.com/DOCGroup/ACE_TAO.git --depth 1 --branch ACE+TAO-7_0_9 ACE_TAO<br>
         cd ACE_TAO<br>
         export ACE_ROOT=$PWD/ACE<br>
         export TAO_ROOT=$PWD/TAO<br>
@@ -322,12 +330,12 @@
         scp bczar@download.dre.vanderbilt.edu:/export/www/download.dre/ACE+TAO-distribution/ACE-html.tar.bz2 .<br>
         bunzip2 ACE-html.tar.bz2;tar -xvf ACE-html.tar<br>
         cd ..<br>
-        mkdir 6.5.5<br>
-        cd 6.5.5<br>
+        mkdir 7.0.8<br>
+        cd 7.0.8<br>
         mv ../tmp/html .<br>
         cd ..<br>
         rm Micro<br>
-        ln -s 6.5.5/html Micro<br>
+        ln -s 7.0.8/html Micro<br>
         rm -rf tmp<br>
         </code>
 
@@ -382,11 +390,7 @@
         Make a new pull request to Microsoft vcpkg to update ACE to the new release, see https://github.com/Microsoft/vcpkg/tree/master/ports/ace
       </li>
       <li>
-        Make a new pull request to OpenDDS to update the configure script to use the new release, see https://github.com/objectcomputing/OpenDDS/blob/master/configure
-      </li>
-      <li>
         Mail the approved release announcement out to, at minimum the following:
-        <tt>ciao-users@list.isis.vanderbilt.edu</tt>, <tt>ciao-announce@list.isis.vanderbilt.edu</tt>,
         <tt>tao-users@list.isis.vanderbilt.edu</tt>, <tt>tao-announce@list.isis.vanderbilt.edu</tt>,
         <tt>ace-users@list.isis.vanderbilt.edu</tt>, <tt>ace-announce@list.isis.vanderbilt.edu</tt>.
         Do this as yourself (not as bugzilla). <b>N.B.</b>

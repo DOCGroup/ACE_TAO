@@ -140,7 +140,7 @@ $server->DeleteFile($iorbase);
 $client->DeleteFile($iorbase);
 @endverbatim
 
-Because of the way tests work on chorus, we need to have a fully
+We need to have a fully
 qualified path to all *.ior and *.conf files.  We unlink the file
 immediately because we use WaitForFileTimed later.
 

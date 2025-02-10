@@ -54,7 +54,7 @@ public:
                          size_t input_cdr_size = ACE_CDR::DEFAULT_BUFSIZE);
 
   /// Destructor
-  ~TAO_GIOP_Message_Base (void);
+  ~TAO_GIOP_Message_Base ();
 
   /// Initialize the underlying state object based on the @a major and
   /// @a minor revision numbers
@@ -121,13 +121,13 @@ public:
       const CORBA::Exception &x);
 
   /// Header length
-  size_t header_length (void) const;
+  size_t header_length () const;
 
   /// The header length of a fragment
   size_t fragment_header_length (
     const TAO_GIOP_Message_Version& giop_version) const;
 
-  TAO_OutputCDR &out_stream (void);
+  TAO_OutputCDR &out_stream ();
 
   /// Consolidate fragmented message with associated fragments, being
   /// stored within this class.  If reliable transport is used (like
@@ -149,7 +149,7 @@ public:
   int discard_fragmented_message (const TAO_Queued_Data *cancel_request);
 
   /// Outgoing GIOP message fragmentation strategy.
-  TAO_GIOP_Fragmentation_Strategy * fragmentation_strategy (void);
+  TAO_GIOP_Fragmentation_Strategy * fragmentation_strategy ();
 
   /// Is the messaging object ready for processing BiDirectional
   /// request/response?

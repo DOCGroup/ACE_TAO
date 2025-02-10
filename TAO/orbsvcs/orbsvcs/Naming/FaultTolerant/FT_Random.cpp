@@ -9,14 +9,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_FT_Random::TAO_FT_Random (void)
-{
-}
-
-TAO_FT_Random::~TAO_FT_Random (void)
-{
-}
-
 bool
 TAO_FT_Random::next_location (
       PortableGroup::ObjectGroup_ptr object_group,

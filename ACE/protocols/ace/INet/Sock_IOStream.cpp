@@ -10,7 +10,6 @@ namespace ACE
 {
   namespace IOS
   {
-
     template <ACE_SYNCH_DECL>
     Sock_StreamBufferBase<ACE_SYNCH_USE>::Sock_StreamBufferBase (stream_type* stream)
       : BidirStreamBuffer<StreamHandler<ACE_SOCK_STREAM, ACE_SYNCH_USE> > (

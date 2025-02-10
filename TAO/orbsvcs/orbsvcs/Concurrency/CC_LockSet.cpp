@@ -16,7 +16,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Default constructor.
 
-CC_LockSet::CC_LockSet (void)
+CC_LockSet::CC_LockSet ()
 {
   try
     {
@@ -24,7 +24,7 @@ CC_LockSet::CC_LockSet (void)
     }
   catch (const CORBA::Exception& ex)
     {
-      ex._tao_print_exception ("CC_LockSet::CC_LockSet (void)");
+      ex._tao_print_exception ("CC_LockSet::CC_LockSet ()");
     }
 }
 
@@ -45,7 +45,7 @@ CC_LockSet::CC_LockSet (CosConcurrencyControl::LockSet_ptr )
 // Initialization.
 
 void
-CC_LockSet::Init (void)
+CC_LockSet::Init ()
 {
   // Set the mode of the statically allocated locks
   lock_[CC_IR] = 0;
@@ -61,7 +61,7 @@ CC_LockSet::Init (void)
 
 // Destructor
 
-CC_LockSet::~CC_LockSet (void)
+CC_LockSet::~CC_LockSet ()
 {
 }
 
@@ -278,7 +278,7 @@ CC_LockSet::lock_held (CC_LockModeEnum lm)
 }
 
 void
-CC_LockSet::dump (void)
+CC_LockSet::dump ()
 {
   ORBSVCS_DEBUG ((LM_DEBUG,
               "waiting_calls_: %i, IR: %i, R: %i, U: %i, IW: %i, W: %i\n",

@@ -67,7 +67,6 @@ public:
    */
   struct POD_RT_Info
   {
-
     const char *entry_point;
     RtecScheduler::handle_t handle;
     RtecScheduler::Time worst_case_execution_time;
@@ -83,7 +82,6 @@ public:
     RtecScheduler::Preemption_Priority_t preemption_priority;
     CORBA::Long info_type;
     RtecScheduler::RT_Info_Enabled_Type_t enabled;
-
   };
 
 
@@ -159,7 +157,7 @@ public:
    * from main, after resolve_initial_references.
    */
   static int server (RtecScheduler::Scheduler_ptr);
-  static RtecScheduler::Scheduler_ptr server (void);
+  static RtecScheduler::Scheduler_ptr server ();
 
   /**
    * This helper function will dump the schedule returned by a
@@ -202,7 +200,7 @@ public:
    * the factory is uninitialized, or in a config or runtime mode of
    * operation.
    */
-  static Factory_Status status (void);
+  static Factory_Status status ();
 
   // = Access the (OS independent) preemption priority of the calling thread.
   /// Returns (u_int) -1 if the preemption priority hadn't been set.
@@ -244,7 +242,6 @@ public:
   static void rt_info_enable_state_default(RtecScheduler::RT_Info_Enabled_Type_t rt_info_enable_state_default);
 
 protected:
-
   /**
    * By default this factory assumes we are runnning a config
    * run. Calling this method disables that.  Since the methods
@@ -253,7 +250,7 @@ protected:
    * code emitted for the run-time scheduler, automagically disabling
    * the config_run() when that code is linked in.
    */
-  static int no_config_run (void);
+  static int no_config_run ();
 
 private:
   static RtecScheduler::Scheduler_ptr server_;
@@ -271,7 +268,6 @@ private:
 
   /// Default rt_info enabled state.  (Boeing Extension)
   static RtecScheduler::RT_Info_Enabled_Type_t rt_info_enable_state_default_;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

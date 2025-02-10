@@ -22,7 +22,7 @@ ast_visitor_tmpl_module_ref::ast_visitor_tmpl_module_ref (
 {
 }
 
-ast_visitor_tmpl_module_ref::~ast_visitor_tmpl_module_ref (void)
+ast_visitor_tmpl_module_ref::~ast_visitor_tmpl_module_ref ()
 {
 }
 
@@ -52,7 +52,7 @@ ast_visitor_tmpl_module_ref::visit_template_module_ref (
   // to the module of the same name in the instantiated template
   // module scope (see ast_visitor_reifying::check_and_store()
   // and ast_visitor_reifying::template_module_rel_name()).
-  UTL_ScopedName sn (node->local_name (), 0);
+  UTL_ScopedName sn (node->local_name (), nullptr);
 
   AST_Module *added_module =
     idl_global->gen ()->create_module (idl_global->scopes (). top (),
@@ -70,7 +70,7 @@ ast_visitor_tmpl_module_ref::visit_template_module_ref (
   /// that's what will be search for any matches. We save the
   /// current list to restore after the traversal.
 
-  if (idl_global->for_new_holder () == 0)
+  if (idl_global->for_new_holder () == nullptr)
     {
       idl_global->for_new_holder (
         const_cast<UTL_StrList *> (
@@ -102,7 +102,7 @@ ast_visitor_tmpl_module_ref::visit_template_module_ref (
   idl_global->current_params (
     const_cast<FE_Utils::T_PARAMLIST_INFO *> (
       old_params));
-  idl_global->for_new_holder (0);
+  idl_global->for_new_holder (nullptr);
   idl_global->alias_params (const_cast<UTL_StrList *> (old_refs));
 
   idl_global->scopes ().pop ();

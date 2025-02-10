@@ -29,22 +29,21 @@
  */
 class Quoter_Factory_Finder_Server
 {
-
 public:
   /// Default constructor
-  Quoter_Factory_Finder_Server (void);
+  Quoter_Factory_Finder_Server ();
 
   /// Destructor
-  ~Quoter_Factory_Finder_Server (void);
+  ~Quoter_Factory_Finder_Server ();
 
   /// Initialize the Quoter_Server state - parsing arguments and ...
   int init (int argc, ACE_TCHAR *argv[]);
 
   /// Run the orb
-  int run (void);
+  int run ();
 
   /// parse the passed parameters
-  u_int parse_args (void);
+  u_int parse_args ();
 
 private:
   /// instance of the ORB Manager

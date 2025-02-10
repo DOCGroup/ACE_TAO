@@ -18,7 +18,7 @@ be_visitor_operation_tie_sh::be_visitor_operation_tie_sh (
 {
 }
 
-be_visitor_operation_tie_sh::~be_visitor_operation_tie_sh (void)
+be_visitor_operation_tie_sh::~be_visitor_operation_tie_sh ()
 {
 }
 
@@ -36,7 +36,7 @@ be_visitor_operation_tie_sh::visit_operation (be_operation *node)
   this->ctx_->node (node);
 
   // STEP I: generate the return type.
-  be_type *bt = be_type::narrow_from_decl (node->return_type ());
+  be_type *bt = dynamic_cast<be_type*> (node->return_type ());
 
   if (!bt)
     {
@@ -47,8 +47,7 @@ be_visitor_operation_tie_sh::visit_operation (be_operation *node)
                         -1);
     }
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   be_visitor_context ctx (*this->ctx_);
   be_visitor_operation_rettype oro_visitor (&ctx);

@@ -5,13 +5,12 @@
 #include "orbsvcs/CosNotifyFilterExtC.h"
 
 
-
-ExtendedFilter::ExtendedFilter (void)
+ExtendedFilter::ExtendedFilter ()
   : event_count_ (5)
 {
 }
 
-ExtendedFilter::~ExtendedFilter (void)
+ExtendedFilter::~ExtendedFilter ()
 {
 }
 
@@ -46,7 +45,7 @@ ExtendedFilter::init (int argc, ACE_TCHAR* argv [])
 }
 
 void
-ExtendedFilter::run_test (void)
+ExtendedFilter::run_test ()
 {
   if (TAO_debug_level)
     ACE_DEBUG ((LM_DEBUG, " Obtaining FilterAdmin interface from ConsumerAdmin\n"));
@@ -105,7 +104,7 @@ ExtendedFilter::run_filter_test (CosNotifyFilter::FilterAdmin_ptr filter_admin)
   CosNotifyFilter::FilterID id_dup = extffact->get_filterid (filter.in());
   ACE_ASSERT (id_dup == id_1);
 #if defined (ACE_NDEBUG)
-  ACE_UNUSED_ARG (id_dup );
+  ACE_UNUSED_ARG (id_dup);
 #endif
 
   if (TAO_debug_level)
@@ -114,13 +113,13 @@ ExtendedFilter::run_filter_test (CosNotifyFilter::FilterAdmin_ptr filter_admin)
   bool id_lookup_failed = false;
   try {
     CosNotifyFilter::FilterID id_ne = extffact2->get_filterid (filter.in());
-    ACE_UNUSED_ARG (id_ne );
+    ACE_UNUSED_ARG (id_ne);
   } catch (const CORBA::INTERNAL& ) {
     id_lookup_failed = true;
     }
-  ACE_ASSERT (id_lookup_failed );
+  ACE_ASSERT (id_lookup_failed);
 #if defined (ACE_NDEBUG)
-  ACE_UNUSED_ARG (id_lookup_failed );
+  ACE_UNUSED_ARG (id_lookup_failed);
 #endif
 
   if (TAO_debug_level)
@@ -191,7 +190,7 @@ ExtendedFilter::add_filter (CosNotifyFilter::FilterAdmin_ptr filter_admin)
   constraint_list[0].event_types.length (0);
   constraint_list[0].constraint_expr = CORBA::string_dup (test_filter_string);
 
-  filter->add_constraints (constraint_list);
+  CosNotifyFilter::ConstraintInfoSeq_var cons_info = filter->add_constraints (constraint_list);
 
   CosNotifyFilter::FilterID id = filter_admin->add_filter (filter.in ());
 
@@ -217,7 +216,7 @@ ExtendedFilter::print_filters (CosNotifyFilter::FilterAdmin_ptr filter_admin)
 
 
 void
-ExtendedFilter::create_EC (void)
+ExtendedFilter::create_EC ()
 {
   CosNotifyChannelAdmin::ChannelID id, id2;
 

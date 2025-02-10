@@ -10,7 +10,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<class PROXY>
-TAO_ESF_Proxy_RB_Tree<PROXY>::TAO_ESF_Proxy_RB_Tree (void)
+TAO_ESF_Proxy_RB_Tree<PROXY>::TAO_ESF_Proxy_RB_Tree ()
 {
 }
 
@@ -70,7 +70,7 @@ TAO_ESF_Proxy_RB_Tree<PROXY>::disconnected (PROXY *proxy)
 }
 
 template<class PROXY> void
-TAO_ESF_Proxy_RB_Tree<PROXY>::shutdown (void)
+TAO_ESF_Proxy_RB_Tree<PROXY>::shutdown ()
 {
   Iterator end = this->impl_.end ();
   for (Iterator i = this->impl_.begin (); i != end; ++i)

@@ -46,7 +46,7 @@ public:
   TAO_EC_Per_Supplier_Filter (TAO_EC_Event_Channel_Base* ec);
 
   /// Destructor
-  virtual ~TAO_EC_Per_Supplier_Filter (void);
+  virtual ~TAO_EC_Per_Supplier_Filter ();
 
   // = The TAO_EC_Supplier_Filter methods.
   virtual void bind (TAO_EC_ProxyPushConsumer* consumer);
@@ -54,13 +54,13 @@ public:
   virtual void connected (TAO_EC_ProxyPushSupplier* supplier);
   virtual void reconnected (TAO_EC_ProxyPushSupplier* supplier);
   virtual void disconnected (TAO_EC_ProxyPushSupplier* supplier);
-  virtual void shutdown (void);
+  virtual void shutdown ();
   virtual void push (const RtecEventComm::EventSet& event,
                      TAO_EC_ProxyPushConsumer *consumer);
   virtual void push_scheduled_event (RtecEventComm::EventSet &event,
                                      const TAO_EC_QOS_Info &event_info);
-  virtual CORBA::ULong _decr_refcnt (void);
-  virtual CORBA::ULong _incr_refcnt (void);
+  virtual CORBA::ULong _decr_refcnt ();
+  virtual CORBA::ULong _incr_refcnt ();
 
 private:
   /// The event channel, used to locate the set of consumers.

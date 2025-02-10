@@ -35,11 +35,7 @@
 
 #include "ace/Thread_Mutex.h"
 #include "ace/Guard_T.h"
-#if defined (ACE_HAS_CPP11)
-# include <atomic>
-#else
-# include "ace/Atomic_Op.h"
-#endif /* ACE_HAS_CPP11 */
+#include <atomic>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -99,7 +95,7 @@ namespace CORBA
 
   typedef CORBA::ULong PolicyType;
 
-  // TODO - implement OMG's 'ORBid CORBA::ORB::id (void)'.
+  // TODO - implement OMG's 'ORBid CORBA::ORB::id ()'.
 
   typedef
     TAO_VarSeq_Var_T<
@@ -134,7 +130,6 @@ namespace CORBA
 
     // Typedefs for CORBA::RequestSeq, which is an argument of
     // send_multiple_requests_*().
-
     typedef
       TAO::unbounded_object_reference_sequence<
           CORBA::Request, CORBA::Request_var
@@ -169,22 +164,21 @@ namespace CORBA
   class TAO_Export ORB
   {
   public:
-
     class TAO_Export InvalidName : public CORBA::UserException
     {
     public:
-      InvalidName (void);
+      InvalidName ();
       InvalidName (const InvalidName &);
-      ~InvalidName (void);
+      ~InvalidName ();
 
       InvalidName &operator= (const InvalidName &);
 
       static InvalidName *_downcast (CORBA::Exception *);
-      static CORBA::Exception *_alloc (void);
+      static CORBA::Exception *_alloc ();
 
-      virtual CORBA::Exception *_tao_duplicate (void) const;
+      virtual CORBA::Exception *_tao_duplicate () const;
 
-      virtual void _raise (void) const;
+      virtual void _raise () const;
 
       virtual void _tao_encode (TAO_OutputCDR &) const;
 
@@ -211,10 +205,10 @@ namespace CORBA
 
     /// Returns a pointer to a nil ORB, i.e., an non-existent ORB.  This
     /// can be used for initialization or in comparisons.
-    static CORBA::ORB_ptr _nil (void);
+    static CORBA::ORB_ptr _nil ();
 
     /// Return this ORB's ORBid.
-    char * id (void);
+    char * id ();
 
     /**
      * Turn a string-ified object reference back into an object
@@ -286,7 +280,7 @@ namespace CORBA
 
     void get_next_response (CORBA::Request_ptr &req);
 
-    CORBA::Boolean poll_next_response (void);
+    CORBA::Boolean poll_next_response ();
 
     /// The ORB TypeCode creation functions.
 
@@ -383,7 +377,7 @@ namespace CORBA
      * If an error occurs during initialization or at runtime, a CORBA
      * system exception will be thrown.
      */
-    void run (void);
+    void run ();
 
     /**
      * Instructs the ORB to initialize itself and run its event loop in
@@ -419,7 +413,7 @@ namespace CORBA
 
     /// Returns an indication of whether the ORB needs to perform some
     /// work.
-    CORBA::Boolean work_pending (void);
+    CORBA::Boolean work_pending ();
 
     /// Returns an indication of whether the ORB needs to perform some
     /// work but will look for work pending for no more than the
@@ -436,7 +430,7 @@ namespace CORBA
      * is not present; this behavior can be modified by passing an
      * appropriate @c ACE_Time_Value as described in run().
      **/
-    void perform_work (void);
+    void perform_work ();
     void perform_work (ACE_Time_Value &tv);
     void perform_work (ACE_Time_Value *tv);
 
@@ -462,7 +456,7 @@ namespace CORBA
      * the ORB in one thread and trying to service a request in another
      * thread are not well defined. TAO does not support such cases.
      */
-    void destroy (void);
+    void destroy ();
 
     /**
      * This method acts as a mini-bootstrapping Naming Service, which is
@@ -494,7 +488,7 @@ namespace CORBA
 
     /// Returns a sequence of ObjectIds that lists which objects have
     /// references available via the initial references mechanism.
-    CORBA::ORB::ObjectIdList_ptr list_initial_services (void);
+    CORBA::ORB::ObjectIdList_ptr list_initial_services ();
 
 #if !defined(CORBA_E_MICRO)
     CORBA::Policy_ptr create_policy (CORBA::PolicyType type,
@@ -512,18 +506,18 @@ namespace CORBA
 #endif
 
     /// Reference counting...
-    unsigned long _incr_refcount (void);
-    unsigned long _decr_refcount (void);
-    unsigned long _refcount (void) const;
+    unsigned long _incr_refcount ();
+    unsigned long _decr_refcount ();
+    unsigned long _refcount () const;
 
     /// Set the IOR flag.
     void _use_omg_ior_format (CORBA::Boolean ior);
 
     /// Get the IOR flag.
-    CORBA::Boolean _use_omg_ior_format (void);
+    CORBA::Boolean _use_omg_ior_format ();
 
     /// Get the ORB core.
-    TAO_ORB_Core *orb_core (void) const;
+    TAO_ORB_Core *orb_core () const;
 
     /// Factory method that creates an ORB.
     static CORBA::ORB_ptr _tao_make_ORB (TAO_ORB_Core * orb_core);
@@ -534,10 +528,9 @@ namespace CORBA
     typedef ORB_out _out_type;
 
     /// Get the Timeout value
-    ACE_Time_Value *get_timeout (void);
+    ACE_Time_Value *get_timeout ();
 
   protected:
-
     // We must be created via the @c CORBA::ORB_init() function.
     ORB (TAO_ORB_Core *orb_core);
 
@@ -546,16 +539,15 @@ namespace CORBA
      * Protected destructor to enforce proper memory management
      * through the reference counting mechanism.
      */
-    ~ORB (void);
+    ~ORB ();
 
     /// Resolve the Policy Manager for this ORB.
-    CORBA::Object_ptr resolve_policy_manager (void);
+    CORBA::Object_ptr resolve_policy_manager ();
 
     /// Resolve the Policy Current for this thread.
-    CORBA::Object_ptr resolve_policy_current (void);
+    CORBA::Object_ptr resolve_policy_current ();
 
   private:
-
     /// Resolve the given service based on the service ID.
     /**
      * "@c resolve_service" is a legacy name.  This method now simply
@@ -572,20 +564,15 @@ namespace CORBA
 
     /// Check if ORB has shutdown.  If it has, throw the appropriate
     /// exception.
-    void check_shutdown (void);
+    void check_shutdown ();
 
     /// Set the timeout value
     void set_timeout (ACE_Time_Value * timeout);
 
   private:
-
     /// Maintains a reference count of number of instantiations of the
     /// ORB.
-#if defined (ACE_HAS_CPP11)
     std::atomic<uint32_t> refcount_;
-#else
-    ACE_Atomic_Op<TAO_SYNCH_MUTEX, unsigned long> refcount_;
-#endif /* ACE_HAS_CPP11 */
 
     /// The ORB_Core that created us....
     TAO_ORB_Core * orb_core_;
@@ -599,10 +586,8 @@ namespace CORBA
 
     /// Timeout value
     ACE_Time_Value * timeout_;
-
   };
 }  // End namespace CORBA
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

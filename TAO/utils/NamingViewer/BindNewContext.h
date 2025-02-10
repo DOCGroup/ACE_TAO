@@ -33,7 +33,6 @@ public:
 
 // Implementation
 protected:
-
   // Generated message map functions
   //{{AFX_MSG(CBindNewContext)
   virtual void OnOK();

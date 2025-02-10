@@ -19,7 +19,7 @@ ACEXML_Element_Tree_Name_Node::dump ()
 
 ACE_ALLOC_HOOK_DEFINE (ACEXML_Element_Tree_Name_Node)
 
-ACEXML_Element_Tree_List_Node::~ACEXML_Element_Tree_List_Node (void)
+ACEXML_Element_Tree_List_Node::~ACEXML_Element_Tree_List_Node ()
 {
   delete this->head_;
 }
@@ -40,7 +40,7 @@ ACEXML_Element_Tree_List_Node::insert (ACEXML_Element_Tree_Node *node)
 }
 
 void
-ACEXML_Element_Tree_List_Node::dump (void)
+ACEXML_Element_Tree_List_Node::dump ()
 {
   ACEXML_Element_Tree_Node *ptr = this->head_;
   const ACEXML_Char *separator = (this->type_ == SEQUENCE) ? ACE_TEXT(" , ") : ACE_TEXT(" | ");
@@ -64,7 +64,6 @@ ACEXML_Element_Tree_List_Node::dump (void)
 }
 
 ACE_ALLOC_HOOK_DEFINE (ACEXML_Element_Tree_List_Node)
-
 
 
 ACE_ALLOC_HOOK_DEFINE (ACEXML_Element_Tree_List_Stack)

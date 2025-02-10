@@ -604,10 +604,9 @@ ACE_CC_YY_MALLOC_DECL
 
 ACE_CC_YY_DECL
   {
-  register ace_cc_yy_state_type ace_cc_yy_current_state;
-  register char *ace_cc_yy_cp = 0, *ace_cc_yy_bp = 0;
-  register int ace_cc_yy_act;
-
+  ace_cc_yy_state_type ace_cc_yy_current_state;
+  char *ace_cc_yy_cp = 0, *ace_cc_yy_bp = 0;
+  int ace_cc_yy_act;
 
 
 
@@ -654,7 +653,7 @@ ACE_CC_YY_DECL
 ace_cc_yy_match:
     do
       {
-      register ACE_CC_YY_CHAR ace_cc_yy_c = ace_cc_yy_ec[ACE_CC_YY_SC_TO_UI(*ace_cc_yy_cp)];
+      ACE_CC_YY_CHAR ace_cc_yy_c = ace_cc_yy_ec[ACE_CC_YY_SC_TO_UI(*ace_cc_yy_cp)];
       if ( ace_cc_yy_accept[ace_cc_yy_current_state] )
         {
         ace_cc_yy_last_accepting_state = ace_cc_yy_current_state;
@@ -947,9 +946,9 @@ case ACE_CC_YY_STATE_EOF(INITIAL):
 
 static int ace_cc_yy_get_next_buffer()
   {
-  register char *dest = ace_cc_yy_current_buffer->ace_cc_yy_ch_buf;
-  register char *source = ace_cc_yytext_ptr;
-  register int number_to_move, i;
+  char *dest = ace_cc_yy_current_buffer->ace_cc_yy_ch_buf;
+  char *source = ace_cc_yytext_ptr;
+  int number_to_move, i;
   int ret_val;
 
   if ( ace_cc_yy_c_buf_p > &ace_cc_yy_current_buffer->ace_cc_yy_ch_buf[ace_cc_yy_n_chars + 1] )
@@ -1079,15 +1078,15 @@ static int ace_cc_yy_get_next_buffer()
 
 static ace_cc_yy_state_type ace_cc_yy_get_previous_state()
   {
-  register ace_cc_yy_state_type ace_cc_yy_current_state;
-  register char *ace_cc_yy_cp;
+  ace_cc_yy_state_type ace_cc_yy_current_state;
+  char *ace_cc_yy_cp;
 
   ace_cc_yy_current_state = ace_cc_yy_start;
   ace_cc_yy_current_state += ACE_CC_YY_AT_BOL();
 
   for ( ace_cc_yy_cp = ace_cc_yytext_ptr + ACE_CC_YY_MORE_ADJ; ace_cc_yy_cp < ace_cc_yy_c_buf_p; ++ace_cc_yy_cp )
     {
-    register ACE_CC_YY_CHAR ace_cc_yy_c = (*ace_cc_yy_cp ? ace_cc_yy_ec[ACE_CC_YY_SC_TO_UI(*ace_cc_yy_cp)] : 1);
+    ACE_CC_YY_CHAR ace_cc_yy_c = (*ace_cc_yy_cp ? ace_cc_yy_ec[ACE_CC_YY_SC_TO_UI(*ace_cc_yy_cp)] : 1);
     if ( ace_cc_yy_accept[ace_cc_yy_current_state] )
       {
       ace_cc_yy_last_accepting_state = ace_cc_yy_current_state;
@@ -1119,10 +1118,10 @@ static ace_cc_yy_state_type ace_cc_yy_try_NUL_trans( ace_cc_yy_current_state )
 ace_cc_yy_state_type ace_cc_yy_current_state;
 #endif
   {
-  register int ace_cc_yy_is_jam;
-  register char *ace_cc_yy_cp = ace_cc_yy_c_buf_p;
+  int ace_cc_yy_is_jam;
+  char *ace_cc_yy_cp = ace_cc_yy_c_buf_p;
 
-  register ACE_CC_YY_CHAR ace_cc_yy_c = 1;
+  ACE_CC_YY_CHAR ace_cc_yy_c = 1;
   if ( ace_cc_yy_accept[ace_cc_yy_current_state] )
     {
     ace_cc_yy_last_accepting_state = ace_cc_yy_current_state;
@@ -1143,14 +1142,14 @@ ace_cc_yy_state_type ace_cc_yy_current_state;
 
 #ifndef ACE_CC_YY_NO_UNPUT
 #ifdef ACE_CC_YY_USE_PROTOS
-static void ace_cc_yyunput( int c, register char *ace_cc_yy_bp )
+static void ace_cc_yyunput( int c, char *ace_cc_yy_bp )
 #else
 static void ace_cc_yyunput( c, ace_cc_yy_bp )
 int c;
-register char *ace_cc_yy_bp;
+char *ace_cc_yy_bp;
 #endif
   {
-  register char *ace_cc_yy_cp = ace_cc_yy_c_buf_p;
+  char *ace_cc_yy_cp = ace_cc_yy_c_buf_p;
 
   /* undo effects of setting up ace_cc_yytext */
   *ace_cc_yy_cp = ace_cc_yy_hold_char;
@@ -1158,10 +1157,10 @@ register char *ace_cc_yy_bp;
   if ( ace_cc_yy_cp < ace_cc_yy_current_buffer->ace_cc_yy_ch_buf + 2 )
     { /* need to shift things up to make room */
     /* +2 for EOB chars. */
-    register int number_to_move = ace_cc_yy_n_chars + 2;
-    register char *dest = &ace_cc_yy_current_buffer->ace_cc_yy_ch_buf[
+    int number_to_move = ace_cc_yy_n_chars + 2;
+    char *dest = &ace_cc_yy_current_buffer->ace_cc_yy_ch_buf[
           ace_cc_yy_current_buffer->ace_cc_yy_buf_size + 2];
-    register char *source =
+    char *source =
         &ace_cc_yy_current_buffer->ace_cc_yy_ch_buf[number_to_move];
 
     while ( source > ace_cc_yy_current_buffer->ace_cc_yy_ch_buf )
@@ -1309,7 +1308,7 @@ ACE_CC_YY_BUFFER_STATE new_buffer;
 
 
 #ifdef ACE_CC_YY_USE_PROTOS
-void ace_cc_yy_load_buffer_state( void )
+void ace_cc_yy_load_buffer_state()
 #else
 void ace_cc_yy_load_buffer_state()
 #endif
@@ -1370,7 +1369,6 @@ ACE_CC_YY_BUFFER_STATE b;
 
   ace_cc_yy_flex_free( (void *) b );
   }
-
 
 
 #ifdef ACE_CC_YY_USE_PROTOS
@@ -1592,7 +1590,6 @@ char msg[];
   }
 
 
-
 /* Redefine ace_cc_yyless() so it works in section 3 code. */
 
 #undef ace_cc_yyless
@@ -1621,7 +1618,7 @@ ace_cc_yyconst char *s2;
 int n;
 #endif
   {
-  register int i;
+  int i;
   for ( i = 0; i < n; ++i )
     s1[i] = s2[i];
   }
@@ -1635,7 +1632,7 @@ static int ace_cc_yy_flex_strlen( s )
 ace_cc_yyconst char *s;
 #endif
   {
-  register int n;
+  int n;
   for ( n = 0; s[n]; ++n )
     ;
 

@@ -29,7 +29,7 @@ class Acceptor_Factory : public ACE_Acceptor<PEER_HANDLER, ACE_UPIPE_ACCEPTOR>
 {
 public:
   Acceptor_Factory (Peer_Router<PEER_HANDLER, KEY> *pr);
-  Peer_Router<PEER_HANDLER, KEY> *router (void);
+  Peer_Router<PEER_HANDLER, KEY> *router ();
 
   int init (int argc, ACE_TCHAR *argv[]);
   // Initialize the acceptor when it's linked dynamically.
@@ -60,7 +60,7 @@ protected:
 
 private:
   // Don't need this method here...
-  virtual int svc (void);
+  virtual int svc ();
 };
 
 // This abstract base class provides mechanisms for routing messages
@@ -74,7 +74,7 @@ class Peer_Router : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
   Peer_Router (ACE_Thread_Manager * = 0);
-  ~Peer_Router (void);
+  ~Peer_Router ();
 
   typedef Peer_Handler<Peer_Router<PEER_HANDLER, PEER_KEY>, PEER_KEY> HANDLER;
 
@@ -88,7 +88,7 @@ public:
   int send_peers (ACE_Message_Block *mb);
 
 protected:
-// Handle control messages arriving from adjacent Modules.
+  // Handle control messages arriving from adjacent Modules.
   virtual int control (ACE_Message_Block *);
 
   // Map used to keep track of active peers.
@@ -96,15 +96,14 @@ protected:
 
   // Dynamic linking initialization hooks inherited from ACE_Task.
   virtual int init (int argc, ACE_TCHAR *argv[]);
-  virtual int fini (void);
+  virtual int fini ();
 
   // Factory for accepting new PEER_HANDLERs.
   Acceptor_Factory<PEER_HANDLER, PEER_KEY> *acceptor_;
 
 private:
-// Prevent copies and pass-by-value.
-  ACE_UNIMPLEMENTED_FUNC (Peer_Router (const Peer_Router<PEER_HANDLER, PEER_KEY> &))
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const Peer_Router<PEER_HANDLER, PEER_KEY> &))
+  Peer_Router (const Peer_Router<PEER_HANDLER, PEER_KEY> &) = delete;
+  void operator= (const Peer_Router<PEER_HANDLER, PEER_KEY> &) = delete;
 };
 
 #if defined (__ACE_INLINE__)
@@ -113,13 +112,7 @@ private:
 #define ACE_INLINE
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "Peer_Router.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Peer_Router.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #endif /* ACE_HAS_THREADS */
 #endif /* _PEER_ROUTER_H */

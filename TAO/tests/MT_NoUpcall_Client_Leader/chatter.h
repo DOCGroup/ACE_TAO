@@ -10,10 +10,10 @@ class Chatter : public Worker
 {
 public:
   Chatter (CORBA::ORB_ptr orb, const ACE_TCHAR *ior, ACE_Condition<ACE_Mutex>& cond);
-  virtual int svc (void);
+  virtual int svc ();
   int farewell ();
-  long nrequests (void);
-  long nreplies (void);
+  long nrequests ();
+  long nreplies ();
 public:
   volatile long nrequests_;
   volatile long nreplies_;

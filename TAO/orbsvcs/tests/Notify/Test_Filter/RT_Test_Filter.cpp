@@ -1,13 +1,11 @@
 #include "RT_Test_Filter.h"
 
-
-
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
 #include "tao/RTCORBA/Thread_Pool.h"
 #include "tao/PortableServer/Root_POA.h"
 
-TAO_Notify_Tests_RT_Test_Filter::TAO_Notify_Tests_RT_Test_Filter (void)
+TAO_Notify_Tests_RT_Test_Filter::TAO_Notify_Tests_RT_Test_Filter ()
   : expected_pool_id_ (0)
     , expected_lane_id_ (0)
 {
@@ -15,19 +13,17 @@ TAO_Notify_Tests_RT_Test_Filter::TAO_Notify_Tests_RT_Test_Filter (void)
 
 TAO_Notify_Tests_RT_Test_Filter::~TAO_Notify_Tests_RT_Test_Filter ()
 {
-
 }
 
 char*
-TAO_Notify_Tests_RT_Test_Filter::constraint_grammar (void)
+TAO_Notify_Tests_RT_Test_Filter::constraint_grammar ()
 {
   return CORBA::string_dup ("ETCL");
 }
 
 
 CosNotifyFilter::ConstraintInfoSeq*
-TAO_Notify_Tests_RT_Test_Filter::add_constraints (const CosNotifyFilter::ConstraintExpSeq& constraint_list
-                                )
+TAO_Notify_Tests_RT_Test_Filter::add_constraints (const CosNotifyFilter::ConstraintExpSeq& constraint_list)
 {
   const char* PoolId_prefix = "PoolId = ";
   size_t poolId_index = ACE_OS::strlen (PoolId_prefix);
@@ -75,33 +71,29 @@ TAO_Notify_Tests_RT_Test_Filter::add_constraints (const CosNotifyFilter::Constra
 
 void
 TAO_Notify_Tests_RT_Test_Filter::modify_constraints (const CosNotifyFilter::ConstraintIDSeq & /*del_list*/,
-                                   const CosNotifyFilter::ConstraintInfoSeq & /*modify_list*/
-                                   )
+                                   const CosNotifyFilter::ConstraintInfoSeq & /*modify_list*/)
 {
-
 }
 
 CosNotifyFilter::ConstraintInfoSeq*
-TAO_Notify_Tests_RT_Test_Filter::get_constraints (const CosNotifyFilter::ConstraintIDSeq & /*id_list*/
-                                )
+TAO_Notify_Tests_RT_Test_Filter::get_constraints (const CosNotifyFilter::ConstraintIDSeq & /*id_list*/)
 {
   return 0;
 }
 
 CosNotifyFilter::ConstraintInfoSeq *
-TAO_Notify_Tests_RT_Test_Filter::get_all_constraints (void)
+TAO_Notify_Tests_RT_Test_Filter::get_all_constraints ()
 {
-        return 0;
+  return 0;
 }
 
 void
-TAO_Notify_Tests_RT_Test_Filter::remove_all_constraints (void)
+TAO_Notify_Tests_RT_Test_Filter::remove_all_constraints ()
 {
-
 }
 
 void
-TAO_Notify_Tests_RT_Test_Filter::destroy (void)
+TAO_Notify_Tests_RT_Test_Filter::destroy ()
 {
   ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,
                       CORBA::INTERNAL ());
@@ -115,14 +107,13 @@ TAO_Notify_Tests_RT_Test_Filter::destroy (void)
 
 CORBA::Boolean
 TAO_Notify_Tests_RT_Test_Filter::match (const CORBA::Any & /*filterable_data */
-                           )
+                          )
 {
   throw CORBA::NO_IMPLEMENT ();
 }
 
 CORBA::Boolean
-TAO_Notify_Tests_RT_Test_Filter::match_structured (const CosNotification::StructuredEvent & notification
-                                 )
+TAO_Notify_Tests_RT_Test_Filter::match_structured (const CosNotification::StructuredEvent & notification)
 {
   ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,
                       CORBA::INTERNAL ());
@@ -216,8 +207,7 @@ TAO_Notify_Tests_RT_Test_Filter::match_structured (const CosNotification::Struct
 
 CORBA::Boolean
 TAO_Notify_Tests_RT_Test_Filter::match_typed (
-                            const CosNotification::PropertySeq & /* filterable_data */
-                            )
+                            const CosNotification::PropertySeq & /* filterable_data */)
 {
   throw CORBA::NO_IMPLEMENT ();
 }
@@ -239,7 +229,7 @@ TAO_Notify_Tests_RT_Test_Filter::detach_callback (
 }
 
 CosNotifyFilter::CallbackIDSeq *
-TAO_Notify_Tests_RT_Test_Filter::get_callbacks (void)
+TAO_Notify_Tests_RT_Test_Filter::get_callbacks ()
 {
   throw CORBA::NO_IMPLEMENT ();
 }

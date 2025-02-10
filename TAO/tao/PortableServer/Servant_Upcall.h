@@ -70,7 +70,7 @@ namespace TAO
       {
       public:
         /// Constructor.
-        Pre_Invoke_State (void);
+        Pre_Invoke_State ();
 
         enum State
         {
@@ -93,7 +93,7 @@ namespace TAO
       explicit Servant_Upcall (TAO_ORB_Core *orb_core);
 
       /// Destructor.
-      ~Servant_Upcall (void);
+      ~Servant_Upcall ();
 
       /// Locate POA and servant.
       int prepare_for_upcall (const TAO::ObjectKey &key,
@@ -110,41 +110,41 @@ namespace TAO
       void pre_invoke_remote_request (TAO_ServerRequest &req);
 
       /// Run pre_invoke for a collocated request.
-      void pre_invoke_collocated_request (void);
+      void pre_invoke_collocated_request ();
 
       /// Run post_invoke for a request.
-      void post_invoke (void);
+      void post_invoke ();
 
       /// Locate POA.
       ::TAO_Root_POA *lookup_POA (const TAO::ObjectKey &key);
 
       /// POA accessor.
-      ::TAO_Root_POA &poa (void) const;
+      ::TAO_Root_POA &poa () const;
 
       /// Object Adapter accessor.
-      TAO_Object_Adapter &object_adapter (void) const;
+      TAO_Object_Adapter &object_adapter () const;
 
       /// System ID accessor.
-      const PortableServer::ObjectId &id (void) const;
+      const PortableServer::ObjectId &id () const;
 
       /// User ID accessors.  This is the same value returned by
       /// PortableServer::Current::get_object_id().
       void user_id (const PortableServer::ObjectId *);
-      const PortableServer::ObjectId &user_id (void) const;
+      const PortableServer::ObjectId &user_id () const;
 
       /// Servant accessor.
-      PortableServer::Servant servant (void) const;
+      PortableServer::Servant servant () const;
 
   #if (TAO_HAS_MINIMUM_POA == 0)
 
       /// Get the Servant Locator's cookie
-      void* locator_cookie (void) const;
+      void* locator_cookie () const;
 
       /// Set the Servant Locator's cookie
       void locator_cookie (void* cookie);
 
       /// Get the operation name.
-      const char *operation (void) const;
+      const char *operation () const;
 
       /// Set the operation name.
       void operation (const char *);
@@ -155,10 +155,10 @@ namespace TAO
       void active_object_map_entry (TAO_Active_Object_Map_Entry *entry);
 
       /// Get the active_object_map_entry.
-      TAO_Active_Object_Map_Entry *active_object_map_entry (void) const;
+      TAO_Active_Object_Map_Entry *active_object_map_entry () const;
 
       /// Get the priority for the current upcall.
-      CORBA::Short priority (void) const;
+      CORBA::Short priority () const;
 
       enum State
       {
@@ -170,27 +170,25 @@ namespace TAO
       };
 
       /// Get the state.
-      State state (void) const;
+      State state () const;
 
       /// Set the state.
       void state (State);
 
       /// Increment the refcount
-      void increment_servant_refcount (void);
+      void increment_servant_refcount ();
 
     protected:
-
-      void post_invoke_servant_cleanup (void);
-      void single_threaded_poa_setup (void);
-      void single_threaded_poa_cleanup (void);
-      void servant_cleanup (void);
-      void poa_cleanup (void);
+      void post_invoke_servant_cleanup ();
+      void single_threaded_poa_setup ();
+      void single_threaded_poa_cleanup ();
+      void servant_cleanup ();
+      void poa_cleanup ();
 
       /// Clean-up / reset state of this Servant_Upcall object.
-      void upcall_cleanup (void);
+      void upcall_cleanup ();
 
     protected:
-
       TAO_Object_Adapter *object_adapter_;
 
       ::TAO_Root_POA *poa_;

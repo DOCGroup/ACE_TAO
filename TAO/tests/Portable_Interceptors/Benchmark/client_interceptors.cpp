@@ -8,7 +8,7 @@
 const CORBA::ULong request_ctx_id = 0xdead;
 //const CORBA::ULong reply_ctx_id = 0xbeef;   // Never used.
 
-Vault_Client_Request_Interceptor::Vault_Client_Request_Interceptor (void)
+Vault_Client_Request_Interceptor::Vault_Client_Request_Interceptor ()
   : myname_ ("Vault_Client_Interceptor")
 {
 }
@@ -18,13 +18,13 @@ Vault_Client_Request_Interceptor::~Vault_Client_Request_Interceptor ()
 }
 
 char *
-Vault_Client_Request_Interceptor::name (void)
+Vault_Client_Request_Interceptor::name ()
 {
   return CORBA::string_dup (this->myname_);
 }
 
 void
-Vault_Client_Request_Interceptor::destroy (void)
+Vault_Client_Request_Interceptor::destroy ()
 {
 }
 
@@ -39,7 +39,6 @@ void
 Vault_Client_Request_Interceptor::send_request (
     PortableInterceptor::ClientRequestInfo_ptr ri)
 {
-
   CORBA::String_var op = ri->operation ();
 
   if (ACE_OS::strcmp (op.in (), "authenticate") == 0)
@@ -79,7 +78,6 @@ void
 Vault_Client_Request_Interceptor::receive_reply (
     PortableInterceptor::ClientRequestInfo_ptr ri)
 {
-
   CORBA::String_var op = ri->operation ();
 
   if (ACE_OS::strcmp (op.in (), "update_records") == 0)
@@ -102,7 +100,6 @@ void
 Vault_Client_Request_Interceptor::receive_exception (
     PortableInterceptor::ClientRequestInfo_ptr ri)
 {
-
   CORBA::Any_var any = ri->received_exception ();
 
   CORBA::TypeCode_var tc = any->type ();
@@ -122,7 +119,7 @@ Vault_Client_Request_Interceptor::receive_exception (
 
 //////////////////////////////////  Context /////////////////////////
 
-Vault_Client_Request_Context_Interceptor::Vault_Client_Request_Context_Interceptor (void)
+Vault_Client_Request_Context_Interceptor::Vault_Client_Request_Context_Interceptor ()
   : myname_ ("Vault_Client_Context_Interceptor")
 {
 }
@@ -153,7 +150,6 @@ void
 Vault_Client_Request_Context_Interceptor::send_request (
     PortableInterceptor::ClientRequestInfo_ptr ri)
 {
-
   // MAke the context to send the context to the target
   IOP::ServiceContext sc;
   sc.context_id = request_ctx_id;
@@ -184,14 +180,12 @@ void
 Vault_Client_Request_Context_Interceptor::receive_reply (
     PortableInterceptor::ClientRequestInfo_ptr)
 {
-
 }
 
 void
 Vault_Client_Request_Context_Interceptor::receive_exception (
     PortableInterceptor::ClientRequestInfo_ptr ri)
 {
-
   CORBA::Any_var any = ri->received_exception ();
 
   CORBA::TypeCode_var tc = any->type ();
@@ -211,7 +205,7 @@ Vault_Client_Request_Context_Interceptor::receive_exception (
 
 ///////////////////////////////////Dynamic ////////////////////////////////////
 
-Vault_Client_Request_Dynamic_Interceptor::Vault_Client_Request_Dynamic_Interceptor (void)
+Vault_Client_Request_Dynamic_Interceptor::Vault_Client_Request_Dynamic_Interceptor ()
   : myname_ ("Vault_Client_Dynamic_Interceptor")
 {
 }
@@ -242,7 +236,6 @@ void
 Vault_Client_Request_Dynamic_Interceptor::send_request (
     PortableInterceptor::ClientRequestInfo_ptr ri)
 {
-
   CORBA::String_var op = ri->operation ();
 
  if (ACE_OS::strcmp (op.in (), "authenticate") == 0)
@@ -274,7 +267,6 @@ void
 Vault_Client_Request_Dynamic_Interceptor::receive_reply (
     PortableInterceptor::ClientRequestInfo_ptr ri)
 {
-
   CORBA::String_var op = ri->operation ();
 
   if (ACE_OS::strcmp (op.in (), "ready") == 0)
@@ -307,7 +299,6 @@ void
 Vault_Client_Request_Dynamic_Interceptor::receive_exception (
     PortableInterceptor::ClientRequestInfo_ptr ri)
 {
-
   CORBA::Any_var any = ri->received_exception ();
 
   CORBA::TypeCode_var tc = any->type ();
@@ -327,7 +318,7 @@ Vault_Client_Request_Dynamic_Interceptor::receive_exception (
 
 //////////////////////////////NOOP///////////////////////////////////////
 
-Vault_Client_Request_NOOP_Interceptor::Vault_Client_Request_NOOP_Interceptor (void)
+Vault_Client_Request_NOOP_Interceptor::Vault_Client_Request_NOOP_Interceptor ()
   : myname_ ("Vault_Client_NOOP_Interceptor")
 {
 }
@@ -337,7 +328,7 @@ Vault_Client_Request_NOOP_Interceptor::~Vault_Client_Request_NOOP_Interceptor ()
 }
 
 char *
-Vault_Client_Request_NOOP_Interceptor::name (void)
+Vault_Client_Request_NOOP_Interceptor::name ()
 {
   return CORBA::string_dup (this->myname_);
 }
@@ -358,7 +349,6 @@ void
 Vault_Client_Request_NOOP_Interceptor::send_request (
     PortableInterceptor::ClientRequestInfo_ptr)
 {
-
 }
 
 void
@@ -372,14 +362,12 @@ void
 Vault_Client_Request_NOOP_Interceptor::receive_reply (
     PortableInterceptor::ClientRequestInfo_ptr)
 {
-
 }
 
 void
 Vault_Client_Request_NOOP_Interceptor::receive_exception (
     PortableInterceptor::ClientRequestInfo_ptr ri)
 {
-
   CORBA::Any_var any = ri->received_exception ();
 
   CORBA::TypeCode_var tc = any->type ();

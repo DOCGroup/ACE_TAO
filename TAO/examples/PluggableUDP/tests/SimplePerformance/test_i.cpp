@@ -30,13 +30,13 @@ Simple_Server_i::get_number (CORBA::Long)
 }
 
 void
-Simple_Server_i::shutdown (void)
+Simple_Server_i::shutdown ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "Simple_Server_i::shutdown\n"));
   try
     {
-      this->orb_->shutdown (0);
+      this->orb_->shutdown (false);
     }
   catch (const CORBA::Exception& ex)
     {

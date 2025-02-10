@@ -43,19 +43,19 @@ namespace TAO
     public:
       LifespanPolicy (::PortableServer::LifespanPolicyValue value);
 
-      CORBA::Policy_ptr copy (void);
+      CORBA::Policy_ptr copy ();
 
-      void destroy (void);
+      void destroy ();
 
-      ::PortableServer::LifespanPolicyValue value (void);
+      ::PortableServer::LifespanPolicyValue value ();
 
-      CORBA::PolicyType policy_type (void);
+      CORBA::PolicyType policy_type ();
 
       /// Return the cached policy type for this policy.
-      virtual TAO_Cached_Policy_Type _tao_cached_type (void) const;
+      virtual TAO_Cached_Policy_Type _tao_cached_type () const;
 
       /// Returns the scope at which this policy can be applied. See orbconf.h.
-      virtual TAO_Policy_Scope _tao_scope (void) const;
+      virtual TAO_Policy_Scope _tao_scope () const;
 
     private:
       ::PortableServer::LifespanPolicyValue value_;

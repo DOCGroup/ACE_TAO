@@ -42,12 +42,12 @@ public:
   URL_Processing_Strategy (URL &,
                            URL_Iterator &);
 
-  virtual ~URL_Processing_Strategy (void);
+  virtual ~URL_Processing_Strategy ();
 
   /// Perform the strategy.
-  virtual int execute (void) = 0;
+  virtual int execute () = 0;
 
-  virtual int destroy (void);
+  virtual int destroy ();
 
   // Close down the resources.
 
@@ -72,7 +72,7 @@ public:
                                    URL_Iterator &);
 
   /// Perform the strategy for processing an HTTP header.
-  virtual int execute (void);
+  virtual int execute ();
 };
 
 /**
@@ -96,7 +96,7 @@ public:
    * iterates over the HTML file and recursively visits embedded links
    * to process them, as well.
    */
-  virtual int execute (void);
+  virtual int execute ();
 
 private:
   /// This is the context of the visit.
@@ -118,7 +118,7 @@ public:
                          URL_Iterator &);
 
   /// Perform the strategy for downloading a URL to a temporary file.
-  virtual int execute (void);
+  virtual int execute ();
 };
 
 /**
@@ -132,14 +132,14 @@ public:
   URL_Visitation_Strategy_Factory (URL *);
 
   /// Destructor.
-  virtual ~URL_Visitation_Strategy_Factory (void);
+  virtual ~URL_Visitation_Strategy_Factory ();
 
   // = Factory Methods.
   /// Factory Method that makes the header iterator.
-  virtual URL_Iterator *make_header_iterator (void) = 0;
+  virtual URL_Iterator *make_header_iterator () = 0;
 
   /// Factory Method that makes the body iterator.
-  virtual URL_Iterator *make_body_iterator (void) = 0;
+  virtual URL_Iterator *make_body_iterator () = 0;
 
   /// Factory Method that makes the header processing strategy.
   virtual URL_Processing_Strategy *make_header_strategy (URL_Iterator &) = 0;
@@ -148,7 +148,7 @@ public:
   virtual URL_Processing_Strategy *make_body_strategy (URL_Iterator &) = 0;
 
   /// Close down the resources.
-  virtual int destroy (void) = 0;
+  virtual int destroy () = 0;
 
 protected:
   /// Stash the URL so we don't have to pass it around.
@@ -168,10 +168,10 @@ public:
 
   // = Factory Methods.
   /// Factory Method that makes an <HTTP_Header_Iterator>.
-  virtual URL_Iterator *make_header_iterator (void);
+  virtual URL_Iterator *make_header_iterator ();
 
   /// Factory Method that makes an <HTML_Body_Iterator>.
-  virtual URL_Iterator *make_body_iterator (void);
+  virtual URL_Iterator *make_body_iterator ();
 
   /// Factory Method that makes the header processing strategy.
   virtual URL_Processing_Strategy *make_header_strategy (URL_Iterator &);
@@ -180,7 +180,7 @@ public:
   virtual URL_Processing_Strategy *make_body_strategy (URL_Iterator &);
 
   /// Close down the resources.
-  virtual int destroy (void);
+  virtual int destroy ();
 };
 
 /**
@@ -197,10 +197,10 @@ public:
 
   // = Factory Methods.
   /// Factory Method that makes an <HTTP_Header_Iterator>.
-  virtual URL_Iterator *make_header_iterator (void);
+  virtual URL_Iterator *make_header_iterator ();
 
   /// Factory Method that makes an <HTML_Body_Iterator>.
-  virtual URL_Iterator *make_body_iterator (void);
+  virtual URL_Iterator *make_body_iterator ();
 
   /// Factory Method that makes the header processing strategy.
   virtual URL_Processing_Strategy *make_header_strategy (URL_Iterator &);
@@ -209,7 +209,7 @@ public:
   virtual URL_Processing_Strategy *make_body_strategy (URL_Iterator &);
 
   /// Close down the resources.
-  virtual int destroy (void);
+  virtual int destroy ();
 
 private:
   /// Context of the visitor.
@@ -226,8 +226,7 @@ private:
 class URL_Visitor
 {
 public:
-
-  virtual ~URL_Visitor (void);
+  virtual ~URL_Visitor ();
 
   /// Visit an <HTTP_URL>.
   virtual int visit (HTTP_URL &http_url) = 0;
@@ -236,7 +235,7 @@ public:
   // virtual int visit (FTP_URL &http_url) = 0;
 
   /// Cleanup the resources.
-  virtual int destroy (void) = 0;
+  virtual int destroy () = 0;
 
 protected:
   /// Make the appropriate <URL_Visitation_Strategy_Factory>.
@@ -311,16 +310,16 @@ public:
   // virtual int visit (FTP_URL &http_url);
 
   /// Cleanup the resources.
-  URL_Validation_Visitor (void);
-  virtual int destroy (void);
+  URL_Validation_Visitor ();
+  virtual int destroy ();
 
   /// Returns a reference to the URL cache.
-  URL_CACHE &url_cache (void);
+  URL_CACHE &url_cache ();
 
 protected:
   /// Factory Method that makes a
   /// <URL_Validation_Visitation_Strategy_Factory>.
-  virtual ~URL_Validation_Visitor (void);
+  virtual ~URL_Validation_Visitor ();
   virtual URL_Visitation_Strategy_Factory *make_visitation_strategy_factory (URL &);
 
   /// Cache the status of URLs we've already validated.
@@ -365,7 +364,7 @@ public:
   // virtual int visit (FTP_URL &http_url);
 
   /// Cleanup the resources.
-  virtual int destroy (void);
+  virtual int destroy ();
 
 protected:
   /// Factory Method that makes a <URL_Download_Visitation_Strategy_Factory>.
@@ -387,15 +386,15 @@ class Auto_Destroyer
 {
 public:
   Auto_Destroyer (T *t): t_ (t) {}
-  T *operator-> (void) { return this->t_; }
-  T *operator *(void) { return this->t_; }
+  T *operator-> () { return this->t_; }
+  T *operator *() { return this->t_; }
   void operator= (T *t)
   {
     if (this->t_ != 0)
       this->t_->destroy ();
     this->t_ = t;
   }
-  ~Auto_Destroyer (void)
+  ~Auto_Destroyer ()
   {
     if (this->t_ != 0)
       t_->destroy ();

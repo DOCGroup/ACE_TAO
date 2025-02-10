@@ -109,7 +109,7 @@ void systhread_init(char *name);
  * between threads, and then use setdata to associate a value with this
  * key for each thread.
  */
-int systhread_newkey(void);
+int systhread_newkey();
 
 /*
  * Get data that has been previously associated with key in this thread.

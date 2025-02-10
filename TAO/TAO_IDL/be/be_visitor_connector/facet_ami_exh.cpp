@@ -17,10 +17,10 @@
 be_visitor_facet_ami_exh::be_visitor_facet_ami_exh (
       be_visitor_context *ctx)
   : be_visitor_component_scope (ctx),
-    iface_ (0),
-    callback_iface_ (0),
-    scope_name_ (0),
-    iface_name_ (0),
+    iface_ (nullptr),
+    callback_iface_ (nullptr),
+    scope_name_ (nullptr),
+    iface_name_ (nullptr),
     sync_ (false)
 {
   // This is initialized in the base class to svnt_export_macro()
@@ -30,7 +30,7 @@ be_visitor_facet_ami_exh::be_visitor_facet_ami_exh (
   export_macro_ = be_global->conn_export_macro ();
 }
 
-be_visitor_facet_ami_exh::~be_visitor_facet_ami_exh (void)
+be_visitor_facet_ami_exh::~be_visitor_facet_ami_exh ()
 {
 }
 
@@ -51,7 +51,7 @@ int
 be_visitor_facet_ami_exh::visit_provides (be_provides *node)
 {
   this->iface_ =
-    be_interface::narrow_from_decl (node->provides_type ());
+    dynamic_cast<be_interface*> (node->provides_type ());
 
   if (this->gen_reply_handler_class () == -1)
     {
@@ -79,12 +79,11 @@ be_visitor_facet_ami_exh::visit_provides (be_provides *node)
 int
 be_visitor_facet_ami_exh::visit_attribute (be_attribute *node)
 {
-
   be_operation get_op (node->field_type (),
                        AST_Operation::OP_noflags,
                        node->name (),
-                       0,
-                       0);
+                       false,
+                       false);
 
   get_op.set_name ((UTL_IdList *) node->name ()->copy ());
   if (this->visit_operation (&get_op) == -1)
@@ -103,7 +102,7 @@ be_visitor_facet_ami_exh::visit_attribute (be_attribute *node)
       return 0;
     }
   Identifier id ("void");
-  UTL_ScopedName sn (&id, 0);
+  UTL_ScopedName sn (&id, nullptr);
 
   // Create the return type, which is "void"
   be_predefined_type rt (AST_PredefinedType::PT_void, &sn);
@@ -120,8 +119,8 @@ be_visitor_facet_ami_exh::visit_attribute (be_attribute *node)
   be_operation set_op (&rt,
                        AST_Operation::OP_noflags,
                        node->name (),
-                       0,
-                       0);
+                       false,
+                       false);
 
   set_op.set_name ((UTL_IdList *) node->name ()->copy ());
   set_op.be_add_argument (arg);
@@ -206,22 +205,20 @@ be_visitor_facet_ami_exh::init (bool for_impl)
   UTL_ScopedName *sn =
     FE_Utils::string_to_scoped_name (this->handler_str_.c_str ());
   AST_Decl *d = s->lookup_by_name (sn, true, false);
-  this->callback_iface_ = be_interface::narrow_from_decl (d);
+  this->callback_iface_ = dynamic_cast<be_interface*> (d);
 
-  if (this->callback_iface_ == 0)
+  if (this->callback_iface_ == nullptr)
     this->sync_  = true;
 
   sn->destroy ();
   delete sn;
-  sn = 0;
+  sn = nullptr;
 }
 
 int
-be_visitor_facet_ami_exh::gen_reply_handler_class (void)
+be_visitor_facet_ami_exh::gen_reply_handler_class ()
 {
-  os_ << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
-
+  TAO_INSERT_COMMENT (&os_);
 
   const char *suffix = "_reply_handler";
   this->init (false);
@@ -239,7 +236,7 @@ be_visitor_facet_ami_exh::gen_reply_handler_class (void)
       << this->iface_name_
       << "ReplyHandler_ptr callback," << be_nl
       << "::PortableServer::POA_ptr poa);" << be_uidt_nl << be_nl
-      << "virtual ~" << this->iface_name_ << suffix << " (void);";
+      << "virtual ~" << this->iface_name_ << suffix << " ();";
 
   int const status =
     this->callback_iface_->traverse_inheritance_graph (
@@ -269,10 +266,9 @@ be_visitor_facet_ami_exh::gen_reply_handler_class (void)
 }
 
 int
-be_visitor_facet_ami_exh::gen_facet_executor_class (void)
+be_visitor_facet_ami_exh::gen_facet_executor_class ()
 {
-    os_ << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (&os_);
 
   const char *suffix = "_exec_i";
   const char *scope_name =
@@ -288,9 +284,9 @@ be_visitor_facet_ami_exh::gen_facet_executor_class (void)
       << be_uidt << be_uidt_nl
       << "{" << be_nl
       << "public:" << be_idt_nl
-      << iface_name << suffix << " (void);" << be_nl_2
+      << iface_name << suffix << " ();" << be_nl_2
       << "virtual ~" << iface_name << suffix
-      << " (void);";
+      << " ();";
 
 
   ACE_CString handler_str (
@@ -299,7 +295,7 @@ be_visitor_facet_ami_exh::gen_facet_executor_class (void)
   handler_str += "::";
   handler_str += tmp;
 
-  if (ACE_OS::strstr (tmp.c_str(), "AMI4CCM") != 0)
+  if (ACE_OS::strstr (tmp.c_str(), "AMI4CCM") != nullptr)
     this->sync_ = false;
   else
     this->sync_ = true;
@@ -312,17 +308,16 @@ be_visitor_facet_ami_exh::gen_facet_executor_class (void)
 
      sn->destroy ();
      delete sn;
-     sn = 0;
+     sn = nullptr;
 
      be_interface *sync_iface =
-     be_interface::narrow_from_decl (d);
+     dynamic_cast<be_interface*> (d);
 
      /// The overload of traverse_inheritance_graph() used here
      /// doesn't automatically prime the queues.
      sync_iface->get_insert_queue ().reset ();
      sync_iface->get_del_queue ().reset ();
      sync_iface->get_insert_queue ().enqueue_tail (sync_iface);
-
 
 
      Facet_AMI_ExecH_Op_Attr_Generator op_attr_gen (this);
@@ -340,7 +335,6 @@ be_visitor_facet_ami_exh::gen_facet_executor_class (void)
                       ACE_TEXT ("::gen_facet_executor_class - ")
                       ACE_TEXT ("traverse_inheritance_graph() on ")
                       ACE_TEXT ("interface failed\n")));
-
        }
    }
  else
@@ -371,7 +365,7 @@ be_visitor_facet_ami_exh::gen_facet_executor_class (void)
   const char *smart_scope = (is_global ? "" : "::");
 
   os_ << be_nl_2
-      << "virtual ::CORBA::Object_ptr _get_component (void);";
+      << "virtual ::CORBA::Object_ptr _get_component ();";
 
   os_ << be_nl_2
       << "virtual void _set_component (" << be_idt_nl

@@ -35,7 +35,7 @@ class Priority_Task : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
   /// The constructor
-  Priority_Task (void);
+  Priority_Task ();
 
   //FUZZ: disable check_for_lack_ACE_OS
   /**
@@ -43,20 +43,20 @@ public:
    * priority.
    *FUZZ: enable check_for_lack_ACE_OS
    */
-  int open (void *);
+  int open (void *) override;
 
   /// Runs on a separate thread an checks the priority.
-  int svc (void);
+  int svc () override;
 
   /// Returns 1 if priority was set properly, 0 otherwise.
-  int succeeded (void) { return error_ == 0; }
+  int succeeded () { return error_ == 0; }
 
 private:
   int priority_;
   u_int error_;
 };
 
-Priority_Task::Priority_Task (void)
+Priority_Task::Priority_Task ()
   : ACE_Task<ACE_MT_SYNCH> (ACE_Thread_Manager::instance ()),
     priority_ (0),
     error_ (0)
@@ -125,7 +125,7 @@ Priority_Task::open (void *arg)
 }
 
 int
-Priority_Task::svc (void)
+Priority_Task::svc ()
 {
   ACE_hthread_t thr_handle;
   ACE_Thread::self (thr_handle);
@@ -199,12 +199,6 @@ run_main (int argc, ACE_TCHAR *argv[])
 
   // Spawn off ACE_MAX_ITERATIONS of tasks, passing each one their
   // iteration number as their priority.
-
-  // NOTE: on Solaris, for example, this requests the min FIFO
-  // priority.  But, this test doesn't use the Realtime scheduling
-  // class.  The FIFO priorities are used because they're all
-  // nonnegative.
-
   ACE_Sched_Priority_Iterator priority (ACE_SCHED_FIFO,
                                         ACE_SCOPE_THREAD);
 

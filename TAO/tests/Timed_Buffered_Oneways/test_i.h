@@ -31,7 +31,7 @@ public:
                const test::data &,
                CORBA::ULong work);
 
-  void flush (void);
+  void flush ();
 
   void shutdown (CORBA::Long start_time);
 

@@ -20,7 +20,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-CC_Lock::CC_Lock (void)
+CC_Lock::CC_Lock ()
   : mode_ (CosConcurrencyControl::intention_read),
     lock_held_ (0)
 {
@@ -32,12 +32,12 @@ CC_Lock::CC_Lock (CosConcurrencyControl::lock_mode mode)
 {
 }
 
-CC_Lock::~CC_Lock (void)
+CC_Lock::~CC_Lock ()
 {
 }
 
 void
-CC_Lock::lock (void)
+CC_Lock::lock ()
 {
   ORBSVCS_DEBUG ((LM_DEBUG,
               "CC_Lock::lock\n"));
@@ -45,7 +45,7 @@ CC_Lock::lock (void)
 }
 
 CORBA::Boolean
-CC_Lock::try_lock (void)
+CC_Lock::try_lock ()
 {
   ORBSVCS_DEBUG ((LM_DEBUG,
               "CC_Lock::try_lock. "));
@@ -79,7 +79,7 @@ CC_Lock::try_lock (void)
 }
 
 void
-CC_Lock::unlock (void)
+CC_Lock::unlock ()
 {
   ORBSVCS_DEBUG ((LM_DEBUG,
               "CC_Lock::unlock\n"));
@@ -133,25 +133,25 @@ CC_Lock::Compatible (CosConcurrencyControl::lock_mode mode)
 }
 
 CosConcurrencyControl::lock_mode
-CC_Lock::GetMode (void)
+CC_Lock::GetMode ()
 {
   return mode_;
 }
 
 int
-CC_Lock::GetLocksHeld (void)
+CC_Lock::GetLocksHeld ()
 {
   return this->lock_held_;
 }
 
 void
-CC_Lock::DecLocksHeld (void)
+CC_Lock::DecLocksHeld ()
 {
   this->lock_held_--;
 }
 
 void
-CC_Lock::dump (void)
+CC_Lock::dump ()
 {
   ORBSVCS_DEBUG ((LM_DEBUG,
               "mode_ %i, lock_held_: %i\n",
@@ -183,21 +183,21 @@ CORBA::Boolean CC_Lock::compatible_[NUMBER_OF_LOCK_MODES][NUMBER_OF_LOCK_MODES] 
 
 // CC_LockModeterator
 
-CC_LockModeIterator::CC_LockModeIterator (void)
+CC_LockModeIterator::CC_LockModeIterator ()
   : current_ (CosConcurrencyControl::intention_read)
 {
 }
 
-CC_LockModeIterator::~CC_LockModeIterator (void)
+CC_LockModeIterator::~CC_LockModeIterator ()
 {
   // Do nothing
 }
-void CC_LockModeIterator::First (void)
+void CC_LockModeIterator::First ()
 {
   current_ = CosConcurrencyControl::intention_read;
 }
 
-void CC_LockModeIterator::Next (void)
+void CC_LockModeIterator::Next ()
 {
   switch (current_)
     {
@@ -221,7 +221,7 @@ void CC_LockModeIterator::Next (void)
 }
 
 CORBA::Boolean
-CC_LockModeIterator::IsDone (void)
+CC_LockModeIterator::IsDone ()
 {
   if (current_ == CosConcurrencyControl::write)
     return 1;
@@ -230,7 +230,7 @@ CC_LockModeIterator::IsDone (void)
 }
 
 CosConcurrencyControl::lock_mode
-CC_LockModeIterator::GetLockMode (void)
+CC_LockModeIterator::GetLockMode ()
 {
   return current_;
 }

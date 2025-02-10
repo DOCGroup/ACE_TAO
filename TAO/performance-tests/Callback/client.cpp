@@ -28,10 +28,10 @@ public:
   Task (Test::Server_ptr server, int iterations);
 
   /// Return 1 when all the messages have been sent
-  int done (void);
+  int done ();
 
   /// Run the experiment
-  int svc (void);
+  int svc ();
 
 private:
   /// The consumer
@@ -50,10 +50,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   int priority =
     (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO)
      + ACE_Sched_Params::priority_max (ACE_SCHED_FIFO)) / 2;
-  priority = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO,
-                                                  priority);
-  // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
+  priority = ACE_Sched_Params::next_priority (ACE_SCHED_FIFO, priority);
 
+  // Enable FIFO scheduling
   if (ACE_OS::sched_params (ACE_Sched_Params (ACE_SCHED_FIFO,
                                               priority,
                                               ACE_SCOPE_PROCESS)) != 0)
@@ -232,14 +231,14 @@ Task::Task (Test::Server_ptr server,
 }
 
 int
-Task::done (void)
+Task::done ()
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, 1);
   return this->remaining_messages_ == 0;
 }
 
 int
-Task::svc (void)
+Task::svc ()
 {
   Test::Payload payload(1024); payload.length(1024);
   try

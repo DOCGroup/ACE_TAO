@@ -53,38 +53,40 @@ public:
                bool local,
                bool abstract);
 
-    // Non-virtual override of frontend method.
-  be_type *base_type (void) const;
+  /// Non-virtual override of frontend method.
+  be_type *base_type () const;
+
+  /**
+   * Returns the fully dealiased base type if it's a typedef. If it's not a
+   * typedef, the it returns the same value as as base_type().
+   */
+  be_type *primitive_base_type () const;
 
   /// Create a name for ourselves. If we are typedefed, then we get the name of
   /// the typedef node, else we generate a name for ourselves.
   virtual int create_name (be_typedef *node);
 
   /// Return the managed type.
-  virtual MANAGED_TYPE managed_type (void);
+  virtual MANAGED_TYPE managed_type ();
 
   // Scope management functions.
   virtual AST_Sequence *fe_add_sequence (AST_Sequence *);
 
   /// Overridden method on the be_scope class.
-  virtual be_decl *decl (void);
+  virtual be_decl *decl ();
 
   /// Overridden from class be_type.
   virtual void gen_ostream_operator (TAO_OutStream *os,
                                      bool use_underscore);
 
   /// Cleanup method.
-  virtual void destroy (void);
+  virtual void destroy ();
 
   // Visiting.
   virtual int accept (be_visitor *visitor);
 
-  // Narrowing.
-
-  DEF_NARROW_FROM_DECL (be_sequence);
-
   /// Report the instance name for instantiation.
-  const char *instance_name (void);
+  const char *instance_name ();
 
   /// Common code for generating the name and parameters of our
   /// template sequence base class.
@@ -93,16 +95,15 @@ public:
                            AST_Decl *elem_scope);
 
   /// Accessors for the member.
-  be_field *field_node (void) const;
+  be_field *field_node () const;
   void field_node (be_field *node);
 
   /// Helper to create_name, also used by the traits visitor.
-  virtual char *gen_name (void);
+  virtual char *gen_name ();
 
 protected:
-
   /// Computes the fully scoped typecode name.
-  virtual void compute_tc_name (void);
+  virtual void compute_tc_name ();
 
 private:
   const char *smart_fwd_helper_name (AST_Decl *elem_scope,

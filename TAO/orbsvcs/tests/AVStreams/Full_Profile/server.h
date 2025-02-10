@@ -15,19 +15,19 @@ class FTP_Server_Callback
   :public TAO_AV_Callback
 {
 public:
-  FTP_Server_Callback (void);
-  virtual int handle_stop (void);
+  FTP_Server_Callback ();
+  virtual int handle_stop ();
   virtual int receive_frame (ACE_Message_Block *frame,
                              TAO_AV_frame_info *,
                              const ACE_Addr &);
-  virtual int handle_end_stream (void);
+  virtual int handle_end_stream ();
 };
 
 class FTP_Server_FlowEndPoint
   :public TAO_FlowConsumer
 {
 public:
-  FTP_Server_FlowEndPoint (void);
+  FTP_Server_FlowEndPoint ();
   int get_callback (const char *flowname,
                     TAO_AV_Callback *&callback);
 };
@@ -35,17 +35,17 @@ public:
 class Server
 {
 public:
-  Server (void);
+  Server ();
   int init (int argc,
             ACE_TCHAR *argv[]);
-  int run (void);
-  FILE *file (void);
-  AVStreams::protocolSpec protocols (void);
-  CORBA::ORB_ptr orb (void);
+  int run ();
+  FILE *file ();
+  AVStreams::protocolSpec protocols ();
+  CORBA::ORB_ptr orb ();
   void orb (CORBA::ORB_ptr orb_in);
-  PortableServer::POA_ptr poa (void);
+  PortableServer::POA_ptr poa ();
   void poa (PortableServer::POA_ptr poa_in);
-  const char *format (void);
+  const char *format ();
 protected:
   int parse_args (int argc, ACE_TCHAR *argv[]);
   TAO_Naming_Client my_naming_client_;

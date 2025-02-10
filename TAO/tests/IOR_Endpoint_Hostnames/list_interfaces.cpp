@@ -7,7 +7,7 @@
 
 #include "tao/corba.h"
 #include "ace/ACE.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/INET_Addr.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_stdio.h"
@@ -89,7 +89,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       }
 #endif /* ACE_HAS_IPV6 */
 
-  ACE_Auto_Basic_Array_Ptr<ACE_INET_Addr> safe_if_addrs (if_addrs);
+  std::unique_ptr<ACE_INET_Addr[]> safe_if_addrs (if_addrs);
 
 #if defined (ACE_HAS_IPV6)
   bool ipv4_only = def_type == AF_INET;

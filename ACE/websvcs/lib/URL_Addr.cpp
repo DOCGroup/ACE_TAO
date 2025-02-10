@@ -41,17 +41,7 @@ static size_t tn3270_size = sizeof(tn3270)/sizeof(tn3270[0]) - 1;
 static ACE_TCHAR gopher[] = ACE_TEXT ("gopher:");
 static size_t gopher_size = sizeof(gopher)/sizeof(gopher[0]) - 1;
 
-// When assembling URLs, sprintf() is often used. The format specifier for
-// a string changes depending on the platform and char width being fed to it.
-// Since we use ACE_TCHAR for strings, and it changes with the char width,
-// the printf specifier needs to change with the platform.
-#if defined (ACE_WIN32) || !defined (ACE_USES_WCHAR)
-#  define ACE_PRINTF_S ACE_TEXT ("%s")
-#else
-#  define ACE_PRINTF_S ACE_TEXT ("%ls")
-#endif
-
-ACE_URL_Addr::ACE_URL_Addr (void)
+ACE_URL_Addr::ACE_URL_Addr ()
   : url_ (0)
 {
 }
@@ -157,7 +147,7 @@ ACE_URL_Addr::known_scheme (const ACE_TCHAR *url)
 
 // ****************************************************************
 
-ACE_URL_Addr_Visitor::~ACE_URL_Addr_Visitor (void)
+ACE_URL_Addr_Visitor::~ACE_URL_Addr_Visitor ()
 {
 }
 
@@ -187,7 +177,7 @@ ACE_URL_Addr_Visitor::visit (ACE_Mailto_Addr*)
 
 // ****************************************************************
 
-ACE_HTTP_Addr::ACE_HTTP_Addr (void)
+ACE_HTTP_Addr::ACE_HTTP_Addr ()
   :  hostname_ (0),
      port_number_ (0),
      path_ (0),
@@ -217,7 +207,7 @@ ACE_HTTP_Addr::ACE_HTTP_Addr (const ACE_HTTP_Addr &addr)
   this->set (addr);
 }
 
-ACE_HTTP_Addr::~ACE_HTTP_Addr (void)
+ACE_HTTP_Addr::~ACE_HTTP_Addr ()
 {
   this->clear ();
   this->hostname_ = 0;
@@ -278,7 +268,7 @@ ACE_HTTP_Addr::set (const ACE_HTTP_Addr &addr)
 }
 
 void
-ACE_HTTP_Addr::clear (void)
+ACE_HTTP_Addr::clear ()
 {
   if (this->hostname_ != 0)
     ACE_OS::free (this->hostname_);
@@ -531,11 +521,11 @@ ACE_HTTP_Addr::addr_to_string (ACE_TCHAR *buffer,
   if (flags == 0)
     {
       ACE_INET_Addr inet = this->get_inet_address ();
-      n += ACE_OS::sprintf (buffer + n, ACE_PRINTF_S, inet.get_host_addr ());
+      n += ACE_OS::sprintf (buffer + n, ACE_TEXT ("%") ACE_TEXT_PRIs, inet.get_host_addr ());
     }
   else
     {
-     n += ACE_OS::sprintf (buffer + n, ACE_PRINTF_S, this->hostname_);
+     n += ACE_OS::sprintf (buffer + n, ACE_TEXT ("%") ACE_TEXT_PRIs, this->hostname_);
     }
 
   if (this->port_number_ != ACE_DEFAULT_HTTP_PORT)
@@ -545,13 +535,13 @@ ACE_HTTP_Addr::addr_to_string (ACE_TCHAR *buffer,
   if (this->path_ != 0)
     {
       n += ACE_OS::sprintf (buffer + n,
-                            ACE_TEXT ("/") ACE_PRINTF_S,
+                            ACE_TEXT ("/%") ACE_TEXT_PRIs,
                             this->path_);
     }
   if (this->query_ != 0)
     {
       n += ACE_OS::sprintf (buffer + n,
-                            ACE_TEXT ("?") ACE_PRINTF_S,
+                            ACE_TEXT ("?%") ACE_TEXT_PRIs,
                             this->query_);
     }
   return 0;
@@ -565,7 +555,7 @@ ACE_HTTP_Addr::accept (ACE_URL_Addr_Visitor *visitor)
 
 // ****************************************************************
 
-ACE_FTP_Addr::ACE_FTP_Addr (void)
+ACE_FTP_Addr::ACE_FTP_Addr ()
   :  user_ (0),
      password_ (0),
      hostname_ (0),
@@ -595,7 +585,7 @@ ACE_FTP_Addr::ACE_FTP_Addr (const ACE_FTP_Addr& addr)
   this->set (addr);
 }
 
-ACE_FTP_Addr::~ACE_FTP_Addr (void)
+ACE_FTP_Addr::~ACE_FTP_Addr ()
 {
   this->clear ();
 }
@@ -652,7 +642,7 @@ ACE_FTP_Addr::set (const ACE_FTP_Addr& addr)
 }
 
 void
-ACE_FTP_Addr::clear (void)
+ACE_FTP_Addr::clear ()
 {
   if (this->hostname_ != 0)
     ACE_OS::free (this->hostname_);
@@ -704,12 +694,12 @@ ACE_FTP_Addr::addr_to_string (ACE_TCHAR *buffer,
 
   if (this->user_ != 0)
     {
-      n += ACE_OS::sprintf (buffer + n, ACE_PRINTF_S, this->user_);
+      n += ACE_OS::sprintf (buffer + n, ACE_TEXT ("%") ACE_TEXT_PRIs, this->user_);
     }
   if (this->password_ != 0)
     {
       n += ACE_OS::sprintf (buffer + n,
-                            ACE_TEXT (":") ACE_PRINTF_S,
+                            ACE_TEXT (":%") ACE_TEXT_PRIs,
                             this->password_);
     }
 
@@ -721,16 +711,16 @@ ACE_FTP_Addr::addr_to_string (ACE_TCHAR *buffer,
   if (flags == 0)
     {
       ACE_INET_Addr inet = this->get_inet_address ();
-      n += ACE_OS::sprintf (buffer + n, ACE_PRINTF_S, inet.get_host_addr ());
+      n += ACE_OS::sprintf (buffer + n, ACE_TEXT ("%") ACE_TEXT_PRIs, inet.get_host_addr ());
     }
   else
     {
-      n += ACE_OS::sprintf (buffer + n, ACE_PRINTF_S, this->hostname_);
+      n += ACE_OS::sprintf (buffer + n, ACE_TEXT ("%") ACE_TEXT_PRIs, this->hostname_);
     }
   if (this->path_ != 0)
     {
       n += ACE_OS::sprintf (buffer + n,
-                            ACE_TEXT ("/") ACE_PRINTF_S,
+                            ACE_TEXT ("/%") ACE_TEXT_PRIs,
                             this->path_);
     }
   return 0;
@@ -805,7 +795,7 @@ ACE_FTP_Addr::accept (ACE_URL_Addr_Visitor* visitor)
 
 // ****************************************************************
 
-ACE_Mailto_Addr::ACE_Mailto_Addr (void)
+ACE_Mailto_Addr::ACE_Mailto_Addr ()
   :  user_ (0),
      hostname_ (0),
      headers_ (0)
@@ -831,7 +821,7 @@ ACE_Mailto_Addr::ACE_Mailto_Addr (const ACE_Mailto_Addr &addr)
   this->set (addr);
 }
 
-ACE_Mailto_Addr::~ACE_Mailto_Addr (void)
+ACE_Mailto_Addr::~ACE_Mailto_Addr ()
 {
   this->clear ();
 }
@@ -877,7 +867,7 @@ ACE_Mailto_Addr::set (const ACE_Mailto_Addr &addr)
 }
 
 void
-ACE_Mailto_Addr::clear (void)
+ACE_Mailto_Addr::clear ()
 {
   if (this->user_ != 0)
     ACE_OS::free (this->user_);
@@ -915,12 +905,12 @@ ACE_Mailto_Addr::addr_to_string (ACE_TCHAR *buffer,
     return -1;
 
   size_t n = ACE_OS::sprintf (buffer,
-                              ACE_TEXT ("mailto:") ACE_PRINTF_S ACE_TEXT
-                              ("@") ACE_PRINTF_S,
+                              ACE_TEXT ("mailto:%") ACE_TEXT_PRIs
+                              ACE_TEXT ("@%") ACE_TEXT_PRIs,
                               this->user_, this->hostname_);
   if (this->headers_ != 0)
     {
-      n += ACE_OS::sprintf (buffer + n, ACE_TEXT ("?") ACE_PRINTF_S,
+      n += ACE_OS::sprintf (buffer + n, ACE_TEXT ("?%") ACE_TEXT_PRIs,
                             this->headers_);
     }
 

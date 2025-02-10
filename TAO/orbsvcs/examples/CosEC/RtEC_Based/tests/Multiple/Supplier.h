@@ -38,21 +38,21 @@ public:
   void open (CosEventChannelAdmin::EventChannel_ptr event_channel);
 
   /// Disconnect from the EC.
-  void close (void);
+  void close ();
 
-  void connect (void);
+  void connect ();
 
   /// Disconnect from the EC, but do not forget about it or close it.
-  void disconnect (void);
+  void disconnect ();
 
   /// Send one event.
   void send_event (const CORBA::Any &data);
 
   /// The POA_CosEventComm::PushSupplier method.
-  virtual void disconnect_push_supplier (void);
+  virtual void disconnect_push_supplier ();
 
   /// Sends the events to the EC.
-  void run (void);
+  void run ();
 
   // = Multiple methods.
   /// Parses the command line arguments.

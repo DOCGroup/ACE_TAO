@@ -24,7 +24,6 @@ project(ACE) : ace_output, acedefaults, install, other, codecs, token, svcconf, 
     ATM_QoS.cpp
     ATM_Stream.cpp
     Atomic_Op.cpp
-    Atomic_Op_Sparc.c
     Barrier.cpp
     Base_Thread_Adapter.cpp
     Based_Pointer_Repository.cpp
@@ -45,7 +44,6 @@ project(ACE) : ace_output, acedefaults, install, other, codecs, token, svcconf, 
     Configuration_Import_Export.cpp
     Connection_Recycling_Strategy.cpp
     Containers.cpp
-    Copy_Disabled.cpp
     Date_Time.cpp
     DEV.cpp
     DEV_Addr.cpp
@@ -93,8 +91,6 @@ project(ACE) : ace_output, acedefaults, install, other, codecs, token, svcconf, 
     Log_Category.cpp
     Log_Msg.cpp
     Log_Msg_Android_Logcat.cpp
-    Log_Msg_Backend.cpp
-    Log_Msg_Callback.cpp
     Log_Msg_IPC.cpp
     Log_Msg_NT_Event_Log.cpp
     Log_Msg_UNIX_Syslog.cpp
@@ -206,7 +202,6 @@ project(ACE) : ace_output, acedefaults, install, other, codecs, token, svcconf, 
     Recursive_Thread_Mutex.cpp
     Recyclable.cpp
     Registry.cpp
-    Rtems_init.c
     RW_Mutex.cpp
     RW_Process_Mutex.cpp
     RW_Thread_Mutex.cpp
@@ -245,7 +240,6 @@ project(ACE) : ace_output, acedefaults, install, other, codecs, token, svcconf, 
     Stack_Trace.cpp
     Stats.cpp
     String_Base_Const.cpp
-    SUN_Proactor.cpp
     SV_Message.cpp
     SV_Message_Queue.cpp
     SV_Semaphore_Complex.cpp
@@ -300,7 +294,6 @@ project(ACE) : ace_output, acedefaults, install, other, codecs, token, svcconf, 
     Auto_Event.cpp
     Auto_Functor.cpp
     Auto_IncDec_T.cpp
-    Auto_Ptr.cpp
     Based_Pointer_T.cpp
     Bound_Ptr.cpp
     Cache_Map_Manager_T.cpp
@@ -402,11 +395,11 @@ project(ACE) : ace_output, acedefaults, install, other, codecs, token, svcconf, 
 
     ACE_export.h
     Bound_Ptr.h
-    CE_Screen_Output.h
     Codeset_Symbols.h
     CORBA_macros.h
     Codeset_Symbols.h
     Condition_T.h
+    Copy_Disabled.h
     Countdown_Time.h
     Default_Constants.h
     Event_Base.h
@@ -418,6 +411,8 @@ project(ACE) : ace_output, acedefaults, install, other, codecs, token, svcconf, 
     IO_Cntl_Msg.h
     Intrusive_Auto_Ptr.h
     Lock_Adapter_T.h
+    Log_Msg_Backend.h
+    Log_Msg_Callback.h
     Log_Priority.h
     Malloc_Base.h
     Metrics_Cache.h
@@ -469,7 +464,6 @@ project(ACE) : ace_output, acedefaults, install, other, codecs, token, svcconf, 
     Version.h
     Versioned_Namespace.h
     ace_wchar.h
-    checked_iterator.h
     config-*.h
     config.h
     iosfwd.h
@@ -497,6 +491,7 @@ project(ACE) : ace_output, acedefaults, install, other, codecs, token, svcconf, 
     ../bin/add_rel_link.sh
     ../bin/depgen.pl
     ../bin/ace_install_pkgconfig.pl
+    ../bin/generate_export_file.pl
   }
   InstallData_Files {
     gendir = include
@@ -505,7 +500,7 @@ project(ACE) : ace_output, acedefaults, install, other, codecs, token, svcconf, 
   InstallData_Files {
     gendir = .
     ../README
-    ../VERSION
+    ../VERSION.txt
     ../PROBLEM-REPORT-FORM
     ../NEWS
     ../COPYING

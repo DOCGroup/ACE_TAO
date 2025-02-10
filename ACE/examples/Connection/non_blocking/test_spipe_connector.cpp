@@ -5,7 +5,6 @@
 #include "CPP-connector.h"
 
 
-
 #if !defined (ACE_WIN32)
 typedef Peer_Handler<ACE_SPIPE_STREAM> PEER_HANDLER;
 typedef IPC_Client<PEER_HANDLER, ACE_SPIPE_CONNECTOR> IPC_CLIENT;

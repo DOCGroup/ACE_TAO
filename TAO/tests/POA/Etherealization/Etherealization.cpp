@@ -18,11 +18,11 @@
 class test_i : public POA_test
 {
 public:
-  void method ( /**/)
+  void method ()
   {
   }
 
-  ~test_i (void)
+  ~test_i ()
   {
     ACE_DEBUG ((LM_DEBUG, "~test_i called\n"));
   }
@@ -32,11 +32,11 @@ class test_i_with_reference_counting :
   public virtual POA_test
 {
 public:
-  void method (void)
+  void method ()
   {
   }
 
-  ~test_i_with_reference_counting (void)
+  ~test_i_with_reference_counting ()
   {
     ACE_DEBUG ((LM_DEBUG, "~test_i_with_reference_counting called\n"));
   }
@@ -100,7 +100,6 @@ Servant_Activator::etherealize (const PortableServer::ObjectId &id,
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
-
   try
     {
       // Initialize the ORB first.

@@ -14,7 +14,7 @@ TAO_ExtAttributeDef_i::TAO_ExtAttributeDef_i (TAO_Repository_i *repo)
 {
 }
 
-TAO_ExtAttributeDef_i::~TAO_ExtAttributeDef_i (void)
+TAO_ExtAttributeDef_i::~TAO_ExtAttributeDef_i ()
 {
 }
 

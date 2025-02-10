@@ -24,7 +24,7 @@ class AMH_Servant
 public:
   AMH_Servant (CORBA::ORB_ptr orb);
 
-  virtual ~AMH_Servant (void);
+  virtual ~AMH_Servant ();
 
   /// parse arguments from command line for sleep time
   virtual int parse_args (int &argc, ACE_TCHAR **argv);

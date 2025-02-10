@@ -32,8 +32,8 @@ class ECT_Consumer_Driver : public ECT_Driver
   // = DESCRIPTION
   //
 public:
-  ECT_Consumer_Driver (void);
-  virtual ~ECT_Consumer_Driver (void);
+  ECT_Consumer_Driver ();
+  virtual ~ECT_Consumer_Driver ();
 
   enum {
     MAX_CONSUMERS = 16
@@ -54,10 +54,10 @@ private:
 
   void connect_consumers (RtecScheduler::Scheduler_ptr scheduler,
                           RtecEventChannelAdmin::EventChannel_ptr local_ec);
-  void disconnect_consumers (void);
+  void disconnect_consumers ();
   // Connect and disconnect the consumers.
 
-  void dump_results (void);
+  void dump_results ();
   // Print out the results
 
 private:

@@ -36,12 +36,12 @@ class Worker : public ACE_Task_Base
 {
 public:
   /// ctor
-  Worker (void);
+  Worker ();
 
   void orb (CORBA::ORB_ptr orb);
 
   /// The thread entry point.
-  virtual int svc (void);
+  virtual int svc ();
 
   int done_;
 
@@ -63,8 +63,7 @@ public:
 
   // = StructuredPushSupplier methods
   virtual void push_structured_event (
-        const CosNotification::StructuredEvent & notification
-      );
+        const CosNotification::StructuredEvent & notification);
 
   /// Accumulate the throughput statistics into <throughput>
   void accumulate_into (ACE_Throughput_Stats &throughput) const;
@@ -103,7 +102,7 @@ public:
   virtual ~Throughput_StructuredPushSupplier ();
 
   // = The ACE_Task_Base methods....
-  virtual int svc (void);
+  virtual int svc ();
 
   /// Accumulate the throughput statistics into <throughput>
   void accumulate_into (ACE_Throughput_Stats &throughput) const;
@@ -131,7 +130,7 @@ class Notify_Throughput : public Notify_Test_Client
 {
 public:
   // Initialization and termination code
-  Notify_Throughput (void);
+  Notify_Throughput ();
   virtual ~Notify_Throughput ();
 
   int parse_args(int argc, ACE_TCHAR *argv[]) ;
@@ -140,18 +139,18 @@ public:
   int init (int argc, ACE_TCHAR *argv []);
 
   /// Run the test.
-  void run_test (void);
+  void run_test ();
 
   /// Peers call this when done.
-  void peer_done (void);
+  void peer_done ();
 
   /// check if we got the expected results.
-  void dump_results (void);
+  void dump_results ();
 
   Worker worker_;
 protected:
   /// Create participants.
-  void create_EC (void);
+  void create_EC ();
 
   /// is the ec collocated.
   CORBA::Boolean collocated_ec_;

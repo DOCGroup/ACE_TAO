@@ -22,7 +22,7 @@
 
 TimeOfDay
 Time_impl::
-get_gmt (void)
+get_gmt ()
 {
   time_t time_now = ACE_OS::time (0);
   struct tm *time_p = ACE_OS::gmtime (&time_now);
@@ -75,8 +75,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     }
   return 0;
 }
-
-
 
 
 

@@ -20,7 +20,7 @@ public:
   {
   }
 
-  int svc (void)
+  int svc ()
   {
     /// Reconstruct the monitor's unique name using the queue's hex address.
     const int nibbles = 2 * sizeof (ptrdiff_t);

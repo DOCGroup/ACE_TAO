@@ -33,14 +33,12 @@ namespace TAO_Notify
   class TAO_Notify_Serv_Export Event_Persistence_Strategy: public ACE_Service_Object
   {
   public:
-
     // get the current factory, creating it if necessary
     virtual Event_Persistence_Factory * get_factory () = 0;
 
     // release the current factory so a new one can be created
     virtual void reset () = 0;
   };
-
 } // namespace TAO_Notify
 
 TAO_END_VERSIONED_NAMESPACE_DECL

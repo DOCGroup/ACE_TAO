@@ -9,7 +9,6 @@
 
 namespace Kokyu
 {
-
 template <class DSRT_Scheduler_Traits>
 DSRT_Dispatch_Item_var<DSRT_Scheduler_Traits>::
 DSRT_Dispatch_Item_var (DSRT_Dispatch_Item<DSRT_Scheduler_Traits> *p)

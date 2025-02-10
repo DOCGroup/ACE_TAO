@@ -9,7 +9,7 @@
    : ACE_VERSIONED_NAMESPACE_NAME::__ace_assert(__FILE__, __LINE__, ACE_TEXT_CHAR_TO_TCHAR (#X)))
 
 int
-getmacaddress_test (void)
+getmacaddress_test ()
 {
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing getmacaddress\n")));
 

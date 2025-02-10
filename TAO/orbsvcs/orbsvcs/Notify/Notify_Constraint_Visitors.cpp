@@ -17,7 +17,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Notify_Constraint_Visitor::TAO_Notify_Constraint_Visitor (void)
+TAO_Notify_Constraint_Visitor::TAO_Notify_Constraint_Visitor ()
   : implicit_id_ (TAO_Notify_Constraint_Visitor::EMPTY),
     implicit_ids_(implicit_ids_size_),
     filterable_data_(filterable_data_size_),

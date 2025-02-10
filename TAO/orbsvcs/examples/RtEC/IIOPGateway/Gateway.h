@@ -24,7 +24,7 @@ class Gateway
 {
 public:
   /// Constructor
-  Gateway (void);
+  Gateway ();
 
   /// Run the test
   int run (int argc, ACE_TCHAR* argv[]);

@@ -13,12 +13,12 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_MC_Notify_Service::~TAO_MC_Notify_Service (void)
+TAO_MC_Notify_Service::~TAO_MC_Notify_Service ()
 {
 }
 
 TAO_Notify_Factory*
-TAO_MC_Notify_Service::create_factory (void)
+TAO_MC_Notify_Service::create_factory ()
 {
   TAO_MC_Default_Factory* factory = 0;
   ACE_NEW_THROW_EX (factory,

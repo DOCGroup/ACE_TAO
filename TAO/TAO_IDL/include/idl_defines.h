@@ -65,6 +65,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _IDL_DEFINES_IDL_DEFINES_HH
 #define _IDL_DEFINES_IDL_DEFINES_HH
 
+#include "tao/idl_features.h"
+
 #include "ace/os_include/os_limits.h"
 
 /*
@@ -110,11 +112,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
  *   #endif
  */
 #define TAO_IDL_HAS_PARSE_ARGS_EXIT
-
-/**
- * Defined if TAO_IDL has support for annotations
- */
-#define TAO_IDL_HAS_ANNOTATIONS
 
 #define NAMEBUFSIZE 1024
 // Maximum length of static buffers used to store names.

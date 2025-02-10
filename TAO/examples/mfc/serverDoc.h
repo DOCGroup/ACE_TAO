@@ -18,10 +18,8 @@ protected: // create from serialization only
 
 // Attributes
 public:
-
 // Operations
 public:
-
 // Overrides
 // ClassWizard generated virtual function overrides
 //{{AFX_VIRTUAL(CServerDoc)
@@ -39,7 +37,6 @@ public:
 #endif
 
 protected:
-
 // Generated message map functions
 protected:
   //{{AFX_MSG(CServerDoc)

@@ -16,7 +16,6 @@ void
 FTEC_ORBInitializer::post_init (
     PortableInterceptor::ORBInitInfo_ptr info)
 {
-
   Request_Context_Repository().allocate_slots(info);
 
   PortableInterceptor::ClientRequestInterceptor_var client_interceptor;

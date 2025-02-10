@@ -18,7 +18,7 @@ class ACE_Svc_Export Benchmark_Performance_Test_Base : public Benchmark_Base
   // = TITLE
   //     This class identifies itself as Benmarking Performance Test class.
 protected:
-  Benchmark_Performance_Test_Base (void);
+  Benchmark_Performance_Test_Base ();
 };
 
 class ACE_Svc_Export Benchmark_Performance : public Benchmark_Performance_Test_Base
@@ -27,16 +27,16 @@ class ACE_Svc_Export Benchmark_Performance : public Benchmark_Performance_Test_B
   //   Base class for all the timing tests.
 public:
   // = Hooks inherited from ACE_Service_Object.
-  virtual int svc (void) = 0;
+  virtual int svc () = 0;
   virtual int init (int, ACE_TCHAR *[]);
   virtual int info (ACE_TCHAR **, size_t) const;
-  virtual int fini (void);
+  virtual int fini ();
   static void *svc_run (Benchmark_Performance *bp);
 
   // = Set/get flag that controls how the tests are shut down
   // gracefully.
   static void done (sig_atomic_t);
-  static sig_atomic_t done (void);
+  static sig_atomic_t done ();
 
 protected:
   static sig_atomic_t done_;

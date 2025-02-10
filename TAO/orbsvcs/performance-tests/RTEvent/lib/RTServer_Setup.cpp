@@ -23,20 +23,14 @@ RTServer_Setup::RTServer_Setup (int use_rt_corba,
                     rt_class,
                     nthreads)
 {
-
   if (use_rt_corba)
     {
-      ACE_auto_ptr_reset (this->rtpoa_setup_,
-                          new RTPOA_Setup (orb,
-                                           *this->rtcorba_setup ()));
+      this->rtpoa_setup_.reset (new RTPOA_Setup (orb, *this->rtcorba_setup ()));
 
-      this->poa_ =
-        this->rtpoa_setup_->poa ();
+      this->poa_ = this->rtpoa_setup_->poa ();
     }
   else
     {
-      this->poa_ =
-        RIR_Narrow<RTPortableServer::POA>::resolve (orb,
-                                                    "RootPOA");
+      this->poa_ = RIR_Narrow<RTPortableServer::POA>::resolve (orb, "RootPOA");
     }
 }

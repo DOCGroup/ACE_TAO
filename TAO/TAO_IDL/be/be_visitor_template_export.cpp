@@ -25,7 +25,7 @@ be_visitor_template_export::be_visitor_template_export (
 {
 }
 
-be_visitor_template_export::~be_visitor_template_export (void)
+be_visitor_template_export::~be_visitor_template_export ()
 {
 }
 
@@ -34,8 +34,7 @@ be_visitor_template_export::visit_root (be_root *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   *os << "#if defined ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT";
 
@@ -71,32 +70,32 @@ be_visitor_template_export::visit_sequence (be_sequence *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  be_type *bt = be_type::narrow_from_decl (node->base_type ());
+  be_type *bt = dynamic_cast<be_type*> (node->base_type ());
 
   // TAO provides extensions for octet sequences, first find out if
   // the base type is an octet (or an alias for octet).
-  be_predefined_type *predef = 0;
+  be_predefined_type *predef = nullptr;
 
   if (bt->base_node_type () == AST_Type::NT_pre_defined)
     {
       be_typedef* alias =
-            be_typedef::narrow_from_decl (bt);
+            dynamic_cast<be_typedef*> (bt);
 
-      if (alias == 0)
+      if (alias == nullptr)
         {
-          predef = be_predefined_type::narrow_from_decl (bt);
+          predef = dynamic_cast<be_predefined_type*> (bt);
         }
       else
         {
           predef =
-            be_predefined_type::narrow_from_decl (
+            dynamic_cast<be_predefined_type*> (
                 alias->primitive_base_type ()
               );
         }
     }
 
   // When it is a sequence add a special guard
-  if (predef != 0 && predef->pt () == AST_PredefinedType::PT_octet
+  if (predef != nullptr && predef->pt () == AST_PredefinedType::PT_octet
       && node->unbounded ())
     {
       *os << "\n#if (TAO_NO_COPY_OCTET_SEQUENCES == 0)";
@@ -119,7 +118,7 @@ be_visitor_template_export::visit_sequence (be_sequence *node)
 
   *os << ";" << be_uidt;
 
-  if (predef != 0 && predef->pt () == AST_PredefinedType::PT_octet
+  if (predef != nullptr && predef->pt () == AST_PredefinedType::PT_octet
       && node->unbounded ())
     {
       *os << "\n#endif /* TAO_NO_COPY_OCTET_SEQUENCE == 0 */";
@@ -143,6 +142,6 @@ be_visitor_template_export::visit_typedef (be_typedef *node)
                         -1);
     }
 
-  this->ctx_->alias (0);
+  this->ctx_->alias (nullptr);
   return 0;
 }

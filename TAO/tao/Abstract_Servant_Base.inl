@@ -1,7 +1,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
-TAO_Abstract_ServantBase::TAO_Abstract_ServantBase (void)
+TAO_Abstract_ServantBase::TAO_Abstract_ServantBase ()
 {
   // No-Op.
 }

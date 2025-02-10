@@ -19,7 +19,7 @@ StubFaultNotifier::~StubFaultNotifier ()
 }
 
 
-::PortableServer::POA_ptr StubFaultNotifier::_default_POA (void)
+::PortableServer::POA_ptr StubFaultNotifier::_default_POA ()
 {
   return ::PortableServer::POA::_duplicate(this->poa_.in ());
 }
@@ -104,7 +104,7 @@ int StubFaultNotifier::parse_args (int argc, ACE_TCHAR * argv[])
 /**
  * Prepare to exit.
  */
-int StubFaultNotifier::fini (void)
+int StubFaultNotifier::fini ()
 {
   if(this->ns_name_.length () != 0)
   {
@@ -324,9 +324,9 @@ const ACE_TCHAR * StubFaultNotifier::identity () const
 /**
  * Clean house for process shut down.
  */
-void StubFaultNotifier::shutdown_i (void)
+void StubFaultNotifier::shutdown_i ()
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }
 
 void StubFaultNotifier::push_structured_fault (
@@ -409,7 +409,7 @@ void StubFaultNotifier::disconnect_consumer (
   throw CORBA::NO_IMPLEMENT();
 }
 
-CORBA::Boolean StubFaultNotifier::is_alive (void)
+CORBA::Boolean StubFaultNotifier::is_alive ()
 {
   return 1;
 }

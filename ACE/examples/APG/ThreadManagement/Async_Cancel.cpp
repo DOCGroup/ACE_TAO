@@ -9,7 +9,7 @@
 class CanceledTask : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
-  virtual int svc (void)
+  virtual int svc ()
   {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Starting thread\n")));
 
@@ -23,7 +23,7 @@ public:
       }
   }
 
-  int set_cancel_mode (void)
+  int set_cancel_mode ()
   {
     cancel_state new_state;
 

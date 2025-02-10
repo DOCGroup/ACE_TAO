@@ -23,7 +23,7 @@ be_visitor_operation_exceptlist_cs::be_visitor_operation_exceptlist_cs (
 {
 }
 
-be_visitor_operation_exceptlist_cs::~be_visitor_operation_exceptlist_cs (void)
+be_visitor_operation_exceptlist_cs::~be_visitor_operation_exceptlist_cs ()
 {
 }
 
@@ -41,7 +41,7 @@ be_visitor_operation_exceptlist_cs::visit_operation (be_operation *node)
           << "_exceptiondata [] = " << be_idt_nl;
       *os << "{" << be_idt_nl;
 
-      be_exception *ex = 0;
+      be_exception *ex = nullptr;
 
       // Initialize an iterator to iterate thru the exception list.
       // Continue until each element is visited.
@@ -50,7 +50,7 @@ be_visitor_operation_exceptlist_cs::visit_operation (be_operation *node)
            !ei.is_done ();)
         {
           AST_Decl *d = ei.item ();
-          ex = be_exception::narrow_from_decl (d);
+          ex = dynamic_cast<be_exception*> (d);
 
           *os << "{" << be_idt_nl
               << "\"" << ex->repoID () << "\"," << be_nl
@@ -63,7 +63,7 @@ be_visitor_operation_exceptlist_cs::visit_operation (be_operation *node)
             }
           else
             {
-              *os << ", 0";
+              *os << ", nullptr";
             }
 
           *os << "\n#endif /* TAO_HAS_INTERCEPTORS */" << be_uidt_nl

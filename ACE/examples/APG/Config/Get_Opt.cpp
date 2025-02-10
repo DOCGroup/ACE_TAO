@@ -10,7 +10,6 @@
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-
   // Example for a long option without a corresponding short option.
   // Just put some context here so the following compiles and runs.
   static const ACE_TCHAR options[] = ACE_TEXT (":f:");
@@ -23,11 +22,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   int option;
   ACE_TCHAR config_file[MAXPATHLEN];
-  ACE_OS_String::strcpy (config_file, ACE_TEXT ("HAStatus.conf"));
+  ACE_OS::strcpy (config_file, ACE_TEXT ("HAStatus.conf"));
   while ((option = cmd_opts ()) != EOF)
     switch (option) {
     case 'f':
-      ACE_OS_String::strncpy (config_file,
+      ACE_OS::strncpy (config_file,
                               cmd_opts.opt_arg (),
                               MAXPATHLEN);
       break;

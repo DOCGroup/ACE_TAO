@@ -12,19 +12,19 @@ public:
                   const char *filtering_criteria);
   // Constructor.
 
-  ~Consumer_Entry (void);
+  ~Consumer_Entry ();
   // Descriptor.
 
   // = Set/get filtering criteria.
   void criteria (const char *criteria);
-  const char *criteria (void);
+  const char *criteria ();
 
   // = Set/get Event_Comm::Consumer object reference.
-  Event_Comm::Consumer *consumer (void);
+  Event_Comm::Consumer *consumer ();
   void consumer (Event_Comm::Consumer *);
 
   // = Set/get the compiled regular expression buffer.
-  const char *regexp (void);
+  const char *regexp ();
   void regexp (char *);
 
 private:
@@ -50,7 +50,7 @@ Consumer_Entry::criteria (const char *criteria)
 }
 
 const char *
-Consumer_Entry::criteria (void)
+Consumer_Entry::criteria ()
 {
   return this->filtering_criteria_;
 }
@@ -58,7 +58,7 @@ Consumer_Entry::criteria (void)
 // = Set/get Event_Comm::Consumer object reference.
 
 Event_Comm::Consumer *
-Consumer_Entry::consumer (void)
+Consumer_Entry::consumer ()
 {
   return this->consumer_;
 }
@@ -70,7 +70,7 @@ Consumer_Entry::consumer (Event_Comm::Consumer *consumer)
 }
 
 const char *
-Consumer_Entry::regexp (void)
+Consumer_Entry::regexp ()
 {
   return this->compiled_regexp_;
 }
@@ -121,7 +121,7 @@ Consumer_Entry::Consumer_Entry (Event_Comm::Consumer *consumer,
   this->consumer_ = Event_Comm::Consumer::_duplicate (this->consumer_);
 }
 
-Consumer_Entry::~Consumer_Entry (void)
+Consumer_Entry::~Consumer_Entry ()
 {
   ACE_OS::free ((void *) this->filtering_criteria_);
   ACE_OS::free ((void *) this->compiled_regexp_);
@@ -373,20 +373,20 @@ Notifier_i::push (const Event_Comm::Event &event)
 
 // -------------
 
-ShutdownCallback::~ShutdownCallback (void)
+ShutdownCallback::~ShutdownCallback ()
 {
 }
 
 // -------------
 
 //FUZZ: disable check_for_lack_ACE_OS
-Consumer_i::Consumer_i (void)
+Consumer_i::Consumer_i ()
   : shutdown (0)
 {
 }
 //FUZZ: enable check_for_lack_ACE_OS
 
-Consumer_i::~Consumer_i (void)
+Consumer_i::~Consumer_i ()
 {
 }
 

@@ -14,7 +14,7 @@
 
 #include "orbsvcs/ESF/ESF_Proxy_Collection.h"
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 //#define DEBUG_LEVEL 9
 #ifndef DEBUG_LEVEL
@@ -31,7 +31,7 @@ TAO_Notify_ProxySupplier_Find_Worker;
 
 typedef TAO_Notify_Seq_Worker_T<TAO_Notify_Proxy> TAO_Notify_Proxy_Seq_Worker;
 
-TAO_Notify_ConsumerAdmin::TAO_Notify_ConsumerAdmin (void)
+TAO_Notify_ConsumerAdmin::TAO_Notify_ConsumerAdmin ()
   : TAO_Notify_Admin ()
 {
 }
@@ -41,7 +41,6 @@ TAO_Notify_ConsumerAdmin::get_admin_type_name () const
 {
   return "consumer_admin";
 }
-
 
 
 TAO_Notify_ConsumerAdmin::~TAO_Notify_ConsumerAdmin ()
@@ -60,26 +59,26 @@ TAO_Notify_ConsumerAdmin::init (TAO_Notify_EventChannel *ec)
 }
 
 void
-TAO_Notify_ConsumerAdmin::_add_ref (void)
+TAO_Notify_ConsumerAdmin::_add_ref ()
 {
   this->_incr_refcnt ();
 }
 
 void
-TAO_Notify_ConsumerAdmin::_remove_ref (void)
+TAO_Notify_ConsumerAdmin::_remove_ref ()
 {
   this->_decr_refcnt ();
 }
 
 void
-TAO_Notify_ConsumerAdmin::release (void)
+TAO_Notify_ConsumerAdmin::release ()
 {
   delete this;
   //@@ inform factory
 }
 
 void
-TAO_Notify_ConsumerAdmin::destroy (void)
+TAO_Notify_ConsumerAdmin::destroy ()
 {
   this->shutdown ();
   this->ec_->remove (this);
@@ -179,7 +178,7 @@ TAO_Notify_ConsumerAdmin::obtain_notification_push_supplier_with_qos (CosNotifyC
 }
 
 CosEventChannelAdmin::ProxyPushSupplier_ptr
-TAO_Notify_ConsumerAdmin::obtain_push_supplier (void)
+TAO_Notify_ConsumerAdmin::obtain_push_supplier ()
 {
   CosEventChannelAdmin::ProxyPushSupplier_var proxy =
     TAO_Notify_PROPERTIES::instance()->builder()->build_proxy (this);
@@ -188,25 +187,25 @@ TAO_Notify_ConsumerAdmin::obtain_push_supplier (void)
 }
 
 CosNotifyChannelAdmin::AdminID
-TAO_Notify_ConsumerAdmin::MyID (void)
+TAO_Notify_ConsumerAdmin::MyID ()
 {
   return this->id ();
 }
 
 CosNotifyChannelAdmin::EventChannel_ptr
-TAO_Notify_ConsumerAdmin::MyChannel (void)
+TAO_Notify_ConsumerAdmin::MyChannel ()
 {
   return this->ec_->_this ();
 }
 
 ::CosNotifyChannelAdmin::InterFilterGroupOperator
-TAO_Notify_ConsumerAdmin::MyOperator (void)
+TAO_Notify_ConsumerAdmin::MyOperator ()
 {
   return this->filter_operator_;
 }
 
 CosNotifyChannelAdmin::ProxyIDSeq*
-TAO_Notify_ConsumerAdmin::push_suppliers (void)
+TAO_Notify_ConsumerAdmin::push_suppliers ()
 {
   TAO_Notify_Proxy_Seq_Worker seq_worker;
 
@@ -228,7 +227,7 @@ void TAO_Notify_ConsumerAdmin::set_qos (const CosNotification::QoSProperties & q
 
 
 CosNotification::QoSProperties*
-TAO_Notify_ConsumerAdmin::get_qos (void)
+TAO_Notify_ConsumerAdmin::get_qos ()
 {
   return this->TAO_Notify_Object::get_qos ();
 }
@@ -275,13 +274,13 @@ TAO_Notify_ConsumerAdmin::get_filter (CosNotifyFilter::FilterID filter)
 }
 
 ::CosNotifyFilter::FilterIDSeq*
-TAO_Notify_ConsumerAdmin::get_all_filters (void)
+TAO_Notify_ConsumerAdmin::get_all_filters ()
 {
   return this->filter_admin_.get_all_filters ();
 }
 
 void
-TAO_Notify_ConsumerAdmin::remove_all_filters (void)
+TAO_Notify_ConsumerAdmin::remove_all_filters ()
 {
   this->filter_admin_.remove_all_filters ();
 }
@@ -289,7 +288,7 @@ TAO_Notify_ConsumerAdmin::remove_all_filters (void)
 /************ UNIMPLMENTED METHODS *************************/
 
 CosNotifyFilter::MappingFilter_ptr
-TAO_Notify_ConsumerAdmin::priority_filter (void)
+TAO_Notify_ConsumerAdmin::priority_filter ()
 {
   throw CORBA::NO_IMPLEMENT ();
 }
@@ -302,7 +301,7 @@ TAO_Notify_ConsumerAdmin::priority_filter (CosNotifyFilter::MappingFilter_ptr /*
 }
 
 CosNotifyFilter::MappingFilter_ptr
-TAO_Notify_ConsumerAdmin::lifetime_filter (void)
+TAO_Notify_ConsumerAdmin::lifetime_filter ()
 
 {
   throw CORBA::NO_IMPLEMENT ();
@@ -315,7 +314,7 @@ TAO_Notify_ConsumerAdmin::lifetime_filter (CosNotifyFilter::MappingFilter_ptr /*
 }
 
 ::CosNotifyChannelAdmin::ProxyIDSeq*
-TAO_Notify_ConsumerAdmin::pull_suppliers (void)
+TAO_Notify_ConsumerAdmin::pull_suppliers ()
 {
   throw CORBA::NO_IMPLEMENT ();
 }
@@ -336,7 +335,7 @@ TAO_Notify_ConsumerAdmin::validate_qos (const CosNotification::QoSProperties & /
 }
 
 CosEventChannelAdmin::ProxyPullSupplier_ptr
-TAO_Notify_ConsumerAdmin::obtain_pull_supplier (void)
+TAO_Notify_ConsumerAdmin::obtain_pull_supplier ()
 {
   throw CORBA::NO_IMPLEMENT ();
 }

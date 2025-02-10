@@ -7,28 +7,26 @@
 
 class CSD_TP_Test_Export AppShutdown
 {
-  public:
+public:
+  AppShutdown();
+  virtual ~AppShutdown();
 
-    AppShutdown();
-    virtual ~AppShutdown();
+  void init(CORBA::ORB_ptr orb,
+            unsigned num_clients);
 
-    void init(CORBA::ORB_ptr orb,
-              unsigned num_clients);
+  void wait ();
 
-    void wait ();
+  void client_done();
 
-    void client_done();
+  static AppShutdown* instance ();
 
-    static AppShutdown* instance ();
+private:
+  CORBA::ORB_var orb_;
+  unsigned num_clients_;
+  ACE_Atomic_Op <TAO_SYNCH_MUTEX, unsigned> num_clients_shutdown_;
 
-  private:
-    CORBA::ORB_var orb_;
-    unsigned num_clients_;
-    ACE_Atomic_Op <TAO_SYNCH_MUTEX, unsigned> num_clients_shutdown_;
-
-    OrbShutdownTask orb_shutdown_task_;
+  OrbShutdownTask orb_shutdown_task_;
 };
-
 
 #define TheAppShutdown AppShutdown::instance()
 

@@ -22,26 +22,21 @@
 #include "ace/Task_T.h"
 #include "ace/Truncate.h"
 
-# if defined (ACE_WIN32) || \
-     (defined (_POSIX_MONOTONIC_CLOCK) && !defined (ACE_LACKS_MONOTONIC_TIME)) || \
-     defined (ACE_HAS_CLOCK_GETTIME_MONOTONIC)
+#if defined (ACE_HAS_MONOTONIC_TIME_POLICY) && defined (ACE_HAS_MONOTONIC_CONDITIONS)
 
-# if defined (ACE_HAS_THREADS)
+#  if defined (ACE_HAS_THREADS)
 
-#   if defined (ACE_WIN32)
-#     include "ace/Date_Time.h"
-#   endif
+#    if defined (ACE_WIN32)
+#      include "ace/Date_Time.h"
+#    endif
 
 // Create timer queue with hr support
 ACE_Timer_Queue *
-create_timer_queue (void)
+create_timer_queue ()
 {
   ACE_Timer_Queue * tmq = 0;
 
-  typedef ACE_Timer_Heap_T<ACE_Event_Handler *,
-                           ACE_Event_Handler_Handle_Timeout_Upcall,
-                           ACE_SYNCH_RECURSIVE_MUTEX,
-                           ACE_HR_Time_Policy> timer_queue_type;
+  using timer_queue_type = ACE_Timer_Heap_T<ACE_Event_Handler *, ACE_Event_Handler_Handle_Timeout_Upcall, ACE_MT_SYNCH::RECURSIVE_MUTEX, ACE_HR_Time_Policy>;
   ACE_NEW_RETURN (tmq, timer_queue_type (), 0);
 
   return tmq;
@@ -52,17 +47,17 @@ class MyTask : public ACE_Task<ACE_MT_SYNCH>
 public:
   MyTask () : my_reactor_ (0), my_tq_ (0) {}
 
-  virtual ~MyTask () { stop (); }
+  ~MyTask () override { stop (); }
 
-  virtual int svc (void);
+  int svc () override;
 
   int start (int num_threads);
-  int stop (void);
+  int stop ();
   ACE_Reactor* get_reactor ();
-  int  create_reactor (void);
+  int create_reactor ();
 
 private:
-  int  delete_reactor (void);
+  int delete_reactor ();
 
   ACE_SYNCH_RECURSIVE_MUTEX lock_;
   ACE_Reactor *my_reactor_;
@@ -76,7 +71,7 @@ MyTask::get_reactor ()
 }
 
 int
-MyTask::create_reactor (void)
+MyTask::create_reactor ()
 {
   ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX,
                     monitor,
@@ -103,7 +98,7 @@ MyTask::create_reactor (void)
 }
 
 int
-MyTask::delete_reactor (void)
+MyTask::delete_reactor ()
 {
   ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX,
                     monitor,
@@ -135,7 +130,7 @@ MyTask::start (int num_threads)
 
 
 int
-MyTask::stop (void)
+MyTask::stop ()
 {
   if (this->my_reactor_ != 0)
     {
@@ -159,7 +154,7 @@ MyTask::stop (void)
 }
 
 int
-MyTask::svc (void)
+MyTask::svc ()
 {
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" (%P|%t) MyTask started\n")));
 
@@ -179,8 +174,8 @@ public:
       timeout_triggered_ (false)
   {}
 
-  virtual int handle_timeout (const ACE_Time_Value &tv,
-                              const void *arg);
+  int handle_timeout (const ACE_Time_Value &tv,
+                              const void *arg) override;
 
   bool trigger_in(const ACE_Time_Value &delay);
 
@@ -230,7 +225,7 @@ bool test_timer (ACE_Condition_Thread_Mutex& condition_, ACE_Time_Value& waittim
   // reset system clock 4 seconds backwards
   ACE_Time_Value curtime = ACE_OS::gettimeofday ();
   curtime -= ACE_Time_Value (4, 0);
-# if defined (ACE_WIN32)
+#    if defined (ACE_WIN32)
   ACE_Date_Time curdt (curtime);
   SYSTEMTIME sys_time;
   sys_time.wDay = ACE_Utils::truncate_cast <WORD> (curdt.day ());
@@ -241,11 +236,11 @@ bool test_timer (ACE_Condition_Thread_Mutex& condition_, ACE_Time_Value& waittim
   sys_time.wSecond = ACE_Utils::truncate_cast <WORD> (curdt.second ());
   sys_time.wMilliseconds = ACE_Utils::truncate_cast <WORD> (curdt.microsec () / 1000);
   if (!::SetLocalTime (&sys_time))
-# else
+#    else
   timespec_t curts;
   curts = curtime;
   if (ACE_OS::clock_settime (CLOCK_REALTIME, &curts) != 0)
-# endif
+#    endif
     {
       ACE_DEBUG((LM_INFO,
                   "(%P|%t) Unable to reset OS time. Insufficient privileges or not supported.\n"));
@@ -290,7 +285,7 @@ bool test_timer (ACE_Condition_Thread_Mutex& condition_, ACE_Time_Value& waittim
       // reset system clock to correct time
       curtime = ACE_OS::gettimeofday ();
       curtime += ACE_Time_Value (4, 0);
-# if defined (ACE_WIN32)
+#    if defined (ACE_WIN32)
       curdt.update (curtime);
       SYSTEMTIME sys_time;
       sys_time.wDay = ACE_Utils::truncate_cast <WORD> (curdt.day ());
@@ -301,10 +296,10 @@ bool test_timer (ACE_Condition_Thread_Mutex& condition_, ACE_Time_Value& waittim
       sys_time.wSecond = ACE_Utils::truncate_cast <WORD> (curdt.second ());
       sys_time.wMilliseconds = ACE_Utils::truncate_cast <WORD> (curdt.microsec () / 1000);
       if (!::SetLocalTime (&sys_time))
-# else
+#    else
       curts = curtime;
       if (ACE_OS::clock_settime (CLOCK_REALTIME, &curts) != 0)
-# endif
+#    endif
         {
           ACE_DEBUG((LM_INFO,
                       "(%P|%t) Unable to reset OS time. Insufficient privileges or not supported.\n"));
@@ -319,13 +314,13 @@ bool test_timer (ACE_Condition_Thread_Mutex& condition_, ACE_Time_Value& waittim
 
   return status;
 }
-# endif
+#  endif
 
 int
 run_main (int , ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Bug_4055_Regression_Test"));
-# if defined (ACE_HAS_THREADS)
+#  if defined (ACE_HAS_THREADS)
   int status = 1;
 
   ACE_Thread_Mutex mutex_;
@@ -349,9 +344,9 @@ run_main (int , ACE_TCHAR *[])
         status = 0;
     }
   }
-# else
+#  else
   int status = 0;
-# endif
+#  endif
   ACE_END_TEST;
   return status;
 }

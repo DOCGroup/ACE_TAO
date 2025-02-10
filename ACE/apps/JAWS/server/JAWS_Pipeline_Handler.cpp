@@ -4,7 +4,7 @@
 #include "JAWS_Pipeline_Handler.h"
 
 template <class TYPE>
-JAWS_Pipeline_Handler<TYPE>::JAWS_Pipeline_Handler (void)
+JAWS_Pipeline_Handler<TYPE>::JAWS_Pipeline_Handler ()
 {
 }
 

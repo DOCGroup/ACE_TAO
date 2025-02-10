@@ -9,13 +9,13 @@
 #  include "ace/OS_NS_wchar.h"
 #endif /* ACE_USES_WCHAR */
 
-ACEXML_FileCharStream::ACEXML_FileCharStream (void)
+ACEXML_FileCharStream::ACEXML_FileCharStream ()
   : filename_ (0), encoding_ (0), size_ (0), infile_ (0),
     close_infile_ (true), peek_ (0)
 {
 }
 
-ACEXML_FileCharStream::~ACEXML_FileCharStream (void)
+ACEXML_FileCharStream::~ACEXML_FileCharStream ()
 {
   this->close();
 }
@@ -60,7 +60,7 @@ ACEXML_FileCharStream::open (const ACEXML_Char *name)
 }
 
 int
-ACEXML_FileCharStream::determine_encoding (void)
+ACEXML_FileCharStream::determine_encoding ()
 {
   if (this->infile_ == 0)
     return -1;
@@ -114,7 +114,7 @@ ACEXML_FileCharStream::rewind()
 }
 
 int
-ACEXML_FileCharStream::available (void)
+ACEXML_FileCharStream::available ()
 {
   if (this->infile_ == 0)
     return -1;
@@ -126,7 +126,7 @@ ACEXML_FileCharStream::available (void)
 }
 
 int
-ACEXML_FileCharStream::close (void)
+ACEXML_FileCharStream::close ()
 {
   if (this->infile_ != 0)
     {
@@ -177,7 +177,7 @@ ACEXML_FileCharStream::get (ACEXML_Char& ch)
 }
 
 int
-ACEXML_FileCharStream::peek (void)
+ACEXML_FileCharStream::peek ()
 {
   if (this->infile_ == 0)
     return -1;
@@ -226,7 +226,7 @@ ACEXML_FileCharStream::get_i (ACEXML_Char& ch)
 }
 
 int
-ACEXML_FileCharStream::peek_i (void)
+ACEXML_FileCharStream::peek_i ()
 {
   // If we are reading a UTF-8 encoded file, just use the plain unget.
   if (ACE_OS::strcmp (this->encoding_, ACE_TEXT ("UTF-8")) == 0)
@@ -262,13 +262,13 @@ ACEXML_FileCharStream::peek_i (void)
 #endif /* ACE_USES_WCHAR */
 
 const ACEXML_Char*
-ACEXML_FileCharStream::getEncoding (void)
+ACEXML_FileCharStream::getEncoding ()
 {
   return this->encoding_;
 }
 
 const ACEXML_Char*
-ACEXML_FileCharStream::getSystemId (void)
+ACEXML_FileCharStream::getSystemId ()
 {
   return this->filename_;
 }

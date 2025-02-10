@@ -35,10 +35,10 @@ class Echo_Handler : public ACE_Event_Handler
 {
 public:
   /// Default constructor
-  Echo_Handler (void);
+  Echo_Handler ();
 
   /// Destructor
-  virtual ~Echo_Handler (void);
+  virtual ~Echo_Handler ();
 
   /**
    * Initialization of a handler, performing echo-checks against a
@@ -92,7 +92,7 @@ public:
             ACE_Addr const &       local_addr = ACE_Addr::sap_any);
 
   /// Returns reference to the ACE::Ping_Socket. Necessary for ACE_Reactor.
-  virtual ACE_HANDLE get_handle (void) const;
+  virtual ACE_HANDLE get_handle () const;
 
   /**
    * Takes care of the input. Reads the incoming ICMP datagrams and
@@ -117,14 +117,13 @@ public:
   int dispatch_echo_checks (int first_call = 0);
 
   /// Access to ping_socket.
-  ACE_Ping_Socket& ping_socket (void);
+  ACE_Ping_Socket& ping_socket ();
 
   /// Returns 1 if a single char of success_status_ is 0
   /// (connected).
-  int does_echo_test_successful (void);
+  int does_echo_test_successful ();
 
 private:
-
   /// Wrapper for sending/receiving ICMPs.
   ACE_Ping_Socket ping_socket_;
 
@@ -172,10 +171,10 @@ public:
   Stop_Handler (ACE_Reactor * const reactor = ACE_Reactor::instance ());
 
   // Destructor.
-  virtual ~Stop_Handler (void);
+  virtual ~Stop_Handler ();
 
   // Initialization. Registers this for SIGINT, SIGTERM and SIGQUIT.
-  virtual int open (void);
+  virtual int open ();
 
   // De-registers this from the reactor and stops reactors event_loop.
   virtual int handle_close (ACE_HANDLE handle,
@@ -185,9 +184,7 @@ public:
   virtual int handle_input (ACE_HANDLE);
 
   // Dispatches handle_input () notification.
-  virtual int handle_signal (int signum,
-                             siginfo_t * = 0,
-                             ucontext_t * = 0);
+  virtual int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0);
 
   virtual int handle_timeout (ACE_Time_Value const & current_time,
                               void const * act = 0);
@@ -199,7 +196,6 @@ public:
   virtual int unregister_handler (ACE_Event_Handler * handler);
 
 private:
-
   enum
     {
       HANDLERS_TO_STOP_TABLE_SIZE = 10
@@ -222,10 +218,10 @@ class Repeats_Handler : public ACE_Event_Handler
 {
 public:
   // Constructor.
-  Repeats_Handler (void);
+  Repeats_Handler ();
 
   // Destructor.
-  virtual ~Repeats_Handler (void);
+  virtual ~Repeats_Handler ();
 
   // Initialization.
   virtual int open (Echo_Handler *check_handler,

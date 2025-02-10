@@ -14,10 +14,27 @@
 #include /**/ "ace/pre.h"
 
 #include "tao/orbconf.h"
+#include <memory>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
+
+#include "tao/PortableServer/ThreadPolicyC.h"
+#include "tao/PortableServer/IdAssignmentPolicyC.h"
+#include "tao/PortableServer/IdUniquenessPolicyC.h"
+#include "tao/PortableServer/ServantRetentionPolicyC.h"
+#include "tao/PortableServer/LifespanPolicyC.h"
+#include "tao/PortableServer/ImplicitActivationPolicyC.h"
+#include "tao/PortableServer/RequestProcessingPolicyC.h"
+
+#include "tao/PortableServer/ThreadStrategy.h"
+#include "tao/PortableServer/IdAssignmentStrategy.h"
+#include "tao/PortableServer/IdUniquenessStrategy.h"
+#include "tao/PortableServer/ImplicitActivationStrategy.h"
+#include "tao/PortableServer/LifespanStrategy.h"
+#include "tao/PortableServer/RequestProcessingStrategy.h"
+#include "tao/PortableServer/ServantRetentionStrategy.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -28,21 +45,6 @@ namespace TAO
   namespace Portable_Server
   {
     class Cached_Policies;
-    class ThreadStrategy;
-    class RequestProcessingStrategy;
-    class IdAssignmentStrategy;
-    class LifespanStrategy;
-    class IdUniquenessStrategy;
-    class ImplicitActivationStrategy;
-    class ServantRetentionStrategy;
-
-    class ThreadStrategyFactory;
-    class ServantRetentionStrategyFactory;
-    class RequestProcessingStrategyFactory;
-    class LifespanStrategyFactory;
-    class ImplicitActivationStrategyFactory;
-    class IdUniquenessStrategyFactory;
-    class IdAssignmentStrategyFactory;
 
     /**
      * This class stores the active policy strategies used for a certain POA.
@@ -50,44 +52,43 @@ namespace TAO
     class Active_Policy_Strategies
     {
     public:
-      Active_Policy_Strategies (void);
+      Active_Policy_Strategies () = default;
 
-      void update (Cached_Policies &policies,
-                   TAO_Root_POA* poa
-                  );
+      void update (Cached_Policies &policies, TAO_Root_POA* poa);
 
-      void cleanup (void);
+      void cleanup ();
 
-      ThreadStrategy *thread_strategy (void) const;
+      ThreadStrategy *thread_strategy () const;
 
-      RequestProcessingStrategy *request_processing_strategy (void) const;
+      RequestProcessingStrategy *request_processing_strategy () const;
 
-      IdAssignmentStrategy *id_assignment_strategy (void) const;
+      IdAssignmentStrategy *id_assignment_strategy () const;
 
-      IdUniquenessStrategy *id_uniqueness_strategy (void) const;
+      IdUniquenessStrategy *id_uniqueness_strategy () const;
 
-      LifespanStrategy *lifespan_strategy (void) const;
+      LifespanStrategy *lifespan_strategy () const;
 
-      ImplicitActivationStrategy *implicit_activation_strategy (void) const;
+      ImplicitActivationStrategy *implicit_activation_strategy () const;
 
-      ServantRetentionStrategy *servant_retention_strategy (void) const;
+      ServantRetentionStrategy *servant_retention_strategy () const;
 
     private:
-      ThreadStrategy *thread_strategy_;
-      RequestProcessingStrategy *request_processing_strategy_;
-      IdAssignmentStrategy *id_assignment_strategy_;
-      LifespanStrategy *lifespan_strategy_;
-      IdUniquenessStrategy *id_uniqueness_strategy_;
-      ImplicitActivationStrategy *implicit_activation_strategy_;
-      ServantRetentionStrategy *servant_retention_strategy_;
+      void create (::PortableServer::ThreadPolicyValue value);
+      void create (::PortableServer::IdAssignmentPolicyValue value);
+      void create (::PortableServer::IdUniquenessPolicyValue value);
+      void create (::PortableServer::ServantRetentionPolicyValue value);
+      void create (::PortableServer::LifespanPolicyValue value);
+      void create (::PortableServer::ImplicitActivationPolicyValue value);
+      void create (::PortableServer::RequestProcessingPolicyValue value, ::PortableServer::ServantRetentionPolicyValue srvalue);
 
-      ThreadStrategyFactory *thread_strategy_factory_;
-      ServantRetentionStrategyFactory *servant_retention_strategy_factory_;
-      RequestProcessingStrategyFactory *request_processing_strategy_factory_;
-      LifespanStrategyFactory *lifespan_strategy_factory_;
-      ImplicitActivationStrategyFactory *implicit_activation_strategy_factory_;
-      IdUniquenessStrategyFactory *id_uniqueness_strategy_factory_;
-      IdAssignmentStrategyFactory *id_assignment_strategy_factory_;
+    private:
+      std::unique_ptr<ThreadStrategy> thread_strategy_ {};
+      std::unique_ptr<IdAssignmentStrategy> id_assignment_strategy_ {};
+      std::unique_ptr<IdUniquenessStrategy> id_uniqueness_strategy_ {};
+      std::unique_ptr<ServantRetentionStrategy> servant_retention_strategy_ {};
+      std::unique_ptr<LifespanStrategy> lifespan_strategy_ {};
+      std::unique_ptr<ImplicitActivationStrategy> implicit_activation_strategy_ {};
+      std::unique_ptr<RequestProcessingStrategy> request_processing_strategy_ {};
     };
 
     /**
@@ -97,10 +98,10 @@ namespace TAO
     class Active_Policy_Strategies_Cleanup_Guard
     {
     public:
+      Active_Policy_Strategies_Cleanup_Guard () = delete;
       Active_Policy_Strategies_Cleanup_Guard (Active_Policy_Strategies *p);
-      ~Active_Policy_Strategies_Cleanup_Guard (void);
-
-      Active_Policy_Strategies *_retn (void);
+      ~Active_Policy_Strategies_Cleanup_Guard ();
+      Active_Policy_Strategies *_retn ();
 
     private:
       Active_Policy_Strategies *ptr_;

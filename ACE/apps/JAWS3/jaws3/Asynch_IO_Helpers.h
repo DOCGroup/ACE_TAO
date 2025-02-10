@@ -20,7 +20,6 @@ class JAWS_EC_AH_Adapter : public ACE_Handler
 //     if the given platform supports POSIX or WIN32 asynch IO.
 {
 public:
-
   static JAWS_EC_AH_Adapter * make (JAWS_Event_Completer *);
 
   void handle_read_stream (const ACE_Asynch_Read_Stream::Result &result);
@@ -30,23 +29,19 @@ public:
   void handle_transmit_file (const ACE_Asynch_Transmit_File::Result &result);
 
 private:
-
   JAWS_EC_AH_Adapter (JAWS_Event_Completer *completer)
     : completer_ (completer)
   {
   }
 
 protected:
-
   JAWS_Event_Result make_io_result ( const ACE_Asynch_Result &result
                                    , JAWS_Event_Result::JE_REASON reason_ok
                                    , JAWS_Event_Result::JE_REASON reason_fail
                                    );
 
 private:
-
   JAWS_Event_Completer *completer_;
-
 };
 
 #endif /* JAWS_ASYNCH_IO_HELPERS_H */

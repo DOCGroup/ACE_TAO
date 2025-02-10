@@ -17,13 +17,8 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    RequestProcessingStrategyServantActivator::RequestProcessingStrategyServantActivator (void) :
-      etherealize_objects_ (true)
-    {
-    }
-
     void
-    RequestProcessingStrategyServantActivator::strategy_cleanup (void)
+    RequestProcessingStrategyServantActivator::strategy_cleanup ()
     {
       {
         Non_Servant_Upcall non_servant_upcall (*this->poa_);
@@ -36,7 +31,7 @@ namespace TAO
     }
 
     PortableServer::ServantManager_ptr
-    RequestProcessingStrategyServantActivator::get_servant_manager (void)
+    RequestProcessingStrategyServantActivator::get_servant_manager ()
     {
       return PortableServer::ServantManager::_duplicate (this->servant_activator_.in ());
     }
@@ -61,20 +56,20 @@ namespace TAO
       this->validate_servant_manager (this->servant_activator_.in ());
     }
 
-    TAO_SERVANT_LOCATION
+    TAO_Servant_Location
     RequestProcessingStrategyServantActivator::locate_servant (
       const PortableServer::ObjectId &system_id,
       PortableServer::Servant &servant)
     {
-      TAO_SERVANT_LOCATION location = TAO_SERVANT_NOT_FOUND;
+      TAO_Servant_Location location = TAO_Servant_Location::Not_Found;
 
       location = this->poa_->servant_present (system_id, servant);
 
-      if (location == TAO_SERVANT_NOT_FOUND)
+      if (location == TAO_Servant_Location::Not_Found)
         {
           if (!CORBA::is_nil (this->servant_activator_.in ()))
             {
-              location = TAO_SERVANT_MANAGER;
+              location = TAO_Servant_Location::Servant_Manager;
             }
         }
 
@@ -89,13 +84,9 @@ namespace TAO
       TAO::Portable_Server::POA_Current_Impl &poa_current_impl,
       bool &wait_occurred_restart_call)
     {
-      PortableServer::Servant servant = 0;
+      PortableServer::Servant servant = this->poa_->find_servant (system_id, servant_upcall, poa_current_impl);
 
-      servant = this->poa_->find_servant (system_id,
-                                          servant_upcall,
-                                          poa_current_impl);
-
-      if (servant != 0)
+      if (servant != nullptr)
         {
           return servant;
         }
@@ -130,8 +121,7 @@ namespace TAO
       // will raise an OBJ_ADAPTER system exception for the
       // request.
       bool may_activate =
-        this->poa_->is_servant_activation_allowed (servant,
-                                                   wait_occurred_restart_call);
+        this->poa_->is_servant_activation_allowed (servant, wait_occurred_restart_call);
 
       if (!may_activate)
         {
@@ -233,8 +223,7 @@ namespace TAO
     void
     RequestProcessingStrategyServantActivator::cleanup_servant (
       PortableServer::Servant servant,
-      const PortableServer::ObjectId &user_id
-      )
+      const PortableServer::ObjectId &user_id)
     {
       // If a servant manager is associated with the POA,
       // ServantLocator::etherealize will be invoked with the oid and the

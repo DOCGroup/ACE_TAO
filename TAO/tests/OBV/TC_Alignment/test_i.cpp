@@ -64,7 +64,7 @@ test_i::get_value (CORBA::Long offset)
 }
 
 void
-test_i::shutdown (void)
+test_i::shutdown ()
 {
   this->orb_->shutdown ();
 }

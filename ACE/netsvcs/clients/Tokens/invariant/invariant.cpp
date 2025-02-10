@@ -91,7 +91,7 @@ run_mutex (void *)
 }
 
 static int
-run_final_test (void)
+run_final_test ()
 {
   ACE_DEBUG ((LM_DEBUG, "starting mutex tests 1 & 2\n"));
 

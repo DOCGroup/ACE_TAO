@@ -29,10 +29,10 @@ class ACE_UTF8_Encoding_Converter: public ACE_Encoding_Converter
 public:
   /// Allocate the converter to be used by the from_utf8() method based
   /// on the size of the native wide character.
-  ACE_UTF8_Encoding_Converter (void);
+  ACE_UTF8_Encoding_Converter ();
 
   /// De-allocate the native converter.
-  virtual ~ACE_UTF8_Encoding_Converter (void);
+  virtual ~ACE_UTF8_Encoding_Converter ();
 
   /// Since the source *must be* UTF-8, there is no conversion required.
   /// This method just copies the source to the target given that there

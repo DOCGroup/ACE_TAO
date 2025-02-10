@@ -25,14 +25,14 @@ class Object_B_i : public POA_Object_B
 {
 public:
   /// Constructor.
-  Object_B_i (void);
+  Object_B_i ();
 
   /// Destructor.
-  virtual ~Object_B_i (void);
+  virtual ~Object_B_i ();
 
   virtual void foo(Object_A_ptr theObject_A_ptr);
 
-  virtual void shutdown (void);
+  virtual void shutdown ();
 };
 
 #endif /* OBJECT_B_IMPL_H */

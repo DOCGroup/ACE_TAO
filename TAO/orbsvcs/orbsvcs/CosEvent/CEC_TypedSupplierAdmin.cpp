@@ -12,17 +12,11 @@ TAO_CEC_TypedSupplierAdmin::TAO_CEC_TypedSupplierAdmin (TAO_CEC_TypedEventChanne
   :  typed_event_channel_ (ec),
      typed_push_admin_ (ec)
 {
-  this->default_POA_ =
-    this->typed_event_channel_->typed_supplier_poa ();
-}
-
-// Implementation skeleton destructor
-TAO_CEC_TypedSupplierAdmin::~TAO_CEC_TypedSupplierAdmin (void)
-{
+  this->default_POA_ = this->typed_event_channel_->typed_supplier_poa ();
 }
 
 PortableServer::POA_ptr
-TAO_CEC_TypedSupplierAdmin::_default_POA (void)
+TAO_CEC_TypedSupplierAdmin::_default_POA ()
 {
   return PortableServer::POA::_duplicate (this->default_POA_.in ());
 }
@@ -46,7 +40,7 @@ TAO_CEC_TypedSupplierAdmin::disconnected (TAO_CEC_TypedProxyPushConsumer *consum
 }
 
 void
-TAO_CEC_TypedSupplierAdmin::shutdown (void)
+TAO_CEC_TypedSupplierAdmin::shutdown ()
 {
   this->typed_push_admin_.shutdown ();
 }
@@ -75,13 +69,13 @@ TAO_CEC_TypedSupplierAdmin::obtain_typed_pull_consumer (
 }
 
 CosEventChannelAdmin::ProxyPushConsumer_ptr
-TAO_CEC_TypedSupplierAdmin::obtain_push_consumer (void)
+TAO_CEC_TypedSupplierAdmin::obtain_push_consumer ()
 {
   throw CORBA::NO_IMPLEMENT ();
 }
 
 CosEventChannelAdmin::ProxyPullConsumer_ptr
-TAO_CEC_TypedSupplierAdmin::obtain_pull_consumer (void)
+TAO_CEC_TypedSupplierAdmin::obtain_pull_consumer ()
 {
   throw CORBA::NO_IMPLEMENT ();
 }

@@ -1,6 +1,6 @@
 #include "Log_Msg_Alt.h"
 
-void foo (void);
+void foo ();
 
 int ACE_TMAIN (int, ACE_TCHAR *[])
 {

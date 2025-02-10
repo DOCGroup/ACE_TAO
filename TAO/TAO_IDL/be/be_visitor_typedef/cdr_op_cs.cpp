@@ -22,7 +22,7 @@ be_visitor_typedef_cdr_op_cs::be_visitor_typedef_cdr_op_cs (
 {
 }
 
-be_visitor_typedef_cdr_op_cs::~be_visitor_typedef_cdr_op_cs (void)
+be_visitor_typedef_cdr_op_cs::~be_visitor_typedef_cdr_op_cs ()
 {
 }
 
@@ -55,7 +55,7 @@ be_visitor_typedef_cdr_op_cs::visit_typedef (be_typedef *node)
   // the type maybe. In the latter, we just need typedefs for the type and all
   // associated _var, _out, and other types.
 
-  be_type *bt = 0; // base type
+  be_type *bt = nullptr; // base type
 
   if (this->ctx_->tdef ())
     {
@@ -88,7 +88,7 @@ be_visitor_typedef_cdr_op_cs::visit_typedef (be_typedef *node)
                             -1);
         }
 
-      this->ctx_->alias (0); // reset
+      this->ctx_->alias (nullptr); // reset
     }
   else
     {
@@ -97,7 +97,7 @@ be_visitor_typedef_cdr_op_cs::visit_typedef (be_typedef *node)
       this->ctx_->tdef (node); // save the typedef node
 
       // grab the immediate base type node
-      bt = be_type::narrow_from_decl (node->base_type ());
+      bt = dynamic_cast<be_type*> (node->base_type ());
 
       if (!bt)
         {
@@ -118,17 +118,17 @@ be_visitor_typedef_cdr_op_cs::visit_typedef (be_typedef *node)
                             -1);
         }
 
-      this->ctx_->tdef (0); // reset
+      this->ctx_->tdef (nullptr); // reset
     }
 
-  node->cli_stub_cdr_op_gen (1);
+  node->cli_stub_cdr_op_gen (true);
   return 0;
 }
 
 int
 be_visitor_typedef_cdr_op_cs::visit_array (be_array *node)
 {
-  be_type *bt = 0;
+  be_type *bt = nullptr;
 
   if (this->ctx_->alias ()) // typedef of a typedef
     {
@@ -160,7 +160,7 @@ be_visitor_typedef_cdr_op_cs::visit_array (be_array *node)
 int
 be_visitor_typedef_cdr_op_cs::visit_sequence (be_sequence *node)
 {
-  be_type *bt = 0;
+  be_type *bt = nullptr;
 
   if (this->ctx_->alias ()) // typedef of a typedef
     {
@@ -191,7 +191,7 @@ be_visitor_typedef_cdr_op_cs::visit_sequence (be_sequence *node)
 int
 be_visitor_typedef_cdr_op_cs::visit_structure (be_structure *node)
 {
-  be_type *bt = 0;
+  be_type *bt = nullptr;
 
   if (this->ctx_->alias ()) // typedef of a typedef
     {
@@ -222,7 +222,7 @@ be_visitor_typedef_cdr_op_cs::visit_structure (be_structure *node)
 int
 be_visitor_typedef_cdr_op_cs::visit_union (be_union *node)
 {
-  be_type *bt = 0;
+  be_type *bt = nullptr;
 
   if (this->ctx_->alias ()) // typedef of a typedef
     {

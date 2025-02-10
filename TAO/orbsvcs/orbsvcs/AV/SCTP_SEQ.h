@@ -16,7 +16,7 @@
 
 #if defined (ACE_HAS_SCTP)
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/Service_Config.h"
 #include "orbsvcs/AV/Protocol_Factory.h"
 #include "ace/SOCK_SEQPACK_Association.h"
@@ -32,7 +32,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 typedef ACE_Unbounded_Set <ACE_CString> Interface_Seq;
 typedef ACE_Unbounded_Set_Iterator <ACE_CString> Interface_Seq_Itor;
 
-//typedef auto_ptr <Interface_Seq> Interface_Seq_Ptr;
 typedef ACE_Hash_Map_Manager <ACE_CString,Interface_Seq,ACE_Null_Mutex>  Secondary_Addr_Map;
 typedef ACE_Hash_Map_Entry <ACE_CString,Interface_Seq> Secondary_Addr_Map_Entry;
 typedef ACE_Hash_Map_Iterator <ACE_CString,Interface_Seq,ACE_Null_Mutex>  Secondary_Addr_Map_Iterator;
@@ -44,12 +43,12 @@ class TAO_AV_Export TAO_AV_SCTP_SEQ_Factory : public TAO_AV_Transport_Factory
 {
 public:
   /// Initialization hook.
-  TAO_AV_SCTP_SEQ_Factory (void);
-  virtual ~TAO_AV_SCTP_SEQ_Factory (void);
+  TAO_AV_SCTP_SEQ_Factory ();
+  virtual ~TAO_AV_SCTP_SEQ_Factory ();
   virtual int init (int argc, ACE_TCHAR *argv[]);
   virtual int match_protocol (const char *protocol_string);
-  virtual TAO_AV_Acceptor *make_acceptor (void);
-  virtual TAO_AV_Connector *make_connector (void);
+  virtual TAO_AV_Acceptor *make_acceptor ();
+  virtual TAO_AV_Connector *make_connector ();
 };
 
 class TAO_AV_SCTP_SEQ_Flow_Handler;
@@ -63,18 +62,18 @@ class TAO_AV_Export TAO_AV_SCTP_SEQ_Transport
   :public TAO_AV_Transport
 {
 public:
-  TAO_AV_SCTP_SEQ_Transport (void);
+  TAO_AV_SCTP_SEQ_Transport ();
 
   TAO_AV_SCTP_SEQ_Transport (TAO_AV_SCTP_SEQ_Flow_Handler *handler);
 
-  virtual  ~TAO_AV_SCTP_SEQ_Transport (void);
+  virtual  ~TAO_AV_SCTP_SEQ_Transport ();
   virtual int open (ACE_Addr *addr);
 
-  virtual int close (void);
+  virtual int close ();
 
-  virtual int mtu (void);
+  virtual int mtu ();
 
-  virtual ACE_Addr *get_peer_addr (void);
+  virtual ACE_Addr *get_peer_addr ();
 
   /// Write the complete Message_Block chain to the connection.
   virtual ssize_t send (const ACE_Message_Block *mblk,
@@ -106,7 +105,7 @@ public:
                         int iovcnt,
                         ACE_Time_Value *s = 0);
 
-  TAO_AV_SCTP_SEQ_Flow_Handler *handler (void) { return this->handler_; }
+  TAO_AV_SCTP_SEQ_Flow_Handler *handler () { return this->handler_; }
 
 protected:
   TAO_AV_SCTP_SEQ_Flow_Handler *handler_;
@@ -123,12 +122,12 @@ class TAO_AV_SCTP_SEQ_Flow_Handler
 {
 public:
   TAO_AV_SCTP_SEQ_Flow_Handler (TAO_AV_Callback *callback = 0);
-  virtual ~TAO_AV_SCTP_SEQ_Flow_Handler (void);
-  virtual TAO_AV_Transport *transport (void);
+  virtual ~TAO_AV_SCTP_SEQ_Flow_Handler ();
+  virtual TAO_AV_Transport *transport ();
   virtual int open (void * = 0);
   virtual int handle_input (ACE_HANDLE fd);
   virtual int handle_timeout (const ACE_Time_Value &tv, const void *arg = 0);
-  virtual ACE_Event_Handler* event_handler (void){ return this; }
+  virtual ACE_Event_Handler* event_handler () { return this; }
   /// Change the QoS
   virtual int change_qos (AVStreams::QoS);
 
@@ -163,8 +162,8 @@ class TAO_AV_Export TAO_AV_SCTP_SEQ_Acceptor
    :public TAO_AV_Acceptor
 {
 public:
-  TAO_AV_SCTP_SEQ_Acceptor (void);
-  virtual ~TAO_AV_SCTP_SEQ_Acceptor (void);
+  TAO_AV_SCTP_SEQ_Acceptor ();
+  virtual ~TAO_AV_SCTP_SEQ_Acceptor ();
   virtual int open (TAO_Base_StreamEndPoint *endpoint,
                     TAO_AV_Core *av_core,
                     TAO_FlowSpec_Entry *entry,
@@ -179,7 +178,7 @@ public:
                             TAO_AV_Core::Flow_Component flow_comp =
                             TAO_AV_Core::TAO_AV_DATA);
 
-  virtual int close (void);
+  virtual int close ();
   virtual int make_svc_handler (TAO_AV_SCTP_SEQ_Flow_Handler *&handler);
 
 protected:
@@ -217,8 +216,8 @@ protected:
 class TAO_AV_SCTP_SEQ_Connector  : public TAO_AV_Connector
 {
 public:
-  TAO_AV_SCTP_SEQ_Connector (void);
-  virtual ~TAO_AV_SCTP_SEQ_Connector (void);
+  TAO_AV_SCTP_SEQ_Connector ();
+  virtual ~TAO_AV_SCTP_SEQ_Connector ();
 
   virtual int open (TAO_Base_StreamEndPoint *endpoint,
                     TAO_AV_Core *av_core,
@@ -228,7 +227,7 @@ public:
                        TAO_AV_Transport *&transport,
                        TAO_AV_Core::Flow_Component flow_comp =
                        TAO_AV_Core::TAO_AV_DATA);
-  virtual int close (void);
+  virtual int close ();
   virtual int make_svc_handler (TAO_AV_SCTP_SEQ_Flow_Handler *&handler);
 protected:
   TAO_AV_Core *av_core_;
@@ -249,9 +248,9 @@ public:
                      TAO_AV_Transport *transport = 0);
 
   /// Dtor
-  virtual ~TAO_AV_SCTP_SEQ_Object (void);
+  virtual ~TAO_AV_SCTP_SEQ_Object ();
 
-  virtual int handle_input (void);
+  virtual int handle_input ();
 
   /// send a data frame.
   virtual int send_frame (ACE_Message_Block *frame,
@@ -265,7 +264,7 @@ public:
                           size_t len);
 
   /// end the stream.
-  virtual int destroy (void);
+  virtual int destroy ();
 
 private:
   /// Pre-allocated memory to receive the data...
@@ -280,8 +279,8 @@ class TAO_AV_Export TAO_AV_SCTP_SEQ_Flow_Factory : public TAO_AV_Flow_Protocol_F
 {
 public:
   /// Initialization hook.
-  TAO_AV_SCTP_SEQ_Flow_Factory (void);
-  virtual ~TAO_AV_SCTP_SEQ_Flow_Factory (void);
+  TAO_AV_SCTP_SEQ_Flow_Factory ();
+  virtual ~TAO_AV_SCTP_SEQ_Flow_Factory ();
   virtual int init (int argc, ACE_TCHAR *argv[]);
   virtual int match_protocol (const char *flow_string);
   TAO_AV_Protocol_Object* make_protocol_object (TAO_FlowSpec_Entry *entry,

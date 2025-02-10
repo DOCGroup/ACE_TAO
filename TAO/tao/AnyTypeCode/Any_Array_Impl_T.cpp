@@ -10,7 +10,7 @@
 #include "tao/CDR.h"
 #include "tao/SystemException.h"
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 #if !defined (__ACE_INLINE__)
 # include "tao/AnyTypeCode/Any_Array_Impl_T.inl"
@@ -30,7 +30,7 @@ TAO::Any_Array_Impl_T<T_slice, T_forany>::Any_Array_Impl_T (
 }
 
 template<typename T_slice, typename T_forany>
-TAO::Any_Array_Impl_T<T_slice, T_forany>::~Any_Array_Impl_T (void)
+TAO::Any_Array_Impl_T<T_slice, T_forany>::~Any_Array_Impl_T ()
 {
 }
 
@@ -93,11 +93,7 @@ TAO::Any_Array_Impl_T<T_slice, T_forany>::extract (const CORBA::Any & any,
                                       T_forany::tao_alloc ()),
                       false);
 
-#if defined (ACE_HAS_CPP11)
       std::unique_ptr<TAO::Any_Array_Impl_T<T_slice, T_forany> > replacement_safety (replacement);
-#else
-      auto_ptr<TAO::Any_Array_Impl_T<T_slice, T_forany> > replacement_safety (replacement);
-#endif /* ACE_HAS_CPP11 */
 
       // We know this will work since the unencoded case is covered above.
       TAO::Unknown_IDL_Type * const unk =
@@ -140,29 +136,28 @@ TAO::Any_Array_Impl_T<T_slice, T_forany>::marshal_value (TAO_OutputCDR &cdr)
 
 template<typename T_slice, typename T_forany>
 const void *
-TAO::Any_Array_Impl_T<T_slice, T_forany>::value (void) const
+TAO::Any_Array_Impl_T<T_slice, T_forany>::value () const
 {
   return this->value_;
 }
 
 template<typename T_slice, typename T_forany>
 void
-TAO::Any_Array_Impl_T<T_slice, T_forany>::free_value (void)
+TAO::Any_Array_Impl_T<T_slice, T_forany>::free_value ()
 {
-  if (this->value_destructor_ != 0)
+  if (this->value_destructor_)
     {
       (*this->value_destructor_) (this->value_);
-      this->value_destructor_ = 0;
+      this->value_destructor_ = nullptr;
     }
 
-  this->value_ = 0;
+  this->value_ = nullptr;
   ::CORBA::release (this->type_);
 }
 
 template<typename T_slice, typename T_forany>
 void
-TAO::Any_Array_Impl_T<T_slice, T_forany>::_tao_decode (TAO_InputCDR &cdr
-                                                       )
+TAO::Any_Array_Impl_T<T_slice, T_forany>::_tao_decode (TAO_InputCDR &cdr)
 {
   if (! this->demarshal_value (cdr))
     {

@@ -83,10 +83,7 @@ namespace TAO
     Invocation_Status invoke (Collocation_Strategy strat);
 
   private:
-
-    // Disallow default construction.
-    Collocated_Invocation (void);
-
+    Collocated_Invocation () = delete;
   };
 }
 

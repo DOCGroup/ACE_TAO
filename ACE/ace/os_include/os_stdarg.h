@@ -22,9 +22,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if !defined (ACE_LACKS_STDARG_H)
-# include /**/ <stdarg.h>
-#endif /* !ACE_LACKS_STDARG_H */
+#include /**/ <stdarg.h>
 
 #if !defined (va_copy)
 #if defined (__va_copy)

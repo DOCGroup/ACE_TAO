@@ -51,7 +51,7 @@ public:
   /// Parse svc.conf arguments
   int parse_args (int argc, ACE_TCHAR* argv[]);
 
-  virtual ACE_Timer_Queue * create_timer_queue (void);
+  virtual ACE_Timer_Queue * create_timer_queue ();
 
   virtual void destroy_timer_queue (ACE_Timer_Queue *tmq);
 

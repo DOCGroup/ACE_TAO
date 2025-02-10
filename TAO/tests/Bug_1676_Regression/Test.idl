@@ -1,5 +1,3 @@
-// -*- IDL -*-
-
 //=============================================================================
 /**
  * @file Test.idl
@@ -7,10 +5,11 @@
  * "test" IDL interface for the Uninitialized "out" param for sequence<string>
  * can cause server to core test.
  *
- * @author Kees van Marle <kvmarle@ermedy.nl>
+ * @author Kees van Marle <kvmarle@remedy.nl>
  */
 //=============================================================================
 
+#include "tao/StringSeq.pidl"
 
 module Test
 {

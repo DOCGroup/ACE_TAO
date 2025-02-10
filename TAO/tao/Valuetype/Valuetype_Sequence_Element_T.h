@@ -18,7 +18,6 @@ namespace TAO
 {
 namespace details
 {
-
 template<typename obj_ref_traits>
 class valuetype_sequence_element
 {
@@ -55,9 +54,7 @@ public:
   {
   }
 
-  ~valuetype_sequence_element()
-  {
-  }
+  ~valuetype_sequence_element() = default;
 
   valuetype_sequence_element & operator=(
       valuetype_var const & rhs)
@@ -118,7 +115,6 @@ private:
   value_type * element_;
   CORBA::Boolean release_;
 };
-
 } // namespace details
 } // namespace CORBA
 

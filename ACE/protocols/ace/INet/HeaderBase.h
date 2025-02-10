@@ -46,11 +46,11 @@ namespace ACE
               bool operator ==(const NVPair& pair) const;
               bool operator <(const NVPair& pair) const;
 
-              const ACE_CString& first (void) const;
+              const ACE_CString& first () const;
 
               void first (const ACE_CString& t1);
 
-              const ACE_CString& second (void) const;
+              const ACE_CString& second () const;
 
               void second (const ACE_CString& t2);
 

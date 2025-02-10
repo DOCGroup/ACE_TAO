@@ -33,11 +33,11 @@ class Command
 {
 public:
   /// Virtual destructor.
-  virtual ~Command (void);
+  virtual ~Command ();
 
   /// This is the entry point to execute the command.
-  virtual int execute (void) = 0;
-  virtual int destroy (void) = 0;
+  virtual int execute () = 0;
+  virtual int destroy () = 0;
 };
 
 /**
@@ -54,10 +54,10 @@ public:
   URL_Command (URL *);
 
   /// Execute the URL command.
-  virtual int execute (void);
+  virtual int execute ();
 
   /// Commit suicide.
-  int destroy (void);
+  int destroy ();
 private:
   /// Pointer to the URL.
   URL *url_;
@@ -73,20 +73,20 @@ private:
 class Command_Processor
 {
 public:
-  Command_Processor (void);
+  Command_Processor ();
 
   /// Insert a new <Command> into the <Command_Processor>'s queue.
   int insert (Command *);
 
   /// Execute all the <Commands> in the queue.
-  int execute (void);
+  int execute ();
 
   /// Destroy the <Command_Processor>.
-  int destroy (void);
+  int destroy ();
 
 protected:
   /// Ensure dynamic allocation.
-  ~Command_Processor (void);
+  ~Command_Processor ();
 
 private:
   // @@ You fill in here...

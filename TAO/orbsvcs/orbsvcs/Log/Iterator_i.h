@@ -48,14 +48,14 @@ public:
   TAO_Iterator_i (PortableServer::POA_ptr poa, ACE_Reactor* reactor);
 
   /// Destructor.
-  virtual ~TAO_Iterator_i (void);
+  virtual ~TAO_Iterator_i ();
 
   /// Gets a list of LogRecords.
   virtual DsLogAdmin::RecordList* get (CORBA::ULong position,
                                        CORBA::ULong how_many) = 0;
 
   /// This destroys the iterator.
-  virtual void destroy (void);
+  virtual void destroy ();
 
 protected:
   /// POA

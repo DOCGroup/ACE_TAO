@@ -4,18 +4,18 @@
 #include "tao/ORB_Core.h"
 
 // Constructor.
-Notifier_Server::Notifier_Server (void)
+Notifier_Server::Notifier_Server ()
 {
 }
 
 // Destructor.
 
-Notifier_Server::~Notifier_Server (void)
+Notifier_Server::~Notifier_Server ()
 {
 }
 
 int
-Notifier_Server::close (void)
+Notifier_Server::close ()
 {
   try
     {
@@ -45,7 +45,7 @@ Notifier_Server::close (void)
 // the object name is bound to the naming server.
 
 int
-Notifier_Server::init_naming_service (void)
+Notifier_Server::init_naming_service ()
 {
   try
     {
@@ -110,7 +110,7 @@ Notifier_Server::init (int argc,
 }
 
 int
-Notifier_Server::run (void)
+Notifier_Server::run ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "Running the notifier server...\n"));
@@ -122,7 +122,7 @@ Notifier_Server::run (void)
 }
 
 ACE_Reactor *
-Notifier_Server::reactor (void)
+Notifier_Server::reactor ()
 {
   return TAO_ORB_Core_instance ()->reactor ();
 }

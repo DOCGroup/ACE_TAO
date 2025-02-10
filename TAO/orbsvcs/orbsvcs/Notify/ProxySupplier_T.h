@@ -31,7 +31,7 @@ class TAO_Notify_ProxySupplier_T : public virtual TAO_Notify_Proxy_T <SERVANT_TY
 {
 public:
   /// Constructor
-  TAO_Notify_ProxySupplier_T (void);
+  TAO_Notify_ProxySupplier_T ();
 
   /// Destructor
   ~TAO_Notify_ProxySupplier_T ();
@@ -92,13 +92,7 @@ protected:
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "orbsvcs/Notify/ProxySupplier_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("ProxySupplier_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 #endif /* TAO_Notify_PROXYSUPPLIER_T_H */

@@ -18,7 +18,6 @@
 #include "ace/Truncate.h"
 
 
-
 #if defined (ACE_HAS_THREADS)
 
 typedef ACE_Stream<ACE_MT_SYNCH> MT_Stream;
@@ -30,7 +29,7 @@ class Common_Task : public MT_Task
   //   Methods that are common to the producer and consumer.
 {
 public:
-  Common_Task (void) {}
+  Common_Task () {}
 
   //FUZZ: disable check_for_lack_ACE_OS
   // ACE_Task hooks
@@ -44,10 +43,10 @@ public:
 class Producer : public Common_Task
 {
 public:
-  Producer (void) {}
+  Producer () {}
 
   // Read data from stdin and pass to consumer.
-  virtual int svc (void);
+  virtual int svc ();
 };
 
 class Consumer : public Common_Task
@@ -55,18 +54,17 @@ class Consumer : public Common_Task
   //    Define the Consumer interface.
 {
 public:
-  Consumer (void) {}
+  Consumer () {}
 
   virtual int put (ACE_Message_Block *mb,
                    ACE_Time_Value *tv = 0);
   // Enqueue the message on the ACE_Message_Queue for subsequent
   // handling in the svc() method.
 
-  virtual int svc (void);
+  virtual int svc ();
   // Receive message from producer and print to stdout.
 
 private:
-
   ACE_Time_Value timeout_;
 };
 
@@ -76,7 +74,7 @@ class Filter : public MT_Task
   //    line.
 {
 public:
-  Filter (void): count_ (1) {}
+  Filter (): count_ (1) {}
 
   virtual int put (ACE_Message_Block *mb,
                    ACE_Time_Value *tv = 0);
@@ -121,7 +119,7 @@ Common_Task::close (u_long exit_status)
 // know when to exit.
 
 int
-Producer::svc (void)
+Producer::svc ()
 {
   // Keep reading stdin, until we reach EOF.
 
@@ -182,7 +180,7 @@ Consumer::put (ACE_Message_Block *mb, ACE_Time_Value *tv)
 // reading and exit.
 
 int
-Consumer::svc (void)
+Consumer::svc ()
 {
   int result = 0;
 

@@ -32,7 +32,7 @@ class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_EventChannel_Command : public TAO_
 {
 public:
   /// Constructor
-  TAO_Notify_Tests_EventChannel_Command (void);
+  TAO_Notify_Tests_EventChannel_Command ();
 
   /// Destructor
   virtual ~TAO_Notify_Tests_EventChannel_Command ();
@@ -41,18 +41,14 @@ public:
   virtual void init (ACE_Arg_Shifter& arg_shifter);
 
   /// Execute the command.
-  virtual void execute_i (void);
+  virtual void execute_i ();
 
   /// Name of object
-  virtual const char* get_name (void);
-  static const char* name (void);
+  virtual const char* get_name ();
+  static const char* name ();
 
 protected:
   ///= Data Members
-#ifdef HPUX_11
-   // Remove clash with /usr/include/machine/cpu.h and /usr/include/pa/cpu.h
-#undef COMMAND
-#endif
   enum COMMAND
   {
     CREATE,
@@ -76,13 +72,13 @@ protected:
   CORBA::Boolean collocated_;
 
   /// Helper method to create a collocated ECF.
-  void create_collocated_ecf (void);
+  void create_collocated_ecf ();
 
   /// = Handlers
-  void handle_create (void);
-  void handle_destroy (void);
-  void handle_set_qos (void);
-  void handle_status (void);
+  void handle_create ();
+  void handle_destroy ();
+  void handle_set_qos ();
+  void handle_status ();
 };
 
 #include /**/ "ace/post.h"

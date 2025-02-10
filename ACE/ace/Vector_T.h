@@ -25,7 +25,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 /*
  * Default size for an ACE_Vector.
  */
-static const size_t ACE_VECTOR_DEFAULT_SIZE = 32;
+static constexpr size_t ACE_VECTOR_DEFAULT_SIZE = 32;
 
 // Forward declaration.
 template <class T, size_t DEFAULT_SIZE> class ACE_Vector_Iterator;
@@ -88,7 +88,7 @@ public:
   /**
    * Destructor.
    */
-  ~ACE_Vector ();
+  ~ACE_Vector () = default;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -99,7 +99,7 @@ public:
    *
    * @return Current buffer size of the vector
    */
-  size_t capacity (void) const;
+  size_t capacity () const;
 
   /**
    * Returns the vector's dynamic size / actual current size of the
@@ -109,13 +109,13 @@ public:
    *
    * @return Dynamic size / actual current size of the vector.
    */
-  size_t size (void) const;
+  size_t size () const;
 
   /**
    * Clears out the vector.  It does not reallocate the vector's
    * buffer, it is just sets the vector's dynamic size to 0.
    */
-  void clear (void);
+  void clear ();
 
   /**
    * Resizes the vector to the new capacity.  If the vector's current
@@ -151,13 +151,13 @@ public:
    * vector.  The vector's buffer does not get reallocated for
    * performance.
    */
-  void pop_back (void);
+  void pop_back ();
 
   /**
    * This function dumps the content of the vector.  TO BE MOVED out
    * of this class.  It needs to be implemented as a global template
    * function that accepts a const ACE_Vector&lt;T&gt;, in order to
-   * make instances of this class compile on Linux, AIX.  G++ and xlC
+   * make instances of this class compile on Linux.  G++ and xlC
    * have template instantiation algoriths, which are different from
    * the one in Visual C++.  The algorithms try to instantiate ALL
    * methods declared in the template class, regardless of whether the
@@ -167,7 +167,7 @@ public:
    *
    * This function calls T::dump() for each element of the vector.
    */
-  void dump (void) const;
+  void dump () const;
 
   // = Compare operators
 
@@ -199,7 +199,6 @@ public:
   ///}
 
 protected:
-
   /**
    * Dynamic size (length) of the vector.
    */
@@ -236,13 +235,13 @@ public:
 
   /// Move forward by one element in the vector.  Returns 0 when all the
   /// items in the vector have been seen, else 1.
-  int advance (void);
+  int advance ();
 
   /// Returns 1 when all items have been seen, else 0.
-  int done (void) const;
+  int done () const;
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -261,13 +260,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #include "ace/Vector_T.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Vector_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Vector_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 

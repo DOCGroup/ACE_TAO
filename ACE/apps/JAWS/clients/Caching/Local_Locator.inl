@@ -1,6 +1,6 @@
 // -*- C++ -*-
 ACE_INLINE
-ACE_URL_Record::ACE_URL_Record (void)
+ACE_URL_Record::ACE_URL_Record ()
   : id_ (0),
     offer_ (0)
 {
@@ -16,7 +16,7 @@ ACE_URL_Record::ACE_URL_Record (ACE_URL_Offer *offer)
 }
 
 ACE_INLINE
-ACE_URL_Record::~ACE_URL_Record (void)
+ACE_URL_Record::~ACE_URL_Record ()
 {
   delete this->id_;
   delete this->offer_;
@@ -35,6 +35,6 @@ ACE_URL_Record::operator!= (const ACE_URL_Record &rhs) const
 }
 
 ACE_INLINE
-ACE_URL_Local_Locator::~ACE_URL_Local_Locator (void)
+ACE_URL_Local_Locator::~ACE_URL_Local_Locator ()
 {
 }

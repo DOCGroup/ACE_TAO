@@ -9,7 +9,7 @@ TAO_ComponentModuleDef_i::TAO_ComponentModuleDef_i (TAO_Repository_i *repo)
 {
 }
 
-TAO_ComponentModuleDef_i::~TAO_ComponentModuleDef_i (void)
+TAO_ComponentModuleDef_i::~TAO_ComponentModuleDef_i ()
 {
 }
 

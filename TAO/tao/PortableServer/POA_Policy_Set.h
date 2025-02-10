@@ -25,23 +25,22 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Policy_Validator;
-
+//
 class TAO_PortableServer_Export TAO_POA_Policy_Set
 {
 public:
-
-  TAO_POA_Policy_Set (void);
+  TAO_POA_Policy_Set ();
 
   TAO_POA_Policy_Set (const TAO_POA_Policy_Set &rhs);
 
-  ~TAO_POA_Policy_Set (void);
+  ~TAO_POA_Policy_Set () = default;
 
   /// Returns the policy at the specified index.
   /// CORBA::Policy::_nil () is returned if the policy doesn't exist
   CORBA::Policy *get_policy_by_index (CORBA::ULong index);
 
   /// Get the number of policies
-  CORBA::ULong num_policies (void) const;
+  CORBA::ULong num_policies () const;
 
   /// Obtain a single cached policy.
   CORBA::Policy_ptr get_cached_policy (TAO_Cached_Policy_Type type);
@@ -56,7 +55,7 @@ public:
   /// Add all of the client exposed policies to the specified list.
   void add_client_exposed_fixed_policies (CORBA::PolicyList *client_exposed_policies);
 
-  TAO_Policy_Set &policies (void);
+  TAO_Policy_Set &policies ();
 
   /// Obtain a single policy.
   CORBA::Policy_ptr get_policy (CORBA::PolicyType policy);

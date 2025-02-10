@@ -32,7 +32,7 @@ class EC_Test_Export EC_Counting_Supplier : public POA_RtecEventComm::PushSuppli
 {
 public:
   /// Constructor
-  EC_Counting_Supplier (void);
+  EC_Counting_Supplier ();
 
   // = The RtecEventComm::PushSupplier methods
 
@@ -44,7 +44,7 @@ public:
    */
   void activate (RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin,
                  int period);
-  void deactivate (void);
+  void deactivate ();
 
   /// Simple connect/disconnect methods..
   void connect (RtecEventChannelAdmin::SupplierAdmin_ptr supplier_admin,
@@ -54,14 +54,14 @@ public:
                 int event_type);
   void connect (RtecEventChannelAdmin::SupplierAdmin_ptr supplier_admin,
                 const RtecEventChannelAdmin::SupplierQOS &qos);
-  void disconnect (void);
+  void disconnect ();
 
   /// The Consumer side methods.
   void push (const RtecEventComm::EventSet& events);
-  void disconnect_push_consumer (void);
+  void disconnect_push_consumer ();
 
   /// The skeleton methods.
-  virtual void disconnect_push_supplier (void);
+  virtual void disconnect_push_supplier ();
 
   /// Count the number of events sent
   CORBA::ULong event_count;
@@ -93,13 +93,13 @@ public:
   EC_Counting_Supplier_Task (EC_Counting_Supplier *supplier);
 
   // = Check the ACE_Task_Base documentation.
-  int svc (void);
+  int svc ();
 
-  void stop (void);
-  CORBA::ULong push_count (void);
+  void stop ();
+  CORBA::ULong push_count ();
 
   /// Run a single iteration of the test
-  void run (void);
+  void run ();
 
 private:
   /// The supplier we are turning into an active object

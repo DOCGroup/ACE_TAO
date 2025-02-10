@@ -19,7 +19,6 @@ TAO::CSD::TP_Strategy::~TP_Strategy()
 }
 
 
-
 TAO::CSD::TP_Strategy::CustomRequestOutcome
 TAO::CSD::TP_Strategy::custom_synch_request(TP_Custom_Request_Operation* op)
 {

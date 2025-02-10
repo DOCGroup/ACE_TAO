@@ -46,39 +46,39 @@ public:
   TAO_HomeDef_i (TAO_Repository_i *repo);
 
   /// Destructor
-  virtual ~TAO_HomeDef_i (void);
+  virtual ~TAO_HomeDef_i ();
 
   /// Return our definition kind.
-  virtual CORBA::DefinitionKind def_kind (void);
+  virtual CORBA::DefinitionKind def_kind ();
 
   /// Remove the repository entry.
-  virtual void destroy (void);
+  virtual void destroy ();
 
-  virtual void destroy_i (void);
-
-  /// From Contained_i's pure virtual function.
-  virtual CORBA::Contained::Description *describe (void);
+  virtual void destroy_i ();
 
   /// From Contained_i's pure virtual function.
-  virtual CORBA::Contained::Description *describe_i (void);
+  virtual CORBA::Contained::Description *describe ();
+
+  /// From Contained_i's pure virtual function.
+  virtual CORBA::Contained::Description *describe_i ();
 
   /// From IDLType_i's pure virtual function.
-  virtual CORBA::TypeCode_ptr type (void);
+  virtual CORBA::TypeCode_ptr type ();
 
   /// From IDLType_i's pure virtual function.
-  virtual CORBA::TypeCode_ptr type_i (void);
+  virtual CORBA::TypeCode_ptr type_i ();
 
-  virtual CORBA::ComponentIR::HomeDef_ptr base_home (void);
+  virtual CORBA::ComponentIR::HomeDef_ptr base_home ();
 
-  CORBA::ComponentIR::HomeDef_ptr base_home_i (void);
+  CORBA::ComponentIR::HomeDef_ptr base_home_i ();
 
   virtual void base_home (CORBA::ComponentIR::HomeDef_ptr base_home);
 
   void base_home_i (CORBA::ComponentIR::HomeDef_ptr base_home);
 
-  virtual CORBA::InterfaceDefSeq *supported_interfaces (void);
+  virtual CORBA::InterfaceDefSeq *supported_interfaces ();
 
-  CORBA::InterfaceDefSeq *supported_interfaces_i (void);
+  CORBA::InterfaceDefSeq *supported_interfaces_i ();
 
   virtual void supported_interfaces (
       const CORBA::InterfaceDefSeq &supported_interfaces);
@@ -86,9 +86,9 @@ public:
   void supported_interfaces_i (
       const CORBA::InterfaceDefSeq &supported_interfaces);
 
-  virtual CORBA::ComponentIR::ComponentDef_ptr managed_component (void);
+  virtual CORBA::ComponentIR::ComponentDef_ptr managed_component ();
 
-  CORBA::ComponentIR::ComponentDef_ptr managed_component_i (void);
+  CORBA::ComponentIR::ComponentDef_ptr managed_component_i ();
 
   virtual void managed_component (
       CORBA::ComponentIR::ComponentDef_ptr managed_component);
@@ -96,9 +96,9 @@ public:
   void managed_component_i (
       CORBA::ComponentIR::ComponentDef_ptr managed_component);
 
-  virtual CORBA::ValueDef_ptr primary_key (void);
+  virtual CORBA::ValueDef_ptr primary_key ();
 
-  CORBA::ValueDef_ptr primary_key_i (void);
+  CORBA::ValueDef_ptr primary_key_i ();
 
   virtual void primary_key (CORBA::ValueDef_ptr primary_key);
 

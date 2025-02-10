@@ -18,7 +18,6 @@
 #include "ace/Read_Buffer.h"
 
 
-
 // Name of file contains ior.
 static const ACE_TCHAR *IOR = ACE_TEXT ("file://ior");
 
@@ -113,7 +112,6 @@ parse_args (int argc, ACE_TCHAR **argv)
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-
   try
     {
       // Initialize the ORB.
@@ -310,7 +308,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ex._tao_print_exception ("Exception caught:");
       return -1;
     }
-
 
   return 0;
 }

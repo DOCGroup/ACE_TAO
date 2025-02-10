@@ -338,7 +338,7 @@ TAO::CSD::FW_Server_Request_Wrapper::clone (TAO_Operation_Details const *& from,
         }
       else
         {
-          static const size_t mb_size = 2048;
+          static constexpr size_t mb_size = 2048;
           ACE_NEW_RETURN (cdr,
                           TAO_InputCDR (mb_size),
                           false);

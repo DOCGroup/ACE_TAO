@@ -40,13 +40,13 @@ class be_visitor_context : public ast_visitor_context
 {
 public:
   /// default constructor
-  be_visitor_context (void);
+  be_visitor_context ();
 
   /// default constructor
   be_visitor_context (const be_visitor_context &ctx);
 
   /// destructor
-  ~be_visitor_context (void);
+  ~be_visitor_context ();
 
   /// assignment operator
   be_visitor_context &operator= (const be_visitor_context &ctx);
@@ -54,67 +54,67 @@ public:
   // =helpers
 
   /// reset the context
-  void reset (void);
+  void reset ();
 
   /// set the output stream
   void stream (TAO_OutStream *os);
 
   /// get the stream
-  TAO_OutStream *stream (void);
+  TAO_OutStream *stream ();
 
   /// set the scope
   void scope (be_scope *scope);
 
   /// get the scope in which code will be generated
-  be_scope *scope (void);
+  be_scope *scope ();
 
   /// current node being visited
   void node (be_decl *node);
 
   /// node being visited
-  be_decl *node (void);
+  be_decl *node ();
 
   /// code generation state
   void state (TAO_CodeGen::CG_STATE);
 
   /// return the code generation state
-  TAO_CodeGen::CG_STATE state (void);
+  TAO_CodeGen::CG_STATE state ();
 
   /// code generation state
   void sub_state (TAO_CodeGen::CG_SUB_STATE);
 
   /// return the code generation state
-  TAO_CodeGen::CG_SUB_STATE sub_state (void);
+  TAO_CodeGen::CG_SUB_STATE sub_state ();
 
   /// set the alias node (if any)
   void alias (be_typedef *node);
 
   /// return the aliased node (if any)
-  be_typedef *alias (void);
+  be_typedef *alias ();
 
   /// set the typedef node (if any)
   void tdef (be_typedef *node);
 
   /// return the typedef node (if any)
-  be_typedef *tdef (void);
+  be_typedef *tdef ();
 
   /// set the attribute node if any
   void attribute (be_attribute *attr);
 
   /// get the attribute node
-  be_attribute *attribute (void);
+  be_attribute *attribute ();
 
   /// is it the special ctor for exceptions?
   void exception (bool);
 
   /// is it the special ctor for exceptions?
-  bool exception (void);
+  bool exception ();
 
   /// scope supoorts generation of comma after each element
   void comma (bool);
 
   /// are we supposed to generate a comma?
-  bool comma (void);
+  bool comma ();
 
   /**
    * In some cases we need to generate the objects of one interface as
@@ -123,17 +123,17 @@ public:
    * *generating* code, as opposed to the interfaces where the methods
    * or structures are defined.
    */
-  be_interface *interface (void) const;
+  be_interface *interface () const;
   void interface (be_interface *);
 
   /// Accessor for the member.
-  ACE_CString &port_prefix (void);
+  ACE_CString &port_prefix ();
 
   /// return the export macro currently in force
-  const char *export_macro (void) const;
+  const char *export_macro () const;
 
   /// if anyop export macro is empty, check stub.
-  const char *non_null_export_macro (void) const;
+  const char *non_null_export_macro () const;
 
 private:
   /// code generation state

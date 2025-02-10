@@ -14,7 +14,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_ALLOC_HOOK_DEFINE(ACE_FIFO_Recv_Msg)
 
 void
-ACE_FIFO_Recv_Msg::dump (void) const
+ACE_FIFO_Recv_Msg::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_FIFO_Recv_Msg::dump");
@@ -42,7 +42,7 @@ ACE_FIFO_Recv_Msg::open (const ACE_TCHAR *fifo_name,
                               sa);
 }
 
-ACE_FIFO_Recv_Msg::ACE_FIFO_Recv_Msg (void)
+ACE_FIFO_Recv_Msg::ACE_FIFO_Recv_Msg ()
 {
   ACE_TRACE ("ACE_FIFO_Recv_Msg::ACE_FIFO_Recv_Msg");
 }

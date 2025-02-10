@@ -1,7 +1,6 @@
 #include "RT_CORBA_Leader_Follower.h"
 
 
-
 #if defined (ACE_HAS_THREADS)
 
 // We need the following only if we have threads enabled..
@@ -38,10 +37,9 @@ ACE_High_Res_Timer test_timer;
 
 
 
-
 /*******************************************************************/
 // Constructor for Synchronisers
-Synchronisers::Synchronisers (void)
+Synchronisers::Synchronisers ()
   : mutex_ (),
     condition_ (mutex_),
     event_ ()
@@ -50,7 +48,7 @@ Synchronisers::Synchronisers (void)
 
 
 int
-Synchronisers::start_synchronization (void)
+Synchronisers::start_synchronization ()
 {
   // Hold the lock and increment the global variable to indicate
   // number of ready threads
@@ -67,7 +65,6 @@ Synchronisers::start_synchronization (void)
 
     if (ready_threads == number_of_threads)
       {
-
         // Reset the ready_threads so that we can wait at the end of
         // runs
         ready_threads = 0;
@@ -92,7 +89,7 @@ Synchronisers::start_synchronization (void)
 }
 
 int
-Synchronisers::end_synchronization (void)
+Synchronisers::end_synchronization ()
 {
   // Hold the lock and increment the global variable to indicate
   // number of ready threads
@@ -109,7 +106,6 @@ Synchronisers::end_synchronization (void)
 
     if (ready_threads == number_of_threads)
       {
-
         // Reset the ready_threads so that we can wait at the end of
         // runs
         ready_threads = 0;
@@ -143,13 +139,13 @@ Leader_Follower_Task::Leader_Follower_Task (Synchronisers &synch)
 }
 
 int
-Leader_Follower_Task::processed (void)
+Leader_Follower_Task::processed ()
 {
   return this->messages_consumed_;
 }
 
 int
-Leader_Follower_Task::svc (void)
+Leader_Follower_Task::svc ()
 {
   (void) this->synch_.start_synchronization ();
 

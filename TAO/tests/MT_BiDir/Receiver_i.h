@@ -13,11 +13,11 @@ class Receiver_i
 {
 public:
   /// Constructor
-  Receiver_i (void);
+  Receiver_i ();
 
 
   /// Get the number of events that have been received, local method
-  CORBA::Long get_event_count (void);
+  CORBA::Long get_event_count ();
 
   // = The skeleton methods
   virtual void receive_payload (const Receiver::Payload &payload);

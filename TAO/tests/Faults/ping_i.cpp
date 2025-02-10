@@ -11,18 +11,18 @@ PingObject_i::ping (PingObject_ptr callback)
 }
 
 void
-PingObject_i::pong (void)
+PingObject_i::pong ()
 {
 }
 
 void
-PingObject_i::shutdown (void)
+PingObject_i::shutdown ()
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }
 
 PortableServer::POA_ptr
-PingObject_i::_default_POA (void)
+PingObject_i::_default_POA ()
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }

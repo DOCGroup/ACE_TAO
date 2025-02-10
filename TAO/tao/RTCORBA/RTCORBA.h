@@ -32,7 +32,7 @@ class TAO_RTCORBA_Export TAO_RTCORBA_Initializer
 {
 public:
   // Constructor.
-  TAO_RTCORBA_Initializer (void);
+  TAO_RTCORBA_Initializer ();
 };
 
 static TAO_RTCORBA_Initializer TAO_RTCORBA_initializer;

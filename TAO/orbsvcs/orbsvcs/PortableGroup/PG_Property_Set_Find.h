@@ -37,8 +37,8 @@ namespace TAO
   int find (const PG_Property_Set & decoder, const ACE_CString & key, TYPE & value)
   {
     int result = 0;
-    const PortableGroup::Value * any = 0;
-    if ( decoder.find (key, any))
+    const PortableGroup::Value * any = nullptr;
+    if (decoder.find (key, any))
     {
       result = ((*any) >>= value);
     }

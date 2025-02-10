@@ -12,9 +12,9 @@ public:
   // = The skeleton methods
   virtual void pass_callback (Test::TestCallback_ptr test);
 
-  bool got_callback (void);
-  void make_callback (void);
-  void shutdown_client (void);
+  bool got_callback ();
+  void make_callback ();
+  void shutdown_client ();
 
 private:
   Test::TestCallback_var callback_;

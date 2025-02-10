@@ -7,7 +7,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 const ACE_SOCK_Dgram *
-TAO_AV_UDP_Flow_Handler::get_socket (void) const
+TAO_AV_UDP_Flow_Handler::get_socket () const
 {
   return &this->sock_dgram_;
 }
@@ -21,7 +21,7 @@ TAO_AV_UDP_Flow_Handler::open (ACE_Addr &address)
 
 ACE_INLINE
 int
-TAO_AV_UDP_Flow_Handler::close (void)
+TAO_AV_UDP_Flow_Handler::close ()
 {
   return  this->sock_dgram_.close ();
 }

@@ -39,7 +39,7 @@ ACE_ID_Generator::get_serial_id (time_t &t, size_t &s)
 }
 
 ACE_SYNCH_MUTEX *
-ACE_ID_Generator::get_lock (void)
+ACE_ID_Generator::get_lock ()
 {
 #if defined (ACE_HAS_THREADS)
   if (ACE_ID_Generator::lock_ == 0)

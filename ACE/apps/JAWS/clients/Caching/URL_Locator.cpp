@@ -35,12 +35,12 @@ ACE_URL_Locator::err_name[] =
   "unknown error"
 };
 
-ACE_URL_Locator::~ACE_URL_Locator (void)
+ACE_URL_Locator::~ACE_URL_Locator ()
 {
 }
 
 const char *
-ACE_URL_Locator::error_status (void)
+ACE_URL_Locator::error_status ()
 {
   return "Not implemented yet.";
 }

@@ -51,7 +51,7 @@ Test_impl::get_vb()
 }
 
 void
-Test_impl::shutdown (void)
+Test_impl::shutdown ()
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

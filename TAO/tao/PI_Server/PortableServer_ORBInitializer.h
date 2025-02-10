@@ -29,7 +29,6 @@ class TAO_PortableServer_ORBInitializer
     public virtual ::CORBA::LocalObject
 {
 public:
-
   /**
    * @name PortableInterceptor::ORBInitializer methods
    *
@@ -43,7 +42,6 @@ public:
   //@}
 
 private:
-
   /// Register PortableServer policy factories.
   void register_policy_factories (PortableInterceptor::ORBInitInfo_ptr info);
 };

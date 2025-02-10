@@ -9,18 +9,18 @@ TAO::Security::QOPPolicy::QOPPolicy (::Security::QOP qop)
 {
 }
 
-TAO::Security::QOPPolicy::~QOPPolicy (void)
+TAO::Security::QOPPolicy::~QOPPolicy ()
 {
 }
 
 CORBA::PolicyType
-TAO::Security::QOPPolicy::policy_type (void)
+TAO::Security::QOPPolicy::policy_type ()
 {
   return ::Security::SecQOPPolicy;
 }
 
 CORBA::Policy_ptr
-TAO::Security::QOPPolicy::copy (void)
+TAO::Security::QOPPolicy::copy ()
 {
   TAO::Security::QOPPolicy * policy = 0;
   ACE_NEW_THROW_EX (policy,
@@ -35,12 +35,12 @@ TAO::Security::QOPPolicy::copy (void)
 }
 
 void
-TAO::Security::QOPPolicy::destroy (void)
+TAO::Security::QOPPolicy::destroy ()
 {
 }
 
 Security::QOP
-TAO::Security::QOPPolicy::qop (void)
+TAO::Security::QOPPolicy::qop ()
 {
   return this->qop_;
 }

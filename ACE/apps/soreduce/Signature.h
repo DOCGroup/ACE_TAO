@@ -22,7 +22,6 @@
 
 class Signature {
 public:
-
   enum Kind {
     text_,
     undef_

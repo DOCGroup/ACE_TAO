@@ -33,22 +33,21 @@ class TAO_Notify_Tests_Activation_Manager;
 class TAO_Notify_Tests_Worker : public ACE_Task_Base
 {
 public:
-  TAO_Notify_Tests_Worker (void);
+  TAO_Notify_Tests_Worker ();
   // ctor
 
   /// Set the command builder.
   void command_builder (TAO_Notify_Tests_Command_Builder* cmd_builder);
 
-  virtual int svc (void);
+  virtual int svc ();
   // The thread entry point.
 
-  void shutdown (void);
+  void shutdown ();
 
 private:
   /// The command builder
   TAO_Notify_Tests_Command_Builder* cmd_builder_;
 };
-
 
 
 /**
@@ -59,7 +58,7 @@ private:
 class TAO_Notify_Tests_ORB_Run_Worker : public ACE_Task_Base
 {
 public:
-  TAO_Notify_Tests_ORB_Run_Worker (void);
+  TAO_Notify_Tests_ORB_Run_Worker ();
   // ctor
 
   void orb (CORBA::ORB_ptr orb);
@@ -67,7 +66,7 @@ public:
   /// Srt the run period.
   void run_period (ACE_Time_Value run_period);
 
-  virtual int svc (void);
+  virtual int svc ();
   // The thread entry point.
 
 private:
@@ -88,7 +87,7 @@ class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_Driver : public TAO_Notify_Tests_D
 {
 public:
   /// Constructor
-  TAO_Notify_Tests_Driver (void);
+  TAO_Notify_Tests_Driver ();
 
   /// Destructor
   ~TAO_Notify_Tests_Driver ();
@@ -97,10 +96,10 @@ public:
   int init (int argc, ACE_TCHAR *argv[]);
 
   /// Execute the commands.
-  void run (void);
+  void run ();
 
   /// Shutdown
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
 protected:
   /// Parse command line parameters.

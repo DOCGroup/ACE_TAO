@@ -15,9 +15,9 @@ CORBA::LocalObject::_duplicate (CORBA::LocalObject_ptr obj)
 
 ACE_INLINE
 CORBA::LocalObject_ptr
-CORBA::LocalObject::_nil (void)
+CORBA::LocalObject::_nil ()
 {
-  return 0;
+  return nullptr;
 }
 
 ACE_INLINE
@@ -34,7 +34,7 @@ CORBA::LocalObject::_narrow (CORBA::Object_ptr obj)
 }
 
 ACE_INLINE
-CORBA::LocalObject::LocalObject (void)
+CORBA::LocalObject::LocalObject ()
   : Object (0)
 {
 }

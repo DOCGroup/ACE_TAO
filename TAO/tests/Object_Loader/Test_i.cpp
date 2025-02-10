@@ -10,13 +10,13 @@ Test_i::Test_i (PortableServer::POA_ptr poa)
 }
 
 CORBA::Long
-Test_i::instance_count (void)
+Test_i::instance_count ()
 {
   return Test_i::instance_count_;
 }
 
 void
-Test_i::destroy (void)
+Test_i::destroy ()
 {
   PortableServer::POA_var poa =
     this->_default_POA ();
@@ -26,7 +26,7 @@ Test_i::destroy (void)
 }
 
 PortableServer::POA_ptr
-Test_i::_default_POA (void)
+Test_i::_default_POA ()
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }

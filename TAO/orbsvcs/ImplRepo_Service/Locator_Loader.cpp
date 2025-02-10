@@ -50,7 +50,7 @@ ImR_Locator_Loader::init (int argc, ACE_TCHAR *argv[])
 }
 
 int
-ImR_Locator_Loader::fini (void)
+ImR_Locator_Loader::fini ()
 {
   ACE_ASSERT(this->runner_.get () != 0);
   try
@@ -76,7 +76,7 @@ ImR_Locator_Loader::create_object (CORBA::ORB_ptr,
 }
 
 int
-ImR_Locator_Loader::run(void)
+ImR_Locator_Loader::run()
 {
   try
     {

@@ -40,7 +40,6 @@ namespace ACE
     class HTBP_Export Filter_Factory : public ACE_Service_Object
     {
     public:
-
       /// Constructor
       Filter_Factory ();
 
@@ -59,7 +58,6 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 
 ACE_STATIC_SVC_DECLARE_EXPORT (HTBP, ACE_HTBP_Filter_Factory)
 ACE_FACTORY_DECLARE (HTBP, ACE_HTBP_Filter_Factory)
-
 
 
 #include /**/ "ace/post.h"

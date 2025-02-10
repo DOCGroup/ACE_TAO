@@ -3,7 +3,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Client_Strategy_Factory::~TAO_Client_Strategy_Factory (void)
+TAO_Client_Strategy_Factory::~TAO_Client_Strategy_Factory ()
 {
 }
 

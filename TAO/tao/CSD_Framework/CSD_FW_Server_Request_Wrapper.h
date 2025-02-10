@@ -29,7 +29,6 @@ namespace TAO
 {
   namespace CSD
   {
-
     /**
      * @class FW_Server_Request_Wrapper
      *
@@ -58,7 +57,6 @@ namespace TAO
     class TAO_CSD_FW_Export FW_Server_Request_Wrapper
     {
     public:
-
       /// Constructor.
       FW_Server_Request_Wrapper(TAO_ServerRequest& server_request);
 
@@ -77,7 +75,6 @@ namespace TAO
       void cancel();
 
     private:
-
       /// Create a deep copy of the request_ object.
       /// The other clone methods are used to support the TAO_ServerRequest clone.
       TAO_ServerRequest* clone (TAO_ServerRequest*& from);
@@ -112,7 +109,6 @@ namespace TAO
       /// Pointer to the underlying TAO_ServerRequest object.
       TAO_ServerRequest* request_;
     };
-
   }
 }
 

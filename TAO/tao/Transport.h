@@ -138,19 +138,14 @@ namespace TAO
     }
 
   private:
-    ACE_UNIMPLEMENTED_FUNC (Drain_Constraints (const Drain_Constraints &))
-    ACE_UNIMPLEMENTED_FUNC (Drain_Constraints &operator= (const Drain_Constraints &))
+    Drain_Constraints (const Drain_Constraints &) = delete;
+    Drain_Constraints &operator= (const Drain_Constraints &) = delete;
 
     ACE_Time_Value * timeout_;
     bool block_on_io_;
   };
   }
 }
-
-/*
- * Specialization hook for the TAO's transport implementation.
- */
-//@@ TAO_TRANSPORT_SPL_INCLUDE_FORWARD_DECL_ADD_HOOK
 
 /**
  * @class TAO_Transport
@@ -315,19 +310,18 @@ namespace TAO
  *
  * <B>See Also:</B>
  *
- * http://htmlpreview.github.com/?https://github.com/DOCGroup/ACE_TAO/blob/master/TAO/docs/pluggable_protocols/index.html
+ * https://htmlpreview.github.io/?https://github.com/DOCGroup/ACE_TAO/blob/master/TAO/docs/pluggable_protocols/index.html
  */
 class TAO_Export TAO_Transport
 {
 public:
-
   /// Default creator, requires the tag value be supplied.
   TAO_Transport (CORBA::ULong tag,
                  TAO_ORB_Core *orb_core,
                  size_t input_cdr_size = ACE_CDR::DEFAULT_BUFSIZE);
 
   /// Destructor
-  virtual ~TAO_Transport (void);
+  virtual ~TAO_Transport ();
 
   /// Return the protocol tag.
   /**
@@ -335,10 +329,10 @@ public:
    * protocol. New protocol tags can be obtained free of charge from
    * the OMG, check the documents in corbafwd.h for more details.
    */
-  CORBA::ULong tag (void) const;
+  CORBA::ULong tag () const;
 
   /// Access the ORB that owns this connection.
-  TAO_ORB_Core *orb_core (void) const;
+  TAO_ORB_Core *orb_core () const;
 
   /// Get the TAO_Tranport_Mux_Strategy used by this object.
   /**
@@ -351,7 +345,7 @@ public:
    * connection is more efficient and reduces the possibilities of
    * priority inversions.
    */
-  TAO_Transport_Mux_Strategy *tms (void) const;
+  TAO_Transport_Mux_Strategy *tms () const;
 
   /// Return the TAO_Wait_Strategy used by this object.
   /**
@@ -361,7 +355,7 @@ public:
    * multiple events concurrently or using the Leader/Followers
    * protocol.
    */
-  TAO_Wait_Strategy *wait_strategy (void) const;
+  TAO_Wait_Strategy *wait_strategy () const;
 
   enum Drain_Result_Enum
     {
@@ -394,7 +388,7 @@ public:
   Drain_Result handle_output (TAO::Transport::Drain_Constraints const & c);
 
   /// Get the bidirectional flag
-  int bidirectional_flag (void) const;
+  int bidirectional_flag () const;
 
   /// Set the bidirectional flag
   void bidirectional_flag (int flag);
@@ -403,7 +397,7 @@ public:
   void cache_map_entry (TAO::Transport_Cache_Manager::HASH_MAP_ENTRY *entry);
 
   /// Get the Cache Map entry
-  TAO::Transport_Cache_Manager::HASH_MAP_ENTRY *cache_map_entry (void);
+  TAO::Transport_Cache_Manager::HASH_MAP_ENTRY *cache_map_entry ();
 
   /// Set and Get the identifier for this transport instance.
   /**
@@ -411,29 +405,29 @@ public:
    * the <code>this</code> pointer for the instance on which
    * it's called.
    */
-  size_t id (void) const;
+  size_t id () const;
   void id (size_t id);
 
   /**
    * Methods dealing with the role of the connection, e.g., CLIENT or SERVER.
    * See CORBA 2.6 Specification, Section 15.5.1 for origin of definitions.
    */
-  TAO::Connection_Role opened_as (void) const;
+  TAO::Connection_Role opened_as () const;
   void opened_as (TAO::Connection_Role);
 
   /// Get and Set the purging order. The purging strategy uses the set
   /// version to set the purging order.
-  unsigned long purging_order (void) const;
+  unsigned long purging_order () const;
   void purging_order(unsigned long value);
 
   /// Check if there are messages pending in the queue
   /**
    * @return true if the queue is empty
    */
-  bool queue_is_empty (void);
+  bool queue_is_empty ();
 
   /// Register with the reactor via the wait strategy
-  bool register_if_necessary (void);
+  bool register_if_necessary ();
 
 
   /// Added event handler to the handlers set.
@@ -471,10 +465,10 @@ public:
    * thread-per-connection mode.  In that case putting the connection
    * in the Reactor would produce unpredictable results anyway.
    */
-  virtual int register_handler (void);
+  virtual int register_handler ();
 
   /// Remove the handler from the reactor.
-  virtual int remove_handler (void);
+  virtual int remove_handler ();
 
   /// Write the complete Message_Block chain to the connection.
   /**
@@ -535,7 +529,6 @@ public:
                             TAO::Transport::Drain_Constraints const & dc);
 #endif  /* TAO_HAS_SENDFILE==1 */
 
-
   /// Read len bytes from into buf.
   /**
    * This method serializes on handler_lock_, guaranteeing that only
@@ -557,18 +550,16 @@ public:
    * strategies implement them correctly.
    */
   //@{
-
   /// Request has been just sent, but the reply is not received. Idle
   /// the transport now.
-  bool idle_after_send (void);
+  bool idle_after_send ();
 
   /// Request is sent and the reply is received. Idle the transport
   /// now.
-  bool idle_after_reply (void);
+  bool idle_after_reply ();
 
   /// Call the implementation method after obtaining the lock.
-  virtual void close_connection (void);
-
+  virtual void close_connection ();
   //@}
 
   /** @name Template methods
@@ -602,18 +593,18 @@ public:
    *
    * @note The methods are not made const with a reason.
    */
-  virtual bool post_connect_hook (void);
+  virtual bool post_connect_hook ();
 
   /// Memory management routines.
   /**
    * Forwards to event handler.
    */
-  ACE_Event_Handler::Reference_Count add_reference (void);
-  ACE_Event_Handler::Reference_Count remove_reference (void);
+  ACE_Event_Handler::Reference_Count add_reference ();
+  ACE_Event_Handler::Reference_Count remove_reference ();
 
   /// Return the messaging object that is used to format the data that
   /// needs to be sent.
-  TAO_GIOP_Message_Base * messaging_object (void);
+  TAO_GIOP_Message_Base * messaging_object ();
 
   /** @name Template methods
    *
@@ -623,7 +614,6 @@ public:
    * following methods with the semantics documented below.
    */
   //@{
-
   /// Return the event handler used to receive notifications from the
   /// Reactor.
   /**
@@ -641,47 +631,38 @@ public:
    *
    * @todo This method has to be renamed to event_handler()
    */
-  virtual ACE_Event_Handler * event_handler_i (void) = 0;
+  virtual ACE_Event_Handler * event_handler_i () = 0;
 
   /// Is this transport really connected
-  bool is_connected (void) const;
+  bool is_connected () const;
 
   /// Was a connection seen as closed during a read
-  bool connection_closed_on_read (void) const;
+  bool connection_closed_on_read () const;
 
   /// Perform all the actions when this transport get opened
   bool post_open (size_t id);
 
   /// do what needs to be done when closing the transport
-  void pre_close (void);
+  void pre_close ();
 
   /// Get the connection handler for this transport
-  TAO_Connection_Handler * connection_handler (void);
+  TAO_Connection_Handler * connection_handler ();
 
   /// Accessor for the output CDR stream
-  TAO_OutputCDR &out_stream (void);
+  TAO_OutputCDR &out_stream ();
 
   /// Accessor for synchronizing Transport OutputCDR access
-  TAO_SYNCH_MUTEX &output_cdr_lock (void);
+  TAO_SYNCH_MUTEX &output_cdr_lock ();
 
   /// Can the transport be purged?
-  bool can_be_purged (void);
+  bool can_be_purged ();
 
   virtual void set_bidir_context_info (TAO_Operation_Details &opdetails);
 
-  /*
-   * Specialization hook to add public methods from
-   * concrete transport implementations to TAO's transport
-   * class
-   */
-  //@@ TAO_TRANSPORT_SPL_PUBLIC_METHODS_ADD_HOOK
-
 protected:
-
-  virtual TAO_Connection_Handler * connection_handler_i (void) = 0;
+  virtual TAO_Connection_Handler * connection_handler_i () = 0;
 
 public:
-
   /// This is a request for the transport object to write a
   /// LocateRequest header before it is sent out.
   int generate_locate_request (TAO_Target_Specification &spec,
@@ -784,7 +765,6 @@ public:
                                    ACE_Time_Value *max_wait_time);
 
 protected:
-
   /// Process the message by sending it to the higher layers of the
   /// ORB.
   int process_parsed_messages (TAO_Queued_Data *qd,
@@ -846,13 +826,13 @@ public:
                                   TAO::Transport::Drain_Constraints const & dc);
 
   /// Cache management
-  int purge_entry (void);
+  int purge_entry ();
 
   /// Cache management
-  int make_idle (void);
+  int make_idle ();
 
   /// Cache management
-  int update_transport (void);
+  int update_transport ();
 
   /// The timeout callback, invoked when any of the timers related to
   /// this transport expire.
@@ -874,16 +854,16 @@ public:
   int handle_timeout (const ACE_Time_Value &current_time, const void* act);
 
   /// Accessor to recv_buffer_size_
-  size_t recv_buffer_size (void) const;
+  size_t recv_buffer_size () const;
 
   /// Accessor to sent_byte_count_
-  size_t sent_byte_count (void) const;
+  size_t sent_byte_count () const;
 
   /// CodeSet Negotiation - Get the char codeset translator factory
-  TAO_Codeset_Translator_Base *char_translator (void) const;
+  TAO_Codeset_Translator_Base *char_translator () const;
 
   /// CodeSet Negotiation - Get the wchar codeset translator factory
-  TAO_Codeset_Translator_Base *wchar_translator (void) const;
+  TAO_Codeset_Translator_Base *wchar_translator () const;
 
   /// CodeSet negotiation - Set the char codeset translator factory
   void char_translator (TAO_Codeset_Translator_Base *);
@@ -911,15 +891,14 @@ public:
 
   /// Notify all the components inside a Transport when the underlying
   /// connection is closed.
-  void send_connection_closed_notifications (void);
+  void send_connection_closed_notifications ();
 
   /// Transport statistics
-  TAO::Transport::Stats* stats (void) const;
+  TAO::Transport::Stats* stats () const;
 
 private:
-
   /// Helper method that returns the Transport Cache Manager.
-  TAO::Transport_Cache_Manager &transport_cache_manager (void);
+  TAO::Transport_Cache_Manager &transport_cache_manager ();
 
   /// Send some of the data in the queue.
   /**
@@ -938,7 +917,7 @@ private:
    *
    * @return true if the queue is empty
    */
-  bool queue_is_empty_i (void) const;
+  bool queue_is_empty_i () const;
 
   /// A helper routine used in drain_queue_i()
   Drain_Result drain_queue_helper (int &iovcnt, iovec iov[],
@@ -955,10 +934,10 @@ private:
   friend class TAO_Thread_Per_Connection_Handler;
 
   /// Schedule handle_output() callbacks
-  int schedule_output_i (void);
+  int schedule_output_i ();
 
   /// Cancel handle_output() callbacks
-  int cancel_output_i (void);
+  int cancel_output_i ();
 
   /// Cleanup the queue.
   /**
@@ -998,11 +977,11 @@ private:
                                    ACE_Time_Value *max_wait_time);
 
   /// Check if the flush timer is still pending
-  int flush_timer_pending (void) const;
+  int flush_timer_pending () const;
 
   /// The flush timer expired or was explicitly cancelled, mark it as
   /// not pending
-  void reset_flush_timer (void);
+  void reset_flush_timer ();
 
   /// Print out error messages if the event handler is not valid
   void report_invalid_event_handler (const char *caller);
@@ -1045,25 +1024,25 @@ private:
    * This call prepares a new handler for the notify call and sends a
    * notify () call to the reactor.
    */
-  int notify_reactor (void);
+  int notify_reactor ();
 
 protected:
   /*
    * Same as notify_reactor above but does NOT first check for a
    * registered TAO_Wait_Strategy.
    */
-  int notify_reactor_now (void);
+  int notify_reactor_now ();
 
 private:
-  ACE_UNIMPLEMENTED_FUNC (TAO_Transport (const TAO_Transport &))
-  ACE_UNIMPLEMENTED_FUNC (TAO_Transport &operator= (const TAO_Transport &))
+  TAO_Transport (const TAO_Transport &) = delete;
+  TAO_Transport &operator= (const TAO_Transport &) = delete;
 
   /// Assume the lock is held
-  void send_connection_closed_notifications_i (void);
+  void send_connection_closed_notifications_i ();
 
   /// Allocate a partial message block and store it in our
   /// partial_message_ data member.
-  void allocate_partial_message_block (void);
+  void allocate_partial_message_block ();
 
   /**
    * Return true if blocking I/O should be used for sending synchronous
@@ -1084,10 +1063,7 @@ private:
    * TAO's protocol implementation onto the base Transport class
    */
 
-  //@@ TAO_TRANSPORT_SPL_PRIVATE_METHODS_ADD_HOOK
-
 protected:
-
   /// IOP protocol tag.
   CORBA::ULong const tag_;
 
@@ -1191,7 +1167,6 @@ protected:
   bool connection_closed_on_read_;
 
 private:
-
   /// Our messaging object.
   TAO_GIOP_Message_Base *messaging_object_;
 
@@ -1244,21 +1219,7 @@ private:
 
   /// lock for synchronizing Transport OutputCDR access
   mutable TAO_SYNCH_MUTEX output_cdr_mutex_;
-
-  /*
-   * specialization hook to add class members from concrete
-   * transport class onto the base transport class. Please
-   * add any private members to this class *before* this hook.
-   */
-  //@@ TAO_TRANSPORT_SPL_DATA_MEMBERS_ADD_HOOK
 };
-
-/*
- * Hook to add external typedefs and specializations to
- * TAO's transport implementation.
- */
-
-//@@ TAO_TRANSPORT_SPL_EXTERN_ADD_HOOK
 
 #if TAO_HAS_TRANSPORT_CURRENT == 1
 namespace TAO
@@ -1278,7 +1239,7 @@ namespace TAO
      *
      * <B>See Also:</B>
      *
-     * http://htmlpreview.github.com/?https://github.com/DOCGroup/ACE_TAO/blob/master/TAO/docs/transport_current/index.html
+     * https://htmlpreview.github.io/?https://github.com/DOCGroup/ACE_TAO/blob/master/TAO/docs/transport_current/index.html
      *
      */
     class TAO_Export Stats
@@ -1288,15 +1249,15 @@ namespace TAO
       virtual ~Stats ();
 
       void messages_sent (size_t message_length);
-      CORBA::LongLong messages_sent (void) const;
-      CORBA::LongLong bytes_sent (void) const;
+      CORBA::LongLong messages_sent () const;
+      CORBA::LongLong bytes_sent () const;
 
       void messages_received (size_t message_length);
-      CORBA::LongLong messages_received (void) const;
-      CORBA::LongLong bytes_received (void) const;
+      CORBA::LongLong messages_received () const;
+      CORBA::LongLong bytes_received () const;
 
       void opened_since (const ACE_Time_Value& tv);
-      const ACE_Time_Value& opened_since (void) const;
+      const ACE_Time_Value& opened_since () const;
 
     private:
       /// Mutex guarding the internal state of the statistics

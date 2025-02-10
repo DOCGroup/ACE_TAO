@@ -25,7 +25,7 @@ class be_visitor_exception_cs : public be_visitor_exception
 {
 public:
   be_visitor_exception_cs (be_visitor_context *ctx);
-  ~be_visitor_exception_cs (void);
+  ~be_visitor_exception_cs ();
 
   virtual int visit_exception (be_exception *node);
 };

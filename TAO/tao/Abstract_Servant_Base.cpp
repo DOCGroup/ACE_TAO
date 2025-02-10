@@ -7,7 +7,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Abstract_ServantBase::~TAO_Abstract_ServantBase (void)
+TAO_Abstract_ServantBase::~TAO_Abstract_ServantBase ()
 {
 }
 

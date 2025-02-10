@@ -30,7 +30,6 @@ class TAO_ORB_Core;
 
 namespace TAO
 {
-
   // Forward declarations within the namespace..
   class Refcounted_ObjectKey;
   class ObjectKey;
@@ -87,12 +86,12 @@ namespace TAO
   {
   public:
     /// Default Constructor and destructor..
-    ObjectKey_Table (void);
+    ObjectKey_Table ();
 
-    ~ObjectKey_Table (void);
+    ~ObjectKey_Table ();
 
     /// Iterates and unbinds the contents of the table.
-    int destroy (void);
+    int destroy ();
 
     /// Bind the ObjectKey in the table.
     /**
@@ -116,8 +115,8 @@ namespace TAO
     int unbind_i (Refcounted_ObjectKey *&key);
 
   private:
-    ACE_UNIMPLEMENTED_FUNC (ObjectKey_Table (const ObjectKey_Table &))
-    ACE_UNIMPLEMENTED_FUNC (ObjectKey_Table &operator= (const ObjectKey_Table &))
+    ObjectKey_Table (const ObjectKey_Table &) = delete;
+    ObjectKey_Table &operator= (const ObjectKey_Table &) = delete;
 
     /// Some useful typedefs.
     typedef ACE_RB_Tree<TAO::ObjectKey,

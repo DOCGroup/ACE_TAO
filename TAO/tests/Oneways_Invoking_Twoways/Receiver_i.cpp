@@ -10,12 +10,12 @@ Receiver_i::Receiver_i (CORBA::ORB_ptr orb,
 {
 }
 
-Receiver_i::~Receiver_i (void)
+Receiver_i::~Receiver_i ()
 {
 }
 
 CORBA::Long
-Receiver_i::receive_call (void)
+Receiver_i::receive_call ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t)  Doing a ping...\n"));
@@ -26,15 +26,15 @@ Receiver_i::receive_call (void)
 }
 
 CORBA::Long
-Receiver_i::get_call_count ( /**/)
+Receiver_i::get_call_count ()
 {
   return this->iteration_;
 }
 
 void
-Receiver_i::shutdown (void)
+Receiver_i::shutdown ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) About to invoke shutdown...\n"));
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

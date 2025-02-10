@@ -31,10 +31,10 @@ public:
   HTTP_Response (JAWS_IO &io,
                  HTTP_Request &request);
   HTTP_Response (HTTP_Request &request, JAWS_IO &io);
-  ~HTTP_Response (void);
+  ~HTTP_Response ();
 
   /// This is called by the handler to initiate a response.
-  void process_request (void);
+  void process_request ();
 
   /// This returns an error response for cases where there is a problem
   /// with the request, logging the log_message.
@@ -42,20 +42,18 @@ public:
                        const char *log_message);
 
 private:
-
   /// Called by process_request when the request is a normal request.
-  void normal_response (void);
+  void normal_response ();
 
   /// Called by process_request when the request is a cgi request.
-  void cgi_response (void);
+  void cgi_response ();
 
 private:
-
   /// static version of process_request, just in case.
   static void process_request (HTTP_Response &response);
 
   /// creates the appropriate header information for responses.
-  void build_headers (void);
+  void build_headers ();
 
 private:
   /// The IO and Request objects associated with this re

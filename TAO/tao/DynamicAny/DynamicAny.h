@@ -32,7 +32,7 @@ class TAO_DynamicAny_Export TAO_DynamicAny_Loader : public TAO_Object_Loader
 {
 public:
   /// Constructor
-  TAO_DynamicAny_Loader (void);
+  TAO_DynamicAny_Loader ();
 
   /// Creates a DynamicAny factory and returns it.
   virtual CORBA::Object_ptr create_object (CORBA::ORB_ptr orb,
@@ -40,7 +40,7 @@ public:
                                            ACE_TCHAR *argv []);
 
   /// Used to force the initialization of the ORB code.
-  static int Initializer (void);
+  static int Initializer ();
 };
 
 static int

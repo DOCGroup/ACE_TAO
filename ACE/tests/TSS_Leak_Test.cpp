@@ -4,12 +4,17 @@
 #include "ace/Task.h"
 #include "ace/Barrier.h"
 
-struct X : private ACE_Copy_Disabled
+struct X
 {
   static int count_;
 
   X() { ++count_; }
   ~X() { --count_; }
+
+  X (const X &) = delete;
+  X (X &&) = delete;
+  X &operator= (const X &) = delete;
+  X &operator= (X &&) = delete;
 };
 
 int X::count_;
@@ -20,7 +25,7 @@ struct Task : ACE_Task_Base
 {
   explicit Task (ACE_TSS<X> *tss) : tss_(tss) {}
 
-  int svc (void)
+  int svc () override
   {
     X *x = *tss_;
     ACE_UNUSED_ARG (x);

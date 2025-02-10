@@ -35,11 +35,11 @@ public:
   TAO_DynCommon (CORBA::Boolean allow_truncation);
 
   /// Destructor.
-  virtual ~TAO_DynCommon (void);
+  virtual ~TAO_DynCommon ();
 
   // = Some functions common to all Dynamic Any types.
 
-  virtual CORBA::TypeCode_ptr type (void);
+  virtual CORBA::TypeCode_ptr type ();
 
   virtual void assign (DynamicAny::DynAny_ptr dyn_any);
 
@@ -81,59 +81,59 @@ public:
 
   virtual void insert_val (CORBA::ValueBase * value);
 
-  virtual CORBA::Boolean get_boolean (void);
+  virtual CORBA::Boolean get_boolean ();
 
-  virtual CORBA::Octet get_octet (void);
+  virtual CORBA::Octet get_octet ();
 
-  virtual CORBA::Char get_char (void);
+  virtual CORBA::Char get_char ();
 
-  virtual CORBA::Short get_short (void);
+  virtual CORBA::Short get_short ();
 
-  virtual CORBA::UShort get_ushort (void);
+  virtual CORBA::UShort get_ushort ();
 
-  virtual CORBA::Long get_long (void);
+  virtual CORBA::Long get_long ();
 
-  virtual CORBA::ULong get_ulong (void);
+  virtual CORBA::ULong get_ulong ();
 
-  virtual CORBA::Float get_float (void);
+  virtual CORBA::Float get_float ();
 
-  virtual CORBA::Double get_double (void);
+  virtual CORBA::Double get_double ();
 
-  virtual char * get_string (void);
+  virtual char * get_string ();
 
-  virtual CORBA::Object_ptr get_reference (void);
+  virtual CORBA::Object_ptr get_reference ();
 
-  virtual CORBA::TypeCode_ptr get_typecode (void);
+  virtual CORBA::TypeCode_ptr get_typecode ();
 
-  virtual CORBA::LongLong get_longlong (void);
+  virtual CORBA::LongLong get_longlong ();
 
-  virtual CORBA::ULongLong get_ulonglong (void);
+  virtual CORBA::ULongLong get_ulonglong ();
 
-  virtual CORBA::LongDouble get_longdouble (void);
+  virtual CORBA::LongDouble get_longdouble ();
 
-  virtual CORBA::WChar get_wchar (void);
+  virtual CORBA::WChar get_wchar ();
 
-  virtual CORBA::WChar * get_wstring (void);
+  virtual CORBA::WChar * get_wstring ();
 
-  virtual CORBA::Any * get_any (void);
+  virtual CORBA::Any * get_any ();
 
-  virtual DynamicAny::DynAny_ptr get_dyn_any (void);
+  virtual DynamicAny::DynAny_ptr get_dyn_any ();
 
-  virtual CORBA::ValueBase * get_val (void);
+  virtual CORBA::ValueBase * get_val ();
 
   virtual CORBA::Boolean seek (CORBA::Long index);
 
-  virtual void rewind (void);
+  virtual void rewind ();
 
-  virtual CORBA::Boolean next (void);
+  virtual CORBA::Boolean next ();
 
-  virtual DynamicAny::DynAny_ptr copy (void);
+  virtual DynamicAny::DynAny_ptr copy ();
 
-  virtual CORBA::ULong component_count (void);
+  virtual CORBA::ULong component_count ();
 
   virtual void insert_abstract (CORBA::AbstractBase_ptr value);
 
-  virtual CORBA::AbstractBase_ptr get_abstract (void);
+  virtual CORBA::AbstractBase_ptr get_abstract ();
 
   virtual void insert_boolean_seq (const CORBA::BooleanSeq & value);
 
@@ -161,31 +161,31 @@ public:
 
   virtual void insert_wchar_seq (const CORBA::WCharSeq & value);
 
-  virtual CORBA::BooleanSeq * get_boolean_seq (void);
+  virtual CORBA::BooleanSeq * get_boolean_seq ();
 
-  virtual CORBA::OctetSeq * get_octet_seq (void);
+  virtual CORBA::OctetSeq * get_octet_seq ();
 
-  virtual CORBA::CharSeq * get_char_seq (void);
+  virtual CORBA::CharSeq * get_char_seq ();
 
-  virtual CORBA::ShortSeq * get_short_seq (void);
+  virtual CORBA::ShortSeq * get_short_seq ();
 
-  virtual CORBA::UShortSeq * get_ushort_seq (void);
+  virtual CORBA::UShortSeq * get_ushort_seq ();
 
-  virtual CORBA::LongSeq * get_long_seq (void);
+  virtual CORBA::LongSeq * get_long_seq ();
 
-  virtual CORBA::ULongSeq * get_ulong_seq (void);
+  virtual CORBA::ULongSeq * get_ulong_seq ();
 
-  virtual CORBA::FloatSeq * get_float_seq (void);
+  virtual CORBA::FloatSeq * get_float_seq ();
 
-  virtual CORBA::DoubleSeq * get_double_seq (void);
+  virtual CORBA::DoubleSeq * get_double_seq ();
 
-  virtual CORBA::LongLongSeq * get_longlong_seq (void);
+  virtual CORBA::LongLongSeq * get_longlong_seq ();
 
-  virtual CORBA::ULongLongSeq * get_ulonglong_seq (void);
+  virtual CORBA::ULongLongSeq * get_ulonglong_seq ();
 
-  virtual CORBA::LongDoubleSeq * get_longdouble_seq (void);
+  virtual CORBA::LongDoubleSeq * get_longdouble_seq ();
 
-  virtual CORBA::WCharSeq * get_wchar_seq (void);
+  virtual CORBA::WCharSeq * get_wchar_seq ();
 
   /// This sets one of two flags in this base class. CORBA 2.4.2
   /// requires that destroy() do nothing if it is called on
@@ -208,9 +208,9 @@ public:
 
   // Accessors
 
-  CORBA::Boolean has_components (void) const;
-  CORBA::Boolean destroyed (void) const;
-  CORBA::Any &the_any (void);
+  CORBA::Boolean has_components () const;
+  CORBA::Boolean destroyed () const;
+  CORBA::Any &the_any ();
 
   // Mutators
 
@@ -248,7 +248,6 @@ protected:
 
 private:
   // Utility functions used by insert_* and get_*.
-
   CORBA::TypeCode_ptr check_type_and_unalias (CORBA::TypeCode_ptr tc);
 };
 

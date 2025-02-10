@@ -7,12 +7,11 @@ template <class KEY, class DATA> class JAWS_Assoc_Array_Iterator;
 template <class KEY, class DATA>
 class JAWS_Assoc_Array
 {
-
 friend class JAWS_Assoc_Array_Iterator<KEY, DATA>;
 
 public:
   JAWS_Assoc_Array (int maxsize = 1024);
-  ~JAWS_Assoc_Array (void);
+  ~JAWS_Assoc_Array ();
 
   int index (const KEY &k);
   // Returns the index into the array associated with key k
@@ -40,11 +39,10 @@ public:
   // and successfully destroyed it, 0 if it did not find the
   // item, or -1 if an error occurred.
 
-  void clear (void);
+  void clear ();
   // Destroys all keys and associated data.
 
 protected:
-
   int find_i (const KEY &k);
   // If k points to an associated data item, then this function
   // returns the index into the arrays that hold it.  Otherwise, it
@@ -61,28 +59,25 @@ template <class KEY, class DATA>
 class JAWS_Assoc_Array_Iterator
 {
 public:
-
   JAWS_Assoc_Array_Iterator (const JAWS_Assoc_Array<KEY, DATA> &aa);
-  ~JAWS_Assoc_Array_Iterator (void);
+  ~JAWS_Assoc_Array_Iterator ();
 
-  KEY * key (void);
-  DATA * data (void);
+  KEY * key ();
+  DATA * data ();
 
-  int first (void);
-  int last (void);
-  int next (void);
-  int previous (void);
-  int is_done (void);
+  int first ();
+  int last ();
+  int next ();
+  int previous ();
+  int is_done ();
 
 private:
-
   // declare private and do not define: explicitly
   // prevent assignment and copy construction of iterators
   JAWS_Assoc_Array_Iterator (const JAWS_Assoc_Array_Iterator<KEY, DATA> &);
   void operator= (const JAWS_Assoc_Array_Iterator<KEY, DATA> &);
 
 private:
-
   const JAWS_Assoc_Array<KEY, DATA> &aa_;
 
   int i_;
@@ -90,11 +85,8 @@ private:
 
   int j_;
   // The next item to be pointed to by iterator.
-
 };
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "JAWS/Assoc_Array.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #endif /* !defined (JAWS_ASSOC_ARRAY_H) */

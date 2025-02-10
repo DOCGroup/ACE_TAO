@@ -9,7 +9,7 @@ ACE_OS::compile (const char *instring, char *expbuf, char *endbuf)
 {
   ACE_OS_TRACE ("ACE_OS::compile");
 #if defined (ACE_HAS_REGEX)
-  ACE_OSCALL_RETURN (::compile (instring, expbuf, endbuf), char *, 0);
+  return ::compile (instring, expbuf, endbuf);
 #else
   ACE_UNUSED_ARG (instring);
   ACE_UNUSED_ARG (expbuf);
@@ -24,7 +24,7 @@ ACE_OS::step (const char *str, char *expbuf)
 {
   ACE_OS_TRACE ("ACE_OS::step");
 #if defined (ACE_HAS_REGEX)
-  ACE_OSCALL_RETURN (::step (str, expbuf), int, -1);
+  return ::step (str, expbuf);
 #else
   ACE_UNUSED_ARG (str);
   ACE_UNUSED_ARG (expbuf);

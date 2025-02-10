@@ -7,8 +7,6 @@
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  *  @author Jesper S. M|ller<stophph@diku.dk>
  *  @author and a cast of thousands...
- *
- *  Originally in OS.h.
  */
 //=============================================================================
 
@@ -46,18 +44,18 @@ class ACE_Export ACE_Cleanup
 {
 public:
   /// No-op constructor.
-  ACE_Cleanup (void);
+  ACE_Cleanup ();
 
   /// Destructor.
-  virtual ~ACE_Cleanup (void);
+  virtual ~ACE_Cleanup () = default;
 
   /// Cleanup method that, by default, simply deletes itself.
-  virtual void cleanup (void *param = 0);
+  virtual void cleanup (void *param = nullptr);
 };
 
 /// Adapter for cleanup, used by ACE_Object_Manager.
 extern "C" ACE_Export
-void ACE_CLEANUP_DESTROYER_NAME (ACE_Cleanup *, void *param = 0);
+void ACE_CLEANUP_DESTROYER_NAME (ACE_Cleanup *, void *param = nullptr);
 
 /**
  * @class ACE_Cleanup_Info_Node
@@ -69,12 +67,12 @@ void ACE_CLEANUP_DESTROYER_NAME (ACE_Cleanup *, void *param = 0);
 class ACE_Cleanup_Info_Node : public ACE_Intrusive_List_Node<ACE_Cleanup_Info_Node>
 {
 public:
-  ACE_Cleanup_Info_Node (void);
+  ACE_Cleanup_Info_Node ();
   ACE_Cleanup_Info_Node (void *object,
                          ACE_CLEANUP_FUNC cleanup_hook,
                          void *param,
                          const char *name);
-  ~ACE_Cleanup_Info_Node (void);
+  ~ACE_Cleanup_Info_Node ();
 
   /// Equality operator.
   bool operator== (const ACE_Cleanup_Info_Node &o) const;
@@ -82,11 +80,11 @@ public:
   /// Inequality operator.
   bool operator!= (const ACE_Cleanup_Info_Node &o) const;
 
-  void* object(void);
+  void* object();
 
-  ACE_CLEANUP_FUNC cleanup_hook (void);
+  ACE_CLEANUP_FUNC cleanup_hook ();
 
-  void *param (void);
+  void *param ();
 
   ACE_ALLOC_HOOK_DECLARE;
 
@@ -119,10 +117,10 @@ class ACE_Export ACE_OS_Exit_Info
 {
 public:
   /// Default constructor.
-  ACE_OS_Exit_Info (void);
+  ACE_OS_Exit_Info () = default;
 
   /// Destructor.
-  ~ACE_OS_Exit_Info (void);
+  ~ACE_OS_Exit_Info () = default;
 
   /// Use to register a cleanup hook.
   int at_exit_i (void *object, ACE_CLEANUP_FUNC cleanup_hook, void *param, const char* name = 0);
@@ -145,7 +143,6 @@ private:
    */
   ACE_Cleanup_Info_Node_List registered_objects_;
 };
-
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 

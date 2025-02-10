@@ -4,12 +4,12 @@
 //---------------------------------------------------------------------------
 #include "ReceiverImpl.h"
 #include "BroadcasterC.h"
-#include "ace/Auto_Ptr.h"
 #include "ORBThread.h"
 #include <Classes.hpp>
 #include <Dialogs.hpp>
 #include <Controls.hpp>
 #include <StdCtrls.hpp>
+#include <memory>
 
 //---------------------------------------------------------------------------
 // Message used to notify window of incoming data
@@ -25,35 +25,35 @@ __published:  // IDE-managed Components
   void __fastcall InputMemoKeyPress (TObject *Sender, char &Key);
 
 private:
-  void __fastcall ReadIOR (String filename);
   // Function to read the server ior from a file.
+  void __fastcall ReadIOR (String filename);
 
-  String ior_;
   // IOR of the obj ref of the server.
+  String ior_;
 
-  String ior_file_name_;
   // The filename that stores the ior of the server
+  String ior_file_name_;
 
-  String nickname_;
   // Nickname of the user chatting.
+  String nickname_;
 
-  auto_ptr<TORBThread> orb_thread_;
   // We run the orb's main loop in a separate thread.
+  std::unique_ptr<TORBThread> orb_thread_;
 
-  CORBA::ORB_var orb_;
   // Our orb. Order is important! The orb must have a longer lifetime than
   // any of the servants or stub vars/ptrs. Therefore we declare the orb var
   // first. There is probably a better way to do this, maybe by using a
   // singleton.
+  CORBA::ORB_var orb_;
 
-  Broadcaster_var server_;
   // Server object ptr.
+  Broadcaster_var server_;
 
-  TReceiverImplementation receiver_i_;
   // The receiver object.
+  TReceiverImplementation receiver_i_;
 
-  Receiver_var receiver_var_;
   // Pointer to the receiver object registered with the ORB.
+  Receiver_var receiver_var_;
 
 public:    // User declarations
   __fastcall TChatClientWindow (TComponent* Owner);

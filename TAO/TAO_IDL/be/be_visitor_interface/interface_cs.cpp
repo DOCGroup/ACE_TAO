@@ -15,7 +15,7 @@ be_visitor_interface_cs::be_visitor_interface_cs (be_visitor_context *ctx)
 {
 }
 
-be_visitor_interface_cs::~be_visitor_interface_cs (void)
+be_visitor_interface_cs::~be_visitor_interface_cs ()
 {
 }
 
@@ -27,7 +27,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       return 0;
     }
 
-  be_type *bt = 0;
+  be_type *bt = nullptr;
 
   // Set the right type.
   if (this->ctx_->alias ())
@@ -39,13 +39,12 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       bt = node;
     }
 
-  AST_Component *c = AST_Component::narrow_from_decl (node);
+  AST_Component *c = dynamic_cast<AST_Component*> (node);
   TAO_OutStream *os = this->ctx_->stream ();
 
   if (node->is_defined () && be_global->gen_arg_traits ())
     {
-      *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-          << "// " << __FILE__ << ":" << __LINE__;
+      TAO_INSERT_COMMENT (os);
 
       *os << be_global->core_versioning_begin ();
 
@@ -55,8 +54,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       *os << be_nl_2
           << node->name () << "_ptr" << be_nl
           << "TAO::Objref_Traits<" << node->name () << ">::duplicate ("
-          << be_idt << be_idt_nl
-          << node->name () << "_ptr p)" << be_uidt << be_uidt_nl
+          << node->name () << "_ptr p)" << be_nl
           << "{" << be_idt_nl
           << "return " << node->name () << "::_duplicate (p);" << be_uidt_nl
           << "}";
@@ -64,11 +62,9 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       *os << be_nl_2
           << "void" << be_nl
           << "TAO::Objref_Traits<" << node->name () << ">::release ("
-          << be_idt << be_idt_nl
-          << node->name () << "_ptr p)" << be_uidt << be_uidt_nl
+          << node->name () << "_ptr p)" << be_nl
           << "{" << be_idt_nl;
 
-      // Workaround for broken HP V7.4-004 on OpenVMS IA83
       if (node->has_mixed_parentage ())
         {
           *os << "::CORBA::AbstractBase_ptr abs = p;" << be_nl
@@ -83,7 +79,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
 
       *os << be_nl_2
           << node->name () << "_ptr" << be_nl
-          << "TAO::Objref_Traits<" << node->name () << ">::nil (void)"
+          << "TAO::Objref_Traits<" << node->name () << ">::nil ()"
           << be_nl
           << "{" << be_idt_nl
           << "return " << node->name () << "::_nil ();" << be_uidt_nl
@@ -92,14 +88,13 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       *os << be_nl_2
           << "::CORBA::Boolean" << be_nl
           << "TAO::Objref_Traits<" << node->name () << ">::marshal ("
-          << be_idt << be_idt_nl
-          << "const " << node->name () << "_ptr p," << be_nl
-          << "TAO_OutputCDR & cdr)" << be_uidt << be_uidt_nl
+          << "const " << node->name () << "_ptr p,"
+          << "TAO_OutputCDR & cdr)" << be_nl
           << "{" << be_idt_nl
           << "return ";
 
 
-      if (node->is_abstract () || c != 0)
+      if (node->is_abstract () || c != nullptr)
         {
           *os << "cdr << p;";
         }
@@ -129,12 +124,12 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << "  return false;" << be_nl
           << "}" << be_nl << be_nl
           << "TAO_Cached_Policy_Type" << be_nl
-          << "CORBA::Policy::_tao_cached_type (void) const" << be_nl
+          << "CORBA::Policy::_tao_cached_type () const" << be_nl
           << "{" << be_nl
             << "return TAO_CACHED_POLICY_UNCACHED;" << be_nl
           << "}" << be_nl << be_nl
           << "TAO_Policy_Scope" << be_nl
-          << "CORBA::Policy::_tao_scope (void) const" << be_nl
+          << "CORBA::Policy::_tao_scope () const" << be_nl
           << "{" << be_nl
           << "  return TAO_POLICY_DEFAULT_SCOPE;" << be_nl
           << "}" << be_nl;
@@ -189,7 +184,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
     {
       *os << be_nl_2
           << node->name () << "::" << node->local_name ()
-          << " (void)" << be_nl
+          << " ()" << be_nl
           << "{}";
     }
 
@@ -197,17 +192,11 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
     {
       *os << be_nl_2
           << node->name () << "::" << node->local_name ()
-          << " (void)" << be_nl;
+          << " ()" << be_nl;
 
       *os << "{" << be_nl;
-
-      *os << "}";
+      *os << "}" << be_nl;
     }
-
-  *os << be_nl_2
-      << node->name () << "::~" << node->local_name ()
-      << " (void)" << be_nl;
-  *os << "{" << be_nl << "}" << be_nl_2;
 
   bool gen_any_destructor =
     be_global->any_support ()
@@ -230,7 +219,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
   if (node->has_mixed_parentage ())
     {
       *os << "void" << be_nl
-          << node->name () << "::_add_ref (void)" << be_nl
+          << node->name () << "::_add_ref ()" << be_nl
           << "{" << be_idt_nl
           << "this->::CORBA::Object::_add_ref ();"
           << be_uidt_nl
@@ -248,7 +237,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
     }
 
   // The _unchecked_narrow method, not for components.
-  if (c == 0 && ! this->gen_xxx_narrow ("unchecked_narrow", node))
+  if (c == nullptr && ! this->gen_xxx_narrow ("unchecked_narrow", node))
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("be_visitor_interface_cs::")
@@ -260,10 +249,10 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
 
   // The _nil method
   *os << node->full_name () << "_ptr" << be_nl
-      << node->full_name () << "::_nil (void)"
+      << node->full_name () << "::_nil ()"
       << be_nl
       << "{" << be_idt_nl
-      << "return 0;" << be_uidt_nl
+      << "return nullptr;" << be_uidt_nl
       << "}" << be_nl_2;
 
   // The _duplicate method
@@ -280,7 +269,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       << "}" << be_nl_2;
 
   // The _tao_release method
-  if (c == 0)
+  if (c == nullptr)
     {
       *os << "void" << be_nl
           << node->full_name () << "::_tao_release ("
@@ -308,7 +297,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
                         -1);
     }
 
-  *os << ")" << be_nl
+  *os << ")" << be_uidt_nl
       << "{" << be_idt_nl
       << "return true; // success using local knowledge" << be_uidt_nl
       << "}" << be_uidt_nl
@@ -328,7 +317,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       << "}" << be_nl_2;
 
   *os << "const char* " << node->full_name ()
-      << "::_interface_repository_id (void) const"
+      << "::_interface_repository_id () const"
       << be_nl
       << "{" << be_idt_nl
       << "return \"" << node->repoID ()
@@ -338,7 +327,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
   if (be_global->gen_static_desc_operations ())
     {
       *os << be_nl_2 << "const char* " << node->full_name ()
-          << "::_desc_repository_id (void)"
+          << "::_desc_repository_id ()"
           << be_nl
           << "{" << be_idt_nl
           << "return \"" << node->repoID ()
@@ -346,7 +335,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << "}";
 
       *os << be_nl_2 << "const char* " << node->full_name ()
-          << "::_desc_interface_name (void)"
+          << "::_desc_interface_name ()"
           << be_nl
           << "{" << be_idt_nl
           << "return \"" << node->local_name()
@@ -391,7 +380,6 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
 
   if (be_global->tc_support ())
     {
-
       be_visitor_context ctx = *this->ctx_;
       TAO::be_visitor_objref_typecode tc_visitor (&ctx);
 
@@ -415,8 +403,7 @@ be_visitor_interface_cs::gen_xxx_narrow (const char *pre,
   TAO_OutStream *os = this->ctx_->stream ();
 
   *os << node->full_name () << "_ptr" << be_nl
-      << node->full_name () << "::_" << pre << " ("
-      << be_idt << be_idt_nl;
+      << node->full_name () << "::_" << pre << " (";
 
   if (node->is_abstract ())
     {
@@ -428,8 +415,7 @@ be_visitor_interface_cs::gen_xxx_narrow (const char *pre,
     }
 
   *os << " _tao_objref)"
-      << be_uidt
-      << be_uidt_nl
+      << be_nl
       << "{" << be_idt_nl;
 
   if (node->is_local ())
@@ -471,7 +457,7 @@ be_visitor_interface_cs::gen_xxx_narrow (const char *pre,
     }
   else
     {
-      *os << "return" << be_idt_nl;
+      *os << "return ";
 
       if (!node->is_abstract ())
         {
@@ -484,18 +470,17 @@ be_visitor_interface_cs::gen_xxx_narrow (const char *pre,
               << node->local_name () << ">::" << pre <<" (";
         }
 
-      *os << be_idt << be_idt_nl
-          << "_tao_objref";
+      *os << "_tao_objref";
 
       if (ACE_OS::strcmp (pre, "narrow") == 0)
         {
-          *os << "," << be_nl
+          *os << ", "
               << "\"" << node->repoID () << "\"";
         }
 
       *os << ");";
 
-      *os << be_uidt << be_uidt << be_uidt << be_uidt_nl
+      *os << be_uidt_nl
           << "}" << be_nl_2;
     }
 
@@ -524,7 +509,7 @@ be_visitor_interface_cs::visit_extended_port (be_extended_port *node)
   /// original porttype, this is a way for visitors down the
   /// line to tell what scope we are actually in.
   this->ctx_->interface (
-    be_interface::narrow_from_scope (node->defined_in ()));
+    dynamic_cast<be_interface*> (node->defined_in ()));
 
   /// Will ignore everything but porttype attributes.
   int status = this->visit_scope (node->port_type ());
@@ -553,7 +538,7 @@ be_visitor_interface_cs::visit_mirror_port (be_mirror_port *node)
   /// original porttype, this is a way for visitors down the
   /// line to tell what scope we are actually in.
   this->ctx_->interface (
-    be_interface::narrow_from_scope (node->defined_in ()));
+    dynamic_cast<be_interface*> (node->defined_in ()));
 
   /// Will ignore everything but porttype attributes.
   int status = this->visit_scope (node->port_type ());
@@ -584,7 +569,7 @@ be_visitor_interface_cs::gen_abstract_ops_helper (be_interface *node,
       return 0;
     }
 
-  AST_Decl *d = 0;
+  AST_Decl *d = nullptr;
   be_visitor_context ctx;
   ctx.stream (os);
 
@@ -594,7 +579,7 @@ be_visitor_interface_cs::gen_abstract_ops_helper (be_interface *node,
     {
       d = si.item ();
 
-      if (d == 0)
+      if (d == nullptr)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_interface_cs::"
@@ -605,17 +590,17 @@ be_visitor_interface_cs::gen_abstract_ops_helper (be_interface *node,
 
       if (d->node_type () == AST_Decl::NT_op)
         {
-          UTL_ScopedName *item_new_name  = 0;
+          UTL_ScopedName *item_new_name  = nullptr;
           ACE_NEW_RETURN (item_new_name,
                           UTL_ScopedName (d->local_name ()->copy (),
-                                          0),
+                                          nullptr),
                           -1);
 
           UTL_ScopedName *new_op_name =
             (UTL_ScopedName *)node->name ()->copy ();
           new_op_name->nconc (item_new_name);
 
-          be_operation *op = be_operation::narrow_from_decl (d);
+          be_operation *op = dynamic_cast<be_operation*> (d);
           UTL_ScopedName *old_op_name =
             (UTL_ScopedName *) op->name ()->copy ();
           op->set_name (new_op_name);

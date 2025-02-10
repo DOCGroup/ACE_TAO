@@ -7,13 +7,13 @@ interface_3_i::interface_3_i (CORBA::ORB_ptr orb)
 
 // INTERFACE 1
 char *
-interface_3_i::operation_1 (void)
+interface_3_i::operation_1 ()
 {
   return CORBA::string_dup ("Invoked operation one");
 }
 
 ::CORBA::Long
-interface_3_i::attribute_1 (void)
+interface_3_i::attribute_1 ()
 {
   return 10;
 }
@@ -27,13 +27,13 @@ interface_3_i::attribute_1 (::CORBA::Long attribute_1)
 // INTERFACE 2
 
 char *
-interface_3_i::operation_2 (void)
+interface_3_i::operation_2 ()
 {
   return CORBA::string_dup ("Invoked operation two");
 }
 
 char *
-interface_3_i::attribute_2 (void)
+interface_3_i::attribute_2 ()
 {
   return CORBA::string_dup ("Returning attribute_2");
 }
@@ -41,19 +41,19 @@ interface_3_i::attribute_2 (void)
 //INTERFACE 3
 
 char *
-interface_3_i::operation_3 (void)
+interface_3_i::operation_3 ()
 {
   return CORBA::string_dup ("Invoked operation three");
 }
 
 void
-interface_3_i::shutdown (void)
+interface_3_i::shutdown ()
 {
   this->orb_->shutdown ();
 }
 
 ::CORBA::Short
-interface_3_i::attribute_3 (void)
+interface_3_i::attribute_3 ()
 {
   return 10;
 }

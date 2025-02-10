@@ -9,6 +9,6 @@ bogus::~bogus()
 }
 
 void
-bogus::noop (void)
+bogus::noop ()
 {
 }

@@ -14,7 +14,7 @@ Notifier::handle_signal (int signum, siginfo_t *, ucontext_t *)
 }
 
 void
-Notifier::run (void)
+Notifier::run ()
 {
   try
     {
@@ -45,7 +45,7 @@ Notifier::Notifier (int argc, ACE_TCHAR *argv[])
                 "register_handler"));
 }
 
-Notifier::~Notifier (void)
+Notifier::~Notifier ()
 {
   // Cleanup.
   this->ns_.close ();

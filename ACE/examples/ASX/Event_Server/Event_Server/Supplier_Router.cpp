@@ -6,11 +6,10 @@
 #include "Options.h"
 
 
-
 // Handle outgoing messages in a separate thread.
 
 int
-Supplier_Router::svc (void)
+Supplier_Router::svc ()
 {
   assert (this->is_writer ());
 
@@ -131,11 +130,6 @@ Supplier_Router::put (ACE_Message_Block *mb,
 }
 
 // Return information about the <Supplier_Router>.
-#if defined (ACE_WIN32) || !defined (ACE_USES_WCHAR)
-#  define FMTSTR  ACE_TEXT ("%s\t %d/%s %s (%s)\n")
-#else
-#  define FMTSTR  ACE_TEXT ("%ls\t %d/%ls %ls (%ls)\n")
-#endif /* ACE_WIN32 || !ACE_USES_WCHAR */
 
 int
 Supplier_Router::info (ACE_TCHAR **strp, size_t length) const
@@ -148,7 +142,11 @@ Supplier_Router::info (ACE_TCHAR **strp, size_t length) const
     return -1;
 
   ACE_OS::sprintf (buf,
-                   FMTSTR,
+                   ACE_TEXT ("%") ACE_TEXT_PRIs
+                   ACE_TEXT ("\t %d/%") ACE_TEXT_PRIs
+                   ACE_TEXT (" %") ACE_TEXT_PRIs
+                   ACE_TEXT (" (%") ACE_TEXT_PRIs
+                   ACE_TEXT (")\n"),
                    module_name,
                    addr.get_port_number (),
                    ACE_TEXT ("tcp"),

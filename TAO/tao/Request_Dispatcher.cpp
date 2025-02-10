@@ -4,7 +4,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Request_Dispatcher::~TAO_Request_Dispatcher (void)
+TAO_Request_Dispatcher::~TAO_Request_Dispatcher ()
 {
 }
 

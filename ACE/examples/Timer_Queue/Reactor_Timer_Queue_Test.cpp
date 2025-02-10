@@ -20,7 +20,6 @@
 #include "Reactor_Timer_Queue_Test.h"
 
 
-
 void
 Reactor_Timer_Handler::set_timer_id (long tid)
 {
@@ -51,7 +50,7 @@ Input_Handler::Input_Handler (ACE_Timer_Queue *tq,
 }
 
 int
-Input_Handler::done (void)
+Input_Handler::done ()
 {
   return this->done_;
 }
@@ -128,19 +127,19 @@ Input_Handler::handle_input (ACE_HANDLE)
   return driver_.get_next_request ();
 }
 
-Reactor_Timer_Queue_Test_Driver::Reactor_Timer_Queue_Test_Driver (void)
+Reactor_Timer_Queue_Test_Driver::Reactor_Timer_Queue_Test_Driver ()
   : thandler_ (&timer_queue_, *this)
 {
 }
 
-Reactor_Timer_Queue_Test_Driver::~Reactor_Timer_Queue_Test_Driver (void)
+Reactor_Timer_Queue_Test_Driver::~Reactor_Timer_Queue_Test_Driver ()
 {
   // unhook our timer queue
   ACE_Reactor::instance ()->timer_queue (0);
 }
 
 int
-Reactor_Timer_Queue_Test_Driver::display_menu (void)
+Reactor_Timer_Queue_Test_Driver::display_menu ()
 {
   static char menu[] =
     "\n*****\n"
@@ -157,7 +156,7 @@ Reactor_Timer_Queue_Test_Driver::display_menu (void)
 }
 
 int
-Reactor_Timer_Queue_Test_Driver::init (void)
+Reactor_Timer_Queue_Test_Driver::init ()
 {
   typedef Command<Input_Handler, Input_Handler::ACTION> CMD;
 
@@ -193,7 +192,7 @@ Reactor_Timer_Queue_Test_Driver::init (void)
 // run test was overrun due to the reactive way of handling input.
 
 int
-Reactor_Timer_Queue_Test_Driver::run_test (void)
+Reactor_Timer_Queue_Test_Driver::run_test ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "TIMER TEST STARTED\n"));

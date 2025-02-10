@@ -48,9 +48,10 @@ namespace
    */
   template<typename T>
   class randomize_element
-    : public std::unary_function<T &, void>
   {
   public:
+    typedef T &argument_type;
+    typedef void result_type;
 
     randomize_element (T * array, size_t size, unsigned int seed)
       : array_ (array)
@@ -72,7 +73,6 @@ namespace
     }
 
   private:
-
     // The array.
     T * const array_;
 
@@ -81,7 +81,6 @@ namespace
 
     // Random number generator seed value.
     unsigned int seed_;
-
   };
 
   /**

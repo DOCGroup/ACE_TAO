@@ -1,5 +1,5 @@
 #include "EntityResolver.h"
 
-ACEXML_EntityResolver::~ACEXML_EntityResolver (void)
+ACEXML_EntityResolver::~ACEXML_EntityResolver ()
 {
 }

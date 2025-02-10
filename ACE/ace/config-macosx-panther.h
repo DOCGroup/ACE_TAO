@@ -26,8 +26,6 @@
 #define ACE_HAS_GPERF
 #define ACE_HAS_POSIX_SEM
 
-//#define ACE_HAS_SVR4_TLI
-
 #define ACE_LACKS_STROPTS_H
 #define ACE_LACKS_WCHAR_H
 
@@ -54,9 +52,6 @@
 #define ACE_HAS_NONCONST_SELECT_TIMEVAL
 
 #define ACE_NEEDS_SCHED_H
-
-// Use of <malloc.h> is deprecated.
-#define ACE_LACKS_MALLOC_H
 
 #define ACE_HAS_ALT_CUSERID
 
@@ -153,7 +148,6 @@
 #define ACE_LACKS_SIGINFO_H
 #define ACE_HAS_UCONTEXT_T
 #define ACE_HAS_GETIFADDRS
-#define ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES
 #define ACE_LACKS_UNNAMED_SEMAPHORE
 
 // dlcompat package (not part of base Darwin) is needed for dlopen().

@@ -7,13 +7,13 @@
 const CORBA::ULong service_ctx_id = 0xdeed;
 
 ClientInterceptor::
-ClientInterceptor (void)
+ClientInterceptor ()
   : myname_ ("Client_Authentication_Interceptor")
 {
   std::cout << "Calling ClientInterceptor constructor." << std::endl;
 }
 
-ClientInterceptor::~ClientInterceptor (void)
+ClientInterceptor::~ClientInterceptor ()
 {
 }
 
@@ -59,7 +59,6 @@ ClientInterceptor::send_request (
 
   // Add this context to the service context list.
   ri->add_request_service_context (sc, false);
-
 }
 
 void

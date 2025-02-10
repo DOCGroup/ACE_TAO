@@ -51,7 +51,6 @@ namespace Dynamic
 class TAO_PI_Export TAO_RequestInfo_Util
 {
 public:
-
   /**
    * @name Factory Methods
    *
@@ -61,13 +60,13 @@ public:
    * class.
    */
   //@{
-  static Dynamic::ParameterList * make_parameter_list (void);
+  static Dynamic::ParameterList * make_parameter_list ();
 
-  static Dynamic::ExceptionList * make_exception_list (void);
+  static Dynamic::ExceptionList * make_exception_list ();
 
-  static Dynamic::ContextList * make_context_list (void);
+  static Dynamic::ContextList * make_context_list ();
 
-  static Dynamic::RequestContext * make_request_context (void);
+  static Dynamic::RequestContext * make_request_context ();
 
   static CORBA::Any * make_any (CORBA::Boolean tk_void_any);
   //@}

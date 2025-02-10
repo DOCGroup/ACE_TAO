@@ -28,7 +28,7 @@ class Client_Task : public ACE_Task_Base
                ACE_Thread_Manager *thr_mgr);
 
   /// Thread entry point.
-  int svc (void);
+  int svc ();
 
 private:
   /// File to read in the remote IOR.

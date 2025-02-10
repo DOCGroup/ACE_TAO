@@ -33,7 +33,7 @@ class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_Periodic_Supplier : public TAO_Not
 {
 public:
   /// Constructor
-  TAO_Notify_Tests_Periodic_Supplier (void);
+  TAO_Notify_Tests_Periodic_Supplier ();
 
   /// Destructor
   ~TAO_Notify_Tests_Periodic_Supplier ();
@@ -48,24 +48,23 @@ public:
   virtual int activate_task (ACE_Barrier* barrier);
 
   /// task svc
-  virtual int svc (void);
+  virtual int svc ();
 
   /// Dump stats.
   void dump_stats (ACE_TCHAR* msg, int dump_samples);
 
   /// Get the name of the proxy
-  const char* proxy_name (void);
+  const char* proxy_name ();
 
 protected:
-
   /// svc method.
-  void handle_svc (void);
+  void handle_svc ();
 
   /// Send a few events before the actual measurements.
-  void send_warmup_events (void);
+  void send_warmup_events ();
 
   /// Send Prologue
-  void send_prologue (void);
+  void send_prologue ();
 
   /// All tasks synch at this barrier.
   ACE_Barrier* barrier_;

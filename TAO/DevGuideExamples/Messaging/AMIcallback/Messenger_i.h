@@ -25,7 +25,7 @@ public:
                CORBA::Boolean throw_exception = 0);
 
   //Destructor
-  virtual ~Messenger_i (void);
+  virtual ~Messenger_i ();
 
 virtual CORBA::Boolean send_message (
     const char * user_name,
@@ -42,9 +42,7 @@ private:
   // Force an exception to be thrown to test client-side
   // exception handling
   CORBA::Boolean throw_exception_;
-
 };
-
 
 
 #endif /* MESSENGER_IMPL_H_  */

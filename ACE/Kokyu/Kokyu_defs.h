@@ -10,7 +10,6 @@
 #include /**/ "ace/pre.h"
 #include "ace/Containers_T.h"
 #include "ace/Time_Value.h"
-#include "ace/Auto_Ptr.h"
 #include "ace/Message_Block.h"
 #include "ace/Sched_Params.h"
 #include "ace/Malloc_Allocator.h"
@@ -121,32 +120,32 @@ namespace Kokyu
   enum Block_Flag_t {BLOCK, UNBLOCK};
 
   class Kokyu_Export Dispatch_Command
-    {
-    public:
-      Dispatch_Command(int dont_delete = 0,
-                       ACE_Allocator *allocator = 0);
-      //dont_delete indicates whether this object needs to be deleted once processed.
-      //allocator indicates the ACE_Allocator, if any, from which this object was created.
-      //This same allocator has to be used for the deletion also
+  {
+  public:
+    Dispatch_Command(int dont_delete = 0,
+                      ACE_Allocator *allocator = 0);
+    //dont_delete indicates whether this object needs to be deleted once processed.
+    //allocator indicates the ACE_Allocator, if any, from which this object was created.
+    //This same allocator has to be used for the deletion also
 
-      /// Command callback
-      virtual int execute () = 0;
+    /// Command callback
+    virtual int execute () = 0;
 
-      int can_be_deleted () const;
+    int can_be_deleted () const;
 
-      void destroy (void);
-    protected:
-      /// Destructor
-      // only inheritance is possible and object should be on heap,
-      // since object could be handed over to a different thread.
-      virtual ~Dispatch_Command (void);
+    void destroy ();
+  protected:
+    /// Destructor
+    // only inheritance is possible and object should be on heap,
+    // since object could be handed over to a different thread.
+    virtual ~Dispatch_Command ();
 
-    private:
-      int dont_delete_;
-      ACE_Allocator *allocator_;
-      //if this object has to be deleted, then delete it using the allocator
-      //if one is present.
-    };
+  private:
+    int dont_delete_;
+    ACE_Allocator *allocator_;
+    //if this object has to be deleted, then delete it using the allocator
+    //if one is present.
+  };
 
   enum DSRT_Sched_Type_t
     {
@@ -174,7 +173,6 @@ namespace Kokyu
 
     DSRT_ConfigInfo ();
   };
-
 } //end of namespace
 
 //to satisfy ACE_Array<ConfigInfo>

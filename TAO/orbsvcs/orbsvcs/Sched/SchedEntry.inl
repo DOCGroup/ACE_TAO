@@ -375,7 +375,7 @@ TimeLine_Entry::deadline () const
 
 // accessor for next slice for this dispatch
 ACE_INLINE TimeLine_Entry *
-TimeLine_Entry::next (void) const
+TimeLine_Entry::next () const
 {
   return next_;
 }
@@ -389,7 +389,7 @@ TimeLine_Entry::next (TimeLine_Entry *t)
 
 // accessor for previous slice for this dispatch
 ACE_INLINE TimeLine_Entry *
-TimeLine_Entry::prev (void) const
+TimeLine_Entry::prev () const
 {
   return prev_;
 }

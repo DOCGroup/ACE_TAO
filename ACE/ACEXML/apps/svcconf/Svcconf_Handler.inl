@@ -32,7 +32,7 @@ ACE_Parsed_Info::name (const ACEXML_Char *n)
 }
 
 ACE_INLINE const ACEXML_Char *
-ACE_Parsed_Info::name (void)
+ACE_Parsed_Info::name ()
 {
   return this->name_;
 }
@@ -49,7 +49,7 @@ ACE_Parsed_Info::service_type (int type)
 }
 
 ACE_INLINE int
-ACE_Parsed_Info::service_type (void)
+ACE_Parsed_Info::service_type ()
 {
   return this->service_type_;
 }
@@ -62,7 +62,7 @@ ACE_Parsed_Info::active (int a)
 }
 
 ACE_INLINE int
-ACE_Parsed_Info::active (void)
+ACE_Parsed_Info::active ()
 {
   return this->active_;
 }
@@ -79,7 +79,7 @@ ACE_Parsed_Info::path (const ACEXML_Char *p)
 }
 
 ACE_INLINE const ACEXML_Char *
-ACE_Parsed_Info::path (void)
+ACE_Parsed_Info::path ()
 {
   return this->path_;
 }
@@ -96,7 +96,7 @@ ACE_Parsed_Info::init_func (const ACEXML_Char *n)
 }
 
 ACE_INLINE const ACEXML_Char *
-ACE_Parsed_Info::init_func (void)
+ACE_Parsed_Info::init_func ()
 {
   return this->init_func_;
 }
@@ -113,13 +113,13 @@ ACE_Parsed_Info::init_params (const ACEXML_Char *n)
 }
 
 ACE_INLINE const ACEXML_Char *
-ACE_Parsed_Info::init_params (void)
+ACE_Parsed_Info::init_params ()
 {
   return this->init_params_;
 }
 
 ACE_INLINE void
-ACE_Parsed_Info::reset (void)
+ACE_Parsed_Info::reset ()
 {
   delete[] this->name_;
   this->name_ = 0;

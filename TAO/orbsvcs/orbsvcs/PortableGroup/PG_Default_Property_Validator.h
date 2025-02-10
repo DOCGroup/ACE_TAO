@@ -34,12 +34,11 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_PortableGroup_Export TAO_PG_Default_Property_Validator
 {
 public:
-
   /// Constructor.
-  TAO_PG_Default_Property_Validator (void);
+  TAO_PG_Default_Property_Validator ();
 
   /// Destructor
-  virtual ~TAO_PG_Default_Property_Validator (void);
+  virtual ~TAO_PG_Default_Property_Validator () = default;
 
   /// Validate the given properties.  Throw an exception when the
   /// first invalid property is encountered.  The remaining properties
@@ -52,7 +51,6 @@ public:
   virtual void validate_criteria (const PortableGroup::Properties & criteria);
 
 private:
-
   /**
    * @name Pre-initialize property Names.
    *
@@ -66,7 +64,6 @@ private:
   PortableGroup::Name membership_;
   PortableGroup::Name factories_;
   //@}
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

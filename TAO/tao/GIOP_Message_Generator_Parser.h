@@ -46,7 +46,7 @@ class TAO_ServerRequest;
 class TAO_GIOP_Message_Generator_Parser
 {
 public:
-  virtual ~TAO_GIOP_Message_Generator_Parser (void);
+  virtual ~TAO_GIOP_Message_Generator_Parser ();
 
   /// Write the request header in to @a msg
   virtual bool write_request_header (
@@ -93,15 +93,15 @@ public:
                                   TAO_Pluggable_Reply_Params &params);
 
   /// Our versions
-  virtual CORBA::Octet major_version (void) const = 0;
-  virtual CORBA::Octet minor_version (void) const = 0;
+  virtual CORBA::Octet major_version () const = 0;
+  virtual CORBA::Octet minor_version () const = 0;
 
   /// Is the messaging object ready for processing BiDirectional
   /// request/response?
-  virtual bool is_ready_for_bidirectional (void) const;
+  virtual bool is_ready_for_bidirectional () const;
 
   /// The header length of a fragment
-  virtual size_t fragment_header_length (void) const = 0;
+  virtual size_t fragment_header_length () const = 0;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

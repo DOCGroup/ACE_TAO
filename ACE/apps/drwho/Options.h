@@ -57,7 +57,7 @@ public:
   static const char *friend_file;
   static char *user_name;
 
-  static void print_usage_and_die (int long_msg);
+  static void print_usage_and_die [[noreturn]] (int long_msg);
   static unsigned int option_word;
 };
 

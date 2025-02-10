@@ -46,7 +46,7 @@ class TAO_Notify_Serv_Export TAO_Notify_StructuredProxyPushSupplier
 
 public:
   /// Constructor
-  TAO_Notify_StructuredProxyPushSupplier (void);
+  TAO_Notify_StructuredProxyPushSupplier ();
 
   /// Destructor
   virtual ~TAO_Notify_StructuredProxyPushSupplier ();
@@ -57,7 +57,7 @@ public:
 
   /// = Servant methods
   // = interface methods
-  virtual CosNotifyChannelAdmin::ProxyType MyType (void);
+  virtual CosNotifyChannelAdmin::ProxyType MyType ();
 
   virtual void connect_structured_push_consumer (
     CosNotifyComm::StructuredPushConsumer_ptr push_consumer
@@ -66,14 +66,13 @@ public:
   virtual void disconnect_structured_push_supplier (
   );
 
-  virtual const char * get_proxy_type_name (void) const;
+  virtual const char * get_proxy_type_name () const;
 
   virtual void configure(TAO_Notify_ConsumerAdmin & admin, CosNotifyChannelAdmin::ProxyID_out proxy_id);
 
 private:
-
   /// Release
-  virtual void release (void);
+  virtual void release ();
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

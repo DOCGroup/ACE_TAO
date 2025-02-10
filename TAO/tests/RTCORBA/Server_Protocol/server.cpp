@@ -17,7 +17,7 @@ public:
   // ctor
 
   //FUZZ: disable check_for_lack_ACE_OS
-  void shutdown (void);
+  void shutdown ();
   //FUZZ: enable check_for_lack_ACE_OS
 
 private:
@@ -31,11 +31,11 @@ Test_i::Test_i (CORBA::ORB_ptr orb)
 }
 
 void
-Test_i::shutdown (void)
+Test_i::shutdown ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "Received request to shut down the ORB\n"));
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }
 
 //*************************************************************************

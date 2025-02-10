@@ -129,7 +129,7 @@ RTCORBA::RTORB_ptr getRTORB(CORBA::ORB_ptr orb, const char *id)
 {
   CORBA::Object_var obj = orb->resolve_initial_references("RTORB");
   RTCORBA::RTORB_ptr rtorb = RTCORBA::RTORB::_narrow(obj.in());
-  if ( CORBA::is_nil(rtorb))
+  if (CORBA::is_nil(rtorb))
     {
       ACE_ERROR ((LM_ERROR,
                   "Failed getting RTORB for orb <%C>\n",
@@ -142,7 +142,7 @@ PortableServer::POA_ptr getRootPoa(CORBA::ORB_ptr orb, const char *id)
 {
   CORBA::Object_var obj = orb->resolve_initial_references("RootPOA");
   PortableServer::POA_ptr poa = PortableServer::POA::_narrow(obj.in());
-  if ( CORBA::is_nil(poa) )
+  if (CORBA::is_nil(poa))
     {
       ACE_ERROR ((LM_ERROR,
                   "Failed getting RootPOA for orb <%C>\n",

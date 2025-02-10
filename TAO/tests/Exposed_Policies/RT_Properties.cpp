@@ -5,15 +5,10 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 
-RT_Properties::RT_Properties (void)
+RT_Properties::RT_Properties ()
   : priority_ (10)
 {
   ior_source_ = ACE_TEXT("poa_default.ior");
-}
-
-RT_Properties::~RT_Properties (void)
-{
-  // No-Op.
 }
 
 RT_Properties *
@@ -49,7 +44,6 @@ RT_Properties::read_from (const ACE_TCHAR *file_name)
           ACE_UNUSED_ARG (n_matched);
 
           rt_properties->priority_bands_.length (int_field);
-
         }
       else if (ACE_OS::strcmp (string_field, "Priority_Range") == 0)
         {
@@ -77,7 +71,7 @@ RT_Properties::priority (RTCORBA::Priority priority)
 }
 
 RTCORBA::Priority
-RT_Properties::priority (void)
+RT_Properties::priority ()
 {
   return this->priority_;
 }
@@ -89,7 +83,7 @@ RT_Properties::priority_bands (const RTCORBA::PriorityBands& priority_bands)
 }
 
 const RTCORBA::PriorityBands&
-RT_Properties::priority_bands (void)
+RT_Properties::priority_bands ()
 {
   return this->priority_bands_;
 }
@@ -101,7 +95,7 @@ RT_Properties::ior_source (const ACE_TCHAR *s)
 }
 
 const ACE_TCHAR *
-RT_Properties::ior_source (void)
+RT_Properties::ior_source ()
 {
   return this->ior_source_.c_str ();
 }

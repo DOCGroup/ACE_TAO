@@ -475,6 +475,7 @@ project(Bug_4055_Regression_Test) : acetest, threads {
 }
 
 project(Bug_4189_Regression_Test) : acetest, threads {
+  avoids += ace_for_tao
   exename = Bug_4189_Regression_Test
   Source_Files {
     Bug_4189_Regression_Test.cpp
@@ -611,15 +612,6 @@ project(Compiler_Features_07_Test) : acetest {
   exename = Compiler_Features_07_Test
   Source_Files {
     Compiler_Features_07_Test.cpp
-  }
-}
-
-// This compiler feature is not supported on all compilers
-project(Compiler_Features_08_Test) : acetest {
-  requires += dummy_label
-  exename = Compiler_Features_08_Test
-  Source_Files {
-    Compiler_Features_08_Test.cpp
   }
 }
 
@@ -850,6 +842,20 @@ project(Compiler_Features_38_Test) : acetest {
   }
 }
 
+project(Compiler_Features_39_Test) : acetest {
+  exename = Compiler_Features_39_Test
+  Source_Files {
+    Compiler_Features_39_Test.cpp
+  }
+}
+
+project(Compiler_Features_40_Test) : acetest {
+  exename = Compiler_Features_40_Test
+  Source_Files {
+    Compiler_Features_40_Test.cpp
+  }
+}
+
 project(Config Test) : acetest {
   avoids += ace_for_tao
   exename = Config_Test
@@ -951,6 +957,14 @@ project(Future Set Test) : acetest {
   exename = Future_Set_Test
   Source_Files {
     Future_Set_Test.cpp
+  }
+}
+
+project(Future Stress Test) : acetest {
+  avoids += ace_for_tao
+  exename = Future_Stress_Test
+  Source_Files {
+    Future_Stress_Test.cpp
   }
 }
 
@@ -1163,13 +1177,6 @@ project(Message Queue Test) : acetest {
   Source_Files {
     Message_Queue_Test.cpp
   }
-  verbatim(gnuace,local) {
-    # Needs a larger heap on AIX to avoid overwriting stacks in the counting
-    # part of the test.
-    ifdef AIX_VERS
-      LDFLAGS += -bmaxdata:0x20000000
-    endif
-  }
 }
 
 project(Monotonic_Manual_Event Test) : acetest {
@@ -1214,6 +1221,13 @@ project(Multicast Test) : acetest {
   exename = Multicast_Test
   Source_Files {
     Multicast_Test.cpp
+  }
+}
+
+project(Multicast Interfaces Test) : acetest {
+  exename = Multicast_Interfaces_Test
+  Source_Files {
+    Multicast_Interfaces_Test.cpp
   }
 }
 
@@ -2181,7 +2195,6 @@ project(Based Pointer Test) : acetest {
 }
 
 project(Library Unload): unload_libace {
-  avoids += wince
   exename = UnloadLibACE
   staticflags += ACE_AS_STATIC_LIBS
   Source_Files {
@@ -2286,6 +2299,7 @@ project(Missing_Svc_Conf_Test) : acetest {
 }
 
 project(UNIX Addr Test) : acetest {
+  avoids += ace_for_tao
   exename = UNIX_Addr_Test
   Source_Files {
     UNIX_Addr_Test.cpp

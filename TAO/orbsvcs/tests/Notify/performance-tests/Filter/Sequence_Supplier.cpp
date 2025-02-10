@@ -3,7 +3,6 @@
 // ******************************************************************
 
 #include "ace/Get_Opt.h"
-#include "ace/Auto_Ptr.h"
 
 #include "tao/ORB_Core.h"
 
@@ -16,6 +15,7 @@
 #include "Notify_Test_Client.h"
 
 #include "ace/OS_NS_unistd.h"
+#include <memory>
 
 // ******************************************************************
 // Data Section
@@ -38,12 +38,12 @@ public:
   {
   }
 
-  void go (void)
+  void go ()
   {
     started_ = true;
   }
 
-  void done (void)
+  void done ()
   {
     started_ = false;
   }
@@ -130,7 +130,7 @@ SendEvents (int id)
 
   for(CORBA::ULong z = 0; z < amount; z++)
   {
-    const char* type = ( (z & 1) == 1 ? "odd" : "even" );
+    const char* type = ( (z & 1) == 1 ? "odd" : "even");
     events[z].header.fixed_header.event_type.domain_name =
       CORBA::string_dup("Orbix 2000 Demos");
     events[z].header.fixed_header.event_type.type_name =
@@ -174,7 +174,7 @@ create_suppliers (CosNotifyChannelAdmin::SupplierAdmin_ptr admin,
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Auto_Ptr< sig_i > sig_impl;
+  std::unique_ptr<sig_i> sig_impl;
   int status = 0;
   try
   {
@@ -189,7 +189,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       CORBA::ORB_ptr orb = client.orb ();
 
-      sig_impl.reset( new sig_i( orb ) );
+      sig_impl.reset(new sig_i(orb));
       sig_var sig = sig_impl->_this ();
 
       CORBA::String_var ior =

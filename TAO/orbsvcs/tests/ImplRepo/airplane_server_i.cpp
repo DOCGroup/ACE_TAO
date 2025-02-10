@@ -14,7 +14,7 @@
 // The server name of the Aiprlane Server
 const char SERVER_NAME[] = "airplane_server";
 
-Airplane_Server_i::Airplane_Server_i (void)
+Airplane_Server_i::Airplane_Server_i ()
   : argc_ (0),
     argv_ (0),
     orb_ (),
@@ -30,7 +30,7 @@ Airplane_Server_i::Airplane_Server_i (void)
 }
 
 int
-Airplane_Server_i::parse_args (void)
+Airplane_Server_i::parse_args ()
 {
   ACE_Get_Opt get_opts (this->argc_, this->argv_, ACE_TEXT("do:s:p:"));
   int c;
@@ -186,7 +186,7 @@ Airplane_Server_i::init (int argc, ACE_TCHAR** argv)
 }
 
 int
-Airplane_Server_i::run (void)
+Airplane_Server_i::run ()
 {
   try
     {
@@ -213,7 +213,7 @@ Airplane_Server_i::run (void)
   return 0;
 }
 
-Airplane_Server_i::~Airplane_Server_i (void)
+Airplane_Server_i::~Airplane_Server_i ()
 {
   delete this->server_impl_;
 }

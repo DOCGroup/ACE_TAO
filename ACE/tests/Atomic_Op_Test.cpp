@@ -34,11 +34,11 @@ class Exchange_Tester : public ACE_Task<ACE_NULL_SYNCH>
 {
 public:
   Exchange_Tester (unsigned int thr_count);
-  int result (void) const;
+  int result () const;
 
 private:
   Exchange_Tester () {}
-  int svc (void);
+  int svc () override;
 
   ACE_Barrier barrier_;
   ACE_Atomic_Op<ACE_SYNCH_MUTEX, T> op_;
@@ -55,14 +55,14 @@ Exchange_Tester<T>::Exchange_Tester (unsigned int thr_count)
 
 template <typename T>
 int
-Exchange_Tester<T>::result (void) const
+Exchange_Tester<T>::result () const
 {
   return this->claimed_ == 1 ? 0 : 1;
 }
 
 template <typename T>
 int
-Exchange_Tester<T>::svc (void)
+Exchange_Tester<T>::svc ()
 {
   this->barrier_.wait ();     // Want all threads to try to claim "at once"
   bool claimed = this->op_.exchange (1) == 0;

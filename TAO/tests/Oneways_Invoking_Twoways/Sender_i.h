@@ -1,4 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
 // ===================================================================
 /**
  *  @file   Sender_i.h
@@ -28,16 +27,16 @@ public:
             CORBA::ULong no);
 
   ///Destructor
-  virtual ~Sender_i (void);
+  virtual ~Sender_i ();
 
   // = The skeleton methods
   virtual void active_objects (CORBA::Short ao);
 
   virtual void send_ready_message (Test::Receiver_ptr receiver);
 
-  virtual void ping (void);
+  virtual void ping ();
 
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
 private:
   /// Our local ORB ptr

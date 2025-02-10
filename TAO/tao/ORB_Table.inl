@@ -6,32 +6,32 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE ::TAO_ORB_Core *
-TAO::ORB_Table::first_orb (void)
+TAO::ORB_Table::first_orb ()
 {
   return this->first_orb_;
 }
 
 ACE_INLINE TAO::ORB_Table::iterator
-TAO::ORB_Table::begin (void)
+TAO::ORB_Table::begin ()
 {
   return this->table_.begin ();
 }
 
 ACE_INLINE TAO::ORB_Table::iterator
-TAO::ORB_Table::end (void)
+TAO::ORB_Table::end ()
 {
   return this->table_.end ();
 }
 
 /// Accessor to the underlying table_
 ACE_INLINE TAO::ORB_Table::Table *
-TAO::ORB_Table::table (void)
+TAO::ORB_Table::table ()
 {
   return &this->table_;
 }
 
 ACE_INLINE TAO_SYNCH_MUTEX &
-TAO::ORB_Table::lock (void)
+TAO::ORB_Table::lock ()
 {
   return this->lock_;
 }
@@ -39,7 +39,7 @@ TAO::ORB_Table::lock (void)
 // ****************************************************************
 
 ACE_INLINE
-TAO::ORB_Core_Ref_Counter::ORB_Core_Ref_Counter (void)
+TAO::ORB_Core_Ref_Counter::ORB_Core_Ref_Counter ()
   : core_ (0)
 {
 }
@@ -58,7 +58,7 @@ TAO::ORB_Core_Ref_Counter::ORB_Core_Ref_Counter (::TAO_ORB_Core * core)
 }
 
 ACE_INLINE
-TAO::ORB_Core_Ref_Counter::~ORB_Core_Ref_Counter (void)
+TAO::ORB_Core_Ref_Counter::~ORB_Core_Ref_Counter ()
 {
   if (this->core_)
     (void) this->core_->_decr_refcnt (); // Should never throw.

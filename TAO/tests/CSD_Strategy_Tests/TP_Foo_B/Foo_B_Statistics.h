@@ -8,7 +8,6 @@
 class CSD_TP_Foo_B_Export Foo_B_Statistics
 {
   public:
-
     enum In_Value_Type
     {
       FOO_B_STAT_NONE,
@@ -19,7 +18,7 @@ class CSD_TP_Foo_B_Export Foo_B_Statistics
     Foo_B_Statistics(unsigned num_remote_clients,
                      unsigned num_collcated_clients);
 
-    virtual ~Foo_B_Statistics();
+    virtual ~Foo_B_Statistics() = default;
 
     void expected(unsigned op_num, unsigned count, In_Value_Type type);
     void actual(unsigned op_num, unsigned count);
@@ -33,7 +32,6 @@ class CSD_TP_Foo_B_Export Foo_B_Statistics
     bool actual_vs_expected();
 
 private:
-
     unsigned num_clients_;
     unsigned num_collcated_clients_;
 

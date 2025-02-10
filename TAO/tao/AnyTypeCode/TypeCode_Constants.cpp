@@ -81,6 +81,8 @@ namespace CORBA
   TypeCode_ptr const _tc_wchar      = &TAO::TypeCode::tc_wchar;
   TypeCode_ptr const _tc_short      = &TAO::TypeCode::tc_short;
   TypeCode_ptr const _tc_ushort     = &TAO::TypeCode::tc_ushort;
+  TypeCode_ptr const _tc_int8       = nullptr;
+  TypeCode_ptr const _tc_uint8      = nullptr;
   TypeCode_ptr const _tc_long       = &TAO::TypeCode::tc_long;
   TypeCode_ptr const _tc_ulong      = &TAO::TypeCode::tc_ulong;
   TypeCode_ptr const _tc_longlong   = &TAO::TypeCode::tc_longlong;
@@ -99,7 +101,6 @@ namespace CORBA
   TypeCode_ptr const _tc_Object     = &TAO::TypeCode::tc_Object;
   TypeCode_ptr const _tc_Component  = &TAO::TypeCode::tc_Component;
   TypeCode_ptr const _tc_Home       = &TAO::TypeCode::tc_Home;
-
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

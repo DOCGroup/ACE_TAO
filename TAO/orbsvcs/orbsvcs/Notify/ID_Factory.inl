@@ -2,7 +2,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE TAO_Notify_Object::ID
-TAO_Notify_ID_Factory::id (void)
+TAO_Notify_ID_Factory::id ()
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mtx_, 0);
   return ++seed_;

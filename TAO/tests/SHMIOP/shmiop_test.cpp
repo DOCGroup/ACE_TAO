@@ -21,7 +21,7 @@ struct Servant : virtual POA_Test::Hello
 
   void shutdown ()
   {
-    this->orb_->shutdown (0);
+    this->orb_->shutdown (false);
   }
 
   CORBA::ORB_var orb_;

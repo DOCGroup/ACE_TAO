@@ -90,7 +90,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
     stock_factory_i.destroy_stock_objects ();
 
     // Destroy the POA, waiting until the destruction terminates
-    poa->destroy (1, 1);
+    poa->destroy (true, true);
     orb->destroy ();
   }
   catch (const CORBA::Exception &) {

@@ -14,7 +14,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_TypeCodeFactory_Loader::TAO_TypeCodeFactory_Loader (void)
+TAO_TypeCodeFactory_Loader::TAO_TypeCodeFactory_Loader ()
 {
 }
 
@@ -29,7 +29,7 @@ TAO_TypeCodeFactory_Loader::create_object (CORBA::ORB_ptr, int, ACE_TCHAR * [])
 }
 
 int
-TAO_TypeCodeFactory_Loader::Initializer (void)
+TAO_TypeCodeFactory_Loader::Initializer ()
 {
   return ACE_Service_Config::process_directive (ace_svc_desc_TAO_TypeCodeFactory_Loader);
 }

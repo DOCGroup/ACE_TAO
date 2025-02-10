@@ -11,7 +11,6 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace TAO_FtRt
 {
-
 static union
 {
   struct

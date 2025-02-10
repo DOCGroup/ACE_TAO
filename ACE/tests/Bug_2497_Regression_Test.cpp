@@ -15,12 +15,12 @@
 class Test_Task : public ACE_Task<ACE_SYNCH>
 {
 public:
-  Test_Task( void ) :
+  Test_Task( ) :
     _destructorCalled(0)
   {
   }
 
-  virtual ~Test_Task( void )
+  ~Test_Task( ) override
   {
     ++_destructorCalled;
     if (_destructorCalled > 1)
@@ -36,7 +36,7 @@ private:
 class Test_Module : public ACE_Module<ACE_SYNCH>
 {
 public:
-  Test_Module( void )
+  Test_Module( )
     {
       this->open( ACE_TEXT("Test module"),
                   &_writerTask,

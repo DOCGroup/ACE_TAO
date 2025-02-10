@@ -21,7 +21,7 @@ ACE_Intrusive_Auto_Ptr<X>::ACE_Intrusive_Auto_Ptr (const ACE_Intrusive_Auto_Ptr<
 }
 
 template <class X> ACE_INLINE X *
-ACE_Intrusive_Auto_Ptr<X>::operator-> (void) const
+ACE_Intrusive_Auto_Ptr<X>::operator-> () const
 {
     return this->rep_;
 }
@@ -33,14 +33,14 @@ ACE_Intrusive_Auto_Ptr<X>::operator *() const
 }
 
 template <class X> ACE_INLINE X*
-ACE_Intrusive_Auto_Ptr<X>::get (void) const
+ACE_Intrusive_Auto_Ptr<X>::get () const
 {
   // We return the ACE_Future_rep.
   return this->rep_;
 }
 
 template<class X> ACE_INLINE X *
-ACE_Intrusive_Auto_Ptr<X>::release (void)
+ACE_Intrusive_Auto_Ptr<X>::release ()
 {
   X *p = this->rep_;
   if (this->rep_ != 0)
@@ -114,31 +114,30 @@ template<class T, class U> ACE_INLINE bool operator==(ACE_Intrusive_Auto_Ptr<T> 
     return a.get() == b.get();
 }
 
-  /// Inequality operator, which is the opposite of equality.
-  template<class T, class U> ACE_INLINE bool operator!=(ACE_Intrusive_Auto_Ptr<T> const & a, ACE_Intrusive_Auto_Ptr<U> const & b)
+/// Inequality operator, which is the opposite of equality.
+template<class T, class U> ACE_INLINE bool operator!=(ACE_Intrusive_Auto_Ptr<T> const & a, ACE_Intrusive_Auto_Ptr<U> const & b)
 {
     return a.get() != b.get();
 }
 
-    template<class T, class U> ACE_INLINE bool operator==(ACE_Intrusive_Auto_Ptr<T> const & a, U * b)
+template<class T, class U> ACE_INLINE bool operator==(ACE_Intrusive_Auto_Ptr<T> const & a, U * b)
 {
     return a.get() == b;
 }
 
-      template<class T, class U> ACE_INLINE bool operator!=(ACE_Intrusive_Auto_Ptr<T> & a, U * b)
+template<class T, class U> ACE_INLINE bool operator!=(ACE_Intrusive_Auto_Ptr<T> & a, U * b)
 {
     return a.get() != b;
 }
 
-        template<class T, class U> ACE_INLINE bool operator==(T * a, ACE_Intrusive_Auto_Ptr<U> const & b)
+template<class T, class U> ACE_INLINE bool operator==(T * a, ACE_Intrusive_Auto_Ptr<U> const & b)
 {
     return a == b.get();
 }
 
-          template<class T, class U> ACE_INLINE bool operator!=(T * a, ACE_Intrusive_Auto_Ptr<U> const & b)
+template<class T, class U> ACE_INLINE bool operator!=(T * a, ACE_Intrusive_Auto_Ptr<U> const & b)
 {
     return a != b.get();
 }
-
 
 ACE_END_VERSIONED_NAMESPACE_DECL

@@ -58,16 +58,16 @@ SM_Client::mux (char *packet, int &packet_length)
   return 1;
 }
 
-SM_Client::SM_Client (void)
+SM_Client::SM_Client ()
 {
 }
 
-SM_Client::~SM_Client (void)
+SM_Client::~SM_Client ()
 {
 }
 
 void
-SM_Client::process (void)
+SM_Client::process ()
 {
   this->pm_client->process ();
 }

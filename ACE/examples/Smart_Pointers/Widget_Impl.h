@@ -28,10 +28,10 @@ class Widget_Impl : public Widget
 {
 public:
   /// Constructor.
-  Widget_Impl (void);
+  Widget_Impl ();
 
   /// Destructor.
-  virtual ~Widget_Impl (void);
+  virtual ~Widget_Impl ();
 
   /// Add a new part to the widget. The widget takes ownership of the part
   /// object.
@@ -39,10 +39,10 @@ public:
 
   /// Remove a random part from the widget. Ownership of the part is returned
   /// to the caller.
-  virtual Widget_Part *remove_part (void);
+  virtual Widget_Part *remove_part ();
 
   /// Ask the widget to print information about the parts that it contains.
-  virtual void list_parts (void);
+  virtual void list_parts ();
 
 private:
   /// The parts which make up this widget. The set actually contains instances

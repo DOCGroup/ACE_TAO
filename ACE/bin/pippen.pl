@@ -44,9 +44,6 @@ while ( $#ARGV >= 0)
     elsif ($ARGV[0] =~ m/^-evc3/i) {
         $extension = "vcp";
     }
-    elsif ($ARGV[0] =~ m/^-msvc6/i) {
-        $extension = "dsp";
-    }
     elsif ($ARGV[0] =~ m/^-msvc7/i) {
         $extension = "vcproj";
     }
@@ -78,7 +75,6 @@ while ( $#ARGV >= 0)
         print "-list          - Prints out the list of project files\n";
         print "-config <c>    - Use <c> as a configuration\n";
         print "-evc3          - Looks for eMbedded Visual C++ 3.0 projects\n";
-        print "-msvc6         - Looks for Visual C++ 5.0/6.0 projects\n";
         print "-msvc7         - Looks for Visual C++ 7.0 projects\n";
         print "-clean         - Clean instead of building\n";
         print "-recurse       - Recurse into directories\n";
@@ -126,9 +122,6 @@ if (!defined $extension) {
 
     if ($compiler eq "evc3") {
         $extension = "vcp";
-    }
-    elsif ($compiler eq "msvc6") {
-        $extension = "dsp";
     }
     elsif ($compiler eq "msvc7") {
         $extension = "vcproj";

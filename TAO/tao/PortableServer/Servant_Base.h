@@ -22,11 +22,7 @@
 #include "tao/PortableServer/PS_ForwardC.h"
 #include "tao/PortableServer/Servant_var.h"
 #include "tao/Abstract_Servant_Base.h"
-#if defined (ACE_HAS_CPP11)
 #include <atomic>
-#else
-#include "ace/Atomic_Op.h"
-#endif /* ACE_HAS_CPP11 */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -69,7 +65,7 @@ public:
   typedef CORBA::Object_var _stub_var_type;
 
   /// Destructor.
-  virtual ~TAO_ServantBase (void);
+  virtual ~TAO_ServantBase () = default;
 
   static void _is_a_skel (TAO_ServerRequest & req,
                           TAO::Portable_Server::Servant_Upcall* servant_upcall,
@@ -108,29 +104,29 @@ public:
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
   /// Returns the default POA for this servant.
-  virtual PortableServer::POA_ptr _default_POA (void);
+  virtual PortableServer::POA_ptr _default_POA ();
 
   /// Local implementation of the CORBA::Object::_is_a method.
   virtual CORBA::Boolean _is_a (const char *logical_type_id);
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
   /// Default _non_existent: always returns false.
-  virtual CORBA::Boolean _non_existent (void);
+  virtual CORBA::Boolean _non_existent ();
 
   /// Query the Interface Repository for the interface definition.
-  virtual CORBA::InterfaceDef_ptr _get_interface (void);
+  virtual CORBA::InterfaceDef_ptr _get_interface ();
 
 #if !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
   /// Default _get_component: always returns CORBA::Object::_nil().
-  virtual CORBA::Object_ptr _get_component (void);
+  virtual CORBA::Object_ptr _get_component ();
 #endif
 
   /// Get the repository id.
-  virtual char * _repository_id (void);
+  virtual char * _repository_id ();
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
   /// This is an auxiliary method for _this() and _narrow().
-  virtual TAO_Stub *_create_stub (void);
+  virtual TAO_Stub *_create_stub ();
 
   /**
    * Dispatches a request to the object: find the operation, cast the
@@ -155,26 +151,26 @@ public:
                      const size_t length = 0);
 
   /// Get this interface's repository id (TAO specific).
-  virtual const char *_interface_repository_id (void) const = 0;
+  virtual const char *_interface_repository_id () const = 0;
 
   //@{
   /**
    * @name Reference Counting Operations
    */
   /// Increase reference count by one.
-  virtual void _add_ref (void);
+  virtual void _add_ref ();
 
   /**
    * Decreases reference count by one; if the resulting reference
    * count equals zero, _remove_ref invokes delete on its this pointer
    * in order to destroy the servant.
    */
-  virtual void _remove_ref (void);
+  virtual void _remove_ref ();
 
   /**
    * Returns the current reference count value.
    */
-  virtual CORBA::ULong _refcount_value (void) const;
+  virtual CORBA::ULong _refcount_value () const;
   //@}
 
   virtual void _collocated_dispatch (::CORBA::Object_ptr obj,
@@ -187,7 +183,6 @@ public:
                                      TAO::Collocation_Strategy strategy);
 
 protected:
-
   /// Default constructor, only derived classes can be created.
   explicit TAO_ServantBase (TAO_Operation_Table* optable = 0);
 
@@ -209,11 +204,7 @@ protected:
 
 protected:
   /// Reference counter.
-#if defined (ACE_HAS_CPP11)
   std::atomic<uint32_t> ref_count_;
-#else
-  ACE_Atomic_Op<TAO_SYNCH_MUTEX, unsigned long> ref_count_;
-#endif /* ACE_HAS_CPP11 */
 
   /// The operation table for this servant.  It is initialized by the
   /// most derived class.

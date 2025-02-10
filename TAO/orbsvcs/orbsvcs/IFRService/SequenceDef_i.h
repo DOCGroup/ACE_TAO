@@ -43,7 +43,7 @@ public:
   TAO_SequenceDef_i (TAO_Repository_i *repo);
 
   /// Destructor
-  virtual ~TAO_SequenceDef_i (void);
+  virtual ~TAO_SequenceDef_i ();
 
   /// Return our definition kind.
   virtual CORBA::DefinitionKind def_kind ();

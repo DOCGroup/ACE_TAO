@@ -4,10 +4,8 @@
 #include "tao/PortableServer/ForwardRequestC.h"
 
 test_i::test_i (CORBA::Short id,
-                bool direct,
                 CORBA::ORB_ptr orb)
   : id_ (id)
-  , direct_ (direct)
   , orb_ (CORBA::ORB::_duplicate (orb))
   , to_ (CORBA::Object::_nil ())
   , request_pass_count_ (0)
@@ -24,7 +22,7 @@ test_i::forward (CORBA::Object_ptr to,
 }
 
 CORBA::Short
-test_i::collocated_call (void)
+test_i::collocated_call ()
 {
   this->request_count_++;
 

@@ -70,30 +70,30 @@ TAO::SSLIOP_Credentials::SSLIOP_Credentials (::X509 *cert, ::EVP_PKEY *evp)
     }
 }
 
-TAO::SSLIOP_Credentials::~SSLIOP_Credentials (void)
+TAO::SSLIOP_Credentials::~SSLIOP_Credentials ()
 {
 }
 
 char *
-TAO::SSLIOP_Credentials::creds_id (void)
+TAO::SSLIOP_Credentials::creds_id ()
 {
   return CORBA::string_dup (this->id_.in ());
 }
 
 SecurityLevel3::CredentialsUsage
-TAO::SSLIOP_Credentials::creds_usage (void)
+TAO::SSLIOP_Credentials::creds_usage ()
 {
   return SecurityLevel3::CU_Indefinite;
 }
 
 TimeBase::UtcT
-TAO::SSLIOP_Credentials::expiry_time (void)
+TAO::SSLIOP_Credentials::expiry_time ()
 {
   return this->expiry_time_;
 }
 
 SecurityLevel3::CredentialsState
-TAO::SSLIOP_Credentials::creds_state (void)
+TAO::SSLIOP_Credentials::creds_state ()
 {
   const ::X509 *x = this->x509_.in ();
 
@@ -181,7 +181,7 @@ TAO::SSLIOP_Credentials::operator== (const TAO::SSLIOP_Credentials &rhs)
 }
 
 CORBA::ULong
-TAO::SSLIOP_Credentials::hash (void) const
+TAO::SSLIOP_Credentials::hash () const
 {
   ::X509 * x509 = this->x509_.in ();
 
@@ -219,7 +219,7 @@ tao_TAO_SSLIOP_Credentials_release (TAO::SSLIOP::Credentials_ptr p)
 }
 
 TAO::SSLIOP::Credentials_ptr
-tao_TAO_SSLIOP_Credentials_nil (void)
+tao_TAO_SSLIOP_Credentials_nil ()
 {
   return TAO::SSLIOP_Credentials::_nil ();
 }

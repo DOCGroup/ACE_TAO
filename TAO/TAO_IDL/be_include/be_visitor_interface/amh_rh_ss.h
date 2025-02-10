@@ -22,7 +22,7 @@ public:
 
   int visit_operation (be_operation *node);
 
-  ~be_visitor_amh_rh_interface_ss (void);
+  ~be_visitor_amh_rh_interface_ss ();
 };
 
 #endif /* AMH_RH_INTERFACE_SS_H */

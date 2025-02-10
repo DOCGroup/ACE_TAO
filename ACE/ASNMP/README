@@ -1,5 +1,3 @@
-
-
 ====================================================================
 ASNMP = ACE+SNMP++ Version 2.1
 By Michael R. MacFaden mrm@acm.org, mrm@yagosys.com
@@ -25,8 +23,7 @@ Is HP SNMP++ compatible with ASNMP?
   with the HP interface as well as locking down valid() semantics, etc.
 
 What platforms have the test programs been verified on?
-  Solaris 2.4, 2.5.1 using SUN C++ 4.1,4.2 compiler. Linux/GCC
-  fixes are now in as well.
+  Linux/GCC fixes are now in as well.
 
 Why use this version?
   The SNMP++ version ships only for HP-UX and for Windows.
@@ -57,10 +54,11 @@ How to build this library
   create libasnmp.a, libasnmp.so and then run the tests
 
 Any Support for ASNMP?
-   As time permits from the mailing list.
+   As time permits through github.
 
 Where to ask questions?
-  Please use ace-users@cs.wustl.edu mailing list or mrm@acm.org
+  Please use github issues or discussions at https://github.com/DOCGroup/ACE_TAO
+  or mrm@acm.org
 
 NOTE: Please do not bother Eric Mellquist unless you are using
    the original HP version of this library.
@@ -145,7 +143,7 @@ readme.txt ( this file)
 
 src Directory Contents:
 --------------------------------------------------------------------
-Makefile             - make file for ACE/Solaris 2. build
+Makefile             - make file for ACE. build
 target.cpp           - Collection of attributes(address, timeout, etc) used
                        to define a command session
 snmp.cpp             - A logical session between NM app and agent

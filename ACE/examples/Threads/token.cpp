@@ -6,14 +6,13 @@
 #include "ace/OS_NS_time.h"
 
 
-
 #if defined (ACE_HAS_THREADS)
 
 class My_Task : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
   My_Task (int n);
-  virtual int svc (void);
+  virtual int svc ();
 
   static void sleep_hook (void *);
 
@@ -40,7 +39,7 @@ My_Task::sleep_hook (void *)
 // Test out the behavior of the ACE_Token class.
 
 int
-My_Task::svc (void)
+My_Task::svc ()
 {
   for (size_t i = 0; i < 100; i++)
     {

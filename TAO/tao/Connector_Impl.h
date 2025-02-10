@@ -44,7 +44,6 @@ template <class SVC_HANDLER>
 class TAO_Connect_Creation_Strategy : public ACE_Creation_Strategy<SVC_HANDLER>
 {
 public:
-
   /// Constructor.
   TAO_Connect_Creation_Strategy (ACE_Thread_Manager * = 0,
                                  TAO_ORB_Core* orb_core = 0);
@@ -54,11 +53,9 @@ public:
 
 
 private:
-
   /// Pointer to the ORB_Core on which we are activated
   TAO_ORB_Core * const orb_core_;
 };
-
 
 
 /**
@@ -75,7 +72,6 @@ class TAO_Connect_Concurrency_Strategy :
   public ACE_Concurrency_Strategy<SVC_HANDLER>
 {
 public:
-
   /// Constructor.
   TAO_Connect_Concurrency_Strategy (TAO_ORB_Core *orb_core);
 
@@ -85,21 +81,13 @@ public:
   int activate_svc_handler (SVC_HANDLER *svc_handler, void *arg);
 
 private:
-
   /// Pointer to the ORB Core.
   TAO_ORB_Core * const orb_core_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "tao/Connector_Impl.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Connector_Impl.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 #endif /*TAO_CONNECTOR_IMPL_H*/

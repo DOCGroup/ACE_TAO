@@ -48,7 +48,7 @@ TAO_DIOP_Connection_Handler::TAO_DIOP_Connection_Handler (TAO_ORB_Core *orb_core
   this->transport (specific_transport);
 }
 
-TAO_DIOP_Connection_Handler::~TAO_DIOP_Connection_Handler (void)
+TAO_DIOP_Connection_Handler::~TAO_DIOP_Connection_Handler ()
 {
   delete this->transport ();
   int const result =
@@ -65,7 +65,7 @@ TAO_DIOP_Connection_Handler::~TAO_DIOP_Connection_Handler (void)
 
 // DIOP Additions - Begin
 const ACE_INET_Addr &
-TAO_DIOP_Connection_Handler::addr (void)
+TAO_DIOP_Connection_Handler::addr ()
 {
   return this->addr_;
 }
@@ -77,7 +77,7 @@ TAO_DIOP_Connection_Handler::addr (const ACE_INET_Addr &addr)
 }
 
 const ACE_INET_Addr &
-TAO_DIOP_Connection_Handler::local_addr (void)
+TAO_DIOP_Connection_Handler::local_addr ()
 {
   return this->local_addr_;
 }
@@ -206,7 +206,7 @@ TAO_DIOP_Connection_Handler::open (void*)
 }
 
 int
-TAO_DIOP_Connection_Handler::open_server (void)
+TAO_DIOP_Connection_Handler::open_server ()
 {
   TAO_DIOP_Protocol_Properties protocol_properties;
 
@@ -250,8 +250,7 @@ TAO_DIOP_Connection_Handler::open_server (void)
                   ACE_TEXT("TAO (%P|%t) - DIOP_Connection_Handler::open_server, ")
                   ACE_TEXT("listening on %C:%d\n"),
                   this->local_addr_.get_host_name (),
-                  this->local_addr_.get_port_number ()
-                ));
+                  this->local_addr_.get_port_number ()));
     }
 
   this->transport ()->id ((size_t) this->peer ().get_handle ());
@@ -260,13 +259,13 @@ TAO_DIOP_Connection_Handler::open_server (void)
 }
 
 int
-TAO_DIOP_Connection_Handler::resume_handler (void)
+TAO_DIOP_Connection_Handler::resume_handler ()
 {
   return ACE_Event_Handler::ACE_APPLICATION_RESUMES_HANDLER;
 }
 
 int
-TAO_DIOP_Connection_Handler::close_connection (void)
+TAO_DIOP_Connection_Handler::close_connection ()
 {
   return this->close_connection_eh (this);
 }
@@ -320,13 +319,13 @@ TAO_DIOP_Connection_Handler::close (u_long flags)
 }
 
 int
-TAO_DIOP_Connection_Handler::release_os_resources (void)
+TAO_DIOP_Connection_Handler::release_os_resources ()
 {
   return this->peer ().close ();
 }
 
 int
-TAO_DIOP_Connection_Handler::add_transport_to_cache (void)
+TAO_DIOP_Connection_Handler::add_transport_to_cache ()
 {
   ACE_INET_Addr addr;
 

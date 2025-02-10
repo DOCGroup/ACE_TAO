@@ -2,7 +2,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE int
-TAO_ORB_Parameters::sock_rcvbuf_size (void) const
+TAO_ORB_Parameters::sock_rcvbuf_size () const
 {
   return sock_rcvbuf_size_;
 }
@@ -14,7 +14,7 @@ TAO_ORB_Parameters::sock_rcvbuf_size (int s)
 }
 
 ACE_INLINE int
-TAO_ORB_Parameters::sock_sndbuf_size (void) const
+TAO_ORB_Parameters::sock_sndbuf_size () const
 {
   return sock_sndbuf_size_;
 }
@@ -26,7 +26,7 @@ TAO_ORB_Parameters::sock_sndbuf_size (int s)
 }
 
 ACE_INLINE int
-TAO_ORB_Parameters::cdr_memcpy_tradeoff (void) const
+TAO_ORB_Parameters::cdr_memcpy_tradeoff () const
 {
   return this->cdr_memcpy_tradeoff_;
 }
@@ -38,7 +38,7 @@ TAO_ORB_Parameters::cdr_memcpy_tradeoff (int x)
 }
 
 ACE_INLINE ACE_CDR::ULong
-TAO_ORB_Parameters::max_message_size (void) const
+TAO_ORB_Parameters::max_message_size () const
 {
   return this->max_message_size_;
 }
@@ -50,7 +50,7 @@ TAO_ORB_Parameters::max_message_size (ACE_CDR::ULong size)
 }
 
 ACE_INLINE int
-TAO_ORB_Parameters::use_dotted_decimal_addresses (void) const
+TAO_ORB_Parameters::use_dotted_decimal_addresses () const
 {
   return this->use_dotted_decimal_addresses_;
 }
@@ -62,7 +62,7 @@ TAO_ORB_Parameters::use_dotted_decimal_addresses (int x)
 }
 
 ACE_INLINE int
-TAO_ORB_Parameters::cache_incoming_by_dotted_decimal_address (void) const
+TAO_ORB_Parameters::cache_incoming_by_dotted_decimal_address () const
 {
   return this->cache_incoming_by_dotted_decimal_address_;
 }
@@ -74,7 +74,7 @@ TAO_ORB_Parameters::cache_incoming_by_dotted_decimal_address (int x)
 }
 
 ACE_INLINE int
-TAO_ORB_Parameters::linger (void) const
+TAO_ORB_Parameters::linger () const
 {
   return this->linger_;
 }
@@ -87,7 +87,7 @@ TAO_ORB_Parameters::linger (int x)
 
 
 ACE_INLINE time_t
-TAO_ORB_Parameters::accept_error_delay (void) const
+TAO_ORB_Parameters::accept_error_delay () const
 {
   return this->accept_error_delay_;
 }
@@ -119,7 +119,7 @@ TAO_ORB_Parameters::mcast_discovery_endpoint (const char *mde)
 }
 
 ACE_INLINE const char *
-TAO_ORB_Parameters::mcast_discovery_endpoint (void) const
+TAO_ORB_Parameters::mcast_discovery_endpoint () const
 {
   return this->mcast_discovery_endpoint_.in ();
 }
@@ -131,13 +131,13 @@ TAO_ORB_Parameters::default_init_ref (const char *default_init_ref)
 }
 
 ACE_INLINE char *
-TAO_ORB_Parameters::default_init_ref (void) const
+TAO_ORB_Parameters::default_init_ref () const
 {
   return CORBA::string_dup (this->default_init_ref_.c_str ());
 }
 
 ACE_INLINE bool
-TAO_ORB_Parameters::std_profile_components (void) const
+TAO_ORB_Parameters::std_profile_components () const
 {
   return this->std_profile_components_;
 }
@@ -149,7 +149,7 @@ TAO_ORB_Parameters::std_profile_components (bool x)
 }
 
 ACE_INLINE int
-TAO_ORB_Parameters::nodelay (void) const
+TAO_ORB_Parameters::nodelay () const
 {
   return this->nodelay_;
 }
@@ -161,7 +161,7 @@ TAO_ORB_Parameters::nodelay (int x)
 }
 
 ACE_INLINE int
-TAO_ORB_Parameters::sock_keepalive (void)
+TAO_ORB_Parameters::sock_keepalive ()
 {
   return this->sock_keepalive_;
 }
@@ -173,7 +173,7 @@ TAO_ORB_Parameters::sock_keepalive (int x)
 }
 
 ACE_INLINE int
-TAO_ORB_Parameters::sock_dontroute (void)
+TAO_ORB_Parameters::sock_dontroute ()
 {
   return this->sock_dontroute_;
 }
@@ -185,7 +185,7 @@ TAO_ORB_Parameters::sock_dontroute (int x)
 }
 
 ACE_INLINE int
-TAO_ORB_Parameters::ip_hoplimit (void)
+TAO_ORB_Parameters::ip_hoplimit ()
 {
   return this->ip_hoplimit_;
 }
@@ -197,7 +197,7 @@ TAO_ORB_Parameters::ip_hoplimit (int x)
 }
 
 ACE_INLINE bool
-TAO_ORB_Parameters::ip_multicastloop (void)
+TAO_ORB_Parameters::ip_multicastloop ()
 {
   return this->ip_multicastloop_;
 }
@@ -209,7 +209,7 @@ TAO_ORB_Parameters::ip_multicastloop (bool x)
 }
 
 ACE_INLINE u_short
-TAO_ORB_Parameters::iiop_client_port_base (void)
+TAO_ORB_Parameters::iiop_client_port_base ()
 {
   return this->iiop_client_port_base_;
 }
@@ -221,7 +221,7 @@ TAO_ORB_Parameters::iiop_client_port_base (u_short b)
 }
 
 ACE_INLINE u_short
-TAO_ORB_Parameters::iiop_client_port_span (void)
+TAO_ORB_Parameters::iiop_client_port_span ()
 {
   return this->iiop_client_port_base_ ?
     this->iiop_client_port_span_ : 0;
@@ -234,7 +234,7 @@ TAO_ORB_Parameters::iiop_client_port_span (u_short s)
 }
 
 ACE_INLINE int
-TAO_ORB_Parameters::ace_sched_policy (void) const
+TAO_ORB_Parameters::ace_sched_policy () const
 {
   return this->ace_sched_policy_;
 }
@@ -246,7 +246,7 @@ TAO_ORB_Parameters::ace_sched_policy (int x)
 }
 
 ACE_INLINE long
-TAO_ORB_Parameters::sched_policy (void) const
+TAO_ORB_Parameters::sched_policy () const
 {
   return this->sched_policy_;
 }
@@ -258,7 +258,7 @@ TAO_ORB_Parameters::sched_policy (long x)
 }
 
 ACE_INLINE long
-TAO_ORB_Parameters::scope_policy (void) const
+TAO_ORB_Parameters::scope_policy () const
 {
   return this->scope_policy_;
 }
@@ -270,7 +270,7 @@ TAO_ORB_Parameters::scope_policy (long x)
 }
 
 ACE_INLINE long
-TAO_ORB_Parameters::thread_creation_flags (void) const
+TAO_ORB_Parameters::thread_creation_flags () const
 {
   return
     this->scope_policy () |
@@ -278,7 +278,7 @@ TAO_ORB_Parameters::thread_creation_flags (void) const
 }
 
 ACE_INLINE int
-TAO_ORB_Parameters::single_read_optimization (void) const
+TAO_ORB_Parameters::single_read_optimization () const
 {
   return this->single_read_optimization_;
 }
@@ -290,7 +290,7 @@ TAO_ORB_Parameters::single_read_optimization (int x)
 }
 
 ACE_INLINE bool
-TAO_ORB_Parameters::use_parallel_connects (void) const
+TAO_ORB_Parameters::use_parallel_connects () const
 {
   return this->use_parallel_connects_;
 }
@@ -302,7 +302,7 @@ TAO_ORB_Parameters::use_parallel_connects (bool x)
 }
 
 ACE_INLINE unsigned long
-TAO_ORB_Parameters::parallel_connect_delay (void) const
+TAO_ORB_Parameters::parallel_connect_delay () const
 {
   return this->parallel_connect_delay_;
 }
@@ -314,7 +314,7 @@ TAO_ORB_Parameters::parallel_connect_delay (unsigned long x)
 }
 
 ACE_INLINE int
-TAO_ORB_Parameters::shared_profile (void) const
+TAO_ORB_Parameters::shared_profile () const
 {
   return this->shared_profile_;
 }
@@ -326,7 +326,7 @@ TAO_ORB_Parameters::shared_profile (int x)
 }
 
 ACE_INLINE bool
-TAO_ORB_Parameters::disable_rt_collocation_resolver (void) const
+TAO_ORB_Parameters::disable_rt_collocation_resolver () const
 {
   return this->disable_rt_collocation_resolver_;
 }
@@ -339,7 +339,7 @@ TAO_ORB_Parameters::disable_rt_collocation_resolver (bool x)
 
 
 ACE_INLINE bool
-TAO_ORB_Parameters::negotiate_codesets (void) const
+TAO_ORB_Parameters::negotiate_codesets () const
 {
   return this->negotiate_codesets_;
 }
@@ -351,7 +351,7 @@ TAO_ORB_Parameters::negotiate_codesets (bool x)
 }
 
 ACE_INLINE bool
-TAO_ORB_Parameters::ami_collication (void) const
+TAO_ORB_Parameters::ami_collication () const
 {
   return this->ami_collication_;
 }
@@ -369,13 +369,13 @@ TAO_ORB_Parameters::collocation_resolver_name (const char *s)
 }
 
 ACE_INLINE const char *
-TAO_ORB_Parameters::collocation_resolver_name (void) const
+TAO_ORB_Parameters::collocation_resolver_name () const
 {
   return this->collocation_resolver_name_.c_str ();
 }
 
 ACE_INLINE bool
-TAO_ORB_Parameters::forward_invocation_on_object_not_exist (void) const
+TAO_ORB_Parameters::forward_invocation_on_object_not_exist () const
 {
   return this->forward_invocation_on_object_not_exist_;
 }
@@ -387,7 +387,7 @@ TAO_ORB_Parameters::forward_invocation_on_object_not_exist (bool x)
 }
 
 ACE_INLINE int
-TAO_ORB_Parameters::forward_once_exception (void) const
+TAO_ORB_Parameters::forward_once_exception () const
 {
   return this->forward_once_exception_;
 }
@@ -399,7 +399,7 @@ TAO_ORB_Parameters::forward_once_exception (const int ef)
 }
 
 ACE_INLINE bool
-TAO_ORB_Parameters::allow_ziop_no_server_policies (void) const
+TAO_ORB_Parameters::allow_ziop_no_server_policies () const
 {
   return this->allow_ziop_no_server_policies_;
 }

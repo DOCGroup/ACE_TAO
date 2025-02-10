@@ -23,7 +23,7 @@ be_visitor_args_vardecl_ss::be_visitor_args_vardecl_ss (
 {
 }
 
-be_visitor_args_vardecl_ss::~be_visitor_args_vardecl_ss (void)
+be_visitor_args_vardecl_ss::~be_visitor_args_vardecl_ss ()
 {
 }
 
@@ -31,7 +31,7 @@ int be_visitor_args_vardecl_ss::visit_argument (
   be_argument *node)
 {
   this->ctx_->node (node);
-  be_type *bt = be_type::narrow_from_decl (node->field_type ());
+  be_type *bt = dynamic_cast<be_type*> (node->field_type ());
 
   if (!bt)
     {
@@ -65,8 +65,8 @@ int be_visitor_args_vardecl_ss::visit_array (
 {
   TAO_OutStream *os = this->ctx_->stream ();
   be_argument *arg =
-    be_argument::narrow_from_decl (this->ctx_->node ());
-  be_type *bt = 0;
+    dynamic_cast<be_argument*> (this->ctx_->node ());
+  be_type *bt = nullptr;
 
   if (this->ctx_->alias ())
     {
@@ -113,8 +113,8 @@ int be_visitor_args_vardecl_ss::visit_enum (be_enum *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
   be_argument *arg =
-    be_argument::narrow_from_decl (this->ctx_->node ());
-  be_type *bt = 0;
+    dynamic_cast<be_argument*> (this->ctx_->node ());
+  be_type *bt = nullptr;
 
   if (this->ctx_->alias ())
     {
@@ -175,8 +175,8 @@ int be_visitor_args_vardecl_ss::visit_predefined_type (
 {
   TAO_OutStream *os = this->ctx_->stream ();
   be_argument *arg =
-    be_argument::narrow_from_decl (this->ctx_->node ());
-  be_type *bt = 0;
+    dynamic_cast<be_argument*> (this->ctx_->node ());
+  be_type *bt = nullptr;
 
   if (this->ctx_->alias ())
     {
@@ -236,10 +236,8 @@ int be_visitor_args_vardecl_ss::visit_predefined_type (
               case AST_PredefinedType::PT_float:
               case AST_PredefinedType::PT_double:
               case AST_PredefinedType::PT_octet:
-                *os << " = 0";
-                break;
               case AST_PredefinedType::PT_longlong:
-                *os << " = ACE_CDR_LONGLONG_INITIALIZER";
+                *os << " = 0";
                 break;
               case AST_PredefinedType::PT_longdouble:
                 *os << " = ACE_CDR_LONG_DOUBLE_INITIALIZER";
@@ -262,8 +260,8 @@ int be_visitor_args_vardecl_ss::visit_sequence (
 {
   TAO_OutStream *os = this->ctx_->stream ();
   be_argument *arg =
-    be_argument::narrow_from_decl (this->ctx_->node ());
-  be_type *bt = 0;
+    dynamic_cast<be_argument*> (this->ctx_->node ());
+  be_type *bt = nullptr;
 
   if (this->ctx_->alias ())
     {
@@ -297,7 +295,7 @@ int be_visitor_args_vardecl_ss::visit_string (
 {
   TAO_OutStream *os = this->ctx_->stream ();
   be_argument *arg =
-    be_argument::narrow_from_decl (this->ctx_->node ());
+    dynamic_cast<be_argument*> (this->ctx_->node ());
 
   switch (this->direction ())
     {
@@ -360,7 +358,7 @@ int be_visitor_args_vardecl_ss::visit_typedef (
                         -1);
     }
 
-  this->ctx_->alias (0);
+  this->ctx_->alias (nullptr);
   return 0;
 }
 
@@ -403,8 +401,8 @@ be_visitor_args_vardecl_ss::emit_common (
 {
   TAO_OutStream *os = this->ctx_->stream ();
   be_argument *arg =
-    be_argument::narrow_from_decl (this->ctx_->node ());
-  be_type *bt = 0;
+    dynamic_cast<be_argument*> (this->ctx_->node ());
+  be_type *bt = nullptr;
 
   if (this->ctx_->alias ())
     {
@@ -434,14 +432,13 @@ be_visitor_args_vardecl_ss::emit_common (
 }
 
 
-
 int
 be_visitor_args_vardecl_ss::emit_common2 (be_type *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
   be_argument *arg =
-    be_argument::narrow_from_decl (this->ctx_->node ());
-  be_type *bt = 0;
+    dynamic_cast<be_argument*> (this->ctx_->node ());
+  be_type *bt = nullptr;
 
   if (this->ctx_->alias ())
     {

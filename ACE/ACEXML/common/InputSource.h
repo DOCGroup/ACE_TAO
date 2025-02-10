@@ -19,7 +19,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ACEXML/common/CharStream.h"
-#include "ace/Copy_Disabled.h"
 
 /**
  * @class ACEXML_InputSource
@@ -49,14 +48,18 @@
  *
  * @sa ACEXML_CharStream
  */
-class ACEXML_Export ACEXML_InputSource : private ACE_Copy_Disabled
+class ACEXML_Export ACEXML_InputSource
 {
 public:
   /**
    * Default constructor.
    */
-  ACEXML_InputSource (void);
+  ACEXML_InputSource ();
 
+  ACEXML_InputSource (const ACEXML_InputSource &) = delete;
+  ACEXML_InputSource (ACEXML_InputSource &&) = delete;
+  ACEXML_InputSource &operator= (const ACEXML_InputSource &) = delete;
+  ACEXML_InputSource &operator= (ACEXML_InputSource &&) = delete;
 
   /**
    * Create a new input source with a ACEXML_Char stream.
@@ -73,27 +76,27 @@ public:
   /**
    * Default destructor.
    */
-  virtual ~ACEXML_InputSource (void);
+  virtual ~ACEXML_InputSource ();
 
   /**
    * Get the ACEXML_Char stream for this input source.
    */
-  virtual ACEXML_CharStream *getCharStream (void) const;
+  virtual ACEXML_CharStream *getCharStream () const;
 
   /**
    * Get the character encoding for a byte stream or URI.
    */
-  virtual const ACEXML_Char *getEncoding (void) const;
+  virtual const ACEXML_Char *getEncoding () const;
 
   /**
    * Get the public identifier for this input source.
    */
-  virtual const ACEXML_Char *getPublicId (void) const;
+  virtual const ACEXML_Char *getPublicId () const;
 
   /**
    * Get the system identifier for this input source.
    */
-  virtual const ACEXML_Char *getSystemId (void) const;
+  virtual const ACEXML_Char *getSystemId () const;
 
   /**
    * Set the ACEXML_Char stream for this input source.

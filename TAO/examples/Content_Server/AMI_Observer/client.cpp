@@ -87,7 +87,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
             ACE_OS::sleep (tv);
         }
 
-      orb->shutdown (0);
+      orb->shutdown (false);
 
       //orb->destroy ();
     }

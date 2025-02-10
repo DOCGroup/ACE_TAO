@@ -15,7 +15,7 @@ public:
     TEST_ACE_THREAD_MUTEX_GUARD // -t
   };
 
-  virtual int svc (void);
+  virtual int svc ();
   virtual int init (int, ACE_TCHAR *[]);
 
   void test_guard (int);
@@ -59,7 +59,7 @@ Guard_Test::init (int argc, ACE_TCHAR *argv[])
 }
 
 int
-Guard_Test::svc (void)
+Guard_Test::svc ()
 {
   // Extract out the unique thread-specific value to be used as an
   // index...

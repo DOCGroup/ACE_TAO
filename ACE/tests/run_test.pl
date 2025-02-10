@@ -78,7 +78,7 @@ sub record_resources ()
             $user = $ENV{'LOGNAME'};
         }
 
-        $start_test_resources=`ipcs | egrep $user`;
+        $start_test_resources=`ipcs | grep -E $user`;
     }
 }
 
@@ -88,7 +88,7 @@ sub check_resources
 {
     my($oh) = shift;
     if ($config_list->check_config ('CHECK_RESOURCES')) {
-        $end_test_resources=`ipcs | egrep $user`;
+        $end_test_resources=`ipcs | grep -E $user`;
          if ("$start_test_resources" ne "$end_test_resources") {
             print STDERR "Warning: the ACE tests _may_ have leaked OS ".
                          "resources!\n";

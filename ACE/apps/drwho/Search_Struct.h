@@ -23,14 +23,14 @@
 class Search_Struct
 {
 public:
-  Search_Struct (void);
-  virtual ~Search_Struct (void);
-  virtual int n_elems (void);
+  Search_Struct ();
+  virtual ~Search_Struct ();
+  virtual int n_elems ();
 
   virtual Protocol_Record *insert (const char *key_name,
                                    int max_len = MAXUSERIDNAMELEN) = 0;
-  virtual Protocol_Record *get_next_entry (void) = 0;
-  virtual Protocol_Record *get_each_entry (void) = 0;
+  virtual Protocol_Record *get_next_entry () = 0;
+  virtual Protocol_Record *get_each_entry () = 0;
 
 protected:
   int count_;

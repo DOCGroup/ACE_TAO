@@ -12,27 +12,22 @@
 class ServerApp : public TestAppBase
 {
   public:
-
     ServerApp();
-    virtual ~ServerApp();
-
+    virtual ~ServerApp() = default;
 
   protected:
-
     virtual int run_i(int argc, ACE_TCHAR* argv[]);
 
-
   private:
-
     // These are all called, in order, by the run_i() method.
     int init(int argc, ACE_TCHAR* argv[]);
-    void poa_setup(void);
-    void csd_setup(void);
-    void servant_setup(void);
+    void poa_setup();
+    void csd_setup();
+    void servant_setup();
     void collocated_setup();
-    void poa_activate(void);
-    void run_collocated_clients(void);
-    void run_orb_event_loop(void);
+    void poa_activate();
+    void run_collocated_clients();
+    void run_orb_event_loop();
     bool check_validity ();
     void cleanup();
 

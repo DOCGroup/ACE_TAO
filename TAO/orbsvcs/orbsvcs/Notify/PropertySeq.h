@@ -34,7 +34,7 @@ class TAO_Notify_Serv_Export TAO_Notify_PropertySeq
 {
 public:
   /// Constructor
-  TAO_Notify_PropertySeq (void);
+  TAO_Notify_PropertySeq ();
 
   /// Destructor
   ~TAO_Notify_PropertySeq ();

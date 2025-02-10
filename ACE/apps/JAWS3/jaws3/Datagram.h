@@ -13,8 +13,7 @@
 class JAWS_Export JAWS_Datagram_Impl
 {
 public:
-
-  virtual ~JAWS_Datagram_Impl (void) {}
+  virtual ~JAWS_Datagram_Impl () {}
 
   virtual void accept ( const ACE_Addr &local_sap
                       , ACE_SOCK_Dgram &new_dgram
@@ -72,17 +71,15 @@ public:
   // The address to new_dgram is passed back as the data member of
   // the JAWS_Event_Result that is returned to the completer.
   // Use the specified local access point.
-
 };
 
 
 class JAWS_Export JAWS_Datagram
 {
 public:
-
   JAWS_Datagram (JAWS_Datagram_Impl *impl = 0);
 
-  static JAWS_Datagram * instance (void)
+  static JAWS_Datagram * instance ()
   {
     return ACE_Singleton<JAWS_Datagram, ACE_SYNCH_MUTEX>::instance ();
   }
@@ -129,9 +126,7 @@ public:
                );
 
 private:
-
   JAWS_Datagram_Impl *impl_;
-
 };
 
 #endif /* JAWS_DATAGRAM_H */

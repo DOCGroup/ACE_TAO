@@ -90,7 +90,6 @@ Catior_i::decode (const ACE_CString& aString, ACE_CString& output)
 }
 
 
-
 CORBA::Boolean
 Catior_i::catiiop (char* string)
 {
@@ -727,7 +726,6 @@ Catior_i::cat_tag_policies (TAO_InputCDR& stream) {
       ACE_OS::snprintf (buf, bufsize,
                        "\t Priority: %d\n", server_priority);
       buffer_ += buf;
-
     } else if (policies[iter].ptype == RTCORBA::PRIORITY_BANDED_CONNECTION_POLICY_TYPE) {
       indent ();
       ACE_OS::snprintf (buf, bufsize,
@@ -1038,7 +1036,7 @@ Catior_i::_find_info (CORBA::ULong id)
 void
 Catior_i::displayHex (TAO_InputCDR & str)
 {
-  if (str.good_bit () == 0)
+  if (!str.good_bit ())
     return;
 
   TAO_InputCDR clone_str (str);
@@ -1100,7 +1098,7 @@ Catior_i::cat_codeset_info (TAO_InputCDR& cdr)
                        "for char.\n"),
                       false);
 
-  ACE_OS::snprintf (buf, bufsize, "\tNumber of CCS for char %u\n", c_ccslen);
+  ACE_OS::snprintf (buf, bufsize, "\tNumber of CCS for char: %u\n", c_ccslen);
   buffer_ += buf;
 
   if (c_ccslen)
@@ -1131,7 +1129,7 @@ Catior_i::cat_codeset_info (TAO_InputCDR& cdr)
                        "for wchar.\n"),
                       false);
 
-  ACE_OS::snprintf (buf, bufsize, "\tNumber of CCS for wchar %u\n", w_ccslen);
+  ACE_OS::snprintf (buf, bufsize, "\tNumber of CCS for wchar: %u\n", w_ccslen);
   buffer_ += buf;
 
   if (w_ccslen)
@@ -1260,7 +1258,7 @@ Catior_i::cat_profile_helper (TAO_InputCDR& stream,
   // buffer, and skip the encapsulation.
   TAO_InputCDR str (stream, encap_len);
 
-  if (str.good_bit () == 0 || stream.skip_bytes (encap_len) == 0)
+  if (!str.good_bit () || stream.skip_bytes (encap_len) == 0)
     return false;
 
   static const size_t bufsize = 512;
@@ -1348,7 +1346,7 @@ Catior_i::cat_coiop_profile (TAO_InputCDR& stream)
   // buffer, and skip the encapsulation.
   TAO_InputCDR str (stream, encap_len);
 
-  if (str.good_bit () == 0 || stream.skip_bytes (encap_len) == 0)
+  if (!str.good_bit () || stream.skip_bytes (encap_len) == 0)
     return false;
 
   static const size_t bufsize = 512;
@@ -1438,7 +1436,7 @@ Catior_i::cat_uiop_profile (TAO_InputCDR& stream)
   // buffer, and skip the encapsulation.
   TAO_InputCDR str (stream, encap_len);
 
-  if (str.good_bit () == 0 || stream.skip_bytes (encap_len) == 0)
+  if (!str.good_bit () || stream.skip_bytes (encap_len) == 0)
     return false;
 
   static const size_t bufsize = 512;
@@ -1519,7 +1517,7 @@ Catior_i::cat_sciop_profile (TAO_InputCDR& stream)
   // buffer, and skip the encapsulation.
   TAO_InputCDR str (stream, encap_len);
 
-  if (str.good_bit () == 0 || stream.skip_bytes (encap_len) == 0)
+  if (!str.good_bit () || stream.skip_bytes (encap_len) == 0)
     return false;
 
   static const size_t bufsize = 512;
@@ -1625,7 +1623,7 @@ Catior_i::cat_nsk_profile_helper (TAO_InputCDR& stream,
   // buffer, and skip the encapsulation.
   TAO_InputCDR str (stream, encap_len);
 
-  if (str.good_bit () == 0 || stream.skip_bytes (encap_len) == 0)
+  if (!str.good_bit () || stream.skip_bytes (encap_len) == 0)
     return false;
 
   static const size_t bufsize = 512;

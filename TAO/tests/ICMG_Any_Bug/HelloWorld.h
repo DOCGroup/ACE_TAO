@@ -11,12 +11,10 @@ class HelloWorld
   : public virtual POA_Test::HelloWorld
 {
 public:
-
-  HelloWorld (void);
+  HelloWorld ();
   /// Constructor
 
-  virtual char * get_string (void);
-
+  virtual char * get_string ();
 };
 
 #include /**/ "ace/post.h"

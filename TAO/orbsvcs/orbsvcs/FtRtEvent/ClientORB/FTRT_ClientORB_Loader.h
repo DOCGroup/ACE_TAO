@@ -29,15 +29,14 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_ORB_Core;
 
 namespace TAO_FTRT {
-
   class TAO_FTRT_Export FTRT_ClientORB_Loader : public ACE_Service_Object
   {
   public:
     /// Constructor.
-    FTRT_ClientORB_Loader (void);
+    FTRT_ClientORB_Loader ();
 
     /// Destructor.
-    virtual ~FTRT_ClientORB_Loader (void);
+    virtual ~FTRT_ClientORB_Loader ();
 
     /// Initialize the TransactionDepth loader hooks.
     virtual int init (int argc,

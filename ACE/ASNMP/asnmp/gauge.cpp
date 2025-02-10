@@ -70,7 +70,6 @@ Gauge32& Gauge32::operator=( const unsigned long int i)
 // TODO: this is broken if not inherited from UInt32 (see UInt32 code).
 SnmpSyntax& Gauge32::operator=( SnmpSyntax &in_val)
 {
-
   if ( this == &in_val )        // handle assignement from itself
       return *this;
 

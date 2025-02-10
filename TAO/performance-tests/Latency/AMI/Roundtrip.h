@@ -21,7 +21,7 @@ public:
   // = The skeleton methods
   virtual Test::Timestamp test_method (Test::Timestamp send_time);
 
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
 private:
   /// Use an ORB reference to convert strings to objects and shutdown

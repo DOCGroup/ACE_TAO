@@ -36,7 +36,7 @@ public:
   TAO_Naming_Loader (TAO_Naming_Server *server = 0);
 
   /// Destructor
-  ~TAO_Naming_Loader (void);
+  ~TAO_Naming_Loader ();
 
   /// Called by the Service Configurator framework to initialize the
   /// Event Service. Defined in <ace/Service_Config.h>
@@ -44,7 +44,7 @@ public:
 
   /// Called by the Service Configurator framework to remove the
   /// Event Service. Defined in <ace/Service_Config.h>
-  virtual int fini (void);
+  virtual int fini ();
 
   /// This function call initializes the Naming Service given a reference to the
   /// ORB and the command line parameters.
@@ -58,8 +58,8 @@ protected:
   TAO_Naming_Server* naming_server_;
 
 private:
-  TAO_Naming_Loader (const TAO_Naming_Loader &);
-  TAO_Naming_Loader &operator = (const TAO_Naming_Loader &);
+  TAO_Naming_Loader (const TAO_Naming_Loader &) = delete;
+  TAO_Naming_Loader &operator = (const TAO_Naming_Loader &) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

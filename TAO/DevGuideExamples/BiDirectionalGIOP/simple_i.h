@@ -8,19 +8,13 @@ class  Simple_i : public virtual POA_Simple
 public:
   Simple_i (CORBA::ORB_ptr orb, int iterations);
 
-  virtual ~Simple_i (void);
+  ~Simple_i () = default;
 
-virtual CORBA::Long test_method (
-    CORBA::Boolean do_callback
-  );
+  virtual CORBA::Long test_method (CORBA::Boolean do_callback);
 
-virtual void callback_object (
-    Callback_ptr cb
-  );
+  virtual void callback_object (Callback_ptr cb);
 
-virtual void shutdown (
-
-  );
+  virtual void shutdown ();
 
   /// Not part of the CORBA interface. This method is called
   /// by our special orb event loop in server main().

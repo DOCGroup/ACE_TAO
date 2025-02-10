@@ -14,20 +14,6 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    RequestProcessingStrategy::RequestProcessingStrategy (void)
-      : poa_ (0)
-    {
-    }
-
-    void
-    RequestProcessingStrategy::strategy_init(
-      TAO_Root_POA *poa,
-      ::PortableServer::ServantRetentionPolicyValue sr_value)
-    {
-      poa_ = poa;
-      sr_value_ = sr_value;
-    }
-
     void
     RequestProcessingStrategy::strategy_init(TAO_Root_POA *poa)
     {
@@ -35,15 +21,9 @@ namespace TAO
     }
 
     void
-    RequestProcessingStrategy::strategy_cleanup(void)
+    RequestProcessingStrategy::strategy_cleanup()
     {
-      poa_ = 0;
-    }
-
-    ::PortableServer::ServantRetentionPolicyValue
-    RequestProcessingStrategy::sr_type() const
-    {
-      return sr_value_;
+      poa_ = nullptr;
     }
   }
 }

@@ -60,13 +60,13 @@ public:
                          TAO_EC_Filter* child);
 
   /// Destructor
-  virtual ~TAO_EC_Bitmask_Filter (void);
+  virtual ~TAO_EC_Bitmask_Filter ();
 
   // = The TAO_EC_Filter methods, please check the documentation in
   // TAO_EC_Filter.
-  virtual ChildrenIterator begin (void) const;
-  virtual ChildrenIterator end (void) const;
-  virtual int size (void) const;
+  virtual ChildrenIterator begin () const;
+  virtual ChildrenIterator end () const;
+  virtual int size () const;
   virtual int filter (const RtecEventComm::EventSet& event,
                       TAO_EC_QOS_Info& qos_info);
   virtual int filter_nocopy (RtecEventComm::EventSet& event,
@@ -75,8 +75,8 @@ public:
                      TAO_EC_QOS_Info& qos_info);
   virtual void push_nocopy (RtecEventComm::EventSet& event,
                             TAO_EC_QOS_Info& qos_info);
-  virtual void clear (void);
-  virtual CORBA::ULong max_event_size (void) const;
+  virtual void clear ();
+  virtual CORBA::ULong max_event_size () const;
   virtual int can_match (const RtecEventComm::EventHeader& header) const;
   virtual int add_dependencies (const RtecEventComm::EventHeader& header,
                                 const TAO_EC_QOS_Info &qos_info);

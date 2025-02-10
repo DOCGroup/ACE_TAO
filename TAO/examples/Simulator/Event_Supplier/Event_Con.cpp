@@ -44,7 +44,7 @@ static int received = 0;
 
 // ************************************************************
 
-Demo_Consumer::Demo_Consumer (void)
+Demo_Consumer::Demo_Consumer ()
 {
 }
 
@@ -123,7 +123,7 @@ Demo_Consumer::open_consumer (RtecEventChannelAdmin::EventChannel_ptr ec,
 }
 
 void
-Demo_Consumer::disconnect_push_consumer (void)
+Demo_Consumer::disconnect_push_consumer ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "Consumer received disconnect from channel.\n"));
@@ -132,7 +132,6 @@ Demo_Consumer::disconnect_push_consumer (void)
 void
 Demo_Consumer::push (const RtecEventComm::EventSet &events)
 {
-
   if (events.length () == 0)
     {
       ACE_DEBUG ((LM_DEBUG, "no events\n"));
@@ -194,7 +193,7 @@ Demo_Consumer::push (const RtecEventComm::EventSet &events)
 }
 
 void
-Demo_Consumer::shutdown (void)
+Demo_Consumer::shutdown ()
 {
   try
     {
@@ -331,9 +330,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       delete demo_consumer;
 
-      root_poa->destroy (1,
-                         1);
-
+      root_poa->destroy (true, true);
     }
   catch (const CORBA::Exception& ex)
     {

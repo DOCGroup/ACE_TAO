@@ -47,7 +47,6 @@ reference_counted_test_i::reference_counted_test_i (CORBA::ORB_ptr orb,
 class Adapter_Activator : public PortableServer::AdapterActivator
 {
 public:
-
   Adapter_Activator (PortableServer::POAManager_ptr poa_manager,
                      CORBA::ORB_ptr orb);
 
@@ -58,7 +57,6 @@ public:
   CORBA::PolicyList second_poa_policies_;
 
 private:
-
   PortableServer::POAManager_var poa_manager_;
   CORBA::ORB_var orb_;
 };
@@ -238,7 +236,6 @@ write_iors_to_file (const char *first_ior,
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-
   try
     {
       // Initialize the ORB first.

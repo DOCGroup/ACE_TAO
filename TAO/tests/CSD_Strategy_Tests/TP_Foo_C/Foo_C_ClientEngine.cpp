@@ -17,7 +17,7 @@ Foo_C_ClientEngine::~Foo_C_ClientEngine()
 
 
 bool
-Foo_C_ClientEngine::execute(void)
+Foo_C_ClientEngine::execute()
 {
   // Verify the return values and return the results.
   bool check_validity = true;

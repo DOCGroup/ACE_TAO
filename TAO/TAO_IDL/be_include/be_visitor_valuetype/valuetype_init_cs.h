@@ -31,7 +31,7 @@ public:
   be_visitor_valuetype_init_cs (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_valuetype_init_cs (void);
+  ~be_visitor_valuetype_init_cs ();
 
   virtual int visit_valuetype (be_valuetype *node);
   virtual int visit_eventtype (be_eventtype *node);

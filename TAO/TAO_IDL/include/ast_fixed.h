@@ -1,4 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
 #ifndef AST_FIXED_H
 #define AST_FIXED_H
 
@@ -16,8 +15,6 @@ public:
              AST_Expression *scale);
 
   virtual ~AST_Fixed ();
-
-  DEF_NARROW_FROM_DECL (AST_Fixed);
 
   virtual void dump (ACE_OSTREAM_TYPE &o);
 

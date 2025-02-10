@@ -1,11 +1,11 @@
 #include "Connection_Manager.h"
 #include "tao/debug.h"
 
-Connection_Manager::Connection_Manager (void)
+Connection_Manager::Connection_Manager ()
 {
 }
 
-Connection_Manager::~Connection_Manager (void)
+Connection_Manager::~Connection_Manager ()
 {
 }
 
@@ -95,7 +95,7 @@ Connection_Manager::bind_to_receivers (const ACE_CString &sender_name,
 }
 
 void
-Connection_Manager::find_receivers (void)
+Connection_Manager::find_receivers ()
 {
   CosNaming::BindingIterator_var iterator;
   CosNaming::BindingList_var binding_list;
@@ -159,7 +159,7 @@ Connection_Manager::add_to_receivers (CosNaming::BindingList &binding_list)
 }
 
 void
-Connection_Manager::connect_to_receivers (void)
+Connection_Manager::connect_to_receivers ()
 {
   // Connect to all receivers that we know about.
   for (Receivers::iterator iterator = this->receivers_.begin ();
@@ -316,7 +316,7 @@ Connection_Manager::bind_to_sender (const ACE_CString &sender_name,
 }
 
 void
-Connection_Manager::connect_to_sender (void)
+Connection_Manager::connect_to_sender ()
 {
   if (CORBA::is_nil (this->sender_.in ()))
     return;
@@ -394,10 +394,9 @@ Connection_Manager::add_streamctrl (const ACE_CString &flowname,
   {
     // the CORBA::Any_var owns the pointer, so we should
     // _duplicate it before passing it around
-    AVStreams::StreamCtrl::_duplicate( streamctrl );
+    AVStreams::StreamCtrl::_duplicate( streamctrl);
     this->streamctrls_.unbind(flowname);
-    this->streamctrls_.bind (flowname,
-                             streamctrl);
+    this->streamctrls_.bind (flowname, streamctrl);
   }
 }
 
@@ -551,19 +550,19 @@ Connection_Manager::unbind_receiver (const ACE_CString &sender_name,
 }
 
 Connection_Manager::Receivers &
-Connection_Manager::receivers (void)
+Connection_Manager::receivers ()
 {
   return this->receivers_;
 }
 
 Connection_Manager::Protocol_Objects &
-Connection_Manager::protocol_objects (void)
+Connection_Manager::protocol_objects ()
 {
   return this->protocol_objects_;
 }
 
 Connection_Manager::StreamCtrls &
-Connection_Manager::streamctrls (void)
+Connection_Manager::streamctrls ()
 {
   return this->streamctrls_;
 }

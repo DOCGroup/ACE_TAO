@@ -10,7 +10,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Notify_ETCL_FilterFactory::TAO_Notify_ETCL_FilterFactory (void) :
+TAO_Notify_ETCL_FilterFactory::TAO_Notify_ETCL_FilterFactory () :
   filter_poa_ (PortableServer::POA::_nil ())
 {
 }
@@ -29,7 +29,6 @@ TAO_Notify_ETCL_FilterFactory::~TAO_Notify_ETCL_FilterFactory ()
   }
 
   this->filters_.unbind_all ();
-
 }
 
 CosNotifyFilter::FilterFactory_ptr
@@ -59,7 +58,7 @@ TAO_Notify_ETCL_FilterFactory::create (PortableServer::POA_ptr filter_poa)
 }
 
 void
-TAO_Notify_ETCL_FilterFactory::destroy (void)
+TAO_Notify_ETCL_FilterFactory::destroy ()
 {
   if (CORBA::is_nil(this->filter_poa_.in ()))
     return;
@@ -241,7 +240,7 @@ TAO_Notify_ETCL_FilterFactory::load_child (const ACE_CString &type,
 
 
 void
-TAO_Notify_ETCL_FilterFactory::release (void)
+TAO_Notify_ETCL_FilterFactory::release ()
 {
   delete this;
   //@@ inform factory
@@ -318,7 +317,6 @@ TAO_Notify_ETCL_FilterFactory::find_filter_id (CosNotifyFilter::Filter_ptr filte
   throw CORBA::INTERNAL ();
   return 0;
 }
-
 
 
 ACE_FACTORY_DEFINE (TAO_Notify_Serv, TAO_Notify_ETCL_FilterFactory)

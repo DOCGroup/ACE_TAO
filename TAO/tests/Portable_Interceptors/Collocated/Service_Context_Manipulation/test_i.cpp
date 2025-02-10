@@ -12,29 +12,29 @@ Visual_i::normal (CORBA::Long)
 }
 
 void
-Visual_i::nothing (void)
+Visual_i::nothing ()
 {
 //  ACE_DEBUG ((LM_DEBUG, "Visual::nothing\n"));
 }
 
 void
-Visual_i::user (void)
+Visual_i::user ()
 {
  // ACE_DEBUG ((LM_DEBUG, "Visual::user, throwing Silly\n"));
   throw Test_Interceptors::Silly ();
 }
 
 void
-Visual_i::system (void)
+Visual_i::system ()
 {
   // ACE_DEBUG ((LM_DEBUG, "Visual::user, throwing INV_OBJREF\n"));
   throw CORBA::INV_OBJREF ();
 }
 
 void
-Visual_i::shutdown (void)
+Visual_i::shutdown ()
 {
   //  this->_remove_ref ();
   ACE_DEBUG ((LM_DEBUG,"(%P|%t) visual_i::shutdown\n"));
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

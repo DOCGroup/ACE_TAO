@@ -1,15 +1,16 @@
 // -*- C++ -*-
 #include "tao/SystemException.h"
+#include <cstring>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
-TAO_OutputCDR::~TAO_OutputCDR (void)
+TAO_OutputCDR::~TAO_OutputCDR ()
 {
 }
 
 ACE_INLINE bool
-TAO_OutputCDR::more_fragments (void) const
+TAO_OutputCDR::more_fragments () const
 {
   return this->more_fragments_;
 }
@@ -33,25 +34,25 @@ TAO_OutputCDR::message_attributes (CORBA::ULong request_id,
 }
 
 ACE_INLINE CORBA::ULong
-TAO_OutputCDR::request_id (void) const
+TAO_OutputCDR::request_id () const
 {
   return this->request_id_;
 }
 
 ACE_INLINE TAO_Stub *
-TAO_OutputCDR::stub (void) const
+TAO_OutputCDR::stub () const
 {
   return this->stub_;
 }
 
 ACE_INLINE TAO_Message_Semantics
-TAO_OutputCDR::message_semantics (void) const
+TAO_OutputCDR::message_semantics () const
 {
   return this->message_semantics_;
 }
 
 ACE_INLINE ACE_Time_Value *
-TAO_OutputCDR::timeout (void) const
+TAO_OutputCDR::timeout () const
 {
   return this->timeout_;
 }
@@ -59,8 +60,7 @@ TAO_OutputCDR::timeout (void) const
 ACE_INLINE void
 TAO_OutputCDR::get_version (TAO_GIOP_Message_Version& giop_version)
 {
-  giop_version.major = this->major_version_;
-  giop_version.minor = this->minor_version_;
+  giop_version.set_version (this->major_version_, this->minor_version_);
 }
 
 ACE_INLINE TAO_OutputCDR::Repo_Id_Map_Handle&
@@ -262,12 +262,12 @@ TAO_InputCDR::TAO_InputCDR (ACE_InputCDR::Transfer_Contents rhs,
 
 
 ACE_INLINE
-TAO_InputCDR::~TAO_InputCDR (void)
+TAO_InputCDR::~TAO_InputCDR ()
 {
 }
 
 ACE_INLINE TAO_ORB_Core*
-TAO_InputCDR::orb_core (void) const
+TAO_InputCDR::orb_core () const
 {
   return this->orb_core_;
 }
@@ -433,7 +433,7 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
                                       ACE_OutputCDR::from_string x)
 {
   if (x.bound_ != 0 && x.val_ != 0 &&
-      ACE_OS::strlen (x.val_) > x.bound_)
+      std::strlen (x.val_) > x.bound_)
     {
       throw CORBA::BAD_PARAM ();
     }
@@ -454,14 +454,19 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
                                       const std::string &x)
 {
-#if defined (ACE_HAS_CPP11)
   return
     os.fragment_stream (ACE_CDR::OCTET_ALIGN,
                         sizeof (char))
     && static_cast<ACE_OutputCDR &> (os) << x;
-#else
-  return os << x.c_str ();
-#endif
+}
+
+ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
+                                      const std::string_view &x)
+{
+  return
+    os.fragment_stream (ACE_CDR::OCTET_ALIGN,
+                        sizeof (char))
+    && static_cast<ACE_OutputCDR &> (os) << x;
 }
 
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
@@ -479,16 +484,12 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
                                       const std::wstring &x)
 {
-#if defined (ACE_HAS_CPP11)
   return
     os.fragment_stream ((sizeof (CORBA::WChar) == 2
                          ? ACE_CDR::SHORT_ALIGN
                          : ACE_CDR::LONG_ALIGN),
                         sizeof (CORBA::WChar))
     && static_cast<ACE_OutputCDR &> (os) << x;
-#else
-  return os << x.c_str ();
-#endif
 }
 
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
@@ -577,7 +578,7 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &is,
   CORBA::Boolean const marshal_flag =
     is >> const_cast<ACE_CDR::Char *&> (x.val_);
   if (marshal_flag && x.bound_ != 0 && x.val_ != 0 &&
-      ACE_OS::strlen (x.val_) > x.bound_)
+      std::strlen (x.val_) > x.bound_)
     {
       throw CORBA::BAD_PARAM ();
     }

@@ -32,23 +32,23 @@ public:
   ~TAO_Notify_ThreadPool_Consumer_Client ();
 
   /// Init
-  void _init (void);
+  void _init ();
 
   /// Run
-  void run (void);
+  void run ();
 
   /// Parse Args
   int parse_args (int argc, ACE_TCHAR *argv[]);
 
   /// The thread entry point.
-  virtual int svc (void);
+  virtual int svc ();
 
   /// Dump stats.
-  void dump_stats (void);
+  void dump_stats ();
 
 protected:
   /// Create an RT POA with a single threadpool.
-  PortableServer::POA_ptr create_rt_poa (void);
+  PortableServer::POA_ptr create_rt_poa ();
 
   /// ORB Objects.
   TAO_Notify_ORB_Objects orb_objects_;

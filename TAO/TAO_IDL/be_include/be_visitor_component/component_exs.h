@@ -24,7 +24,7 @@ class be_visitor_component_exs
 public:
   be_visitor_component_exs (be_visitor_context *ctx);
 
-  ~be_visitor_component_exs (void);
+  ~be_visitor_component_exs ();
 
   virtual int visit_component (be_component *node);
 };

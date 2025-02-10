@@ -20,7 +20,6 @@ namespace TAO
 {
 namespace details
 {
-
 template<class object_t, class object_t_var, class derived>
 struct object_reference_traits_decorator
 {
@@ -83,7 +82,6 @@ struct object_reference_traits
   typedef object_type const * const_value_type;
   typedef object_t_var object_type_var;
 };
-
 } // namespace details
 } // namespace CORBA
 

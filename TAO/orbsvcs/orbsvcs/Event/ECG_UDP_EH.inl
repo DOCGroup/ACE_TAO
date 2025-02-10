@@ -2,7 +2,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE ACE_SOCK_Dgram&
-TAO_ECG_UDP_EH::dgram (void)
+TAO_ECG_UDP_EH::dgram ()
 {
   return this->dgram_;
 }

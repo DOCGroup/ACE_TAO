@@ -8,7 +8,6 @@ Simple_Server_i::Simple_Server_i (CORBA::ORB_ptr orb)
 {
 }
 
-
 ACE_INLINE
 int Simple_Server_i::ncalls () const
 {

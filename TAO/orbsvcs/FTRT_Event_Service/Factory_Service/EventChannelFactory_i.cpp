@@ -21,13 +21,11 @@ CORBA::Object_ptr EventChannelFactory_i::create_object (
   PortableGroup::GenericFactory::FactoryCreationId_out factory_creation_id
   )
 {
-
   ORBSVCS_DEBUG((LM_DEBUG,"EventChannelFactory_i::create_object\n"));
   FILE* file = 0;
   char *id_str=0, *prog=0;
 
   try{
-
     file = ACE_OS::fopen(conf_file, "r");
     if (file == 0)
       throw PortableGroup::NoFactory();
@@ -103,7 +101,8 @@ CORBA::Object_ptr EventChannelFactory_i::create_process (
   const int ENV_BUF_LEN = 512;
   ACE_TCHAR buf[ENV_BUF_LEN];
   server_addr.addr_to_string(buf,ENV_BUF_LEN,0);
-  options.setenv(ACE_TEXT("EventChannelFactoryAddr"), buf);
+  options.setenv(ACE_TEXT("EventChannelFactoryAddr"),
+                 ACE_TEXT("%") ACE_TEXT_PRIs, buf);
 
   // extract the object ID from the criteria
   for (CORBA::ULong i = 0; i < the_criteria.length(); ++i)
@@ -114,7 +113,8 @@ CORBA::Object_ptr EventChannelFactory_i::create_process (
       const char* id_str = name[0].id.in();
       the_criteria[i].val >>= val;
       if (id_str[0] != '-') // environment variable
-        options.setenv(ACE_TEXT_CHAR_TO_TCHAR(id_str), ACE_TEXT("%s"), val);
+        options.setenv(ACE_TEXT_CHAR_TO_TCHAR(id_str),
+                       ACE_TEXT("%") ACE_TEXT_PRIs, val);
       else {// command line option
         ACE_OS::sprintf(buf, ACE_TEXT(" %s %s"), id_str, val);
         str += buf;
@@ -124,7 +124,7 @@ CORBA::Object_ptr EventChannelFactory_i::create_process (
 
   ORBSVCS_DEBUG((LM_DEBUG, "Command Line : %s\n", str.c_str()));
 
-  options.command_line(str.c_str());
+  options.command_line(ACE_TEXT("%") ACE_TEXT_PRIs, str.c_str());
 
   // Try to create a new process running date.
   ACE_Process new_process;

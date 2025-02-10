@@ -15,7 +15,6 @@
 #include "ace/Malloc_T.h"
 
 
-
 // Strategic typedefs for memory allocation.
 
 typedef ACE_Malloc <ACE_LOCAL_MEMORY_POOL, ACE_SYNCH_MUTEX> L_ALLOCATOR;
@@ -41,7 +40,7 @@ ACE_Allocator *Malloc::instance_ = 0;
 // This is a factory that decides what type of allocator to create.
 
 ACE_Allocator *
-Malloc::instance (void)
+Malloc::instance ()
 {
   if (Malloc::instance_ == 0)
     {

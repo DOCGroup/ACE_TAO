@@ -21,7 +21,6 @@
 class Object_Factory_i : public virtual POA_Gateway::Object_Factory
 {
  public:
-
   /// Constructor
   Object_Factory_i (CORBA::ORB_ptr orb,
                     PortableServer::POA_ptr gateway_poa);
@@ -31,7 +30,6 @@ class Object_Factory_i : public virtual POA_Gateway::Object_Factory
                    CORBA::Object_ptr gatewayed_object);
 
  private:
-
   CORBA::ORB_ptr orb_;
   PortableServer::POA_ptr gateway_poa_;
 };

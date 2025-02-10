@@ -4,18 +4,18 @@
 
 #include "testS.h"
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/SString.h"
 
 class Server_i
 {
 public:
-  Server_i (void);
-  ~Server_i (void);
+  Server_i ();
+  ~Server_i ();
 
   int init (int argc, ACE_TCHAR **argv);
 
-  int run (void);
+  int run ();
 
 private:
   int parse_args (int argc, ACE_TCHAR* argv[]);

@@ -16,7 +16,7 @@ for subsequent requests on the same connection handle.
 
 Description:
 
-The server creates two servants ( each implementing different
+The server creates two servants (each implementing different
 interfaces ). Two threads are created on the server and each
 one of them listens for requests (has a orb->run() call). The
 client first makes a one way call to Servant 1. It then makes

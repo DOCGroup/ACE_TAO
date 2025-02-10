@@ -41,7 +41,7 @@ namespace TAO
 #if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_value (CORBA::Any *any) const;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    S_ptr arg (void) const;
+    S_ptr arg () const;
 
   protected:
     S_ptr x_;
@@ -67,9 +67,9 @@ namespace TAO
   {
   public:
     In_Object_Clonable_Argument_T (S_ptr x);
-    virtual ~In_Object_Clonable_Argument_T (void);
+    virtual ~In_Object_Clonable_Argument_T ();
 
-    virtual Argument* clone (void);
+    virtual Argument* clone ();
 
   private:
     bool is_clone_;
@@ -94,7 +94,7 @@ namespace TAO
 #if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_value (CORBA::Any *any) const;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    S_ptr & arg (void);
+    S_ptr & arg ();
 
   private:
     S_ptr & x_;
@@ -118,7 +118,7 @@ namespace TAO
 #if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_value (CORBA::Any *any) const;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    S_out arg (void);
+    S_out arg ();
 
   private:
     S_ptr & x_;
@@ -136,17 +136,16 @@ namespace TAO
   class Ret_Object_Argument_T : public RetArgument
   {
   public:
-
-    Ret_Object_Argument_T (void);
+    Ret_Object_Argument_T ();
 
     virtual CORBA::Boolean demarshal (TAO_InputCDR &);
 #if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_value (CORBA::Any *any) const;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    S_ptr & arg (void);
+    S_ptr & arg ();
 
-    S_ptr excp (void);
-    S_ptr retn (void);
+    S_ptr excp ();
+    S_ptr retn ();
 
   private:
     S_var x_;
@@ -191,13 +190,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #include "tao/Object_Argument_T.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "tao/Object_Argument_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Object_Argument_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 

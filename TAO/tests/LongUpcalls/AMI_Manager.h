@@ -15,7 +15,7 @@ public:
   virtual void start_workers (CORBA::Short worker_count,
                               CORBA::Long milliseconds,
                               Test::Controller_ptr controller);
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
 private:
   CORBA::ORB_var orb_;
@@ -32,7 +32,7 @@ public:
           CORBA::Long milliseconds,
           CORBA::ORB_ptr orb);
 
-  virtual int svc (void);
+  virtual int svc ();
   // The service method
 
 private:
@@ -56,9 +56,9 @@ public:
                       int *pending_replies);
   // Constructor
 
-  virtual void worker_started (void);
+  virtual void worker_started ();
   virtual void worker_started_excep (::Messaging::ExceptionHolder*);
-  virtual void worker_finished (void);
+  virtual void worker_finished ();
   virtual void worker_finished_excep (::Messaging::ExceptionHolder*);
 
 private:

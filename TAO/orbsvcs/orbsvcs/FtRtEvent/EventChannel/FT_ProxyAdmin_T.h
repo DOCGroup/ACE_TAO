@@ -31,7 +31,7 @@ public:
   FT_ProxyAdmin(EC_PROXY_ADMIN* admin,
               PortableServer::POA_var poa);
 
-  ProxyInterface_ptr obtain_proxy (void);
+  ProxyInterface_ptr obtain_proxy ();
 
   /// this is used for updating the state
   void obtain_proxy (const FtRtecEventChannelAdmin::Operation& op);
@@ -44,12 +44,6 @@ private:
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "orbsvcs/FtRtEvent/EventChannel/FT_ProxyAdmin_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("FT_ProxyAdmin_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #endif

@@ -10,13 +10,13 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Invocation_Endpoint_Selector::~TAO_Invocation_Endpoint_Selector (void)
+TAO_Invocation_Endpoint_Selector::~TAO_Invocation_Endpoint_Selector ()
 {
 }
 
 // ****************************************************************
 
-TAO_Default_Endpoint_Selector::~TAO_Default_Endpoint_Selector (void)
+TAO_Default_Endpoint_Selector::~TAO_Default_Endpoint_Selector ()
 {
 }
 
@@ -55,7 +55,7 @@ TAO_Default_Endpoint_Selector::select_endpoint (TAO::Profile_Transport_Resolver 
             }
 
           for (TAO_Endpoint *ep = r->profile ()->first_filtered_endpoint ();
-               ep != 0;
+               ep != nullptr;
                ep = r->profile ()->next_filtered_endpoint (ep))
             {
               TAO_Base_Transport_Property desc (ep);

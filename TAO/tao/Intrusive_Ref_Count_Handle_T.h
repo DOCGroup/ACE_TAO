@@ -63,9 +63,8 @@ template <typename T>
 class TAO_Intrusive_Ref_Count_Handle
 {
 public:
-
   /// Default Constructor - enters the "nil" state.
-  TAO_Intrusive_Ref_Count_Handle (void);
+  TAO_Intrusive_Ref_Count_Handle ();
 
   /// Ctor - By default, takes ownership of passed-in "copy" of reference
   ///        to T.  But the second argument (bool) can be changed from
@@ -83,7 +82,7 @@ public:
   TAO_Intrusive_Ref_Count_Handle (const TAO_Intrusive_Ref_Count_Handle& b);
 
   /// Destructor
-  ~TAO_Intrusive_Ref_Count_Handle (void);
+  ~TAO_Intrusive_Ref_Count_Handle ();
 
   /// Assignment Operator with T* argument.
   /// Takes ownership of passed-in "copy" of reference to T.
@@ -99,39 +98,38 @@ public:
 
   /// Returns true if underlying pointer is NULL (0).
   /// Returns false otherwise.
-  bool is_nil (void) const;
+  bool is_nil () const;
 
   /// Used to pass the underlying pointer as an "IN" argument to a method.
-  T* in (void) const;
+  T* in () const;
 
   /// Used to pass the underlying pointer as an "IN/OUT" argument to a method.
-  T*& inout (void);
+  T*& inout ();
 
   /// Used to pass the underlying pointer as an "OUT" argument to a method.
-  T*& out (void);
+  T*& out ();
 
   /// Used to take-away the underlying pointer from this smart pointer object.
   /// Caller becomes responsibe for the returned "copy" to the reference.
   /// Always leaves the smart pointer in the "nil" state upon return.
-  T* _retn (void);
+  T* _retn ();
 
   /// Equality operator allows the refcounted object to be used generically
   /// as a contained object
   bool operator== (const TAO_Intrusive_Ref_Count_Handle& h) const;
 
 private:
-
   /// Claim a "copy" of the reference-counted object by adding
   /// one to its reference counter.  Do nothing if this smart pointer
   /// object is currently in the "nil" state.
-  void claim (void);
+  void claim ();
 
   /// Drop our "copy" of the reference-counted object by removing
   /// one from its reference counter.  Do nothing if this smart pointer
   /// object is currently in the "nil" state.
   /// Note that this method will always leave this smart pointer
   /// in the "nil" state upon its return.
-  void drop (void);
+  void drop ();
 
   /// The underlying pointer to the (intrusively) reference-counted object.
   /// Set to 0 when this smart pointer is in the "nil" state.  Otherwise,
@@ -146,13 +144,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #include "tao/Intrusive_Ref_Count_Handle_T.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "tao/Intrusive_Ref_Count_Handle_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Intrusive_Ref_Count_Handle_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 

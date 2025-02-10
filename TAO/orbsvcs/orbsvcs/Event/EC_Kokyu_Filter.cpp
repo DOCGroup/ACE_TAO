@@ -27,25 +27,25 @@ this->rt_info_computed_ = 1;
 #endif
 }
 
-TAO_EC_Kokyu_Filter::~TAO_EC_Kokyu_Filter (void)
+TAO_EC_Kokyu_Filter::~TAO_EC_Kokyu_Filter ()
 {
   delete this->body_;
 }
 
 TAO_EC_Filter::ChildrenIterator
-TAO_EC_Kokyu_Filter::begin (void) const
+TAO_EC_Kokyu_Filter::begin () const
 {
   return this->body_->begin ();
 }
 
 TAO_EC_Filter::ChildrenIterator
-TAO_EC_Kokyu_Filter::end (void) const
+TAO_EC_Kokyu_Filter::end () const
 {
   return this->body_->end ();
 }
 
 int
-TAO_EC_Kokyu_Filter::size (void) const
+TAO_EC_Kokyu_Filter::size () const
 {
   return this->body_->size ();
 }
@@ -117,13 +117,13 @@ TAO_EC_Kokyu_Filter::push_nocopy (RtecEventComm::EventSet &event,
 }
 
 void
-TAO_EC_Kokyu_Filter::clear (void)
+TAO_EC_Kokyu_Filter::clear ()
 {
   this->body_->clear ();
 }
 
 CORBA::ULong
-TAO_EC_Kokyu_Filter::max_event_size (void) const
+TAO_EC_Kokyu_Filter::max_event_size () const
 {
   return this->body_->max_event_size ();
 }
@@ -225,7 +225,7 @@ TAO_EC_Kokyu_Filter::get_qos_info (TAO_EC_QOS_Info& qos_info)
 }
 
 void
-TAO_EC_Kokyu_Filter::init_rt_info (void)
+TAO_EC_Kokyu_Filter::init_rt_info ()
 {
   if (this->rt_info_computed_)
     return;

@@ -60,7 +60,7 @@ Consumer::connect (RtecEventChannelAdmin::EventChannel_ptr ec)
 }
 
 void
-Consumer::disconnect (void)
+Consumer::disconnect ()
 {
   RtecEventChannelAdmin::ProxyPushSupplier_var proxy;
   {
@@ -79,7 +79,7 @@ Consumer::disconnect (void)
 }
 
 ACE_Sample_History &
-Consumer::sample_history (void)
+Consumer::sample_history ()
 {
   return this->sample_history_;
 }
@@ -108,7 +108,7 @@ Consumer::push (const RtecEventComm::EventSet &events)
 }
 
 void
-Consumer::disconnect_push_consumer (void)
+Consumer::disconnect_push_consumer ()
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
   this->proxy_supplier_ =
@@ -116,7 +116,7 @@ Consumer::disconnect_push_consumer (void)
 }
 
 PortableServer::POA_ptr
-Consumer::_default_POA (void)
+Consumer::_default_POA ()
 {
   return PortableServer::POA::_duplicate (this->default_POA_.in ());
 }

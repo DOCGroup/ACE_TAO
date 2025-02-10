@@ -34,17 +34,17 @@ class TAO_Notify_Proxy_T : public SERVANT_TYPE, public virtual TAO_Notify_Proxy
 {
 public:
   /// Constructor
-  TAO_Notify_Proxy_T (void);
+  TAO_Notify_Proxy_T ();
 
   /// Destructor
   ~TAO_Notify_Proxy_T ();
 
   /// Implements TAO_Notify_Object::servant method.
-  virtual PortableServer::Servant servant (void);
+  virtual PortableServer::Servant servant ();
 
   /// ServantBase refcount methods.
-  virtual void _add_ref (void);
-  virtual void _remove_ref (void);
+  virtual void _add_ref ();
+  virtual void _remove_ref ();
 
   virtual void validate_event_qos (
     const CosNotification::QoSProperties & required_qos,
@@ -103,13 +103,7 @@ TAO_Notify_Proxy_T<POA_CosEventChannelAdmin::ProxyPushConsumer>;
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "orbsvcs/Notify/Proxy_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Proxy_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 #endif /* TAO_Notify_PROXY_T_H */

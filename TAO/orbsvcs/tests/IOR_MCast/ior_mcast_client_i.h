@@ -16,10 +16,10 @@ class ior_mcast_Client_i
 
  public:
   // = COnstructor and destructor.
-  ior_mcast_Client_i (void);
-  ~ior_mcast_Client_i (void);
+  ior_mcast_Client_i ();
+  ~ior_mcast_Client_i ();
 
-  int run (void);
+  int run ();
   // Execute the client example code.
 
   int init (int& argc, ACE_TCHAR *argv[]);
@@ -28,7 +28,6 @@ class ior_mcast_Client_i
  private:
   // mcast_ior
   ACE_CString mcast_url_;
-
 };
 
 #endif /* IOR_MCAST_CLIENT_I_H */

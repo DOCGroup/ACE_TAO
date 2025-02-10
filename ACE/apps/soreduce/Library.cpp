@@ -222,7 +222,6 @@ Library::has_modules () const
 }
 
 extern "C" {
-
 static int
 selector (const dirent *d)
 {

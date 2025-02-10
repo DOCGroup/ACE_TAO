@@ -153,7 +153,6 @@ namespace TAO
       }
     catch ( ::CORBA::Exception& ex)
       {
-
         PortableInterceptor::ReplyStatus const status =
           this->handle_any_exception (&ex);
 

@@ -157,19 +157,12 @@ namespace ACE
         typedef Sock_IStreamBase<ACE_NULL_SYNCH> Sock_IStream;
         typedef Sock_OStreamBase<ACE_NULL_SYNCH> Sock_OStream;
         typedef Sock_IOStreamBase<ACE_NULL_SYNCH> Sock_IOStream;
-
       }
   }
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/INet/Sock_IOStream.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Sock_IOStream.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_IOS_SOCK_IOSTREAM_H */

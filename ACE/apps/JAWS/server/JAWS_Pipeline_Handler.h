@@ -10,7 +10,7 @@ class JAWS_Pipeline_Handler : public JAWS_Pipeline_Task
   //   Methods that are common to pipeline components
 {
 public:
-  JAWS_Pipeline_Handler (void);
+  JAWS_Pipeline_Handler ();
   // ACE_Task hooks
 
   virtual int put (ACE_Message_Block *mb, ACE_Time_Value *tv = 0);
@@ -20,8 +20,6 @@ public:
   // Callback hook for specialized data processing
 };
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "JAWS_Pipeline_Handler.cpp"
-#endif
 
 #endif /* !defined (JAWS_PIPELINE_HANDLER_H) */

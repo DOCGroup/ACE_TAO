@@ -47,9 +47,8 @@ class ServerRequestInterceptor
     public virtual ::CORBA::LocalObject
 {
 public:
-
   /// Constructor.
-  ServerRequestInterceptor (void);
+  ServerRequestInterceptor ();
 
   /**
    * @name Methods Required by the ServerRequestInterceptor
@@ -59,9 +58,9 @@ public:
    * ServerRequestInterceptors.
    */
   //@{
-  virtual char * name (void);
+  virtual char * name ();
 
-  virtual void destroy (void);
+  virtual void destroy ();
 
   virtual void receive_request_service_contexts (
       PortableInterceptor::ServerRequestInfo_ptr ri);
@@ -79,22 +78,19 @@ public:
       PortableInterceptor::ServerRequestInfo_ptr ri);
   //@}
 
-  CORBA::Long request_count (void);
+  CORBA::Long request_count ();
 
 protected:
-
   /// Destructor.
   /**
    * Protected destructor to enforce correct memory management via
    * reference counting.
    */
-  ~ServerRequestInterceptor (void);
+  ~ServerRequestInterceptor ();
 
 private:
-
   /// The number of requests that have arrived on the server.
   ACE_Atomic_Op<TAO_SYNCH_MUTEX, long> request_count_;
-
 };
 
 #if defined(_MSC_VER)

@@ -2,7 +2,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE TAO::Any_Impl *
-CORBA::Any::impl (void) const
+CORBA::Any::impl () const
 {
   return this->impl_;
 }
@@ -12,8 +12,8 @@ CORBA::Any::impl (void) const
 // *************************************************************
 
 ACE_INLINE
-CORBA::Any_var::Any_var (void)
-  : ptr_ (0)
+CORBA::Any_var::Any_var ()
+  : ptr_ (nullptr)
 {
 }
 
@@ -24,7 +24,7 @@ CORBA::Any_var::Any_var (CORBA::Any *p)
 }
 
 ACE_INLINE
-CORBA::Any_var::~Any_var (void)
+CORBA::Any_var::~Any_var ()
 {
   delete this->ptr_;
 }
@@ -42,41 +42,41 @@ CORBA::Any_var::operator const CORBA::Any *() const
 }
 
 ACE_INLINE CORBA::Any *
-CORBA::Any_var::operator-> (void)
+CORBA::Any_var::operator-> ()
 {
   return this->ptr_;
 }
 
 ACE_INLINE const CORBA::Any &
-CORBA::Any_var::in (void) const
+CORBA::Any_var::in () const
 {
   return *this->ptr_;
 }
 
 ACE_INLINE CORBA::Any &
-CORBA::Any_var::inout (void)
+CORBA::Any_var::inout ()
 {
   return *this->ptr_;
 }
 
 ACE_INLINE CORBA::Any *&
-CORBA::Any_var::out (void)
+CORBA::Any_var::out ()
 {
   delete this->ptr_;
-  this->ptr_ = 0;
+  this->ptr_ = nullptr;
   return this->ptr_;
 }
 
 ACE_INLINE CORBA::Any *
-CORBA::Any_var::_retn (void)
+CORBA::Any_var::_retn ()
 {
   CORBA::Any *temp = this->ptr_;
-  this->ptr_ = 0;
+  this->ptr_ = nullptr;
   return temp;
 }
 
 ACE_INLINE CORBA::Any *
-CORBA::Any_var::ptr (void) const
+CORBA::Any_var::ptr () const
 {
   return this->ptr_;
 }
@@ -85,10 +85,8 @@ CORBA::Any_var::ptr (void) const
 // CORBA::Any_var insertion operators
 // *************************************************************
 
-#ifdef ACE_ANY_OPS_USE_NAMESPACE
 namespace CORBA
 {
-#endif
 
 ACE_INLINE void
 operator <<= (CORBA::Any_var &lhs, CORBA::Short rhs)
@@ -316,9 +314,7 @@ operator >>= (const CORBA::Any_var &lhs, CORBA::Any::to_object rhs)
   return lhs.in () >>= rhs;
 }
 
-#ifdef ACE_ANY_OPS_USE_NAMESPACE
 }
-#endif
 
 // *************************************************************
 // Inline operations for class CORBA::Any_out
@@ -364,13 +360,13 @@ CORBA::Any_out::operator CORBA::Any *&()
 }
 
 ACE_INLINE CORBA::Any *&
-CORBA::Any_out::ptr (void)
+CORBA::Any_out::ptr ()
 {
   return this->ptr_;
 }
 
 ACE_INLINE CORBA::Any *
-CORBA::Any_out::operator-> (void)
+CORBA::Any_out::operator-> ()
 {
   return this->ptr_;
 }

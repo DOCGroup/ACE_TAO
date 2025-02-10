@@ -59,7 +59,7 @@ class TAO_Root_POA;
 class TAO_Export TAO_IORInterceptor_Adapter
 {
 public:
-  virtual ~TAO_IORInterceptor_Adapter (void);
+  virtual ~TAO_IORInterceptor_Adapter ();
 
   virtual void add_interceptor (
       PortableInterceptor::IORInterceptor_ptr interceptor) = 0;
@@ -68,7 +68,7 @@ public:
       PortableInterceptor::IORInterceptor_ptr interceptor,
       const CORBA::PolicyList& policies) = 0;
 
-  virtual void destroy_interceptors (void) = 0;
+  virtual void destroy_interceptors () = 0;
 
   /// Call the IORInterceptor::establish_components() method on all
   /// registered IORInterceptors.
@@ -82,8 +82,7 @@ public:
 
   /// Call the IORInterceptor::components_established() method on all
   /// registered IORInterceptors.
-  virtual void components_established (PortableInterceptor::IORInfo_ptr info)
-    = 0;
+  virtual void components_established (PortableInterceptor::IORInfo_ptr info) = 0;
 
   virtual void adapter_state_changed (
       const TAO::ObjectReferenceTemplate_Array &array_obj_ref_template,

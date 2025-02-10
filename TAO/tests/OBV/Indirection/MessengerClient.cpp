@@ -7,9 +7,7 @@ using namespace demo::value::idl;
 const char* IOR = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
 
 int ACE_TMAIN (int ac, ACE_TCHAR* av[]) {
-
   try {
-
     CORBA::ORB_var orb = CORBA::ORB_init(ac, av);
 
     NodeFactory::register_new_factory(* orb.in());
@@ -88,7 +86,6 @@ int ACE_TMAIN (int ac, ACE_TCHAR* av[]) {
     }
 
     orb->destroy();
-
   } catch(const CORBA::Exception& e) {
     std::cerr << e << std::endl;
     return 1;

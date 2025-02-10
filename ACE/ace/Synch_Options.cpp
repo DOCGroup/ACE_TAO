@@ -12,7 +12,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_ALLOC_HOOK_DEFINE (ACE_Synch_Options)
 
 void
-ACE_Synch_Options::dump (void) const
+ACE_Synch_Options::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Synch_Options::dump");
@@ -48,11 +48,12 @@ ACE_Synch_Options::set (unsigned long options,
   this->options_ = options;
   this->timeout_ = timeout;
 
-  // Whoa, possible dependence on static initialization here.  This
-  // function is called during initialization of the statics above.
-  // But, ACE_Time_Value::zero is a static object.  Very fortunately,
-  // its bits have a value of 0.
-  if (this->timeout_ != ACE_Time_Value::zero)
+  /*
+   * Not using ACE_Time_Value::zero because of possible static init order
+   * dependence. It would work fine because the memory would all zeros anyways,
+   * but ubsan complains about it.
+   */
+  if (timeout_ != ACE_Time_Value(0))
     ACE_SET_BITS (this->options_, ACE_Synch_Options::USE_TIMEOUT);
 
   this->arg_ = arg;
@@ -73,7 +74,7 @@ ACE_Synch_Options::operator= (unsigned long option)
 }
 
 const ACE_Time_Value &
-ACE_Synch_Options::timeout (void) const
+ACE_Synch_Options::timeout () const
 {
   ACE_TRACE ("ACE_Synch_Options::timeout");
   return this->timeout_;
@@ -87,14 +88,14 @@ ACE_Synch_Options::timeout (const ACE_Time_Value &tv)
 }
 
 const ACE_Time_Value *
-ACE_Synch_Options::time_value (void) const
+ACE_Synch_Options::time_value () const
 {
   ACE_TRACE ("ACE_Synch_Options::time_value");
   return (*this)[USE_TIMEOUT] ? &this->timeout_ : 0;
 }
 
 const void *
-ACE_Synch_Options::arg (void) const
+ACE_Synch_Options::arg () const
 {
   ACE_TRACE ("ACE_Synch_Options::arg");
   return this->arg_;

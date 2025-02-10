@@ -21,7 +21,7 @@ public:
     kind(k);
   }
 
-  virtual ::CORBA::ValueBase *_copy_value (void)
+  virtual ::CORBA::ValueBase *_copy_value ()
   {
     ::CORBA::ValueBase *ret_val = 0;
     ACE_NEW_THROW_EX (

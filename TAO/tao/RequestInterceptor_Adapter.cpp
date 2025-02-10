@@ -13,7 +13,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO::RequestInterceptor_Adapter::~RequestInterceptor_Adapter (void)
+TAO::RequestInterceptor_Adapter::~RequestInterceptor_Adapter ()
 {
 }
 

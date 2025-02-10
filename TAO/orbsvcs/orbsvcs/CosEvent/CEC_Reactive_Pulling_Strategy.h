@@ -85,8 +85,8 @@ public:
                        const void* arg);
 
   // = The CEC_Pulling_Strategy methods.
-  virtual void activate (void);
-  virtual void shutdown (void);
+  virtual void activate ();
+  virtual void shutdown ();
 
 private:
   /// The Adapter for the reactor events

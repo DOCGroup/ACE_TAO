@@ -16,7 +16,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void
-ACE_PI_Control_Block::ACE_Malloc_Header::dump (void) const
+ACE_PI_Control_Block::ACE_Malloc_Header::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_PI_Control_Block::ACE_Malloc_Header::dump");
@@ -29,7 +29,7 @@ ACE_PI_Control_Block::ACE_Malloc_Header::dump (void) const
 }
 
 void
-ACE_PI_Control_Block::print_alignment_info (void)
+ACE_PI_Control_Block::print_alignment_info ()
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_PI_Control_Block::ACE_Control_Block::print_alignment_info");
@@ -65,7 +65,7 @@ ACE_PI_Control_Block::print_alignment_info (void)
 }
 
 void
-ACE_PI_Control_Block::dump (void) const
+ACE_PI_Control_Block::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_PI_Control_Block::dump");
@@ -91,7 +91,7 @@ ACE_PI_Control_Block::dump (void) const
 #endif /* ACE_HAS_DUMP */
 }
 
-ACE_PI_Control_Block::ACE_Name_Node::ACE_Name_Node (void)
+ACE_PI_Control_Block::ACE_Name_Node::ACE_Name_Node ()
 {
   ACE_TRACE ("ACE_PI_Control_Block::ACE_Name_Node::ACE_Name_Node");
 }
@@ -119,7 +119,7 @@ ACE_PI_Control_Block::ACE_Name_Node::ACE_Name_Node (const ACE_Name_Node &)
 }
 
 const char *
-ACE_PI_Control_Block::ACE_Name_Node::name (void) const
+ACE_PI_Control_Block::ACE_Name_Node::name () const
 {
   return this->name_;
 }
@@ -130,14 +130,14 @@ ACE_PI_Control_Block::ACE_Name_Node::name (const char *)
   ACE_ASSERT (0); // not implemented yet.
 }
 
-ACE_PI_Control_Block::ACE_Malloc_Header::ACE_Malloc_Header (void)
+ACE_PI_Control_Block::ACE_Malloc_Header::ACE_Malloc_Header ()
   : next_block_ (0),
     size_ (0)
 {
 }
 
 void
-ACE_PI_Control_Block::ACE_Name_Node::dump (void) const
+ACE_PI_Control_Block::ACE_Name_Node::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_PI_Control_Block::ACE_Name_Node::dump");

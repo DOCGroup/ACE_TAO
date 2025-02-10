@@ -26,7 +26,6 @@ namespace TAO
 {
   namespace Utils
   {
-
     /**
      * @struct Implicit_Deactivation_Functor
      *
@@ -37,7 +36,7 @@ namespace TAO
       typedef PortableServer::ServantBase * argument;
 
       // Deactivate an implicitly activated servant
-      void operator() (PortableServer::ServantBase * servant) throw ();
+      void operator() (PortableServer::ServantBase * servant) noexcept;
     };
 
     /**
@@ -50,7 +49,6 @@ namespace TAO
       PortableServer::ServantBase,
       Implicit_Deactivation_Functor>
     Implicit_Deactivator;
-
   } // namespace Utils
 } // namespace TAO
 

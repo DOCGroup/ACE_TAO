@@ -8,7 +8,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Notify_ProxyPushConsumer::TAO_Notify_ProxyPushConsumer (void)
+TAO_Notify_ProxyPushConsumer::TAO_Notify_ProxyPushConsumer ()
 {
 }
 
@@ -17,14 +17,14 @@ TAO_Notify_ProxyPushConsumer::~TAO_Notify_ProxyPushConsumer ()
 }
 
 void
-TAO_Notify_ProxyPushConsumer::release (void)
+TAO_Notify_ProxyPushConsumer::release ()
 {
   delete this;
   //@@ inform factory
 }
 
 CosNotifyChannelAdmin::ProxyType
-TAO_Notify_ProxyPushConsumer::MyType (void)
+TAO_Notify_ProxyPushConsumer::MyType ()
 {
   return CosNotifyChannelAdmin::PUSH_ANY;
 }
@@ -61,7 +61,7 @@ TAO_Notify_ProxyPushConsumer::connect_any_push_supplier (CosEventComm::PushSuppl
   this->self_change ();
 }
 
-void TAO_Notify_ProxyPushConsumer::disconnect_push_consumer (void)
+void TAO_Notify_ProxyPushConsumer::disconnect_push_consumer ()
 {
   TAO_Notify_ProxyPushConsumer::Ptr guard( this );
   this->destroy ();
@@ -69,7 +69,7 @@ void TAO_Notify_ProxyPushConsumer::disconnect_push_consumer (void)
 }
 
 const char *
-TAO_Notify_ProxyPushConsumer::get_proxy_type_name (void) const
+TAO_Notify_ProxyPushConsumer::get_proxy_type_name () const
 {
   return "proxy_push_consumer";
 }

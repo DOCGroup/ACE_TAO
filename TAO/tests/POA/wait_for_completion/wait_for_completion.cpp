@@ -15,7 +15,7 @@
 class test_i : public POA_test
 {
 public:
-  void destroy_poa (void);
+  void destroy_poa ();
 
   void test_poa (PortableServer::POA_ptr poa);
 
@@ -29,7 +29,7 @@ test_i::test_poa (PortableServer::POA_ptr poa)
 }
 
 void
-test_i::destroy_poa (void)
+test_i::destroy_poa ()
 {
   CORBA::Boolean etherealize_objects = 1;
   CORBA::Boolean wait_for_completion = 1;
@@ -124,7 +124,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       test_object->destroy_poa ();
 
-      first_poa->destroy (1, 1);
+      first_poa->destroy (true, true);
 
       orb1->destroy ();
       orb2->destroy ();

@@ -11,13 +11,13 @@ namespace ACE
   namespace Monitor_Control
   {
     Monitor_Admin&
-    Monitor_Admin_Manager::admin (void)
+    Monitor_Admin_Manager::admin ()
     {
       return this->admin_;
     }
 
     int
-    Monitor_Admin_Manager::Initializer (void)
+    Monitor_Admin_Manager::Initializer ()
     {
       return
         ACE_Service_Config::process_directive (ace_svc_desc_MC_ADMINMANAGER);

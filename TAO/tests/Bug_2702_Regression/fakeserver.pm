@@ -17,7 +17,7 @@ sub run {
   my $self = shift;
   my $timeoutafter = shift; # in seconds
   my $rout;
-  while ( 1 ) {
+  while (1) {
     print STDERR "fakeserver: Loop\n";
 
     select( undef, undef, undef, 1 );
@@ -31,7 +31,7 @@ sub run {
     my $routs = unpack("b*", $rout);
     print STDERR "fakeserver: Select $routs\n";
     my $pos = index( $routs,'1');
-    while ( $pos >= 0 ) {
+    while ( $pos >= 0) {
       $self->HandleFile( $pos );
       $pos = index( $routs,'1', $pos+1);
     }
@@ -73,7 +73,7 @@ sub OpenServer {
 
 sub SendMessage {
   my $self = shift;
-  my( $message ) = @_;
+  my( $message) = @_;
 
   print STDERR "fakeserver: SendMessage $message\n";
   $message .= "\r\n";
@@ -88,7 +88,7 @@ sub SendMessage {
 
 sub HandleFile {
   my $self = shift;
-  my ( $fileno ) = @_;
+  my ($fileno) = @_;
 
   print STDERR "fakeserver: HandleFile $fileno\n";
   if ( $fileno == $self->{'server_fileno'} ) {

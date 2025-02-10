@@ -43,7 +43,6 @@
 
 #include "ace/os_include/os_signal.h"
 #include "ace/Thread_Mutex.h"
-#include "ace/Copy_Disabled.h"
 #include "ace/Synch_Traits.h"
 
 #define ACE_DEFAULT_FRAMEWORK_REPOSITORY_SIZE 1024
@@ -56,7 +55,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * @brief Base class that defines a uniform interface for all managed
  * framework components.
  */
-class ACE_Export ACE_Framework_Component : private ACE_Copy_Disabled
+class ACE_Export ACE_Framework_Component
 {
 public:
   friend class ACE_Framework_Repository;
@@ -66,12 +65,17 @@ public:
                            const ACE_TCHAR *dll_name = 0,
                            const ACE_TCHAR *name = 0);
 
+  ACE_Framework_Component (const ACE_Framework_Component &) = delete;
+  ACE_Framework_Component (ACE_Framework_Component &&) = delete;
+  ACE_Framework_Component &operator= (const ACE_Framework_Component &) = delete;
+  ACE_Framework_Component &operator= (ACE_Framework_Component &&) = delete;
+
   /// Close the contained singleton.
-  virtual void close_singleton (void) = 0;
+  virtual void close_singleton () = 0;
 
 protected:
   /// Destructor.
-  virtual ~ACE_Framework_Component (void);
+  virtual ~ACE_Framework_Component ();
 
 private:
   /// Pointer to the actual component.
@@ -93,7 +97,7 @@ private:
  * destruction, framework components are destroyed in the reverse order
  * that they were added originally.
  */
-class ACE_Export ACE_Framework_Repository : private ACE_Copy_Disabled
+class ACE_Export ACE_Framework_Repository
 {
 public:
   // This is just to silence a compiler warning about no public ctors
@@ -104,23 +108,28 @@ public:
     DEFAULT_SIZE = ACE_DEFAULT_FRAMEWORK_REPOSITORY_SIZE
   };
 
+  ACE_Framework_Repository (const ACE_Framework_Repository &) = delete;
+  ACE_Framework_Repository (ACE_Framework_Repository &&) = delete;
+  ACE_Framework_Repository &operator= (const ACE_Framework_Repository &) = delete;
+  ACE_Framework_Repository &operator= (ACE_Framework_Repository &&) = delete;
+
   /// Close down the repository and free up dynamically allocated
   /// resources.
-  ~ACE_Framework_Repository (void);
+  ~ACE_Framework_Repository ();
 
   /// Initialize the repository.
   int open (int size = DEFAULT_SIZE);
 
   /// Close down the repository and free up dynamically allocated
   /// resources, also called by dtor.
-  int close (void);
+  int close ();
 
   /// Get pointer to a process-wide ACE_Framework_Repository.
   static ACE_Framework_Repository *instance
     (int size = ACE_Framework_Repository::DEFAULT_SIZE);
 
   /// Delete the dynamically allocated Singleton.
-  static void close_singleton (void);
+  static void close_singleton ();
 
   // = Search structure operations (all acquire locks as necessary).
 
@@ -136,35 +145,32 @@ public:
   int remove_dll_components (const ACE_TCHAR *dll_name);
 
   /// Return the current size of the repository.
-  int current_size (void) const;
+  int current_size () const;
 
   /// Return the total size of the repository.
-  int total_size (void) const;
+  int total_size () const;
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-
   /// Initialize the repository.
   ACE_Framework_Repository (int size = ACE_Framework_Repository::DEFAULT_SIZE);
 
 private:
-
   /// Actually removes the dll components, must be called with locks held.
   int remove_dll_components_i (const ACE_TCHAR *dll_name);
 
   /// Compact component_vector_ after components have been removed__maintains
   /// order.
-  void compact (void);
+  void compact ();
 
 private:
-
   /// Contains all the framework components.
-  ACE_Framework_Component **component_vector_;
+  ACE_Framework_Component **component_vector_ {};
 
   /// Current number of components.
   int current_size_;

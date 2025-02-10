@@ -4,7 +4,6 @@
 #include "orbsvcs/RtecEventCommC.h"
 
 
-
 Supplier::Supplier (RtecEventComm::EventSourceID id,
                     const RtecEventChannelAdmin::ProxyPushConsumer_ptr consumer_proxy)
 :id_ (id),
@@ -13,7 +12,7 @@ Supplier::Supplier (RtecEventComm::EventSourceID id,
 }
 
 void
-Supplier::timeout_occurred (void)
+Supplier::timeout_occurred ()
 {
   RtecEventComm::EventSet event (1);
   if (id_ == 1)
@@ -35,7 +34,7 @@ Supplier::timeout_occurred (void)
 }
 
 void
-Supplier::disconnect_push_supplier (void)
+Supplier::disconnect_push_supplier ()
 {
 }
 
@@ -59,7 +58,7 @@ Timeout_Consumer::push (const RtecEventComm::EventSet& events)
 }
 
 void
-Timeout_Consumer::disconnect_push_consumer (void)
+Timeout_Consumer::disconnect_push_consumer ()
 {
 }
 

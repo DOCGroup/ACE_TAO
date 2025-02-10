@@ -4,8 +4,6 @@
 /**
  *  @file    Event.h
  *
- *   Moved from Synch.h.
- *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
 //==========================================================================
@@ -49,11 +47,11 @@ public:
                LPSECURITY_ATTRIBUTES sa = 0);
 
   /// Implicitly destroy the event variable.
-  virtual ~ACE_Event_T (void);
+  virtual ~ACE_Event_T () = default;
 
   /// Get the current time of day according to the queue's TIME_POLICY.
   /// Allows users to initialize timeout values using correct time policy.
-  ACE_Time_Value_T<TIME_POLICY> gettimeofday (void) const;
+  ACE_Time_Value_T<TIME_POLICY> gettimeofday () const;
 
   /// Allows applications to control how the event gets the time
   /// of day.
@@ -63,14 +61,12 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-
   /// The policy to return the current time of day
   TIME_POLICY time_policy_;
 
 private:
-  // = Prevent copying.
-  ACE_Event_T (const ACE_Event_T<TIME_POLICY>& event);
-  const ACE_Event_T &operator= (const ACE_Event_T<TIME_POLICY> &rhs);
+  ACE_Event_T (const ACE_Event_T<TIME_POLICY>& event) = delete;
+  const ACE_Event_T &operator= (const ACE_Event_T<TIME_POLICY> &rhs) = delete;
 };
 
 typedef ACE_Event_T<ACE_System_Time_Policy> ACE_Event;
@@ -81,13 +77,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #include "ace/Event.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "ace/Event.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Event.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_EVENT_H */

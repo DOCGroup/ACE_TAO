@@ -19,8 +19,8 @@ class DT : public ACE_Message_Block
   DT (TAO_SYNCH_MUTEX &lock,
       int guid);
 
-  void suspend (void);
-  void resume (void);
+  void suspend ();
+  void resume ();
 
  private:
   TAO_SYNCH_CONDITION dt_cond_;
@@ -33,15 +33,15 @@ public MIF_Scheduling::SegmentSchedulingParameterPolicy,
        public ::CORBA::LocalObject
 {
  public:
-  virtual CORBA::Short importance (void);
+  virtual CORBA::Short importance ();
 
   virtual void importance (CORBA::Short importance);
 
-  CORBA::Policy_ptr copy (void);
+  CORBA::Policy_ptr copy ();
 
-  virtual CORBA::PolicyType policy_type (void);
+  virtual CORBA::PolicyType policy_type ();
 
-  void destroy (void);
+  void destroy ();
 
  private:
   CORBA::Short importance_;
@@ -54,20 +54,19 @@ public MIF_Scheduling::MIF_Scheduler,
 public ::CORBA::LocalObject
 {
  public:
-
   MIF_Scheduler (CORBA::ORB_ptr orb);
 
-  ~MIF_Scheduler (void);
+  ~MIF_Scheduler ();
 
 
   virtual MIF_Scheduling::SegmentSchedulingParameterPolicy_ptr
     create_segment_scheduling_parameter (CORBA::Short segment_priority);
 
-  void wait (void);
+  void wait ();
 
-  void resume_main (void);
+  void resume_main ();
 
-  void incr_thr_count (void);
+  void incr_thr_count ();
 
   virtual void begin_new_scheduling_segment (const RTScheduling::Current::IdType & guid,
                const char * name,
@@ -115,13 +114,13 @@ public ::CORBA::LocalObject
 
   virtual void cancel (const RTScheduling::Current::IdType & guid);
 
-  virtual CORBA::PolicyList * scheduling_policies (void);
+  virtual CORBA::PolicyList * scheduling_policies ();
 
   virtual void scheduling_policies (const CORBA::PolicyList & scheduling_policies);
 
-  virtual CORBA::PolicyList * poa_policies (void);
+  virtual CORBA::PolicyList * poa_policies ();
 
-  virtual char * scheduling_discipline_name (void);
+  virtual char * scheduling_discipline_name ();
 
   virtual RTScheduling::ResourceManager_ptr create_resource_manager (const char * name,
                      CORBA::Policy_ptr scheduling_parameter);

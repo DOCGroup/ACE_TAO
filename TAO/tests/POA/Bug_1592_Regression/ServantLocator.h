@@ -43,7 +43,6 @@ class ServantLocator
     public virtual ::CORBA::LocalObject
 {
 public:
-
   /// Constructor.
   ServantLocator (CORBA::ORB_ptr orb);
 
@@ -62,18 +61,15 @@ public:
 
   bool error_status_;
 protected:
-
   /// Destructor.
-  ~ServantLocator (void);
+  ~ServantLocator ();
 
 private:
-
   /// Pseudo-reference to the ORB.
   CORBA::ORB_var orb_;
 
   /// Pointer to the test servant.
   PortableServer::ServantBase_var servant_;
-
 };
 
 #if defined(_MSC_VER)

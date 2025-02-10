@@ -29,7 +29,7 @@ class TAO_RT_Notify_Export TAO_Notify_RT_Builder : public TAO_Notify_Builder
 {
 public:
   /// Constructor
-  TAO_Notify_RT_Builder (void);
+  TAO_Notify_RT_Builder ();
 
   /// Destructor
   virtual ~TAO_Notify_RT_Builder ();

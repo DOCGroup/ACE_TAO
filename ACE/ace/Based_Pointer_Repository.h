@@ -41,8 +41,8 @@ class ACE_Export ACE_Based_Pointer_Repository
 public:
   // = Use ACE_Null_Mutex to allow locking while iterating.
 
-  ACE_Based_Pointer_Repository (void);
-  ~ACE_Based_Pointer_Repository (void);
+  ACE_Based_Pointer_Repository ();
+  ~ACE_Based_Pointer_Repository ();
 
   // = Search structure methods.
   /**
@@ -63,26 +63,22 @@ public:
   int unbind (void *addr);
 
 private:
-
   /// Use the "Cheshire-Cat" technique to hide the implementation in
   /// order to avoid circular #include dependencies.
   ACE_Based_Pointer_Repository_Rep *rep_;
 
 private:
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Based_Pointer_Repository &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Based_Pointer_Repository (const ACE_Based_Pointer_Repository &))
+  void operator= (const ACE_Based_Pointer_Repository &) = delete;
+  ACE_Based_Pointer_Repository (const ACE_Based_Pointer_Repository &) = delete;
 };
 
 // ----------------------------------
 
 /// Declare a process wide singleton
-ACE_SINGLETON_DECLARE (ACE_Singleton,
-                       ACE_Based_Pointer_Repository,
-                       ACE_SYNCH_RW_MUTEX)
+ACE_SINGLETON_DECLARE (ACE_Singleton, ACE_Based_Pointer_Repository, ACE_SYNCH_RW_MUTEX)
 
 /// Provide a Singleton access point to the based pointer repository.
-typedef ACE_Singleton<ACE_Based_Pointer_Repository, ACE_SYNCH_RW_MUTEX>
-        ACE_BASED_POINTER_REPOSITORY;
+typedef ACE_Singleton<ACE_Based_Pointer_Repository, ACE_SYNCH_RW_MUTEX> ACE_BASED_POINTER_REPOSITORY;
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 

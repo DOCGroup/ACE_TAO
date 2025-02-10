@@ -3,13 +3,13 @@
 #include "tao/debug.h"
 #include "ace/OS_NS_stdio.h"
 
-PP_Test_Server::PP_Test_Server (void)
+PP_Test_Server::PP_Test_Server ()
   : ior_output_file_ (0)
 {
 }
 
 int
-PP_Test_Server::parse_args (void)
+PP_Test_Server::parse_args ()
 {
   ACE_Get_Opt get_opts (argc_, argv_, ACE_TEXT("do:"));
   int c;
@@ -103,7 +103,7 @@ PP_Test_Server::run ()
   return 0;
 }
 
-PP_Test_Server::~PP_Test_Server (void)
+PP_Test_Server::~PP_Test_Server ()
 {
   if (this->factory_id_.in ())
     this->orb_manager_.deactivate_under_child_poa (this->factory_id_.in ());

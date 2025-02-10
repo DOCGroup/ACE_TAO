@@ -29,18 +29,18 @@ TAO_SCIOP_Transport::TAO_SCIOP_Transport (TAO_SCIOP_Connection_Handler *handler,
 {
 }
 
-TAO_SCIOP_Transport::~TAO_SCIOP_Transport (void)
+TAO_SCIOP_Transport::~TAO_SCIOP_Transport ()
 {
 }
 
 ACE_Event_Handler *
-TAO_SCIOP_Transport::event_handler_i (void)
+TAO_SCIOP_Transport::event_handler_i ()
 {
   return this->connection_handler_;
 }
 
 TAO_Connection_Handler *
-TAO_SCIOP_Transport::connection_handler_i (void)
+TAO_SCIOP_Transport::connection_handler_i ()
 {
   return this->connection_handler_;
 }

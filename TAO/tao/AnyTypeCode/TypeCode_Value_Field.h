@@ -82,9 +82,7 @@ namespace TAO
 
       /// The visibility of the field.
       CORBA::Visibility visibility;
-
     };
-
   }  // End namespace TypeCode
 }  // End namespace TAO
 

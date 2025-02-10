@@ -68,7 +68,6 @@ JAWS_Reactive_IO::recv ( ACE_HANDLE handle
                        , void *act
                        )
 {
-
   JAWS_IO_Reactive_Recv *rr;
   rr = JAWS_IO_Reactive_Recv::make (handle, mb, completer, tv, act);
 
@@ -156,7 +155,7 @@ JAWS_Reactive_IO::transmit ( ACE_HANDLE handle
 
 
 void
-JAWS_IO_Reactive_Handler::open (void)
+JAWS_IO_Reactive_Handler::open ()
 {
   int result = ACE_Reactor::instance ()->notify (this);
 

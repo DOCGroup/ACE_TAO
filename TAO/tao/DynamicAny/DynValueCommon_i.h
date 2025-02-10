@@ -39,20 +39,20 @@ public:
   TAO_DynValueCommon_i (CORBA::Boolean allow_truncation=true);
 
   /// Destructor.
-  ~TAO_DynValueCommon_i (void);
+  ~TAO_DynValueCommon_i ();
 
   // = LocalObject methods.
   static TAO_DynValueCommon_i *_narrow (CORBA::Object_ptr obj);
 
   /// Called by DynValue and DynValueBox init() functions.
-  void init_common (void);
+  void init_common ();
 
   // = Functions specific to DynValueCommon.
-  virtual CORBA::Boolean is_null (void);
+  virtual CORBA::Boolean is_null ();
 
-  virtual void set_to_null (void);
+  virtual void set_to_null ();
 
-  virtual void set_to_value (void) = 0;
+  virtual void set_to_value () = 0;
 
 private:
   // = Use copy() or assign() instead of these.

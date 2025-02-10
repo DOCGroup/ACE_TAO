@@ -30,7 +30,7 @@ public:
   /*
    * Default destructor.
    */
-  virtual ~ACEXML_SAXPrint_Handler (void);
+  virtual ~ACEXML_SAXPrint_Handler ();
 
   // Methods inherit from ACEXML_ContentHandler.
 
@@ -45,7 +45,7 @@ public:
   /*
    * Receive notification of the end of a document.
    */
-  virtual void endDocument (void)
+  virtual void endDocument ()
     ;
 
   /*
@@ -86,7 +86,7 @@ public:
   /*
    * Receive notification of the beginning of a document.
    */
-  virtual void startDocument (void);
+  virtual void startDocument ();
 
   /*
    * Receive notification of the beginning of an element.
@@ -149,7 +149,6 @@ public:
   void print_indent ();
 
 private:
-
   size_t indent_;
   ACEXML_Char* fileName_;
   ACEXML_Locator* locator_;

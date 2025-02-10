@@ -45,7 +45,7 @@ class ASNMP_Export Pdu
 {
 public:
   /// constructor no args
-  Pdu( void);
+  Pdu();
 
   /// constructor with vbs and count
   Pdu( Vb* pvbs, const int pvb_count);

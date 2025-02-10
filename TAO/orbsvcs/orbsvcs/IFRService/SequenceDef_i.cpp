@@ -2,7 +2,7 @@
 #include "orbsvcs/IFRService/Repository_i.h"
 #include "orbsvcs/IFRService/IFR_Service_Utils.h"
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/SString.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -13,18 +13,18 @@ TAO_SequenceDef_i::TAO_SequenceDef_i (TAO_Repository_i *repo)
 {
 }
 
-TAO_SequenceDef_i::~TAO_SequenceDef_i (void)
+TAO_SequenceDef_i::~TAO_SequenceDef_i ()
 {
 }
 
 CORBA::DefinitionKind
-TAO_SequenceDef_i::def_kind (void)
+TAO_SequenceDef_i::def_kind ()
 {
   return CORBA::dk_Sequence;
 }
 
 void
-TAO_SequenceDef_i::destroy (void)
+TAO_SequenceDef_i::destroy ()
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -34,7 +34,7 @@ TAO_SequenceDef_i::destroy (void)
 }
 
 void
-TAO_SequenceDef_i::destroy_i (void)
+TAO_SequenceDef_i::destroy_i ()
 {
   // Only if it is (w)string, fixed, array or sequence.
   this->destroy_element_type ();
@@ -50,7 +50,7 @@ TAO_SequenceDef_i::destroy_i (void)
 }
 
 CORBA::TypeCode_ptr
-TAO_SequenceDef_i::type (void)
+TAO_SequenceDef_i::type ()
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::TypeCode::_nil ());
 
@@ -60,7 +60,7 @@ TAO_SequenceDef_i::type (void)
 }
 
 CORBA::TypeCode_ptr
-TAO_SequenceDef_i::type_i (void)
+TAO_SequenceDef_i::type_i ()
 {
   CORBA::TypeCode_var element_typecode =
     this->element_type_i ();
@@ -74,7 +74,7 @@ TAO_SequenceDef_i::type_i (void)
 }
 
 CORBA::ULong
-TAO_SequenceDef_i::bound (void)
+TAO_SequenceDef_i::bound ()
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
@@ -84,7 +84,7 @@ TAO_SequenceDef_i::bound (void)
 }
 
 CORBA::ULong
-TAO_SequenceDef_i::bound_i (void)
+TAO_SequenceDef_i::bound_i ()
 {
   u_int bound = 0;
   this->repo_->config ()->get_integer_value (this->section_key_,
@@ -111,7 +111,7 @@ TAO_SequenceDef_i::bound_i (CORBA::ULong bound)
 }
 
 CORBA::TypeCode_ptr
-TAO_SequenceDef_i::element_type (void)
+TAO_SequenceDef_i::element_type ()
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::TypeCode::_nil ());
 
@@ -121,7 +121,7 @@ TAO_SequenceDef_i::element_type (void)
 }
 
 CORBA::TypeCode_ptr
-TAO_SequenceDef_i::element_type_i (void)
+TAO_SequenceDef_i::element_type_i ()
 {
   ACE_TString element_path;
   this->repo_->config ()->get_string_value (this->section_key_,
@@ -136,7 +136,7 @@ TAO_SequenceDef_i::element_type_i (void)
 }
 
 CORBA::IDLType_ptr
-TAO_SequenceDef_i::element_type_def (void)
+TAO_SequenceDef_i::element_type_def ()
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::IDLType::_nil ());
 
@@ -146,7 +146,7 @@ TAO_SequenceDef_i::element_type_def (void)
 }
 
 CORBA::IDLType_ptr
-TAO_SequenceDef_i::element_type_def_i (void)
+TAO_SequenceDef_i::element_type_def_i ()
 {
   ACE_TString element_path;
   this->repo_->config ()->get_string_value (this->section_key_,

@@ -21,7 +21,7 @@ be_visitor_sequence_base::be_visitor_sequence_base (be_visitor_context *ctx)
 {
 }
 
-be_visitor_sequence_base::~be_visitor_sequence_base (void)
+be_visitor_sequence_base::~be_visitor_sequence_base ()
 {
 }
 
@@ -41,7 +41,7 @@ int
 be_visitor_sequence_base::visit_node (be_type *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  be_type *bt = 0;
+  be_type *bt = nullptr;
 
   if (this->ctx_->alias ())
     {
@@ -172,7 +172,7 @@ be_visitor_sequence_base::visit_typedef (be_typedef *node)
                         -1);
     }
 
-  this->ctx_->alias (0);
+  this->ctx_->alias (nullptr);
   return 0;
 }
 
@@ -186,7 +186,7 @@ be_visitor_sequence_base_template_args (be_visitor_context *ctx,
 
 
 be_visitor_sequence_base_template_args::
-~be_visitor_sequence_base_template_args (void)
+~be_visitor_sequence_base_template_args ()
 {
 }
 
@@ -194,7 +194,7 @@ int
 be_visitor_sequence_base_template_args::visit_interface (be_interface *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  be_type *bt = 0;
+  be_type *bt = nullptr;
 
   if (this->ctx_->alias ())
     {
@@ -225,7 +225,7 @@ be_visitor_sequence_base_template_args::visit_interface_fwd (
   )
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  be_type *bt = 0;
+  be_type *bt = nullptr;
 
   if (this->ctx_->alias ())
     {

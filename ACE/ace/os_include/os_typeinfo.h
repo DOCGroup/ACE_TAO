@@ -21,7 +21,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-# include /**/ <typeinfo>
+#include /**/ <typeinfo>
 
 #include /**/ "ace/post.h"
 #endif /* ACE_OS_INCLUDE_OS_TYPEINFO_H */

@@ -26,7 +26,7 @@ class be_visitor_ami4ccm_conn_ex_idl : public be_visitor_scope
 public:
   be_visitor_ami4ccm_conn_ex_idl (be_visitor_context *ctx);
 
-  ~be_visitor_ami4ccm_conn_ex_idl (void);
+  ~be_visitor_ami4ccm_conn_ex_idl ();
 
   virtual int visit_interface (be_interface *node);
 

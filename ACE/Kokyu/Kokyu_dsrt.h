@@ -8,14 +8,13 @@
 #ifndef KOKYU_DSRT_H
 #define KOKYU_DSRT_H
 #include /**/ "ace/pre.h"
-#include "ace/Copy_Disabled.h"
 
 #include "kokyu_export.h"
 #include "Kokyu_defs.h"
+#include <memory>
 
 namespace Kokyu
 {
-
   template <class DSRT_Scheduler_Traits> class DSRT_Dispatcher_Impl;
 
   /**
@@ -31,7 +30,7 @@ namespace Kokyu
    * dynamic scheduling of threads.
    */
   template <class DSRT_Scheduler_Traits>
-  class DSRT_Dispatcher : private ACE_Copy_Disabled
+  class DSRT_Dispatcher
   {
   public:
     typedef typename DSRT_Scheduler_Traits::Guid_t Guid_t;
@@ -60,6 +59,13 @@ namespace Kokyu
     /// Shut down the dispatcher. The dispatcher will stop processing requests.
     int shutdown ();
 
+    DSRT_Dispatcher () = default;
+
+    DSRT_Dispatcher (const DSRT_Dispatcher &) = delete;
+    DSRT_Dispatcher (DSRT_Dispatcher &&) = delete;
+    DSRT_Dispatcher &operator= (const DSRT_Dispatcher &) = delete;
+    DSRT_Dispatcher &operator= (DSRT_Dispatcher &&) = delete;
+
     /// Non virtual destructor. Read as <b><i>this class not available
     /// for inheritance<i></b>.
     ~DSRT_Dispatcher ();
@@ -67,7 +73,7 @@ namespace Kokyu
   private:
     /// Auto ptr to the implementation. Implementation will be created on the
     /// heap and deleted automatically when the dispatcher object is destructed.
-    auto_ptr<DSRT_Dispatcher_Impl<DSRT_Scheduler_Traits> > dispatcher_impl_;
+    std::unique_ptr<DSRT_Dispatcher_Impl<DSRT_Scheduler_Traits> > dispatcher_impl_;
   };
 
 
@@ -82,22 +88,27 @@ namespace Kokyu
    */
 
   template <class DSRT_Scheduler_Traits>
-  class DSRT_Dispatcher_Factory : private ACE_Copy_Disabled
-    {
-    public:
-      typedef auto_ptr<DSRT_Dispatcher<DSRT_Scheduler_Traits> > DSRT_Dispatcher_Auto_Ptr;
+  class DSRT_Dispatcher_Factory
+  {
+  public:
+    DSRT_Dispatcher_Factory (const DSRT_Dispatcher_Factory &) = delete;
+    DSRT_Dispatcher_Factory (DSRT_Dispatcher_Factory &&) = delete;
+    DSRT_Dispatcher_Factory &operator= (const DSRT_Dispatcher_Factory &) = delete;
+    DSRT_Dispatcher_Factory &operator= (DSRT_Dispatcher_Factory &&) = delete;
 
-      /**
-       * Create a dispatcher for dynamic dispatching of threads.
-       * This will be used to dynamic scheduling of distributable threads for
-       * DSRTCORBA. The caller is responsible for freeing the memory.
-       *
-       * @param config Configuration information for the DSRT dispatcher.
-       *
-       * @return pointer to the DSRT dispatcher.
-       */
-      static DSRT_Dispatcher<DSRT_Scheduler_Traits>* create_DSRT_dispatcher (const DSRT_ConfigInfo&);
-    };
+    typedef std::unique_ptr<DSRT_Dispatcher<DSRT_Scheduler_Traits> > DSRT_Dispatcher_Auto_Ptr;
+
+    /**
+      * Create a dispatcher for dynamic dispatching of threads.
+      * This will be used to dynamic scheduling of distributable threads for
+      * DSRTCORBA. The caller is responsible for freeing the memory.
+      *
+      * @param config Configuration information for the DSRT dispatcher.
+      *
+      * @return pointer to the DSRT dispatcher.
+      */
+    static DSRT_Dispatcher<DSRT_Scheduler_Traits>* create_DSRT_dispatcher (const DSRT_ConfigInfo&);
+  };
 
   /**
    * @class MIF_Sched_Strategy
@@ -151,20 +162,13 @@ namespace Kokyu
                     const QoSDesc& qos2);
   };
 
-
 } //end of namespace
 
 #if defined (__ACE_INLINE__)
 #include "Kokyu_dsrt.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "Kokyu_dsrt.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Kokyu_dsrt.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 #endif /* KOKYU_DSRT_H */

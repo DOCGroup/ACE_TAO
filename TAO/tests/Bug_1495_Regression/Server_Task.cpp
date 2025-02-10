@@ -26,7 +26,7 @@ Server_Task::Server_Task (const ACE_TCHAR *output,
 
 
 int
-Server_Task::svc (void)
+Server_Task::svc ()
 {
   try
     {
@@ -94,7 +94,7 @@ Server_Task::svc (void)
       ACE_DEBUG ((LM_DEBUG,
                    "Event loop finished for the thread server.\n"));
 
-      root_poa->destroy (1, 1);
+      root_poa->destroy (true, true);
 
       sorb_->destroy ();
     }

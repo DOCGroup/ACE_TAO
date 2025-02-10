@@ -47,30 +47,30 @@ public:
   TAO_InterfaceDef_i (TAO_Repository_i *repo);
 
   /// Destructor
-  virtual ~TAO_InterfaceDef_i (void);
+  virtual ~TAO_InterfaceDef_i ();
 
   /// Return our definition kind.
-  virtual CORBA::DefinitionKind def_kind (void);
+  virtual CORBA::DefinitionKind def_kind ();
 
-  virtual void destroy (void);
+  virtual void destroy ();
 
-  virtual void destroy_i (void);
-
-  /// From Contained_i's pure virtual function.
-  virtual CORBA::Contained::Description *describe (void);
+  virtual void destroy_i ();
 
   /// From Contained_i's pure virtual function.
-  virtual CORBA::Contained::Description *describe_i (void);
+  virtual CORBA::Contained::Description *describe ();
+
+  /// From Contained_i's pure virtual function.
+  virtual CORBA::Contained::Description *describe_i ();
 
   /// From IDLType_i's pure virtual function.
-  virtual CORBA::TypeCode_ptr type (void);
+  virtual CORBA::TypeCode_ptr type ();
 
   /// From IDLType_i's pure virtual function.
-  virtual CORBA::TypeCode_ptr type_i (void);
+  virtual CORBA::TypeCode_ptr type_i ();
 
-  virtual CORBA::InterfaceDefSeq *base_interfaces (void);
+  virtual CORBA::InterfaceDefSeq *base_interfaces ();
 
-  CORBA::InterfaceDefSeq *base_interfaces_i (void);
+  CORBA::InterfaceDefSeq *base_interfaces_i ();
 
   virtual void base_interfaces (const CORBA::InterfaceDefSeq &base_interfaces);
 
@@ -82,7 +82,7 @@ public:
 
   virtual CORBA::InterfaceDef::FullInterfaceDescription *describe_interface ();
 
-  CORBA::InterfaceDef::FullInterfaceDescription *describe_interface_i (void);
+  CORBA::InterfaceDef::FullInterfaceDescription *describe_interface_i ();
 
   virtual CORBA::AttributeDef_ptr create_attribute (
       const char *id,

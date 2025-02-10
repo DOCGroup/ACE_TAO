@@ -38,13 +38,13 @@ namespace TAO
   class In_Special_Basic_SArgument_T : public InArgument
   {
   public:
-    In_Special_Basic_SArgument_T (void);
+    In_Special_Basic_SArgument_T ();
 
     virtual CORBA::Boolean demarshal (TAO_InputCDR &);
 #if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_value (CORBA::Any *any) const;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    S const & arg (void) const;
+    S const & arg () const;
 
   private:
     S x_;
@@ -63,14 +63,14 @@ namespace TAO
   class Inout_Special_Basic_SArgument_T : public InoutArgument
   {
   public:
-    Inout_Special_Basic_SArgument_T (void);
+    Inout_Special_Basic_SArgument_T ();
 
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
     virtual CORBA::Boolean demarshal (TAO_InputCDR &);
 #if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_value (CORBA::Any *any) const;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    S & arg (void);
+    S & arg ();
 
   private:
     S x_;
@@ -89,13 +89,13 @@ namespace TAO
   class Out_Special_Basic_SArgument_T : public OutArgument
   {
   public:
-    Out_Special_Basic_SArgument_T (void);
+    Out_Special_Basic_SArgument_T ();
 
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
 #if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_value (CORBA::Any *any) const;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    S & arg (void);
+    S & arg ();
 
   private:
     S x_;
@@ -114,13 +114,13 @@ namespace TAO
   class Ret_Special_Basic_SArgument_T : public RetArgument
   {
   public:
-    Ret_Special_Basic_SArgument_T (void);
+    Ret_Special_Basic_SArgument_T ();
 
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
 #if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_value (CORBA::Any *any) const;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    S & arg (void);
+    S & arg ();
 
   private:
     S x_;
@@ -152,7 +152,6 @@ namespace TAO
     typedef inout_type                                      inout_arg_type;
     typedef out_type                                        out_arg_type;
     typedef out_type                                        ret_arg_type;
-
   };
 }
 
@@ -162,13 +161,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #include "tao/PortableServer/Special_Basic_SArgument_T.inl"
 #endif /* __ACE_INLINE__ */
 
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "tao/PortableServer/Special_Basic_SArgument_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("Special_Basic_SArgument_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 

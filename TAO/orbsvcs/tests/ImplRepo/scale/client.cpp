@@ -9,7 +9,6 @@ using namespace CORBA;
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[]) {
   try
   {
-
     ORB_var orb = ORB_init(argc, argv);
 
     Object_var obj = orb->resolve_initial_references("Test");

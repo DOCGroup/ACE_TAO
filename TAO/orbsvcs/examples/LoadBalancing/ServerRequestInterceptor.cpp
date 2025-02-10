@@ -1,22 +1,22 @@
 #include "ServerRequestInterceptor.h"
 
-ServerRequestInterceptor::ServerRequestInterceptor (void)
+ServerRequestInterceptor::ServerRequestInterceptor ()
   : request_count_ (0)
 {
 }
 
-ServerRequestInterceptor::~ServerRequestInterceptor (void)
+ServerRequestInterceptor::~ServerRequestInterceptor ()
 {
 }
 
 char *
-ServerRequestInterceptor::name (void)
+ServerRequestInterceptor::name ()
 {
   return CORBA::string_dup ("ServerRequestInterceptor");
 }
 
 void
-ServerRequestInterceptor::destroy (void)
+ServerRequestInterceptor::destroy ()
 {
 }
 
@@ -52,7 +52,7 @@ ServerRequestInterceptor::send_other (
 }
 
 CORBA::Long
-ServerRequestInterceptor::request_count (void)
+ServerRequestInterceptor::request_count ()
 {
   const CORBA::Long r = this->request_count_.value ();
   this->request_count_ = 0;

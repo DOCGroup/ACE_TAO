@@ -84,7 +84,6 @@ namespace TAO_Notify
     TAO_SYNCH_MUTEX internals_;
     size_t active_;
     Queue queue_;
-
   };
 } // namespace
 

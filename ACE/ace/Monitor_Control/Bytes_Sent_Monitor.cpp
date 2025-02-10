@@ -16,12 +16,10 @@ namespace ACE
 #if defined (ACE_HAS_WIN32_PDH)
       , Windows_Multi_Instance_Monitor (
             ACE_TEXT ("\\Network Interface(*)\\Bytes Sent/sec"))
-#elif defined (ACE_LINUX) || defined (AIX)
+#elif defined (ACE_LINUX)
       , Linux_Network_Interface_Monitor (
             " %*[^:]: %*u %*u %*u %*u %*u %*u %*u %*u %lu %*u")
             /// Scan format for /proc/net/dev
-#elif defined (ACE_HAS_KSTAT)
-      , Solaris_Network_Interface_Monitor (ACE_TEXT ("obytes"))
 #elif defined (__FreeBSD__) || defined (__Lynx__)
       , FreeBSD_Network_Interface_Monitor (ACE_TEXT ("obytes"))
 #elif defined (__NetBSD__) || defined (__OpenBSD__)
@@ -30,7 +28,7 @@ namespace ACE
     {}
 
     void
-    Bytes_Sent_Monitor::update (void)
+    Bytes_Sent_Monitor::update ()
     {
       this->update_i ();
 
@@ -39,13 +37,13 @@ namespace ACE
     }
 
     const char*
-    Bytes_Sent_Monitor::default_name (void)
+    Bytes_Sent_Monitor::default_name ()
     {
       return Bytes_Sent_Monitor::default_name_;
     }
 
     void
-    Bytes_Sent_Monitor::clear_i (void)
+    Bytes_Sent_Monitor::clear_i ()
     {
       this->clear_impl ();
       this->Monitor_Base::clear_i ();

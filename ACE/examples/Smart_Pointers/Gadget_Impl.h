@@ -23,10 +23,10 @@ class Gadget_Impl : public Gadget
 {
 public:
   /// Constructor.
-  Gadget_Impl (void);
+  Gadget_Impl ();
 
   /// Destructor.
-  virtual ~Gadget_Impl (void);
+  virtual ~Gadget_Impl ();
 
   /// Add a new part to the gadget. The gadget takes ownership of the part
   /// object.
@@ -34,10 +34,10 @@ public:
 
   /// Remove a random part from the gadget. Ownership of the part is returned
   /// to the caller.
-  virtual Gadget_Part_var remove_part (void);
+  virtual Gadget_Part_var remove_part ();
 
   /// Ask the gadget to print information about the parts that it contains.
-  virtual void list_parts (void);
+  virtual void list_parts ();
 
 private:
   /// The parts which make up this gadget. The set actually contains instances

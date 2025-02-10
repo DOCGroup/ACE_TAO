@@ -13,7 +13,7 @@
 #include "ace/High_Res_Timer.h"
 
 static int
-run_client (void)
+run_client ()
 {
   ACE_MEM_Connector connector;
   ACE_MEM_Stream stream;

@@ -10,7 +10,7 @@
 #include "Send_Task_Stopper.inl"
 #endif /* __ACE_INLINE__ */
 
-Send_Task_Stopper::~Send_Task_Stopper (void)
+Send_Task_Stopper::~Send_Task_Stopper ()
 {
   if (this->task_ == 0)
     return;

@@ -8,10 +8,6 @@ Callback_i::Callback_i (CORBA::ORB_ptr orb)
 {
 }
 
-Callback_i::~Callback_i (void)
-{
-}
-
 void Callback_i::shutdown ()
 {
   std::cout << "Performing clean shutdown." << std::endl;

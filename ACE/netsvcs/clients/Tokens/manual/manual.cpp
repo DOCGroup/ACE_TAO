@@ -23,7 +23,6 @@
 #if defined (ACE_HAS_THREADS) && defined (ACE_HAS_THREADS_LIBRARY)
 
 
-
 typedef ACE_Token_Invariant_Manager ACE_TOKEN_INVARIANTS;
 
 /**
@@ -37,7 +36,7 @@ class STDIN_Token : public ACE_Event_Handler
 {
 public:
   /// Construction.
-  STDIN_Token (void);
+  STDIN_Token ();
 
   /// Parse command-line arguments.
   int parse_args (int argc, ACE_TCHAR *argv[]);
@@ -54,9 +53,8 @@ public:
   typedef ACE_CString TID;
 
 private:
-
   /// Display options.
-  void display_menu (void);
+  void display_menu ();
 
   /// Get or make a proxy to <token> with a <tid> client id.
   ACE_Token_Proxy *get_proxy (const char *tid, const char *token, char type);
@@ -87,7 +85,7 @@ private:
   int remote_;
 };
 
-STDIN_Token::STDIN_Token (void)
+STDIN_Token::STDIN_Token ()
   : server_host_ (ACE_DEFAULT_SERVER_HOST),
     server_port_ (ACE_DEFAULT_SERVER_PORT),
     ignore_deadlock_ (0),
@@ -122,7 +120,8 @@ STDIN_Token::parse_args (int argc, ACE_TCHAR *argv[])
         ignore_deadlock_ = 1;
         break;
       case 'u':
-        // usage: fallthrough
+        // usage same as unknown
+        ACE_FALLTHROUGH;
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
         "%n:\n"
@@ -250,7 +249,7 @@ STDIN_Token::handle_input (ACE_HANDLE fd)
 }
 
 void
-STDIN_Token::display_menu (void)
+STDIN_Token::display_menu ()
 {
   ACE_OS::printf ("<tid> <token> <type> <operation>\n");
 }

@@ -31,11 +31,11 @@ void AST_Fixed::destroy ()
 {
   pd_digits->destroy ();
   delete pd_digits;
-  pd_digits = 0;
+  pd_digits = nullptr;
 
   pd_scale->destroy ();
   delete pd_scale;
-  pd_scale = 0;
+  pd_scale = nullptr;
 
   AST_ConcreteType::destroy ();
 }
@@ -54,5 +54,3 @@ AST_Expression *AST_Fixed::scale ()
 {
   return pd_scale;
 }
-
-IMPL_NARROW_FROM_DECL(AST_Fixed)

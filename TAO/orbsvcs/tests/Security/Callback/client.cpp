@@ -55,7 +55,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // Get the Root POA.
       //
       CORBA::Object_var obj =
-        orb->resolve_initial_references ( "RootPOA" );
+        orb->resolve_initial_references ("RootPOA");
 
       PortableServer::POA_var poa =
         PortableServer::POA::_narrow (obj.in ());
@@ -63,7 +63,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       //
       // Get a reference to the server.
       //
-      obj = orb->string_to_object ( ior );
+      obj = orb->string_to_object (ior);
 
       if (CORBA::is_nil (obj.in ()))
         {
@@ -120,7 +120,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       server_obj->shutdown ();
 
-      poa->destroy (1, 1);
+      poa->destroy (true, true);
 
       orb->destroy ();
     }

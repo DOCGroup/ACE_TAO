@@ -281,19 +281,19 @@
     <P>The interfaces involved are defined in the NotifyExt.idl file (in
       $TAO_ROOT/orbsvcs/orbsvcs) and are shown here:</P>
   <pre>
-  /** 
+  /**
    * \brief An interface which gets registered with a ReconnectionRegistry.
-   * 
-   * A supplier or consumer must implement this interface in order to 
-   * allow the Notification Service to attempt to reconnect to it after 
-   * a failure.  The supplier or consumer must register its instance of 
+   *
+   * A supplier or consumer must implement this interface in order to
+   * allow the Notification Service to attempt to reconnect to it after
+   * a failure.  The supplier or consumer must register its instance of
    * this interface with the ReconnectionRegistry.
-   */ 
+   */
   interface ReconnectionCallback
-  { 
-    /// Perform operations to reconnect to the Notification Service 
+  {
+    /// Perform operations to reconnect to the Notification Service
     /// after a failure.
-    void reconnect (in Object new_connection); 
+    void reconnect (in Object new_connection);
 
     /// Check to see if the ReconnectionCallback is alive
     boolean is_alive ();
@@ -335,7 +335,7 @@
     </P>
     <P>Application code in the Consumer should be written with the knowledge that
       events are guaranteed to be delivered, but during recovery from a failure there
-      is a possiblity that an event may arrive more than once.&nbsp; This could
+      is a possibility that an event may arrive more than once.&nbsp; This could
       happen, for example if the event was in the process of being delivered at the
       time the failure occurred and the failure prevents the Notfication service from
       determining if the delivery completed successfully.&nbsp; To meet its

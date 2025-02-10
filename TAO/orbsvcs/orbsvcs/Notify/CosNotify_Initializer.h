@@ -28,7 +28,7 @@ class TAO_Notify_Serv_Export TAO_Notify_CosNotify_Initializer
 {
 public:
   /// Constructor
-  TAO_Notify_CosNotify_Initializer (void);
+  TAO_Notify_CosNotify_Initializer ();
 };
 
 static TAO_Notify_CosNotify_Initializer TAO_Notify_CosNotify_initializer;

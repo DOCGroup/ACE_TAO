@@ -14,7 +14,7 @@ TAO_EventPortDef_i::TAO_EventPortDef_i (TAO_Repository_i *repo)
 {
 }
 
-TAO_EventPortDef_i::~TAO_EventPortDef_i (void)
+TAO_EventPortDef_i::~TAO_EventPortDef_i ()
 {
 }
 
@@ -121,7 +121,7 @@ TAO_EventPortDef_i::is_a_i (
 }
 
 CORBA::Contained::Description *
-TAO_EventPortDef_i::describe (void)
+TAO_EventPortDef_i::describe ()
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
@@ -131,7 +131,7 @@ TAO_EventPortDef_i::describe (void)
 }
 
 CORBA::Contained::Description *
-TAO_EventPortDef_i::describe_i (void)
+TAO_EventPortDef_i::describe_i ()
 {
   CORBA::ComponentIR::EventPortDescription epd;
   TAO_IFR_Desc_Utils<CORBA::ComponentIR::EventPortDescription,
@@ -158,7 +158,7 @@ TAO_EventPortDef_i::describe_i (void)
 }
 
 CORBA::DefinitionKind
-TAO_EventPortDef_i::def_kind (void)
+TAO_EventPortDef_i::def_kind ()
 {
   return CORBA::dk_none;
 }

@@ -32,10 +32,10 @@ class ifr_removing_visitor : public ifr_visitor
 {
 public:
   /// Constructor.
-  ifr_removing_visitor (void);
+  ifr_removing_visitor ();
 
   /// Destructor.
-  virtual ~ifr_removing_visitor (void);
+  virtual ~ifr_removing_visitor ();
 
   /// Visit the scope.
   virtual int visit_scope (UTL_Scope *node);

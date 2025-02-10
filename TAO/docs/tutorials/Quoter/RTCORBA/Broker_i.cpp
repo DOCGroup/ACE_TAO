@@ -55,7 +55,7 @@ Stock_StockBroker_i::Stock_StockBroker_i (CORBA::ORB_ptr orb,
 }
 
 // Implementation skeleton destructor
-Stock_StockBroker_i::~Stock_StockBroker_i (void)
+Stock_StockBroker_i::~Stock_StockBroker_i ()
 {
 }
 
@@ -83,7 +83,7 @@ void Stock_StockBroker_i::connect_quoter_info (::Stock::StockQuoter_ptr c)
 }
 
 void
-Stock_StockBroker_i::shutdown (void)
+Stock_StockBroker_i::shutdown ()
 {
   // Unsubscribe
   ACE_DEBUG ((LM_DEBUG, "Shutdown unsubscribing notifiers\n"));
@@ -126,7 +126,7 @@ Stock_StockBrokerHome_i::Stock_StockBrokerHome_i (CORBA::ORB_ptr orb)
 }
 
 // Implementation skeleton destructor
-Stock_StockBrokerHome_i::~Stock_StockBrokerHome_i (void)
+Stock_StockBrokerHome_i::~Stock_StockBrokerHome_i ()
 {
 }
 
@@ -160,7 +160,7 @@ Stock_StockBrokerHome_i::handle_signal (int,
 
   ACE_DEBUG ((LM_DEBUG, "Shutting down the ORB\n"));
 
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 
   return 0;
 }

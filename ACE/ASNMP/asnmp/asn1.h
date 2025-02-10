@@ -262,7 +262,6 @@ static unsigned char * build_unsigned_int64( unsigned char *data,
                                          unsigned char  type,
                                          struct counter64 *cp,
                                          int countersize);
-
 };
 
 
@@ -334,7 +333,6 @@ static unsigned char *parse_var_op( unsigned char *data,
                             int     *var_val_len,
                             unsigned char  **var_val,
                             int     *listlength);
-
 };
 
 #endif  // ASN1

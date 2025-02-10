@@ -28,14 +28,13 @@ class TAO_RTEvent_Serv_Export TAO_ECG_Simple_Address_Server :
   public virtual POA_RtecUDPAdmin::AddrServer
 {
 public:
-
   /// Create a new TAO_ECG_Simple_Address_Server object.
   /// (Constructor access is restricted to insure that all
   /// TAO_ECG_Simple_Address_Server objects are heap-allocated.)
-  static PortableServer::Servant_var<TAO_ECG_Simple_Address_Server> create (void);
+  static PortableServer::Servant_var<TAO_ECG_Simple_Address_Server> create ();
 
   /// Destructor
-  virtual ~TAO_ECG_Simple_Address_Server (void);
+  virtual ~TAO_ECG_Simple_Address_Server ();
 
   int init (const char *arg);
 
@@ -46,11 +45,10 @@ public:
                             RtecUDPAdmin::UDP_Address_out addr6);
 
 protected:
-
   /// Constructor (protected).  Clients can create new
   /// TAO_ECG_Simple_Address_Server objects using the static create()
   /// method.
-  TAO_ECG_Simple_Address_Server (void);
+  TAO_ECG_Simple_Address_Server ();
 
 private:
   ACE_INET_Addr addr_;

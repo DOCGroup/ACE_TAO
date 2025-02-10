@@ -27,10 +27,14 @@ class Echo_Client_ORBInitializer :
   public virtual ::CORBA::LocalObject
 {
 public:
+  Echo_Client_ORBInitializer (int& result);
 
   virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info);
 
   virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info);
+
+private:
+  int& result_;
 };
 
 #if defined(_MSC_VER)

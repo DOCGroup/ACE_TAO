@@ -19,12 +19,12 @@
 #include "tao/DynamicAny/DynUnion_i.h"
 #include "tao/DynamicAny/DynAnyUtils_T.h"
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Constructor from typecode
-TAO_DynAnyFactory::TAO_DynAnyFactory (void)
+TAO_DynAnyFactory::TAO_DynAnyFactory ()
 {
 }
 

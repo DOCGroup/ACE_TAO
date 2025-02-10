@@ -13,7 +13,7 @@
 
 int WARMUP_COUNT = 10;
 
-TAO_Notify_Tests_Periodic_Consumer::TAO_Notify_Tests_Periodic_Consumer (void)
+TAO_Notify_Tests_Periodic_Consumer::TAO_Notify_Tests_Periodic_Consumer ()
   : count_ (-2)
   , warmup_countdown_ (WARMUP_COUNT)
   , max_count_ (-1)
@@ -139,7 +139,7 @@ TAO_Notify_Tests_Periodic_Consumer::check_priority (const CosNotification::Prope
                       ACE_TEXT ("TAO (%P|%t) - ")
                       ACE_TEXT (" ACE_Thread::get_prio\n")));
 
-          return ;
+          return;
         }
 
       CORBA::Short native_priority = CORBA::Short (priority);

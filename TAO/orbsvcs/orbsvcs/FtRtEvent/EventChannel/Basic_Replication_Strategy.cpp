@@ -21,7 +21,7 @@ Basic_Replication_Strategy::~Basic_Replication_Strategy()
 }
 
 void
-Basic_Replication_Strategy::check_validity(void)
+Basic_Replication_Strategy::check_validity()
 {
     FTRT::SequenceNumber seq_no = Request_Context_Repository().get_sequence_number();
 
@@ -118,17 +118,17 @@ Basic_Replication_Strategy::add_member(const FTRT::ManagerInfo & info,
   } while (!finished);
 }
 
-int  Basic_Replication_Strategy::acquire_read (void)
+int  Basic_Replication_Strategy::acquire_read ()
 {
   return mutex_ ? mutex_->acquire_read() : 0;
 }
 
-int  Basic_Replication_Strategy::acquire_write (void)
+int  Basic_Replication_Strategy::acquire_write ()
 {
   return mutex_ ? mutex_->acquire_write() : 0;
 }
 
-int  Basic_Replication_Strategy::release (void)
+int  Basic_Replication_Strategy::release ()
 {
   return mutex_ ? mutex_->release() : 0;
 }

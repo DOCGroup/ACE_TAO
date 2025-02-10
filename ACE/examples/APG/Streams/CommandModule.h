@@ -18,7 +18,7 @@ public:
                    CommandTask *reader,
                    ACE_SOCK_Stream *peer);
 
-  ACE_SOCK_Stream &peer (void);
+  ACE_SOCK_Stream &peer ();
 };
 // Listing 01
 

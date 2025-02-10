@@ -40,13 +40,13 @@ class Client_i : public ACE_Event_Handler
 {
 public:
   /// Constructor.
-  Client_i (void);
+  Client_i ();
 
   /// Initialize the client communication with the server.
   int init (int argc, ACE_TCHAR *argv[]);
 
   /// Start the ORB object.
-  int run (void);
+  int run ();
 
   /// Handle the user input.
   virtual int handle_input (ACE_HANDLE);

@@ -26,7 +26,7 @@ class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_StructuredEvent
 {
 public:
   /// Constructor
-  TAO_Notify_Tests_StructuredEvent (void);
+  TAO_Notify_Tests_StructuredEvent ();
   TAO_Notify_Tests_StructuredEvent (const char* name);
   TAO_Notify_Tests_StructuredEvent (const char* domain, const char* type);
   TAO_Notify_Tests_StructuredEvent (const char* name, const char* domain, const char* type);
@@ -37,7 +37,7 @@ public:
   void name (const char* name);
   void type (const char* domain, const char* type);
 
-  const char* type (void);
+  const char* type ();
 
   /// add <name,value> to optional header sequence.
   void opt_header (const char* name, CORBA::Any& value);
@@ -52,7 +52,7 @@ public:
   void payload (CORBA::Any& value);
 
   /// access the underlying event.
-  CosNotification::StructuredEvent& event (void);
+  CosNotification::StructuredEvent& event ();
 
 private:
   CosNotification::StructuredEvent event_;

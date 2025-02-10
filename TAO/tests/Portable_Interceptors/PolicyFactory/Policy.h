@@ -29,33 +29,29 @@ class Policy
     public virtual ::CORBA::LocalObject
 {
 public:
-
   /// Constructor.
   Policy (CORBA::ULong val);
 
   /// Test method defined in test IDL.
-  virtual CORBA::ULong value (void);
+  virtual CORBA::ULong value ();
 
-  virtual CORBA::PolicyType policy_type (void);
+  virtual CORBA::PolicyType policy_type ();
 
-  virtual CORBA::Policy_ptr copy (void);
+  virtual CORBA::Policy_ptr copy ();
 
-  virtual void destroy (void);
+  virtual void destroy ();
 
 protected:
-
   /// Destructor.
   /**
    * Protected destructor to enforce proper memory management through
    * the reference counting mechanism.
    */
-  ~Policy (void);
+  ~Policy ();
 
 private:
-
   /// Pseudo-reference to the ORB.
   const CORBA::ULong value_;
-
 };
 
 #endif  /* POLICY_H */

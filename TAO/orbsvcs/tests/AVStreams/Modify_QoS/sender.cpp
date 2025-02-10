@@ -63,7 +63,7 @@ Sender_StreamEndPoint::modify_QoS (AVStreams::streamQoS &new_qos,
   return 1;
 }
 
-Sender::Sender (void)
+Sender::Sender ()
   : sender_mmdevice_ (0),
     streamctrl_ (0),
     frame_count_ (0),
@@ -117,7 +117,7 @@ Sender::parse_args (int argc,
 
 // Method to get the object reference of the receiver
 int
-Sender::bind_to_receiver (void)
+Sender::bind_to_receiver ()
 {
   CosNaming::Name name (1);
   name.length (1);
@@ -237,10 +237,8 @@ Sender::init (int argc,
 
 // Method to send data at the specified rate
 int
-Sender::pace_data (void)
+Sender::pace_data ()
 {
-
-
   // The time between two consecutive frames.
   inter_frame_time.set (1 / (double) this->frame_rate_);
 
@@ -331,7 +329,6 @@ Sender::pace_data (void)
 
           // Reset the message block.
           this->mb_.reset ();
-
         } // end while
 
       // File reading is complete, destroy the stream.
@@ -386,7 +383,6 @@ ACE_TMAIN (int argc,
 
       // Start sending data.
       result = SENDER::instance ()->pace_data ();
-
     }
   catch (const CORBA::Exception& ex)
     {

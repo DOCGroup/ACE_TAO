@@ -10,12 +10,12 @@
 #include "Widget_Impl.h"
 #include "ace/Log_Msg.h"
 
-Widget_Impl::Widget_Impl (void)
+Widget_Impl::Widget_Impl ()
 {
   ACE_DEBUG ((LM_DEBUG, "Widget_Impl constructor\n"));
 }
 
-Widget_Impl::~Widget_Impl (void)
+Widget_Impl::~Widget_Impl ()
 {
   ACE_DEBUG ((LM_DEBUG, "Widget_Impl destructor\n"));
 }
@@ -28,7 +28,7 @@ void Widget_Impl::add_part (Widget_Part *part)
   parts_.enqueue_tail (new_part);
 }
 
-Widget_Part *Widget_Impl::remove_part (void)
+Widget_Part *Widget_Impl::remove_part ()
 {
   ACE_Refcounted_Auto_Ptr<Widget_Part, ACE_SYNCH_MUTEX> removed_part;
   if (parts_.dequeue_head (removed_part) == -1)
@@ -38,7 +38,7 @@ Widget_Part *Widget_Impl::remove_part (void)
   return removed_part.release();
 }
 
-void Widget_Impl::list_parts (void)
+void Widget_Impl::list_parts ()
 {
   ACE_Unbounded_Queue_Iterator<ACE_Refcounted_Auto_Ptr<Widget_Part, ACE_SYNCH_MUTEX> > iter (parts_);
   ACE_Refcounted_Auto_Ptr<Widget_Part, ACE_SYNCH_MUTEX> *current_part;

@@ -21,7 +21,7 @@ public:
       SSLIOP::Current_ptr ssliop_current
     );
 
-  virtual ~Messenger_i (void);
+  virtual ~Messenger_i ();
 
    virtual CORBA::Boolean send_message (
      const char * user_name,

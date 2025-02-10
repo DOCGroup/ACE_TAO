@@ -8,7 +8,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 // = Set/get the length of the encoded/decoded message.
 
 ACE_INLINE ACE_UINT32
-ACE_Token_Request::length (void) const
+ACE_Token_Request::length () const
 {
   return ntohl (this->transfer_.length_);
 }
@@ -21,7 +21,7 @@ ACE_Token_Request::length (ACE_UINT32 l)
 
 // = Set/get the type of the message.
 ACE_INLINE int
-ACE_Token_Request::token_type (void) const
+ACE_Token_Request::token_type () const
 {
   return (int) ntohl (this->transfer_.token_type_);
 }
@@ -34,7 +34,7 @@ ACE_Token_Request::token_type (int t)
 
 // = Set/get the type of the message.
 ACE_INLINE int
-ACE_Token_Request::proxy_type (void) const
+ACE_Token_Request::proxy_type () const
 {
   return (int) ntohl (this->transfer_.proxy_type_);
 }
@@ -47,7 +47,7 @@ ACE_Token_Request::proxy_type (int t)
 
 // = Set/get the type of the message.
 ACE_INLINE ACE_UINT32
-ACE_Token_Request::operation_type (void) const
+ACE_Token_Request::operation_type () const
 {
   return ntohl (this->transfer_.operation_type_);
 }
@@ -60,7 +60,7 @@ ACE_Token_Request::operation_type (ACE_UINT32 t)
 
 // = Set/get the requeue position
 ACE_INLINE ACE_UINT32
-ACE_Token_Request::requeue_position (void) const
+ACE_Token_Request::requeue_position () const
 {
   return ntohl (this->transfer_.requeue_position_);
 }
@@ -73,7 +73,7 @@ ACE_Token_Request::requeue_position (ACE_UINT32 rq)
 
 // = Set/get the requeue position
 ACE_INLINE ACE_UINT32
-ACE_Token_Request::notify (void) const
+ACE_Token_Request::notify () const
 {
   return ntohl (this->transfer_.notify_);
 }
@@ -86,7 +86,7 @@ ACE_Token_Request::notify (ACE_UINT32 rq)
 
 // = Set/get the blocking semantics.
 ACE_INLINE ACE_Synch_Options &
-ACE_Token_Request::options (void) const
+ACE_Token_Request::options () const
 {
   return (ACE_Synch_Options &) options_;
 }
@@ -115,7 +115,7 @@ ACE_Token_Request::options (const ACE_Synch_Options &opt)
 
 // = Set/get the name of the token.
 ACE_INLINE ACE_TCHAR *
-ACE_Token_Request::token_name (void) const
+ACE_Token_Request::token_name () const
 {
   return token_name_;
 }
@@ -149,7 +149,7 @@ ACE_Token_Request::token_name (const ACE_TCHAR *token_name,
 
 // = Set/get the id of the client.
 ACE_INLINE ACE_TCHAR *
-ACE_Token_Request::client_id (void) const
+ACE_Token_Request::client_id () const
 {
   return this->client_id_;
 }
@@ -160,7 +160,7 @@ ACE_Token_Request::client_id (void) const
 
 // = Set/get the length of the encoded/decoded message.
 ACE_INLINE ACE_UINT32
-ACE_Token_Reply::length (void) const
+ACE_Token_Reply::length () const
 {
   return ntohl (this->transfer_.length_);
 }
@@ -173,7 +173,7 @@ ACE_Token_Reply::length (ACE_UINT32 l)
 
 // = Set/get the errno of a failed reply.
 ACE_INLINE ACE_UINT32
-ACE_Token_Reply::errnum (void) const
+ACE_Token_Reply::errnum () const
 {
   return ntohl (this->transfer_.errno_);
 }
@@ -186,7 +186,7 @@ ACE_Token_Reply::errnum (ACE_UINT32 e)
 
 // = Set/get the length of the encoded/decoded message.
 ACE_INLINE ACE_UINT32
-ACE_Token_Reply::arg (void) const
+ACE_Token_Reply::arg () const
 {
   return ntohl (this->transfer_.arg_);
 }

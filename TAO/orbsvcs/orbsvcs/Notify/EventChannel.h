@@ -54,7 +54,7 @@ public:
   typedef CosNotifyChannelAdmin::ChannelIDSeq_var SEQ_VAR;
 
   /// Constructor
-  TAO_Notify_EventChannel (void);
+  TAO_Notify_EventChannel ();
 
   /// Destructor
   virtual ~TAO_Notify_EventChannel ();
@@ -74,8 +74,8 @@ public:
   void remove (TAO_Notify_SupplierAdmin* supplier_admin);
 
   /// ServantBase refcount methods.
-  virtual void _add_ref (void);
-  virtual void _remove_ref (void);
+  virtual void _add_ref ();
+  virtual void _remove_ref ();
 
   // TAO_Notify::Topology_Parent
 
@@ -83,7 +83,7 @@ public:
   virtual TAO_Notify::Topology_Object* load_child (const ACE_CString &type,
                                                    CORBA::Long id,
                                                    const TAO_Notify::NVPList& attrs);
-  virtual void reconnect (void);
+  virtual void reconnect ();
   virtual void validate ();
 
   virtual TAO_Notify_Object::ID get_id () const {return id();}
@@ -97,11 +97,11 @@ public:
                               bool experienced_timeout);
 
   /// Shutdown
-  virtual int shutdown (void);
+  virtual int shutdown ();
   virtual void load_attrs(const TAO_Notify::NVPList& attrs);
 
   /// TAO_Notify_Container_T requires a destroy method
-  virtual void destroy (void);
+  virtual void destroy ();
 
   /// This is public to allow TAO_MonitorConsumerAdmin access.
   virtual CosNotifyChannelAdmin::ConsumerAdmin_ptr
@@ -136,11 +136,11 @@ protected:
 
   virtual ::CosNotifyChannelAdmin::EventChannelFactory_ptr MyFactory ();
 
-  virtual ::CosNotifyChannelAdmin::ConsumerAdmin_ptr default_consumer_admin (void);
+  virtual ::CosNotifyChannelAdmin::ConsumerAdmin_ptr default_consumer_admin ();
 
-  virtual ::CosNotifyChannelAdmin::SupplierAdmin_ptr default_supplier_admin (void);
+  virtual ::CosNotifyChannelAdmin::SupplierAdmin_ptr default_supplier_admin ();
 
-  virtual ::CosNotifyFilter::FilterFactory_ptr default_filter_factory (void);
+  virtual ::CosNotifyFilter::FilterFactory_ptr default_filter_factory ();
 
   virtual ::CosNotifyChannelAdmin::ConsumerAdmin_ptr new_for_consumers (CosNotifyChannelAdmin::InterFilterGroupOperator op,
                                                                         CosNotifyChannelAdmin::AdminID_out id);
@@ -148,40 +148,40 @@ protected:
   virtual ::CosNotifyChannelAdmin::SupplierAdmin_ptr new_for_suppliers (CosNotifyChannelAdmin::InterFilterGroupOperator op,
                                                                         CosNotifyChannelAdmin::AdminID_out id);
 
-  virtual ::CosNotifyChannelAdmin::AdminIDSeq * get_all_consumeradmins (void);
+  virtual ::CosNotifyChannelAdmin::AdminIDSeq * get_all_consumeradmins ();
 
-  virtual ::CosNotifyChannelAdmin::AdminIDSeq * get_all_supplieradmins (void);
+  virtual ::CosNotifyChannelAdmin::AdminIDSeq * get_all_supplieradmins ();
 
-  virtual ::CosNotification::QoSProperties * get_qos (void);
+  virtual ::CosNotification::QoSProperties * get_qos ();
 
   virtual void set_qos (const CosNotification::QoSProperties & qos);
 
   virtual void validate_qos (const CosNotification::QoSProperties & required_qos,
                              CosNotification::NamedPropertyRangeSeq_out available_qos);
 
-  virtual ::CosNotification::AdminProperties * get_admin (void);
+  virtual ::CosNotification::AdminProperties * get_admin ();
 
   virtual void set_admin (const CosNotification::AdminProperties & admin);
 
-  virtual ::CosEventChannelAdmin::ConsumerAdmin_ptr for_consumers (void);
+  virtual ::CosEventChannelAdmin::ConsumerAdmin_ptr for_consumers ();
 
-  virtual ::CosEventChannelAdmin::SupplierAdmin_ptr for_suppliers (void);
+  virtual ::CosEventChannelAdmin::SupplierAdmin_ptr for_suppliers ();
 
 private:
   TAO_Notify_ConsumerAdmin_Container& ca_container();
   TAO_Notify_SupplierAdmin_Container& sa_container();
 
   /// ConsumerAdmin Container.
-  ACE_Auto_Ptr< TAO_Notify_ConsumerAdmin_Container > ca_container_;
+  std::unique_ptr<TAO_Notify_ConsumerAdmin_Container> ca_container_;
 
   /// SupplierAdmin Container.
-  ACE_Auto_Ptr< TAO_Notify_SupplierAdmin_Container > sa_container_;
+  std::unique_ptr<TAO_Notify_SupplierAdmin_Container> sa_container_;
 
   /// The default filter factory.
   CosNotifyFilter::FilterFactory_var default_filter_factory_;
   TAO_Notify_FilterFactory * default_filter_factory_servant_;
 
-  virtual void release (void);
+  virtual void release ();
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

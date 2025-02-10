@@ -37,7 +37,7 @@ class TAO_Policy_Manager
 {
 public:
   /// constructor
-  TAO_Policy_Manager (void);
+  TAO_Policy_Manager ();
 
   /// Obtain a single policy.
   CORBA::Policy_ptr get_policy (CORBA::PolicyType policy);
@@ -54,9 +54,10 @@ public:
                                      CORBA::SetOverrideType set_add);
 
 private:
-  // Disallow copying.
-  TAO_Policy_Manager (TAO_Policy_Manager const &);
-  TAO_Policy_Manager & operator= (TAO_Policy_Manager const &);
+  TAO_Policy_Manager (TAO_Policy_Manager const &) = delete;
+  TAO_Policy_Manager & operator= (TAO_Policy_Manager const &) = delete;
+  TAO_Policy_Manager (TAO_Policy_Manager &&) = delete;
+  TAO_Policy_Manager & operator= (TAO_Policy_Manager &&) = delete;
 
 private:
   /// Protect access

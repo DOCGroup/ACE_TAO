@@ -4,23 +4,23 @@
 #include "ace/Log_Msg.h"
 #include "CrashPoint.h"
 
-Server_Request_Interceptor::Server_Request_Interceptor (void)
+Server_Request_Interceptor::Server_Request_Interceptor ()
   : request_count_ (0)
 {
 }
 
-Server_Request_Interceptor::~Server_Request_Interceptor (void)
+Server_Request_Interceptor::~Server_Request_Interceptor ()
 {
 }
 
 char *
-Server_Request_Interceptor::name (void)
+Server_Request_Interceptor::name ()
 {
   return CORBA::string_dup ("Server_Request_Interceptor");
 }
 
 void
-Server_Request_Interceptor::destroy (void)
+Server_Request_Interceptor::destroy ()
 {
 }
 

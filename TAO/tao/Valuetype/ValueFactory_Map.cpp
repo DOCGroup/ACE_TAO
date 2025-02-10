@@ -5,12 +5,12 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_ValueFactory_Map::TAO_ValueFactory_Map (void)
+TAO_ValueFactory_Map::TAO_ValueFactory_Map ()
   : map_ (TAO_DEFAULT_VALUE_FACTORY_TABLE_SIZE)
 {
 }
 
-TAO_ValueFactory_Map::~TAO_ValueFactory_Map (void)
+TAO_ValueFactory_Map::~TAO_ValueFactory_Map ()
 {
   // Initialize an iterator.  We need to go thru each entry and free
   // up storage allocated to hold the external ids and invoke

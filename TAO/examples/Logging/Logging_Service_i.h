@@ -43,17 +43,17 @@ class Logger_Server
 {
 public:
   /// Constructor.
-  Logger_Server (void);
+  Logger_Server ();
 
   /// Destructor.
-  ~Logger_Server (void);
+  ~Logger_Server ();
 
   /// Initialize the Logger_Server state - parsing arguments and ...
   int init (int argc,
             ACE_TCHAR **argv);
 
   /// Run the ORB.
-  int run (void);
+  int run ();
 
   /// This function creates and returns a logger with the given <name>.
   /// Currently, <name> is unused.
@@ -61,11 +61,11 @@ public:
 
 private:
   /// Parses the commandline arguments.
-  int parse_args (void);
+  int parse_args ();
 
   /// Initialises the name server and registers logger_factory with the
   /// name server.
-  int init_naming_service (void);
+  int init_naming_service ();
 
   /// The ORB manager.
   TAO_ORB_Manager orb_manager_;

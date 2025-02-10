@@ -22,8 +22,7 @@ TestListener::TestListener(
 
   mv_consumerAdmin = mv_eventChannel->new_for_consumers(
     CosNotifyChannelAdmin::AND_OP,
-    m_consumerAdminId
-  );
+    m_consumerAdminId);
 
   CosNotifyFilter::FilterFactory_var v_filterFactory =
     mv_eventChannel->default_filter_factory();
@@ -43,7 +42,7 @@ TestListener::TestListener(
   constraintSeq[0].event_types[0].type_name = "Data";
   constraintSeq[0].constraint_expr = rc_filterExpression.c_str();
 
-  v_filter->add_constraints (constraintSeq);
+  CosNotifyFilter::ConstraintInfoSeq_var cons_info = v_filter->add_constraints (constraintSeq);
 
   mv_consumerAdmin->add_filter(v_filter.in());
 
@@ -53,13 +52,11 @@ TestListener::TestListener(
   CosNotifyChannelAdmin::ProxySupplier_var v_proxySupplier =
     mv_consumerAdmin->obtain_notification_push_supplier(
       CosNotifyChannelAdmin::STRUCTURED_EVENT,
-      m_proxySupplierId
-    );
+      m_proxySupplierId);
 
   mv_proxySupplier =
     CosNotifyChannelAdmin::StructuredProxyPushSupplier::_narrow(
-      v_proxySupplier.in()
-    );
+      v_proxySupplier.in());
 
   mv_proxySupplier->connect_structured_push_consumer(mv_structuredPushConsumer.in());
 }
@@ -83,8 +80,7 @@ TestListener::~TestListener()
 
 
 void TestListener::push_structured_event (
-  const CosNotification::StructuredEvent & notification
-)
+  const CosNotification::StructuredEvent & notification)
 {
   CORBA::Long data;
   notification.remainder_of_body >>= data;
@@ -92,11 +88,9 @@ void TestListener::push_structured_event (
   m_receivedData.push_back(data);
 }
 
-
-void TestListener::disconnect_structured_push_consumer ( )
+void TestListener::disconnect_structured_push_consumer ()
 {
 }
-
 
 void TestListener::offer_change(
   const CosNotification::EventTypeSeq & ,

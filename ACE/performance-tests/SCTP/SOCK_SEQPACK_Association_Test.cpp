@@ -37,27 +37,20 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_INET_Addr serverAddr;
 
   if (argc < 2) {
-
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("Usage: SOCK_SEQPACK_Association_Test hostname:port\n")));
     status = 1;
-
   } else if (serverAddr.set(argv[1])) {
-
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("%p\n"),
                 ACE_TEXT ("ACE_INET_Addr::set")));
     status = 1;
-
   } else if (connector.connect (dataStream, serverAddr)) {
-
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("%p\n"),
                 ACE_TEXT ("ACE_SOCK_SEQPACK_Connector::connect")));
     status = 1;
-
   } else {
-
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("Connected to server at %s\n"),
                 argv[1]));
@@ -84,7 +77,6 @@ void dump_names(const ACE_SOCK_SEQPACK_Association& assoc)
 
   // Get local addresses of the association
   if (assoc.get_local_addrs(in_out, in_out_size)) {
-
     ACE_ERROR((LM_ERROR,
                "%p\n",
                "get_local_addrs"));
@@ -95,9 +87,7 @@ void dump_names(const ACE_SOCK_SEQPACK_Association& assoc)
 
   // Print individual results of get_local_addrs
   for (i = 0; i < in_out_size; ++i) {
-
     if (in_out[i].addr_to_string(outbuf, outbuf_size)) {
-
       ACE_ERROR((LM_ERROR,
                  "%p\n",
                  "addr_to_string"));
@@ -115,7 +105,6 @@ void dump_names(const ACE_SOCK_SEQPACK_Association& assoc)
 
   // Get remote addresses of the association
   if (assoc.get_remote_addrs(in_out, in_out_size)) {
-
     ACE_ERROR((LM_ERROR,
                "%p\n",
                "get_remote_addrs"));
@@ -126,9 +115,7 @@ void dump_names(const ACE_SOCK_SEQPACK_Association& assoc)
 
   // Print individual results of get_remote_addrs
   for (i = 0; i < in_out_size; ++i) {
-
     if (in_out[i].addr_to_string(outbuf, outbuf_size)) {
-
       ACE_ERROR((LM_ERROR,
                  "%p\n",
                  "addr_to_string"));

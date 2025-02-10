@@ -89,7 +89,7 @@ private:
 
   CORBA::Boolean cat_nskfs_profile (TAO_InputCDR& stream);
 
-  void indent (void);
+  void indent ();
 
   size_t trace_depth_;
   ACE_CString buffer_;

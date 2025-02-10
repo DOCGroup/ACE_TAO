@@ -23,12 +23,6 @@ ServerApp::ServerApp()
 {
 }
 
-
-ServerApp::~ServerApp()
-{
-}
-
-
 int
 ServerApp::run_i(int argc, ACE_TCHAR* argv[])
 {
@@ -94,7 +88,7 @@ ServerApp::init(int argc, ACE_TCHAR* argv[])
 
 
 void
-ServerApp::poa_setup(void)
+ServerApp::poa_setup()
 {
   this->poa_ = this->create_poa(this->orb_.in(),
                                 "ChildPoa");
@@ -107,7 +101,7 @@ ServerApp::poa_setup(void)
 }
 
 void
-ServerApp::csd_setup(void)
+ServerApp::csd_setup()
 {
   this->tp_strategy_ = new TAO::CSD::TP_Strategy(this->num_csd_threads_);
 
@@ -135,7 +129,7 @@ ServerApp::csd_setup(void)
 
 
 void
-ServerApp::servant_setup(void)
+ServerApp::servant_setup()
 {
   this->foo_servants_.create_and_activate(this->num_servants_,
                                       this->orb_.in (),
@@ -145,7 +139,7 @@ ServerApp::servant_setup(void)
 
 
 void
-ServerApp::collocated_setup(void)
+ServerApp::collocated_setup()
 {
   if (this->num_collocated_clients_ == 0)
     return;
@@ -166,14 +160,14 @@ ServerApp::collocated_setup(void)
       FooServantListType::T_stub_var foo
         = this->foo_servants_.objref(servant_index);
       ClientEngine_Handle engine
-        = new Foo_B_ClientEngine(foo.in(), cb.in (), client_id, true);
+        = new Foo_B_ClientEngine(foo.in(), cb.in (), client_id);
       this->collocated_client_task_.add_engine(engine.in());
     }
 }
 
 
 void
-ServerApp::poa_activate(void)
+ServerApp::poa_activate()
 {
   PortableServer::POAManager_var poa_manager
     = this->poa_->the_POAManager();
@@ -182,7 +176,7 @@ ServerApp::poa_activate(void)
 
 
 void
-ServerApp::run_collocated_clients(void)
+ServerApp::run_collocated_clients()
 {
   if (this->num_collocated_clients_ > 0)
     {
@@ -195,7 +189,7 @@ ServerApp::run_collocated_clients(void)
 
 
 void
-ServerApp::run_orb_event_loop(void)
+ServerApp::run_orb_event_loop()
 {
   OrbRunner orb_runner(this->orb_.in(), this->num_orb_threads_);
   orb_runner.run();

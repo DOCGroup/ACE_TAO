@@ -200,7 +200,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-mutex_test (void)
+mutex_test ()
 {
   ACE_Thread_Manager thr_mgr;
 
@@ -242,7 +242,7 @@ mutex_test (void)
 }
 
 static int
-rwlock_test (void)
+rwlock_test ()
 {
   ACE_Thread_Manager thr_mgr;
 

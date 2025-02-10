@@ -26,7 +26,7 @@ class Client_ORBInitializer :
 {
 public:
   /// Constructor
-  Client_ORBInitializer ();
+  Client_ORBInitializer () = default;
 
   virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info);
 

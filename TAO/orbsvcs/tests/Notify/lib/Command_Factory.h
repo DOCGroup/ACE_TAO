@@ -26,13 +26,13 @@ class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_Command_Factory
 {
 public:
   /// Constructor
-  TAO_Notify_Tests_Command_Factory (void);
+  TAO_Notify_Tests_Command_Factory ();
 
   /// Destructor
   virtual ~TAO_Notify_Tests_Command_Factory ();
 
   /// Create the command.
-  virtual TAO_Notify_Tests_Command* create (void) = 0;
+  virtual TAO_Notify_Tests_Command* create () = 0;
 };
 
 #include /**/ "ace/post.h"

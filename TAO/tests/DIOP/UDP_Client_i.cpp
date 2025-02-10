@@ -16,17 +16,16 @@ UDP_Client_i::UDP_Client_i (CORBA::ORB_ptr orb,
 , delay_ (msec)
 , iterations_ (iterations)
 {
-
 }
 
 //Destructor.
-UDP_Client_i::~UDP_Client_i (void)
+UDP_Client_i::~UDP_Client_i ()
 {
   //no-op
 }
 
 int
-UDP_Client_i::svc (void)
+UDP_Client_i::svc ()
 {
   ACE_CString client_name ("UDP");
 
@@ -70,7 +69,6 @@ UDP_Client_i::svc (void)
       // Shut down local ORB, trigger the end of the ORB event loop
           // in the main thread.
       orb_->shutdown ();
-
     }
   catch (const CORBA::Exception& ex)
     {

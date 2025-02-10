@@ -20,17 +20,17 @@
 class Generator
 {
 public:
-  Generator (void);
+  Generator ();
 
-  ~Generator (void);
+  ~Generator ();
 
-  CORBA::Short gen_short (void);
-  CORBA::Long gen_long (void);
-  char* gen_string (void);
+  CORBA::Short gen_short ();
+  CORBA::Long gen_long ();
+  char* gen_string ();
   char* gen_string (int maxlength);
-  CORBA::WChar* gen_wstring (void);
+  CORBA::WChar* gen_wstring ();
   CORBA::WChar* gen_wstring (int maxlength);
-  const Alt_Mapping::Fixed_Struct gen_fixed_struct (void);
+  const Alt_Mapping::Fixed_Struct gen_fixed_struct ();
 
  private:
   Alt_Mapping::Fixed_Struct fixed_struct_;

@@ -2,7 +2,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Endpoint_Selector_Factory::~TAO_Endpoint_Selector_Factory (void)
+TAO_Endpoint_Selector_Factory::~TAO_Endpoint_Selector_Factory ()
 {
 }
 

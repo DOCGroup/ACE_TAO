@@ -33,10 +33,10 @@ class HTTP_Request
 {
 public:
   /// Default construction.
-  HTTP_Request (void);
+  HTTP_Request ();
 
   /// Destructor.
-  ~HTTP_Request (void);
+  ~HTTP_Request ();
 
   /// parse an incoming request
   int parse_request (ACE_Message_Block &mb);
@@ -54,37 +54,37 @@ public:
   // = The Accessors.
 
   /// HTTP request method
-  const char *method (void) const;
+  const char *method () const;
 
   /// HTTP request uri
-  const char *uri (void) const;
+  const char *uri () const;
 
   /// HTTP request version
-  const char *version (void) const;
+  const char *version () const;
 
   /// The HTTP request uri translated into a server filename path
-  const char *path (void) const;
+  const char *path () const;
 
   /// TRUE of the request is a cgi request
-  int cgi (void) const;
+  int cgi () const;
 
   /// The arguments to the cgi request
-  const char *cgi_args (void) const;
+  const char *cgi_args () const;
 
   /// The environment variables passed to the CGI request
-  const char **cgi_env (void) const;
+  const char **cgi_env () const;
 
   /// The cgi request query string
-  const char *query_string (void) const;
+  const char *query_string () const;
 
   /// The cgi request path information
-  const char *path_info (void) const;
+  const char *path_info () const;
 
   /// The type of the HTTP request
-  int type (void) const;
+  int type () const;
 
   /// The headers that were parsed from the request
-  const Headers &headers (void) const;
+  const Headers &headers () const;
 
   /// Header strings stored
   const char *header_strings (int index) const;
@@ -93,22 +93,22 @@ public:
   const char *header_values (int index) const;
 
   /// The buffer into which request data is read
-  char *data (void);
+  char *data ();
 
   /// The length of the request data
-  int data_length (void);
+  int data_length ();
 
   /// The length of incoming content if any
-  int content_length (void);
+  int content_length ();
 
   /// Current status of the incoming request
-  int status (void);
+  int status ();
 
   /// A string describing the state of the incoming request
-  const char *status_string (void);
+  const char *status_string ();
 
   /// Dump the state of the request.
-  void dump (void);
+  void dump ();
 
   enum
   {
@@ -162,7 +162,7 @@ private:
   int type (const char *type_string);
 
 private:
-  int got_request_line (void) const;
+  int got_request_line () const;
 
 private:
   int got_request_line_;

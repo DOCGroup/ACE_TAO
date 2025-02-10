@@ -24,14 +24,6 @@
 # define ACE_LACKS_STD_WSTRING
 #endif
 
-#if !defined (__RTP__)
-  // Fix for wrong typedef of time_t in kernel mode
-  #ifndef _TIME_T
-  #define _TIME_T
-  typedef long time_t;
-  #endif
-#endif
-
 #if ! defined (__ACE_INLINE__)
 # define __ACE_INLINE__
 #endif /* ! __ACE_INLINE__ */
@@ -50,10 +42,6 @@
 #   define _C99
 #  endif
 # endif
-
-#elif defined (__DCC__)
-# define ACE_HAS_STANDARD_CPP_LIBRARY 1
-# define ACE_TEMPLATES_REQUIRE_SOURCE
 #else  /* ! __GNUG__ && !__DCC__ */
 #  ifdef __cplusplus  /* Let it slide for C compilers. */
 #    error unsupported compiler on VxWorks
@@ -87,7 +75,6 @@
 
 // OS-specific configuration
 #define ACE_HAS_4_4BSD_SENDMSG_RECVMSG
-#define ACE_HAS_3_PARAM_READDIR_R
 #define ACE_HAS_NET_IF_DL_H
 #define ACE_HAS_NONCONST_GETBY
 #define ACE_HAS_NONCONST_INET_ADDR
@@ -104,7 +91,6 @@
 #define ACE_HAS_CLOCK_GETTIME
 #define ACE_HAS_CLOCK_SETTIME
 #define ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES
-#define ACE_HAS_CPLUSPLUS_HEADERS
 #define ACE_HAS_DIRENT
 #define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
 #define ACE_HAS_MSG
@@ -135,8 +121,6 @@
 #define ACE_LACKS_GETIPNODEBYNAME_IPV6
 #define ACE_LACKS_LSTAT
 #define ACE_LACKS_MADVISE
-#define ACE_LACKS_MALLOC_H
-#define ACE_LACKS_MEMORY_H
 #define ACE_LACKS_MKFIFO
 #define ACE_LACKS_MKSTEMP
 #define ACE_LACKS_NETDB_REENTRANT_FUNCTIONS

@@ -16,7 +16,7 @@ TAO_Service_Type_Repository::TAO_Service_Type_Repository (ACE_Lock* lock)
              ACE_Lock_Adapter<ACE_Null_Mutex>);
 }
 
-TAO_Service_Type_Repository::~TAO_Service_Type_Repository (void)
+TAO_Service_Type_Repository::~TAO_Service_Type_Repository ()
 {
   {
     // Make sure not to throw exceptions in destructors...
@@ -35,7 +35,7 @@ TAO_Service_Type_Repository::~TAO_Service_Type_Repository (void)
 }
 
 CosTradingRepos::ServiceTypeRepository::IncarnationNumber
-TAO_Service_Type_Repository::incarnation (void)
+TAO_Service_Type_Repository::incarnation ()
 {
   CosTradingRepos::ServiceTypeRepository::IncarnationNumber inc_num;
 

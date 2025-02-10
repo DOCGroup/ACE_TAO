@@ -12,9 +12,6 @@ $server_dynamic_threads = 0;
 
 $status = 0;
 
-$continuous = ($^O eq 'hpux');
-$common_args = ($continuous ? "-ORBSvcConf continuous$PerlACE::svcconf_ext" : '');
-
 my $server = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
 my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
 
@@ -70,7 +67,7 @@ sub run_test
     my @parms = @_;
     $arg = $parms[0];
 
-    $SV = $server->CreateProcess ("server", "$common_args -s $server_static_threads -d $server_dynamic_threads -o $server_iorfile");
+    $SV = $server->CreateProcess ("server", "-s $server_static_threads -d $server_dynamic_threads -o $server_iorfile");
 
     $server_status = $SV->Spawn ();
     if ($server_status == -1) {
@@ -94,7 +91,7 @@ sub run_test
         }
     }
 
-    $CL[$i] = $client->CreateProcess ("client", "$common_args $arg");
+    $CL[$i] = $client->CreateProcess ("client", "$arg");
     $CL[$i]->Spawn ();
 
     $client_status = $CL[$i]->WaitKill ($client->ProcessStartWaitInterval () + 80);

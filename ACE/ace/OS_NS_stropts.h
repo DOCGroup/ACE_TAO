@@ -7,8 +7,6 @@
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  *  @author Jesper S. M|ller<stophph@diku.dk>
  *  @author and a cast of thousands...
- *
- *  Originally in OS.h.
  */
 //=============================================================================
 
@@ -83,7 +81,6 @@ public:
 class ACE_QoS;
 
 namespace ACE_OS {
-
   ACE_NAMESPACE_INLINE_FUNCTION
   int getmsg (ACE_HANDLE handle,
               struct strbuf *ctl,
@@ -150,7 +147,6 @@ namespace ACE_OS {
                const struct strbuf *data,
                int band,
                int flags);
-
 } /* namespace ACE_OS */
 
 ACE_END_VERSIONED_NAMESPACE_DECL

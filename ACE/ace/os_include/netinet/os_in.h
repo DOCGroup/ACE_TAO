@@ -41,11 +41,9 @@ extern "C"
 #endif /* !ACE_LACKS_NETINET_IN_H */
 
 
-# if defined (ACE_HAS_PHARLAP_RT)
-#   define ACE_IPPROTO_TCP SOL_SOCKET
-# elif !defined (ACE_IPPROTO_TCP)
+# if !defined (ACE_IPPROTO_TCP)
 #   define ACE_IPPROTO_TCP IPPROTO_TCP
-# endif /* ACE_HAS_PHARLAP_RT */
+# endif /* !ACE_IPPROTO_TCP */
 
 # if !defined (ACE_HAS_IP_MULTICAST) && defined (ACE_LACKS_IP_ADD_MEMBERSHIP)
   // Even if ACE_HAS_IP_MULTICAST is not defined, if IP_ADD_MEMBERSHIP

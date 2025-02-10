@@ -15,7 +15,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class SERVANT_TYPE>
-TAO_Notify_ProxySupplier_T<SERVANT_TYPE>::TAO_Notify_ProxySupplier_T (void)
+TAO_Notify_ProxySupplier_T<SERVANT_TYPE>::TAO_Notify_ProxySupplier_T ()
   : is_suspended_ (0)
 {
 }
@@ -96,7 +96,7 @@ TAO_Notify_ProxySupplier_T<SERVANT_TYPE>::subscription_change (const CosNotifica
 }
 
 template <class SERVANT_TYPE> void
-TAO_Notify_ProxySupplier_T<SERVANT_TYPE>::suspend_connection (void)
+TAO_Notify_ProxySupplier_T<SERVANT_TYPE>::suspend_connection ()
 {
   {
     ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_, CORBA::INTERNAL ());
@@ -113,7 +113,7 @@ TAO_Notify_ProxySupplier_T<SERVANT_TYPE>::suspend_connection (void)
 }
 
 template <class SERVANT_TYPE> void
-TAO_Notify_ProxySupplier_T<SERVANT_TYPE>::resume_connection (void)
+TAO_Notify_ProxySupplier_T<SERVANT_TYPE>::resume_connection ()
 {
   {
     ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_, CORBA::INTERNAL ());
@@ -129,7 +129,7 @@ TAO_Notify_ProxySupplier_T<SERVANT_TYPE>::resume_connection (void)
 }
 
 template <class SERVANT_TYPE> CosNotifyChannelAdmin::ConsumerAdmin_ptr
-TAO_Notify_ProxySupplier_T<SERVANT_TYPE>::MyAdmin (void)
+TAO_Notify_ProxySupplier_T<SERVANT_TYPE>::MyAdmin ()
 {
   CosNotifyChannelAdmin::ConsumerAdmin_var ret;
 
@@ -143,7 +143,7 @@ TAO_Notify_ProxySupplier_T<SERVANT_TYPE>::MyAdmin (void)
 /***************************** UNIMPLEMENTED METHODS***************************************/
 
 template <class SERVANT_TYPE> CosNotifyFilter::MappingFilter_ptr
-TAO_Notify_ProxySupplier_T<SERVANT_TYPE>::priority_filter (void)
+TAO_Notify_ProxySupplier_T<SERVANT_TYPE>::priority_filter ()
 {
   throw CORBA::NO_IMPLEMENT ();
 }
@@ -155,7 +155,7 @@ TAO_Notify_ProxySupplier_T<SERVANT_TYPE>::priority_filter (CosNotifyFilter::Mapp
 }
 
 template <class SERVANT_TYPE> CosNotifyFilter::MappingFilter_ptr
-TAO_Notify_ProxySupplier_T<SERVANT_TYPE>::lifetime_filter (void)
+TAO_Notify_ProxySupplier_T<SERVANT_TYPE>::lifetime_filter ()
 {
   throw CORBA::NO_IMPLEMENT ();
 }

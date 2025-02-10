@@ -25,7 +25,7 @@ namespace ACE
 
         static unsigned int debug_level_;
 
-        static unsigned int Initializer (void);
+        static unsigned int Initializer ();
     };
   }
 

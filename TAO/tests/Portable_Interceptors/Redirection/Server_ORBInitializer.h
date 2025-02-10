@@ -30,14 +30,12 @@ class Server_ORBInitializer :
   public virtual ::CORBA::LocalObject
 {
 public:
-
   /// Constructor.
-  Server_ORBInitializer (void);
+  Server_ORBInitializer ();
 
   virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info);
 
   virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info);
-
 };
 
 #if defined(_MSC_VER)

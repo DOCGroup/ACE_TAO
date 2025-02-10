@@ -4,7 +4,7 @@
 #include "ace/OS_NS_errno.h"
 #include "ace/Null_Mutex.h"
 
-Globals::Globals (void)
+Globals::Globals ()
   : thr_create_flags (0),
     default_priority (0),
     ior_file (0),
@@ -73,15 +73,15 @@ Globals::parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-Globals::sched_fifo_init (void)
+Globals::sched_fifo_init ()
 {
 #if defined (ACE_HAS_THREADS)
-  // Enable FIFO scheduling, e.g., RT scheduling class on Solaris.
-# if defined (_AIX) || defined (__APPLE__) || defined (BSD)
+  // Enable FIFO scheduling
+# if defined (__APPLE__) || defined (BSD)
   int scope = ACE_SCOPE_THREAD;
 # else
   int scope = ACE_SCOPE_PROCESS;
-# endif /* _AIX */
+# endif /* __APPLE__ || BSD */
 
   if (ACE_OS::sched_params (ACE_Sched_Params (ACE_SCHED_FIFO,
                                               SCHED_PRIORITY,
@@ -115,18 +115,18 @@ Globals::sched_fifo_init (void)
 #endif /* ACE_HAS_THREADS */
 }
 
-MT_Priority::MT_Priority (void)
+MT_Priority::MT_Priority ()
   : num_priorities_ (0),
     grain_ (0)
 {
 }
 
-MT_Priority::~MT_Priority (void)
+MT_Priority::~MT_Priority ()
 {
 }
 
 ACE_Sched_Priority
-MT_Priority::get_high_priority (void)
+MT_Priority::get_high_priority ()
 {
   ACE_Sched_Priority high_priority;
 
@@ -208,13 +208,13 @@ MT_Priority::get_low_priority (u_int num_low_priority,
 }
 
 u_int
-MT_Priority::number_of_priorities (void)
+MT_Priority::number_of_priorities ()
 {
   return this->num_priorities_;
 }
 
 u_int
-MT_Priority::grain (void)
+MT_Priority::grain ()
 {
   return this->grain_;
 }

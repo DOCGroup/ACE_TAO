@@ -14,8 +14,6 @@
 #include "ace/SOCK_Dgram_Bcast.inl"
 #endif /* __ACE_INLINE__ */
 
-
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_SOCK_Dgram_Bcast)
@@ -31,7 +29,7 @@ ACE_Bcast_Node::ACE_Bcast_Node (ACE_INET_Addr &addr,
 ACE_ALLOC_HOOK_DEFINE(ACE_Bcast_Node)
 
 void
-ACE_SOCK_Dgram_Bcast::dump (void) const
+ACE_SOCK_Dgram_Bcast::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_SOCK_Dgram_Bcast::dump");
@@ -41,7 +39,7 @@ ACE_SOCK_Dgram_Bcast::dump (void) const
 // Close up and release resources.
 
 int
-ACE_SOCK_Dgram_Bcast::close (void)
+ACE_SOCK_Dgram_Bcast::close ()
 {
   ACE_TRACE ("ACE_SOCK_Dgram_Bcast::close");
 
@@ -63,7 +61,7 @@ ACE_SOCK_Dgram_Bcast::close (void)
 
 // Here's the simple-minded constructor.
 
-ACE_SOCK_Dgram_Bcast::ACE_SOCK_Dgram_Bcast (void)
+ACE_SOCK_Dgram_Bcast::ACE_SOCK_Dgram_Bcast ()
   : if_list_ (0)
 {
   ACE_TRACE ("ACE_SOCK_Dgram_Bcast::ACE_SOCK_Dgram_Bcast");
@@ -124,7 +122,7 @@ ACE_SOCK_Dgram_Bcast::mk_broadcast (const ACE_TCHAR *host_name)
                       ACE_TEXT("ACE_SOCK_Dgram_Bcast::mk_broadcast: setsockopt failed")),
                       -1);
 
-#if !defined (ACE_WIN32) && !defined(__INTERIX)
+#if !defined (ACE_WIN32)
   ACE_HANDLE s = this->get_handle ();
 
   char buf[BUFSIZ];
@@ -164,7 +162,7 @@ ACE_SOCK_Dgram_Bcast::mk_broadcast (const ACE_TCHAR *host_name)
     }
 
 
-#if !defined(AIX) && !defined (__QNX__) && !defined (__FreeBSD__) && !defined(__NetBSD__) && !defined (ACE_VXWORKS) && !defined(__APPLE__)
+#if !defined (__QNX__) && !defined (__FreeBSD__) && !defined(__NetBSD__) && !defined (ACE_VXWORKS) && !defined(__APPLE__)
   for (int n = ifc.ifc_len / sizeof (struct ifreq) ; n > 0;
        n--, ifr++)
 #else
@@ -182,7 +180,7 @@ ACE_SOCK_Dgram_Bcast::mk_broadcast (const ACE_TCHAR *host_name)
             ifr = (struct ifreq *)
               ((caddr_t) &ifr->ifr_addr + ifr->ifr_addr.sa_len)) :
           (nbytes -= sizeof (struct ifreq), ifr++)))
-#endif /* !defined(AIX) && !defined (__QNX__) && !defined (__FreeBSD__) && !defined(__NetBSD__) && !defined (ACE_VXWORKS) && !defined(__APPLE__) */
+#endif /* !defined (__QNX__) && !defined (__FreeBSD__) && !defined(__NetBSD__) && !defined (ACE_VXWORKS) && !defined(__APPLE__) */
     {
 #if defined (__QNX__) || defined (ACE_VXWORKS)
       // Silently skip link interfaces
@@ -224,7 +222,7 @@ ACE_SOCK_Dgram_Bcast::mk_broadcast (const ACE_TCHAR *host_name)
                          SIOCGIFFLAGS,
                          (char *) &flags) == -1)
         {
-          ACELIB_ERROR ((LM_ERROR, ACE_TEXT("%p [%s]\n"),
+          ACELIB_ERROR ((LM_ERROR, ACE_TEXT("%p [%C]\n"),
                      ACE_TEXT("ACE_SOCK_Dgram_Bcast::mk_broadcast: ioctl (get interface flags)"),
                      flags.ifr_name));
           continue;
@@ -233,7 +231,7 @@ ACE_SOCK_Dgram_Bcast::mk_broadcast (const ACE_TCHAR *host_name)
       if (ACE_BIT_ENABLED (flags.ifr_flags,
                            IFF_UP) == 0)
         {
-          ACELIB_ERROR ((LM_ERROR, ACE_TEXT("%p [%s]\n"),
+          ACELIB_ERROR ((LM_ERROR, ACE_TEXT("%p [%C]\n"),
                      ACE_TEXT("ACE_SOCK_Dgram_Bcast::mk_broadcast: Network interface is not up"),
                      flags.ifr_name));
           continue;
@@ -249,7 +247,7 @@ ACE_SOCK_Dgram_Bcast::mk_broadcast (const ACE_TCHAR *host_name)
           if (ACE_OS::ioctl (s,
                              SIOCGIFBRDADDR,
                              (char *) &if_req) == -1)
-            ACELIB_ERROR ((LM_ERROR, ACE_TEXT("%p [%s]\n"),
+            ACELIB_ERROR ((LM_ERROR, ACE_TEXT("%p [%C]\n"),
                        ACE_TEXT("ACE_SOCK_Dgram_Bcast::mk_broadcast: ioctl (get broadaddr)"),
                        flags.ifr_name));
           else
@@ -266,7 +264,7 @@ ACE_SOCK_Dgram_Bcast::mk_broadcast (const ACE_TCHAR *host_name)
       else
         {
           if (host_name != 0)
-            ACELIB_ERROR ((LM_ERROR, ACE_TEXT("%p [%s]\n"),
+            ACELIB_ERROR ((LM_ERROR, ACE_TEXT("%p [%C]\n"),
                         ACE_TEXT("ACE_SOCK_Dgram_Bcast::mk_broadcast: Broadcast is not enabled for this interface."),
                         flags.ifr_name));
         }
@@ -280,7 +278,7 @@ ACE_SOCK_Dgram_Bcast::mk_broadcast (const ACE_TCHAR *host_name)
                   ACE_Bcast_Node (addr,
                                   this->if_list_),
                   -1);
-#endif /* !ACE_WIN32 && !__INTERIX */
+#endif /* !ACE_WIN32 */
   if (this->if_list_ == 0)
     {
       errno = ENXIO;

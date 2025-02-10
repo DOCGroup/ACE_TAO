@@ -8,15 +8,14 @@ class test_i :
   public POA_test
 {
 public:
-
   test_i (CORBA::ORB_ptr orb,
           PortableServer::POA_ptr poa);
 
   void set_other (test_ptr test);
 
-  void method (void);
+  void method ();
 
-  PortableServer::POA_ptr _default_POA (void);
+  PortableServer::POA_ptr _default_POA ();
 
   CORBA::ORB_var orb_;
 
@@ -48,7 +47,7 @@ test_i::set_other (test_ptr test)
 }
 
 void
-test_i::method (void)
+test_i::method ()
 {
   if (this->other_.in () != test::_nil ())
     {
@@ -83,7 +82,7 @@ test_i::method (void)
 }
 
 PortableServer::POA_ptr
-test_i::_default_POA (void)
+test_i::_default_POA ()
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
@@ -91,13 +90,11 @@ test_i::_default_POA (void)
 class Task : public ACE_Task_Base
 {
 public:
-
   Task (CORBA::ORB_ptr orb);
 
-  int svc (void);
+  int svc ();
 
   CORBA::ORB_var orb_;
-
 };
 
 Task::Task (CORBA::ORB_ptr orb)
@@ -106,7 +103,7 @@ Task::Task (CORBA::ORB_ptr orb)
 }
 
 int
-Task::svc (void)
+Task::svc ()
 {
   try
     {
@@ -252,7 +249,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       base_test->method ();
 
-      orb->shutdown (1);
+      orb->shutdown (true);
 
       result = task.wait ();
       ACE_ASSERT (result != -1);

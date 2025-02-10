@@ -20,14 +20,14 @@ class Checkpoint_i : public POA_Checkpoint
 {
 public:
   /// Constructor.
-  Checkpoint_i (void);
+  Checkpoint_i ();
 
   /// Destructor.
-  ~Checkpoint_i (void);
+  ~Checkpoint_i ();
 
   virtual void put_event (Event * e);
 
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
   /// Set the ORB pointer.
   void orb (CORBA::ORB_ptr o);

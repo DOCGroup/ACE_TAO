@@ -1,7 +1,6 @@
 #include "Supplier.h"
 
 
-
 #include "tao/ORB_Core.h"
 
 TAO_Notify_ThreadPool_Supplier::TAO_Notify_ThreadPool_Supplier  (TAO_Notify_ORB_Objects& orb_objects)
@@ -33,7 +32,7 @@ TAO_Notify_ThreadPool_Supplier::init (CosNotifyChannelAdmin::SupplierAdmin_var& 
 }
 
 void
-TAO_Notify_ThreadPool_Supplier::run (void)
+TAO_Notify_ThreadPool_Supplier::run ()
 {
   {
     ACE_GUARD (TAO_SYNCH_MUTEX, mon, this->lock_);
@@ -65,11 +64,11 @@ TAO_Notify_ThreadPool_Supplier::run (void)
   this->deactivate ();
 
   // we're done. shutdown the ORB to exit the process.
-  this->orb_objects_.orb_->shutdown (1);
+  this->orb_objects_.orb_->shutdown (true);
 }
 
 void
-TAO_Notify_ThreadPool_Supplier::connect (void)
+TAO_Notify_ThreadPool_Supplier::connect ()
 {
   // Activate the supplier object.
   CosNotifyComm::StructuredPushSupplier_var objref = this->_this ();
@@ -117,7 +116,7 @@ TAO_Notify_ThreadPool_Supplier::connect (void)
 }
 
 void
-TAO_Notify_ThreadPool_Supplier::disconnect (void)
+TAO_Notify_ThreadPool_Supplier::disconnect ()
 {
   ACE_ASSERT (!CORBA::is_nil (this->proxy_consumer_.in ()));
 
@@ -125,7 +124,7 @@ TAO_Notify_ThreadPool_Supplier::disconnect (void)
 }
 
 void
-TAO_Notify_ThreadPool_Supplier::deactivate (void)
+TAO_Notify_ThreadPool_Supplier::deactivate ()
 {
   PortableServer::POA_var poa (this->_default_POA ());
 
@@ -166,7 +165,7 @@ TAO_Notify_ThreadPool_Supplier::send_event (const CosNotification::StructuredEve
 }
 
 void
-TAO_Notify_ThreadPool_Supplier::disconnect_structured_push_supplier (void)
+TAO_Notify_ThreadPool_Supplier::disconnect_structured_push_supplier ()
 {
   this->deactivate ();
 }

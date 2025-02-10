@@ -30,7 +30,7 @@ class TAO_RTPortableServer_Export TAO_RTPortableServer_Initializer
 {
 public:
   /// Constructor.
-  TAO_RTPortableServer_Initializer (void);
+  TAO_RTPortableServer_Initializer ();
 };
 
 static TAO_RTPortableServer_Initializer TAO_RTPortableServer_initializer;

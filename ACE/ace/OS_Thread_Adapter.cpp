@@ -15,31 +15,31 @@ ACE_OS_Thread_Adapter::ACE_OS_Thread_Adapter (
      ACE_THR_FUNC user_func
      , void *arg
      , ACE_THR_C_FUNC entry_point
-# if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
+#if defined (ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS)
      , ACE_SEH_EXCEPT_HANDLER selector
      , ACE_SEH_EXCEPT_HANDLER handler
-# endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
+#endif /* ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS */
      , long cancel_flags
      )
   : ACE_Base_Thread_Adapter (user_func, arg, entry_point
                              , 0
-# if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
+#if defined (ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS)
                              , selector
                              , handler
-# endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
+#endif /* ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS */
                              , cancel_flags
                              )
 {
 }
 
-ACE_OS_Thread_Adapter::~ACE_OS_Thread_Adapter (void)
+ACE_OS_Thread_Adapter::~ACE_OS_Thread_Adapter ()
 {
 }
 
 ACE_ALLOC_HOOK_DEFINE(ACE_OS_Thread_Adapter)
 
 ACE_THR_FUNC_RETURN
-ACE_OS_Thread_Adapter::invoke (void)
+ACE_OS_Thread_Adapter::invoke ()
 {
   // Inherit the logging features if the parent thread has an
   // ACE_Log_Msg instance in thread-specific storage.
@@ -56,23 +56,6 @@ ACE_OS_Thread_Adapter::invoke (void)
   // Delete ourselves since we don't need <this> anymore.  Make sure
   // not to access <this> anywhere below this point.
   delete this;
-
-#if defined (ACE_NEEDS_LWP_PRIO_SET)
-  // On SunOS, the LWP priority needs to be set in order to get
-  // preemption when running in the RT class.  This is the ACE way to
-  // do that . . .
-  ACE_hthread_t thr_handle;
-  ACE_OS::thr_self (thr_handle);
-  int prio;
-
-  // thr_getprio () on the current thread should never fail.
-  ACE_OS::thr_getprio (thr_handle, prio);
-
-  // ACE_OS::thr_setprio () has the special logic to set the LWP priority,
-  // if running in the RT class.
-  ACE_OS::thr_setprio (prio);
-
-#endif /* ACE_NEEDS_LWP_PRIO_SET */
 
   if (cancel_flags != 0)
     {
@@ -108,13 +91,13 @@ ACE_OS_Thread_Adapter::invoke (void)
             }
         }
 
-#if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
+#if defined (ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS)
       ACE_SEH_EXCEPT (ACE_OS_Object_Manager::seh_except_selector ()(
                           (void *) GetExceptionInformation ()))
         {
           ACE_OS_Object_Manager::seh_except_handler ()(0);
         }
-#endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
+#endif /* ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS */
     }
 
   ACE_SEH_FINALLY

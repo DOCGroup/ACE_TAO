@@ -75,7 +75,6 @@ namespace TAO
     class TAO_CSD_TP_Export TP_Task : public ACE_Task_Base
     {
     public:
-
       /// Default Constructor.
       TP_Task();
 
@@ -103,7 +102,6 @@ namespace TAO
       void cancel_servant (PortableServer::Servant servant);
 
     private:
-
       typedef TAO_SYNCH_MUTEX         LockType;
       typedef TAO_Condition<LockType> ConditionType;
 
@@ -150,7 +148,6 @@ namespace TAO
 
       enum { MAX_THREADPOOL_TASK_WORKER_THREADS = 50 };
     };
-
   }
 }
 

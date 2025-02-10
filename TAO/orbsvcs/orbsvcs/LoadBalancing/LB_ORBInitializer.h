@@ -53,7 +53,6 @@ class TAO_LB_ORBInitializer
     public virtual ::CORBA::LocalObject
 {
 public:
-
   /// Constructor.
   TAO_LB_ORBInitializer (const CORBA::StringSeq & object_groups,
                          const CORBA::StringSeq & repository_ids,
@@ -72,7 +71,6 @@ public:
   //@}
 
 private:
-
   /// List of stringified object group references.
   const CORBA::StringSeq object_groups_;
 
@@ -90,7 +88,6 @@ private:
    * used out of convencience.
    */
   TAO_LB_LoadAlert load_alert_;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

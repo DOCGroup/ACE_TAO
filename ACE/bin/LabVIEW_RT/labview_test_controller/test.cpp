@@ -1,5 +1,5 @@
 #include <stdio.h>
-__declspec(dllimport) int test_entry(void);
+__declspec(dllimport) int test_entry();
 
 // This is plain Windows code, not ACE. Therefore we disable
 // the check for ACE_OS

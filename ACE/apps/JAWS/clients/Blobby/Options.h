@@ -28,7 +28,7 @@ class Options
 {
 public:
   /// Returns the singleton instance
-  static Options *instance (void);
+  static Options *instance ();
 
   /// parses commandline arguments
   void parse_args (int argc, ACE_TCHAR *argv[]);
@@ -55,7 +55,7 @@ public:
   int debug_;
 
 protected:
-  Options (void);
+  Options ();
   // protected constructor, singleton
 
   /// the singleton

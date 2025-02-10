@@ -11,16 +11,16 @@ class Reply_Handler
 {
 public:
   /// Constructor
-  Reply_Handler (void);
+  Reply_Handler ();
 
   // = The skeleton methods
-  virtual void receive_data (void);
+  virtual void receive_data ();
   virtual void receive_data_excep (::Messaging::ExceptionHolder *holder);
 
-  virtual void sync (void);
+  virtual void sync ();
   virtual void sync_excep (::Messaging::ExceptionHolder *holder);
 
-  virtual void shutdown (void);
+  virtual void shutdown ();
   virtual void shutdown_excep (::Messaging::ExceptionHolder *holder);
 };
 

@@ -43,7 +43,6 @@ class TAO_FTEC_SupplierAdmin
              FtRtecEventChannelAdmin::SupplierAdminState>
 {
 public:
-
   static const FtRtecEventChannelAdmin::OperationType OBTAIN_ID;
 
   typedef FT_ProxyAdmin<TAO_FTEC_SupplierAdmin,
@@ -58,12 +57,12 @@ public:
   TAO_FTEC_SupplierAdmin (TAO_EC_Event_Channel_Base* event_channel);
 
   /// destructor...
-  virtual ~TAO_FTEC_SupplierAdmin (void);
+  virtual ~TAO_FTEC_SupplierAdmin ();
 
 
   // = The RtecEventChannelAdmin::SupplierAdmin methods...
   virtual RtecEventChannelAdmin::ProxyPushConsumer_ptr
-      obtain_push_consumer (void);
+      obtain_push_consumer ();
 
   void disconnect(RtecEventChannelAdmin::ProxyPushConsumer_ptr obj);
 };

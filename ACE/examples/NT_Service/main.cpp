@@ -27,15 +27,15 @@
 class Process
 {
 public:
-  Process (void);
-  ~Process (void);
+  Process ();
+  ~Process ();
 
   int run(int argc, ACE_TCHAR* argv[]);
 
 private:
   void parse_args (int argc,
                    ACE_TCHAR* argv[]);
-  void print_usage_and_die (void);
+  void print_usage_and_die ();
 
 private:
   char progname[128];
@@ -52,7 +52,7 @@ private:
 
 typedef ACE_Singleton<Process, ACE_Mutex> PROCESS;
 
-Process::Process (void)
+Process::Process ()
   : opt_install (0),
     opt_remove (0),
     opt_start (0),
@@ -66,13 +66,13 @@ Process::Process (void)
   ACE::init ();
 }
 
-Process::~Process (void)
+Process::~Process ()
 {
   ACE::fini ();
 }
 
 void
-Process::print_usage_and_die (void)
+Process::print_usage_and_die ()
 {
   ACE_DEBUG ((LM_INFO,
               "Usage: %s"

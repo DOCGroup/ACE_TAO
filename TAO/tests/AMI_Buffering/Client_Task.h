@@ -18,10 +18,10 @@ public:
   Client_Task (CORBA::ORB_ptr orb);
 
   /// Terminate the loop
-  void terminate_loop (void);
+  void terminate_loop ();
 
   /// Thread entry point
-  int svc (void);
+  int svc ();
 
 private:
   /// Reference to the ORB

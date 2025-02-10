@@ -29,19 +29,19 @@ class Account_i : public POA_Bank::Account
 {
 public:
   /// Constructor.
-  Account_i (void);
+  Account_i ();
 
   /// Constructor.
   Account_i (const char *, CORBA::Float);
 
   /// Destructor.
-  virtual ~Account_i (void);
+  virtual ~Account_i ();
 
   /// Get the current balance in the account.
-  virtual CORBA::Float balance (void);
+  virtual CORBA::Float balance ();
 
   /// Get the name of the <Account> holder.
-  virtual char *name (void);
+  virtual char *name ();
 
   /// Set the name of the <Account> holder.
   virtual void name (const char *name);

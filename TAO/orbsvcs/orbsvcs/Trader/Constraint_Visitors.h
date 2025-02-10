@@ -48,8 +48,7 @@ class TAO_Noop_Constraint;
 class TAO_Trading_Serv_Export TAO_Constraint_Visitor
 {
 public:
-
-  virtual ~TAO_Constraint_Visitor (void) {}
+  virtual ~TAO_Constraint_Visitor () {}
 
   virtual int visit_constraint (TAO_Unary_Constraint* constraint) = 0;
 
@@ -115,10 +114,10 @@ class TAO_Trading_Serv_Export TAO_Constraint_Validator : public TAO_Constraint_V
 {
 public:
   /// Constructor.
-  TAO_Constraint_Validator (void);
+  TAO_Constraint_Validator ();
 
   /// Destructor.
-  virtual ~TAO_Constraint_Validator (void);
+  virtual ~TAO_Constraint_Validator ();
 
   /**
    * Validate returns 1 if the expression tree whose root is <root>
@@ -177,13 +176,11 @@ public:
   virtual int visit_property (TAO_Property_Constraint* literal);
 
 protected:
-
   /// A map gleaned from the ServiceTypeStruct, which correlates
   /// property names with their types.
   TAO_Typecode_Table type_map_;
 
 private:
-
   CORBA::TypeCode* extract_type (TAO_Constraint* expr_type,
                                  TAO_Expression_Type& type);
 
@@ -224,9 +221,8 @@ private:
 class TAO_Trading_Serv_Export TAO_Constraint_Evaluator : public TAO_Constraint_Visitor
 {
 public:
-
   /// Constructor.
-  TAO_Constraint_Evaluator (void);
+  TAO_Constraint_Evaluator ();
 
   /**
    * Evaluate returns 1 if the offer satisfies the constraints
@@ -309,7 +305,6 @@ public:
   virtual int visit_property (TAO_Property_Constraint* literal);
 
 private:
-
   class TAO_Trading_Serv_Export Operand_Queue :
     public ACE_Unbounded_Queue <TAO_Literal_Constraint>
   // = TITLE
@@ -317,20 +312,19 @@ private:
   // from the expression evaluation results.
   {
   public:
-
-    Operand_Queue  (void);
+    Operand_Queue  ();
 
     /// In a binary operation, obtain the left operand.
-    TAO_Literal_Constraint& get_left_operand (void);
+    TAO_Literal_Constraint& get_left_operand ();
 
     /// In a binary operation, obtain the right operand.
-    TAO_Literal_Constraint& get_right_operand (void);
+    TAO_Literal_Constraint& get_right_operand ();
 
     /// In a unary operation, obtain the only operand.
-    TAO_Literal_Constraint& get_operand (void);
+    TAO_Literal_Constraint& get_operand ();
 
     /// Remove an operand from the queue.
-    void dequeue_operand (void);
+    void dequeue_operand ();
   };
 
   /// Method for performing a arithmetic or comparison operation.
@@ -344,12 +338,12 @@ private:
   CORBA::Boolean sequence_does_contain (CORBA::Any* sequence,
                                         TAO_Literal_Constraint& element);
 
-  /// Disallow copying.
-  TAO_Constraint_Evaluator (const TAO_Constraint_Evaluator&);
-  TAO_Constraint_Evaluator& operator= (const TAO_Constraint_Evaluator&);
+  TAO_Constraint_Evaluator (const TAO_Constraint_Evaluator&) = delete;
+  TAO_Constraint_Evaluator& operator= (const TAO_Constraint_Evaluator&) = delete;
+  TAO_Constraint_Evaluator (TAO_Constraint_Evaluator&&) = delete;
+  TAO_Constraint_Evaluator& operator= (TAO_Constraint_Evaluator&&) = delete;
 
 protected:
-
   /// The map of property names to their values for a property.
   TAO_Lookup_Table props_;
 
@@ -398,7 +392,6 @@ public:
   /// uses the appropriate form of equals comparison.
   int operator () (TAO_DynSequence_i& dyn_any,
                    CORBA::ULong element) const;
-
 };
 
 template<>
@@ -419,7 +412,6 @@ public:
   /// uses the appropriate form of equals comparison.
   int operator () (TAO_DynSequence_i& dyn_any,
                    CORBA::ULongLong element) const;
-
 };
 
 template<>

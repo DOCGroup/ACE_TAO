@@ -15,7 +15,7 @@ TAO_EC_Default_ProxyPushSupplier::TAO_EC_Default_ProxyPushSupplier (
 {
 }
 
-TAO_EC_Default_ProxyPushSupplier::~TAO_EC_Default_ProxyPushSupplier (void)
+TAO_EC_Default_ProxyPushSupplier::~TAO_EC_Default_ProxyPushSupplier ()
 {
 }
 
@@ -146,31 +146,31 @@ TAO_EC_Default_ProxyPushSupplier::disconnect_push_supplier ()
 }
 
 void
-TAO_EC_Default_ProxyPushSupplier::suspend_connection (void)
+TAO_EC_Default_ProxyPushSupplier::suspend_connection ()
 {
   this->suspend_connection_locked ();
 }
 
 void
-TAO_EC_Default_ProxyPushSupplier::resume_connection (void)
+TAO_EC_Default_ProxyPushSupplier::resume_connection ()
 {
   this->resume_connection_locked ();
 }
 
 PortableServer::POA_ptr
-TAO_EC_Default_ProxyPushSupplier::_default_POA (void)
+TAO_EC_Default_ProxyPushSupplier::_default_POA ()
 {
   return PortableServer::POA::_duplicate (this->default_POA_.in ());
 }
 
 void
-TAO_EC_Default_ProxyPushSupplier::_add_ref (void)
+TAO_EC_Default_ProxyPushSupplier::_add_ref ()
 {
   this->_incr_refcnt ();
 }
 
 void
-TAO_EC_Default_ProxyPushSupplier::_remove_ref (void)
+TAO_EC_Default_ProxyPushSupplier::_remove_ref ()
 {
   this->_decr_refcnt ();
 }
@@ -183,7 +183,7 @@ TAO_EC_Default_ProxyPushSupplier::activate (
 }
 
 PortableServer::ObjectId
-TAO_EC_Default_ProxyPushSupplier::object_id (void)
+TAO_EC_Default_ProxyPushSupplier::object_id ()
 {
   PortableServer::ObjectId_var result =
     this->default_POA_->servant_to_id (this);

@@ -12,13 +12,13 @@ public:
   HA_Device_Repository() : owner_(0)
   { }
 
-  int is_free (void)
+  int is_free ()
     { return (this->owner_ == 0); }
 
   int is_owner (ACE_Task_Base* tb)
     { return (this->owner_ == tb); }
 
-  ACE_Task_Base *get_owner (void)
+  ACE_Task_Base *get_owner ()
     { return this->owner_; }
 
   void set_owner (ACE_Task_Base *owner)
@@ -42,7 +42,7 @@ public:
     : rep_(rep), waitCond_(wait), mutex_(mutex)
   { }
 
-  virtual int svc (void);
+  virtual int svc ();
 
 private:
   HA_Device_Repository &rep_;
@@ -51,7 +51,7 @@ private:
 };
 // Listing 2 code/ch12
 int
-HA_CommandHandler::svc (void)
+HA_CommandHandler::svc ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) Handler Thread running\n")));

@@ -25,7 +25,6 @@
 #include "ace/Handle_Set.h"
 
 
-
 static const char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
 
 void *
@@ -66,15 +65,14 @@ client (void *arg)
   const ACE_Time_Value def_timeout (ACE_DEFAULT_TIMEOUT);
   ACE_Time_Value tv (def_timeout);
   int result = ACE::handle_ready (cli_stream.get_handle (), &tv,
-                                  1, // read_ready
-                                  1, // write_ready
-                                  0);
-  // we expect the handle to be at leat write_ready since it is freshly connected.
+                                  true, // read_ready
+                                  true, // write_ready
+                                  false);
+  // we expect the handle to be at least write_ready since it is freshly connected.
   if (result == -1)
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("ACE::handle_ready")), 0);
 
   // Send data to server (correctly handles "incomplete writes").
-
   for (const char *c = ACE_ALPHABET; *c != '\0'; c++)
     if (cli_stream.send_n (c, 1) == -1)
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("send_n")));
@@ -181,7 +179,7 @@ server (void *arg)
 }
 
 void
-spawn (void)
+spawn ()
 {
   // Acceptor
   ACE_SOCK_Acceptor peer_acceptor;
@@ -203,10 +201,10 @@ spawn (void)
         {
         case -1:
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("(%P|%t) %p\n%a"),
+                      ACE_TEXT ("(%P|%t) %p\n"),
                       ACE_TEXT ("fork failed"),
                       1));
-          /* NOTREACHED */
+          ACE_OS::abort ();
         case 0:
           client (&server_addr);
           ACE_OS::exit (0);

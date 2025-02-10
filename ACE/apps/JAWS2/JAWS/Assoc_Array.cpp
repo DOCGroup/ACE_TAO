@@ -35,7 +35,7 @@ JAWS_Assoc_Array<KEY,DATA>::JAWS_Assoc_Array (int maxsize)
 }
 
 template <class KEY, class DATA>
-JAWS_Assoc_Array<KEY,DATA>::~JAWS_Assoc_Array (void)
+JAWS_Assoc_Array<KEY,DATA>::~JAWS_Assoc_Array ()
 {
   this->clear ();
 
@@ -120,7 +120,7 @@ JAWS_Assoc_Array<KEY,DATA>::remove (const KEY &k)
 }
 
 template <class KEY, class DATA> void
-JAWS_Assoc_Array<KEY,DATA>::clear (void)
+JAWS_Assoc_Array<KEY,DATA>::clear ()
 {
   for (int i = 0; i < this->maxsize_; i++)
     {
@@ -164,24 +164,24 @@ JAWS_Assoc_Array_Iterator (const JAWS_Assoc_Array<KEY, DATA> &aa)
 }
 
 template <class KEY, class DATA>
-JAWS_Assoc_Array_Iterator<KEY,DATA>::~JAWS_Assoc_Array_Iterator (void)
+JAWS_Assoc_Array_Iterator<KEY,DATA>::~JAWS_Assoc_Array_Iterator ()
 {
 }
 
 template <class KEY, class DATA> KEY *
-JAWS_Assoc_Array_Iterator<KEY,DATA>::key (void)
+JAWS_Assoc_Array_Iterator<KEY,DATA>::key ()
 {
   return this->aa_.k_array_[this->i_];
 }
 
 template <class KEY, class DATA> DATA *
-JAWS_Assoc_Array_Iterator<KEY,DATA>::data (void)
+JAWS_Assoc_Array_Iterator<KEY,DATA>::data ()
 {
   return this->aa_.d_array_[this->i_];
 }
 
 template <class KEY, class DATA> int
-JAWS_Assoc_Array_Iterator<KEY,DATA>::first (void)
+JAWS_Assoc_Array_Iterator<KEY,DATA>::first ()
 {
   this->i_ = 0;
   for (this->j_ = 0; this->j_ < this->aa_.maxsize_; this->j_++)
@@ -193,7 +193,7 @@ JAWS_Assoc_Array_Iterator<KEY,DATA>::first (void)
 }
 
 template <class KEY, class DATA> int
-JAWS_Assoc_Array_Iterator<KEY,DATA>::last (void)
+JAWS_Assoc_Array_Iterator<KEY,DATA>::last ()
 {
   this->j_ = this->aa_.maxsize_;
   for (this->i_ = this->aa_.maxsize_; this->i_ > 0; this->i_--)
@@ -206,7 +206,7 @@ JAWS_Assoc_Array_Iterator<KEY,DATA>::last (void)
 }
 
 template <class KEY, class DATA> int
-JAWS_Assoc_Array_Iterator<KEY,DATA>::next (void)
+JAWS_Assoc_Array_Iterator<KEY,DATA>::next ()
 {
   if (this->j_ < this->aa_.maxsize_)
     {
@@ -222,7 +222,7 @@ JAWS_Assoc_Array_Iterator<KEY,DATA>::next (void)
 }
 
 template <class KEY, class DATA> int
-JAWS_Assoc_Array_Iterator<KEY,DATA>::previous (void)
+JAWS_Assoc_Array_Iterator<KEY,DATA>::previous ()
 {
   if (this->i_ > 0)
     {
@@ -242,7 +242,7 @@ JAWS_Assoc_Array_Iterator<KEY,DATA>::previous (void)
 }
 
 template <class KEY, class DATA> int
-JAWS_Assoc_Array_Iterator<KEY,DATA>::is_done (void)
+JAWS_Assoc_Array_Iterator<KEY,DATA>::is_done ()
 {
   return (this->j_ == this->aa_.maxsize_);
 }

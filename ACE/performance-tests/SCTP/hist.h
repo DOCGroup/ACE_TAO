@@ -4,7 +4,6 @@
 
 namespace ACE_SCTP
 {
-
   struct optheader {
     char *key;
     char *value;

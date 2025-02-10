@@ -108,15 +108,16 @@ client (void *arg)
     }
 
     {
-      ACE_INET_Addr local_addr;
+      ACE_INET_Addr local_addr, to_addr;
       cli_dgram.get_local_addr(local_addr);
 
       if (local_addr.get_type () == AF_INET)
         {
           local_addr.set (local_addr.get_port_number (),
-                           ACE_LOCALHOST,
-                           1,
-                           local_addr.get_type ());
+                          ACE_LOCALHOST,
+                          1,
+                          local_addr.get_type ());
+          to_addr.set (9999, ACE_LOCALHOST, 1, AF_INET);
         }
 #if defined (ACE_HAS_IPV6)
       else
@@ -125,10 +126,9 @@ client (void *arg)
                            ACE_IPV6_LOCALHOST,
                            1,
                            local_addr.get_type ());
+          to_addr.set (9999, ACE_IPV6_LOCALHOST, 1, AF_INET6);
         }
 #endif /* ACE_HAS_IPV6 */
-
-      ACE_INET_Addr to_addr = local_addr;
 
 #if defined(ACE_LACKS_RECVMSG)
       ssize_t rcv_cnt = cli_dgram.recv (buf,
@@ -195,10 +195,11 @@ client (void *arg)
                         ACE_TEXT ("(%P|%t) recv addr size %d; should be %d\n"),
                         peer_addr.get_size (),
                         server_addr.get_size ()));
-          if (local_addr != to_addr) {
+#if (defined ACE_RECVPKTINFO6 || defined ACE_RECVPKTINFO) && !defined ACE_FACE_SAFETY_EXTENDED
+          if (local_addr != to_addr)
             ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("(%P|%t) local addr is not equal to server addr\n")));
-          }
+                        ACE_TEXT ("(%P|%t) local addr is not equal to sent-to addr\n")));
+#endif
         }
     }
 

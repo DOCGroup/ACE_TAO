@@ -2,7 +2,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
-TAO_Policy_Current_Impl::TAO_Policy_Current_Impl (void)
+TAO_Policy_Current_Impl::TAO_Policy_Current_Impl ()
   : manager_impl_ (TAO_POLICY_THREAD_SCOPE)
 {
 }

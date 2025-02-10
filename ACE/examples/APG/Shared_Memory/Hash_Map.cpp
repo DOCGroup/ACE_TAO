@@ -132,7 +132,7 @@ int addRecords(HASH_MAP *map, ALLOCATOR *shmem_allocator)
 }
 // Listing 4
 // Listing 5 code/ch17
-int handle_child (void)
+int handle_child ()
 {
   ACE_TRACE ("handle_child");
 

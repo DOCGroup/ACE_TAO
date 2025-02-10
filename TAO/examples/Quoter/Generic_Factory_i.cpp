@@ -25,7 +25,7 @@ Quoter_Generic_Factory_i::Quoter_Generic_Factory_i (int debug_level)
 }
 
 // Destructor.
-Quoter_Generic_Factory_i::~Quoter_Generic_Factory_i (void)
+Quoter_Generic_Factory_i::~Quoter_Generic_Factory_i ()
 {
 }
 
@@ -34,7 +34,6 @@ Quoter_Generic_Factory_i::supports (const CosLifeCycle::Key &)
 {
   return 0;
 }
-
 
 
 CosNaming::NamingContext_ptr
@@ -76,7 +75,6 @@ Quoter_Generic_Factory_i::get_naming_context (const CosLifeCycle::Key &factory_k
     }
   return quoterNamingContext_var._retn ();
 }
-
 
 
 CORBA::Object_ptr
@@ -136,7 +134,6 @@ Quoter_Generic_Factory_i::create_object (const CosLifeCycle::Key &factory_key,
 
       if (this->debug_level_ > 1)
         ACE_DEBUG ((LM_DEBUG, "Generic_Factory: Return an object reference to a new object.\n"));
-
     }
   catch (const CORBA::Exception&)
     {

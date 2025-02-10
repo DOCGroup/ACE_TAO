@@ -13,14 +13,14 @@
 class IFR_DII_Client
 {
 public:
-  IFR_DII_Client (void);
-  ~IFR_DII_Client (void);
+  IFR_DII_Client ();
+  ~IFR_DII_Client ();
 
   int init (int argc,
             ACE_TCHAR *argv[]);
   // Initialize the client.
 
-  int run (void);
+  int run ();
   // Run the client.
 
 private:
@@ -28,20 +28,20 @@ private:
                   ACE_TCHAR *argv[]);
   // Process the command line arguments.
 
-  int find_interface_def (void);
+  int find_interface_def ();
   // Query the object reference to get its InterfaceDef in the IFR.
 
-  int lookup_interface_def (void);
+  int lookup_interface_def ();
   // Look up the InterfaceDef by name in the IFR.
 
-  void get_operation_def (void);
+  void get_operation_def ();
   // Find the desired operation in the interface definition.
 
-  void create_dii_request (void);
+  void create_dii_request ();
   // Query the interface definition to get the info needed
   // to construct a CORBA::Request.
 
-  void invoke_and_display (void);
+  void invoke_and_display ();
   // Do the invocation and display the results.
 
   CORBA::ORB_var orb_;

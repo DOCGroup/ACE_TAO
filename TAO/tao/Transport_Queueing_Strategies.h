@@ -48,7 +48,7 @@ namespace TAO
   {
   public:
     /// Destructor
-    virtual ~Transport_Queueing_Strategy (void);
+    virtual ~Transport_Queueing_Strategy ();
 
     /// Return true if a message must be queued
     virtual bool must_queue (bool queue_empty) const = 0;

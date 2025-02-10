@@ -1,0 +1,255 @@
+name: windows
+
+on:
+  push:
+  pull_request:
+  schedule:
+    - cron: '0 1 * * SUN'
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  msvc:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: VS2019WChar
+            vmimage: windows-2019
+            mpctype: vs2019
+            BuildPlatform: x64
+            BuildConfiguration: Debug
+            vcpkgarch: x64-windows
+            vcpkglibdir: debug/lib
+            vcpkgpackages: '"openssl", {"name": "xerces-c", "features": ["xmlch-wchar"]}, "zlib"'
+            OptionalFeatures: uses_wchar=1
+          - name: VS2019Debug64
+            vmimage: windows-2019
+            mpctype: vs2019
+            BuildPlatform: x64
+            BuildConfiguration: Debug
+            vcpkgarch: x64-windows
+            vcpkglibdir: debug/lib
+            vcpkgpackages: '"openssl", "xerces-c", "zlib"'
+          - name: VS2019Release64
+            vmimage: windows-2019
+            mpctype: vs2019
+            BuildPlatform: x64
+            BuildConfiguration: Release
+            vcpkgarch: x64-windows
+            vcpkglibdir: lib
+            vcpkgpackages: '"openssl", "xerces-c", "zlib"'
+          - name: VS2019Debug32
+            vmimage: windows-2019
+            mpctype: vs2019
+            BuildPlatform: Win32
+            BuildConfiguration: Debug
+            vcpkgarch: x86-windows
+            vcpkglibdir: debug/lib
+            vcpkgpackages: '"openssl", "xerces-c", "zlib"'
+          - name: VS2019Release32
+            vmimage: windows-2019
+            mpctype: vs2019
+            BuildPlatform: Win32
+            BuildConfiguration: Release
+            vcpkgarch: x86-windows
+            vcpkglibdir: lib
+            vcpkgpackages: '"openssl", "xerces-c", "zlib"'
+          - name: VS2019Debug64Cxx17
+            vmimage: windows-2019
+            mpctype: vs2019
+            BuildPlatform: x64
+            BuildConfiguration: Debug
+            vcpkgarch: x64-windows
+            vcpkglibdir: debug/lib
+            vcpkgpackages: '"openssl", "xerces-c", "zlib"'
+            OptionalMpcArgs: -value_template LanguageStandard=stdcpp17
+          - name: VS2019Debug64Cxx20
+            vmimage: windows-2019
+            mpctype: vs2019
+            BuildPlatform: x64
+            BuildConfiguration: Debug
+            vcpkgarch: x64-windows
+            vcpkglibdir: debug/lib
+            vcpkgpackages: '"openssl", "xerces-c", "zlib"'
+            OptionalMpcArgs: -value_template LanguageStandard=stdcpp20
+          - name: VS2022WChar
+            vmimage: windows-2022
+            mpctype: vs2022
+            BuildPlatform: x64
+            BuildConfiguration: Debug
+            vcpkgarch: x64-windows
+            vcpkglibdir: debug/lib
+            vcpkgpackages: '"openssl", {"name": "xerces-c", "features": ["xmlch-wchar"]}, "zlib"'
+            OptionalFeatures: uses_wchar=1
+          - name: VS2022Debug64
+            vmimage: windows-2022
+            mpctype: vs2022
+            BuildPlatform: x64
+            BuildConfiguration: Debug
+            vcpkgarch: x64-windows
+            vcpkglibdir: debug/lib
+            vcpkgpackages: '"openssl", "xerces-c", "zlib"'
+          - name: VS2022Release64
+            vmimage: windows-2022
+            mpctype: vs2022
+            BuildPlatform: x64
+            BuildConfiguration: Release
+            vcpkgarch: x64-windows
+            vcpkglibdir: lib
+            vcpkgpackages: '"openssl", "xerces-c", "zlib"'
+    runs-on: ${{ matrix.vmimage }}
+    name: ${{ matrix.name }}
+    env:
+      ACE_ROOT: ${{ github.workspace }}/ACE
+      TAO_ROOT: ${{ github.workspace }}/TAO
+      MPC_ROOT: ${{ github.workspace }}/MPC
+      VCPKG_ROOT: ${{ github.workspace }}/vcpkg
+      XERCESC_INCDIR: ${{ github.workspace }}/vcpkg_installed/${{ matrix.vcpkgarch }}/include
+      XERCESC_LIBDIR: ${{ github.workspace }}/vcpkg_installed/${{ matrix.vcpkgarch }}/${{ matrix.vcpkglibdir }}
+      SSL_INCDIR: ${{ github.workspace }}/vcpkg_installed/${{ matrix.vcpkgarch }}/include
+      SSL_LIBDIR: ${{ github.workspace }}/vcpkg_installed/${{ matrix.vcpkgarch }}/${{ matrix.vcpkglibdir }}
+      ZLIB_INCDIR: ${{ github.workspace }}/vcpkg_installed/${{ matrix.vcpkgarch }}/include
+      ZLIB_LIBDIR: ${{ github.workspace }}/vcpkg_installed/${{ matrix.vcpkgarch }}/${{ matrix.vcpkglibdir }}
+      VCPKG_DEFAULT_TRIPLET: ${{ matrix.vcpkgarch }}
+      VCPKG_INSTALLED_DIR: ${{ github.workspace }}/vcpkg_installed
+    steps:
+    - name: checkout ACE/TAO
+      uses: actions/checkout@v4
+    - name: checkout MPC
+      uses: actions/checkout@v4
+      with:
+        repository: DOCGroup/MPC
+        path: ${{ env.MPC_ROOT }}
+    - name: create vcpkg.json
+      run: |
+        '{"name": "tao","version-string": "githubaction","dependencies": [ ${{ matrix.vcpkgpackages }} ]}' > vcpkg.json
+      shell: pwsh
+    - name: Install vcpkg
+      uses: lukka/run-vcpkg@v11
+      with:
+        vcpkgGitCommitId: c82f74667287d3dc386bce81e44964370c91a289
+        runVcpkgInstall: true
+    - name: create $ACE_ROOT/ace/config.h
+      run: |
+        '#include "ace/config-win32.h"' > ${env:ACE_ROOT}/ace/config.h
+      shell: pwsh
+    - name: create $ACE_ROOT/bin/MakeProjectCreator/config/default.features
+      run: |
+        echo "ipv6=1" | out-file -encoding ASCII ${env:ACE_ROOT}/bin/MakeProjectCreator/config/default.features
+        echo "xerces3=1" | out-file -encoding ASCII ${env:ACE_ROOT}/bin/MakeProjectCreator/config/default.features
+        echo "ssl=1" | out-file -append -encoding ASCII ${env:ACE_ROOT}/bin/MakeProjectCreator/config/default.features
+        echo "openssl11=1" | out-file -append -encoding ASCII ${env:ACE_ROOT}/bin/MakeProjectCreator/config/default.features
+        echo "versioned_namespace=1" | out-file -append -encoding ASCII ${env:ACE_ROOT}/bin/MakeProjectCreator/config/default.features
+        echo "zlib=1" | out-file -append -encoding ASCII ${env:ACE_ROOT}/bin/MakeProjectCreator/config/default.features
+      shell: pwsh
+    - name: Add optional features ${{ matrix.OptionalFeatures }}
+      run: |
+        echo "${{ matrix.OptionalFeatures }}" | out-file -append -encoding ASCII ${env:ACE_ROOT}/bin/MakeProjectCreator/config/default.features
+      shell: pwsh
+      if: matrix.OptionalFeatures != ''
+    - name: Run mwc.pl on $(TAO_ROOT)/TAO_ACE.mwc
+      run: |
+        perl ${env:ACE_ROOT}/bin/mwc.pl -type ${{ matrix.mpctype }} ${env:TAO_ROOT}/TAO_ACE.mwc -workers 4 ${{ matrix.OptionalMpcArgs }}
+      shell: pwsh
+    - name: Run mwc.pl on $(ACE_ROOT)/tests/tests.mwc
+      run: |
+        perl ${env:ACE_ROOT}/bin/mwc.pl -type ${{ matrix.mpctype }} ${env:ACE_ROOT}/tests/tests.mwc -workers 4 ${{ matrix.OptionalMpcArgs }}
+      shell: pwsh
+    - name: Run mwc.pl on $(TAO_ROOT)/tests/IDL_Test
+      run: |
+        perl ${env:ACE_ROOT}/bin/mwc.pl -type ${{ matrix.mpctype }} ${env:TAO_ROOT}/tests/IDL_Test -workers 4 ${{ matrix.OptionalMpcArgs }}
+      shell: pwsh
+    - name: Setup msbuild
+      uses: microsoft/setup-msbuild@v2
+    - name: Build solution TAO/TAO_ACE.sln
+      run: msbuild -maxcpucount -p:Platform=${{ matrix.BuildPlatform }} -p:Configuration=${{ matrix.BuildConfiguration }} TAO/TAO_ACE.sln
+    - name: Build solution ACE/tests/tests.sln
+      run: msbuild -maxcpucount -p:Platform=${{ matrix.BuildPlatform }} -p:Configuration=${{ matrix.BuildConfiguration }} ACE/tests/tests.sln
+    - name: Build solution TAO/tests/IDL_Test/IDL_Test.sln
+      run: msbuild -maxcpucount -p:Platform=${{ matrix.BuildPlatform }} -p:Configuration=${{ matrix.BuildConfiguration }} TAO/tests/IDL_Test/IDL_Test.sln
+  mingw:
+    runs-on: windows-2019
+    strategy:
+      fail-fast: false
+      matrix:
+        compiler: [gcc]
+        msystem: [MINGW64]
+        include:
+          - platform_file: include $(ACE_ROOT)/include/makeinclude/platform_mingw32.GNU
+    name: ${{ matrix.msystem }}-${{ matrix.compiler }}
+    env:
+      ACE_ROOT: ${{ github.workspace }}/ACE
+      TAO_ROOT: ${{ github.workspace }}/TAO
+      MPC_ROOT: ${{ github.workspace }}/MPC
+    steps:
+    - name: checkout ACE/TAO
+      uses: actions/checkout@v4
+    - name: checkout MPC
+      uses: actions/checkout@v4
+      with:
+        repository: DOCGroup/MPC
+        path: ${{ env.MPC_ROOT }}
+    - uses: msys2/setup-msys2@v2
+      with:
+        msystem: ${{ matrix.msystem }}
+        install: make
+    - run: pacman --noconfirm -S mingw-w64-x86_64-${{ matrix.compiler }}
+      shell: msys2 {0}
+    - run: ${{ matrix.compiler }} --version
+      shell: msys2 {0}
+    - name: create $ACE_ROOT/ace/config.h
+      run: |
+        '#include "ace/config-win32.h"' > ${env:ACE_ROOT}/ace/config.h
+      shell: pwsh
+    - name: create $ACE_ROOT/bin/MakeProjectCreator/config/default.features
+      run: |
+        echo "versioned_namespace=1" | out-file -append -encoding ASCII ${env:ACE_ROOT}/bin/MakeProjectCreator/config/default.features
+      shell: pwsh
+    - name: Add optional features ${{ matrix.OptionalFeatures }}
+      run: |
+        echo "${{ matrix.OptionalFeatures }}" | out-file -append -encoding ASCII ${env:ACE_ROOT}/bin/MakeProjectCreator/config/default.features
+      shell: pwsh
+      if: matrix.OptionalFeatures != ''
+    - name: add optional optional macros
+      run: |
+        '${{ matrix.optional_macros }}' >> ${env:ACE_ROOT}/include/makeinclude/platform_macros.GNU
+      shell: pwsh
+      if: matrix.optional_macros != ''
+    - name: extend $ACE_ROOT/include/makeinclude/platform_macros.GNU
+      run: |
+        '${{ matrix.platform_file }}' >>  ${env:ACE_ROOT}/include/makeinclude/platform_macros.GNU
+      shell: pwsh
+    - name: Run mwc.pl on $(TAO_ROOT)/TAO_ACE.mwc
+      run: |
+        perl ${env:ACE_ROOT}/bin/mwc.pl -type gnuace ${env:TAO_ROOT}/TAO_ACE.mwc -workers 4
+      shell: pwsh
+    - name: Run mwc.pl on $(ACE_ROOT)/tests/tests.mwc
+      run: |
+        perl ${env:ACE_ROOT}/bin/mwc.pl -type gnuace ${env:ACE_ROOT}/tests/tests.mwc -workers 4
+      shell: pwsh
+    - name: Run mwc.pl on $(TAO_ROOT)/tests/IDL_Test
+      run: |
+        perl ${env:ACE_ROOT}/bin/mwc.pl -type gnuace ${env:TAO_ROOT}/tests/IDL_Test -workers 4
+      shell: pwsh
+    - name: Build TAO_ACE project
+      run: |
+        export ACE_ROOT=`cygpath -u $ACE_ROOT`
+        export TAO_ROOT=`cygpath -u $TAO_ROOT`
+        make -j 6 -C $TAO_ROOT
+      shell: msys2 {0}
+    - name: Build ACE/tests project
+      run: |
+        export ACE_ROOT=`cygpath -u $ACE_ROOT`
+        export TAO_ROOT=`cygpath -u $TAO_ROOT`
+        make -j 6 -C $ACE_ROOT/tests
+      shell: msys2 {0}
+    - name: Build TAO/tests/IDL_Test project
+      run: |
+        export ACE_ROOT=`cygpath -u $ACE_ROOT`
+        export TAO_ROOT=`cygpath -u $TAO_ROOT`
+        make -j 6 -C $TAO_ROOT/tests/IDL_Test
+      shell: msys2 {0}

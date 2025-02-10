@@ -1,5 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
-
 //=============================================================================
 /**
  *  @file    ServerApp.h
@@ -18,75 +16,67 @@
 #include "tao/CSD_ThreadPool/CSD_TP_Strategy.h"
 #include "ace/SString.h"
 
-
 class ServerApp : public TestAppBase
 {
-  public:
+public:
+  ServerApp();
+  virtual ~ServerApp();
 
-    ServerApp();
-    virtual ~ServerApp();
+protected:
+  virtual int run_i(int argc, ACE_TCHAR* argv[]);
 
+private:
+  // These are all called, in order, by the run_i() method.
+  int init(int argc, ACE_TCHAR* argv[]);
+  void poa_setup();
+  void csd_setup();
+  void servant_setup();
+  void collocated_setup();
+  void poa_activate();
+  void run_collocated_clients();
+  void run_orb_event_loop();
+  bool check_results();
+  void cleanup();
 
-  protected:
+  // Helper methods used by the methods above.
+  int parse_args(int argc, ACE_TCHAR* argv[]);
 
-    virtual int run_i(int argc, ACE_TCHAR* argv[]);
+  int set_arg(unsigned&   value,
+                const ACE_TCHAR* arg,
+                char        opt,
+                const char* name,
+                int         min = 0);
 
+  void usage_statement();
+  int arg_dependency_checks();
 
-  private:
+  PortableServer::POA_ptr create_poa(CORBA::ORB_ptr orb,
+                                      const char* poa_name);
 
-    // These are all called, in order, by the run_i() method.
-    int init(int argc, ACE_TCHAR* argv[]);
-    void poa_setup(void);
-    void csd_setup(void);
-    void servant_setup(void);
-    void collocated_setup();
-    void poa_activate(void);
-    void run_collocated_clients(void);
-    void run_orb_event_loop(void);
-    bool check_results();
-    void cleanup();
+  typedef ServantList<Foo_i> ServantListType;
 
+  CORBA::ORB_var               orb_;
+  PortableServer::POA_var      poa_;
+  TAO::CSD::TP_Strategy_Handle tp_strategy_;
 
-    // Helper methods used by the methods above.
-    int parse_args(int argc, ACE_TCHAR* argv[]);
+  ServantListType servants_;
 
-    int set_arg(unsigned&   value,
-                 const ACE_TCHAR* arg,
-                 char        opt,
-                 const char* name,
-                 int         min = 0);
+  ClientTask collocated_client_task_;
 
-    void usage_statement();
-    int arg_dependency_checks();
+  ACE_TString exe_name_;
+  ACE_TString ior_filename_prefix_;
+  unsigned    num_servants_;
+  unsigned    num_csd_threads_;
+  unsigned    num_orb_threads_;
+  unsigned    num_remote_clients_;
+  unsigned    num_collocated_clients_;
+  unsigned    num_loops_;
+  unsigned    use_csd_;
 
+  ACE_CString scenario_id_;
+  unsigned    trial_id_;
 
-    PortableServer::POA_ptr create_poa(CORBA::ORB_ptr orb,
-                                       const char* poa_name);
-
-    typedef ServantList<Foo_i> ServantListType;
-
-    CORBA::ORB_var               orb_;
-    PortableServer::POA_var      poa_;
-    TAO::CSD::TP_Strategy_Handle tp_strategy_;
-
-    ServantListType servants_;
-
-    ClientTask collocated_client_task_;
-
-    ACE_TString exe_name_;
-    ACE_TString ior_filename_prefix_;
-    unsigned    num_servants_;
-    unsigned    num_csd_threads_;
-    unsigned    num_orb_threads_;
-    unsigned    num_remote_clients_;
-    unsigned    num_collocated_clients_;
-    unsigned    num_loops_;
-    unsigned    use_csd_;
-
-    ACE_CString scenario_id_;
-    unsigned    trial_id_;
-
-    Foo_Statistics stats_;
+  Foo_Statistics stats_;
 };
 
 #endif

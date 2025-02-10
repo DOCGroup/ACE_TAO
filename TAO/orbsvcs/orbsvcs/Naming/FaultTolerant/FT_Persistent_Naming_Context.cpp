@@ -8,7 +8,7 @@
 #include "orbsvcs/Naming/Persistent_Context_Index.h"
 #include "ace/OS_NS_stdio.h"
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -27,13 +27,6 @@ TAO_FT_Persistent_Naming_Context::TAO_FT_Persistent_Naming_Context (
                                    map,
                                    counter)
 {
-
-}
-
-
-TAO_FT_Persistent_Naming_Context::~TAO_FT_Persistent_Naming_Context (void)
-{
-  // Perform appropriate cleanup based on the destruction level specified.
 }
 
 
@@ -57,7 +50,6 @@ TAO_FT_Persistent_Naming_Context::resolve (const CosNaming::Name& n)
   // Get the locations of the object group members and we will use them to
   // do the load balancing
   try {
-
     // Make sure object is an object group.
     // We will return the object reference all the way back out to the client
     // if not

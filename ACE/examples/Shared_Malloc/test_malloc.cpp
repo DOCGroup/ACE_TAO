@@ -14,9 +14,8 @@
 #include "Options.h"
 
 
-
 static int
-gen_size (void)
+gen_size ()
 {
 #if defined (ACE_HAS_THREADS)
   unsigned int seed =
@@ -98,7 +97,7 @@ worker (void *arg)
 // Create the appropriate type of process/thread.
 
 static void
-spawn (void)
+spawn ()
 {
   if (Options::instance ()->spawn_threads ())
     {
@@ -169,7 +168,7 @@ spawn (void)
 // Wait for all the child processes/threads to exit.
 
 static void
-wait_for_children (void)
+wait_for_children ()
 {
   if (Options::instance ()->spawn_threads ())
     {

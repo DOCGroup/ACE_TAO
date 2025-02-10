@@ -60,10 +60,10 @@ class TAO_Export TAO_Acceptor_Registry
 {
 public:
   ///  Default constructor.
-  TAO_Acceptor_Registry (void);
+  TAO_Acceptor_Registry () = default;
 
   ///  Default destructor.
-  ~TAO_Acceptor_Registry (void);
+  ~TAO_Acceptor_Registry ();
 
   /// Initialize all registered acceptors.  Return -1 on error.
   int open (TAO_ORB_Core *orb_core,
@@ -72,10 +72,10 @@ public:
             bool ignore_address);
 
   /// Close all open acceptors.
-  int close_all (void);
+  int close_all ();
 
   /// Returns the total number of endpoints in all of its acceptors.
-  size_t endpoint_count (void);
+  size_t endpoint_count ();
 
   /// Check if there is at least one profile in @a mprofile that
   /// corresponds to a collocated object.
@@ -85,12 +85,12 @@ public:
   TAO_Acceptor *get_acceptor (CORBA::ULong tag);
 
   // = Iterator.
-  TAO_AcceptorSetIterator begin (void);
-  TAO_AcceptorSetIterator end (void);
+  TAO_AcceptorSetIterator begin ();
+  TAO_AcceptorSetIterator end ();
 
 private:
-  ACE_UNIMPLEMENTED_FUNC (TAO_Acceptor_Registry (const TAO_Acceptor_Registry &))
-  ACE_UNIMPLEMENTED_FUNC (TAO_Acceptor_Registry &operator= (const TAO_Acceptor_Registry &))
+  TAO_Acceptor_Registry (const TAO_Acceptor_Registry &) = delete;
+  TAO_Acceptor_Registry &operator= (const TAO_Acceptor_Registry &) = delete;
 
   /// Create a default acceptor for all loaded protocols.
   int open_default (TAO_ORB_Core *orb_core,
@@ -135,10 +135,10 @@ private:
 
 private:
   /// List of acceptors that are currently open.
-  TAO_Acceptor **acceptors_;
+  TAO_Acceptor **acceptors_ {};
 
   /// Number of acceptors that are currently open.
-  size_t size_;
+  size_t size_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

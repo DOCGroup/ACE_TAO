@@ -12,7 +12,7 @@ ACE_CString IdentifierHelper::tmp_retval_;
 const char *
 IdentifierHelper::type_name (be_type *t, be_visitor *visitor)
 {
-  AST_PredefinedType *pdt = 0;
+  AST_PredefinedType *pdt = nullptr;
 
   switch (t->node_type ())
     {
@@ -22,7 +22,7 @@ IdentifierHelper::type_name (be_type *t, be_visitor *visitor)
         (void) t->accept (visitor);
         return "";
       case AST_Decl::NT_pre_defined:
-        pdt = AST_PredefinedType::narrow_from_decl (t);
+        pdt = dynamic_cast<AST_PredefinedType*> (t);
 
         switch (pdt->pt ())
           {
@@ -78,7 +78,7 @@ IdentifierHelper::type_name (be_type *t, be_visitor *visitor)
 Identifier *
 IdentifierHelper::original_local_name (Identifier * local_name)
 {
-  Identifier * id = 0;
+  Identifier * id = nullptr;
   const char *lname = local_name->get_string ();
 
   // Remove _cxx_ if:
@@ -95,16 +95,16 @@ IdentifierHelper::original_local_name (Identifier * local_name)
       const TAO_IDL_CPP_Keyword_Entry *entry =
         cpp_key_tbl.lookup (lname + 5, len);
 
-      if (entry != 0)
+      if (entry != nullptr)
         {
           // Remove _cxx_ and assign to the Identifier variable.
           ACE_NEW_RETURN (id,
                           Identifier (lname + 5),
-                          0);
+                          nullptr);
         }
     }
 
-  if (id == 0)
+  if (id == nullptr)
     {
       id = local_name->copy ();
     }
@@ -118,7 +118,7 @@ IdentifierHelper::orig_sn (UTL_IdList * sn, bool for_idl)
   ACE_CString retval;
   bool first = true;
   bool second = false;
-  Identifier *id = 0;
+  Identifier *id = nullptr;
 
   for (UTL_IdListActiveIterator i (sn); !i.is_done ();)
     {
@@ -159,7 +159,7 @@ IdentifierHelper::orig_sn (UTL_IdList * sn, bool for_idl)
 
       id->destroy ();
       delete id;
-      id = 0;
+      id = nullptr;
     }
 
   return retval;

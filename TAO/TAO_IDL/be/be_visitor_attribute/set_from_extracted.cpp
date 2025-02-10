@@ -19,7 +19,7 @@ be_visitor_attribute_set_from_extracted::be_visitor_attribute_set_from_extracted
 }
 
 be_visitor_attribute_set_from_extracted::~be_visitor_attribute_set_from_extracted (
-  void)
+  )
 {
 }
 
@@ -137,7 +137,7 @@ be_visitor_attribute_set_from_extracted::visit_typedef (
   be_typedef *node)
 {
   be_type *pbt =
-    be_type::narrow_from_decl (node->primitive_base_type ());
+    dynamic_cast<be_type*> (node->primitive_base_type ());
 
   return (pbt->accept (this));
 }

@@ -1,6 +1,6 @@
 #include "Payload_Receiver.h"
 
-Payload_Receiver::Payload_Receiver (void)
+Payload_Receiver::Payload_Receiver ()
   : message_count_ (0)
   , maybe_lost_count_ (0)
 {
@@ -25,7 +25,7 @@ Payload_Receiver::more_data (
 }
 
 void
-Payload_Receiver::ping (void)
+Payload_Receiver::ping ()
 {
 }
 

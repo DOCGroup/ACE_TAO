@@ -32,7 +32,6 @@
  */
 //=============================================================================
 
-
 #include "../test_config.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
@@ -42,8 +41,6 @@
 #include "ace/TP_Reactor.h"
 #include "ace/SSL/SSL_SOCK_Connector.h"
 #include "ace/SSL/SSL_SOCK_Acceptor.h"
-
-
 
 #if defined (ACE_HAS_THREADS)
 
@@ -104,7 +101,7 @@ parse_arg (int argc, ACE_TCHAR *argv[])
           break;
         default:
           ACE_ERROR ((LM_ERROR,
-                      "Usage: Thread_Pool_Reactor_Test [-r <hostname:port#>]"
+                      "Usage: Thread_Pool_Reactor_SSL_Test [-r <hostname:port#>]"
                       "\t[-s <server thr#>] [-c <client thr#>] [-d <delay>]"
                       "\t[-i <client conn attempt#>]"
                       "[-n <client request# per conn>]\n"));

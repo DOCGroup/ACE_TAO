@@ -20,18 +20,17 @@
 class HTTPU_Export HTTP_Response : public HTTP_Base
 {
 public:
-  HTTP_Response (void);
-  ~HTTP_Response (void);
+  HTTP_Response ();
+  ~HTTP_Response ();
 
-  Parse_HTTP_Response *response_line (void);
+  Parse_HTTP_Response *response_line ();
   // Returns the parsed response line.
 
-  void dump (void);
+  void dump ();
 
 protected:
-
-  virtual void parse_line (void);
-  virtual int espouse_line (void);
+  virtual void parse_line ();
+  virtual int espouse_line ();
 
 private:
   Parse_HTTP_Response response_;

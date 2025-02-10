@@ -11,7 +11,7 @@ ServantLocator::ServantLocator (CORBA::ORB_ptr orb)
 {
 }
 
-ServantLocator::~ServantLocator (void)
+ServantLocator::~ServantLocator ()
 {
 }
 

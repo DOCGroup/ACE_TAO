@@ -1,5 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
-
 //=============================================================================
 /**
  *  @file    OrbTask.cpp
@@ -12,16 +10,10 @@
 
 namespace { enum { MAX_ORB_TASK_WORKER_THREADS = 20 }; }
 
-
 OrbTask::OrbTask(CORBA::ORB_ptr orb, unsigned num_threads)
   : num_threads_(num_threads)
 {
   this->orb_ = CORBA::ORB::_duplicate(orb);
-}
-
-
-OrbTask::~OrbTask()
-{
 }
 
 

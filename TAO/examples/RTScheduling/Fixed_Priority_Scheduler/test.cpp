@@ -23,7 +23,7 @@ public:
 #endif
   }
 
-  ~TestShutdown (void)
+  ~TestShutdown ()
   {
 #if !defined(ACE_LACKS_UNIX_SIGNALS)
     this->shutdown_.remove_handler (SIGTERM);
@@ -46,13 +46,13 @@ private:
   ACE_Sig_Handler shutdown_;
 };
 
-DT_Test::DT_Test (void)
+DT_Test::DT_Test ()
 {
   base_t = ACE_OS::gethrtime ();
 }
 
 void
-DT_Test::check_supported_priorities (void)
+DT_Test::check_supported_priorities ()
 {
   // Check that we have sufficient priority range to run this
   // test, i.e., more than 1 priority level.
@@ -200,21 +200,20 @@ DT_Test::dt_creator (FP_DT_Creator* dt_creator)
 }
 
 FP_DT_Creator*
-DT_Test::dt_creator (void)
+DT_Test::dt_creator ()
 {
   return this->dt_creator_;
 }
 
 Fixed_Priority_Scheduler*
-DT_Test::scheduler (void)
+DT_Test::scheduler ()
 {
   return this->scheduler_.in ();
 }
 
 int
-DT_Test::activate_task (void)
+DT_Test::activate_task ()
 {
-
   ACE_DEBUG ((LM_DEBUG,
               "Test Activate Task\n"));
 
@@ -239,7 +238,7 @@ DT_Test::activate_task (void)
 }
 
 int
-DT_Test::svc (void)
+DT_Test::svc ()
 {
   try
     {
@@ -262,7 +261,7 @@ DT_Test::svc (void)
 }
 
 CORBA::ORB_ptr
-DT_Test::orb (void)
+DT_Test::orb ()
 {
   return this->orb_.in ();
 }

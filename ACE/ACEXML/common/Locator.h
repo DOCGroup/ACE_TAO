@@ -42,28 +42,27 @@
 class ACEXML_Export ACEXML_Locator
 {
 public:
-
-  virtual ~ACEXML_Locator (void);
+  virtual ~ACEXML_Locator ();
 
   /*
    * Return the column number where the current document event ends.
    */
-  virtual int getColumnNumber (void) const = 0;
+  virtual int getColumnNumber () const = 0;
 
   /*
    * Return the line number where the current document event ends.
    */
-  virtual int getLineNumber (void) const = 0;
+  virtual int getLineNumber () const = 0;
 
   /*
    * Return the public identifier for the current document event.
    */
-  virtual const ACEXML_Char *getPublicId (void) const = 0;
+  virtual const ACEXML_Char *getPublicId () const = 0;
 
   /*
    * Return the system identifier for the current document event.
    */
-  virtual const ACEXML_Char *getSystemId (void) const = 0;
+  virtual const ACEXML_Char *getSystemId () const = 0;
 };
 
 

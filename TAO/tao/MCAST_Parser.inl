@@ -6,7 +6,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
-TAO_MCAST_Parser::TAO_MCAST_Parser (void)
+TAO_MCAST_Parser::TAO_MCAST_Parser ()
   : mcast_address_ ()
   , mcast_port_ (TAO_DEFAULT_NAME_SERVER_REQUEST_PORT)
   , mcast_nic_ ()

@@ -47,13 +47,13 @@ public:
 
   /// Send a <GET> command to fetch the contents in the URI from the
   /// server.
-  virtual ssize_t send_request (void);
+  virtual ssize_t send_request ();
 
   /// Returns the URL that we represent.
-  virtual const ACE_URL_Addr &url_addr (void) const;
+  virtual const ACE_URL_Addr &url_addr () const;
 
   /// Commit suicide
-  int destroy (void);
+  int destroy ();
 private:
   /// Address of the URL we're connected to.
   ACE_URL_Addr url_addr_;

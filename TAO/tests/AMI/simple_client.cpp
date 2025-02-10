@@ -61,10 +61,10 @@ class Handler : public POA_A::AMI_AMI_TestHandler
 {
 public:
   /// Constructor.
-  Handler (void) {};
+  Handler () = default;
 
   /// Destructor.
-    ~Handler (void) {};
+  ~Handler () = default;
 
   void foo (CORBA::Long ami_return_val,
             CORBA::Long out_l)
@@ -94,7 +94,6 @@ public:
 
   void foo_excep (::Messaging::ExceptionHolder * excep_holder)
     {
-
       ACE_DEBUG ((LM_DEBUG,
                   "Callback method <foo_excep> called:\n"
                   "Testing proper exception handling ...\n"));
@@ -143,7 +142,7 @@ public:
                   "Callback method <get_yadda_excep> called:\n"));
     };
 
-  void set_yadda (void)
+  void set_yadda ()
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Callback method <set_yadda> called:\n"));

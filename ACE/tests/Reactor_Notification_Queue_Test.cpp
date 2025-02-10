@@ -28,10 +28,10 @@ public:
                 char const *test_name);
 
   /// Run the test
-  void run(void);
+  void run();
 
   /// Receive the notifications.
-  virtual int handle_exception(ACE_HANDLE);
+  int handle_exception(ACE_HANDLE) override;
 
 private:
   /**
@@ -40,12 +40,12 @@ private:
    * Each iteration of the test consists of sending multiple
    * notifications simultaneously.
    */
-  void send_notifications (void);
+  void send_notifications ();
 
   /**
    * @brief Return true if the test is finished.
    */
-  bool done (void) const;
+  bool done () const;
 
 private:
   /**
@@ -142,7 +142,7 @@ Event_Handler::Event_Handler (
 }
 
 void
-Event_Handler::run (void)
+Event_Handler::run ()
 {
   send_notifications ();
 
@@ -180,7 +180,6 @@ Event_Handler::handle_exception (ACE_HANDLE)
   {
     if(notifications_curr_ >= max_notifications_)
     {
-
       return 0;
     }
     send_notifications();
@@ -189,7 +188,7 @@ Event_Handler::handle_exception (ACE_HANDLE)
 }
 
 void
-Event_Handler::send_notifications (void)
+Event_Handler::send_notifications ()
 {
   for (int i = 0; i != notifications_curr_; ++i)
   {
@@ -210,7 +209,7 @@ Event_Handler::send_notifications (void)
 }
 
 bool
-Event_Handler::done (void) const
+Event_Handler::done () const
 {
   return (notifications_curr_ >= max_notifications_)
     && (notifications_sent_ == notifications_recv_);

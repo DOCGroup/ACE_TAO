@@ -67,7 +67,7 @@ main(int argc, char* argv[])
 
       printf("event loop finished\n");
 
-      root_poa->destroy (1, 1);
+      root_poa->destroy (true, true);
 
       orb->destroy ();
     }

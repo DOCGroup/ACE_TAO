@@ -8,7 +8,7 @@ TAO_Transport_Mux_Strategy::TAO_Transport_Mux_Strategy (
 {
 }
 
-TAO_Transport_Mux_Strategy::~TAO_Transport_Mux_Strategy (void)
+TAO_Transport_Mux_Strategy::~TAO_Transport_Mux_Strategy ()
 {
 }
 

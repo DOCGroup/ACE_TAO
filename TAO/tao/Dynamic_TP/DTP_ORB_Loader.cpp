@@ -14,12 +14,12 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_DTP_ORB_Loader::TAO_DTP_ORB_Loader (void)
+TAO_DTP_ORB_Loader::TAO_DTP_ORB_Loader ()
   : initialized_ (false)
 {
 }
 
-TAO_DTP_ORB_Loader::~TAO_DTP_ORB_Loader (void)
+TAO_DTP_ORB_Loader::~TAO_DTP_ORB_Loader ()
 {
 }
 

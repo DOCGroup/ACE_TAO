@@ -1,6 +1,6 @@
 #include "Activator_Info.h"
 
-Activator_Info::Activator_Info (void)
+Activator_Info::Activator_Info ()
   : name ("")
   , token (0)
   , ior ("")
@@ -27,7 +27,7 @@ Activator_Info::Activator_Info (const ACE_CString& aname,
 }
 
 void
-Activator_Info::clear (void)
+Activator_Info::clear ()
 {
   this->name = "";
   this->token = 0;
@@ -36,7 +36,7 @@ Activator_Info::clear (void)
 }
 
 void
-Activator_Info::reset_runtime (void)
+Activator_Info::reset_runtime ()
 {
   this->ior = "";
   this->activator = ImplementationRepository::Activator::_nil ();

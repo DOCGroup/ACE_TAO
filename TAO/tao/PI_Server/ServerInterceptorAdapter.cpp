@@ -15,7 +15,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO::ServerRequestInterceptor_Adapter_Impl::ServerRequestInterceptor_Adapter_Impl (void)
+TAO::ServerRequestInterceptor_Adapter_Impl::ServerRequestInterceptor_Adapter_Impl ()
 {
 }
 
@@ -229,8 +229,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::receive_request (
   size_t nargs,
   TAO::Portable_Server::Servant_Upcall *servant_upcall,
   CORBA::TypeCode_ptr const * exceptions,
-  CORBA::ULong nexceptions
-  )
+  CORBA::ULong nexceptions)
 {
   // This method implements an "intermediate" server side interception
   // point.  Interceptors are invoked in the same order they were
@@ -258,7 +257,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::receive_request (
 
   try
     {
-      bool is_remote_request = !server_request.collocated ();
+      bool const is_remote_request = !server_request.collocated ();
 
       for (size_t i = 0; i < server_request.interceptor_count (); ++i)
         {
@@ -507,13 +506,13 @@ TAO::ServerRequestInterceptor_Adapter_Impl::add_interceptor (
 }
 
 void
-TAO::ServerRequestInterceptor_Adapter_Impl::destroy_interceptors (void)
+TAO::ServerRequestInterceptor_Adapter_Impl::destroy_interceptors ()
 {
   this->interceptor_list_.destroy_interceptors ();
 }
 
 TAO::PICurrent_Impl *
-TAO::ServerRequestInterceptor_Adapter_Impl::allocate_pi_current (void)
+TAO::ServerRequestInterceptor_Adapter_Impl::allocate_pi_current ()
 {
   TAO::PICurrent_Impl *pi = 0;
   ACE_NEW_RETURN (pi,

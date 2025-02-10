@@ -14,13 +14,13 @@ test_i::test_i (CORBA::ORB_ptr orb,
 }
 
 CORBA::Long
-test_i::doit (void)
+test_i::doit ()
 {
   return this->value_++;
 }
 
 void
-test_i::forward (void)
+test_i::forward ()
 {
   this->activator_.forward_requests ();
 
@@ -32,13 +32,13 @@ test_i::forward (void)
 
 
 void
-test_i::shutdown (void)
+test_i::shutdown ()
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }
 
 PortableServer::POA_ptr
-test_i::_default_POA (void)
+test_i::_default_POA ()
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }

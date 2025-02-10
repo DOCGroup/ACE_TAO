@@ -33,7 +33,7 @@ namespace CORBA
 /**
  * @note We tried with CORBA::default_environment() and others.
  */
-TAO_Export CORBA::Environment& TAO_default_environment (void);
+TAO_Export CORBA::Environment& TAO_default_environment ();
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

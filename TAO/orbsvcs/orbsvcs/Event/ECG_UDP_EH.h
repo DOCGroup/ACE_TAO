@@ -43,7 +43,6 @@ class TAO_RTEvent_Serv_Export TAO_ECG_UDP_EH :
 , public TAO_ECG_Handler_Shutdown
 {
 public:
-
   /// Initialization and termination methods.
   //@{
   /// Constructor.
@@ -55,7 +54,7 @@ public:
   TAO_ECG_UDP_EH (TAO_ECG_Dgram_Handler *recv);
 
   /// Destructor.
-  virtual ~TAO_ECG_UDP_EH (void);
+  virtual ~TAO_ECG_UDP_EH ();
 
   /// Open the datagram and register itself with this->reactor().
   /// To insure proper resource clean up, if open () is successful,
@@ -66,7 +65,7 @@ public:
 
   /// TAO_ECG_Handler_Shutdown method.
   /// Unsubscribe from the reactor and close the datagram.
-  virtual int shutdown (void);
+  virtual int shutdown ();
   //@}
 
   /// Main method - reactor callback.  Notify <receiver_> that
@@ -78,10 +77,9 @@ public:
    * type safety", allowing the user to setup options and gain access
    * to low-level features.
    */
-  ACE_SOCK_Dgram &dgram (void);
+  ACE_SOCK_Dgram &dgram ();
 
 private:
-
   /// The datagram used to receive the data.
   ACE_SOCK_Dgram dgram_;
 

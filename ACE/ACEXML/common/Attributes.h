@@ -55,9 +55,8 @@
 class ACEXML_Export ACEXML_Attributes
 {
 public:
-
   /// Destructor.
-  virtual ~ACEXML_Attributes (void);
+  virtual ~ACEXML_Attributes ();
 
   /**
    * Look up the index of an attribute by XML 1.0 qualified name.
@@ -73,7 +72,7 @@ public:
   /**
    * Return the number of attributes in the list.
    */
-  virtual size_t getLength (void) = 0;
+  virtual size_t getLength () = 0;
 
   /**
    * Look up an attribute's local name by index.

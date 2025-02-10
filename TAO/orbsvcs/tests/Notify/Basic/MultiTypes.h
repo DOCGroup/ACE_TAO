@@ -35,9 +35,7 @@ class MultiTypes_PushConsumer : public TAO_Notify_Tests_PushConsumer
 public:
   MultiTypes_PushConsumer (MultiTypes* client);
 
-  void push (
-             const CORBA::Any & data
-             );
+  void push (const CORBA::Any & data);
 
 protected:
   MultiTypes* client_;
@@ -51,8 +49,7 @@ public:
   MultiTypes_StructuredPushConsumer (MultiTypes* client);
 
   // = StructuredPushSupplier methods
-  virtual void push_structured_event (const CosNotification::StructuredEvent & notification
-                                      );
+  virtual void push_structured_event (const CosNotification::StructuredEvent & notification);
 
 protected:
   MultiTypes* client_;
@@ -65,8 +62,7 @@ public:
 
   // = SequencePushConsumer methods
   virtual void push_structured_events (
-        const CosNotification::EventBatch & notifications
-      );
+        const CosNotification::EventBatch & notifications);
 
 protected:
   MultiTypes* client_;
@@ -79,7 +75,7 @@ class MultiTypes : public Notify_Test_Client
 {
 public:
   // Initialization and termination code.
-  MultiTypes (void);
+  MultiTypes ();
   virtual ~MultiTypes ();
 
   void on_received_event (MultiTypes_PushConsumer* consumer);
@@ -94,20 +90,20 @@ public:
             ACE_TCHAR *argv []);
 
   /// Run the test.
-  void run_test (void);
+  void run_test ();
 
   /// End the test.
-  void end_test (void);
+  void end_test ();
 
   /// Check if we got the expected results.
-  int check_results (void);
+  int check_results ();
 
 protected:
   // Wait to receive events.
   void wait_for_all_consumers (int expected_count_per_consumer);
 
   /// Create EC.
-  void create_EC (void);
+  void create_EC ();
 
   /// The one channel that we create using the factory.
   CosNotifyChannelAdmin::EventChannel_var ec_;

@@ -39,7 +39,7 @@ class TAO_Notify_Serv_Export TAO_Notify_Constraint_Visitor
 {
 public:
   /// Constructor.
-  TAO_Notify_Constraint_Visitor (void);
+  TAO_Notify_Constraint_Visitor ();
 
   /// Put the event data into our hash map.
   int bind_structured_event (const CosNotification::StructuredEvent &s_event);

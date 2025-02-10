@@ -22,7 +22,6 @@
 
 namespace Kokyu
 {
-
   /**
    * @class Sched_Ready_Queue
    *
@@ -68,7 +67,6 @@ namespace Kokyu
     DSRT_Scheduler_Traits::QoSDescriptor_t DSRT_QoSDescriptor_t;
 
   public:
-
     /**
      * Given a guid, find an item in the priority queue.
      *
@@ -130,7 +128,6 @@ namespace Kokyu
     void dump();
 
   private:
-
     /**
      * @class Guid_Hash
      *
@@ -211,17 +208,7 @@ namespace Kokyu
   };
 }
 
-#if !defined (__ACE_INLINE__)
-//#include "DSRT_Sched_Queue_T.i"
-#endif /* __ACE_INLINE__ */
-
-#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
 #include "DSRT_Sched_Queue_T.cpp"
-#endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
-
-#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#pragma implementation ("DSRT_Sched_Queue_T.cpp")
-#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #include /**/ "ace/post.h"
 #endif /* DSRT_SCHED_QUEUE_T_H */

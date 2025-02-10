@@ -41,10 +41,10 @@ public:
     TAO_ConsumesDef_i (TAO_Repository_i *repo);
 
   /// Destructor
-  virtual ~TAO_ConsumesDef_i (void);
+  virtual ~TAO_ConsumesDef_i ();
 
   /// Return our definition kind.
-  virtual CORBA::DefinitionKind def_kind (void);
+  virtual CORBA::DefinitionKind def_kind ();
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

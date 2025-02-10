@@ -25,7 +25,6 @@
 #include "ace/OS_NS_unistd.h"
 
 
-
 #if defined (ACE_HAS_STREAM_PIPES) || defined (ACE_HAS_WIN32_NAMED_PIPES)
 # define TEST_HAS_STREAM_PIPES
 #endif

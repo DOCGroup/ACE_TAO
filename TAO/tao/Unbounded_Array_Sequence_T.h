@@ -15,7 +15,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-
 template<typename T_array, typename T_slice, typename T_tag>
 class unbounded_array_sequence
 {
@@ -78,7 +77,7 @@ public:
   inline value_type * get_buffer(CORBA::Boolean orphan = false) {
     return impl_.get_buffer(orphan);
   }
-  inline void swap(unbounded_array_sequence & rhs) throw() {
+  inline void swap(unbounded_array_sequence & rhs) noexcept {
     impl_.swap(rhs.impl_);
   }
   static value_type * allocbuf(CORBA::ULong maximum) {
@@ -96,33 +95,38 @@ private:
 namespace TAO
 {
   template <typename stream, typename T_array, typename T_slice, typename T_tag>
-  bool demarshal_sequence(stream & strm, TAO::unbounded_array_sequence<T_array, T_slice, T_tag> & target) {
+  bool demarshal_sequence (stream &strm, TAO::unbounded_array_sequence<T_array, T_slice, T_tag> &target) {
     typedef TAO::unbounded_array_sequence<T_array, T_slice, T_tag> sequence;
     typedef TAO_Array_Forany_T <T_array, T_slice, T_tag> forany;
     typedef TAO::Array_Traits<forany> array_traits;
 
     ::CORBA::ULong new_length = 0;
-    if (!(strm >> new_length)) {
-      return false;
-    }
-    if (new_length > strm.length()) {
-      return false;
-    }
-    sequence tmp(new_length);
-    tmp.length(new_length);
-    typename sequence::value_type * buffer = tmp.get_buffer();
-    for(CORBA::ULong i = 0; i < new_length; ++i) {
-      forany tmp (array_traits::alloc ());
-      bool const _tao_marshal_flag = (strm >> tmp);
-      if (_tao_marshal_flag) {
-        array_traits::copy (buffer[i], tmp.in ());
-      }
-      array_traits::free (tmp.inout ());
-      if (!_tao_marshal_flag) {
+    if (!(strm >> new_length))
+      {
         return false;
       }
-    }
-    tmp.swap(target);
+    if (new_length > strm.length ())
+      {
+        return false;
+      }
+    sequence tmp (new_length);
+    tmp.length (new_length);
+    typename sequence::value_type *const buffer = tmp.get_buffer ();
+    for (CORBA::ULong i = 0; i < new_length; ++i)
+      {
+        forany wrapper (array_traits::alloc ());
+        bool const _tao_marshal_flag = strm >> wrapper;
+        if (_tao_marshal_flag)
+          {
+            array_traits::copy (buffer[i], wrapper.in ());
+          }
+        array_traits::free (wrapper.inout ());
+        if (!_tao_marshal_flag)
+          {
+            return false;
+          }
+      }
+    tmp.swap (target);
     return true;
   }
 

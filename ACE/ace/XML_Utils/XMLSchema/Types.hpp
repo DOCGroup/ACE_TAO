@@ -59,11 +59,7 @@ namespace XMLSchema
   public:
     //@@ VC6 does not inject XSCRT::Type into the scope so I have
     //   to qualify it all the time.
-    //
-
-    string ()
-    {
-    }
+    string () = default;
 
     string (XSCRT::XML::Element<C> const& e)
         : Base__ (e.value ())
@@ -101,9 +97,7 @@ namespace XMLSchema
     typedef typename string<C>::Base__ Base__;
 
   public:
-    normalizedString ()
-    {
-    }
+    normalizedString () = default;
 
     normalizedString (XSCRT::XML::Element<C> const& e)
         : string<C> (e)
@@ -141,9 +135,7 @@ namespace XMLSchema
     typedef typename normalizedString<C>::Base__ Base__;
 
   public:
-    token ()
-    {
-    }
+    token () = default;
 
     token (XSCRT::XML::Element<C> const& e)
         : normalizedString<C> (e)
@@ -181,9 +173,7 @@ namespace XMLSchema
     typedef typename token<C>::Base__ Base__;
 
   public:
-    NMTOKEN ()
-    {
-    }
+    NMTOKEN () = default;
 
     NMTOKEN (XSCRT::XML::Element<C> const& e)
         : token<C> (e)
@@ -220,9 +210,7 @@ namespace XMLSchema
     typedef typename token<C>::Base__ Base__;
 
   public:
-    Name()
-    {
-    }
+    Name() = default;
 
     Name(XSCRT::XML::Element<C> const& e)
         : token<C> (e)
@@ -260,9 +248,7 @@ namespace XMLSchema
     typedef typename Name<C>::Base__ Base__;
 
   public:
-    NCName()
-    {
-    }
+    NCName() = default;
 
     NCName(XSCRT::XML::Element<C> const& e)
         : Name<C> (e)
@@ -299,9 +285,7 @@ namespace XMLSchema
     typedef typename Name<C>::Base__ Base__;
 
   public:
-    QName()
-    {
-    }
+    QName() = default;
 
     QName(XSCRT::XML::Element<C> const& e)
         : Name<C> (e)
@@ -339,9 +323,7 @@ namespace XMLSchema
     {
     }
 
-    virtual ~IdentityProvider (void)
-    {
-    }
+    virtual ~IdentityProvider () = default;
 
     virtual bool
     before (XSCRT::IdentityProvider const& y) const
@@ -474,11 +456,9 @@ namespace XMLSchema
 
   struct IDREF_Base : public XSCRT::Type
   {
-    virtual XSCRT::Type const*
-    get () const = 0;
+    virtual XSCRT::Type const* get () const = 0;
 
-    virtual XSCRT::Type*
-    get () = 0;
+    virtual XSCRT::Type* get () = 0;
   };
 
   template <typename C>

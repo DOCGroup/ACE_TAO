@@ -45,12 +45,11 @@ class TAO_PrivateConnectionPolicy;
 class TAO_RTCORBA_Export TAO_RT_Stub : public TAO_Stub
 {
 public:
-
   TAO_RT_Stub (const char *repository_id,
                const TAO_MProfile &profiles,
                TAO_ORB_Core *orb_core);
 
-  virtual ~TAO_RT_Stub (void);
+  virtual ~TAO_RT_Stub ();
 
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
@@ -70,9 +69,8 @@ public:
 #endif /* TAO_HAS_CORBA_MESSAGING */
 
 private:
-
   /// Helper method used to parse the policies.
-  void parse_policies (void);
+  void parse_policies ();
 
   void exposed_priority_model (CORBA::Policy_ptr policy);
 
@@ -83,17 +81,17 @@ private:
   /// Returns the CORBA::Policy (which will be narrowed to be
   /// used as RTCORBA::PriorityModelPolicy) exported
   /// in object's IOR.
-  CORBA::Policy_ptr exposed_priority_model (void);
+  CORBA::Policy_ptr exposed_priority_model ();
 
   /// Returns the CORBA::Policy (which will be narrowed and used
   /// as RTCORBA::PriorityBandedConnectionPolicy) exported
   /// in object's IOR.
-  CORBA::Policy_ptr exposed_priority_banded_connection (void);
+  CORBA::Policy_ptr exposed_priority_banded_connection ();
 
   /// Returns the CORBA::Policy (which will be narrowed and used
   /// as RTCORBA::ClientProtocolPolicy) exported
   /// in object's IOR.
-  CORBA::Policy_ptr exposed_client_protocol (void);
+  CORBA::Policy_ptr exposed_client_protocol ();
 
   // = Methods for obtaining effective policies.
   //
@@ -102,8 +100,8 @@ private:
   //   override for a given policy type, and then reconciling it with
   //   the policy value exported in the Object's IOR.
 
-  CORBA::Policy_ptr effective_priority_banded_connection (void);
-  CORBA::Policy_ptr effective_client_protocol (void);
+  CORBA::Policy_ptr effective_priority_banded_connection ();
+  CORBA::Policy_ptr effective_client_protocol ();
 
   // The following attribute are used to cache
   // the different kind of policies and avoid to
@@ -119,10 +117,10 @@ private:
   bool are_policies_parsed_;
 
 private:
-  // = Disallow copying and assignment.
-  TAO_RT_Stub (const TAO_RT_Stub &);
-  TAO_RT_Stub &operator = (const TAO_RT_Stub &);
-
+  TAO_RT_Stub (const TAO_RT_Stub &) = delete;
+  TAO_RT_Stub (TAO_RT_Stub &&) = delete;
+  TAO_RT_Stub &operator = (const TAO_RT_Stub &) = delete;
+  TAO_RT_Stub &operator = (TAO_RT_Stub &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

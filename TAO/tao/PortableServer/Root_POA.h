@@ -173,25 +173,26 @@ public:
   PortableServer::RequestProcessingPolicy_ptr
   create_request_processing_policy (
       PortableServer::RequestProcessingPolicyValue value);
-
 #endif /* TAO_HAS_MINIMUM_POA == 0 && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO) */
 
-  char * the_name (void);
+  char * the_name ();
 
-  PortableServer::POA_ptr the_parent (void);
-
-  PortableServer::POAList *the_children (void);
-
-  PortableServer::POAManager_ptr the_POAManager (void);
+  PortableServer::POA_ptr the_parent ();
 
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
-  PortableServer::POAManagerFactory_ptr the_POAManagerFactory (void);
+  PortableServer::POAList *the_children ();
+#endif /* TAO_HAS_MINIMUM_POA == 0 && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO) */
+
+  PortableServer::POAManager_ptr the_POAManager ();
+
+#if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
+  PortableServer::POAManagerFactory_ptr the_POAManagerFactory ();
 #endif
 
   /// This method returns the adapter_name as a sequence of strings of
   /// length one or more or just a fixed name depending on the Object
   /// Adapter. Added wrt to ORT Spec.
-  PortableInterceptor::AdapterName *adapter_name (void);
+  PortableInterceptor::AdapterName *adapter_name ();
 
   /// Store the given TaggedComponent for eventual insertion into all
   /// object reference profiles.
@@ -204,15 +205,15 @@ public:
     IOP::ProfileId profile_id);
 
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
-  PortableServer::AdapterActivator_ptr the_activator (void);
+  PortableServer::AdapterActivator_ptr the_activator ();
 
   void the_activator (PortableServer::AdapterActivator_ptr adapter_activator);
 
-  PortableServer::ServantManager_ptr get_servant_manager (void);
+  PortableServer::ServantManager_ptr get_servant_manager ();
 
   void set_servant_manager (PortableServer::ServantManager_ptr imgr);
 
-  PortableServer::Servant get_servant (void);
+  PortableServer::Servant get_servant ();
 
   void set_servant (PortableServer::Servant servant);
 #endif /* TAO_HAS_MINIMUM_POA == 0 !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO) */
@@ -246,10 +247,10 @@ public:
 
   CORBA::Object_ptr id_to_reference (const PortableServer::ObjectId &oid);
 
-  CORBA::OctetSeq *id (void);
+  CORBA::OctetSeq *id ();
 
   /// Accessor for POA policies.
-  TAO_POA_Policy_Set &policies (void);
+  TAO_POA_Policy_Set &policies ();
 
   /// Get the set policy of the given type.
   CORBA::Policy_ptr get_policy (CORBA::PolicyType policy);
@@ -268,47 +269,44 @@ public:
                 TAO_ORB_Core &orb_core,
                 TAO_Object_Adapter *object_adapter);
 
-  virtual ~TAO_Root_POA (void);
+  virtual ~TAO_Root_POA ();
 
-  static char name_separator (void);
+  static char name_separator ();
 
-  static CORBA::ULong name_separator_length (void);
+  static CORBA::ULong name_separator_length ();
 
-  enum
-  {
-    TAO_OBJECTKEY_PREFIX_SIZE = 4
-  };
+  static constexpr size_t TAO_OBJECTKEY_PREFIX_SIZE = 4;
 
   static CORBA::Octet const objectkey_prefix[TAO_OBJECTKEY_PREFIX_SIZE];
 
-  const TAO_Object_Adapter::poa_name &folded_name (void) const;
+  const TAO_Object_Adapter::poa_name &folded_name () const;
 
-  const TAO_Object_Adapter::poa_name &system_name (void) const;
+  const TAO_Object_Adapter::poa_name &system_name () const;
 
   static void check_for_valid_wait_for_completions (
       const TAO_ORB_Core &orb_core,
       CORBA::Boolean wait_for_completion);
 
   /// ORB Core for POA.
-  TAO_ORB_Core &orb_core (void) const;
+  TAO_ORB_Core &orb_core () const;
 
   /// obtain a reference to the cached_profiles
-  TAO::Portable_Server::Cached_Policies& cached_policies (void);
+  TAO::Portable_Server::Cached_Policies& cached_policies ();
 
   /// obtain a handle to the network priority hooks
-  TAO_Network_Priority_Hook* network_priority_hook (void);
+  TAO_Network_Priority_Hook* network_priority_hook ();
 
-  TAO::Portable_Server::Cached_Policies::PriorityModel priority_model (void) const;
+  TAO::Portable_Server::Cached_Policies::PriorityModel priority_model () const;
 
-  CORBA::Boolean cleanup_in_progress (void);
+  CORBA::Boolean cleanup_in_progress ();
 
   /// Calls protected static method used when POACurrent is not appropriate.
   static int parse_ir_object_key (const TAO::ObjectKey &object_key,
                                   PortableServer::ObjectId &user_id);
 
-  TAO_Object_Adapter &object_adapter (void);
+  TAO_Object_Adapter &object_adapter ();
 
-  ACE_Lock &lock (void);
+  ACE_Lock &lock ();
 
   /// Create the correct stub, properly initialized with the
   /// attributes and policies attached to the current POA.
@@ -321,33 +319,33 @@ public:
    * The POA can be in one of HOLDING, ACTIVE, DISCARDING, INACTIVE
    * and NON_EXISTENT states.
    */
-  PortableInterceptor::AdapterState get_adapter_state (void);
+  PortableInterceptor::AdapterState get_adapter_state ();
 
-  virtual void *thread_pool (void) const;
+  virtual void *thread_pool () const;
 
-  virtual CORBA::Policy *server_protocol (void);
+  virtual CORBA::Policy *server_protocol ();
 
-  CORBA::ULong outstanding_requests (void) const;
+  CORBA::ULong outstanding_requests () const;
 
-  const ACE_CString &name (void) const;
+  const ACE_CString &name () const;
 
-  CORBA::Boolean waiting_destruction (void) const;
+  CORBA::Boolean waiting_destruction () const;
 
   static void ort_adapter_factory_name (const char *name);
 
-  static const char *ort_adapter_factory_name (void);
+  static const char *ort_adapter_factory_name ();
 
   /// Sets the value of TAO_POA_Static_Resources::imr_client_adapter_name_.
   static void imr_client_adapter_name (const char *name);
 
   /// Gets the value of TAO_POA_Static_Resources::imr_client_adapter_name_.
-  static const char *imr_client_adapter_name (void);
+  static const char *imr_client_adapter_name ();
 
-  CORBA::Object_ptr invoke_key_to_object (void);
+  CORBA::Object_ptr invoke_key_to_object ();
 
-  CORBA::Boolean system_id (void);
+  CORBA::Boolean system_id ();
 
-  CORBA::ULong waiting_servant_deactivation (void) const;
+  CORBA::ULong waiting_servant_deactivation () const;
 
   /// Return the POA Manager related to this POA
   TAO_POA_Manager &tao_poa_manager ();
@@ -373,9 +371,9 @@ public:
   CORBA::Boolean servant_has_remaining_activations (
     PortableServer::Servant servant);
 
-  bool allow_implicit_activation (void) const;
+  bool allow_implicit_activation () const;
 
-  bool allow_multiple_activations (void) const;
+  bool allow_multiple_activations () const;
 
   int is_servant_active (
     PortableServer::Servant servant,
@@ -383,15 +381,15 @@ public:
 
   void deactivate_object_i (const PortableServer::ObjectId &oid);
 
-  CORBA::Boolean is_persistent (void) const;
+  CORBA::Boolean is_persistent () const;
 
-  CORBA::Short server_priority (void) const;
+  CORBA::Short server_priority () const;
 
-  bool has_system_id (void) const;
+  bool has_system_id () const;
 
   PortableServer::Servant find_servant (const PortableServer::ObjectId &system_id);
 
-  TAO_SERVANT_LOCATION servant_present (
+  TAO_Servant_Location servant_present (
     const PortableServer::ObjectId &system_id,
     PortableServer::Servant &servant);
 
@@ -436,18 +434,18 @@ public:
 
   PortableServer::ObjectId *servant_to_id_i (PortableServer::Servant servant);
 
-  TAO_SYNCH_CONDITION &servant_deactivation_condition (void);
+  TAO_SYNCH_CONDITION &servant_deactivation_condition ();
 
   int is_poa_generated_id (const PortableServer::ObjectId &id);
 
   /// Check the state of this POA
-  void check_state (void);
+  void check_state ();
 
   int delete_child (const String &child);
 
   PortableServer::Servant user_id_to_servant_i (const PortableServer::ObjectId &oid);
 
-  virtual CORBA::ORB_ptr _get_orb (void);
+  virtual CORBA::ORB_ptr _get_orb ();
 
   /// These hooks are needed by the CSD strategy to override
   /// and no-ops by default.
@@ -467,11 +465,10 @@ public:
                                  const PortableServer::ObjectId& oid);
 
 protected:
-
 #if (TAO_HAS_MINIMUM_POA == 0)
-  int enter (void);
+  int enter ();
 
-  int exit (void);
+  int exit ();
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
 #if ! defined (CORBA_E_MICRO)
@@ -501,14 +498,14 @@ protected:
   void destroy_i (CORBA::Boolean etherealize_objects,
                   CORBA::Boolean wait_for_completion);
 
-  void complete_destruction_i (void);
+  void complete_destruction_i ();
 
-  PortableServer::POAList *the_children_i (void);
+  PortableServer::POAList *the_children_i ();
 
   /// This method returns the adapter_name as a sequence of strings of
   /// length one or more or just a fixed name depending on the Object
   /// Adapter. Added wrt to ORT Spec.
-  PortableInterceptor::AdapterName *adapter_name_i (void);
+  PortableInterceptor::AdapterName *adapter_name_i ();
 
   /// Method to notify the IOR Interceptors when there is a state
   /// changed not related to POAManager.
@@ -546,7 +543,7 @@ protected:
                                 TAO_Acceptor_Filter *filter,
                                 TAO_Acceptor_Registry &acceptor_registry);
 
-  PortableServer::Servant get_servant_i (void);
+  PortableServer::Servant get_servant_i ();
 
 protected:
   void activate_object_with_id_i (const PortableServer::ObjectId &id,
@@ -554,7 +551,7 @@ protected:
                                   CORBA::Short priority,
                                   bool &wait_occurred_restart_call);
 
-  virtual void remove_from_parent_i (void);
+  virtual void remove_from_parent_i ();
 
   void deactivate_all_objects_i (CORBA::Boolean etherealize_objects);
 
@@ -585,7 +582,7 @@ protected:
    * IORInterceptor::components_established() once the former is
    * completed.
    */
-  void establish_components (void);
+  void establish_components ();
 
   /// Call the IORInterceptor::components_established() method on all
   /// registered IORInterceptors.
@@ -608,20 +605,20 @@ protected:
 protected:
   /// Accessor methods to ObjectReferenceTemplate
   PortableInterceptor::ObjectReferenceTemplate *
-    get_adapter_template (void);
+    get_adapter_template ();
 
   /// Accessor methods to ObjectReferenceTemplate, non locked version
-  PortableInterceptor::ObjectReferenceTemplate *get_adapter_template_i (void);
+  PortableInterceptor::ObjectReferenceTemplate *get_adapter_template_i ();
 
   /// Accessor methods to PortableInterceptor::ObjectReferenceFactory
-  PortableInterceptor::ObjectReferenceFactory *get_obj_ref_factory (void);
+  PortableInterceptor::ObjectReferenceFactory *get_obj_ref_factory ();
 
   /// Set the object reference factory
   void set_obj_ref_factory (
     PortableInterceptor::ObjectReferenceFactory *current_factory);
 
 
-  TAO_SERVANT_LOCATION locate_servant_i (const PortableServer::ObjectId &id,
+  TAO_Servant_Location locate_servant_i (const PortableServer::ObjectId &id,
                                          PortableServer::Servant &servant);
 
   PortableServer::Servant locate_servant_i (
@@ -637,42 +634,41 @@ public:
   invoke_key_to_object_helper_i (const char * repository_id,
                                  const PortableServer::ObjectId & id);
 protected:
-
   /// Get the ORT adapter, in case there is no adapter yet, this method will
   /// try to create one and hold the POA lock
-  TAO::ORT_Adapter *ORT_adapter (void);
+  TAO::ORT_Adapter *ORT_adapter ();
 
   /// Get the ORT adapter, in case there is no adapter yet, this method will
   /// try to create one but assumes the POA lock is already hold
-  TAO::ORT_Adapter *ORT_adapter_i (void);
+  TAO::ORT_Adapter *ORT_adapter_i ();
 
-  CORBA::Boolean persistent (void);
+  CORBA::Boolean persistent ();
 
-  static char persistent_key_char (void);
+  static char persistent_key_char ();
 
-  static char transient_key_char (void);
+  static char transient_key_char ();
 
-  static CORBA::ULong persistent_key_type_length (void);
+  static CORBA::ULong persistent_key_type_length ();
 
-  static char system_id_key_char (void);
+  static char system_id_key_char ();
 
-  static char user_id_key_char (void);
+  static char user_id_key_char ();
 
-  static CORBA::ULong system_id_key_type_length (void);
+  static CORBA::ULong system_id_key_type_length ();
 
-  virtual CORBA::Boolean root (void) const;
+  virtual CORBA::Boolean root () const;
 
-  virtual char root_key_type (void);
+  virtual char root_key_type ();
 
-  static char root_key_char (void);
+  static char root_key_char ();
 
-  static char non_root_key_char (void);
+  static char non_root_key_char ();
 
-  static CORBA::ULong root_key_type_length (void);
+  static CORBA::ULong root_key_type_length ();
 
-  CORBA::ULong increment_outstanding_requests (void);
+  CORBA::ULong increment_outstanding_requests ();
 
-  CORBA::ULong decrement_outstanding_requests (void);
+  CORBA::ULong decrement_outstanding_requests ();
 
   String name_;
 
@@ -795,15 +791,13 @@ public:
 class TAO_PortableServer_Export TAO_POA_Static_Resources
 {
 public:
-
   /// Return the singleton instance.
-  static TAO_POA_Static_Resources* instance (void);
+  static TAO_POA_Static_Resources* instance ();
 
   /// Cleanup the static singleton
-  static void fini (void) ACE_GCC_DESTRUCTOR_ATTRIBUTE;
+  static void fini () ACE_GCC_DESTRUCTOR_ATTRIBUTE;
 
 public:
-
   /**
    * Name of the factory object used to adapt function calls on the
    * PortableInterceptor interfaces ORT. The default value is
@@ -823,7 +817,7 @@ public:
   ACE_CString imr_client_adapter_name_;
 private:
   /// Constructor.
-  TAO_POA_Static_Resources (void);
+  TAO_POA_Static_Resources ();
 
 private:
   /// The singleton instance.

@@ -18,7 +18,6 @@ TAO_CSD_Strategy_Repository::~TAO_CSD_Strategy_Repository()
 int
 TAO_CSD_Strategy_Repository::init(int, ACE_TCHAR **)
 {
-
   static int initialized = 0;
 
   // Only allow initialization once.
@@ -33,7 +32,6 @@ TAO_CSD_Strategy_Repository::init(int, ACE_TCHAR **)
 CSD_Framework::Strategy_ptr
 TAO_CSD_Strategy_Repository::find (const ACE_CString& name)
 {
-
   if (this->strategy_list_head_ != 0)
     {
       Strategy_Node *node = this->strategy_list_head_->find(name);

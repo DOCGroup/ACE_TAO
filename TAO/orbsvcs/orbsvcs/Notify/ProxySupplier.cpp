@@ -15,7 +15,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Notify_ProxySupplier::TAO_Notify_ProxySupplier (void)
+TAO_Notify_ProxySupplier::TAO_Notify_ProxySupplier ()
   : consumer_admin_ (0)
 {
 }
@@ -47,7 +47,7 @@ TAO_Notify_ProxySupplier::init (TAO_Notify_ConsumerAdmin* consumer_admin)
 }
 
 TAO_Notify_Peer*
-TAO_Notify_ProxySupplier:: peer (void)
+TAO_Notify_ProxySupplier:: peer ()
 {
   return this->consumer ();
 }
@@ -99,7 +99,7 @@ TAO_Notify_ProxySupplier::connect (TAO_Notify_Consumer *consumer)
 }
 
 void
-TAO_Notify_ProxySupplier::disconnect (void)
+TAO_Notify_ProxySupplier::disconnect ()
 {
   TAO_Notify_EventTypeSeq added;
 
@@ -112,7 +112,7 @@ TAO_Notify_ProxySupplier::disconnect (void)
 }
 
 int
-TAO_Notify_ProxySupplier::shutdown (void)
+TAO_Notify_ProxySupplier::shutdown ()
 {
   if (this->TAO_Notify_Object::shutdown () == 1)
     return 1;
@@ -128,7 +128,7 @@ TAO_Notify_ProxySupplier::shutdown (void)
 }
 
 void
-TAO_Notify_ProxySupplier::destroy (void)
+TAO_Notify_ProxySupplier::destroy ()
 {
   this->destroy (false);
 }

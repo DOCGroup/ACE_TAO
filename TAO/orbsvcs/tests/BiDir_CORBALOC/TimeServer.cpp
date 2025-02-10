@@ -11,15 +11,14 @@ class Time_impl :
 {
 public:
   virtual TimeModule::TimeOfDay
-    get_gmt (void);
+    get_gmt ();
 
-  void Shutdown (void);
+  void Shutdown ();
 };
 
 
-TimeModule::TimeOfDay Time_impl::get_gmt (void)
+TimeModule::TimeOfDay Time_impl::get_gmt ()
 {
-
   time_t time_now   = ACE_OS::time(0);
   struct tm *time_p = ACE_OS::gmtime(&time_now);
 
@@ -33,7 +32,7 @@ TimeModule::TimeOfDay Time_impl::get_gmt (void)
 }
 
 void
-Time_impl::Shutdown (void)
+Time_impl::Shutdown ()
 {
   ACE_OS::exit(0);
 }
@@ -41,7 +40,6 @@ Time_impl::Shutdown (void)
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-
   try
     {
       // Initialize orb

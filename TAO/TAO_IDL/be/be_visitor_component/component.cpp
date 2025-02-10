@@ -16,7 +16,7 @@ be_visitor_component::be_visitor_component (be_visitor_context *ctx)
 {
 }
 
-be_visitor_component::~be_visitor_component (void)
+be_visitor_component::~be_visitor_component ()
 {
 }
 
@@ -316,7 +316,7 @@ be_visitor_component::visit_extended_port (
   /// original porttype, this is a way for visitors down the
   /// line to tell what scope we are actually in.
   this->ctx_->interface (
-    be_interface::narrow_from_scope (node->defined_in ()));
+    dynamic_cast<be_interface*> (node->defined_in ()));
 
   be_porttype *pt = node->port_type ();
 
@@ -345,7 +345,7 @@ be_visitor_component::visit_mirror_port (be_mirror_port *node)
   /// original porttype, this is a way for visitors down the
   /// line to tell what scope we are actually in.
   this->ctx_->interface (
-    be_interface::narrow_from_scope (node->defined_in ()));
+    dynamic_cast<be_interface*> (node->defined_in ()));
 
   be_porttype *pt = node->port_type ();
 

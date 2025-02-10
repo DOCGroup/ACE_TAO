@@ -5,7 +5,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 int
-ACE_TLI::look (void) const
+ACE_TLI::look () const
 {
   ACE_TRACE ("ACE_TLI::look");
   return ACE_OS::t_look (this->get_handle ());
@@ -29,7 +29,7 @@ ACE_TLI::snddis (struct t_call *call) const
 
 ACE_INLINE
 int
-ACE_TLI::rcvrel (void) const
+ACE_TLI::rcvrel () const
 {
   ACE_TRACE ("ACE_TLI::rcvrel");
   return ACE_OS::t_rcvrel (this->get_handle ());
@@ -37,7 +37,7 @@ ACE_TLI::rcvrel (void) const
 
 ACE_INLINE
 int
-ACE_TLI::sndrel (void) const
+ACE_TLI::sndrel () const
 {
   ACE_TRACE ("ACE_TLI::sndrel");
   return ACE_OS::t_sndrel (this->get_handle ());

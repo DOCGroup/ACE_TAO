@@ -8,7 +8,7 @@ and repackaged as using uscan:
 $ uscan --force-download --repack --verbose --watchfile debian/watch
 
  * ACE-src-<version>.tar.gz is retrieved from:
-     http://download.dre.vanderbilt.edu/previous_versions/
+     https://download.dre.vanderbilt.edu/previous_versions/
    The -src version does not contain pre-generated Makefiles. They are
    regenerated in the build process.
 

@@ -1,4 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
 #include "ast_valuetype.h"
 #include "ast_typedef.h"
 #include "ast_factory.h"
@@ -68,7 +67,7 @@ AST_ValueType::AST_ValueType (UTL_ScopedName *n,
       FE_Utils::tmpl_mod_ref_check (this, supports[i]);
     }
 
-  if (inherits_concrete != 0)
+  if (inherits_concrete != nullptr)
     {
       if (inherits_concrete->node_type () == AST_Decl::NT_param_holder)
         {
@@ -77,7 +76,7 @@ AST_ValueType::AST_ValueType (UTL_ScopedName *n,
     }
 }
 
-AST_ValueType::~AST_ValueType (void)
+AST_ValueType::~AST_ValueType ()
 {
 }
 
@@ -109,7 +108,7 @@ AST_ValueType::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
       else
       {
         // get the head element which is the type being tested
-        AST_Type** recursable_type = 0;
+        AST_Type** recursable_type = nullptr;
         list.get (recursable_type, 0);
         // Check if we are the possibly recursive type being tested
         if (!ACE_OS::strcmp (this->full_name (),
@@ -143,16 +142,16 @@ AST_ValueType::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
                             0);
         }
 
-      AST_Field *field = AST_Field::narrow_from_decl (d);
+      AST_Field *field = dynamic_cast<AST_Field*> (d);
 
-      if (field == 0)
+      if (field == nullptr)
         {
           continue;
         }
 
       AST_Type *type = field->field_type ();
 
-      if (type == 0)
+      if (type == nullptr)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_valuetype::in_recursion - "
@@ -162,7 +161,7 @@ AST_ValueType::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
 
       if (type->node_type () == AST_Decl::NT_typedef)
         {
-          AST_Typedef *td = AST_Typedef::narrow_from_decl (type);
+          AST_Typedef *td = dynamic_cast<AST_Typedef*> (type);
           type = td->primitive_base_type ();
         }
 
@@ -186,9 +185,9 @@ AST_ValueType::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
 void
 AST_ValueType::redefine (AST_Interface *from)
 {
-  AST_ValueType *vt = AST_ValueType::narrow_from_decl (from);
+  AST_ValueType *vt = dynamic_cast<AST_ValueType*> (from);
 
-  if (vt == 0)
+  if (vt == nullptr)
     {
       idl_global->err ()->redef_error (from->local_name ()->get_string (),
                                        this->local_name ()->get_string ());
@@ -204,43 +203,43 @@ AST_ValueType::redefine (AST_Interface *from)
 }
 
 AST_Type **
-AST_ValueType::supports (void) const
+AST_ValueType::supports () const
 {
   return this->pd_supports;
 }
 
 long
-AST_ValueType::n_supports (void) const
+AST_ValueType::n_supports () const
 {
   return this->pd_n_supports;
 }
 
 AST_Type *
-AST_ValueType::inherits_concrete (void) const
+AST_ValueType::inherits_concrete () const
 {
   return this->pd_inherits_concrete;
 }
 
 AST_Type *
-AST_ValueType::supports_concrete (void) const
+AST_ValueType::supports_concrete () const
 {
   return this->pd_supports_concrete;
 }
 
 bool
-AST_ValueType::truncatable (void) const
+AST_ValueType::truncatable () const
 {
   return this->pd_truncatable;
 }
 
 bool
-AST_ValueType::custom (void) const
+AST_ValueType::custom () const
 {
   return this->pd_custom;
 }
 
 bool
-AST_ValueType::will_have_factory (void)
+AST_ValueType::will_have_factory ()
 {
   return false;
 }
@@ -250,15 +249,15 @@ AST_Decl *
 AST_ValueType::look_in_supported (UTL_ScopedName *e,
                                   bool full_def_only)
 {
-  AST_Decl *d = 0;
-  AST_Decl *d_before = 0;
-  AST_Type **is = 0;
+  AST_Decl *d = nullptr;
+  AST_Decl *d_before = nullptr;
+  AST_Type **is = nullptr;
   long nis = -1;
 
   // Can't look in an interface which was not yet defined.
   if (!this->is_defined ())
     {
-      return 0;
+      return nullptr;
     }
 
   // OK, loop through supported interfaces.
@@ -275,14 +274,13 @@ AST_ValueType::look_in_supported (UTL_ScopedName *e,
           continue;
         }
 
-      AST_Interface *i =
-        AST_Interface::narrow_from_decl (*is);
+      AST_Interface *i = dynamic_cast<AST_Interface*> (*is);
 
       d = (i)->lookup_by_name_r (e, full_def_only);
 
-      if (d != 0)
+      if (d != nullptr)
         {
-          if (d_before == 0)
+          if (d_before == nullptr)
             {
               // First result found.
               d_before = d;
@@ -327,7 +325,7 @@ AST_ValueType::special_lookup (UTL_ScopedName *e,
 {
   AST_Decl *d = this->look_in_inherited (e, full_def_only);
 
-  if (d == 0)
+  if (d == nullptr)
     {
       d = this->look_in_supported (e, full_def_only);
     }
@@ -336,7 +334,7 @@ AST_ValueType::special_lookup (UTL_ScopedName *e,
 }
 
 bool
-AST_ValueType::legal_for_primary_key (void) const
+AST_ValueType::legal_for_primary_key () const
 {
   AST_ValueType *pk_base = this->lookup_primary_key_base ();
 
@@ -357,10 +355,10 @@ AST_ValueType::legal_for_primary_key (void) const
           !i.is_done ();
           i.next ())
         {
-          AST_Field *f = AST_Field::narrow_from_decl (i.item ());
+          AST_Field *f = dynamic_cast<AST_Field*> (i.item ());
 
           // We're not interested in any valuetype decls that aren't fields.
-          if (f == 0)
+          if (f == nullptr)
             {
               continue;
             }
@@ -396,12 +394,12 @@ AST_ValueType::legal_for_primary_key (void) const
 }
 
 void
-AST_ValueType::destroy (void)
+AST_ValueType::destroy ()
 {
   this->AST_Interface::destroy ();
 
   delete [] this->pd_supports;
-  this->pd_supports = 0;
+  this->pd_supports = nullptr;
   this->pd_n_supports = 0;
 }
 
@@ -477,16 +475,14 @@ AST_ValueType::fe_add_field (AST_Field *t)
 AST_Factory *
 AST_ValueType::fe_add_factory (AST_Factory *f)
 {
-  return
-    AST_Factory::narrow_from_decl (
-      this->fe_add_decl (f));
+  return dynamic_cast<AST_Factory*> (this->fe_add_decl (f));
 }
 
 bool
 AST_ValueType::derived_from_primary_key_base (const AST_ValueType *node,
                                               const AST_ValueType *pk_base) const
 {
-  if (0 == node)
+  if (nullptr == node)
     {
       return false;
     }
@@ -496,8 +492,7 @@ AST_ValueType::derived_from_primary_key_base (const AST_ValueType *node,
       return true;
     }
 
-  AST_ValueType *concrete_parent =
-    AST_ValueType::narrow_from_decl (node->inherits_concrete ());
+  AST_ValueType *concrete_parent = dynamic_cast<AST_ValueType*> (node->inherits_concrete ());
 
   if (this->derived_from_primary_key_base (concrete_parent, pk_base))
     {
@@ -508,7 +503,7 @@ AST_ValueType::derived_from_primary_key_base (const AST_ValueType *node,
 
   for (long i = 0; i < node->pd_n_inherits; ++i)
     {
-      AST_ValueType *tmp = AST_ValueType::narrow_from_decl (v[i]);
+      AST_ValueType *tmp = dynamic_cast<AST_ValueType*> (v[i]);
 
       if (this->derived_from_primary_key_base (tmp, pk_base))
         {
@@ -520,14 +515,14 @@ AST_ValueType::derived_from_primary_key_base (const AST_ValueType *node,
 }
 
 AST_ValueType *
-AST_ValueType::lookup_primary_key_base (void) const
+AST_ValueType::lookup_primary_key_base () const
 {
   AST_ValueType *retval = idl_global->primary_key_base ();
 
-  if (retval == 0)
+  if (retval == nullptr)
     {
       Identifier local_id ("PrimaryKeyBase");
-      UTL_ScopedName local_name (&local_id, 0);
+      UTL_ScopedName local_name (&local_id, nullptr);
 
       Identifier scope_name ("Components");
       UTL_ScopedName pk_name (&scope_name, &local_name);
@@ -537,18 +532,18 @@ AST_ValueType::lookup_primary_key_base (void) const
       local_id.destroy ();
       scope_name.destroy ();
 
-      if (d == 0)
+      if (d == nullptr)
         {
           idl_global->err ()->lookup_error (&pk_name);
-          return 0;
+          return nullptr;
         }
 
-      retval = AST_ValueType::narrow_from_decl (d);
+      retval = dynamic_cast<AST_ValueType*> (d);
 
-      if (retval == 0)
+      if (retval == nullptr)
         {
           idl_global->err ()->valuetype_expected (d);
-          return 0;
+          return nullptr;
         }
 
       idl_global->primary_key_base (retval);
@@ -556,7 +551,3 @@ AST_ValueType::lookup_primary_key_base (void) const
 
   return retval;
 }
-
-IMPL_NARROW_FROM_DECL(AST_ValueType)
-IMPL_NARROW_FROM_SCOPE(AST_ValueType)
-

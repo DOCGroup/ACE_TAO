@@ -17,14 +17,13 @@ be_visitor_facet_svth::be_visitor_facet_svth (be_visitor_context *ctx)
 {
 }
 
-be_visitor_facet_svth::~be_visitor_facet_svth (void)
+be_visitor_facet_svth::~be_visitor_facet_svth ()
 {
 }
 
 int
 be_visitor_facet_svth::visit_interface (be_interface *node)
 {
-
   if (node->imported () ||
       node->svnt_src_facet_gen () ||
       idl_global->ami_connector_seen_ ||
@@ -37,7 +36,7 @@ be_visitor_facet_svth::visit_interface (be_interface *node)
   const char *lname = node->local_name ();
 
   be_decl *scope =
-    be_scope::narrow_from_scope (node->defined_in ())->decl ();
+    dynamic_cast<be_scope*> (node->defined_in ())->decl ();
   ACE_CString suffix (scope->flat_name ());
 
   if (suffix != "")
@@ -64,12 +63,12 @@ be_visitor_facet_svth::visit_interface (be_interface *node)
       << "typename EXEC::_ptr_type executor," << be_nl
       << "::Components::CCMContext_ptr ctx);" << be_uidt_nl << be_nl;
 
-  os_ << "virtual ~" << lname << "_Servant_T (void);";
+  os_ << "virtual ~" << lname << "_Servant_T ();";
 
   if (is_intf)
     {
       be_interface *intf =
-        be_interface::narrow_from_decl (node);
+        dynamic_cast<be_interface*> (node);
 
       be_global->in_facet_servant (true);
 

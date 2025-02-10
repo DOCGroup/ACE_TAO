@@ -29,7 +29,7 @@ class be_visitor_executor_ami_exh
 public:
   be_visitor_executor_ami_exh (be_visitor_context *ctx);
 
-  ~be_visitor_executor_ami_exh (void);
+  ~be_visitor_executor_ami_exh ();
 
   virtual int visit_connector (be_connector *node);
   virtual int visit_provides (be_provides *node);

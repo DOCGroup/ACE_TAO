@@ -5,7 +5,7 @@
 #include "ace/SOCK_Connector.h"
 #include "ace/Event_Handler.h"
 #include "ace/os_include/netinet/os_tcp.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 #include "HTBP_Filter.h"
 #include "HTBP_ID_Requestor.h"
@@ -56,7 +56,7 @@ ACE::HTBP::Session::find_session (const ACE::HTBP::Session_Id_t &sid, ACE::HTBP:
 }
 
 //----------------------------------------------------------------------------
-ACE::HTBP::Session::Session (void)
+ACE::HTBP::Session::Session ()
   : proxy_addr_ (0),
     destroy_proxy_addr_ (0),
     inbound_ (0),
@@ -69,7 +69,7 @@ ACE::HTBP::Session::Session (void)
 {
   ACE::HTBP::ID_Requestor req;
   ACE_TCHAR * htid = req.get_HTID();
-  ACE_Auto_Array_Ptr<ACE_TCHAR> guard (htid);
+  std::unique_ptr<ACE_TCHAR[]> guard (htid);
   session_id_.local_ = ACE_TEXT_ALWAYS_CHAR(htid);
   session_id_.id_ = ACE::HTBP::Session::next_session_id();
   ACE_NEW (inbound_, ACE::HTBP::Channel (this));
@@ -133,7 +133,7 @@ ACE::HTBP::Session::operator= (const ACE::HTBP::Session &)
   return *this;
 }
 
-ACE::HTBP::Session::~Session (void)
+ACE::HTBP::Session::~Session ()
 {
   if (destroy_proxy_addr_)
     delete proxy_addr_;
@@ -143,7 +143,7 @@ ACE::HTBP::Session::~Session (void)
 }
 
 int
-ACE::HTBP::Session::close (void)
+ACE::HTBP::Session::close ()
 {
   if (this->inbound_)
     this->inbound_->close();
@@ -155,7 +155,7 @@ ACE::HTBP::Session::close (void)
 
 
 ACE::HTBP::Channel *
-ACE::HTBP::Session::outbound (void) const
+ACE::HTBP::Session::outbound () const
 {
   if (!this->closed_ && this->proxy_addr_)
     this->reconnect();
@@ -198,7 +198,7 @@ ACE::HTBP::Session::reconnect_i (ACE::HTBP::Channel *s) const
 }
 
 ACE_Event_Handler *
-ACE::HTBP::Session::handler (void)
+ACE::HTBP::Session::handler ()
 {
   return this->handler_;
 }
@@ -238,7 +238,7 @@ ACE::HTBP::Session::enqueue (ACE_Message_Block *msg)
 }
 
 int
-ACE::HTBP::Session::flush_outbound_queue (void)
+ACE::HTBP::Session::flush_outbound_queue ()
 {
   int result = 0;
   if (this->outbound_queue_.message_count() > 0)
@@ -248,7 +248,7 @@ ACE::HTBP::Session::flush_outbound_queue (void)
       ACE_NEW_RETURN (iov,
                       iovec[this->outbound_queue_.message_count()],
                       -1);
-      ACE_Auto_Array_Ptr<iovec> guard (iov);
+      std::unique_ptr<iovec[]> guard (iov);
       this->outbound_queue_.peek_dequeue_head (msg);
       for (size_t i = 0; i < this->outbound_queue_.message_count(); i++)
         {
@@ -269,13 +269,13 @@ ACE::HTBP::Session::flush_outbound_queue (void)
 }
 
 int
-ACE::HTBP::Session::close_inbound (void) const
+ACE::HTBP::Session::close_inbound () const
 {
   return this->inbound_ ? this->inbound_->close() : 0;
 }
 
 int
-ACE::HTBP::Session::close_outbound (void) const
+ACE::HTBP::Session::close_outbound () const
 {
   return this->outbound_ ? this->outbound_->close() : 0;
 }
@@ -299,7 +299,7 @@ ACE::HTBP::Session::disable (int flags)
 }
 
 ACE::HTBP::Stream *
-ACE::HTBP::Session::stream (void)const
+ACE::HTBP::Session::stream () const
 {
   return this->stream_;
 }

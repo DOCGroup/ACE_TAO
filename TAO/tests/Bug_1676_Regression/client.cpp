@@ -132,7 +132,5 @@ void get_stringList2(Test::Hello_var hello)
     {
       ex._tao_print_exception ("get_stringList2");
     }
-
-
-    return;
+  return;
 }

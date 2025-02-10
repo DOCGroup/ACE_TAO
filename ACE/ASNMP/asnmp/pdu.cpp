@@ -32,7 +32,7 @@
 #include "ace/OS_NS_stdio.h"
 
 //=====================[ constructor no args ]=========================
-Pdu::Pdu( void): vb_count_(0), error_status_(0), error_index_(0),
+Pdu::Pdu(): vb_count_(0), error_status_(0), error_index_(0),
 validity_(0), request_id_(0), pdu_type_(0), notify_timestamp_(0),
 output_(0)
 {
@@ -129,7 +129,6 @@ Pdu& Pdu::operator=( const Pdu &pdu)
 // append operator, appends a string
 Pdu& Pdu::operator+=( Vb &vb)
 {
-
   // do we have room?
   if ( vb_count_ + 1 > MAX_VBS)
     return *this;
@@ -145,7 +144,6 @@ Pdu& Pdu::operator+=( Vb &vb)
 
   // return self reference
   return *this;
-
 }
 
 // return fomatted version of this object
@@ -191,13 +189,11 @@ int Pdu::get_vblist( Vb* pvbs, const int pvb_count)
       pvbs[z] = *vbs_[z];
 
    return 1;
-
 }
 
 //=====================[ deposit Vbs ]===================================
 int Pdu::set_vblist( Vb* pvbs, const int pvb_count)
 {
-
    // if invalid then don't destroy
    if ((!pvbs) || ( pvb_count < 0) || ( pvb_count > MAX_VBS))
      return 0;
@@ -275,7 +271,6 @@ int Pdu::set_vb( Vb &vb, const int index)
    validity_ = 1;
 
    return 1;
-
 }
 
 //=====================[ return number of vbs_ ]==========================
@@ -406,7 +401,6 @@ int Pdu::trim(const int p)
    }
    return 1;
 }
-
 
 
 // delete a Vb anywhere within the Pdu

@@ -18,7 +18,7 @@ invocations over non-secure transport.
 The test verifies that a secure client can make invocations, using both
 the "secure" and the "non-secure" IOR from the server. Note that for
 the server to support the non-secure invocations it must have -SSLNoProtection
-in its sevice configuration file.
+in its service configuration file.
 
 The test verifies that a non-secure client can only make invocations through
 the "non-secure" IOR from the server. An invocation through the "secure" IOR

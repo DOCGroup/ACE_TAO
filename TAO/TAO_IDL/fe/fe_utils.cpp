@@ -24,10 +24,10 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
 
-FE_Utils::T_Param_Info::T_Param_Info (void)
+FE_Utils::T_Param_Info::T_Param_Info ()
   : type_ (AST_Decl::NT_fixed),
     const_type_ (AST_Expression::EV_none),
-    enum_const_type_decl_ (0)
+    enum_const_type_decl_ (nullptr)
 {
 }
 
@@ -41,8 +41,8 @@ FE_Utils::duplicate_param_id (T_PARAMLIST_INFO *params)
        !i.done ();
        i.advance (), ++cur_pos)
     {
-      FE_Utils::T_Param_Info *this_one = 0;
-      FE_Utils::T_Param_Info *that_one = 0;
+      FE_Utils::T_Param_Info *this_one = nullptr;
+      FE_Utils::T_Param_Info *that_one = nullptr;
 
       i.next (this_one);
 
@@ -61,9 +61,9 @@ FE_Utils::duplicate_param_id (T_PARAMLIST_INFO *params)
 }
 
 void
-FE_Utils::T_ARGLIST::destroy (void)
+FE_Utils::T_ARGLIST::destroy ()
 {
-  AST_Decl **d = 0;
+  AST_Decl **d = nullptr;
 
   for (T_ARGLIST::ITERATOR i (this->begin ());
        !i.done ();
@@ -123,6 +123,10 @@ FE_Utils::PredefinedTypeToExprType (
       return AST_Expression::EV_bool;
     case AST_PredefinedType::PT_void:
       return AST_Expression::EV_void;
+    case AST_PredefinedType::PT_int8:
+      return AST_Expression::EV_int8;
+    case AST_PredefinedType::PT_uint8:
+      return AST_Expression::EV_uint8;
     default:
       return AST_Expression::EV_enum;
   }
@@ -165,6 +169,10 @@ FE_Utils::ExprTypeToPredefinedType (AST_Expression::ExprType et)
       return AST_PredefinedType::PT_object;
     case AST_Expression::EV_void:
       return AST_PredefinedType::PT_void;
+    case AST_Expression::EV_int8:
+      return AST_PredefinedType::PT_int8;
+    case AST_Expression::EV_uint8:
+      return AST_PredefinedType::PT_uint8;
     case AST_Expression::EV_enum:
     case AST_Expression::EV_string:
     case AST_Expression::EV_wstring:
@@ -183,10 +191,10 @@ FE_Utils::ExprTypeToPredefinedType (AST_Expression::ExprType et)
 UTL_ScopedName *
 FE_Utils::string_to_scoped_name (const char *s)
 {
-  UTL_ScopedName *retval = 0;
+  UTL_ScopedName *retval = nullptr;
   ACE_CString str (s);
-  Identifier *id = 0;
-  UTL_ScopedName *sn = 0;
+  Identifier *id = nullptr;
+  UTL_ScopedName *sn = nullptr;
 
   while (! str.empty ())
     {
@@ -204,15 +212,15 @@ FE_Utils::string_to_scoped_name (const char *s)
       // Construct a UTL_ScopedName segment.
       ACE_NEW_RETURN (id,
                       Identifier (lname.c_str ()),
-                      0);
+                      nullptr);
 
       ACE_NEW_RETURN (sn,
-                      UTL_ScopedName (id, 0),
-                      0);
+                      UTL_ScopedName (id, nullptr),
+                      nullptr);
 
       // Either make it the head of a new list or the tail of
       // an existing one.
-      if (retval == 0)
+      if (retval == nullptr)
         {
           retval = sn;
         }
@@ -260,14 +268,14 @@ FE_Utils::create_uses_multiple_stuff (AST_Component *c,
   struct_name += u->local_name ()->get_string ();
   struct_name += "Connection";
   Identifier struct_id (struct_name.c_str ());
-  UTL_ScopedName sn (&struct_id, 0);
+  UTL_ScopedName sn (&struct_id, nullptr);
 
   // In case this call comes from the backend. We
   // will pop the scope before returning.
   idl_global->scopes ().push (c);
 
   AST_Structure *connection =
-    idl_global->gen ()->create_structure (&sn, 0, 0);
+    idl_global->gen ()->create_structure (&sn, false, false);
 
   struct_id.destroy ();
 
@@ -277,11 +285,11 @@ FE_Utils::create_uses_multiple_stuff (AST_Component *c,
   UTL_ScopedName *fn = u->uses_type ()->name ();
   AST_Decl *d =
     idl_global->root ()->lookup_by_name (fn, true, false);
-  AST_Type *ft = AST_Type::narrow_from_decl (d);
+  AST_Type *ft = dynamic_cast<AST_Type*> (d);
 
   Identifier object_id ("objref");
   UTL_ScopedName object_name (&object_id,
-                              0);
+                              nullptr);
   AST_Field *object_field =
     idl_global->gen ()->create_field (ft,
                                       &object_name,
@@ -291,7 +299,7 @@ FE_Utils::create_uses_multiple_stuff (AST_Component *c,
 
   Identifier local_id ("Cookie");
   UTL_ScopedName local_name (&local_id,
-                             0);
+                             nullptr);
   Identifier module_id ("Components");
   UTL_ScopedName scoped_name (&module_id,
                               &local_name);
@@ -300,18 +308,18 @@ FE_Utils::create_uses_multiple_stuff (AST_Component *c,
   local_id.destroy ();
   module_id.destroy ();
 
-  if (d == 0)
+  if (d == nullptr)
     {
       // This would happen if we haven't included Components.idl.
       idl_global->err ()->lookup_error (&scoped_name);
       return;
     }
 
-  AST_ValueType *cookie = AST_ValueType::narrow_from_decl (d);
+  AST_ValueType *cookie = dynamic_cast<AST_ValueType*> (d);
 
   Identifier cookie_id ("ck");
   UTL_ScopedName cookie_name (&cookie_id,
-                              0);
+                              nullptr);
   AST_Field *cookie_field =
     idl_global->gen ()->create_field (cookie,
                                       &cookie_name,
@@ -328,20 +336,20 @@ FE_Utils::create_uses_multiple_stuff (AST_Component *c,
   AST_Sequence *sequence =
     idl_global->gen ()->create_sequence (bound_expr,
                                          connection,
-                                         0,
-                                         0,
-                                         0);
+                                         nullptr,
+                                         false,
+                                         false);
 
   ACE_CString seq_string (struct_name);
   seq_string += 's';
   Identifier seq_id (seq_string.c_str ());
   UTL_ScopedName seq_name (&seq_id,
-                           0);
+                           nullptr);
   AST_Typedef *connections =
     idl_global->gen ()->create_typedef (sequence,
                                         &seq_name,
-                                        0,
-                                        0);
+                                        false,
+                                        false);
   seq_id.destroy ();
 
   (void) c->fe_add_typedef (connections);
@@ -351,7 +359,7 @@ FE_Utils::create_uses_multiple_stuff (AST_Component *c,
 }
 
 void
-FE_Utils::create_implied_ami_uses_stuff (void)
+FE_Utils::create_implied_ami_uses_stuff ()
 {
   if (idl_global->included_ami_receps_done ())
     {
@@ -363,7 +371,7 @@ FE_Utils::create_implied_ami_uses_stuff (void)
        ! i.done ();
        i.advance ())
     {
-      char **item = 0;
+      char **item = nullptr;
       i.next (item);
 
       UTL_ScopedName *sn =
@@ -372,24 +380,24 @@ FE_Utils::create_implied_ami_uses_stuff (void)
       AST_Decl *d =
         idl_global->root ()->lookup_by_name (sn, true);
 
-      if (d == 0)
+      if (d == nullptr)
         {
           idl_global->err ()->lookup_error (sn);
 
           sn->destroy ();
           delete sn;
-          sn = 0;
+          sn = nullptr;
 
           continue;
         }
 
       sn->destroy ();
       delete sn;
-      sn = 0;
+      sn = nullptr;
 
-      AST_Uses *u = AST_Uses::narrow_from_decl (d);
+      AST_Uses *u = dynamic_cast<AST_Uses*> (d);
 
-      if (u == 0)
+      if (u == nullptr)
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("idl_global::create_")
@@ -406,9 +414,9 @@ FE_Utils::create_implied_ami_uses_stuff (void)
         }
 
       AST_Component *c =
-        AST_Component::narrow_from_scope (u->defined_in ());
+        dynamic_cast<AST_Component*> (u->defined_in ());
 
-      if (c == 0)
+      if (c == nullptr)
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("idl_global::create_")
@@ -428,7 +436,7 @@ FE_Utils::create_implied_ami_uses_stuff (void)
 int
 FE_Utils::path_cmp (const char *s, const char *t)
 {
-#if defined (WIN32) || defined (ACE_OPENVMS)
+#if defined (WIN32)
   // Since Windows has case-insensitive filenames, the preprocessor,
   // when searching using a provided relative path, will sometimes
   // capitalize the first letter of the last segment of a path name
@@ -476,7 +484,7 @@ FE_Utils::check_for_seq_of_param (FE_Utils::T_PARAMLIST_INFO *list)
        !i.done ();
        i.advance (), ++index)
     {
-      FE_Utils::T_Param_Info *param = 0;
+      FE_Utils::T_Param_Info *param = nullptr;
       i.next (param);
 
       if (param->name_.find (pattern) == 0)
@@ -501,26 +509,26 @@ FILE *
 FE_Utils::open_included_file (char const * filename,
                               char const *& directory)
 {
-  FILE * f = 0;
+  FILE * f = nullptr;
   ACE_CString const the_file (ACE_CString ('/')
                               + ACE_CString (filename));
 
   for (IDL_GlobalData::Unbounded_Paths_Queue_Iterator i (
          idl_global->include_paths ());
-       !i.done () && f == 0;
+       !i.done () && f == nullptr;
        i.advance ())
     {
-      IDL_GlobalData::Include_Path_Info *path_info = 0;
+      IDL_GlobalData::Include_Path_Info *path_info = nullptr;
       (void) i.next (path_info);
 
-      if (path_info->path_ != 0)
+      if (path_info->path_ != nullptr)
         {
           ACE_CString const complete_filename (ACE_CString (path_info->path_)
                                                + the_file);
 
           f = ACE_OS::fopen (complete_filename.c_str (), "r");
 
-          if (f != 0)
+          if (f != nullptr)
             directory = path_info->path_;
         }
     }
@@ -533,7 +541,7 @@ FE_Utils::is_include_file_found (ACE_CString & inc_file,
                                  UTL_String * idl_file_name)
 {
   char abspath[MAXPATHLEN] = "";
-  char *full_path = 0;
+  char *full_path = nullptr;
 
   // If the include path has literal "s (because of an include
   // of a Windows path with spaces), we must remove them here.
@@ -552,11 +560,11 @@ FE_Utils::is_include_file_found (ACE_CString & inc_file,
   full_path =
     ACE_OS::realpath (inc_file.c_str (), abspath);
 
-  if (full_path != 0)
+  if (full_path != nullptr)
     {
       FILE *test = ACE_OS::fopen (abspath, "r");
 
-      if (test == 0)
+      if (test == nullptr)
         {
           return false;
         }
@@ -576,7 +584,7 @@ FE_Utils::is_include_file_found (ACE_CString & inc_file,
 /// Validate the included idl files, some files might have been
 /// ignored by the preprocessor.
 void
-FE_Utils::validate_included_idl_files (void)
+FE_Utils::validate_included_idl_files ()
 {
   // Flag to make sure we don't repeat things.
   static bool already_done = false;
@@ -605,9 +613,9 @@ FE_Utils::validate_included_idl_files (void)
 
   char pre_abspath [MAXPATHLEN] = "";
   char post_abspath [MAXPATHLEN] = "";
-  IDL_GlobalData::Include_Path_Info *path_info = 0;
-  char *post_tmp = 0;
-  char *full_path = 0;
+  IDL_GlobalData::Include_Path_Info *path_info = nullptr;
+  char *post_tmp = nullptr;
+  char *full_path = nullptr;
 
   // We are going to assemble a list of the include files found in
   // the top level file in the order that they are found in the pre-
@@ -690,7 +698,7 @@ FE_Utils::validate_included_idl_files (void)
                     }
 
                   // Reduce length and zero the discarded element
-                  pre_preproc_includes [--n_pre_preproc_includes] = 0;
+                  pre_preproc_includes [--n_pre_preproc_includes] = nullptr;
 
                   // Break out to next entry in pre-processor
                   // output
@@ -709,7 +717,7 @@ FE_Utils::validate_included_idl_files (void)
   for (size_t l = 0u; l < n_pre_preproc_includes; ++l)
     {
       delete [] pre_preproc_includes [l];
-      pre_preproc_includes [l] = 0;
+      pre_preproc_includes [l] = nullptr;
     }
 
   // Copy list back
@@ -745,7 +753,7 @@ FE_Utils::validate_orb_include (UTL_String * idl_file_name)
        !iter.done ();
        iter.advance ())
     {
-      IDL_GlobalData::Include_Path_Info *path_info = 0;
+      IDL_GlobalData::Include_Path_Info *path_info = nullptr;
       iter.next (path_info);
 
       ACE_CString partial = path_info->path_;
@@ -800,7 +808,7 @@ FE_Utils::original_local_name (Identifier *local_name)
       const TAO_IDL_CPP_Keyword_Entry *entry =
         cpp_key_tbl.lookup (lname + 5, len);
 
-      if (entry != 0)
+      if (entry != nullptr)
         {
           ACE_CString tmp (lname + 5);
           local_name->replace_string (tmp.c_str ());
@@ -834,10 +842,10 @@ FE_Utils::can_be_redefined (AST_Decl *prev_decl,
 
   UTL_Scope *prev_scope = prev_decl->defined_in ();
   UTL_Scope *curr_scope = curr_decl->defined_in ();
-  AST_Structure *s = 0;
-  AST_StructureFwd *s_fwd = 0;
-  AST_Template_Module *ptm = 0;
-  AST_Template_Module *ctm = 0;
+  AST_Structure *s = nullptr;
+  AST_StructureFwd *s_fwd = nullptr;
+  AST_Template_Module *ptm = nullptr;
+  AST_Template_Module *ctm = nullptr;
 
   bool nt_eq = (pnt == cnt);
   bool s_eq = (prev_scope == curr_scope);
@@ -852,9 +860,9 @@ FE_Utils::can_be_redefined (AST_Decl *prev_decl,
         }
 
       /// Neither can be a template module.
-      ptm = AST_Template_Module::narrow_from_decl (prev_decl);
-      ctm = AST_Template_Module::narrow_from_decl (curr_decl);
-      return (ptm == 0 && ctm == 0);
+      ptm = dynamic_cast<AST_Template_Module*> (prev_decl);
+      ctm = dynamic_cast<AST_Template_Module*> (curr_decl);
+      return (ptm == nullptr && ctm == nullptr);
     /// For the *_fwd types, if scopes aren't related, it's ok.
     /// If they are related, then we need another fwd or a full decl.
     case AST_Decl::NT_component_fwd:
@@ -874,9 +882,9 @@ FE_Utils::can_be_redefined (AST_Decl *prev_decl,
     /// in a derived interface type is ok.
     case AST_Decl::NT_struct:
     case AST_Decl::NT_union:
-      s = AST_Structure::narrow_from_decl (prev_decl);
-      s_fwd = (s == 0 ? 0 : s->fwd_decl ());
-      return (!s_eq || s_fwd != 0);
+      s = dynamic_cast<AST_Structure*> (prev_decl);
+      s_fwd = (s == nullptr ? nullptr : s->fwd_decl ());
+      return (!s_eq || s_fwd != nullptr);
     /// Only 2 or more full definitions in the same scope are illegal,
     /// and that is caught elsewhere.
     case AST_Decl::NT_interface:
@@ -910,7 +918,7 @@ void
 FE_Utils::tmpl_mod_ref_check (AST_Decl *context,
                               AST_Decl *ref)
 {
-  if (ref == 0
+  if (ref == nullptr
       || ref->node_type () == AST_Decl::NT_param_holder
       || idl_global->in_tmpl_mod_alias ())
     {
@@ -962,7 +970,7 @@ FE_Utils::check_one_seq_of_param (FE_Utils::T_PARAMLIST_INFO *list,
           break;
         }
 
-      FE_Utils::T_Param_Info *info = 0;
+      FE_Utils::T_Param_Info *info = nullptr;
       i.next (info);
 
       if (info->name_ == param_id)
@@ -979,12 +987,12 @@ FE_Utils::get_tm_container (AST_Decl *contained)
 {
   AST_Decl *d = contained;
 
-  while (d != 0)
+  while (d != nullptr)
     {
       AST_Template_Module *tm =
-        AST_Template_Module::narrow_from_decl (d);
+        dynamic_cast<AST_Template_Module*> (d);
 
-      if (tm != 0)
+      if (tm != nullptr)
         {
           return tm;
         }
@@ -992,5 +1000,5 @@ FE_Utils::get_tm_container (AST_Decl *contained)
       d = ScopeAsDecl (d->defined_in ());
     }
 
-  return 0;
+  return nullptr;
 }

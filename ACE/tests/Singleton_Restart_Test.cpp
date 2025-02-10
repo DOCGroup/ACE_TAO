@@ -23,10 +23,14 @@ void report_error (const ACE_TCHAR *lock)
               ACE_TEXT ("failed to allocate\n"), lock));
 }
 
-typedef ACE_Singleton<int, ACE_SYNCH_MUTEX> Singleton1;
-typedef ACE_Singleton<int, ACE_SYNCH_RECURSIVE_MUTEX> Singleton2;
+using Singleton1 = ACE_Singleton<int, ACE_MT_SYNCH::MUTEX>;
+using Singleton2 = ACE_Singleton<int, ACE_MT_SYNCH::RECURSIVE_MUTEX>;
 
+# if defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
+int wmain ()
+#else
 int main ()
+#endif
 {
   ACE::init ();
   ACE_START_TEST (ACE_TEXT ("Singleton_Restart_Test"));

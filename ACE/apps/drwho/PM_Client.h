@@ -22,12 +22,12 @@
 class PM_Client : public Protocol_Manager
 {
 public:
-  PM_Client (void);
-  virtual ~PM_Client (void);
+  PM_Client ();
+  virtual ~PM_Client ();
 
   virtual int encode (char *packet, int &total_bytes) = 0;
   virtual int decode (char *packet, int &total_bytes) = 0;
-  virtual void process (void);
+  virtual void process ();
 
 protected:
   int max_key_length;

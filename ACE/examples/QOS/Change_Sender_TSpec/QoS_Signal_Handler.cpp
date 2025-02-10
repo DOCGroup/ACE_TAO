@@ -1,10 +1,6 @@
-// QoS_Signal_Handler.cpp
 #include "ace/Log_Msg.h"
 #include "QoS_Signal_Handler.h"
 
-
-
-// constructor.
 QoS_Signal_Handler::QoS_Signal_Handler (ACE_QoS_Session *qos_session)
   : qos_session_ (qos_session)
 {

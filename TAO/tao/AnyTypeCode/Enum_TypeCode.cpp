@@ -8,6 +8,7 @@
 #include "tao/CDR.h"
 
 #include "ace/Dynamic_Service.h"
+#include <cstring>
 
 #ifndef __ACE_INLINE__
 # include "tao/AnyTypeCode/Enum_TypeCode.inl"
@@ -60,7 +61,7 @@ template <typename StringType, class EnumeratorArrayType, class RefCountPolicy>
 void
 TAO::TypeCode::Enum<StringType,
                     EnumeratorArrayType,
-                    RefCountPolicy>::tao_duplicate (void)
+                    RefCountPolicy>::tao_duplicate ()
 {
   this->RefCountPolicy::add_ref ();
 }
@@ -69,7 +70,7 @@ template <typename StringType, class EnumeratorArrayType, class RefCountPolicy>
 void
 TAO::TypeCode::Enum<StringType,
                     EnumeratorArrayType,
-                    RefCountPolicy>::tao_release (void)
+                    RefCountPolicy>::tao_release ()
 {
   this->RefCountPolicy::remove_ref ();
 }
@@ -98,7 +99,7 @@ TAO::TypeCode::Enum<StringType,
         Traits<StringType>::get_string (lhs_enumerator);
       char const * const rhs_name = tc->member_name (i);
 
-      if (ACE_OS::strcmp (lhs_name, rhs_name) != 0)
+      if (std::strcmp (lhs_name, rhs_name) != 0)
         return false;
     }
 
@@ -127,7 +128,7 @@ template <typename StringType, class EnumeratorArrayType, class RefCountPolicy>
 CORBA::TypeCode_ptr
 TAO::TypeCode::Enum<StringType,
                     EnumeratorArrayType,
-                    RefCountPolicy>::get_compact_typecode_i (void) const
+                    RefCountPolicy>::get_compact_typecode_i () const
 {
   ACE_Array_Base<CORBA::String_var> tc_enumerators (this->nenumerators_);
 
@@ -157,13 +158,12 @@ TAO::TypeCode::Enum<StringType,
     adapter->create_enum_tc (this->base_attributes_.id (),
                              ""  /* empty name */,
                              tc_enumerators,
-                             this->nenumerators_
-                            );
+                             this->nenumerators_);
 }
 
 template <typename StringType, class EnumeratorArrayType, class RefCountPolicy>
 char const *
-TAO::TypeCode::Enum<StringType, EnumeratorArrayType, RefCountPolicy>::id_i (void) const
+TAO::TypeCode::Enum<StringType, EnumeratorArrayType, RefCountPolicy>::id_i () const
 {
   // Ownership is retained by the TypeCode, as required by the C++
   // mapping.
@@ -172,7 +172,7 @@ TAO::TypeCode::Enum<StringType, EnumeratorArrayType, RefCountPolicy>::id_i (void
 
 template <typename StringType, class EnumeratorArrayType, class RefCountPolicy>
 char const *
-TAO::TypeCode::Enum<StringType, EnumeratorArrayType, RefCountPolicy>::name_i (void) const
+TAO::TypeCode::Enum<StringType, EnumeratorArrayType, RefCountPolicy>::name_i () const
 {
   // Ownership is retained by the TypeCode, as required by the C++
   // mapping.
@@ -183,7 +183,7 @@ template <typename StringType, class EnumeratorArrayType, class RefCountPolicy>
 CORBA::ULong
 TAO::TypeCode::Enum<StringType,
                     EnumeratorArrayType,
-                    RefCountPolicy>::member_count_i (void) const
+                    RefCountPolicy>::member_count_i () const
 {
   return this->nenumerators_;
 }

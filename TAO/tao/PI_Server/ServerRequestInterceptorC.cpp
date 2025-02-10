@@ -64,7 +64,7 @@ TAO::Objref_Traits<PortableInterceptor::ServerRequestInterceptor>::release (
 }
 
 PortableInterceptor::ServerRequestInterceptor_ptr
-TAO::Objref_Traits<PortableInterceptor::ServerRequestInterceptor>::nil (void)
+TAO::Objref_Traits<PortableInterceptor::ServerRequestInterceptor>::nil ()
 {
   return PortableInterceptor::ServerRequestInterceptor::_nil ();
 }
@@ -78,10 +78,10 @@ TAO::Objref_Traits<PortableInterceptor::ServerRequestInterceptor>::marshal (
   return ::CORBA::Object::marshal (p, cdr);
 }
 
-PortableInterceptor::ServerRequestInterceptor::ServerRequestInterceptor (void)
+PortableInterceptor::ServerRequestInterceptor::ServerRequestInterceptor ()
 {}
 
-PortableInterceptor::ServerRequestInterceptor::~ServerRequestInterceptor (void)
+PortableInterceptor::ServerRequestInterceptor::~ServerRequestInterceptor ()
 {}
 
 PortableInterceptor::ServerRequestInterceptor_ptr
@@ -156,7 +156,7 @@ PortableInterceptor::ServerRequestInterceptor::_is_a (
     }
 }
 
-const char* PortableInterceptor::ServerRequestInterceptor::_interface_repository_id (void) const
+const char* PortableInterceptor::ServerRequestInterceptor::_interface_repository_id () const
 {
   return "IDL:omg.org/PortableInterceptor/ServerRequestInterceptor:1.0";
 }

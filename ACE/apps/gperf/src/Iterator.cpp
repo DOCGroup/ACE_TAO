@@ -43,7 +43,7 @@ Iterator::Iterator (char *s,
 /// Provide an Iterator, returning the ``next'' value from the list of
 /// valid values given in the constructor.
 int
-Iterator::operator() (void)
+Iterator::operator() ()
 {
   // Variables to record the Iterator's status when handling ranges,
   // e.g., 3-12.
@@ -75,7 +75,6 @@ Iterator::operator() (void)
 
             if (*str == '-')
               {
-
                 for (size = 1, upper_bound = 0;
                      ACE_OS::ace_isdigit (*++str);
                      upper_bound = upper_bound * 10 + *str - '0')

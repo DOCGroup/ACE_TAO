@@ -33,31 +33,31 @@ class Results
 {
 public:
   /// ctor
-  Results (void);
+  Results ();
 
   /// destructor
-  ~Results (void);
+  ~Results ();
 
   /// prints the time stats
-  void print_stats (void);
+  void print_stats ();
 
   /// print the exception
   void print_exception (const char *call_name);
 
   /// start timing
-  void start_timer (void);
+  void start_timer ();
 
   /// stop timing
-  void stop_timer (void);
+  void stop_timer ();
 
   /// return call count
-  CORBA::ULong call_count (void);
+  CORBA::ULong call_count ();
 
   /// set the call count
   void call_count (CORBA::ULong);
 
   /// return the error count
-  CORBA::ULong error_count (void);
+  CORBA::ULong error_count ();
 
   /// set error count
   void error_count (CORBA::ULong);

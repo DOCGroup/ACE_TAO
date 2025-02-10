@@ -24,7 +24,7 @@ void TReceiverImplementation::message (const char* msg)
 void TReceiverImplementation::shutdown ()
 {
   // Instruct the ORB to shutdown.
-  orb_->shutdown (0);
+  orb_->shutdown (false);
 }
 //---------------------------------------------------------------------------
 void TReceiverImplementation::orb (CORBA::ORB_ptr o)

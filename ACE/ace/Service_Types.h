@@ -42,29 +42,29 @@ public:
                          u_int flags = 0,
                          ACE_Service_Object_Exterminator gobbler = 0,
                          int stype = ACE_Service_Type::INVALID_TYPE);
-  virtual ~ACE_Service_Type_Impl (void);
+  virtual ~ACE_Service_Type_Impl ();
 
   // = Pure virtual interface (must be defined by the subclass).
-  virtual int suspend (void) const = 0;
-  virtual int resume (void) const = 0;
+  virtual int suspend () const = 0;
+  virtual int resume () const = 0;
   virtual int init (int argc, ACE_TCHAR *argv[]) const = 0;
-  virtual int fini (void) const;
+  virtual int fini () const;
   virtual int info (ACE_TCHAR **str, size_t len) const = 0;
 
   /// The pointer to the service.
-  void *object (void) const;
+  void *object () const;
 
   /// Get the name of the service.
-  const ACE_TCHAR *name (void) const;
+  const ACE_TCHAR *name () const;
 
   /// Set the name of the service.
   void name (const ACE_TCHAR *);
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// get the service_type of this service
-  int service_type (void) const;
+  int service_type () const;
 
   /// set the service_type of this service
   void service_type (int stype);
@@ -107,13 +107,13 @@ public:
                            ACE_Service_Object_Exterminator gobbler = 0,
                            int stype = ACE_Service_Type::SERVICE_OBJECT);
 
-  ~ACE_Service_Object_Type (void);
+  ~ACE_Service_Object_Type ();
 
   // = Implement the hooks for <ACE_Service_Objects>.
-  virtual int suspend (void) const;
-  virtual int resume (void) const;
+  virtual int suspend () const;
+  virtual int resume () const;
   virtual int init (int argc, ACE_TCHAR *argv[]) const;
-  virtual int fini (void) const;
+  virtual int fini () const;
   virtual int info (ACE_TCHAR **str, size_t len) const;
 
 private:
@@ -135,23 +135,23 @@ public:
                    u_int flags = 0,
                    int stype = ACE_Service_Type::MODULE);
 
-  ~ACE_Module_Type (void);
+  ~ACE_Module_Type ();
 
   // = Implement the hooks for <ACE_Modules>.
-  virtual int suspend (void) const;
-  virtual int resume (void) const;
+  virtual int suspend () const;
+  virtual int resume () const;
   virtual int init (int argc, ACE_TCHAR *argv[]) const;
-  virtual int fini (void) const;
+  virtual int fini () const;
   virtual int info (ACE_TCHAR **str, size_t len) const;
 
   /// Get the link pointer.
-  ACE_Module_Type *link (void) const;
+  ACE_Module_Type *link () const;
 
   /// Set the link pointer.
   void link (ACE_Module_Type *);
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -175,13 +175,13 @@ public:
                    u_int flags = 0,
                    int stype = ACE_Service_Type::STREAM);
 
-  ~ACE_Stream_Type (void);
+  ~ACE_Stream_Type ();
 
   // = Implement the hooks for <ACE_Streams>.
-  virtual int suspend (void) const;
-  virtual int resume (void) const;
+  virtual int suspend () const;
+  virtual int resume () const;
   virtual int init (int argc, ACE_TCHAR *argv[]) const;
-  virtual int fini (void) const;
+  virtual int fini () const;
   virtual int info (ACE_TCHAR **str, size_t len) const;
 
   /// Add a new  ACE_Module to the top of the ACE_Stream.
@@ -194,7 +194,7 @@ public:
   ACE_Module_Type *find (const ACE_TCHAR *module_name) const;
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;

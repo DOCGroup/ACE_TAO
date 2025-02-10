@@ -26,9 +26,7 @@
  */
 class FTP_Server_Callback : public TAO_AV_Callback
 {
-
 public:
-
   // Method that is called when there is data to be received from the ftp client.
   int receive_frame (ACE_Message_Block *frame,
                      TAO_AV_frame_info *frame_info,
@@ -36,7 +34,7 @@ public:
 
   // Called when the ftp client has finished reading the file and wants
   // to close4 down the connection.
-  int handle_destroy (void);
+  int handle_destroy ();
 };
 
 /**
@@ -71,10 +69,10 @@ class Server
 {
 public:
   /// Constructor
-  Server (void);
+  Server ();
 
   /// Destructor.
-  ~Server (void);
+  ~Server ();
 
   /// Initialize data components.
   int init (int argc,

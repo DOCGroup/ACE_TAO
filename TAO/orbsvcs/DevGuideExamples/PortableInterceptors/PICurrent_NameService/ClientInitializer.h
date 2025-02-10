@@ -11,10 +11,10 @@ class ClientInitializer :
   public virtual ::CORBA::LocalObject
 {
  public:
-  ClientInitializer (void);
+  ClientInitializer ();
   virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info);
   virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info);
-  void set_slot_data (void);
+  void set_slot_data ();
 
  private:
    PortableInterceptor::SlotId slot_;

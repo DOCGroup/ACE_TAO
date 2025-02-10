@@ -29,7 +29,6 @@ testCurrentORBInitializer (int argc, ACE_TCHAR *argv[])
 int
 testCurrentLoader (int, char *[])
 {
-
   ACE_Service_Object *factory = 0;
 
   factory = ACE_Dynamic_Service<ACE_Service_Object>::instance
@@ -50,7 +49,6 @@ testCurrentLoader (int, char *[])
                           -1);
       else
         {
-
 #if !defined (TAO_AS_STATIC_LIBS)
           int ret = ACE_Service_Config::process_directive
             (ACE_DYNAMIC_VERSIONED_SERVICE_DIRECTIVE("TAO_Transport_Current_Loader",
@@ -70,7 +68,6 @@ testCurrentLoader (int, char *[])
   //  ACE_ASSERT (factory != 0);
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("testCurrentLoader: OK\n")));
   return 0;
-
 }
 
 

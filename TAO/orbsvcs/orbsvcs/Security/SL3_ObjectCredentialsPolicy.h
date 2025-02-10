@@ -51,7 +51,6 @@ namespace TAO
         public virtual ::CORBA::LocalObject
     {
     public:
-
       /// Constructor
       ObjectCredentialsPolicy (
         const SecurityLevel3::OwnCredentialsList & creds);
@@ -65,29 +64,25 @@ namespace TAO
       //@{
       virtual SecurityLevel3::OwnCredentialsList * creds_list ();
 
-      virtual CORBA::PolicyType policy_type (void);
+      virtual CORBA::PolicyType policy_type ();
 
-      virtual CORBA::Policy_ptr copy (void);
+      virtual CORBA::Policy_ptr copy ();
 
-      virtual void destroy (void);
+      virtual void destroy ();
       //@}
 
     protected:
-
       /// Destructor
       /**
        * Protected destructor to enforce proper memory management
        * through the reference counting mechanism.
        */
-      ~ObjectCredentialsPolicy (void);
+      ~ObjectCredentialsPolicy ();
 
     private:
-
       /// List of POA-specific OwnCredentials.
       SecurityLevel3::OwnCredentialsList creds_list_;
-
     };
-
   } // End SL3 namespace
 
 }  // End TAO namespace

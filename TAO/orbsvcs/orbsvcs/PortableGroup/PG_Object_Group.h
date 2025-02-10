@@ -55,9 +55,7 @@ namespace TAO
    */
   class TAO_PortableGroup_Export PG_Object_Group
   {
-
   protected:
-
     // Information about an object group member
     struct MemberInfo
     {
@@ -177,7 +175,6 @@ namespace TAO
     PortableGroup::InitialNumberMembersValue get_initial_number_members () const;
 
 
-
     /**
      * @@TODO DOC
      */
@@ -232,7 +229,7 @@ namespace TAO
     /**
      * @@TODO DOC
      */
-    virtual PortableGroup::Locations * locations_of_members (void);
+    virtual PortableGroup::Locations * locations_of_members ();
 
     /**
      * @@TODO DOC
@@ -244,12 +241,12 @@ namespace TAO
     /**
      * @@TODO DOC
      */
-    virtual void initial_populate (void);
+    virtual void initial_populate ();
 
     /**
      * @@TODO DOC
      */
-    virtual void minimum_populate (void);
+    virtual void minimum_populate ();
 
 
     /**
@@ -266,23 +263,21 @@ namespace TAO
 
     virtual void set_name (const char* group_name);
 
-    virtual const char* get_name (void);
+    virtual const char* get_name ();
 
     /////////////////////////
     // Implementation methods
   private:
-
     int increment_version ();
 
-    void distribute_iogr (void);
+    void distribute_iogr ();
 
     void create_members (size_t count);
 
   protected:
-
     virtual PortableGroup::ObjectGroup_ptr add_member_to_iogr(CORBA::Object_ptr member);
 
-    void clear_members_map (void);
+    void clear_members_map ();
 
     /////////////////////////
     // Forbidden methods
@@ -295,15 +290,12 @@ namespace TAO
     /////////////////
     // Static Methods
   public:
-
     ///////////////
     // Static Data
   private:
-
     ///////////////
     // Data Members
   private:
-
     /**
      * Protect internal state.
      */
@@ -313,12 +305,10 @@ namespace TAO
     CORBA::ORB_var orb_;
 
   private:
-
     /// Where to find the factories for replicas.
     PortableGroup::FactoryRegistry_var factory_registry_;
 
   protected:
-
     // The object group manipulator
     TAO::PG_Object_Group_Manipulator & manipulator_;
 
@@ -373,7 +363,6 @@ namespace TAO
     PortableGroup::InitialNumberMembersValue initial_number_members_;
     PortableGroup::MinimumNumberMembersValue minimum_number_members_;
     PortableGroup::FactoryInfos group_specific_factories_;
-
   };
 } // namespace TAO
 
