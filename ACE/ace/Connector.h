@@ -282,6 +282,14 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
+  /**
+   * Flags that indicate how SVC_HANDLER's should be initialized
+   * prior to being activated.  Right now, the only flag that is
+   * processed is ACE_NONBLOCK, which enabled non-blocking I/O on
+   * the SVC_HANDLER when it is opened.
+   */
+  int flags_;
+
   // = Helpful typedefs.
   typedef ACE_NonBlocking_Connect_Handler<SVC_HANDLER> NBCH;
 
@@ -373,14 +381,6 @@ protected:
 private:
   /// This is the peer connector factory.
   PEER_CONNECTOR connector_;
-
-  /**
-   * Flags that indicate how SVC_HANDLER's should be initialized
-   * prior to being activated.  Right now, the only flag that is
-   * processed is ACE_NONBLOCK, which enabled non-blocking I/O on
-   * the SVC_HANDLER when it is opened.
-   */
-  int flags_;
 
   /// Pointer to the Reactor.
   ACE_Reactor *reactor_;

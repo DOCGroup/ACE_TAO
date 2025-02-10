@@ -23,17 +23,13 @@ IIOPEndpointValue_i::IIOPEndpointValue_i (const char *host, CORBA::UShort port)
     this->addr_.set_type (-1);
 }
 
-IIOPEndpointValue_i::~IIOPEndpointValue_i ()
-{
-}
-
 CORBA::Boolean
 IIOPEndpointValue_i::is_equivalent (const TAO_Endpoint * endpoint) const
 {
   const TAO_IIOP_Endpoint *iep =
     dynamic_cast<const TAO_IIOP_Endpoint *>(endpoint);
-  if (iep == 0)
-    return 0;
+  if (iep == nullptr)
+    return false;
   return this->addr_.get_type() != -1 ? this->addr_ == iep->object_addr() :
     this->is_equivalent_i (iep->port(), iep->host());
 }
@@ -54,7 +50,7 @@ IIOPEndpointValue_i::validate_acceptor(TAO_Acceptor * acceptor,
                                        bool is_multi_prot) const
 {
   TAO_IIOP_Acceptor *iacc = dynamic_cast<TAO_IIOP_Acceptor *>(acceptor);
-  if (iacc == 0)
+  if (iacc == nullptr)
     return false;
 
 #if 0

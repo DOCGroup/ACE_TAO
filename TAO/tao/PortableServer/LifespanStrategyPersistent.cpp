@@ -72,7 +72,7 @@ namespace TAO
           // In case we build shared, try to load the ImR Client library, in a
           // static build we just can't do this, so don't try it, lower layers
           // output an error then.
-          if (adapter == 0)
+          if (adapter == nullptr)
             {
               ACE_Service_Config::process_directive (
                 ACE_DYNAMIC_VERSIONED_SERVICE_DIRECTIVE(
@@ -85,7 +85,7 @@ namespace TAO
             }
 #endif /* !TAO_AS_STATIC_LIBS */
 
-          if (adapter != 0)
+          if (adapter != nullptr)
             {
               adapter->imr_notify_startup (this->poa_);
             }
@@ -110,7 +110,7 @@ namespace TAO
         ACE_Dynamic_Service<ImR_Client_Adapter>::instance (
           TAO_Root_POA::imr_client_adapter_name ());
 
-      if (adapter != 0)
+      if (adapter != nullptr)
         {
           adapter->imr_notify_shutdown (this->poa_);
         }
@@ -147,7 +147,7 @@ namespace TAO
       ImR_Client_Adapter *adapter =
         ACE_Dynamic_Service<ImR_Client_Adapter>::instance (
           TAO_Root_POA::imr_client_adapter_name ());
-      if (adapter == 0)
+      if (adapter == nullptr)
         {
           // couldn't load adapter, already reported error
           return CORBA::Object::_nil ();

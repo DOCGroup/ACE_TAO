@@ -11,7 +11,6 @@
  */
 
 #include "testing_exception.hpp"
-#include "ace/Copy_Disabled.h"
 
 #include <iostream>
 
@@ -56,7 +55,6 @@ private:
  *        number of times.
  */
 class expected_calls
-  : private ACE_Copy_Disabled
 {
 public:
   inline expected_calls(call_counter const & counter)
@@ -64,6 +62,11 @@ public:
     , previous_count_(counter.current_count())
     , counter_(counter)
   { }
+
+  expected_calls (const expected_calls &) = delete;
+  expected_calls (expected_calls &&) = delete;
+  expected_calls &operator= (const expected_calls &) = delete;
+  expected_calls &operator= (expected_calls &&) = delete;
 
   inline bool expect(long n)
   {

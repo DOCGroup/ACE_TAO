@@ -34,11 +34,6 @@ namespace TAO
     {
     }
 
-
-    Cached_Policies::~Cached_Policies ()
-    {
-    }
-
     void
     Cached_Policies::update (TAO_POA_Policy_Set &policy_set)
     {

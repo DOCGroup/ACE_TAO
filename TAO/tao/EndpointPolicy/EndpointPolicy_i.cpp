@@ -17,11 +17,6 @@ TAO_EndpointPolicy_i::TAO_EndpointPolicy_i (const TAO_EndpointPolicy_i &rhs)
 {
 }
 
-TAO_EndpointPolicy_i::~TAO_EndpointPolicy_i ()
-{
-}
-
-
 CORBA::PolicyType
 TAO_EndpointPolicy_i::policy_type ()
 {
@@ -31,20 +26,20 @@ TAO_EndpointPolicy_i::policy_type ()
 TAO_EndpointPolicy_i *
 TAO_EndpointPolicy_i::clone () const
 {
-  TAO_EndpointPolicy_i *copy = 0;
+  TAO_EndpointPolicy_i *copy {};
   ACE_NEW_RETURN (copy,
                   TAO_EndpointPolicy_i (*this),
-                  0);
+                  nullptr);
   return copy;
 }
 
 EndpointPolicy::EndpointList *
 TAO_EndpointPolicy_i::value ()
 {
-  EndpointPolicy::EndpointList* list = 0;
+  EndpointPolicy::EndpointList* list {};
   ACE_NEW_RETURN (list,
                   EndpointPolicy::EndpointList (this->value_),
-                  0);
+                  nullptr);
 
   return list;
 }
@@ -52,7 +47,7 @@ TAO_EndpointPolicy_i::value ()
 CORBA::Policy_ptr
 TAO_EndpointPolicy_i::copy ()
 {
-  TAO_EndpointPolicy_i* servant = 0;
+  TAO_EndpointPolicy_i* servant {};
   ACE_NEW_THROW_EX (servant,
                     TAO_EndpointPolicy_i (*this),
                     CORBA::NO_MEMORY ());

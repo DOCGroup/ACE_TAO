@@ -15,7 +15,6 @@
 
 #include "tao/GIOP_Fragmentation_Strategy.h"
 #include "ace/CDR_Base.h"
-#include "ace/Copy_Disabled.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -38,8 +37,7 @@ class TAO_Transport;
  *
  * @see TAO_GIOP_Fragmentation_Strategy
  */
-class TAO_On_Demand_Fragmentation_Strategy
-  : public TAO_GIOP_Fragmentation_Strategy
+class TAO_On_Demand_Fragmentation_Strategy : public TAO_GIOP_Fragmentation_Strategy
 {
 public:
   /// Constructor.
