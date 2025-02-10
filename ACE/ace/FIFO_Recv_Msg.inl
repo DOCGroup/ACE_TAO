@@ -1,11 +1,12 @@
 // -*- C++ -*-
-#include "ace/Min_Max.h"
 #include "ace/OS_NS_stropts.h"
 #include "ace/Truncate.h"
 
 #if !defined (ACE_HAS_STREAM_PIPES)
 #include "ace/OS_NS_unistd.h"
 #endif
+
+#include <algorithm>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -39,7 +40,7 @@ ACE_FIFO_Recv_Msg::recv (ACE_Str_Buf &recv_msg)
       size_t requested = static_cast<size_t> (recv_msg.maxlen);
       ssize_t recv_len = ACE_OS::read (this->get_handle (),
                                        (char *) recv_msg.buf,
-                                       ACE_MIN (remaining, requested));
+                                       (std::min) (remaining, requested));
 
       if (recv_len == -1)
         {
@@ -64,7 +65,7 @@ ACE_FIFO_Recv_Msg::recv (ACE_Str_Buf &recv_msg)
           char dev_null[throw_away];
           recv_len = ACE_OS::read (this->get_handle (),
                                    dev_null,
-                                   ACE_MIN (remaining, throw_away));
+                                   (std::min) (remaining, throw_away));
 
           if (recv_len == -1)
             {

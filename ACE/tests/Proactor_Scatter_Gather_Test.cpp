@@ -36,13 +36,12 @@
 #include "ace/Asynch_Acceptor.h"
 #include "ace/Asynch_Connector.h"
 #include "ace/Mem_Map.h"
-#include "ace/Min_Max.h"
 #include "ace/OS_NS_math.h"
 #include "ace/OS_NS_sys_stat.h"
 #include "ace/OS_NS_fcntl.h"
 #include "ace/OS_NS_unistd.h"
-
 #include "ace/SOCK_Connector.h"
+#include <algorithm>
 
 // For the Acceptor/Connector handlers maintenance lists
 static const  int SENDERS   = 1;
@@ -735,8 +734,7 @@ Writer::initiate_write_file ()
   size_t odd_count  = last_chunk (this->odd_chain_, dummy_last);
   size_t even_count = last_chunk (this->even_chain_, dummy_last);
 
-  size_t merge_size = ACE_MIN (ACE_MIN (odd_count, even_count),
-                               (size_t) ACE_IOV_MAX);
+  size_t const merge_size = (std::min) ((std::min) (odd_count, even_count), (size_t) ACE_IOV_MAX);
 
   // the options here are as follows:
   // io_count_ can be zero or greater.
@@ -1159,8 +1157,8 @@ Sender::initiate_read_file ()
   static const size_t number_of_chunks_needed_for_file =
     static_cast<size_t> (ACE_OS::ceil ((double) file_size / chunk_size));
 
-  size_t relevant_number_of_chunks =
-    ACE_MIN ((size_t)ACE_IOV_MAX,
+  size_t const relevant_number_of_chunks =
+    (std::min) ((size_t)ACE_IOV_MAX,
              number_of_chunks_needed_for_file
              - (size_t)(this->file_offset_ / chunk_size));
 
