@@ -1015,7 +1015,7 @@ resolve (const CosTrading::TraderName &name)
     this->trader_.trading_components ().link_if ();
 
   // Ensure that the link interface is supported.
-  if (! CORBA::is_nil (link_if))
+  if (CORBA::is_nil (link_if))
     return CosTrading::Register::_nil ();
 
   CosTrading::Link::LinkInfo_var link_info;
@@ -1035,7 +1035,7 @@ resolve (const CosTrading::TraderName &name)
     }
 
   // Ensure that the register pointer isn't nil.
-  if (! CORBA::is_nil (remote_reg.in ()))
+  if (CORBA::is_nil (remote_reg.in ()))
     throw CosTrading::Register::RegisterNotSupported (name);
 
   CosTrading::Register_ptr return_value = remote_reg.in ();
@@ -1061,8 +1061,7 @@ validate_properties (const char* type,
                      const CosTrading::PropertySeq& properties)
 {
   CORBA::ULong length = properties.length ();
-  const CosTradingRepos::ServiceTypeRepository::PropStructSeq&
-    prop_types = type_struct->props;
+  const CosTradingRepos::ServiceTypeRepository::PropStructSeq&prop_types = type_struct->props;
   TAO_Property_Evaluator_By_Name prop_eval (properties);
 
   // Perform property validation

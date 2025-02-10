@@ -387,10 +387,10 @@ Sender::pace_data ()
                                "Sender::pace_data send\n"),
                               -1);
 
-            ACE_DEBUG ((LM_DEBUG,
-                        "Sender::pace_data frame %d was sent successfully %d\n",
-                        ++this->frame_count_,
-                        buffer_size));
+          ACE_DEBUG ((LM_DEBUG,
+                      "Sender::pace_data frame %d was sent successfully %d\n",
+                      ++this->frame_count_,
+                      buffer_size));
 
           ++this->frame_count_;
 
