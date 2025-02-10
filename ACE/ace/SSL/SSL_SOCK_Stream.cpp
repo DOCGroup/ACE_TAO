@@ -158,8 +158,7 @@ ACE_SSL_SOCK_Stream::recvv (iovec *io_vec,
       ACE_NEW_RETURN (io_vec->iov_base,
                       char[inlen],
                       -1);
-      io_vec->iov_len = this->recv (io_vec->iov_base,
-                                    inlen);
+      io_vec->iov_len = static_cast<u_long> (this->recv (io_vec->iov_base, inlen));
       return io_vec->iov_len;
     }
   else
