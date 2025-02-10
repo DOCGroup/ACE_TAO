@@ -7,6 +7,7 @@
 #include "tao/operation_details.h"
 #include "tao/Stub.h"
 #include "tao/Transport.h"
+#include <algorithm>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -776,8 +777,7 @@ TAO_ZIOP_Loader::marshal_data (TAO_OutputCDR &cdr, TAO_ORB_Core &orb_core, TAO_S
               // The correct compression level to use is the smaller of the two
               // listed compression levels.
               Compression::CompressionLevel
-                compression_level = ACE_MIN (serverEntry->compression_level,
-                                             clientEntry->compression_level);
+                compression_level = (std::min) (serverEntry->compression_level, clientEntry->compression_level);
               if (6 < TAO_debug_level)
                 {
                   TAOLIB_DEBUG ((LM_DEBUG,

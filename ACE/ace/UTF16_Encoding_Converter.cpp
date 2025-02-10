@@ -22,11 +22,12 @@
 #if defined (ACE_USES_WCHAR)
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_Memory.h"
-#include "ace/Min_Max.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/UTF16_Encoding_Converter.inl"
 #endif /* __ACE_INLINE__ */
+
+#include <algorithm>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -299,16 +300,16 @@ ACE_UTF16_Encoding_Converter*
 ACE_UTF16_Encoding_Converter::encoded (const ACE_Byte* source,
                                        size_t source_size)
 {
-  static const size_t begin = 16;
-  static const size_t converted = begin * 4;
+  constexpr size_t begin = 16;
+  constexpr size_t converted = begin * 4;
 
   ACE_Byte target[converted];
-  ACE_UTF16_Encoding_Converter* converter = 0;
+  ACE_UTF16_Encoding_Converter* converter {};
   ACE_NEW_RETURN (converter,
                   ACE_UTF16_Encoding_Converter (false),
                   0);
   if (converter->to_utf8 (source,
-                          ACE_MIN (begin, source_size),
+                          (std::min) (begin, source_size),
                           target,
                           converted) == CONVERSION_OK)
     {
