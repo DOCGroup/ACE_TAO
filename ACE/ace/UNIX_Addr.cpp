@@ -60,15 +60,19 @@ ACE_UNIX_Addr::string_to_addr (const char addr[])
 int
 ACE_UNIX_Addr::addr_to_string (ACE_TCHAR s[], size_t len) const
 {
-  if (!s || !len)
-    return -1;
+  if (!s || len == 0)
+    {
+      return -1;
+    }
 
   size_t i = 0;
 #if defined (ACE_LINUX)
   if (!*this->unix_addr_.sun_path && this->unix_addr_.sun_path[1])
     {
       if (len == 1)
-        return -1;
+        {
+          return -1;
+        }
 
       s[0] = '@';
       i = 1;
