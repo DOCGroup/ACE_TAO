@@ -27,10 +27,10 @@ void
 Quoter_Stock_Factory_i::destroy_stock_objects ()
 {
   if (!CORBA::is_nil (this->stock_factory_poa_.in ()))
-    return;
-
-  this->stock_factory_poa_->destroy (1, 1);
-  this->stock_factory_poa_ = PortableServer::POA::_nil ();
+    {
+      this->stock_factory_poa_->destroy (1, 1);
+      this->stock_factory_poa_ = PortableServer::POA::_nil ();
+    }
 }
 
 void
@@ -71,16 +71,13 @@ Quoter_Stock_Factory_i::load_stock_objects (
     cin >> price;
     cin.ignore (1, '\n');
 
-    Quoter_Stock_i *stock =
-      new Quoter_Stock_i (symbol, full_name, price);
+    Quoter_Stock_i *stock = new Quoter_Stock_i (symbol, full_name, price);
 
     PortableServer::ServantBase_var servant = stock;
 
-    PortableServer::ObjectId_var oid =
-      PortableServer::string_to_ObjectId (symbol);
+    PortableServer::ObjectId_var oid = PortableServer::string_to_ObjectId (symbol);
 
-    this->stock_factory_poa_->activate_object_with_id (oid.in (),
-                                                servant.in ());
+    this->stock_factory_poa_->activate_object_with_id (oid.in (), servant.in ());
     stock->connect (supplier_admin);
   }
 }
