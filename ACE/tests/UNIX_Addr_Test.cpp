@@ -64,6 +64,11 @@ int run_main (int, ACE_TCHAR *[])
   ACE_UNIX_Addr a1 ("/tmp/testA");
   ACE_UNIX_Addr a2 ("/tmp/testB");
   ACE_TEST_ASSERT (a1 != a2);
+  a2.set ("@/tmp/foo");
+  ACE_TEST_ASSERT (a1 != a2);
+  a2.set ("/tmp/foo");
+  a1.set ("@/tmp/foo");
+  ACE_TEST_ASSERT (a1 != a2);
 
 #if defined(ACE_LINUX)
   // Bounds checking for abstract path
