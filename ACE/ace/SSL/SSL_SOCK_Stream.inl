@@ -317,8 +317,7 @@ ACE_SSL_SOCK_Stream::close ()
   // connection, not 0.
   int const status = ::SSL_shutdown (this->ssl_);
 
-  int status_2 = ::SSL_get_error (this->ssl_, status);
-  switch (status_2)
+  switch (::SSL_get_error (this->ssl_, status))
     {
     case SSL_ERROR_NONE:
       // Reset the SSL object to allow another connection to be made
