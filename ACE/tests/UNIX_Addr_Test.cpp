@@ -94,6 +94,23 @@ int run_main (int, ACE_TCHAR *[])
   ACE_TEST_ASSERT (strcmp (path, ACE_TEXT_ALWAYS_CHAR(buf)) == 0);
   ACE_TEST_ASSERT (*addr.get_path_name () == '\0');
   ACE_TEST_ASSERT (strcmp (path + 1, addr.get_path_name () + 1) == 0);
+
+  // Test maximum length abstract path
+  char max_path[108] = "@";  // sizeof(sun_path) is typically 108
+  ACE_OS::memset(max_path + 1, 'a', sizeof(max_path) - 2);
+  max_path[sizeof(max_path) - 1] = '\0';
+  addr.set(max_path);
+  ACE_TEST_ASSERT(addr.addr_to_string(buf, sizeof(buf)) == 0);
+  ACE_TEST_ASSERT(strcmp(max_path, ACE_TEXT_ALWAYS_CHAR(buf)) == 0);
+
+  // Test comparison of abstract paths
+  ACE_UNIX_Addr addr2("@/tmp/ace.test");
+  ACE_TEST_ASSERT(addr2 == addr2);
+  ACE_TEST_ASSERT(!(addr2 != addr2));
+
+  // Test invalid abstract paths
+  ACE_TEST_ASSERT(addr.set("@") == 0);  // Empty abstract path
+  ACE_TEST_ASSERT(addr.set("@@/tmp/test") == 0);  // Multiple @ prefixes
 #endif // ACE_LINUX
 
 #endif // ! ACE_LACKS_UNIX_DOMAIN_SOCKETS
