@@ -84,7 +84,42 @@ int run_main (int, ACE_TCHAR *[])
     ACE_TEST_ASSERT(!(addr1 == addr2));
   }
 
+  // Regular paths comparison
+  {
+    ACE_UNIX_Addr addr1 ("/tmp/test1");
+    ACE_UNIX_Addr addr2 ("/tmp/test1");
+    ACE_UNIX_Addr addr3 ("/tmp/test2");
+
+    ACE_TEST_ASSERT (addr1 == addr2);
+    ACE_TEST_ASSERT (!(addr1 == addr3));
+  }
+
+  {
+    ACE_UNIX_Addr addr1 ("/tmp/test1");
+    ACE_UNIX_Addr addr2 ("/tmp/test2");
+
+    ACE_TEST_ASSERT (!(addr1 == addr2));
+  }
+
 #if defined(ACE_LINUX)
+  // Abstract paths comparison
+  {
+    ACE_UNIX_Addr addr1 ("@test1");
+    ACE_UNIX_Addr addr2 ("@test1");
+    ACE_UNIX_Addr addr3 ("@test2");
+
+    ACE_TEST_ASSERT (addr1 == addr2);
+    ACE_TEST_ASSERT (!(addr1 == addr3));
+  }
+
+  // Mixed comparison (abstract vs regular)
+  {
+    ACE_UNIX_Addr addr1 ("@test1");
+    ACE_UNIX_Addr addr2 ("/test1");
+
+    ACE_TEST_ASSERT (!(addr1 == addr2));
+  }
+
   // Bounds checking for abstract path
   path = "@/tmp/bounds.test";
   addr.set (path);
