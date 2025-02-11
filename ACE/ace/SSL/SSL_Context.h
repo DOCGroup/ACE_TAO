@@ -104,6 +104,7 @@ public:
 
   enum {
     INVALID_METHOD = -1,
+    /* these negotiate highest available SSL/TLS version */
     SSLv23_client,
     SSLv23_server,
     SSLv23

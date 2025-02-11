@@ -8,7 +8,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/ACE.h"
-#include "ace/Min_Max.h"
 #include "ace/OS_Memory.h"
 #include "ace/Recyclable.h"
 
@@ -56,9 +55,9 @@ ACE_Pair_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUTES>::clear_cac
   // Calculate the no of entries to remove from the cache depending
   // upon the <purge_percent>.
   size_t const entries_to_remove
-    = ACE_MAX (static_cast<size_t> (1),
-               static_cast<size_t> (static_cast<double> (purge_percent)
-                                    / 100 * current_map_size));
+    = (std::max) (static_cast<size_t> (1),
+                  static_cast<size_t> (static_cast<double> (purge_percent)
+                                       / 100 * current_map_size));
   KEY *key_to_remove = 0;
   VALUE *value_to_remove = 0;
 
@@ -155,9 +154,9 @@ ACE_Recyclable_Handler_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUT
   // Calculate the no of entries to remove from the cache depending
   // upon the <purge_percent>.
   size_t const entries_to_remove
-    = ACE_MAX (static_cast<size_t> (1),
-               static_cast<size_t> (static_cast<double> (purge_percent)
-                                    / 100 * current_map_size));
+    = (std::max) (static_cast<size_t> (1),
+                  static_cast<size_t> (static_cast<double> (purge_percent)
+                                       / 100 * current_map_size));
 
   KEY *key_to_remove = 0;
   VALUE *value_to_remove = 0;
@@ -275,9 +274,9 @@ ACE_Refcounted_Recyclable_Handler_Caching_Utility<KEY, VALUE, CONTAINER, ITERATO
   // Calculate the no of entries to remove from the cache depending
   // upon the <purge_percent>.
   size_t entries_to_remove
-    = ACE_MAX (static_cast<size_t> (1),
-               static_cast<size_t> (static_cast<double> (purge_percent)
-                                    / 100 * available_entries));
+    = (std::max) (static_cast<size_t> (1),
+                  static_cast<size_t> (static_cast<double> (purge_percent)
+                                       / 100 * available_entries));
 
   if (entries_to_remove >= available_entries  || entries_to_remove == 0)
     entries_to_remove = available_entries - 1;
@@ -397,10 +396,10 @@ ACE_Handler_Caching_Utility<KEY, VALUE, CONTAINER, ITERATOR, ATTRIBUTES>::clear_
 
   // Calculate the no of entries to remove from the cache depending
   // upon the <purge_percent>.
-  size_t entries_to_remove
-    = ACE_MAX (static_cast<size_t> (1),
-               static_cast<size_t> (static_cast<double> (purge_percent)
-                                    / 100 * current_map_size));
+  size_t const entries_to_remove
+    = (std::max) (static_cast<size_t> (1),
+                  static_cast<size_t> (static_cast<double> (purge_percent)
+                                       / 100 * current_map_size));
 
   KEY *key_to_remove = 0;
   VALUE *value_to_remove = 0;

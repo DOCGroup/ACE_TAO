@@ -45,7 +45,7 @@
 #include "ace/Atomic_Op.h"
 #include "ace/SString.h"
 #include "ace/Signal.h"
-#include "ace/Min_Max.h"
+#include <algorithm>
 
 #if defined (ACE_HAS_IP_MULTICAST) && defined (ACE_HAS_THREADS)
 
@@ -106,7 +106,7 @@ public:
       if (IP_MAX_MEMBERSHIPS == 0)
         this->groups_ = MCT_GROUPS;
       else
-        this->groups_ = ACE_MIN (IP_MAX_MEMBERSHIPS, MCT_GROUPS);
+        this->groups_ = (std::min) (IP_MAX_MEMBERSHIPS, MCT_GROUPS);
     }
 
   ~MCT_Config ()
@@ -269,7 +269,7 @@ MCT_Config::open (int argc, ACE_TCHAR *argv[])
             if (IP_MAX_MEMBERSHIPS == 0)
               this->groups_ = n;
             else
-              this->groups_ = ACE_MIN (ACE_MAX (n, MCT_MIN_GROUPS),
+              this->groups_ = (std::min) ((std::max) (n, MCT_MIN_GROUPS),
                                        IP_MAX_MEMBERSHIPS);
             break;
           }
