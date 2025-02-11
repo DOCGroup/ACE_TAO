@@ -18,8 +18,8 @@ closedir (ACE_DIR *d)
   ACE_OS::closedir_emulation (d);
   delete [] d->directory_name_;
   delete d;
-# elif defined (ACE_HAS_WCLOSEDIR) && defined (ACE_USES_WCHAR)
-  ::wclosedir (d);
+# elif defined (ACE_HAS_WCLOSEDIR_EQUIVALENT) && defined (ACE_USES_WCHAR)
+  ACE_HAS_WCLOSEDIR_EQUIVALENT (d);
 # else /* ACE_WIN32 && ACE_LACKS_CLOSEDIR */
   ::closedir (d);
 # endif /* ACE_WIN32 && ACE_LACKS_CLOSEDIR */
@@ -35,8 +35,8 @@ opendir (const ACE_TCHAR *filename)
 #if defined (ACE_HAS_DIRENT)
 #    if (defined (ACE_WIN32) || defined(ACE_MQX)) && defined (ACE_LACKS_OPENDIR)
   return ::ACE_OS::opendir_emulation (filename);
-#  elif defined (ACE_HAS_WOPENDIR) && defined (ACE_USES_WCHAR)
-  return ::wopendir (filename);
+#  elif defined (ACE_HAS_WOPENDIR_EQUIVALENT) && defined (ACE_USES_WCHAR)
+  return ACE_HAS_WOPENDIR_EQUIVALENT (filename);
 #    else /* ! ACE_WIN32 && ACE_LACKS_OPENDIR */
   return ::opendir (ACE_TEXT_ALWAYS_CHAR (filename));
 #    endif /* ACE_WIN32 && ACE_LACKS_OPENDIR */
@@ -52,8 +52,8 @@ readdir (ACE_DIR *d)
 #if defined (ACE_HAS_DIRENT)
 #  if (defined (ACE_WIN32) || defined (ACE_MQX)) && defined (ACE_LACKS_READDIR)
      return ACE_OS::readdir_emulation (d);
-#  elif defined (ACE_HAS_WREADDIR) && defined (ACE_USES_WCHAR)
-     return ::wreaddir (d);
+#  elif defined (ACE_HAS_WREADDIR_EQUIVALENT) && defined (ACE_USES_WCHAR)
+     return ACE_HAS_WREADDIR_EQUIVALENT (d);
 #  else /* ACE_WIN32 && ACE_LACKS_READDIR */
      return ::readdir (d);
 #  endif /* ACE_WIN32 && ACE_LACKS_READDIR */
@@ -67,8 +67,8 @@ ACE_INLINE void
 rewinddir (ACE_DIR *d)
 {
 #if defined (ACE_HAS_DIRENT)
-#  if defined (ACE_HAS_WREWINDDIR) && defined (ACE_USES_WCHAR)
-  ::wrewinddir (d);
+#  if defined (ACE_HAS_WREWINDDIR_EQUIVALENT) && defined (ACE_USES_WCHAR)
+  ACE_HAS_WREWINDDIR_EQUIVALENT (d);
 #  elif !defined (ACE_LACKS_REWINDDIR)
   ace_rewinddir_helper (d);
 #  else

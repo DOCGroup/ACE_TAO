@@ -31,7 +31,7 @@ public:
     typedef unsigned size_type;
     reference(Dynamic_Bitset* bitset, size_type bit);
     reference operator = (bool val);
-    operator bool () const;
+    explicit operator bool () const;
   private:
     Dynamic_Bitset* bitset_;
     size_type bit_;

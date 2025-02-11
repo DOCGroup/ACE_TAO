@@ -15,12 +15,7 @@ TAO_CEC_SupplierAdmin::TAO_CEC_SupplierAdmin (TAO_CEC_EventChannel *ec)
      push_admin_ (ec),
      pull_admin_ (ec)
 {
-  this->default_POA_ =
-    this->event_channel_->supplier_poa ();
-}
-
-TAO_CEC_SupplierAdmin::~TAO_CEC_SupplierAdmin ()
-{
+  this->default_POA_ = this->event_channel_->supplier_poa ();
 }
 
 PortableServer::POA_ptr

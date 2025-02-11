@@ -177,16 +177,6 @@ TAO_CEC_TypedEventChannel::get_servant_retry_map ()
 }
 
 ACE_INLINE
-TAO_CEC_Param::TAO_CEC_Param ()
-{
-}
-
-ACE_INLINE
-TAO_CEC_Param::~TAO_CEC_Param ()
-{
-}
-
-ACE_INLINE
 TAO_CEC_Operation_Params::TAO_CEC_Operation_Params (CORBA::ULong num_params)
   :  num_params_ (num_params)
 {

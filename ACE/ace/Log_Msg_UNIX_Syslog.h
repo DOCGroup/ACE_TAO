@@ -38,7 +38,7 @@ public:
   ACE_Log_Msg_UNIX_Syslog () = default;
 
   /// Destructor
-  virtual ~ACE_Log_Msg_UNIX_Syslog ();
+  ~ACE_Log_Msg_UNIX_Syslog () override;
 
   /// Open a new event log.
   /**
@@ -48,16 +48,16 @@ public:
    *                   it is 0 (no name), the application name as
    *                   returned from ACE_Log_Msg::program_name() is used.
    */
-  virtual int open (const ACE_TCHAR *logger_key);
+  int open (const ACE_TCHAR *logger_key) override;
 
   /// Reset the backend.
-  virtual int reset ();
+  int reset () override;
 
   /// Close the backend completely.
-  virtual int close ();
+  int close () override;
 
   /// This is called when we want to log a message.
-  virtual ssize_t log (ACE_Log_Record &log_record);
+  ssize_t log (ACE_Log_Record &log_record) override;
 
 private:
   /// Convert an ACE_Log_Priority value to the corresponding syslog priority.

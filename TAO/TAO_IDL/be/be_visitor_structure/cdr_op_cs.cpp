@@ -52,9 +52,12 @@ be_visitor_structure_cdr_op_cs::visit_structure (be_structure *node)
   //  Set the sub state as generating code for the output operator.
   this->ctx_->sub_state (TAO_CodeGen::TAO_CDR_OUTPUT);
 
+  const bool empty = node->nfields () == 0;
+  const char *const strm = empty ? "" : "strm";
+  const char *const tao_aggregate = empty ? "" : "_tao_aggregate";
   *os << "::CORBA::Boolean operator<< (" << be_idt << be_idt_nl
-      << "TAO_OutputCDR &strm," << be_nl
-      << "const " << node->name () << " &_tao_aggregate)" << be_uidt
+      << "TAO_OutputCDR &" << strm << "," << be_nl
+      << "const " << node->name () << " &" << tao_aggregate << ")" << be_uidt
       << be_uidt_nl
       << "{" << be_idt_nl;
 
@@ -81,7 +84,7 @@ be_visitor_structure_cdr_op_cs::visit_structure (be_structure *node)
                         -1);
     }
 
-  *os << ";" << be_uidt << be_uidt_nl
+  *os << "true;" << be_uidt << be_uidt_nl
       << "}" << be_nl_2;
 
   // Set the substate as generating code for the input operator.
@@ -92,7 +95,7 @@ be_visitor_structure_cdr_op_cs::visit_structure (be_structure *node)
 
   if (! node->is_local ())
     {
-      *os << "strm";
+      *os << strm;
     }
 
   *os << "," << be_nl
@@ -100,7 +103,7 @@ be_visitor_structure_cdr_op_cs::visit_structure (be_structure *node)
 
   if (! node->is_local ())
     {
-      *os << "_tao_aggregate";
+      *os << tao_aggregate;
     }
 
   *os << ")" << be_uidt << be_uidt_nl
@@ -135,7 +138,7 @@ be_visitor_structure_cdr_op_cs::visit_structure (be_structure *node)
                             -1);
         }
 
-      *os << ";" << be_uidt << be_uidt;
+      *os << "true;" << be_uidt << be_uidt;
     }
 
   *os << be_uidt_nl << "}" << be_nl;
@@ -157,8 +160,7 @@ be_visitor_structure_cdr_op_cs::post_process (be_decl *bd)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  if (!this->last_node (bd)
-      && bd->node_type () != AST_Decl::NT_enum_val)
+  if (bd->node_type () != AST_Decl::NT_enum_val)
     {
       switch (this->ctx_->sub_state ())
         {

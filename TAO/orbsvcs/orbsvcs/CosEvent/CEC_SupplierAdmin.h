@@ -57,7 +57,7 @@ public:
   TAO_CEC_SupplierAdmin (TAO_CEC_EventChannel* event_channel);
 
   /// destructor...
-  virtual ~TAO_CEC_SupplierAdmin ();
+  virtual ~TAO_CEC_SupplierAdmin () = default;
 
   /// For each elements call <worker->work()>.
   void for_each (TAO_ESF_Worker<TAO_CEC_ProxyPushConsumer> *worker);

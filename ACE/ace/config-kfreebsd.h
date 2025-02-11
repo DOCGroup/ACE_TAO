@@ -164,9 +164,6 @@
 /* Define to 1 if platform has pthread_setconcurrency(). */
 #define ACE_HAS_PTHREAD_SETCONCURRENCY 1
 
-/* Define to 1 if platform has the declaration of pthread_sigmask(). */
-#define ACE_HAS_PTHREAD_SIGMASK_PROTOTYPE 1
-
 /* Platform has pread() and pwrite() support. */
 #define ACE_HAS_P_READ_WRITE 1
 

@@ -778,7 +778,7 @@ ACE_Configuration_Win32Registry::get_string_value (const ACE_Configuration_Secti
       return -1;
     }
 
-  value = buffer.get ();
+  value.set (buffer.get (), buffer_length, true);
   return 0;
 }
 

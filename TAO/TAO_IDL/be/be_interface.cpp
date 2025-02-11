@@ -2228,45 +2228,6 @@ be_interface::is_a_helper (be_interface * /*derived*/,
 }
 
 int
-be_interface::copy_ctor_helper (be_interface *derived,
-                                be_interface *base,
-                                TAO_OutStream *os)
-{
-  // We can't call ourselves in a copy constructor, and
-  // abstract interfaces don't exist on the skeleton side.
-  if (derived == base || base->is_abstract ())
-    {
-      return 0;
-    }
-
-  *os << "," << be_idt_nl;
-
-  bool is_rh_base =
-    (ACE_OS::strcmp (base->flat_name (), "Messaging_ReplyHandler") == 0);
-
-  if (is_rh_base)
-    {
-      *os << "::POA_Messaging::ReplyHandler (rhs)";
-    }
-  else if (base->is_nested ())
-    {
-      be_decl *scope = nullptr;
-      scope = dynamic_cast<be_scope*> (base->defined_in ())->decl ();
-
-      *os << "POA_" << scope->name () << "::"
-          << base->local_name () << " (rhs)";
-    }
-  else
-    {
-      *os << base->full_skel_name () << " (rhs)";
-    }
-
-  *os << be_uidt;
-
-  return 0;
-}
-
-int
 be_interface::in_mult_inheritance_helper (be_interface *derived,
                                           be_interface *base,
                                           TAO_OutStream *)

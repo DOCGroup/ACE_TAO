@@ -208,6 +208,9 @@ private:
 
   /// The number of retries before disconnecting a proxy
   unsigned int proxy_disconnect_retries_;
+
+  /// The flag which allows or not to wait the message queue threads completion
+  bool wait_for_shutdown_thread_completion_ { true };
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

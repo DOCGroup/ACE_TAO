@@ -7,8 +7,6 @@
 # include "ace/Array_Map.inl"
 #endif  /* !__ACE_INLINE__ */
 
-#include "ace/checked_iterator.h"
-
 #include <algorithm>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -23,8 +21,7 @@ ACE_Array_Map<Key, Value, EqualTo, Alloc>::ACE_Array_Map (InputIterator f,
 {
   (void) std::uninitialized_copy (f,
                                   l,
-                                  ACE_make_checked_array_iterator (this->begin (),
-                                                                   this->size_));
+                                  this->begin ());
 }
 
 template<typename Key, typename Value, class EqualTo, class Alloc>
@@ -36,8 +33,7 @@ ACE_Array_Map<Key, Value, EqualTo, Alloc>::ACE_Array_Map (
 {
   (void) std::uninitialized_copy (map.begin (),
                                   map.end (),
-                                  ACE_make_checked_array_iterator (this->begin (),
-                                                                   this->size_));
+                                  this->begin ());
 }
 
 template<typename Key, typename Value, class EqualTo, class Alloc>
@@ -215,8 +211,7 @@ ACE_Array_Map<Key, Value, EqualTo, Alloc>::grow (
 
       std::copy (this->begin (),
                  this->end (),
-                 ACE_make_checked_array_iterator (temp.begin (),
-                                                  temp.capacity_));
+                 temp.begin ());
 
       size_type const n = this->size ();  // Do not swap out the size
                                           // since we bypassed the
@@ -241,8 +236,7 @@ operator== (ACE_Array_Map<Key, Value, EqualTo, Alloc> const & lhs,
   return (lhs.size () == rhs.size ()
           && std::equal (lhs.begin (),
                          lhs.end (),
-                         ACE_make_checked_array_iterator (rhs.begin (),
-                                                          rhs.size ())));
+                         rhs.begin ()));
 }
 
 template <typename Key, typename Value, class EqualTo, class Alloc>

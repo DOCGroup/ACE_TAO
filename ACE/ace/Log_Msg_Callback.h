@@ -56,7 +56,7 @@ public:
   ACE_Log_Msg_Callback () = default;
 
   /// No-op virtual destructor.
-  virtual ~ACE_Log_Msg_Callback ();
+  virtual ~ACE_Log_Msg_Callback () = default;
 
   /// Callback routine.  This is called when we want to log a message.
   /// Since this routine is pure virtual, it must be overwritten by the

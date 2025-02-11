@@ -13,13 +13,7 @@ TAO_CEC_TypedConsumerAdmin::TAO_CEC_TypedConsumerAdmin (TAO_CEC_TypedEventChanne
   :  typed_event_channel_ (ec),
      typed_push_admin_ (ec)
 {
-  this->default_POA_ =
-    this->typed_event_channel_->typed_consumer_poa ();
-}
-
-// Implementation skeleton destructor
-TAO_CEC_TypedConsumerAdmin::~TAO_CEC_TypedConsumerAdmin ()
-{
+  this->default_POA_ = this->typed_event_channel_->typed_consumer_poa ();
 }
 
 void

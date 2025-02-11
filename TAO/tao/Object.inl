@@ -8,7 +8,7 @@ ACE_INLINE
 CORBA::Boolean
 CORBA::is_nil<> (CORBA::Object_ptr obj)
 {
-  if (obj == 0)
+  if (!obj)
     {
       return true;
     }
@@ -24,8 +24,8 @@ CORBA::Object::Object (int)
     is_local_ (true),
     is_evaluated_ (true),
     ior_ (),
-    orb_core_ (0),
-    protocol_proxy_ (0)
+    orb_core_ (nullptr),
+    protocol_proxy_ (nullptr)
 {
 }
 

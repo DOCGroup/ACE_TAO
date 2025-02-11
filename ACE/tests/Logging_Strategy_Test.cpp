@@ -40,7 +40,6 @@
 #include "ace/Logging_Strategy.h"
 #endif
 
-#include "ace/Auto_Ptr.cpp"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_time.h"
 

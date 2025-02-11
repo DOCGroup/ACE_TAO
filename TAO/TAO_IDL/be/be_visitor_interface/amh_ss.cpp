@@ -200,7 +200,7 @@ TAO_IDL_Copy_Ctor_Worker::emit (be_interface *derived,
       TAO_OutStream *os,
       be_interface *base)
 {
-  if (derived == base)
+  if (derived == base || derived->nmembers () > 0)
     {
       return 0;
     }

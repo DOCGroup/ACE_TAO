@@ -1,0 +1,6 @@
+project: taoexe {
+  idlflags += --idl-version 4
+  IDL_Files {
+    test.idl
+  }
+}

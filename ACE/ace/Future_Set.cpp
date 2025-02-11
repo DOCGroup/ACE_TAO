@@ -59,14 +59,13 @@ ACE_Future_Set<T>::is_empty () const
 template <class T> int
 ACE_Future_Set<T>::insert (ACE_Future<T> &future)
 {
-  FUTURE_HOLDER *future_holder;
+  FUTURE_HOLDER *future_holder {};
   ACE_NEW_RETURN (future_holder,
                   FUTURE_HOLDER (future),
                   -1);
 
   FUTURE_REP *future_rep = future.get_rep ();
-  int result = this->future_map_.bind (future_rep,
-                                       future_holder);
+  int const result = this->future_map_.bind (future_rep, future_holder);
 
   // If a new map entry was created, then attach to the future,
   // otherwise we were already attached to the future or some error
@@ -83,7 +82,7 @@ ACE_Future_Set<T>::insert (ACE_Future<T> &future)
 template <class T> void
 ACE_Future_Set<T>::update (const ACE_Future<T> &future)
 {
-  ACE_Message_Block *mb = 0;
+  ACE_Message_Block *mb = nullptr;
   FUTURE &local_future = const_cast<ACE_Future<T> &> (future);
 
   ACE_NEW (mb,
@@ -100,12 +99,11 @@ ACE_Future_Set<T>::next_readable (ACE_Future<T> &future,
   if (this->is_empty ())
     return 0;
 
-  ACE_Message_Block *mb = 0;
-  FUTURE_REP *future_rep = 0;
+  ACE_Message_Block *mb = nullptr;
+  FUTURE_REP *future_rep = nullptr;
 
   // Wait for a "readable future" signal from the message queue.
-  if (this->future_notification_queue_->dequeue_head (mb,
-                                                      tv) != -1)
+  if (this->future_notification_queue_->dequeue_head (mb, tv) != -1)
     {
       // Extract future rep from the message block.
       future_rep = reinterpret_cast<FUTURE_REP *> (mb->base ());
@@ -117,9 +115,8 @@ ACE_Future_Set<T>::next_readable (ACE_Future<T> &future,
     return 0;
 
   // Remove the hash map entry with the specified future rep from our map.
-  FUTURE_HOLDER *future_holder = 0;
-  if (this->future_map_.find (future_rep,
-                              future_holder) != -1)
+  FUTURE_HOLDER *future_holder = nullptr;
+  if (this->future_map_.find (future_rep, future_holder) != -1)
     {
       future = future_holder->item_;
       this->future_map_.unbind (future_rep);

@@ -230,6 +230,9 @@ def update_version_files (component):
 #define {comp}_MICRO_VERSION {micro}
 #define {comp}_VERSION \"{version}\"
 #define {comp}_VERSION_CODE 0x{code:x}
+#if !defined ({comp}_PATCH)
+# define {comp}_PATCH \"\"
+#endif
 #define {comp}_MAKE_VERSION_CODE(a,b,c) (((a) << 16) + ((b) << 8) + (c))
 """.format(**parts)
 
@@ -448,20 +451,20 @@ def get_comp_versions (component):
 
 
 def update_latest_branch (product, which, main_branch):
-    """Update one of the Latest_ACE7TAO3_* branches to point to the new release.
+    """Update one of the Latest_ACE8TAO4_* branches to point to the new release.
     """
 
-    name = "Latest_ACE7TAO3_" + which
+    name = "Latest_ACE8TAO4_" + which
 
     vprint ('Fast-forwarding', name, 'to', main_branch)
     ex ("cd $DOC_ROOT/" + product + " && git fetch . " + main_branch +  ":" + name)
 
 
 def push_latest_branch (product, which, main_branch):
-    """Update one of the remote Latest_ACE7TAO3_* branches to point to the new release.
+    """Update one of the remote Latest_ACE8TAO4_* branches to point to the new release.
     """
 
-    name = "Latest_ACE7TAO3_" + which
+    name = "Latest_ACE8TAO4_" + which
 
     if opts.push:
         vprint ("Pushing branch", name)
@@ -764,8 +767,8 @@ def generate_workspaces (stage_dir):
     mpc_option = ' -recurse -hierarchy -relative ACE_ROOT=' + stage_dir + '/ACE_wrappers '
     mpc_option += ' -relative TAO_ROOT=' + stage_dir + '/ACE_wrappers/TAO '
     msvc_exclude_option = ' '
-    vs2017_option = ' -name_modifier *_vs2017 '
     vs2019_option = ' -name_modifier *_vs2019 '
+    vs2022_option = ' -name_modifier *_vs2022 '
 
     redirect_option = str ()
     if not opts.verbose:
@@ -775,13 +778,13 @@ def generate_workspaces (stage_dir):
     ex (mpc_command + " -type gnuace " + \
         exclude_option + workers_option + mpc_option + redirect_option)
 
-    print ("\tGenerating VS2017 solutions...")
-    ex (mpc_command + " -type vs2017 "  + \
-        msvc_exclude_option + mpc_option + workers_option + vs2017_option + redirect_option)
-
     print ("\tGenerating VS2019 solutions...")
     ex (mpc_command + " -type vs2019 " + \
         msvc_exclude_option + mpc_option + workers_option + vs2019_option + redirect_option)
+
+    print ("\tGenerating VS2022 solutions...")
+    ex (mpc_command + " -type vs2022 "  + \
+        msvc_exclude_option + mpc_option + workers_option + vs2022_option + redirect_option)
 
     print ("\tCorrecting permissions for all generated files...")
     regex = [

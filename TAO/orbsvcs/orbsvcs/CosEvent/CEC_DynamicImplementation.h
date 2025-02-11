@@ -35,7 +35,7 @@ public:
                                        TAO_CEC_TypedEventChannel *typed_event_channel);
 
   /// Destructor
-  virtual ~TAO_CEC_DynamicImplementationServer ();
+  virtual ~TAO_CEC_DynamicImplementationServer () = default;
 
   // = The DynamicImplementation methods.
   virtual void invoke (CORBA::ServerRequest_ptr request);

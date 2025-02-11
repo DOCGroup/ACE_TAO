@@ -461,6 +461,15 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
 }
 
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
+                                      const std::string_view &x)
+{
+  return
+    os.fragment_stream (ACE_CDR::OCTET_ALIGN,
+                        sizeof (char))
+    && static_cast<ACE_OutputCDR &> (os) << x;
+}
+
+ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
                                       ACE_OutputCDR::from_std_string x)
 {
   if (x.bound_ != 0 &&

@@ -135,7 +135,7 @@ private:
   /// Read the value from the input stream
   void from_inputCDR (TAO_InputCDR &);
 
-  /// These are not implimented!
+  /// These are not implemented!
   /// Use copy() or assign() instead of these.
   TAO_DynValue_i (const TAO_DynValue_i &src);
   TAO_DynValue_i &operator= (const TAO_DynValue_i &src);

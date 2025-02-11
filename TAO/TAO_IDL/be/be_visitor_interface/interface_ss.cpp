@@ -107,37 +107,21 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
 
   *os << full_skel_name << "::"
       << local_name_prefix << node_local_name
-      << " ()" << be_idt_nl;
+      << " ()";
 
-  *os << ": TAO_ServantBase ()" << be_uidt_nl;
+  if (node->nmembers () == 0)
+    {
+      *os << be_idt_nl << ": TAO_ServantBase ()" << be_uidt_nl;
+    }
+  else
+    {
+      *os << be_nl;
+    }
 
   // Default constructor body.
   *os << "{" << be_idt_nl
-      << "this->optable_ = std::addressof(tao_" << flat_name
+      << "this->optable_ = std::addressof (tao_" << flat_name
       << "_optable);" << be_uidt_nl
-      << "}" << be_nl_2;
-
-  // find if we are at the top scope or inside some module
-  *os << full_skel_name << "::"
-      << local_name_prefix << node_local_name << " ("
-      << "const " << local_name_prefix
-      << node_local_name << "& rhs)";
-
-  *os << be_idt_nl
-      << ": TAO_Abstract_ServantBase (rhs)," << be_nl
-      << "  TAO_ServantBase (rhs)";
-
-  if (this->generate_copy_ctor (node, os) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_visitor_interface_ss::")
-                         ACE_TEXT ("visit_interface - ")
-                         ACE_TEXT (" copy ctor generation failed\n")),
-                        -1);
-    }
-
-  *os << be_uidt_nl
-      << "{" << be_nl
       << "}" << be_nl_2;
 
   // Generate code for elements in the scope (e.g., operations).
@@ -442,14 +426,6 @@ be_visitor_interface_ss::generate_proxy_classes (be_interface *node)
     }
 
   return 0;
-}
-
-int
-be_visitor_interface_ss::generate_copy_ctor (be_interface *node,
-                                             TAO_OutStream *os)
-{
-  return node->traverse_inheritance_graph (be_interface::copy_ctor_helper,
-                                           os);
 }
 
 ACE_CString

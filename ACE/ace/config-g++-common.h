@@ -14,25 +14,20 @@
 #define ACE_CC_MINOR_VERSION __GNUC_MINOR__
 #define ACE_CC_BETA_VERSION (0)
 
+#if __cplusplus >= 202302L
+# define ACE_HAS_CPP23
+#endif
 #if __cplusplus >= 202002L
 # define ACE_HAS_CPP20
 #endif
 #if __cplusplus >= 201703L
 # define ACE_HAS_CPP17
-# define ACE_FALLTHROUGH [[fallthrough]]
 #endif
 #if __cplusplus >= 201402L
 # define ACE_HAS_CPP14
 #endif
 #if __cplusplus >= 201103L
 # define ACE_HAS_CPP11
-# if !defined (ACE_FALLTHROUGH)
-#  if __GNUC__ >= 7
-#   define ACE_FALLTHROUGH [[gnu::fallthrough]]
-#  else
-#   define ACE_FALLTHROUGH
-#  endif
-# endif
 #endif
 
 #if (defined (i386) || defined (__i386__)) && !defined (ACE_SIZEOF_LONG_DOUBLE)
@@ -60,10 +55,6 @@
 #define ACE_HAS_GCC_DESTRUCTOR_ATTRIBUTE 1
 #endif
 
-#if !defined (ACE_HAS_GCC_DEPRECATED_ATTRIBUTE)
-#define ACE_HAS_GCC_DEPRECATED_ATTRIBUTE 1
-#endif
-
 #if !defined (ACE_HAS_GCC_FORMAT_ATTRIBUTE)
 #define ACE_HAS_GCC_FORMAT_ATTRIBUTE 1
 #endif
@@ -74,10 +65,6 @@
 
 #if (ACE_HAS_GCC_DESTRUCTOR_ATTRIBUTE == 1)
 # define ACE_GCC_DESTRUCTOR_ATTRIBUTE __attribute__ ((destructor))
-#endif
-
-#if (ACE_HAS_GCC_DEPRECATED_ATTRIBUTE == 1)
-#define ACE_DEPRECATED __attribute__ ((deprecated))
 #endif
 
 #if (ACE_HAS_GCC_FORMAT_ATTRIBUTE == 1)

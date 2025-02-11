@@ -418,7 +418,6 @@ inline int puts(const char* str) {
 #define ACE_MKDIR_LACKS_MODE
 
 // POSIX
-#define ACE_HAS_PTHREAD_SIGMASK_PROTOTYPE
 #define ACE_LACKS_SEMBUF_T
 #define ACE_LACKS_UNIX_DOMAIN_SOCKETS
 #define ACE_LACKS_KILL

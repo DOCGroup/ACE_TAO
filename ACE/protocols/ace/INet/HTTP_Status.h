@@ -121,7 +121,7 @@ namespace ACE
               bool is_ok () const;
 
               /// Return true in case of a *valid* HTTP status
-              operator bool () const;
+              explicit operator bool () const;
 
               /// Return true if status code == INVALID
               bool operator !() const;

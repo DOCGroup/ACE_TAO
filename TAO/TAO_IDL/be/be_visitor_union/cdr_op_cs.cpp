@@ -43,6 +43,9 @@ namespace {
         case AST_Expression::EV_int8:
           tmp_suffix = "int8";
           break;
+        case AST_Expression::EV_octet:
+          tmp_suffix = "octet";
+          break;
         default:
           break;
       }

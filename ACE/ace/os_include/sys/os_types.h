@@ -28,6 +28,10 @@
 #  include /**/ <sys/types.h>
 #endif /* !ACE_LACKS_SYS_TYPES_H */
 
+#if !defined (ACE_LACKS_FCNTL_H)
+# include /**/ <fcntl.h>
+#endif /* !ACE_LACKS_FCNTL_H */
+
 # if defined (ACE_USES_STD_NAMESPACE_FOR_STDC_LIB) && \
              (ACE_USES_STD_NAMESPACE_FOR_STDC_LIB != 0)
 using std::time_t;

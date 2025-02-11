@@ -269,12 +269,14 @@ namespace ACE_Utils
     /// Initialization state of the generator.
     bool is_init_;
   };
-
-  typedef ACE_Singleton <ACE_Utils::UUID_Generator, ACE_SYNCH_MUTEX>
-          UUID_GENERATOR;
 }
 
 ACE_SINGLETON_DECLARE (ACE_Singleton, ACE_Utils::UUID_Generator, ACE_SYNCH_MUTEX)
+
+namespace ACE_Utils
+{
+  typedef ACE_Singleton <ACE_Utils::UUID_Generator, ACE_SYNCH_MUTEX> UUID_GENERATOR;
+}
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 

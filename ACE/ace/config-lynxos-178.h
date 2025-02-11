@@ -53,7 +53,6 @@
 #if ACE_MT_SAFE == 1
   // Platform supports threads.
 # define ACE_HAS_NONCONST_PTHREAD_SIGMASK
-# define ACE_HAS_PTHREAD_SIGMASK_PROTOTYPE
 #endif /* ACE_MT_SAFE */
 
 #include /**/ "ace/post.h"

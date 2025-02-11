@@ -1121,10 +1121,18 @@ ACE_Process_Options::release_handles ()
       ACE_OS::close (startup_info_.hStdInput);
       ACE_OS::close (startup_info_.hStdOutput);
       ACE_OS::close (startup_info_.hStdError);
+
+      startup_info_.hStdInput = ACE_INVALID_HANDLE;
+      startup_info_.hStdOutput = ACE_INVALID_HANDLE;
+      startup_info_.hStdError = ACE_INVALID_HANDLE;
 #else /* ACE_WIN32 */
       ACE_OS::close (stdin_);
       ACE_OS::close (stdout_);
       ACE_OS::close (stderr_);
+
+      stdin_ = ACE_INVALID_HANDLE;
+      stdout_ = ACE_INVALID_HANDLE;
+      stderr_ = ACE_INVALID_HANDLE;
 #endif /* ACE_WIN32 */
       set_handles_called_ = 0;
     }

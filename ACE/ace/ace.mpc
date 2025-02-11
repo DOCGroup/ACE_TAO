@@ -92,8 +92,6 @@ project(ACE) : ace_output, acedefaults, install, other, codecs, token, svcconf, 
     Log_Category.cpp
     Log_Msg.cpp
     Log_Msg_Android_Logcat.cpp
-    Log_Msg_Backend.cpp
-    Log_Msg_Callback.cpp
     Log_Msg_IPC.cpp
     Log_Msg_NT_Event_Log.cpp
     Log_Msg_UNIX_Syslog.cpp
@@ -297,7 +295,6 @@ project(ACE) : ace_output, acedefaults, install, other, codecs, token, svcconf, 
     Auto_Event.cpp
     Auto_Functor.cpp
     Auto_IncDec_T.cpp
-    Auto_Ptr.cpp
     Based_Pointer_T.cpp
     Bound_Ptr.cpp
     Cache_Map_Manager_T.cpp
@@ -414,6 +411,8 @@ project(ACE) : ace_output, acedefaults, install, other, codecs, token, svcconf, 
     IO_Cntl_Msg.h
     Intrusive_Auto_Ptr.h
     Lock_Adapter_T.h
+    Log_Msg_Backend.h
+    Log_Msg_Callback.h
     Log_Priority.h
     Malloc_Base.h
     Metrics_Cache.h
@@ -465,7 +464,6 @@ project(ACE) : ace_output, acedefaults, install, other, codecs, token, svcconf, 
     Version.h
     Versioned_Namespace.h
     ace_wchar.h
-    checked_iterator.h
     config-*.h
     config.h
     iosfwd.h

@@ -110,7 +110,7 @@ ACE_Test_Output::set_output (const ACE_TCHAR *filename, int append)
 #if defined (ACE_VXWORKS)
   // This is the only way I could figure out to avoid a console
   // warning about opening an existing file (w/o O_CREAT), or
-  // attempting to unlink a non-existant one.
+  // attempting to unlink a non-existent one.
   ACE_HANDLE fd = ACE_OS::open (temp,
                                 O_WRONLY|O_CREAT,
                                 S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH);

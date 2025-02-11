@@ -97,7 +97,7 @@ public:
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
   /// destructor...
-  virtual ~TAO_CEC_Reactive_SupplierControl ();
+  virtual ~TAO_CEC_Reactive_SupplierControl () = default;
 
   /// Receive the timeout from the adapter
   void handle_timeout (const ACE_Time_Value &tv,

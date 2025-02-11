@@ -1,0 +1,293 @@
+commit ef42200cbe3802b54c58af4b6820560598b3c61a
+Author: Son Dinh <dinhs@objectcomputing.com>
+Date:   Thu Nov 21 14:45:02 2024 -0600
+
+    Try using to bring the base class's functions into scope
+
+commit bb2a27e0e7c696598f7c1f6d5774ad46cf8db2cc
+Author: Son Dinh <dinhs@objectcomputing.com>
+Date:   Thu Nov 21 10:11:14 2024 -0600
+
+    Call base member template
+
+commit 6ed34759dd23452b33dfed48979be272a1c274dd
+Author: Son Dinh <dinhs@objectcomputing.com>
+Date:   Tue Nov 19 16:09:24 2024 -0600
+
+    Duplicate reactor timer functions
+
+commit 3d492fae8749f62092979da3dd30355e7ea4f160
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Nov 13 10:57:09 2024 +0100
+
+    Update NEWS
+
+commit 4a709f3d73569e85a936a6494955949eb9a2fcc3
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Nov 13 10:55:50 2024 +0100
+
+    Update NEWS
+
+commit 1546ab71d13c175ef5158e191124c212189bfb84
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Nov 13 10:55:26 2024 +0100
+
+    Update NEWS
+
+commit 17514f856402d3f68c0b130c9d69588a9da135eb
+Merge: 86a03e594c7 1839bdf444e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Nov 12 12:50:41 2024 +0100
+
+    Merge branch 'master' into jwi-makeincludeclean
+
+commit 86a03e594c70df8be0dfb569faba305e0595c643
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Nov 12 12:50:24 2024 +0100
+
+    Only set certain version variables when not set yet and simplified how to determine the major/minor versions
+    
+        * ACE/include/makeinclude/platform_g++_common.GNU:
+
+commit 52a2e24942a97482da0b9532ccf4ad7d7ae2604d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Nov 12 12:49:51 2024 +0100
+
+    Removed workarounds for ancient ubuntu versions, only set CXX_FULL_VERSION and CXX_VERSION when not set yet
+    
+        * ACE/include/makeinclude/platform_linux.GNU:
+
+commit 1b0fa02eb7e03a308eb3692882a26abe08fbd5e1
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Nov 12 12:49:05 2024 +0100
+
+    Simplified setting of CXX_MAJOR_VERSION
+    
+        * ACE/include/makeinclude/platform_linux_clang.GNU:
+
+commit 35c33fc8720653fae641a2ef07470837104f5b8b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Nov 12 10:46:05 2024 +0100
+
+    Removed empty line
+    
+        * ACE/include/makeinclude/platform_clang_common.GNU:
+
+commit 3fbd1869845f9f774351a56672eb0109509a904e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Nov 11 16:57:55 2024 +0100
+
+    Removed ancient check for gcc 4.0.2
+    
+        * ACE/include/makeinclude/platform_linux.GNU:
+
+commit 94a462be6052789f5fbe86a7361816d8c4393f9a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Nov 11 16:57:35 2024 +0100
+
+    Removed check for c++14, not supported anymore
+    
+        * ACE/include/makeinclude/platform_gcc_clang_common.GNU:
+
+commit 1f0cdacc9731299b7c6055f8c1a077070a252d1d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Nov 11 16:57:17 2024 +0100
+
+    Removed check for c++14, not supported anymore
+    
+        * ACE/include/makeinclude/platform_linux_clang.GNU:
+
+commit 1839bdf444e7c8721b72f1d3834325c6e4751892
+Merge: 465964da4ea 746c32a7698
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Nov 5 09:10:09 2024 +0100
+
+    Merge pull request #2298 from DOCGroup/jwillemsen-patch-1
+    
+    Update libace-dev.install.in
+
+commit 746c32a76982755d52ca551c30b9a7a0d6ae7173
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Nov 4 17:36:45 2024 +0100
+
+    Update libace-dev.install.in
+    
+    See #2297
+
+commit 9ab2a3253623399d8c037f55ab78374973902875
+Author: shurarama <92807911+shurarama@users.noreply.github.com>
+Date:   Mon Nov 4 17:02:45 2024 +0100
+
+    Fix ace_for_tao.mpc
+
+commit 2bec045b8c7e7d05af90598c15c60b7f34e47566
+Author: shurarama <92807911+shurarama@users.noreply.github.com>
+Date:   Mon Nov 4 16:58:41 2024 +0100
+
+    fix missed headers in linux build
+
+commit f100e7f8e0a6ff8cfcb2191ce087f82b0dd2c9c7
+Author: Osyotr <Osyotr@users.noreply.github.com>
+Date:   Thu Oct 24 15:19:09 2024 +0300
+
+    Update NEWS
+
+commit 4a52b9387b14f557907b2f28d0064fa863c0ea1c
+Author: Osyotr <Osyotr@users.noreply.github.com>
+Date:   Thu Oct 24 14:04:30 2024 +0300
+
+    Remove checked_iterator.h
+
+commit db27e8b16df58a8c8516128f64cb7d7ca8d5a8db
+Author: Iulian Serbanoiu <iulian-nicu.serbanoiu@atos.net>
+Date:   Sun Oct 6 18:34:47 2024 +0300
+
+    fix for #2286 - avoid header compilation failure in %install phase by adding -std=c++17
+
+commit 47e2cd8a853e233347dc7a7baf8085b121194bbd
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Oct 1 15:29:41 2024 +0200
+
+    Update NEWS
+
+commit af70a6ebd43b93be5814328e2aa63f2bb8777cfc
+Author: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
+Date:   Thu Sep 5 14:44:04 2024 +0100
+
+    sync debian files
+    
+    Signed-off-by: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
+
+commit aaefe4c80c2c5ac5b84b901d7f75d595db69782c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 29 09:37:32 2024 +0200
+
+    Set +ACE_PLATFORM_CONFIG
+    
+        * ACE/include/makeinclude/platform_qnx_gcc.GNU:
+
+commit 843f39c3f34d51fdb1e458508b9a31fd7d9f39d9
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Aug 9 12:28:26 2024 -0500
+
+    updated preprocessor expression
+
+commit 13c89f982a41df87f9f80fc681252e7672315fc0
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Aug 9 12:25:27 2024 -0500
+
+    removed check for unused macro
+
+commit 1eee82d3680bbf03ee6d6adb45bec9f2a2bf805f
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Thu Aug 8 21:38:32 2024 +0000
+
+    Updated and simplified musl-libc compatibility
+
+commit a202757e6e15050cb97715b8b3beefe1cb67f325
+Merge: 2f43395536e 7ec8330eb8a
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Thu Aug 8 21:37:39 2024 +0000
+
+    Merge remote-tracking branch 'origin/pr1072' into musl
+
+commit 2f43395536e8f1e3ceb6eca2b0a81dd3735a6f01
+Merge: 21085b684bf 452d14159cb
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 5 20:43:55 2024 +0200
+
+    Merge pull request #2274 from jwillemsen/jwi-ACE_FALLTHROUGH
+    
+    Cleanup ACE_FALLTHROUGH
+
+commit 452d14159cba5389d55c2e6948d35354f9da8a5d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 5 19:36:08 2024 +0200
+
+    Cleanup ACE_FALLTHROUGH
+    
+        * ACE/ace/config-g++-common.h:
+        * ACE/ace/config-macros.h:
+
+commit 21085b684bfe9722b1f27e34ded3fd85a1f3cce8
+Merge: 484ff9dd3c4 78eb5267905
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 5 11:31:27 2024 +0200
+
+    Merge pull request #2271 from jwillemsen/jwi-cpp23
+    
+    Define ACE_HAS_CPP23 when we have C++23 support
+
+commit 852621f99f833e2fc22673490b69a5f048027b37
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 5 10:19:41 2024 +0200
+
+    Extended output CDR classes to serialize a std::string_view directly
+    
+        * ACE/ace/CDR_Size.h:
+        * ACE/ace/CDR_Size.inl:
+        * ACE/ace/CDR_Stream.h:
+        * ACE/ace/CDR_Stream.inl:
+        * ACE/tests/CDR_Test.cpp:
+        * TAO/tao/CDR.h:
+        * TAO/tao/CDR.inl:
+
+commit 78eb52679050266c047bf19e7819bdae96f89e2d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 5 08:55:30 2024 +0200
+
+    Define ACE_HAS_CPP23 when we have C++23 support
+    
+        * ACE/ace/config-g++-common.h:
+        * ACE/ace/config-win32-borland.h:
+        * ACE/ace/config-win32-msvc-142.h:
+
+commit e0d586b7697aa252bd0d83ffae8de3971ca32634
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Aug 2 10:36:20 2024 +0200
+
+    Manually updating OpenDDS is not necessary anymore, there is a github action handling that
+    
+        * ACE/docs/bczar/bczar.html:
+
+commit c9e15410ccf4d9cbb5fb39c4dba32c24a4d2b48e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Aug 2 10:21:01 2024 +0200
+
+    Make ACE 8.0.1 and TAO 4.0.1 public
+    
+        * ACE/NEWS:
+        * ACE/bin/copy-local-script.sh:
+        * ACE/bin/diff-builds-and-group-fixed-tests-only.sh:
+        * ACE/docs/Download.html:
+        * ACE/etc/index.html:
+
+commit 7ec8330eb8adf35e2bbf12bc40a5321feb93c4b8
+Author: Andreas Dröscher <github@anticat.ch>
+Date:   Thu Apr 9 23:39:46 2020 +0200
+
+    Abort compilation if no libc is detected or enabled
+
+commit b9e97a9a68ddfe06bc6a871df86f3211d2f19d48
+Author: Andreas Dröscher <github@anticat.ch>
+Date:   Thu Apr 9 23:39:02 2020 +0200
+
+    Added musl specific section to config-linux.h
+
+commit 96e0a8511e27fb962cfb324dd654fe23311b0f38
+Author: Andreas Dröscher <github@anticat.ch>
+Date:   Thu Apr 9 23:38:08 2020 +0200
+
+    typedef ACE_LOFF_T as off_t for musl
+
+commit af5a3578b242f425bec5cf64d4ec0dce548214b0
+Author: Andreas Dröscher <github@anticat.ch>
+Date:   Thu Apr 9 23:36:15 2020 +0200
+
+    Replacing strange datatype definition with standard
+    
+    ACE_Dev_Poll_Reactor is using __uint32_t for no apparent
+    reason. Since struct epoll_event.events is defined as
+    uint32_t and using __uint32_t breaks compatibility
+    with musl, __uint32_t should be replaced with uint32_t.
+    But to conform with ACE Guidelines I'm using ACE_UINT32.

@@ -339,10 +339,10 @@ class TAO_Event_Serv_Export TAO_CEC_Param
 {
 public:
   /// Constructor
-  TAO_CEC_Param ();
+  TAO_CEC_Param () = default;
 
   /// Destructor
-  ~TAO_CEC_Param ();
+  ~TAO_CEC_Param () = default;
 
 private:
   /// Only the TypedEventChannel can read the private fields.

@@ -64,7 +64,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       poa_manager->activate ();
 
-      // Try to find a non-existant POA.  Since the Adapter Activator
+      // Try to find a non-existent POA.  Since the Adapter Activator
       // has not been installed yet, this call should fail.
       find_non_existant_POA (root_poa.in (),
                              "firstPOA",
@@ -88,7 +88,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         first_poa->find_POA (name.c_str (),
                              1);
 
-      // Try to find a non-existant POA.  Even though the Adapter
+      // Try to find a non-existent POA.  Even though the Adapter
       // Activator has been installed, this call should fail because
       // the activate (if not found) flag is 0.
       find_non_existant_POA (root_poa.in (),

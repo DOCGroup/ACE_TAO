@@ -112,8 +112,6 @@ public:
   // character that is *not* in the skip set.
 };
 
-typedef ACE_Singleton<JAWS_Parse_Headers, ACE_SYNCH_MUTEX>
-        JAWS_Parse_Headers_Singleton;
-
+typedef ACE_Singleton<JAWS_Parse_Headers, ACE_SYNCH_MUTEX> JAWS_Parse_Headers_Singleton;
 
 #endif /* !defined (JAWS_PARSE_HEADERS_H) */

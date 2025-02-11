@@ -160,6 +160,7 @@ be_visitor_union_discriminant_ci::visit_predefined_type (
           *os << dv.u.short_val;
           break;
         case AST_Expression::EV_ushort:
+        case AST_Expression::EV_wchar:
           *os << dv.u.ushort_val;
           break;
         case AST_Expression::EV_long:

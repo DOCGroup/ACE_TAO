@@ -119,5 +119,4 @@ ACE_Based_Pointer_Repository::unbind (void *addr)
 
 ACE_SINGLETON_TEMPLATE_INSTANTIATE(ACE_Singleton, ACE_Based_Pointer_Repository, ACE_SYNCH_RW_MUTEX);
 
-
 ACE_END_VERSIONED_NAMESPACE_DECL

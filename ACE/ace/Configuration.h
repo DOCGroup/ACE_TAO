@@ -349,7 +349,7 @@ public:
    * error The path consists of sections separated by the backslash
    * '\' or forward slash '/'.
    * Returns 0 on success, -1 if <create) is 0 and the path refers
-   * a nonexistant section
+   * a non-existent section
    */
   int expand_path (const ACE_Configuration_Section_Key& key,
                    const ACE_TString& path_in,

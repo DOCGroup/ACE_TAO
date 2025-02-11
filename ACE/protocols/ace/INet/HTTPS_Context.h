@@ -48,7 +48,7 @@ namespace ACE
 
               ~Context ();
 
-              operator bool () const;
+              explicit operator bool () const;
 
               bool operator ! () const;
 

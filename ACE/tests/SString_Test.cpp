@@ -110,7 +110,7 @@ int testConstIterator()
   // Use the advance () method to count number of characters.
   size_t count = 0;
   for (ACE_CString::CONST_ITERATOR iter (s1); !iter.done (); iter.advance ())
-    ++ count;
+    ++count;
 
   if (count != s1.length ())
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -146,6 +146,41 @@ int testConstIterator()
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("dereference operator failed")),
                        1);
+
+  return 0;
+}
+
+int testAutoStringFree()
+{
+  char* s = ACE_OS::strdup("Hello, World");
+  ACE_Auto_String_Free const s1(s);
+  if (s1)
+  {
+    ACE_DEBUG ((LM_DEBUG,
+                ACE_TEXT ("ACE_Auto_String_Free::operator bool for s1 correct\n")));
+  }
+  else
+  {
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("ACE_Auto_String_Free::operator bool for s1 return false")),
+                       1);
+  }
+
+  if (!s1)
+  {
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("!ACE_Auto_String_Free::operator bool s1 return true")),
+                       1);
+  }
+
+  ACE_Auto_String_Free const s2;
+
+  if (s2)
+  {
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("ACE_Auto_String_Free s2 is not empty")),
+                       1);
+  }
 
   return 0;
 }
@@ -425,6 +460,7 @@ run_main (int, ACE_TCHAR *[])
   int err = testConcatenation ();
   err += testIterator ();
   err += testConstIterator ();
+  err += testAutoStringFree ();
 
   ACE_END_TEST;
   return err;

@@ -6,13 +6,15 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 TAO_CEC_MT_Dispatching::TAO_CEC_MT_Dispatching (int nthreads,
                                                 int thread_creation_flags,
                                                 int thread_priority,
-                                                int force_activate)
+                                                int force_activate,
+                                                bool shutdown_completion)
   :  nthreads_ (nthreads),
      thread_creation_flags_ (thread_creation_flags),
      thread_priority_ (thread_priority),
      force_activate_ (force_activate),
      task_ (&this->thread_manager_),
-     active_ (0)
+     active_ (0),
+     wait_for_shutdown_thread_completion_(shutdown_completion)
 {
 }
 
@@ -48,10 +50,18 @@ TAO_CEC_MT_Dispatching::shutdown ()
   if (this->active_ == 0)
     return;
 
-  for (int i = 0; i < this->nthreads_; ++i)
+  if (wait_for_shutdown_thread_completion_)
     {
-      this->task_.putq (new TAO_CEC_Shutdown_Task_Command);
+      for (int i = 0; i < this->nthreads_; ++i)
+        {
+          this->task_.putq (new TAO_CEC_Shutdown_Task_Command);
+        }
     }
+  else
+    {
+      this->task_.flush(ACE_Task_Flags::ACE_FLUSHALL);
+    }
+
   this->thread_manager_.wait ();
 }
 

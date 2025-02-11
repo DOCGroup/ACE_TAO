@@ -41,11 +41,6 @@ TAO_CEC_Event_Loader::TAO_CEC_Event_Loader () :
   // Constructor
 }
 
-TAO_CEC_Event_Loader::~TAO_CEC_Event_Loader ()
-{
-  // Destructor
-}
-
 int
 TAO_CEC_Event_Loader::init (int argc, ACE_TCHAR *argv[])
 {

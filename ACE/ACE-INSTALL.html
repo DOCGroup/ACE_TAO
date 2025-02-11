@@ -427,7 +427,7 @@ INSTALL_PREFIX = /usr/local
   </li>
   <li>If you've set the INSTALL_PREFIX before building, now run
 <blockquote><code>% make install</code></blockquote>
-    <p>An alternative to directly running <code>make install</make> is to use <code>$ACE_ROOT/bin/install_proj.sh</code>
+    <p>An alternative to directly running <code>make install</code> is to use <code>$ACE_ROOT/bin/install_proj.sh</code>
        which will only install projects that are built (instead of trying to build each one during <code>make install</code>).
     </p>
   </li>
@@ -679,9 +679,9 @@ to check <a href="#win32nonic">here</a> first. <p>
       <code>set CODEGUARD=1</code><br>
       <br>
       Set one of the following environment variable to 1 to select which Embarcadero
-      C++ compiler has to be used. Valid environment variables are BCC32, BCC32C, and BCC64.
+      C++ compiler has to be used. Valid environment variables are <code>BCC32C</code>, <code>BCC64</code>, and <code>BCC64X</code>.
       <br>
-      <code>set BCC32=1</code><br>
+      <code>set BCC64X=1</code><br><br>
       You can then start the build with the command
       <br><code>make -f Makefile.bmak all</code><br>
       <br>

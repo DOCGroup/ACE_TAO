@@ -1836,7 +1836,7 @@ Sun Jun 13 07:56:20 2004  Phil Mesnier  <mesnier_p@ociweb.com>
 Sun Jun 14 11:36:12 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * tao/PortableServer/Operation_Table.cpp:
-          Also on AIX we must explictly instantiate static template members.
+          Also on AIX we must explicitly instantiate static template members.
           To make things easier to maintenance use the new
           ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION macro to check
           whether we need to do this. This macro is set for the GNU compiler for
@@ -8244,7 +8244,7 @@ Wed Feb 11 13:17:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 Wed Feb 11 11:28:56 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * examples/Simple/chat/chat.mpc:
-          Added idl files explictly so that the order in which the idl files
+          Added idl files explicitly so that the order in which the idl files
           are compiled is fixed and correct.
 
 Wed Feb 11 10:22:11 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>

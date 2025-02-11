@@ -926,8 +926,11 @@ ACE_OS::tempnam (const wchar_t *dir, const wchar_t *pfx)
 #  endif /* ACE_HAS_NONCONST_TEMPNAM */
 #else /* ACE_LACKS_TEMPNAM */
   // No native wide-char support; convert to narrow and call the char* variant.
-  char *ndir = ACE_Wide_To_Ascii (dir).char_rep ();
-  char *npfx = ACE_Wide_To_Ascii (pfx).char_rep ();
+  ACE_Wide_To_Ascii wta_ndir(dir);
+  char *ndir = wta_ndir.char_rep ();
+
+  ACE_Wide_To_Ascii wta_npfx(pfx);
+  char *npfx = wta_npfx.char_rep ();
   char *name = ACE_OS::tempnam (ndir, npfx);
   // ACE_OS::tempnam returns a pointer to a malloc()-allocated space.
   // Convert that string to wide-char and free() the original.

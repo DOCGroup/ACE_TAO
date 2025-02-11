@@ -62,7 +62,7 @@ jobs:
             PackageDeps: g++-13
             optional_macros: c++std=c++20
             platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
-            os: ubuntu-22.04
+            os: ubuntu-24.04
           - CC: clang-6.0
             CXX: clang++-6.0
             PackageDeps: clang-6.0
@@ -118,6 +118,12 @@ jobs:
             CXX: clang++-15
             PackageDeps: clang-15
             Repo: llvm-toolchain-$(lsb_release -cs)-15
+            platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux_clang.GNU
+            os: ubuntu-22.04
+          - CC: clang-16
+            CXX: clang++-16
+            PackageDeps: clang-16
+            Repo: llvm-toolchain-$(lsb_release -cs)-16
             platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux_clang.GNU
             os: ubuntu-22.04
           - feature: CORBA/e micro

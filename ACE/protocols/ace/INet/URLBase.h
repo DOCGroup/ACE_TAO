@@ -43,7 +43,7 @@ namespace ACE
 
               bool operator ! ();
 
-              operator bool ();
+              explicit operator bool ();
 
               std::istream& operator * ();
 

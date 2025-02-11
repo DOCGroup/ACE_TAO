@@ -48,10 +48,10 @@ class TAO_Event_Serv_Export TAO_CEC_ConsumerControl
 {
 public:
   /// Constructor
-  TAO_CEC_ConsumerControl ();
+  TAO_CEC_ConsumerControl () = default;
 
   /// Destructor
-  virtual ~TAO_CEC_ConsumerControl ();
+  virtual ~TAO_CEC_ConsumerControl () = default;
 
   /// Activate any internal threads or timers used to poll the state of
   /// the consumers

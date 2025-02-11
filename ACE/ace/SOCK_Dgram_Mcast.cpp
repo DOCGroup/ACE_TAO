@@ -564,17 +564,13 @@ ACE_SOCK_Dgram_Mcast::subscribe_i (const ACE_INET_Addr &mcast_addr,
 
   // Open the socket IFF this is the first ::subscribe and ::open
   // was not explicitly invoked.
-  if (this->open (mcast_addr,
-                  net_if,
-                  reuse_addr) == -1)
+  if (this->open (mcast_addr, net_if, reuse_addr) == -1)
     return -1;
 
   // Only do this if net_if == 0, i.e., INADDR_ANY
   if (net_if == 0)
     {
-      int result = this->subscribe_ifs (mcast_addr,
-                                        net_if,
-                                        reuse_addr);
+      int const result = this->subscribe_ifs (mcast_addr, net_if, reuse_addr);
       // Check for error or "short-circuit" return.
       if (result != 0)
         return result;

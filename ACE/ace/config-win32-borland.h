@@ -96,10 +96,17 @@
 
 #undef ACE_LACKS_REWINDDIR
 
-#define ACE_HAS_WOPENDIR
-#define ACE_HAS_WCLOSEDIR
-#define ACE_HAS_WREADDIR
-#define ACE_HAS_WREWINDDIR
+#if !defined (__MINGW64__)
+# define ACE_HAS_WOPENDIR_EQUIVALENT ::wopendir
+# define ACE_HAS_WCLOSEDIR_EQUIVALENT ::wclosedir
+# define ACE_HAS_WREADDIR_EQUIVALENT ::wreaddir
+# define ACE_HAS_WREWINDDIR_EQUIVALENT ::wrewinddir
+#else
+# define ACE_HAS_WOPENDIR_EQUIVALENT ::_wopendir
+# define ACE_HAS_WCLOSEDIR_EQUIVALENT ::_wclosedir
+# define ACE_HAS_WREADDIR_EQUIVALENT ::_wreaddir
+# define ACE_HAS_WREWINDDIR_EQUIVALENT ::_wrewinddir
+#endif
 
 #define ACE_LACKS_STRRECVFD
 
@@ -192,6 +199,9 @@
 #endif
 #if __cplusplus >= 202002L
 # define ACE_HAS_CPP20
+#endif
+#if __cplusplus >= 202302L
+# define ACE_HAS_CPP23
 #endif
 
 #include /**/ "ace/post.h"

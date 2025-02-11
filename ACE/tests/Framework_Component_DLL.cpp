@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #include "Framework_Component_DLL.h"
 #include "ace/Service_Config.h"
 #include "ace/Service_Object.h"

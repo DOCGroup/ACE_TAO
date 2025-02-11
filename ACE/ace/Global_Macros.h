@@ -57,8 +57,8 @@
 # define ACE_SET_BITS(WORD, BITS) (WORD |= (BITS))
 # define ACE_CLR_BITS(WORD, BITS) (WORD &= ~(BITS))
 
-#if !defined (ACE_HAS_CPP14)
-# error ACE/TAO require C++14 compliance, please upgrade your compiler and/or fix the platform configuration for your environment
+#if !defined (ACE_HAS_CPP17)
+# error ACE/TAO require C++17 compliance, please upgrade your compiler and/or fix the platform configuration for your environment
 #endif
 
 #define ACE_UNIMPLEMENTED_FUNC(f) f = delete;

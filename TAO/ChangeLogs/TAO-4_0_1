@@ -1,0 +1,277 @@
+commit 9b4704f45687c4bc1ed8a48570306600bbd8616f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jul 31 10:41:46 2024 +0200
+
+    Mark operator bool as explicit
+    
+        * ACE/protocols/ace/INet/HTTPS_Context.h:
+        * ACE/protocols/ace/INet/HTTP_Status.h:
+        * ACE/protocols/ace/INet/URLBase.cpp:
+        * ACE/protocols/ace/INet/URLBase.h:
+        * TAO/orbsvcs/orbsvcs/FtRtEvent/EventChannel/Dynamic_Bitset.h:
+
+commit 921463b03033e05743f2d00466e435b9c5bdd717
+Author: Oliver Kellogg <olivermkellogg@gmail.com>
+Date:   Tue Jul 16 07:42:50 2024 +0200
+
+    TAO/TAO-INSTALL.html : In "Building and Installing TAO from git" mwc.pl TAO_ACE.mwc add missing `-type gnuace`.
+
+commit 15193a49314e5866a4c24f5aa3f0f68fe3673881
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jun 27 09:21:47 2024 +0200
+
+    Use nullptr
+    
+        * TAO/tao/Object.inl:
+
+commit dee98e4f47b7f5922607909e985d9a21bd83d579
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jun 17 12:26:57 2024 +0200
+
+    Use std::string_view as part of Exception_Data
+    
+        * TAO/tao/Exception_Data.h:
+        * TAO/tao/Messaging/ExceptionHolder_i.cpp:
+        * TAO/tao/operation_details.cpp:
+
+commit fe02c11dae4e4ea4834e37223d88115a35722ab8
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Tue Jun 11 12:57:14 2024 -0500
+
+    Remove ACE_UNUSED_ARG
+
+commit 1d95ccaf016c2c03bb5ad030bc6520230c36682e
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Mon Jun 10 16:51:01 2024 -0500
+
+    Respond to Review and Fix Typedefs in Union Disc
+
+commit f78f458a74555764370e0267ef57c4069d174ec9
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Sun Jun 9 01:19:04 2024 -0500
+
+    Minor Additions to IDL4 Support
+    
+    - Support the following IDL v4 features:
+      - Empty structs
+      - `octet` and `wchar` union discriminators
+      - Allow using empty parentheses in annotation applications to
+        workaround syntax errors when an annotation with no arguments has to
+        be followed by a complete scoped name:
+          `@example_annotation() ::ex::ExampleType`
+      - Reserve the `bitfield`, `bitmask`, and `bitset` keywords in IDL v4
+        (these are not implemented yet)
+    - Allow using `map` as an identifier in IDL v3 again
+
+commit 8b34c8e3ffdcf8f5e411064e0d5bf1da52b169fd
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed May 22 15:06:42 2024 +0200
+
+    Revert "Minor modernization of DynamicAny code"
+
+commit 8438079c911eb442897920d2a03e79c660140ac5
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed May 22 15:06:14 2024 +0200
+
+    Revert "Use std::vector in Interceptor List"
+
+commit f7fd4579d673f4431298ebba6157361aee21b629
+Merge: 18dc6f83439 e0d8ed1739e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed May 22 08:28:39 2024 +0200
+
+    Merge branch 'master' into jwi-dynamicany
+
+commit 18dc6f8343993278327105a349958578b8cb48a5
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue May 21 17:32:04 2024 +0200
+
+    Add missing include
+    
+        * TAO/tao/DynamicAny/DynValue_i.h:
+
+commit 7f32588294603e1a7ee996db8a35f9a733bc397b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue May 21 16:02:05 2024 +0200
+
+    Fixed Coday issues
+    
+        * TAO/tao/DynamicAny/DynEnum_i.cpp:
+        * TAO/tao/DynamicAny/DynStruct_i.cpp:
+
+commit deef2c3a1a0ee49bd501f71161cda1ea95149daa
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue May 21 15:55:09 2024 +0200
+
+    Whitespace
+    
+        * TAO/tao/PI/PICurrent_Impl.h:
+
+commit 4cb33f4722a105961c3eda2c8cf109c4a280f08f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue May 21 15:51:48 2024 +0200
+
+    Merge
+
+commit d7df2721d918efb988c407da06c333a65a948623
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue May 21 15:44:02 2024 +0200
+
+    Fixed typo
+    
+        * TAO/tao/PI/Interceptor_List_T.h:
+        * TAO/tests/DynValue_Test/Analyzer.cpp:
+
+commit d79b50d0cecef47c2508193edc253a2daac19d67
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue May 21 15:34:04 2024 +0200
+
+    Revert change
+    
+        * TAO/tao/DynamicAny/DynValue_i.cpp:
+
+commit 1b273c15634fa725e5f5eb1425f98d832de39956
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue May 21 15:25:50 2024 +0200
+
+    Use nullptr
+    
+        * TAO/tao/AnyTypeCode/Indirected_Type_TypeCode.cpp:
+        * TAO/tao/DynamicAny/DynAnyUtils_T.cpp:
+        * TAO/tao/DynamicAny/DynValue_i.cpp:
+
+commit e58549348e7d342ae5984b9da303efef24742b8a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue May 21 14:00:09 2024 +0200
+
+    Add a variable on the stack for ref counting
+    
+        * TAO/tao/DynamicAny/DynValue_i.cpp:
+
+commit 3bb0b475c4fb74e6c1edb1c9fa49d789f3d95b64
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue May 21 13:50:50 2024 +0200
+
+    Layout changes
+    
+        * TAO/tao/DynamicAny/DynValue_i.cpp:
+
+commit e770be424ac236cd4ab6c306c7b9b2ce1ef37eac
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue May 21 13:35:10 2024 +0200
+
+    Revert duplicate
+    
+        * TAO/tao/DynamicAny/DynValue_i.cpp:
+
+commit fa285886000e5bbaeec98c2d9bb719655920a785
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue May 21 13:33:10 2024 +0200
+
+    Init changes
+    
+        * TAO/tao/DynamicAny/DynAny_i.cpp:
+        * TAO/tao/DynamicAny/DynCommon.cpp:
+        * TAO/tao/DynamicAny/DynSequence_i.cpp:
+        * TAO/tao/DynamicAny/DynStruct_i.cpp:
+        * TAO/tao/DynamicAny/DynValueBox_i.cpp:
+        * TAO/tao/DynamicAny/DynValue_i.cpp:
+
+commit 0030ab82e0d4bff3d8e0719f55c62e5047412368
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue May 21 13:31:35 2024 +0200
+
+    Add missing duplicat, init changes
+    
+        * TAO/tao/DynamicAny/DynAnyUtils_T.cpp:
+        * TAO/tao/DynamicAny/DynArray_i.cpp:
+        * TAO/tao/DynamicAny/DynCommon.cpp:
+        * TAO/tao/DynamicAny/DynEnum_i.cpp:
+        * TAO/tao/DynamicAny/DynSequence_i.cpp:
+        * TAO/tao/DynamicAny/DynUnion_i.cpp:
+        * TAO/tao/DynamicAny/DynValueBox_i.cpp:
+        * TAO/tao/DynamicAny/DynValue_i.cpp:
+        * TAO/tao/DynamicAny/DynValue_i.h:
+
+commit cf0397065c105159c64585c6820f85833ec3cab0
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue May 21 13:15:00 2024 +0200
+
+    Check any/cdr extraction return values
+    
+        * TAO/tao/DynamicAny/DynAny_i.cpp:
+        * TAO/tao/DynamicAny/DynUnion_i.cpp:
+
+commit 9329ec7e58671ab70d8019f21fac20ced0bc52ed
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue May 21 12:56:01 2024 +0200
+
+    Fixed typos in comments, delete more assignment/copy, use std::vector
+    
+        * TAO/tao/DynamicAny/DynAny_i.h:
+        * TAO/tao/DynamicAny/DynArray_i.cpp:
+        * TAO/tao/DynamicAny/DynArray_i.h:
+        * TAO/tao/DynamicAny/DynEnum_i.cpp:
+        * TAO/tao/DynamicAny/DynEnum_i.h:
+        * TAO/tao/DynamicAny/DynSequence_i.cpp:
+        * TAO/tao/DynamicAny/DynSequence_i.h:
+        * TAO/tao/DynamicAny/DynStruct_i.cpp:
+        * TAO/tao/DynamicAny/DynStruct_i.h:
+        * TAO/tao/DynamicAny/DynUnion_i.cpp:
+        * TAO/tao/DynamicAny/DynUnion_i.h:
+        * TAO/tao/DynamicAny/DynValueBox_i.h:
+        * TAO/tao/DynamicAny/DynValueCommon_i.h:
+        * TAO/tao/DynamicAny/DynValue_i.cpp:
+        * TAO/tao/DynamicAny/DynValue_i.h:
+
+commit 0fdce6d1c0899e3de52b16af327d2cb25234259a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue May 21 12:13:37 2024 +0200
+
+    Use true
+    
+        * TAO/tao/DynamicAny/DynValueBox_i.cpp:
+
+commit caf6c9d44d04d19a01fe994b3d48ae0f75d7b9ca
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue May 21 12:12:47 2024 +0200
+
+    Use true for boolean instead of 1, delete illegal methods
+    
+        * TAO/tao/DynamicAny/DynAny_i.cpp:
+        * TAO/tao/DynamicAny/DynArray_i.cpp:
+        * TAO/tao/DynamicAny/DynSequence_i.cpp:
+        * TAO/tao/DynamicAny/DynStruct_i.cpp:
+        * TAO/tao/DynamicAny/DynUnion_i.cpp:
+        * TAO/tao/DynamicAny/DynValue_i.cpp:
+        * TAO/tao/DynamicAny/DynValue_i.h:
+
+commit 5de3fff1b8ea728d36cc44db857d95a545a868b4
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue May 21 12:12:20 2024 +0200
+
+    Fixed gcc warning
+    
+        * TAO/tests/DynValue_Test/Analyzer.cpp:
+
+commit 7aa195eb9f3efd7355800daa6dd4cb9475413016
+Merge: c38c77843f2 f86851ff7c8
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu May 16 12:52:45 2024 +0200
+
+    Merge pull request #2235 from jwillemsen/jwi-ace800
+    
+    Make ACE 8.0.0 and TAO 4.0.0 public
+
+commit f86851ff7c84059dd009d12c2c27c4415a6d9be0
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu May 16 12:51:57 2024 +0200
+
+    Make ACE 8.0.0 and TAO 4.0.0 public
+    
+        * ACE/NEWS:
+        * ACE/bin/copy-local-script.sh:
+        * ACE/bin/diff-builds-and-group-fixed-tests-only.sh:
+        * ACE/docs/Download.html:
+        * ACE/etc/index.html:
+        * TAO/NEWS:

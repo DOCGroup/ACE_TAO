@@ -968,6 +968,14 @@ project(Future Set Test) : acetest {
   }
 }
 
+project(Future Stress Test) : acetest {
+  avoids += ace_for_tao
+  exename = Future_Stress_Test
+  Source_Files {
+    Future_Stress_Test.cpp
+  }
+}
+
 project(Get Opt Test) : acetest {
   exename = Get_Opt_Test
   Source_Files {

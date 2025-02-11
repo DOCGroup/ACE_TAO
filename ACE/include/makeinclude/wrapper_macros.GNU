@@ -283,10 +283,6 @@ ifeq ($(debug),0)
   DEFFLAGS        += -DNDEBUG
 endif
 
-ifeq (,$(findstring -I$(ACE_ROOT),$(INCLDIRS)))
-  INCLDIRS        += -I$(ACE_ROOT)
-endif
-
 CPPFLAGS          += $(DEFFLAGS) $(INCLDIRS)
 
 # Define default extensions for IDL-generated files

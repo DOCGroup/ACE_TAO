@@ -1,6 +1,6 @@
 # Set the version number here.
-%define ACEVER  7.1.2
-%define TAOVER  3.1.2
+%define ACEVER  8.0.2
+%define TAOVER  4.0.2
 
 # Conditional build
 # Default values are
@@ -1099,7 +1099,7 @@ BASEHDR="$BASEHDR `find \
 for j in $BASEHDR; do
         echo $j >> rawhdrs.log
         echo '#include <'$j'>' | \
-        g++ %{inline} \
+        g++ -std=c++17 %{inline} \
             -I . \
             -I protocols \
             $TAO_MM_OPTS \

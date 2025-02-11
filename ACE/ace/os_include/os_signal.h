@@ -188,10 +188,6 @@ extern "C"
 #  endif /* ACE_SIGRTMAX */
 #endif /* ACE_HAS_POSIX_REALTIME_SIGNALS */
 
-#if !defined (ACE_HAS_PTHREAD_SIGMASK_PROTOTYPE)
-  int pthread_sigmask(int, const sigset_t *, sigset_t *);
-#endif /*!ACE_HAS_PTHREAD_SIGMASK_PROTOTYPE */
-
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
