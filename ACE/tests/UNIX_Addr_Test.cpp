@@ -65,6 +65,25 @@ int run_main (int, ACE_TCHAR *[])
   ACE_UNIX_Addr a2 ("/tmp/testB");
   ACE_TEST_ASSERT (a1 != a2);
 
+  // Test 1: Regular paths with difference at the end
+  {
+    char path1[108] = "/test/path/";
+    char path2[108] = "/test/path/";
+    // Fill paths with 'a' up to index 106 (leaving room for null terminator)
+    ACE_OS::memset(path1 + 11, 'a', 95);
+    ACE_OS::memset(path2 + 11, 'a', 95);
+    path1[106] = '1';
+    path2[106] = '2';
+    path1[107] = '\0';
+    path2[107] = '\0';
+
+    ACE_UNIX_Addr addr1(path1);
+    ACE_UNIX_Addr addr2(path2);
+
+    // Should detect difference at the last valid character
+    ACE_TEST_ASSERT(!(addr1 == addr2));
+  }
+
 #if defined(ACE_LINUX)
   // Bounds checking for abstract path
   path = "@/tmp/bounds.test";
@@ -120,6 +139,25 @@ int run_main (int, ACE_TCHAR *[])
   char null_path[] = "@/tmp/te\0st";
   ACE_TEST_ASSERT(addr.set(null_path) == 0);
   ACE_TEST_ASSERT(ACE_OS::strcmp(addr.get_path_name() + 1, "/tmp/te") == 0);
+
+  // Abstract paths with difference at the end
+  {
+    char path1[108] = "@/test/";
+    char path2[108] = "@/test/";
+    // Fill paths with 'a' up to index 106
+    ACE_OS::memset(path1 + 7, 'a', 99);
+    ACE_OS::memset(path2 + 7, 'a', 99);
+    path1[106] = '1';
+    path2[106] = '2';
+    path1[107] = '\0';
+    path2[107] = '\0';
+
+    ACE_UNIX_Addr addr1(path1);
+    ACE_UNIX_Addr addr2(path2);
+
+    // Should detect difference at the last valid character
+    ACE_TEST_ASSERT(!(addr1 == addr2));
+  }
 #endif // ACE_LINUX
 
 #endif // ! ACE_LACKS_UNIX_DOMAIN_SOCKETS
