@@ -11,11 +11,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ////////////////////////////////////////////////////////////////////////////
 
-template <class KEY, class VALUE, class CONTAINER>
-ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER>::~ACE_Cleanup_Strategy ()
-{
-}
-
 template <class KEY, class VALUE, class CONTAINER> int
 ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER>::cleanup (CONTAINER &container,
                                                       KEY *key,

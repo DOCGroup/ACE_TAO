@@ -208,7 +208,7 @@ namespace TAO
     {
       PortableServer::Servant default_servant = this->default_servant_.in ();
 
-      if (default_servant != 0 &&
+      if (default_servant != nullptr &&
           default_servant == servant)
         {
           // If they are the same servant, then check if we are in an
@@ -218,7 +218,7 @@ namespace TAO
                         (TAO_TSS_Resources::instance ()->poa_current_impl_);
           // If we are in an upcall on the default servant, return the
           // ObjectId associated with the current invocation.
-          if (poa_current_impl != 0 &&
+          if (poa_current_impl != nullptr &&
               servant == poa_current_impl->servant ())
             {
               return poa_current_impl->get_object_id ();

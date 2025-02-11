@@ -12,14 +12,6 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ETCL_Constraint::ETCL_Constraint ()
-{
-}
-
-ETCL_Constraint::~ETCL_Constraint ()
-{
-}
-
 int
 ETCL_Constraint::accept (ETCL_Constraint_Visitor * /* visitor */)
 {

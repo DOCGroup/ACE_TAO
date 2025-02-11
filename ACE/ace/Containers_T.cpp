@@ -1421,11 +1421,6 @@ ACE_DNode<T>::ACE_DNode (const T &i, ACE_DNode<T> *n, ACE_DNode<T> *p)
 {
 }
 
-template <class T>
-ACE_DNode<T>::~ACE_DNode ()
-{
-}
-
 // ****************************************************************
 
 template <class T> void

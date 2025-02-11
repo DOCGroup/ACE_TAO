@@ -21,7 +21,6 @@
 
 #include "ace/Global_Macros.h"
 #include "ace/Cleanup_Strategies_T.h"
-#include "ace/Copy_Disabled.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -40,7 +39,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * entries to be cleaned up will be delegated.
  */
 template <class KEY, class VALUE, class CONTAINER, class ITERATOR, class ATTRIBUTES>
-class ACE_Pair_Caching_Utility : private ACE_Copy_Disabled
+class ACE_Pair_Caching_Utility
 {
 public:
   typedef ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> CLEANUP_STRATEGY;
@@ -51,6 +50,11 @@ public:
 
   /// Destructor.
   ~ACE_Pair_Caching_Utility ();
+
+  ACE_Pair_Caching_Utility (const ACE_Pair_Caching_Utility &) = delete;
+  ACE_Pair_Caching_Utility (ACE_Pair_Caching_Utility &&) = delete;
+  ACE_Pair_Caching_Utility &operator= (const ACE_Pair_Caching_Utility &) = delete;
+  ACE_Pair_Caching_Utility &operator= (ACE_Pair_Caching_Utility &&) = delete;
 
   /**
    * Purge entries from the @a container. The Cleanup_Strategy will do the
@@ -87,7 +91,7 @@ protected:
  * be cleaned up will be delegated.
  */
 template <class KEY, class VALUE, class CONTAINER, class ITERATOR, class ATTRIBUTES>
-class ACE_Recyclable_Handler_Caching_Utility : private ACE_Copy_Disabled
+class ACE_Recyclable_Handler_Caching_Utility
 {
 public:
   typedef ACE_Recyclable_Handler_Cleanup_Strategy<KEY, VALUE, CONTAINER> CLEANUP_STRATEGY;
@@ -99,6 +103,11 @@ public:
 
   /// Destructor.
   ~ACE_Recyclable_Handler_Caching_Utility ();
+
+  ACE_Recyclable_Handler_Caching_Utility (const ACE_Recyclable_Handler_Caching_Utility &) = delete;
+  ACE_Recyclable_Handler_Caching_Utility (ACE_Recyclable_Handler_Caching_Utility &&) = delete;
+  ACE_Recyclable_Handler_Caching_Utility &operator= (const ACE_Recyclable_Handler_Caching_Utility &) = delete;
+  ACE_Recyclable_Handler_Caching_Utility &operator= (ACE_Recyclable_Handler_Caching_Utility &&) = delete;
 
   /**
    * Purge entries from the @a container. The Cleanup_Strategy will do
@@ -137,7 +146,7 @@ protected:
  * delegated.
  */
 template <class KEY, class VALUE, class CONTAINER, class ITERATOR, class ATTRIBUTES>
-class ACE_Refcounted_Recyclable_Handler_Caching_Utility : private ACE_Copy_Disabled
+class ACE_Refcounted_Recyclable_Handler_Caching_Utility
 {
 public:
   typedef ACE_Refcounted_Recyclable_Handler_Cleanup_Strategy<KEY, VALUE, CONTAINER> CLEANUP_STRATEGY;
@@ -149,6 +158,11 @@ public:
 
   /// Destructor.
   ~ACE_Refcounted_Recyclable_Handler_Caching_Utility ();
+
+  ACE_Refcounted_Recyclable_Handler_Caching_Utility (const ACE_Refcounted_Recyclable_Handler_Caching_Utility &) = delete;
+  ACE_Refcounted_Recyclable_Handler_Caching_Utility (ACE_Refcounted_Recyclable_Handler_Caching_Utility &&) = delete;
+  ACE_Refcounted_Recyclable_Handler_Caching_Utility &operator= (const ACE_Refcounted_Recyclable_Handler_Caching_Utility &) = delete;
+  ACE_Refcounted_Recyclable_Handler_Caching_Utility &operator= (ACE_Refcounted_Recyclable_Handler_Caching_Utility &&) = delete;
 
   /**
    * Purge entries from the @a container. The Cleanup_Strategy will do
@@ -193,7 +207,7 @@ protected:
  * class to which the entries to be cleaned up will be delegated.
  */
 template <class KEY, class VALUE, class CONTAINER, class ITERATOR, class ATTRIBUTES>
-class ACE_Handler_Caching_Utility : private ACE_Copy_Disabled
+class ACE_Handler_Caching_Utility
 {
 public:
   typedef ACE_Handler_Cleanup_Strategy<KEY, VALUE, CONTAINER> CLEANUP_STRATEGY;
@@ -202,6 +216,11 @@ public:
   /// Constructor.
   ACE_Handler_Caching_Utility (ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> *cleanup_strategy = 0,
                                bool delete_cleanup_strategy = false);
+
+  ACE_Handler_Caching_Utility (const ACE_Handler_Caching_Utility &) = delete;
+  ACE_Handler_Caching_Utility (ACE_Handler_Caching_Utility &&) = delete;
+  ACE_Handler_Caching_Utility &operator= (const ACE_Handler_Caching_Utility &) = delete;
+  ACE_Handler_Caching_Utility &operator= (ACE_Handler_Caching_Utility &&) = delete;
 
   /// Destructor.
   ~ACE_Handler_Caching_Utility ();
@@ -246,7 +265,7 @@ protected:
  * be cleaned up will be delegated.
  */
 template <class KEY, class VALUE, class CONTAINER, class ITERATOR, class ATTRIBUTES>
-class ACE_Null_Caching_Utility : private ACE_Copy_Disabled
+class ACE_Null_Caching_Utility
 {
 public:
   typedef ACE_Null_Cleanup_Strategy<KEY, VALUE, CONTAINER> CLEANUP_STRATEGY;
@@ -255,6 +274,11 @@ public:
   /// Constructor.
   ACE_Null_Caching_Utility (ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> *cleanup_strategy = 0,
                             bool delete_cleanup_strategy = false);
+
+  ACE_Null_Caching_Utility (const ACE_Null_Caching_Utility &) = delete;
+  ACE_Null_Caching_Utility (ACE_Null_Caching_Utility &&) = delete;
+  ACE_Null_Caching_Utility &operator= (const ACE_Null_Caching_Utility &) = delete;
+  ACE_Null_Caching_Utility &operator= (ACE_Null_Caching_Utility &&) = delete;
 
   /// Destructor.
   ~ACE_Null_Caching_Utility ();

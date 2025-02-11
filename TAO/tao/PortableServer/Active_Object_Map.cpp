@@ -95,7 +95,7 @@ TAO_Active_Object_Map::TAO_Active_Object_Map (
 {
   TAO_Active_Object_Map::set_system_id_size (creation_parameters);
 
-  TAO_Id_Uniqueness_Strategy *id_uniqueness_strategy = 0;
+  TAO_Id_Uniqueness_Strategy *id_uniqueness_strategy {};
 
   if (unique_id_policy)
     {
@@ -118,7 +118,7 @@ TAO_Active_Object_Map::TAO_Active_Object_Map (
   // Give ownership to the unique pointer.
   std::unique_ptr<TAO_Id_Uniqueness_Strategy> new_id_uniqueness_strategy (id_uniqueness_strategy);
 
-  TAO_Lifespan_Strategy *lifespan_strategy = 0;
+  TAO_Lifespan_Strategy *lifespan_strategy {};
 
   if (persistent_id_policy)
     {
@@ -142,7 +142,7 @@ TAO_Active_Object_Map::TAO_Active_Object_Map (
   // Give ownership to the unique pointer.
   std::unique_ptr<TAO_Lifespan_Strategy> new_lifespan_strategy (lifespan_strategy);
 
-  TAO_Id_Assignment_Strategy *id_assignment_strategy = 0;
+  TAO_Id_Assignment_Strategy *id_assignment_strategy {};
 
   if (user_id_policy)
     {
@@ -177,7 +177,7 @@ TAO_Active_Object_Map::TAO_Active_Object_Map (
   // Give ownership to the unique pointer.
   std::unique_ptr<TAO_Id_Assignment_Strategy> new_id_assignment_strategy (id_assignment_strategy);
 
-  TAO_Id_Hint_Strategy *id_hint_strategy = 0;
+  TAO_Id_Hint_Strategy *id_hint_strategy {};
   if ((user_id_policy
        || creation_parameters.allow_reactivation_of_system_ids_)
       && creation_parameters.use_active_hint_in_ids_)
@@ -199,7 +199,7 @@ TAO_Active_Object_Map::TAO_Active_Object_Map (
   // Give ownership to the unique pointer.
   std::unique_ptr<TAO_Id_Hint_Strategy> new_id_hint_strategy (id_hint_strategy);
 
-  servant_map *sm = 0;
+  servant_map *sm {};
   if (unique_id_policy)
     {
       switch (creation_parameters.reverse_object_lookup_strategy_for_unique_id_policy_)
@@ -233,7 +233,7 @@ TAO_Active_Object_Map::TAO_Active_Object_Map (
   // Give ownership to the unique pointer.
   std::unique_ptr<servant_map> new_servant_map (sm);
 
-  user_id_map *uim = 0;
+  user_id_map *uim {};
   if (user_id_policy
       || creation_parameters.allow_reactivation_of_system_ids_)
     {
@@ -348,13 +348,13 @@ TAO_Active_Object_Map::is_user_id_in_map (
   bool &priorities_match,
   bool &deactivated)
 {
-  TAO_Active_Object_Map_Entry *entry = 0;
+  TAO_Active_Object_Map_Entry *entry {};
   bool result = false;
   int const find_result = this->user_id_map_->find (user_id, entry);
 
   if (find_result == 0)
     {
-      if (entry->servant_ == 0)
+      if (entry->servant_ == nullptr)
         {
           if (entry->priority_ != priority)
             {
@@ -388,9 +388,8 @@ int
 TAO_Unique_Id_Strategy::is_servant_in_map (PortableServer::Servant servant,
                                            bool &deactivated)
 {
-  TAO_Active_Object_Map_Entry *entry = 0;
-  int result = this->active_object_map_->servant_map_->find (servant,
-                                                             entry);
+  TAO_Active_Object_Map_Entry *entry{};
+  int result = this->active_object_map_->servant_map_->find (servant, entry);
   if (result == 0)
     {
       result = 1;
@@ -420,7 +419,7 @@ TAO_Unique_Id_Strategy::bind_using_user_id (
 
   if (result == 0)
     {
-      if (servant != 0)
+      if (servant != nullptr)
         {
           entry->servant_ = servant;
 
@@ -451,24 +450,19 @@ TAO_Unique_Id_Strategy::bind_using_user_id (
       if (result == 0)
         {
           result =
-            this->active_object_map_->user_id_map_->bind (entry->user_id_,
-                                                          entry);
+            this->active_object_map_->user_id_map_->bind (entry->user_id_, entry);
           if (result == 0)
             {
-              if (servant != 0)
+              if (servant != nullptr)
                 {
                   result =
-                    this->active_object_map_->servant_map_->bind (
-                      entry->servant_,
-                      entry);
+                    this->active_object_map_->servant_map_->bind (entry->servant_, entry);
                 }
 
               if (result != 0)
                 {
-                  this->active_object_map_->user_id_map_->unbind (
-                    entry->user_id_);
-                  this->active_object_map_->id_hint_strategy_->unbind (
-                    *entry);
+                  this->active_object_map_->user_id_map_->unbind (entry->user_id_);
+                  this->active_object_map_->id_hint_strategy_->unbind (*entry);
                   delete entry;
                 }
               else
@@ -515,9 +509,8 @@ int
 TAO_Unique_Id_Strategy::unbind_using_user_id (
   const PortableServer::ObjectId &user_id)
 {
-  TAO_Active_Object_Map_Entry *entry = 0;
-  int result = this->active_object_map_->user_id_map_->unbind (user_id,
-                                                               entry);
+  TAO_Active_Object_Map_Entry *entry {};
+  int result = this->active_object_map_->user_id_map_->unbind (user_id, entry);
   if (result == 0)
     {
       if (TAO_debug_level > 7)
@@ -563,7 +556,7 @@ TAO_Unique_Id_Strategy::find_user_id_using_servant (
   PortableServer::Servant servant,
   PortableServer::ObjectId_out user_id)
 {
-  TAO_Active_Object_Map_Entry *entry = 0;
+  TAO_Active_Object_Map_Entry *entry {};
   int result = this->active_object_map_->servant_map_->find (servant, entry);
 
   if (result == 0)
@@ -589,7 +582,7 @@ TAO_Unique_Id_Strategy::find_system_id_using_servant (
   PortableServer::ObjectId_out system_id,
   CORBA::Short &priority)
 {
-  TAO_Active_Object_Map_Entry *entry = 0;
+  TAO_Active_Object_Map_Entry *entry {};
   int result = this->active_object_map_->servant_map_->find (servant,
                                                              entry);
   if (result == 0)
@@ -640,12 +633,11 @@ TAO_Multiple_Id_Strategy::bind_using_user_id (
   CORBA::Short priority,
   TAO_Active_Object_Map_Entry *&entry)
 {
-  int result =
-    this->active_object_map_->user_id_map_->find (user_id, entry);
+  int result = this->active_object_map_->user_id_map_->find (user_id, entry);
 
   if (result == 0)
     {
-      if (servant != 0)
+      if (servant != nullptr)
         {
           entry->servant_ = servant;
         }
@@ -711,7 +703,7 @@ int
 TAO_Multiple_Id_Strategy::unbind_using_user_id (
   const PortableServer::ObjectId &user_id)
 {
-  TAO_Active_Object_Map_Entry *entry = 0;
+  TAO_Active_Object_Map_Entry *entry {};
   int result = this->active_object_map_->user_id_map_->unbind (user_id,
                                                                entry);
   if (result == 0)
@@ -944,7 +936,7 @@ TAO_System_Id_With_Unique_Id_Strategy::bind_using_system_id (
 
       if (result == 0)
         {
-          if (servant != 0)
+          if (servant != nullptr)
             {
               result =
                 this->active_object_map_->servant_map_->bind (entry->servant_,

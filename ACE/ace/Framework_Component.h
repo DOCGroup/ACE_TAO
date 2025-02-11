@@ -43,7 +43,6 @@
 
 #include "ace/os_include/os_signal.h"
 #include "ace/Thread_Mutex.h"
-#include "ace/Copy_Disabled.h"
 #include "ace/Synch_Traits.h"
 
 #define ACE_DEFAULT_FRAMEWORK_REPOSITORY_SIZE 1024
@@ -56,7 +55,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * @brief Base class that defines a uniform interface for all managed
  * framework components.
  */
-class ACE_Export ACE_Framework_Component : private ACE_Copy_Disabled
+class ACE_Export ACE_Framework_Component
 {
 public:
   friend class ACE_Framework_Repository;
@@ -65,6 +64,11 @@ public:
   ACE_Framework_Component (void *_this,
                            const ACE_TCHAR *dll_name = 0,
                            const ACE_TCHAR *name = 0);
+
+  ACE_Framework_Component (const ACE_Framework_Component &) = delete;
+  ACE_Framework_Component (ACE_Framework_Component &&) = delete;
+  ACE_Framework_Component &operator= (const ACE_Framework_Component &) = delete;
+  ACE_Framework_Component &operator= (ACE_Framework_Component &&) = delete;
 
   /// Close the contained singleton.
   virtual void close_singleton () = 0;
@@ -93,7 +97,7 @@ private:
  * destruction, framework components are destroyed in the reverse order
  * that they were added originally.
  */
-class ACE_Export ACE_Framework_Repository : private ACE_Copy_Disabled
+class ACE_Export ACE_Framework_Repository
 {
 public:
   // This is just to silence a compiler warning about no public ctors
@@ -103,6 +107,11 @@ public:
   {
     DEFAULT_SIZE = ACE_DEFAULT_FRAMEWORK_REPOSITORY_SIZE
   };
+
+  ACE_Framework_Repository (const ACE_Framework_Repository &) = delete;
+  ACE_Framework_Repository (ACE_Framework_Repository &&) = delete;
+  ACE_Framework_Repository &operator= (const ACE_Framework_Repository &) = delete;
+  ACE_Framework_Repository &operator= (ACE_Framework_Repository &&) = delete;
 
   /// Close down the repository and free up dynamically allocated
   /// resources.

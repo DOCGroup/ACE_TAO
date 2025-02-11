@@ -129,7 +129,7 @@ MonitorTestInterface_i::running (MonitorTestInterface::Which proc)
       if (!ACE::is_equal (num.dlist[0].value, 0.0))
         ACE_ERROR ((LM_ERROR, "Monitor: ERROR: There should be no events queued\n"));
 
-        brain_dump ("Running Consumer");
+      brain_dump ("Running Consumer");
 
       break;
       }
@@ -148,7 +148,7 @@ MonitorTestInterface_i::running (MonitorTestInterface::Which proc)
       if (!ACE::is_equal (num.dlist[0].value, 1.0))
         ACE_ERROR ((LM_ERROR,
               "Monitor: ERROR: There should be only one SupplierAdmin\n"));
-        brain_dump ("Running Supplier");
+      brain_dump ("Running Supplier");
       break;
       }
     default:

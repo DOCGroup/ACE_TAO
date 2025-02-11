@@ -238,15 +238,15 @@ ICP_get(
             return -1;                      // Must be thermostat
         ACE_OS::memcpy(
             value, &pos->second.nominal_temp,
-            ace_min(len, sizeof(pos->second.nominal_temp))
+            (std::min)(len, sizeof(pos->second.nominal_temp))
         );
     } else if (ACE_OS::strcmp(attr, "temperature") == 0) {
         long temp = actual_temp(pos);
-        ACE_OS::memcpy(value, &temp, ace_min(len, sizeof(temp)));
+        ACE_OS::memcpy(value, &temp, (std::min) (len, sizeof(temp)));
     } else if (ACE_OS::strcmp(attr, "MIN_TEMP") == 0) {
-        ACE_OS::memcpy(value, &MIN_TEMP, ace_min(len, sizeof(MIN_TEMP)));
+        ACE_OS::memcpy(value, &MIN_TEMP, (std::min) (len, sizeof(MIN_TEMP)));
     } else if (ACE_OS::strcmp(attr, "MAX_TEMP") == 0) {
-        ACE_OS::memcpy(value, &MAX_TEMP, ace_min(len, sizeof(MAX_TEMP)));
+        ACE_OS::memcpy(value, &MAX_TEMP, (std::min) (len, sizeof(MAX_TEMP)));
     } else {
         return -1;                          // No such attribute
     }

@@ -8,6 +8,7 @@
 #include "tao/Policy_Set.h"
 #include "tao/Policy_Manager.h"
 #include "tao/SystemException.h"
+#include <algorithm>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -278,7 +279,7 @@ TAO_ZIOP_Stub::effective_compression_id_list_policy ()
               // The one we found is the one we are going to use (now the highest priority)
               // but with the correct (minimized) compression level of the client and server.
               returningList[0].compressor_id=     clientEntry->compressor_id;
-              returningList[0].compression_level= ACE_MIN (clientEntry->compression_level,
+              returningList[0].compression_level= (std::min) (clientEntry->compression_level,
                                                            serverEntry->compression_level);
               if (6 < TAO_debug_level)
                 {

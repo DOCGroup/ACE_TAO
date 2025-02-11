@@ -22,10 +22,6 @@ ACE_Msg_WFMO_Reactor::ACE_Msg_WFMO_Reactor (size_t size,
 {
 }
 
-ACE_Msg_WFMO_Reactor::~ACE_Msg_WFMO_Reactor ()
-{
-}
-
 DWORD
 ACE_Msg_WFMO_Reactor::wait_for_multiple_events (int timeout,
                                                 int alertable)

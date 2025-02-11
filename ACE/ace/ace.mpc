@@ -44,7 +44,6 @@ project(ACE) : ace_output, acedefaults, install, other, codecs, token, svcconf, 
     Configuration_Import_Export.cpp
     Connection_Recycling_Strategy.cpp
     Containers.cpp
-    Copy_Disabled.cpp
     Date_Time.cpp
     DEV.cpp
     DEV_Addr.cpp
@@ -400,6 +399,7 @@ project(ACE) : ace_output, acedefaults, install, other, codecs, token, svcconf, 
     CORBA_macros.h
     Codeset_Symbols.h
     Condition_T.h
+    Copy_Disabled.h
     Countdown_Time.h
     Default_Constants.h
     Event_Base.h

@@ -29,7 +29,7 @@ class TAO_DiffServPolicy_Export TAO_DiffServ_Network_Priority_Hook
   : public TAO_Network_Priority_Hook
 {
 public:
-  virtual ~TAO_DiffServ_Network_Priority_Hook();
+  ~TAO_DiffServ_Network_Priority_Hook() override = default;
 
   /// This function is a hook, that is called from the Root_POA's
   /// constructor. It allows the POA to cache the server side network
@@ -37,13 +37,13 @@ public:
   /// policy-specified DiffServ codepoint.
   ///
   void update_network_priority (TAO_Root_POA &poa,
-                                TAO_POA_Policy_Set &poa_policy_set);
+                                TAO_POA_Policy_Set &poa_policy_set) override;
 
   /// This function is a hook, that is used by the POA's servant dispatcher
   /// when it tries to assign DiffServ codepoints on the replies.
   ///
   void set_dscp_codepoint (TAO_ServerRequest &req,
-                           TAO_Root_POA &poa);
+                           TAO_Root_POA &poa) override;
 };
 
 

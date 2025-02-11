@@ -7,7 +7,9 @@ assignees: ''
 
 ---
 
+<!---
 All support on github is best effort only, no guarantees given. When you need guaranteed support have a look at the commercial support offerings as listed at https://github.com/DOCGroup/ACE_TAO/wiki/ACE-and-TAO-Commercial-support.
+--->
 
 ### Version
 

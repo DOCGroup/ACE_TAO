@@ -7,10 +7,6 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_Message_Queue_Base::~ACE_Message_Queue_Base ()
-{
-}
-
 int
 ACE_Message_Queue_Base::state ()
 {

@@ -65,7 +65,7 @@ public:
   typedef CORBA::Object_var _stub_var_type;
 
   /// Destructor.
-  virtual ~TAO_ServantBase ();
+  virtual ~TAO_ServantBase () = default;
 
   static void _is_a_skel (TAO_ServerRequest & req,
                           TAO::Portable_Server::Servant_Upcall* servant_upcall,

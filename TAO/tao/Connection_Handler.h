@@ -21,7 +21,6 @@
 
 #include "tao/Basic_Types.h"
 #include "ace/Event_Handler.h"
-#include "ace/Copy_Disabled.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_SOCK;
@@ -202,19 +201,23 @@ private:
  * @brief TAO_Auto_Reference acts as a "smart pointer" for
  * reference-countable instances.
  *
- * It increments the refrence count in the constructor and decrements
- * it in the destructor. The only requiement for the template
+ * It increments the reference count in the constructor and decrements
+ * it in the destructor. The only requirement for the template
  * parameter is to be a class that provides add_reference() and
  * remove_reference().
  */
 template <class T> class TAO_Auto_Reference
-  : private ACE_Copy_Disabled
 {
 public:
   TAO_Auto_Reference (T& r): ref_ (r)
   {
     ref_.add_reference ();
   }
+
+  TAO_Auto_Reference (const TAO_Auto_Reference &) = delete;
+  TAO_Auto_Reference (TAO_Auto_Reference &&) = delete;
+  TAO_Auto_Reference &operator= (const TAO_Auto_Reference &) = delete;
+  TAO_Auto_Reference &operator= (TAO_Auto_Reference &&) = delete;
 
   ~TAO_Auto_Reference ()
   {
