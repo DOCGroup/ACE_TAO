@@ -2026,13 +2026,19 @@ TAO_StreamEndPoint::request_connection (AVStreams::StreamEndPoint_ptr /*initiato
       if (qos.length () > 0)
         {
          if (TAO_debug_level > 0)
-          ORBSVCS_DEBUG ((LM_DEBUG,
-                      "QoS is Specified\n"));
+         {
+            ORBSVCS_DEBUG ((LM_DEBUG,
+                        "QoS is Specified\n"));
+         }
 
-          int result = this->translate_qos (qos, network_qos);
+          int const result = this->translate_qos (qos, network_qos);
           if (result != 0)
+          {
             if (TAO_debug_level > 0)
+            {
               ORBSVCS_DEBUG ((LM_DEBUG, "QoS translation failed\n"));
+            }
+          }
 
           this->qos ().set (network_qos);
         }
@@ -2080,7 +2086,9 @@ TAO_StreamEndPoint::request_connection (AVStreams::StreamEndPoint_ptr /*initiato
                                                              flow_spec);
 
       if (result < 0)
+      {
         return 0;
+      }
 
       // Make the upcall to the app
       result = this->handle_connection_requested (flow_spec);

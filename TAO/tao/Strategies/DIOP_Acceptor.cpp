@@ -19,6 +19,7 @@
 #include "ace/os_include/os_netdb.h"
 #include <cstring>
 #include <memory>
+#include <algorithm>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -395,8 +396,7 @@ TAO_DIOP_Acceptor::open_i (const ACE_INET_Addr& addr,
                            ACE_Reactor *reactor)
 {
   unsigned short const requested_port = addr.get_port_number ();
-  ACE_UINT32 const last_port = ACE_MIN (requested_port + this->port_span_ - 1,
-                                        ACE_MAX_DEFAULT_PORT);
+  ACE_UINT32 const last_port = (std::min) (requested_port + this->port_span_ - 1, ACE_MAX_DEFAULT_PORT);
 
   ACE_INET_Addr a(addr);
   bool found_a_port = false;

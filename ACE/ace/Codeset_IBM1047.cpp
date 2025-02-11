@@ -63,14 +63,6 @@ namespace
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_IBM1047_ISO8859::ACE_IBM1047_ISO8859 ()
-{
-}
-
-ACE_IBM1047_ISO8859::~ACE_IBM1047_ISO8859 ()
-{
-}
-
 ACE_CDR::ULong
 ACE_IBM1047_ISO8859::ncs ()
 {
@@ -211,14 +203,6 @@ ACE_IBM1047_ISO8859::write_char_array (ACE_OutputCDR& out,
 }
 
 // ****************************************************************
-
-ACE_ISO8859_IBM1047::ACE_ISO8859_IBM1047 ()
-{
-}
-
-ACE_ISO8859_IBM1047::~ACE_ISO8859_IBM1047 ()
-{
-}
 
 ACE_CDR::ULong
 ACE_ISO8859_IBM1047::ncs ()

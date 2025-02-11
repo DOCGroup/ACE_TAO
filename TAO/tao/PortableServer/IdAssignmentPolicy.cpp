@@ -20,7 +20,7 @@ namespace TAO
     CORBA::Policy_ptr
     IdAssignmentPolicy::copy ()
     {
-      IdAssignmentPolicy *copy = 0;
+      IdAssignmentPolicy *copy {};
       ACE_NEW_THROW_EX (copy,
                         IdAssignmentPolicy (this->value_),
                         CORBA::NO_MEMORY ());

@@ -20,10 +20,6 @@ ACE_Cleanup::cleanup (void *)
   delete this;
 }
 
-ACE_Cleanup::~ACE_Cleanup ()
-{
-}
-
 /*****************************************************************************/
 
 extern "C" void
@@ -81,14 +77,6 @@ ACE_Cleanup_Info_Node::operator!= (const ACE_Cleanup_Info_Node &o) const
 
 
 /*****************************************************************************/
-
-ACE_OS_Exit_Info::ACE_OS_Exit_Info ()
-{
-}
-
-ACE_OS_Exit_Info::~ACE_OS_Exit_Info ()
-{
-}
 
 int
 ACE_OS_Exit_Info::at_exit_i (void *object,

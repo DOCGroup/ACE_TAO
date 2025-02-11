@@ -26,7 +26,6 @@
 
 #include "ace/Log_Msg.h"
 #include "ace/SString.h"
-#include "ace/Copy_Disabled.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -91,10 +90,14 @@ enum
  *
  * @todo The Options class should be changed to use the Singleton pattern.
  */
-class Options : private ACE_Copy_Disabled
+class Options
 {
 public:
   Options ();
+  Options (const Options &) = delete;
+  Options (Options &&) = delete;
+  Options &operator= (const Options &) = delete;
+  Options &operator= (Options &&) = delete;
   ~Options ();
   int operator[] (Option_Type option);
   int parse_args (int argc, ACE_TCHAR *argv[]);

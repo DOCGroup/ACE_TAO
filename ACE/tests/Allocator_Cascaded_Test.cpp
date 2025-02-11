@@ -1,17 +1,14 @@
-// ============================================================================
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = DESCRIPTION
-//    This program tests the basic APIs supported in
-//    <ACE_Cascaded_Dynamic_Cached_Allocator>, and demonstrates how to use it.
-//
-// = AUTHOR
-//    Smith Achang <changyunlei@126.com>
-//
-// ============================================================================
+
+//============================================================================
+/**
+ *  @file    Allocator_Cascaded_Test.cpp
+ *
+ *  This program tests the basic APIs supported in <ACE_Cascaded_Dynamic_Cached_Allocator> and demonstrates how to use it.
+ *
+ *  @author Smith Achang <changyunlei@126.com>
+ */
+//============================================================================
+
 
 #include "ace/Malloc_T.h"
 #include "test_config.h"
@@ -85,7 +82,7 @@ run_cascaded_allocator_test ()
 
   ptr = alloc.malloc(nbytes);
   ACE_TEST_EXCEPTION_RETURN (ptr == nullptr,
-                             "  pool must return valid ptr for calloc call with normal nbytes\n");
+                             "  pool must return valid ptr for malloc call with normal nbytes\n");
   ACE_TEST_EXCEPTION_RETURN (alloc.pool_depth () != 0, "  initial pool depth must be zero\n");
   alloc.free(ptr);
   ACE_TEST_EXCEPTION_RETURN (alloc.pool_depth () != initial_n_chunks,

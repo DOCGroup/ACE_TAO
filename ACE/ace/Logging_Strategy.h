@@ -82,37 +82,34 @@ public:
   ACE_Logging_Strategy ();
 
   /// Destructor.
-  ~ACE_Logging_Strategy ();
+  ~ACE_Logging_Strategy () override;
 
   /// Dynamic linking initialization hook.
-  virtual int init (int argc, ACE_TCHAR *argv[]);
+  int init (int argc, ACE_TCHAR *argv[]) override;
 
   /// Dynamic linking termination hook.
-  virtual int fini ();
+  int fini () override;
 
   /**
    * Timeout handler which tests logfile size.  If the current logfile
    * size exceeds @c max_size_, the current logfile is closed, saved to
    * logfile.old, and a new logfile is reopened.
    */
-  virtual int handle_timeout (const ACE_Time_Value& tv,
-                              const void* arg);
-
+  int handle_timeout (const ACE_Time_Value& tv, const void* arg) override;
   /**
    * This function helps to cancel timer events for this logging strategy
    * in reactor during shutdown.
    */
-  virtual int handle_close (ACE_HANDLE,
-                            ACE_Reactor_Mask);
+  int handle_close (ACE_HANDLE, ACE_Reactor_Mask) override;
 
   /**
    * Reactor accessors. If reactor changes then we need remove this
    * event handler from previous reactor and scheduler for timer events
    * in a new one.
    */
-  virtual void reactor (ACE_Reactor *r);
+  void reactor (ACE_Reactor *r) override;
 
-  virtual ACE_Reactor * reactor () const;
+  ACE_Reactor * reactor () const override;
 
   /**
    * Parse arguments provided in svc.conf file.
@@ -148,56 +145,55 @@ protected:
   void tokenize (ACE_TCHAR *flag_string);
 
   /// Tokenize to set priorities (either process or thread one).
-  void priorities (ACE_TCHAR *priority_string,
-                   ACE_Log_Msg::MASK_TYPE mask);
+  void priorities (ACE_TCHAR *priority_string, ACE_Log_Msg::MASK_TYPE mask);
 
   /// Current thread's priority mask set by @c priorities
-  u_long thread_priority_mask_;
+  u_long thread_priority_mask_ {};
 
   /// Process-wide priority mask set by @c priorities
-  u_long process_priority_mask_;
+  u_long process_priority_mask_ {};
 
   /// Flags we keep track of.
-  u_long flags_;
+  u_long flags_ {};
 
   /// File name we're logging to.
-  ACE_TCHAR *filename_;
+  ACE_TCHAR *filename_ {};
 
   /// Logger key for distributed logging.
-  ACE_TCHAR *logger_key_;
+  ACE_TCHAR *logger_key_ {};
 
   /// Program name to be used for %n format specifier.
-  ACE_TCHAR *program_name_;
+  ACE_TCHAR *program_name_ {};
 
   /// If true then wipeout the logfile, otherwise append to it.
   /// Default value is false.
-  bool wipeout_logfile_;
+  bool wipeout_logfile_ {};
 
   /// If true we have a maximum number of log files we can write.
   /// Default value is false, i.e., no maximum number.
-  bool fixed_number_;
+  bool fixed_number_ {};
 
   /// If true we order the files as we rotate them.  Default value
   /// is false, i.e., we do not rotate files by default.
-  bool order_files_;
+  bool order_files_ {};
 
   /// This tells us in what file we last wrote. It will be increased
   /// to enable multiple log files
-  int count_;
+  int count_ {};
 
   /// Tells us what is the maximum log file to write. We will write
   /// @c max_file_number_ + 1 files (includes the current log file).
   /// Default value is 1, i.e., 2 files by default.
-  int max_file_number_;
+  int max_file_number_ { 1 };
 
   /// If non-zero, sampling interval (in secs) at which maximum logfile
   /// size is checked, otherwise logfile size can grow indefinitely.
   /// Default value is 0.
-  u_long interval_;
+  u_long interval_ { ACE_DEFAULT_LOGFILE_POLL_INTERVAL };
 
   /// Maximum logfile size (in KB).  Default value is
   /// ACE_DEFAULT_MAX_LOGFILE_SIZE.
-  u_long max_size_;
+  u_long max_size_ {};
 
   /// ACE_Log_Msg instance to work with
   ACE_Log_Msg *log_msg_;

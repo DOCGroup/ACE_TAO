@@ -26,12 +26,6 @@ ACE_Dynamic_Message_Strategy::ACE_Dynamic_Message_Strategy (unsigned long static
 {
 }
 
-// dtor
-
-ACE_Dynamic_Message_Strategy::~ACE_Dynamic_Message_Strategy ()
-{
-}
-
 ACE_Dynamic_Message_Strategy::Priority_Status
 ACE_Dynamic_Message_Strategy::priority_status (ACE_Message_Block & mb,
                                                const ACE_Time_Value & tv)
@@ -122,10 +116,6 @@ ACE_Deadline_Message_Strategy::ACE_Deadline_Message_Strategy (unsigned long stat
 {
 }
 
-ACE_Deadline_Message_Strategy::~ACE_Deadline_Message_Strategy ()
-{
-}
-
 void
 ACE_Deadline_Message_Strategy::convert_priority (ACE_Time_Value & priority,
                                                  const ACE_Message_Block & mb)
@@ -161,10 +151,6 @@ ACE_Laxity_Message_Strategy::ACE_Laxity_Message_Strategy (unsigned long static_b
                                   static_bit_field_shift,
                                   dynamic_priority_max,
                                   dynamic_priority_offset)
-{
-}
-
-ACE_Laxity_Message_Strategy::~ACE_Laxity_Message_Strategy ()
 {
 }
 

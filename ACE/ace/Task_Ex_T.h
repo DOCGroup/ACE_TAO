@@ -56,8 +56,7 @@ template <ACE_SYNCH_DECL, class TIME_POLICY> class ACE_Module;
  * code is in action.
  */
 template <ACE_SYNCH_DECL, class ACE_MESSAGE_TYPE, class TIME_POLICY = ACE_System_Time_Policy>
-class ACE_Task_Ex : public ACE_Task_Base,
-                    private ACE_Copy_Disabled
+class ACE_Task_Ex : public ACE_Task_Base
 {
 public:
   friend class ACE_Module<ACE_SYNCH_USE, TIME_POLICY>;
@@ -71,8 +70,12 @@ public:
    * then we'll allocate one dynamically.  Otherwise, we'll use the
    * one passed as a parameter.
    */
-  ACE_Task_Ex (ACE_Thread_Manager *thr_mgr = 0,
-            MESSAGE_QUEUE_EX *mq = 0);
+  ACE_Task_Ex (ACE_Thread_Manager *thr_mgr = nullptr, MESSAGE_QUEUE_EX *mq = nullptr);
+
+  ACE_Task_Ex (const ACE_Task_Ex &) = delete;
+  ACE_Task_Ex (ACE_Task_Ex &&) = delete;
+  ACE_Task_Ex &operator= (const ACE_Task_Ex &) = delete;
+  ACE_Task_Ex &operator= (ACE_Task_Ex &&) = delete;
 
   /// Destructor.
   virtual ~ACE_Task_Ex ();

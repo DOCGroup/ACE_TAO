@@ -63,7 +63,7 @@ class ACE_Svc_Conf_Param;
  * it. This feature is important for the derived classes and the
  * Service Config in particular.
  */
-class ACE_Export ACE_Service_Gestalt : private ACE_Copy_Disabled
+class ACE_Export ACE_Service_Gestalt
 {
 public:
   enum
@@ -82,6 +82,11 @@ public:
   ACE_Service_Gestalt (size_t size = DEFAULT_SIZE,
                        bool svc_repo_is_owned = true,
                        bool no_static_svcs = true);
+
+  ACE_Service_Gestalt (const ACE_Service_Gestalt &) = delete;
+  ACE_Service_Gestalt (ACE_Service_Gestalt &&) = delete;
+  ACE_Service_Gestalt &operator= (const ACE_Service_Gestalt &) = delete;
+  ACE_Service_Gestalt &operator= (ACE_Service_Gestalt &&) = delete;
 
   /// Perform user-specified close activities and remove dynamic
   /// memory.

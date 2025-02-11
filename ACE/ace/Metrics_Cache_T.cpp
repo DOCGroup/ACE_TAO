@@ -194,13 +194,6 @@ ACE_Metrics_Cache (u_long table_size,
   dequeue_probes_ [1] = 0;
 }
 
-// Destructor.
-
-template <class ACE_LOCK, class ALLOCATOR>
-ACE_Metrics_Cache<ACE_LOCK, ALLOCATOR>::~ACE_Metrics_Cache ()
-{
-}
-
 // Obtain an allocator pointer correctly thunked for the current
 // address space.  If there is no allocator stored in the instance,
 // the singleton allocator in the current process is used.

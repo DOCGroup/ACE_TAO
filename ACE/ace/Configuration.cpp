@@ -449,10 +449,6 @@ ACE_Configuration_Win32Registry::ACE_Configuration_Win32Registry (HKEY hKey, u_l
 }
 
 
-ACE_Configuration_Win32Registry::~ACE_Configuration_Win32Registry ()
-{
-}
-
 int
 ACE_Configuration_Win32Registry::open_section (const ACE_Configuration_Section_Key& base,
                                                const ACE_TCHAR* sub_section,
@@ -778,7 +774,7 @@ ACE_Configuration_Win32Registry::get_string_value (const ACE_Configuration_Secti
       return -1;
     }
 
-  value = buffer.get ();
+  value.set (buffer.get (), buffer_length, true);
   return 0;
 }
 
@@ -1059,10 +1055,6 @@ ACE_Configuration_Value_IntId::ACE_Configuration_Value_IntId (const ACE_Configur
 {
 }
 
-ACE_Configuration_Value_IntId::~ACE_Configuration_Value_IntId ()
-{
-}
-
 ACE_Configuration_Value_IntId& ACE_Configuration_Value_IntId::operator= (const ACE_Configuration_Value_IntId& rhs)
 {
   if (this != &rhs)
@@ -1143,10 +1135,6 @@ ACE_Configuration_Section_IntId::ACE_Configuration_Section_IntId (VALUE_MAP* val
 ACE_Configuration_Section_IntId::ACE_Configuration_Section_IntId (const ACE_Configuration_Section_IntId& rhs)
   : value_hash_map_ (rhs.value_hash_map_),
     section_hash_map_ (rhs.section_hash_map_)
-{
-}
-
-ACE_Configuration_Section_IntId::~ACE_Configuration_Section_IntId ()
 {
 }
 

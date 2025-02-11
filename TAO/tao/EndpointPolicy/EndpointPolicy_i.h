@@ -50,7 +50,7 @@ public:
   /// Copy constructor.
   TAO_EndpointPolicy_i (const TAO_EndpointPolicy_i &rhs);
 
-  virtual ~TAO_EndpointPolicy_i ();
+  virtual ~TAO_EndpointPolicy_i () = default;
 
   /// Returns a copy of this>
   virtual TAO_EndpointPolicy_i *clone () const;
