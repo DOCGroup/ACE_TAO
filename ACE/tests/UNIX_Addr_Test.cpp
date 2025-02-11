@@ -111,6 +111,15 @@ int run_main (int, ACE_TCHAR *[])
   // Test invalid abstract paths
   ACE_TEST_ASSERT(addr.set("@") == 0);  // Empty abstract path
   ACE_TEST_ASSERT(addr.set("@@/tmp/test") == 0);  // Multiple @ prefixes
+
+ // Test invalid abstract paths
+ ACE_TEST_ASSERT(addr.set("@") == 0);  // Empty abstract path
+ ACE_TEST_ASSERT(addr.set("@@/tmp/test") == 0);  // Multiple @ prefixes
+
+  // Test path with embedded null
+  char null_path[] = "@/tmp/te\0st";
+  ACE_TEST_ASSERT(addr.set(null_path) == 0);
+  ACE_TEST_ASSERT(ACE_OS::strcmp(addr.get_path_name() + 1, "/tmp/te") == 0);
 #endif // ACE_LINUX
 
 #endif // ! ACE_LACKS_UNIX_DOMAIN_SOCKETS
