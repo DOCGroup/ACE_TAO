@@ -45,7 +45,7 @@ TAO_Set_Update_Interceptor::send_request (
     {
       CORBA::Any_var a = Request_Context_Repository().get_ft_request_service_context(ri);
 
-      const IOP::ServiceContext* scp = 0;
+      const IOP::ServiceContext* scp {};
 
       if ((a.in() >>= scp) == 0)
         return;
