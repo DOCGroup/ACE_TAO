@@ -168,7 +168,7 @@ Demo_Consumer::push (const RtecEventComm::EventSet &events)
 
               if (ret)
                 {
-                  const Navigation *navigation_ = 0;
+                  const Navigation *navigation_ {};
                   events[i].data.any_value >>= navigation_;
                   ACE_DEBUG ((LM_DEBUG, "Found a Navigation struct in the any: pos_lat = %d\n", navigation_->position_latitude));
                 }
@@ -178,7 +178,7 @@ Demo_Consumer::push (const RtecEventComm::EventSet &events)
 
                   if (ret)
                     {
-                      const Weapons *weapons_ = 0;
+                      const Weapons *weapons_ {};
                       events[i].data.any_value >>= weapons_;
                       ACE_DEBUG ((LM_DEBUG, "Found a Weapons struct in the any: nr_of_weapons = %u\n", weapons_->number_of_weapons));
                     }

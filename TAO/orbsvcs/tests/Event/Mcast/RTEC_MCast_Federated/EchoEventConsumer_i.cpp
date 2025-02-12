@@ -23,7 +23,7 @@ void EchoEventConsumer_i::push(const RtecEventComm::EventSet& events)
     {
       //ACE_OS::printf(".");
       // Extract event data from the any.
-      const char* eventData;
+      const char* eventData {};
       std::ostringstream out;
 
 #ifndef ACE_LACKS_GETPID

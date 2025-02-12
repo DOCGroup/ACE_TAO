@@ -35,7 +35,7 @@ Stock_Consumer::push (const RtecEventComm::EventSet &data)
   for (CORBA::ULong i = 0; i != data.length (); ++i) {
     const RtecEventComm::Event &e = data[i];
 
-    const Quoter::Event *event = 0;
+    const Quoter::Event *event {};
     if ((e.data.any_value >>= event) == 0)
       continue; // Invalid event
 
