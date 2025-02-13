@@ -270,7 +270,7 @@ ACE_Ping_Socket::process_incoming_dgram (char * ptr, ssize_t len)
       if (ACE::debug())
         ACELIB_DEBUG
           ((LM_DEBUG,
-            ACE_TEXT ("(%P|%t) ACE::Ping_Socket::process_incoming_dgram - ")
+            ACE_TEXT ("(%P|%t) ACE_Ping_Socket::process_incoming_dgram - ")
             ACE_TEXT ("received ")
             ACE_TEXT ("ICMP datagram with length of %b bytes (not counting ")
             ACE_TEXT ("IP-header): seq=%u, ttl=%d.\n"),
@@ -282,7 +282,7 @@ ACE_Ping_Socket::process_incoming_dgram (char * ptr, ssize_t len)
   if (ACE::debug())
     ACELIB_DEBUG
       ((LM_DEBUG,
-        ACE_TEXT ("(%P|%t) ACE::Ping_Socket::process_incoming_dgram - ")
+        ACE_TEXT ("(%P|%t) ACE_Ping_Socket::process_incoming_dgram - ")
         ACE_TEXT ("received datagram that is not ICMP_ECHOREPLY.\n")));
 
   return -1;
@@ -358,16 +358,15 @@ ACE_Ping_Socket::make_echo_check (ACE_INET_Addr & remote_addr,
                                   bool to_connect,
                                   ACE_Time_Value const * timeout)
 {
-  int rval_send = -1;
+  const int rval_send = this->send_echo_check (remote_addr, to_connect);
 
-  if ((rval_send = this->send_echo_check (remote_addr,
-                                          to_connect)) == -1)
+  if (rval_send == -1)
     return -1;
 
   if (ACE::debug())
     ACELIB_DEBUG
       ((LM_DEBUG,
-        ACE_TEXT ("(%P|%t) ACE_Ping_Socket::make_echo_check - sent %d.\n"),
+        ACE_TEXT ("(%P|%t) ACE_Ping_Socket::make_echo_check - sent %d bytes.\n"),
         rval_send));
 
   return this->receive_echo_reply (timeout);
