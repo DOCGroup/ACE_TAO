@@ -5,7 +5,7 @@ USER VISIBLE CHANGES BETWEEN ACE-8.0.2 and ACE-8.0.3
 
 . Replaced usage of ACE_MIN and ACE_MAX with std::min/std::max
 
-. Add support for abstract pats to ACE_UNIX_ADDR
+. Add support for abstract paths to ACE_UNIX_ADDR
 
 . Improve support for 64bit file sizes
 
