@@ -5,7 +5,6 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_sys_uio.h"
 #include "ace/OS_NS_sys_socket.h"
-#include "ace/Min_Max.h"
 
 #include "JAWS/Data_Block.h"
 #include "JAWS/Policy.h"
@@ -15,9 +14,7 @@
 #include "JAWS/Filecache.h"
 
 #include "ace/Asynch_IO.h"  //for ACE_Asynch_Write_Stream
-
-// #include "HTTP_Helpers.h"
-
+#include <algorithm>
 
 JAWS_IO::JAWS_IO ()
   : handle_ (ACE_INVALID_HANDLE),
@@ -120,7 +117,7 @@ JAWS_Synch_IO::receive_file (JAWS_IO_Handler *ioh,
       ACE_SOCK_Stream stream;
       stream.set_handle (ioh->handle ());
 
-      int bytes_to_memcpy = ACE_MIN (entire_length, initial_data_length);
+      int const bytes_to_memcpy = (std::min) (entire_length, initial_data_length);
       ACE_OS::memcpy (handle.address (), initial_data, bytes_to_memcpy);
 
       int bytes_to_read = entire_length - bytes_to_memcpy;

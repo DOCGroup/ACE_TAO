@@ -63,12 +63,12 @@ Request_Context_Repository::set_object_id(
 FtRtecEventChannelAdmin::ObjectId_var
 get_object_id(CORBA::Any_var a)
 {
-  const FtRtecEventChannelAdmin::ObjectId *object_id = 0;
+  const FtRtecEventChannelAdmin::ObjectId *object_id {};
 
   if ((a.in() >>= object_id) == 0)
     throw CORBA::NO_MEMORY();
 
-  FtRtecEventChannelAdmin::ObjectId *r = 0;
+  FtRtecEventChannelAdmin::ObjectId *r {};
   ACE_NEW_THROW_EX(r,
                    FtRtecEventChannelAdmin::ObjectId(*object_id),
                    CORBA::NO_MEMORY());

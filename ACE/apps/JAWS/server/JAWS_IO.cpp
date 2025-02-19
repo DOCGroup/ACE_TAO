@@ -2,7 +2,6 @@
 #include "ace/OS_NS_sys_uio.h"
 #include "ace/OS_NS_sys_socket.h"
 #include "ace/Message_Block.h"
-#include "ace/Min_Max.h"
 #include "ace/SOCK_Stream.h"
 #include "ace/Filecache.h"
 #include "JAWS_IO.h"
@@ -13,6 +12,7 @@
 #include "ace/OS_NS_sys_stat.h"
 #include "ace/Basic_Types.h"
 #include <memory>
+#include <algorithm>
 
 JAWS_IO::JAWS_IO ()
   : handler_ (0)
@@ -87,7 +87,7 @@ JAWS_Synch_IO::receive_file (const char *filename,
       ACE_SOCK_Stream stream;
       stream.set_handle (this->handle_);
 
-      int bytes_to_memcpy = ACE_MIN (entire_length, initial_data_length);
+      int const bytes_to_memcpy = (std::min) (entire_length, initial_data_length);
       ACE_OS::memcpy (handle.address (), initial_data, bytes_to_memcpy);
 
       int bytes_to_read = entire_length - bytes_to_memcpy;

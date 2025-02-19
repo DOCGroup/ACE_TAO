@@ -261,6 +261,7 @@ ACE_SSL_Context::set_mode (int mode)
   SSL_METHOD *method = 0;
 #endif
 
+  /* these openssl macros negotiate highest available SSL/TLS version */
   switch (mode)
     {
     case ACE_SSL_Context::SSLv23_client:
