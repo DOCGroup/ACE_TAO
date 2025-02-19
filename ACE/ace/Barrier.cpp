@@ -25,7 +25,7 @@ ACE_Sub_Barrier::dump () const
 
   ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   this->barrier_finished_.dump ();
-  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("running_threads_ = %d\n"), this->running_threads_));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("running_threads_ = %d\n"), this->running_threads_.load()));
   ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
