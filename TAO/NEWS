@@ -1,6 +1,14 @@
 USER VISIBLE CHANGES BETWEEN TAO-4.0.2 and TAO-4.0.3
 ====================================================
 
+. Add new CECShutdownWaitCompletion command line argument to CosEvent service
+  in order to be able not to wait on any pending event on shutdown
+
+. Fixed possible race condition when handling location forwards
+
+. When no preferred interfaces are provided we don't query for all IP interfaces
+  as that could be slow
+
 USER VISIBLE CHANGES BETWEEN TAO-4.0.1 and TAO-4.0.2
 ====================================================
 
