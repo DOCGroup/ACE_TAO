@@ -81,7 +81,7 @@ YY_DECL;
 extern FILE *ace_yyin;
 
 /// Error handling routines required by YACC or BISON
-extern void ace_yyerror (ACE_TCHAR const *);
+extern void ace_yyerror (void *YYLEX_PARAM, ACE_TCHAR const *);
 extern void ace_yyerror (int yyerrno, int yylineno, ACE_TCHAR const *);
 
 /// Holds the lexeme for the current token
