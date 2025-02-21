@@ -17,6 +17,7 @@ project(ace_svcconf_gen) {
     "       -e 's/ace_yyerror[ ]*([ ]*YY_/ace_yyerror (ACE_SVC_CONF_PARAM->yyerrno, ACE_SVC_CONF_PARAM->yylineno, YY_/g' \\"
     "       -e 's@#include <stdio\\.h>@@' \\"
     "       -e 's/Svc_Conf\\.tab\\.c/Svc_Conf_y.cpp/g' <Svc_Conf.tab.c >Svc_Conf_y.cpp"
+    "	sed -e 's/yy/ace_yy/g' -i Svc_Conf_Token_Table.h"
     "	$(RM) -f Svc_Conf.tab.c Svc_Conf_y.cpp.orig"
     "else"
     "	@echo 'ERROR: You must use bison 1.35 or higher to process this file'"

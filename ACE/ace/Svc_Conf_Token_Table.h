@@ -32,7 +32,7 @@
    version 2.2 of Bison.  */
 
 /* DO NOT RELY ON FEATURES THAT ARE NOT DOCUMENTED in the manual,
-   especially those whose name start with YY_ or yy_.  They are
+   especially those whose name start with YY_ or ace_yy_.  They are
    private implementation details that can be changed or removed.  */
 
 #ifndef YY_YY_SVC_CONF_TOKEN_TABLE_H_INCLUDED
@@ -42,13 +42,13 @@
 # define YYDEBUG 0
 #endif
 #if YYDEBUG
-extern int yydebug;
+extern int ace_yydebug;
 #endif
 
 /* Token kinds.  */
 #ifndef YYTOKENTYPE
 # define YYTOKENTYPE
-  enum yytokentype
+  enum ace_yytokentype
   {
     YYEMPTY = -2,
     YYEOF = 0,                     /* "end of file"  */
@@ -69,7 +69,7 @@ extern int yydebug;
     ACE_IDENT = 270,               /* ACE_IDENT  */
     ACE_STRING = 271               /* ACE_STRING  */
   };
-  typedef enum yytokentype yytoken_kind_t;
+  typedef enum ace_yytokentype ace_yytoken_kind_t;
 #endif
 
 /* Value type.  */
@@ -77,7 +77,7 @@ extern int yydebug;
 
 
 
-int yyparse (void *YYLEX_PARAM);
+int ace_yyparse (void *YYLEX_PARAM);
 
 
 #endif /* !YY_YY_SVC_CONF_TOKEN_TABLE_H_INCLUDED  */
