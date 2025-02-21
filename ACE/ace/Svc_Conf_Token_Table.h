@@ -32,28 +32,28 @@
    version 2.2 of Bison.  */
 
 /* DO NOT RELY ON FEATURES THAT ARE NOT DOCUMENTED in the manual,
-   especially those whose name start with YY_ or ace_yy_.  They are
+   especially those whose name start with ACE_YY_ or ace_yy_.  They are
    private implementation details that can be changed or removed.  */
 
-#ifndef YY_YY_SVC_CONF_TOKEN_TABLE_H_INCLUDED
-# define YY_YY_SVC_CONF_TOKEN_TABLE_H_INCLUDED
+#ifndef ACE_YY_ACE_YY_SVC_CONF_TOKEN_TABLE_H_INCLUDED
+# define ACE_YY_ACE_YY_SVC_CONF_TOKEN_TABLE_H_INCLUDED
 /* Debug traces.  */
-#ifndef YYDEBUG
-# define YYDEBUG 0
+#ifndef ACE_YYDEBUG
+# define ACE_YYDEBUG 0
 #endif
-#if YYDEBUG
+#if ACE_YYDEBUG
 extern int ace_yydebug;
 #endif
 
 /* Token kinds.  */
-#ifndef YYTOKENTYPE
-# define YYTOKENTYPE
+#ifndef ACE_YYTOKENTYPE
+# define ACE_YYTOKENTYPE
   enum ace_yytokentype
   {
-    YYEMPTY = -2,
-    YYEOF = 0,                     /* "end of file"  */
-    YYerror = 256,                 /* error  */
-    YYUNDEF = 257,                 /* "invalid token"  */
+    ACE_YYEMPTY = -2,
+    ACE_YYEOF = 0,                     /* "end of file"  */
+    ACE_YYerror = 256,                 /* error  */
+    ACE_YYUNDEF = 257,                 /* "invalid token"  */
     ACE_DYNAMIC = 258,             /* ACE_DYNAMIC  */
     ACE_STATIC = 259,              /* ACE_STATIC  */
     ACE_SUSPEND = 260,             /* ACE_SUSPEND  */
@@ -77,7 +77,7 @@ extern int ace_yydebug;
 
 
 
-int ace_yyparse (void *YYLEX_PARAM);
+int ace_yyparse (void *ACE_YYLEX_PARAM);
 
 
-#endif /* !YY_YY_SVC_CONF_TOKEN_TABLE_H_INCLUDED  */
+#endif /* !ACE_YY_ACE_YY_SVC_CONF_TOKEN_TABLE_H_INCLUDED  */

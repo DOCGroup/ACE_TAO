@@ -8,7 +8,7 @@ project(ace_svcconf_gen) {
     "	$(YACC) -l --header=Svc_Conf_Token_Table.h Svc_Conf.y"
     "	sed -e 's/fprintf/ACE_OS::fprintf/g' \\"       // Use ACE's fprintf, not library's
     "       -e 's/\\t/  /g' \\"                        // Eliminate tabs (replace with 2 spaces)
-    "       -e 's/yy/ace_yy/g' \\"
+    "       -e 's/yy/ace_yy/g' -e's/YY/ACE_YY/g' \\"
     "       -e 's/->ace_yyerrno/->yyerrno/g' \\"       // This reverses the ace_ prefix where it
     "       -e 's/->ace_yylineno/->yylineno/g' \\"     // should not have been added by the substitution, above.
     "       -e 's/ NULL/ 0/g' \\"
@@ -17,7 +17,7 @@ project(ace_svcconf_gen) {
     "       -e 's/ace_yyerror[ ]*([ ]*YY_/ace_yyerror (ACE_SVC_CONF_PARAM->yyerrno, ACE_SVC_CONF_PARAM->yylineno, YY_/g' \\"
     "       -e 's@#include <stdio\\.h>@@' \\"
     "       -e 's/Svc_Conf\\.tab\\.c/Svc_Conf_y.cpp/g' <Svc_Conf.tab.c >Svc_Conf_y.cpp"
-    "	sed -e 's/yy/ace_yy/g' -i Svc_Conf_Token_Table.h"
+    "	sed -e 's/yy/ace_yy/g' -e's/YY/ACE_YY/g' -i Svc_Conf_Token_Table.h"
     "	$(RM) -f Svc_Conf.tab.c Svc_Conf_y.cpp.orig"
     "else"
     "	@echo 'ERROR: You must use bison 1.35 or higher to process this file'"
